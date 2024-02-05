@@ -1,0 +1,61 @@
+﻿using System.Globalization;
+
+namespace _Game.Utils.Extensions
+{
+    public static class FloatExtensions
+    {
+        public static string FormatMoney(this float price)
+        {
+            CultureInfo ci = CultureInfo.InvariantCulture;
+            
+            if (price >= 1_000 && price < 10_000)
+            {
+                if (price % 1000 == 0)
+                {
+                    return (price / 1000).ToString("0", ci) + "k";
+                }
+                else
+                {
+                    return (price / 1000).ToString("0.##", ci) + "k"; 
+                }
+            }
+            else if (price >= 10_000 && price < 1_000_000)
+            {
+                if (price % 1000 == 0)
+                {
+                    return (price / 1000).ToString("0", ci) + "k";
+                }
+                else
+                {
+                    return (price / 1000).ToString("0.#", ci) + "k"; 
+                }
+            }
+            else if (price >= 1_000_000 && price < 1_000_000_000)
+            {
+                if (price % 1_000_000 == 0)
+                {
+                    return (price / 1_000_000).ToString("0", ci) + "M";
+                }
+                else
+                {
+                    return (price / 1_000_000).ToString("0.#", ci) + "M";
+                }
+            }
+            else if (price >= 1_000_000_000)
+            {
+                if (price % 1_000_000_000 == 0)
+                {
+                    return (price / 1_000_000_000).ToString("0", ci) + "B";
+                }
+                else
+                {
+                    return (price / 1_000_000_000).ToString("0.#", ci) + "B";
+                }
+            }
+            else
+            {
+                return price.ToString("0", ci);
+            }
+        }
+    }
+}
