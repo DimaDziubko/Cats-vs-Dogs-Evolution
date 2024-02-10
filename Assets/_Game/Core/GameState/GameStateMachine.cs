@@ -50,8 +50,8 @@ namespace _Game.Core.GameState
                     .CreateState<LoadProgressState>(),
                 [typeof(MenuState)] = _stateFactory
                     .CreateState<MenuState>(),
-                [typeof(GameLoadState)] = _stateFactory
-                    .CreateState<GameLoadState>(),
+                [typeof(PrepareBattleState)] = _stateFactory
+                    .CreateState<PrepareBattleState>(),
                 [typeof(GameLoopState)] = _stateFactory
                     .CreateState<GameLoopState>(),
             };

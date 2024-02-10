@@ -21,17 +21,7 @@ namespace _Game.Core.Loading
 
         public async UniTask Load(Action<float> onProgress)
         {
-            onProgress.Invoke(0.5f);
-            
-            var battlesKey = _gameConfigController.GetBattlesKey();
-            
-            await _assetProvider.LoadBattlesAsync(battlesKey);
-            
-            var unitsKey = _gameConfigController.GetUnitsKey();
-            
-            await _assetProvider.LoadUnitsAsync(unitsKey);
-            
-            onProgress.Invoke(1);
+  
         }
     }
 }

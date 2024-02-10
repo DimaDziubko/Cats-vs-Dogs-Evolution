@@ -1,56 +1,57 @@
-﻿using _Game.Gameplay.UpgradesAndEvolution.Scripts;
+﻿using _Game.Bundles.Units.Common.Scripts;
+using _Game.Gameplay.UpgradesAndEvolution.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradesWindow : MonoBehaviour, IUIWindow
     {
+        public string Name => "Upgrades";
+        
         [SerializeField] private Canvas _canvas;
-
         [SerializeField] private UpgradeUnitItem[] _unitItems;
 
         private IUpgradesAndEvolutionService _upgradesAndEvolutionService;
         private IHeader _header;
 
-        public string Name => "Upgrades";
 
-        public void Construct(
+        public async UniTask Construct(
             IHeader header,
             IUpgradesAndEvolutionService upgradesAndEvolutionService)
         {
             _upgradesAndEvolutionService = upgradesAndEvolutionService;
             _header = header;
             
-            InitInitItems();
+            InitItems();
             
-            UpdateUIElements();
+            await UpdateUIElements();
         }
 
-        private void InitInitItems()
+        private void InitItems()
         {
             for (int i = 0; i < _unitItems.Length; i++)
             {
-                int index = i; 
-                _unitItems[i].Setup(index, HandleUnitItemClick);
+                _unitItems[i].Setup((UnitType)i, HandleUnitItemClick);
             }
         }
 
-        private void HandleUnitItemClick(int unitIndex)
+        private async void HandleUnitItemClick(UnitType type)
         {
-            _upgradesAndEvolutionService.PurchaseUnit(unitIndex);
-            UpdateUIElements();
+            _upgradesAndEvolutionService.PurchaseUnit(type);
+            await UpdateUIElements();
         }
         
-        private void UpdateUIElements()
+        private async UniTask UpdateUIElements()
         {
-            UpdateUnitItems();
+            await UpdateUnitItems();
         }
 
-        private void UpdateUnitItems()
+        private async UniTask UpdateUnitItems()
         {
-            var models = _upgradesAndEvolutionService.GetUpgradeItems();
+            var models = await _upgradesAndEvolutionService.GetUpgradeItems();
             for (int i = 0; i < models.Length; i++)
             {
                 _unitItems[i]
@@ -67,7 +68,6 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             _canvas.enabled = true;
             _header.ShowWindowName(Name);
-            
         }
         
         public void Hide()

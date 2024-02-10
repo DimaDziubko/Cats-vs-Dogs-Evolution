@@ -1,4 +1,5 @@
 using _Game.Audio.Scripts;
+using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
 using _Game.Core.Configs.Controllers;
@@ -13,7 +14,6 @@ using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.StaticData;
 using _Game.Core.UserState;
-using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.GamePlayManager;
 using _Game.Gameplay.UpgradesAndEvolution.Scripts;
 using _Game.StaticData;
@@ -43,6 +43,8 @@ namespace _Game.Core.Scripts
 
         public override void InstallBindings()
         {
+            BindLogger();
+            
             BindSceneLoader();
             BindStaticDataService();
             BindPersistentData();
@@ -69,10 +71,17 @@ namespace _Game.Core.Scripts
 
             BindBattleState();
             BindUpgradesAndEvolutionService();
-            
+
             BindStartBattleWindowProvider();
             BindUpgradeAndEvolutionWindowProvider();
             BindMainMenuProvider();
+        }
+
+        private void BindLogger()
+        {
+            Container
+                .BindInterfacesAndSelfTo<MyLogger>()
+                .AsSingle();
         }
 
         private void BindUpgradesAndEvolutionService()
@@ -245,9 +254,10 @@ namespace _Game.Core.Scripts
 
         private void BindStaticDataService()
         {
-            AssetProvider staticData = new AssetProvider();
+            AssetProvider assetProvider = new AssetProvider();
+            assetProvider.Initialize();
             Container.Bind<IAssetProvider>()
-                .FromInstance(staticData)
+                .FromInstance(assetProvider)
                 .AsSingle();
         }
     }

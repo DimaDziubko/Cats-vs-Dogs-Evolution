@@ -1,9 +1,7 @@
-using _Game.Core.Communication;
-using _Game.Core.Configs.Controllers;
+using _Game.Core._Logger;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
+using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.GamePlayManager;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
@@ -22,82 +20,77 @@ namespace _Game.UI._StartBattleWindow.Scripts
         [SerializeField] private Button _nextBattleButton;
         [SerializeField] private Button _previousBattleButton;
         
-        
         private IAudioService _audioService;
-        private IPersistentDataService _persistentData;
-        private IUserStateCommunicator _communicator;
+
         private IBeginGameManager _beginGameManager;
-        private IGameConfigController _gameConfigController;
         private IBattleStateService _battleState;
         private IHeader _header;
+        private IMyLogger _logger;
 
-        private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        
 
         public void Construct(
-            Camera uICamera, 
-            IPersistentDataService persistentData, 
+            Camera uICamera,
             IAudioService audioService,
-            IUserStateCommunicator communicator,
-            
+
             IHeader header,
             IBeginGameManager beginGameManager,
-            
-            IGameConfigController gameConfigController,
 
-            IBattleStateService battleState)
+            IBattleStateService battleState,
+            IMyLogger logger)
         {
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
-            _persistentData = persistentData;
-            _communicator = communicator;
 
             _beginGameManager = beginGameManager;
-
-            _gameConfigController = gameConfigController;
 
             _header = header;
 
             _battleState = battleState;
+            _logger = logger;
             
-            UpdateNavigationButtons();
-            
+            UpdateNavigationButtons(_battleState.NavigationModel);
             
             _header.ShowWindowName(Name);
-            
+
+            _battleState.BattleChange += UpdateNavigationButtons;
+            _battleState.BattlePrepared += OnBattlePrepared;
+
             _previousBattleButton.onClick.AddListener(OnPreviousBattleButtonClick);
             _nextBattleButton.onClick.AddListener(OnNextBattleButtonClick);
             _startBattleButton.onClick.AddListener(OnStartButtonClick);
         }
-        
-        private void UpdateNavigationButtons()
+
+        private void OnBattlePrepared(BattleData obj)
         {
-            _previousBattleButton.gameObject.SetActive(_battleState.IsFirstBattle());
-            _nextBattleButton.gameObject.SetActive(!_battleState.IsLastBattle());
-            _previousBattleButton.interactable = _battleState.CanMoveToPreviousBattle();
-            _nextBattleButton.interactable = _battleState.CanMoveToNextBattle();
+            _logger.Log("OnBattle prepared (UI)");
+            _startBattleButton.interactable = true;
+        }
+
+        private void UpdateNavigationButtons(BattleNavigationModel model)
+        {
+            _previousBattleButton.gameObject.SetActive(model.IsFirstBattle);
+            _nextBattleButton.gameObject.SetActive(!model.IsLastBattle);
+            _previousBattleButton.interactable = model.CanMoveToPreviousBattle;
+            _nextBattleButton.interactable = model.CanMoveToNextBattle;
+            
+            _startBattleButton.interactable = _battleState.IsBattlePrepared;
             _header.ShowWindowName(Name);
         }
         
         private void OnStartButtonClick() => _beginGameManager.TriggerBeginGame();
 
-        private void OnPreviousBattleButtonClick()
-        {
-            _battleState.MoveToPreviousBattle();
-            UpdateNavigationButtons();
-        }
+        private void OnPreviousBattleButtonClick() => _battleState.MoveToPreviousBattle();
 
-        private void OnNextBattleButtonClick()
-        {
-            _battleState.MoveToNextBattle();
-            UpdateNavigationButtons();
-        }
+        private void OnNextBattleButtonClick() => _battleState.MoveToNextBattle();
 
         private void OnDisable()
         {
             _startBattleButton.onClick.RemoveAllListeners();
             _nextBattleButton.onClick.RemoveAllListeners();
             _previousBattleButton.onClick.RemoveAllListeners();
+
+            _battleState.BattlePrepared -= OnBattlePrepared;
+            _battleState.BattleChange -= UpdateNavigationButtons;
         }
     }
 }

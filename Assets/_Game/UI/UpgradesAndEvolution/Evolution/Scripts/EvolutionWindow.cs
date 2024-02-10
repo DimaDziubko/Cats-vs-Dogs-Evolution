@@ -70,9 +70,6 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void OnDisable()
         {
-            //TODO Delete
-            Debug.Log("Evolution window disabled");
-            
             _evolveButton.Click -= OnEvolveButtonClick;
         }
     }

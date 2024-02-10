@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
@@ -38,11 +39,6 @@ namespace _Game.Core.Configs.Controllers
             return (GetCurrentTimeline().Battles.Count - 1);
         }
 
-        public string GetBattlesKey()
-        {
-            return GetCurrentTimeline()?.BattleAssetKey;
-        }
-
         public float GetAgePrice(int ageId)
         {
             var ageConfig = GetCurrentTimeline()?.Ages
@@ -51,65 +47,53 @@ namespace _Game.Core.Configs.Controllers
             if (ageConfig != null) return ageConfig.Price;
             return 0;
         }
-
-        public string GetUnitsKey()
-        {
-            var ageConfig = GetCurrentTimeline()?.Ages.FirstOrDefault(age => age.Id == TimelineState.AgeId);
-            if (ageConfig != null) return ageConfig.UnitAssetKey;
-            else
-            {
-                throw new Exception("There is not unit asset key");
-            }
-        }
         
-        public string[] GetUnitNames()
+        public List<WarriorConfig> GetCurrentAgeUnits()
         {
-            var currentAge = GetCurrentTimeline()?.Ages.FirstOrDefault(age => age.Id == TimelineState.AgeId);
-            if (currentAge != null && currentAge.Warriors.Count > 0)
-            {
-                return currentAge.Warriors.Select(warrior => warrior.Name).ToArray();
-            }
-            else
-            {
-                throw new Exception("There are no warriors in the current age.");
-            }
+            return GetCurrentTimeline()?.Ages[TimelineState.AgeId].Warriors;
         }
 
-        public float GetUnitPrice(in int unitIndex)
+        public List<WarriorConfig> GetEnemyConfigs(in int currentBattleIndex)
         {
-            var economy = GetCurrentTimeline()?.Ages.FirstOrDefault(age => age.Id == TimelineState.AgeId)?.Economy;
-            
-            if (economy != null) return economy.WarriorPrices[unitIndex];
-            else
-            {
-                throw new Exception("There is not economy");
-            }
+            return GetCurrentTimeline()?.Battles[currentBattleIndex].Enemies;
         }
 
-        public BattleScenario GetBattleScenario(in int currentBattleIndex)
+        public FoodProductionConfig GetFoodProduction()
         {
-            var battles = GetCurrentTimeline()?.Battles;
-            return battles?[currentBattleIndex].Scenario;
+            return GetCurrentTimeline()?.Ages[TimelineState.AgeId].Economy.FoodProduction;
         }
 
-        public string GetEnemiesKey(int battleIndex)
+        public List<WarriorConfig> GetOpenPlayerUnitConfigs()
         {
-            var battleConfig = GetCurrentTimeline()?.Battles[battleIndex];
-            if (battleConfig != null) return battleConfig.EnemyAssetKey;
-            else
+            var warriors = GetCurrentTimeline()?.Ages[TimelineState.AgeId].Warriors;
+
+            if (warriors != null && TimelineState.OpenUnits != null)
             {
-                throw new Exception("There is not enemyAsset");
+                var openWarriors = warriors
+                    .Where(warrior => TimelineState.OpenUnits.Contains(warrior.Type))
+                    .ToList();
+
+                return openWarriors;
             }
+
+            return new List<WarriorConfig>();
         }
 
-        public WarriorConfig GetEnemyConfig(in int currentBattleIndex, in int enemyIndex)
+        public string GetFoodIconKey()
         {
-            var battleConfig = GetCurrentTimeline()?.Battles[currentBattleIndex];
-            if (battleConfig != null) return battleConfig.Enemies[enemyIndex];
-            else
-            {
-                throw new Exception("There is not enemyAsset");
-            }
+            return GetCurrentTimeline()?.Ages[TimelineState.AgeId].FoodIconKey;
+        }
+
+        public float GetUnitPrice(in UnitType type)
+        {
+            var timeline = GetCurrentTimeline();
+
+            var ageConfig = timeline?.Ages.FirstOrDefault(age => age.Id == TimelineState.AgeId);
+            if (ageConfig == null) return 0;
+
+            var unitType = type;
+            var warrior = ageConfig.Warriors.FirstOrDefault(x => x.Type == unitType);
+            return warrior?.Price ?? 0;
         }
     }
 
@@ -118,13 +102,12 @@ namespace _Game.Core.Configs.Controllers
         AgeConfig GetAgeConfig(int ageId);
         BattleConfig GetBattleConfig(int battleIndex);
         int LastBattleIndex();
-        string GetBattlesKey();
         float GetAgePrice(int timelineStateAgeId);
-        string GetUnitsKey();
-        string[] GetUnitNames();
-        float GetUnitPrice(in int unitIndex);
-        BattleScenario GetBattleScenario(in int currentBattleIndex);
-        string GetEnemiesKey(int battleIndex);
-        WarriorConfig GetEnemyConfig(in int currentBattleIndex, in int enemyIndex);
+        List<WarriorConfig> GetCurrentAgeUnits();
+        List<WarriorConfig> GetEnemyConfigs(in int currentBattleIndex);
+        FoodProductionConfig GetFoodProduction();
+        List<WarriorConfig> GetOpenPlayerUnitConfigs();
+        string GetFoodIconKey();
+        float GetUnitPrice(in UnitType type);
     }
 }

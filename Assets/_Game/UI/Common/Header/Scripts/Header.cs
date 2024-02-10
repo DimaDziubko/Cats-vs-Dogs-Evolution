@@ -23,8 +23,6 @@ namespace _Game.UI.Common.Header.Scripts
 
         public void OnDisable()
         {
-            //TODO Delete
-            Debug.Log("Hide CurrencyUI");
             _currenciesUI.Hide();
         }
     }

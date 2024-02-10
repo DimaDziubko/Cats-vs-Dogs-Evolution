@@ -2,10 +2,13 @@ using _Game.Core.Configs.Models;
 using Firebase.RemoteConfig;
 using UnityEngine;
 
-public class ConfigManager : MonoBehaviour
+namespace _Game.Scenes.Tests
 {
-    public GameConfig ReadConfig(FirebaseRemoteConfig remoteConfig)
+    public class ConfigManager : MonoBehaviour
     {
-        return null;
+        public GameConfig ReadConfig(FirebaseRemoteConfig remoteConfig)
+        {
+            return null;
+        }
     }
 }

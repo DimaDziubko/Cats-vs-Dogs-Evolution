@@ -14,12 +14,9 @@ using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.StaticData;
 using _Game.Gameplay.GamePlayManager;
+using _Game.Gameplay.UpgradesAndEvolution.Scripts;
 using _Game.UI._MainMenu.Scripts;
-using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Settings.Scripts;
-using _Game.UI.Shop.Scripts;
-using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Popups;
 using Cysharp.Threading.Tasks;
 
@@ -35,8 +32,7 @@ namespace _Game.Core.GameState
         private readonly IUserStateCommunicator _communicator;
         private readonly IAssetProvider _assetProvider;
         private readonly IRandomService _random;
-        private readonly ISettingsPopupProvider _settingsPopupProvider;
-        private readonly IShopPopupProvider _shopPopupProvider;
+
         private readonly IAudioService _audioService;
         private readonly IRemoteConfigProvider _remoteConfigProvider;
         private readonly ILocalConfigProvider _localConfigProvider;
@@ -48,6 +44,7 @@ namespace _Game.Core.GameState
         private readonly IGameConfigController _gameConfigController;
         private readonly IBattleStateService _battleState;
         private readonly IHeader _header;
+        private readonly IUpgradesAndEvolutionService _upgradesAndEvolutionService;
 
         public LoadProgressState(
             GameStateMachine stateMachine,
@@ -58,8 +55,7 @@ namespace _Game.Core.GameState
             IUserStateCommunicator communicator,
             IAssetProvider assetProvider,
             IRandomService random,
-            ISettingsPopupProvider settingsPopupProvider,
-            IShopPopupProvider shopPopupProvider,
+
             IAudioService audioService,
 
             IRemoteConfigProvider remoteConfigProvider,
@@ -77,7 +73,9 @@ namespace _Game.Core.GameState
 
             IBattleStateService battleState,
             
-            IHeader header
+            IHeader header,
+            
+            IUpgradesAndEvolutionService upgradesAndEvolutionService
             )
         {
             _pauseManager = pauseManager;
@@ -94,8 +92,7 @@ namespace _Game.Core.GameState
             _communicator = communicator;
             _assetProvider = assetProvider;
             _random = random;
-            _settingsPopupProvider = settingsPopupProvider;
-            _shopPopupProvider = shopPopupProvider;
+
             _audioService = audioService;
 
             _remoteConfigProvider = remoteConfigProvider;
@@ -108,6 +105,8 @@ namespace _Game.Core.GameState
             _battleState = battleState;
 
             _header = header;
+
+            _upgradesAndEvolutionService = upgradesAndEvolutionService;
         }
 
         public void Enter()
@@ -132,10 +131,6 @@ namespace _Game.Core.GameState
                 _communicator,
                 _assetProvider,
                 _random));
-            
-            loadingOperations.Enqueue(new AssetLoadingOperation(
-                _assetProvider,
-                _gameConfigController));
 
             loadingOperations.Enqueue(
                 new GameLoadingOperation(
@@ -146,8 +141,7 @@ namespace _Game.Core.GameState
                     _persistentData,
                     _pauseManager,
                     _alertPopupProvider,
-                    _settingsPopupProvider,
-                    _shopPopupProvider,
+
                     _audioService,
                     _communicator,
                     
@@ -158,7 +152,9 @@ namespace _Game.Core.GameState
                     _gameConfigController,
                     _battleState,
                     
-                    _header
+                    _header,
+                    
+                    _upgradesAndEvolutionService
                 ));
             
             _loadingProvider.LoadAndDestroy(loadingOperations).Forget();

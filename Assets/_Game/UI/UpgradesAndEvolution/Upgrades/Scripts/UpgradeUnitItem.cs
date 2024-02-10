@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Bundles.Units.Common.Scripts;
 using _Game.UI.Common.Scripts;
 using TMPro;
 using UnityEngine;
@@ -20,9 +21,9 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         [SerializeField] private TransactionButton _transactionButton;
         [SerializeField] private TMP_Text _unitNameLabel;
 
-        public void Setup(int unitIndex, Action<int> onPurchaseRequested)
+        public void Setup(UnitType type, Action<UnitType> onPurchaseRequested)
         {
-            _clickAction = () => onPurchaseRequested.Invoke(unitIndex);
+            _clickAction = () => onPurchaseRequested.Invoke(type);
             _transactionButton.Click += _clickAction;
         }
         
@@ -49,8 +50,6 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             if (_transactionButton != null)
             {
-                //TODO Delete
-                Debug.Log("UpgradeUnitItem unsubscribed");
                 _transactionButton.Click -= _clickAction;
             }
         }

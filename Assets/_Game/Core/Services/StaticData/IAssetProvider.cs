@@ -1,18 +1,21 @@
-﻿using System.Threading.Tasks;
-using _Game.Gameplay._Unit.Scripts;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using _Game.Bundles.Units.Common.Scripts;
 using _Game.Gameplay.Battle.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace _Game.Core.Services.StaticData
 {
     public interface IAssetProvider
     {
-        Task LoadEnemiesAsync(string assetKey);
-        Task LoadBattlesAsync(string assetKey);
-        Task LoadUnitsAsync(string assetKey);
-        BattleAsset ForBattle(in int currentBattleIndex);
-        UnitAsset ForUnit(in int index);
-        EnemyAsset ForEnemy(in int index);
-        Sprite[] ForUnitIcons();
+        UniTask<GameObject> Instantiate(string path);
+        UniTask<GameObject> Instantiate(string path, Vector3 at);
+        UniTask<T> Load<T>(AssetReference assetReference) where T : class;
+        UniTask<T> Load<T>(string address) where T : class;
+        void CleanUp();
+        void Initialize();
+        UniTask<GameObject> Instantiate(string address, Transform under);
     }
 }

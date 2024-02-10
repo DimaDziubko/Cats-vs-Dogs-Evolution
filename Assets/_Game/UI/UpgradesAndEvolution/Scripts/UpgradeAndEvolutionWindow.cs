@@ -6,6 +6,7 @@ using _Game.UI.Common.Header.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils.Popups;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +25,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private IUserStateCommunicator _communicator;
         private IAlertPopupProvider _alertPopupProvider;
         
-        public void Construct(
+        public async UniTask Construct(
             Camera uICamera, 
             IPersistentDataService persistentData, 
             IAudioService audioService,
@@ -41,7 +42,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _communicator = communicator;
             _alertPopupProvider = alertPopupProvider;
             
-            _upgradesWindow.Construct(header, upgradesAndEvolutionService);
+            await _upgradesWindow.Construct(header, upgradesAndEvolutionService);
             _evolutionWindow.Construct(header, upgradesAndEvolutionService);
 
             _upgradesButton.onClick.AddListener(OnUpgradesButtonClick);

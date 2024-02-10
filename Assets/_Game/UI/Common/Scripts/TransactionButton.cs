@@ -12,7 +12,7 @@ namespace _Game.UI.Common.Scripts
         public event Action Click;
 
         [SerializeField] private TMP_Text _priceText;
-        
+
         private Button _button;
 
         private readonly Color _affordableColor = new Color(1f, 1f, 1f); 
@@ -44,10 +44,6 @@ namespace _Game.UI.Common.Scripts
         
         private void OnDisable()
         {
-            //TODO Delete
-            
-            Debug.Log("TransitionButton cleanup");
-            
             Cleanup();
         }
 

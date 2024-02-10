@@ -48,7 +48,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         {
             var popup = await LoadDisposable<UpgradeAndEvolutionWindow>(AssetsConstants.UPGRADE_AND_EVOLUTION_WINDOW);
             
-            popup.Value.Construct(
+            await popup.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _persistentData,
                 _audioService,

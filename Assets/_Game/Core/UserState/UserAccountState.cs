@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.Random;
 
@@ -30,9 +31,10 @@ namespace _Game.Core.UserState
                     BaseHealthLevel = 0,
                     FoodProductionLevel = 0,
                     MaxBattle = 3,
-                    OpenUnits = new List<int>(3)
+                    OpenUnits = new List<UnitType>(3)
                     {
-                        0
+                        UnitType.Light,
+                        UnitType.Heavy
                     }
                 },
                 Currencies = new UserCurrenciesState()

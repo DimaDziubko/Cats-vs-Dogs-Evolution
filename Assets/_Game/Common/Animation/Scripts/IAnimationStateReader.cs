@@ -1,4 +1,4 @@
-﻿using _Game.Gameplay._Unit.Scripts;
+﻿using _Game.Bundles.Units.Common.Scripts;
 
 namespace _Game.Common.Animation.Scripts
 {

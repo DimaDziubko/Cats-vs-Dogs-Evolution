@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Bundles.Units.Common.Scripts;
 
 namespace _Game.Core.UserState
 {
@@ -16,7 +17,7 @@ namespace _Game.Core.UserState
         public int BaseHealthLevel;
 
         //TODO Change save system
-        public List<int> OpenUnits;
+        public List<UnitType> OpenUnits;
 
         public event Action Changed;
         
@@ -30,11 +31,11 @@ namespace _Game.Core.UserState
         int IUserTimelineStateReadonly.FoodProductionLevel => FoodProductionLevel;
         int IUserTimelineStateReadonly.BaseHealthLevel => BaseHealthLevel;
         
-        List<int> IUserTimelineStateReadonly.OpenUnits => OpenUnits;
+        List<UnitType> IUserTimelineStateReadonly.OpenUnits => OpenUnits;
         
-        public void OpenUnit(in int unitIndex)
+        public void OpenUnit(in UnitType type)
         {
-            OpenUnits.Add(unitIndex);
+            OpenUnits.Add(type);
             Changed?.Invoke();
         }
     }

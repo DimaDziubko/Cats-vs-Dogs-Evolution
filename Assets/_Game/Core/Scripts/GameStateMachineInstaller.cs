@@ -10,7 +10,7 @@ namespace _Game.Core.Scripts
             Container.Bind<BootstrapState>().AsSingle().NonLazy();
             Container.Bind<LoadProgressState>().AsSingle().NonLazy();
             Container.Bind<MenuState>().AsSingle().NonLazy();
-            Container.Bind<GameLoadState>().AsSingle().NonLazy();
+            Container.Bind<PrepareBattleState>().AsSingle().NonLazy();
             Container.Bind<GameLoopState>().AsSingle().NonLazy();
 
             Container

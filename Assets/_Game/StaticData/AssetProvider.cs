@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using _Game.Core.Services.StaticData;
-using _Game.Gameplay._Unit.Scripts;
-using _Game.Gameplay.Battle.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -12,98 +10,77 @@ namespace _Game.StaticData
 {
     public class AssetProvider : IAssetProvider
     {
-        private readonly Dictionary<int, UnitAsset> _units = new Dictionary<int, UnitAsset>();
-        private readonly Dictionary<int, BattleAsset> _battles = new Dictionary<int, BattleAsset>();
-        private readonly Dictionary<int, EnemyAsset> _enemies = new Dictionary<int, EnemyAsset>();
         
-        public async Task LoadEnemiesAsync(string assetKey)
+        private readonly Dictionary<string, AsyncOperationHandle> _completeCache = new Dictionary<string, AsyncOperationHandle>();
+        private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new Dictionary<string, List<AsyncOperationHandle>>();
+
+        public void Initialize()
         {
-            AsyncOperationHandle<BattleEnemyAsset> handle = Addressables.LoadAssetAsync<BattleEnemyAsset>(assetKey);
+            Addressables.InitializeAsync();
+        }
+        
+        public UniTask<GameObject> Instantiate(string address) => 
+            Addressables.InstantiateAsync(address).ToUniTask();
+
+        public UniTask<GameObject> Instantiate(string address, Vector3 at) => 
+            Addressables.InstantiateAsync(address, at, Quaternion.identity).ToUniTask();
+        
+        public UniTask<GameObject> Instantiate(string address, Transform under) => 
+            Addressables.InstantiateAsync(address, under).ToUniTask();
+        public async UniTask<T> Load<T>(AssetReference assetReference) where T : class
+        {
+            if (_completeCache.TryGetValue(assetReference.AssetGUID, out AsyncOperationHandle completeHandle))
+                return completeHandle.Result as T;
+
+            return await RunWithCacheOnComplete(
+                Addressables.LoadAssetAsync<T>(assetReference),
+                cacheKey: assetReference.AssetGUID);
+        }
+
+        public async UniTask<T> Load<T>(string address) where T : class
+        {
+            if (_completeCache.TryGetValue(address, out AsyncOperationHandle completeHandle))
+                return completeHandle.Result as T;
+
+            return await RunWithCacheOnComplete(
+                Addressables.LoadAssetAsync<T>(address),
+                cacheKey: address);
+        }
+
+        
+        //TODO Choose place
+        public void CleanUp()
+        {
+            foreach (List<AsyncOperationHandle> resourcesHandles in _handles.Values)
+            foreach (AsyncOperationHandle handle in resourcesHandles)
+            {
+                Addressables.Release(handle);
+            }  
             
-            await handle.Task;
-
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                BattleEnemyAsset enemyAssets = handle.Result;
-                foreach (var asset in enemyAssets.Assets)
-                {
-                    _enemies[asset.Id] = asset;
-                }
-                
-                Addressables.Release(handle);
-            }
-            else
-            {
-                Debug.LogError($"Failed to load unit assets with key {assetKey}");
-            }
+            _completeCache.Clear();
+            _handles.Clear();
         }
-        
-        public async Task LoadUnitsAsync(string assetKey)
+
+        private void AddHandler<T>(string key, AsyncOperationHandle<T> handle) where T : class
         {
-            AsyncOperationHandle<AgeUnitAsset> handle = Addressables.LoadAssetAsync<AgeUnitAsset>(assetKey);
+            if(!_handles.TryGetValue(key, out List<AsyncOperationHandle> resourceHandles))
+            {
+                resourceHandles = new List<AsyncOperationHandle>();
+                _handles[key] = resourceHandles;
+            }
             
-            await handle.Task;
-
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                AgeUnitAsset unitAssets = handle.Result;
-                foreach (var asset in unitAssets.Assets)
-                {
-                    _units[asset.Id] = asset;
-                }
-                
-                Addressables.Release(handle);
-            }
-            else
-            {
-                Debug.LogError($"Failed to load unit assets with key {assetKey}");
-            }
+            resourceHandles.Add(handle);
         }
-        
-        
-        public async Task LoadBattlesAsync(string assetKey)
+
+        private async Task<T> RunWithCacheOnComplete<T>(AsyncOperationHandle<T> handle, string cacheKey) where T : class
         {
-            AsyncOperationHandle<GeneralBattleAsset> handle = Addressables.LoadAssetAsync<GeneralBattleAsset>(assetKey);
-            await handle.Task;
-
-            if (handle.Status == AsyncOperationStatus.Succeeded)
+            handle.Completed += completeHandle =>
             {
-                GeneralBattleAsset battleAssets = handle.Result;
-                foreach (var asset in battleAssets.Assets)
-                {
-                    _battles[asset.Id] = asset;
-                }
-                
-                Addressables.Release(handle);
-            }
-            else
-            {
-                Debug.LogError($"Failed to load battle assets with key {assetKey}");
-            }
-        }
-        
-        public BattleAsset ForBattle(in int index) =>
-            _battles.TryGetValue(index, out BattleAsset battleAsset) 
-                ? battleAsset
-                : null;
-        
-        public UnitAsset ForUnit(in int index) =>
-            _units.TryGetValue(index, out UnitAsset unitAsset) 
-                ? unitAsset
-                : null;
-        
-        public EnemyAsset ForEnemy(in int index) =>
-            _enemies.TryGetValue(index, out EnemyAsset enemyAsset) 
-                ? enemyAsset
-                : null;
+                _completeCache[cacheKey] = completeHandle;
+            };
 
-        public Sprite[] ForUnitIcons() => _units.Values.Select(asset => asset.Icon).ToArray();
-
-        private void Cleanup()
-        {
-            _units.Clear();
-            _battles.Clear();
-            _enemies.Clear();
+            AddHandler(cacheKey, handle);
+            return await handle.Task;
         }
     }
 }

@@ -36,8 +36,6 @@ namespace _Game.UI.Common.Scripts
 
         private void OnDisable()
         {
-            //TODO Delete
-            Debug.Log("Toggle button unsubscribed");
             _button.onClick.RemoveAllListeners();
         }
     }

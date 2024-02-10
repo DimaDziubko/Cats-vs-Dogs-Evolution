@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Bundles.Units.Common.Scripts;
 
 namespace _Game.Core.UserState
 {
@@ -12,7 +13,7 @@ namespace _Game.Core.UserState
         int FoodProductionLevel { get; }
         int BaseHealthLevel { get; }
 
-        List<int> OpenUnits { get; }
+        List<UnitType> OpenUnits { get; }
 
         event Action Changed;
     }

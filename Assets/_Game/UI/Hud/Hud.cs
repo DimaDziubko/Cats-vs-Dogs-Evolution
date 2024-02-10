@@ -2,6 +2,7 @@
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
+using _Game.Gameplay.Food.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.Utils.Popups;
 using UnityEngine;
@@ -15,7 +16,8 @@ namespace _Game.UI.Hud
 
         [SerializeField] private Button _quitButton;
         [SerializeField] private ToggleWithSpriteSwap _pauseToggle;
-
+        [SerializeField] private FoodPanel _foodPanel;
+        
         public event Action QuitGame;
         
         private IPauseManager _pauseManager;
@@ -73,6 +75,15 @@ namespace _Game.UI.Hud
         {
             _pauseToggle.ValueChanged -= OnPauseClicked;
         }
-        
+
+        public void UpdateFoodFillAmount(float progress)
+        {
+            _foodPanel.UpdateFillAmount(progress);
+        }
+
+        public void OnFoodChanged(int amount)
+        {
+            _foodPanel.OnFoodChanged(amount);
+        }
     }
 }

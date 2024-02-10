@@ -1,7 +1,7 @@
+using _Game.Bundles.Units.Common.Factory;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.StaticData;
-using _Game.Gameplay._Unit.Factory;
 using UnityEngine;
 using Zenject;
 
@@ -17,10 +17,7 @@ namespace _Game.Core.Scripts
 
         private void BindUnitFactory()
         {
-            _unitFactory.Initialize(
-                Container.Resolve<IRandomService>(),
-                Container.Resolve<IAssetProvider>(),
-                Container.Resolve<IBattleStateService>());
+            _unitFactory.Initialize(Container.Resolve<IBattleStateService>());
             Container.Bind<IUnitFactory>().To<UnitFactory>().FromInstance(_unitFactory).AsSingle();
         }
     }

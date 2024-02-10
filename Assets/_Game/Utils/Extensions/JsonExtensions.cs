@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Configs.Models;
 using Newtonsoft.Json.Linq;
 
@@ -29,7 +31,6 @@ namespace _Game.Utils.Extensions
                 Id = (int)timelineToken[Constants.ConfigKeys.ID],
                 Ages = ParseAges(timelineToken[Constants.ConfigKeys.AGES], jsonData),
                 Battles = ParseBattles(timelineToken[Constants.ConfigKeys.BATTLES], jsonData),
-                BattleAssetKey = timelineToken[Constants.ConfigKeys.BATTLE_ASSET_KEY]?.ToString()
             };
 
             return timelineConfig;
@@ -51,7 +52,7 @@ namespace _Game.Utils.Extensions
                         GemsPerAge = (float)ageToken[Constants.ConfigKeys.GEMS_PER_AGE],
                         Economy = ParseEconomy((int)ageToken[Constants.ConfigKeys.ECONOMY], jsonData),
                         Warriors = ParseWarriors(ageToken[Constants.ConfigKeys.WARRIORS], jsonData),
-                        UnitAssetKey = ageToken[Constants.ConfigKeys.UNIT_ASSET_KEY]?.ToString()
+                        FoodIconKey = ageToken[Constants.ConfigKeys.FOOD_ICON_KEY]?.ToString(),
                     };
                     ages.Add(ageConfig);
                 }
@@ -65,24 +66,12 @@ namespace _Game.Utils.Extensions
                 .FirstOrDefault(e => (int)e[Constants.ConfigKeys.ID] == economyId);
             if (economyToken != null)
             {
-                var warriorPrices = new List<float>(3);
-                var warriorPricesToken = economyToken[Constants.ConfigKeys.WARRIOR_PRICES];
-
-                if (warriorPricesToken != null)
-                {
-                    foreach (var price in warriorPricesToken)
-                    {
-                        warriorPrices.Add((float)price);
-                    }
-                }
-                
                 return new EconomyConfig
                 {
                     Id = (int)economyToken[Constants.ConfigKeys.ID],
                     CoinPerBattle = (int)economyToken[Constants.ConfigKeys.COINS_PER_BATTLE],
                     FoodProduction = ParseFoodProduction((int)economyToken[Constants.ConfigKeys.FOOD_PRODUCTION], jsonData),
                     BaseHealth = ParseBaseHealth((int)economyToken[Constants.ConfigKeys.BASE_HEALTH], jsonData),
-                    WarriorPrices = warriorPrices
                 };
             }
             return null;
@@ -139,7 +128,7 @@ namespace _Game.Utils.Extensions
                         Id = (int)battleToken[Constants.ConfigKeys.ID],
                         Scenario = ParseBattleScenario((int)battleToken[Constants.ConfigKeys.BATTLE_SCENARIO], jsonData),
                         Enemies = ParseWarriors(battleToken[Constants.ConfigKeys.WARRIORS], jsonData),
-                        EnemyAssetKey = battleToken[Constants.ConfigKeys.ENEMY_ASSET_KEY]?.ToString()
+                        BackgroundKey = battleToken[Constants.ConfigKeys.BACKGROUND_KEY]?.ToString()
                         
                     };
                     battles.Add(battleConfig);
@@ -198,7 +187,10 @@ namespace _Game.Utils.Extensions
                     var wave = new EnemySpawnSequence()
                     {
                         Id = (int)spawnSequenceToken[Constants.ConfigKeys.ID],
-                        WarriorIndex = (int)spawnSequenceToken[Constants.ConfigKeys.WARRIOR],
+                        Type = spawnSequenceToken[Constants.ConfigKeys.UNIT_TYPE] != null ?
+                            (UnitType)Enum.Parse(typeof(UnitType),
+                                spawnSequenceToken[Constants.ConfigKeys.UNIT_TYPE].ToString(), 
+                                true) : default(UnitType),
                         Amount = (int)spawnSequenceToken[Constants.ConfigKeys.AMOUNT],
                         Cooldown = (float)spawnSequenceToken[Constants.ConfigKeys.COOLDOWN]
                     };
@@ -224,7 +216,16 @@ namespace _Game.Utils.Extensions
                         Health = (float)warriorToken[Constants.ConfigKeys.HEALTH],
                         Speed = (float)warriorToken[Constants.ConfigKeys.SPEED],
                         Damage = (float)warriorToken[Constants.ConfigKeys.DAMAGE],
-                        Name = warriorToken[Constants.ConfigKeys.NAME]?.ToString()
+                        Name = warriorToken[Constants.ConfigKeys.NAME]?.ToString(),
+                        IconKey = warriorToken[Constants.ConfigKeys.ICON_KEY]?.ToString(),
+                        Price = (float)warriorToken[Constants.ConfigKeys.PRICE],
+                        EnemyKey = warriorToken[Constants.ConfigKeys.ENEMY_KEY]?.ToString(),
+                        PlayerKey = warriorToken[Constants.ConfigKeys.PLAYER_KEY]?.ToString(),
+                        FoodPrice = (int)warriorToken[Constants.ConfigKeys.FOOD_PRICE],
+                        Type = warriorToken[Constants.ConfigKeys.UNIT_TYPE] != null ?
+                            (UnitType)Enum.Parse(typeof(UnitType),
+                                warriorToken[Constants.ConfigKeys.UNIT_TYPE].ToString(), 
+                                true) : default(UnitType),
                     };
                     warriors.Add(warriorConfig);
                 }

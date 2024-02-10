@@ -1,8 +1,12 @@
-﻿using _Game.Core.Configs.Controllers;
+﻿using System.Collections.Generic;
+using _Game.Bundles.Units.Common.Scripts;
+using _Game.Core.Configs.Controllers;
+using _Game.Core.Configs.Models;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.StaticData;
 using _Game.Core.UserState;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.Gameplay.UpgradesAndEvolution.Scripts
@@ -39,12 +43,6 @@ namespace _Game.Gameplay.UpgradesAndEvolution.Scripts
         public int GetTimelineNumber() => TimelineState.TimelineId;
         
 
-        private float GetUnitPrice(in int index)
-        {
-            return _gameConfigController.GetUnitPrice(index);
-        }
-        
-
         public float GetEvolutionPrice()
         {
             return _gameConfigController
@@ -52,43 +50,52 @@ namespace _Game.Gameplay.UpgradesAndEvolution.Scripts
         }
         
         
-        public UpgradeItemModel[] GetUpgradeItems()
+        public async UniTask<UpgradeItemModel[]> GetUpgradeItems()
         {
-            int capacity = 3;
-            
-            UpgradeItemModel[] models = new UpgradeItemModel[capacity];
-        
-            var unitIcons = _assetProvider.ForUnitIcons();
-            var unitNames = _gameConfigController.GetUnitNames();
-            
-            for (int i = 0; i < capacity; i++)
+            List<WarriorConfig> warriorConfigs = _gameConfigController.GetCurrentAgeUnits();
+            UpgradeItemModel[] models = new UpgradeItemModel[warriorConfigs.Count];
+
+            for (int i = 0; i < warriorConfigs.Count; i++)
             {
-                float price = GetUnitPrice(i);
-                
-                models[i] = new UpgradeItemModel 
+                var config = warriorConfigs[i];
+                Sprite icon = await _assetProvider.Load<Sprite>(config.IconKey);
+
+                models[i] = new UpgradeItemModel
                 {
-                    Icon = unitIcons[i],
-                    Name = unitNames[i],
-                    Price = price,
-                    IsBought = TimelineState.OpenUnits.Contains(i),
-                    CanAfford = Currency.Coins >= price
+                    Icon = icon, 
+                    Name = config.Name,
+                    Price = config.Price,
+                    IsBought = TimelineState.OpenUnits.Contains(warriorConfigs[i].Type),
+                    CanAfford = Currency.Coins >= config.Price
                 };
             }
-        
+
             return models;
         }
 
-        public void PurchaseUnit(in int unitIndex)
+        public void PurchaseUnit(in UnitType type)
         {
-            var unitPrice = _gameConfigController.GetUnitPrice(unitIndex);
+            var unitPrice = _gameConfigController.GetUnitPrice(type);
+            
             if (Currency.Coins >= unitPrice)
             {
-                _persistentData.PurchaseUnit(unitIndex, unitPrice);
+                _persistentData.PurchaseUnit(type, unitPrice);
             }
             else
             {
-                Debug.LogError($"Cannot purchase unit {unitIndex}. Either already opened or not enough coins.");
+                Debug.LogError($"Cannot purchase unit {type}. Either already opened or not enough coins.");
             }
+        }
+
+        public float GetFoodProductionSpeed()
+        {
+            var foodProduction = _gameConfigController.GetFoodProduction();
+
+            float baseSpeed = foodProduction.Speed;
+
+            float totalSpeed = baseSpeed * Mathf.Pow(foodProduction.SpeedFactor, TimelineState.FoodProductionLevel);
+    
+            return totalSpeed;
         }
     }
 
@@ -98,7 +105,8 @@ namespace _Game.Gameplay.UpgradesAndEvolution.Scripts
         float GetEvolutionPrice();
         bool IsNextAgeAvailable();
         int GetTimelineNumber();
-        UpgradeItemModel[] GetUpgradeItems();
-        void PurchaseUnit(in int unitIndex);
+        UniTask<UpgradeItemModel[]> GetUpgradeItems();
+        void PurchaseUnit(in UnitType type);
+        float GetFoodProductionSpeed();
     }
 }

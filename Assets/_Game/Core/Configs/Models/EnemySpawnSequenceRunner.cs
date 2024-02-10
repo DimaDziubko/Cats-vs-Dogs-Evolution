@@ -1,17 +1,18 @@
 ﻿using System;
+using _Game.Bundles.Units.Common.Scripts;
 using _Game.Gameplay._BattleField.Scripts;
 
 namespace _Game.Core.Configs.Models
 {
     public class EnemySpawnSequenceRunner
     {
-        private int _warriorIndex;
+        private UnitType _type;
         private int _amount;
         private float _cooldown;
 
         public void Init(EnemySpawnSequence sequence)
         {
-            _warriorIndex = sequence.WarriorIndex;
+            _type = sequence.Type;
             _amount = sequence.Amount;
             _cooldown = sequence.Cooldown;
         }
@@ -47,8 +48,7 @@ namespace _Game.Core.Configs.Models
                     }
                     _count += 1;
                     
-                    _battleField.SpawnEnemy(_sequenceRunner._warriorIndex);
-                    _battleField.SpawnPlayerUnit(_sequenceRunner._warriorIndex);
+                    _battleField.SpawnEnemy(_sequenceRunner._type);
                 }
                 return -1f;
             }

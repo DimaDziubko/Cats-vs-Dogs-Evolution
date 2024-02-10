@@ -1,4 +1,5 @@
-﻿using _Game.Core.Configs.Models;
+﻿using _Game.Bundles.Units.Common.Scripts;
+using _Game.Core.Configs.Models;
 using _Game.Core.Services.PersistentData;
 
 namespace _Game.Core.UserState
@@ -15,12 +16,12 @@ namespace _Game.Core.UserState
             State.Currencies.ChangeCoins(count);
         }
 
-        public void PurchaseUnit(int unitIndex, float price)
+        public void PurchaseUnit(UnitType type, float price)
         {
             if (State.Currencies.Coins >= price)
             {
                 ChangeAfterPurchase(price, false);
-                State.TimelineState.OpenUnit(unitIndex);
+                State.TimelineState.OpenUnit(type);
             }
         }
 

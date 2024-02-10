@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Game.Bundles.Units.Common.Scripts;
 
 namespace _Game.Core.Configs.Models
 {
@@ -12,7 +13,6 @@ namespace _Game.Core.Configs.Models
         public int Id;
         public List<AgeConfig> Ages;
         public List<BattleConfig> Battles;
-        public string BattleAssetKey;
     }
 
     public class AgeConfig
@@ -22,7 +22,7 @@ namespace _Game.Core.Configs.Models
         public float GemsPerAge;
         public EconomyConfig Economy;
         public List<WarriorConfig> Warriors;
-        public string UnitAssetKey;
+        public string FoodIconKey;
     }
 
     public class BattleConfig
@@ -30,7 +30,7 @@ namespace _Game.Core.Configs.Models
         public int Id;
         public BattleScenario Scenario;
         public List<WarriorConfig> Enemies;
-        public string EnemyAssetKey;
+        public string BackgroundKey;
     }
 
     public class BattleScenario
@@ -48,7 +48,7 @@ namespace _Game.Core.Configs.Models
     public class EnemySpawnSequence
     {
         public int Id;
-        public int WarriorIndex;
+        public UnitType Type;
         public int Amount;
         public float Cooldown;
     }
@@ -61,8 +61,6 @@ namespace _Game.Core.Configs.Models
 
         public FoodProductionConfig FoodProduction;
         public BaseHealthConfig BaseHealth;
-        
-        public List<float> WarriorPrices;
     }
 
     public class BaseHealthConfig
@@ -90,5 +88,11 @@ namespace _Game.Core.Configs.Models
         public float Speed;
         public float Damage;
         public string Name;
+        public string IconKey;
+        public string EnemyKey;
+        public float Price;
+        public string PlayerKey;
+        public int FoodPrice;
+        public UnitType Type;
     }
 }

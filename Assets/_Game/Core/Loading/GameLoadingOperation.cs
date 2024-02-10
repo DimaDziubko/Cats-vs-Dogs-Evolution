@@ -12,6 +12,7 @@ using _Game.Core.Services.Random;
 using _Game.GameModes.BattleMode.Scripts;
 using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.GamePlayManager;
+using _Game.Gameplay.UpgradesAndEvolution.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
@@ -44,6 +45,7 @@ namespace _Game.Core.Loading
         private readonly IGameConfigController _gameConfigController;
         private readonly IBattleStateService _battleState;
         private readonly IHeader _header;
+        private readonly IUpgradesAndEvolutionService _upgradesAndEvolutionService;
 
         public string Description => "Game loading...";
         
@@ -55,8 +57,7 @@ namespace _Game.Core.Loading
             IPersistentDataService persistentData,
             IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
-            ISettingsPopupProvider settingsPopupProvider,
-            IShopPopupProvider shopPopupProvider,
+
             IAudioService audioService,
             IUserStateCommunicator communicator,
             
@@ -68,7 +69,9 @@ namespace _Game.Core.Loading
 
             IBattleStateService battleState,
             
-            IHeader header)
+            IHeader header,
+            
+            IUpgradesAndEvolutionService upgradesAndEvolutionService)
         {
             _sceneLoader = sceneLoader;
             _cameraService = cameraService;
@@ -77,8 +80,7 @@ namespace _Game.Core.Loading
             _persistentData = persistentData;
             _pauseManager = pauseManager;
             _alertPopupProvider = alertPopupProvider;
-            _settingsPopupProvider = settingsPopupProvider;
-            _shopPopupProvider = shopPopupProvider;
+
             _audioService = audioService;
             _communicator = communicator;
 
@@ -91,6 +93,8 @@ namespace _Game.Core.Loading
             _battleState = battleState;
 
             _header = header;
+
+            _upgradesAndEvolutionService = upgradesAndEvolutionService;
         }
         public async UniTask Load(Action<float> onProgress)
         {
@@ -109,27 +113,19 @@ namespace _Game.Core.Loading
             onProgress?.Invoke(0.85f);
             gameMode.Construct(
                 _cameraService,
-                _randomService,
-                _sceneLoader,
+                _randomService,    
                 _stateMachine,
                 _persistentData,
                 _pauseManager,
                 _alertPopupProvider,
-                _settingsPopupProvider,
-                _shopPopupProvider,
                 _audioService,
                 _communicator,
-                _mainMenuProvider,
                 _beginGameManager,
                 
-                _gameConfigController,
                 _battleState,
-                
-                _header);
-            
-            //TODO Delete
-            //gameMode.BeginGame();
-            
+                _header,
+                _upgradesAndEvolutionService);
+
             onProgress?.Invoke(1.0f);
             
             _stateMachine.Enter<MenuState>();
