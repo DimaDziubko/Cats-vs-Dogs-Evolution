@@ -7,15 +7,15 @@ namespace _Game.Bundles.Units.Common.FSM.States
     {
         private Vector3 _direction;
         private readonly UnitMove _unitMove;
-        private readonly UnitAggroDetection _unitAggroDetection;
-        private readonly UnitAttackDetection _unitAttackDetection;
+        private readonly TargetDetection _unitAggroDetection;
+        private readonly TargetDetection _unitAttackDetection;
         private readonly UnitFsm _fsm;
 
         public MoveForwardState(
             UnitFsm fsm, 
             UnitMove unitMove, 
-            UnitAggroDetection unitAggroDetection,
-            UnitAttackDetection unitAttackDetection)
+            TargetDetection unitAggroDetection,
+            TargetDetection unitAttackDetection)
         {
             _unitMove = unitMove;
             _unitAggroDetection = unitAggroDetection;

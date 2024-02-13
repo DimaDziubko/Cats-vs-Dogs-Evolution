@@ -2,8 +2,9 @@ using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
+using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.PersistentData;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.Utils.Disposable;
 using _Game.Utils.Popups;
@@ -21,7 +22,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         
         private readonly IHeader _header;
         
-        private readonly IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        private readonly IUpgradesService _upgradesService;
+        private readonly IEvolutionService _evolutionService;
 
         public UpgradeAndEvolutionWindowProvider(
             IWorldCameraService cameraService,
@@ -32,7 +34,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             
             IHeader header,
             
-            IUpgradesAndEvolutionService upgradesAndEvolutionService)
+            IUpgradesService upgradesService,
+            IEvolutionService evolutionService)
         {
             _cameraService = cameraService;
             _persistentData = persistentData;
@@ -42,13 +45,14 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             
             _header = header;
 
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _upgradesService = upgradesService;
+            _evolutionService = evolutionService;
         }
         public async UniTask<Disposable<UpgradeAndEvolutionWindow>> Load()
         {
             var popup = await LoadDisposable<UpgradeAndEvolutionWindow>(AssetsConstants.UPGRADE_AND_EVOLUTION_WINDOW);
             
-            await popup.Value.Construct(
+            popup.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _persistentData,
                 _audioService,
@@ -57,7 +61,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 
                 _header,
                 
-                _upgradesAndEvolutionService);
+                _upgradesService,
+                _evolutionService);
             return popup;
         }
     }

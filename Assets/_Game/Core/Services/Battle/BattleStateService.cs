@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using _Game.Bundles.Bases.Scripts;
 using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core._Logger;
 using _Game.Core.Configs.Controllers;
@@ -28,7 +29,6 @@ namespace _Game.Core.Services.Battle
         private IUserTimelineStateReadonly TimelineState => _persistentDataService.State.TimelineState;
 
         private int? _currentBattleIndex;
-
         public bool IsBattlePrepared { get; private set; }
 
         private readonly BattleData _currentBattleData = new BattleData();
@@ -40,6 +40,21 @@ namespace _Game.Core.Services.Battle
         private int _playerDataPreparedForAge;
         
         private CancellationTokenSource _cts = new CancellationTokenSource();
+        
+        public BaseData GetForEnemyBase()
+        {
+            return _currentBattleData.EnemyBaseData;
+        }
+
+        public async UniTask Init()
+        {
+            await PrepareBattle();
+        }
+
+        public BattleData BattleData
+        {
+            get => _currentBattleData;
+        }
 
         public UnitData GetEnemy(UnitType type)
         {
@@ -54,31 +69,6 @@ namespace _Game.Core.Services.Battle
             }
         }
         
-        public UnitData GetPlayerUnit(UnitType type)
-        {
-            if (_playerUnitData.TryGetValue(type, out var unitData))
-            {
-                return unitData;
-            }
-            else
-            {
-                _logger.Log("Player data is empty");
-                return null;
-            }
-        }
-        public List<UnitBuilderBtnData> GetUnitBuilderData()
-        {
-            if (_unitBuilderData != null)
-            {
-                return _unitBuilderData;
-            }
-            else
-            {
-                _logger.Log("UnitBuilderData data is empty");
-                return null;
-            }
-        }
-
         public BattleNavigationModel NavigationModel =>
             new BattleNavigationModel()
             {
@@ -103,17 +93,12 @@ namespace _Game.Core.Services.Battle
 
             BattleChange += OnBattleChange;
         }
-
+        
         public int CurrentBattleIndex
         {
             get
             {
-                if (_currentBattleIndex == null)
-                {
-                    _currentBattleIndex = TimelineState.MaxBattle;
-                    BattleChange?.Invoke(NavigationModel);
-                }
-
+                _currentBattleIndex ??= TimelineState.MaxBattle;
                 return _currentBattleIndex.Value;
             }
             private set
@@ -152,14 +137,13 @@ namespace _Game.Core.Services.Battle
             }
         }
 
-        public async UniTask PrepareBattle()
+        private async UniTask PrepareBattle()
         {
             var ct = _cts.Token;
             try
             {
                 await PrepareBattleData(ct);
                 await PrepareEnemyData(ct);
-                await PreparePlayerData(ct);
                 ct.ThrowIfCancellationRequested();
 
                 SetBattlePreparationState(true);
@@ -169,108 +153,29 @@ namespace _Game.Core.Services.Battle
                 _logger.Log("PrepareBattle was canceled.");
             }
         }
-
+        
         private async void OnBattleChange(BattleNavigationModel model)
         {
             _logger.Log("Battle change");
             IsBattlePrepared = false;
             await PrepareBattle();
         }
-
-        private async UniTask PreparePlayerData(CancellationToken ct)
-        {
-            List<WarriorConfig> openPlayerUnitConfigs = _gameConfigController.GetOpenPlayerUnitConfigs();
-            
-            _logger.Log($"OpenPlayerUnits : {openPlayerUnitConfigs.Count}");
-            
-            _playerUnitData ??= new Dictionary<UnitType, UnitData>(openPlayerUnitConfigs.Count);
-            _unitBuilderData ??= new List<UnitBuilderBtnData>(openPlayerUnitConfigs.Count);
-
-            if (IsPlayerDataPrepared(openPlayerUnitConfigs))
-            {
-                _logger.Log("Player battle data already prepared");
-                return;
-            }
-            
-            await PreparePlayerUnits(openPlayerUnitConfigs, ct);
-            await PrepareUnitBuilderData(openPlayerUnitConfigs, ct);
-            
-            _playerDataPreparedForAge = TimelineState.AgeId;
-        }
-
-        private bool IsPlayerDataPrepared(List<WarriorConfig> openPlayerUnitConfigs)
-        {
-            return _playerDataPreparedForAge == TimelineState.AgeId &&
-                   openPlayerUnitConfigs.Count == _playerUnitData.Count &&
-                   openPlayerUnitConfigs.Count == _unitBuilderData.Count;
-        }
-
-        private async UniTask PreparePlayerUnits(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
-        {
-            _playerUnitData.Clear();
-    
-            foreach (var config in openPlayerUnitConfigs)
-            {
-                ct.ThrowIfCancellationRequested();
-
-                var go = await _assetProvider.Load<GameObject>(config.PlayerKey);
-                var newData = new UnitData
-                {
-                    Config = config,
-                    Prefab = go.GetComponent<Unit>()
-                };
-
-                _playerUnitData[config.Type] = newData;
-            }
-
-            _logger.Log("PlayerUnitData prepared");
-        }
-
-        private async UniTask PrepareUnitBuilderData(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
-        {
-            var foodIconKey = _gameConfigController.GetFoodIconKey();
-
-            for (int i = 0; i < openPlayerUnitConfigs.Count; i++)
-            {
-                ct.ThrowIfCancellationRequested();
-
-                var config = openPlayerUnitConfigs[i];
-                var foodSprite = await _assetProvider.Load<Sprite>(foodIconKey);
-                var unitIcon = await _assetProvider.Load<Sprite>(config.IconKey);
-
-                _logger.Log($"UnitBuilderData preparing {i}");
-                
-                var newData = new UnitBuilderBtnData
-                {
-                    Type = config.Type,
-                    Food = foodSprite,
-                    UnitIcon = unitIcon,
-                    FoodPrice = config.FoodPrice,
-                };
-                
-                if (_unitBuilderData.Count < openPlayerUnitConfigs.Count)
-                {
-                    _unitBuilderData.Add(newData); 
-                }
-                else
-                {
-                    _unitBuilderData[i] = newData; 
-                }
-            }
-
-            _logger.Log($"UnitBuilderData prepared {_unitBuilderData.Count}");
-        }
-
+        
         private async UniTask PrepareBattleData(CancellationToken ct)
         {
             BattleConfig battleConfig = _gameConfigController.GetBattleConfig(CurrentBattleIndex);
 
             ct.ThrowIfCancellationRequested();
-
             Sprite environment = await _assetProvider.Load<Sprite>(battleConfig.BackgroundKey);
-
+            var enemyBasePrefab = await _assetProvider.Load<GameObject>(battleConfig.EnemyBaseKey);
+            
             _currentBattleData.Scenario = battleConfig.Scenario;
             _currentBattleData.Environment = environment;
+            _currentBattleData.EnemyBaseData = new BaseData()
+            {
+                Health = battleConfig.EnemyBaseHealth,
+                BasePrefab = enemyBasePrefab.GetComponent<Base>()
+            };
 
             _logger.Log("BattleData prepared");
         }

@@ -8,11 +8,8 @@ namespace _Game.Bundles.Units.Common._Target
     public class TargetCollection
     {
         private readonly List<Target> _targets = new List<Target>();
-
-        public List<Target> Targets
-        {
-            get => _targets;
-        }
+        
+        public List<Target> Targets => _targets;
 
         public bool IsEmpty => _targets.Count == 0;
         
@@ -26,6 +23,7 @@ namespace _Game.Bundles.Units.Common._Target
 
         public void Remove(Transform targetTransform)
         {
+            //TODO optimize
             _targets.RemoveAll(t => t.Transform == targetTransform);
         }
 

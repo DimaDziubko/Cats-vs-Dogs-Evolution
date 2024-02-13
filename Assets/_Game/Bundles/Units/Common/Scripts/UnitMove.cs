@@ -11,13 +11,12 @@ namespace _Game.Bundles.Units.Common.Scripts
             get => _transform.position;
             set => _transform.position = value;
         }
+
+        private float _speed;
         
-        //TODO Config
-        private float _speed = 0.25f;
-        
-        public void Construct()
+        public void Construct(float speed)
         {
-            
+            _speed = speed;
         }
         
         public void Move(Vector3 direction)

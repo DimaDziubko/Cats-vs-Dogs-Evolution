@@ -59,11 +59,6 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             gameObject.SetActive(false);
             Cleanup();
         }
-        
-        private void OnDisable()
-        {
-            Cleanup();
-        }
 
         private void Cleanup()
         {

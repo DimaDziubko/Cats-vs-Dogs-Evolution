@@ -18,7 +18,7 @@ namespace _Game.UI.Common.Scripts
 
         public void Show()
         {
-            _currencies.Changed += OnCurrenciesChanged;
+            _currencies.CoinsChanged += OnCurrenciesChanged;
             OnCurrenciesChanged();
         }
         
@@ -29,7 +29,7 @@ namespace _Game.UI.Common.Scripts
         
         public void Hide()
         {
-            _currencies.Changed -= OnCurrenciesChanged;
+            _currencies.CoinsChanged -= OnCurrenciesChanged;
         }
     }
 }

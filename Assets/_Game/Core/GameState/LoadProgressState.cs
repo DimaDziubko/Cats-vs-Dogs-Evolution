@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
-using _Game.Core.Configs.Controllers;
 using _Game.Core.Configs.Providers;
 using _Game.Core.Loading;
 using _Game.Core.Login;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Scripts;
+using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.StaticData;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Gameplay.GamePlayManager;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
-using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.Utils.Popups;
 using Cysharp.Threading.Tasks;
@@ -39,12 +38,11 @@ namespace _Game.Core.GameState
         private readonly ILoadingScreenProvider _loadingProvider;
         private readonly IPauseManager _pauseManager;
         private readonly IAlertPopupProvider _alertPopupProvider;
-        private readonly IMainMenuProvider _mainMenuProvider;
         private readonly IBeginGameManager _beginGameManager;
-        private readonly IGameConfigController _gameConfigController;
         private readonly IBattleStateService _battleState;
         private readonly IHeader _header;
-        private readonly IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        private readonly IUpgradesService _upgradesService;
+        private readonly IAgeStateService _ageState;
 
         public LoadProgressState(
             GameStateMachine stateMachine,
@@ -65,23 +63,18 @@ namespace _Game.Core.GameState
             
             IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
-
-            IMainMenuProvider mainMenuProvider,
+            
             IBeginGameManager beginGameManager,
             
-            IGameConfigController gameConfigController,
-
             IBattleStateService battleState,
             
             IHeader header,
-            
-            IUpgradesAndEvolutionService upgradesAndEvolutionService
+            IUpgradesService upgradesService,
+            IAgeStateService ageState
             )
         {
             _pauseManager = pauseManager;
             _alertPopupProvider = alertPopupProvider;
-
-            _mainMenuProvider = mainMenuProvider;
             _beginGameManager = beginGameManager;
             
             _stateMachine = stateMachine;
@@ -100,13 +93,12 @@ namespace _Game.Core.GameState
 
             _loadingProvider = loadingProvider;
 
-            _gameConfigController = gameConfigController;
-
             _battleState = battleState;
 
             _header = header;
 
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _upgradesService = upgradesService;
+            _ageState = ageState;
         }
 
         public void Enter()
@@ -144,18 +136,15 @@ namespace _Game.Core.GameState
 
                     _audioService,
                     _communicator,
-                    
-                    _mainMenuProvider,
-                    
+
                     _beginGameManager,
-                    
-                    _gameConfigController,
+    
                     _battleState,
                     
                     _header,
-                    
-                    _upgradesAndEvolutionService
-                ));
+                    _upgradesService,
+                    _ageState
+                    ));
             
             _loadingProvider.LoadAndDestroy(loadingOperations).Forget();
         }

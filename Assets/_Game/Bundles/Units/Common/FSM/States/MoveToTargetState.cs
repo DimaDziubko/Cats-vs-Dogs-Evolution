@@ -7,14 +7,14 @@ namespace _Game.Bundles.Units.Common.FSM.States
     {
         private readonly UnitFsm _fsm;
         private readonly UnitMove _unitMove;
-        private readonly UnitAggroDetection _aggroDetection;
-        private readonly UnitAttackDetection _attackDetection;
+        private readonly TargetDetection _aggroDetection;
+        private readonly TargetDetection _attackDetection;
 
         public MoveToTargetState(
             UnitFsm fsm,
             UnitMove unitMove,
-            UnitAggroDetection aggroDetection,
-            UnitAttackDetection attackDetection)
+            TargetDetection aggroDetection,
+            TargetDetection attackDetection)
         {
             _unitMove = unitMove;
             _fsm = fsm;
@@ -25,13 +25,13 @@ namespace _Game.Bundles.Units.Common.FSM.States
         public void Enter()
         {
             //TODO Delete
-            Debug.Log("MoveToTargetState ENTERED");
+            //Debug.Log("MoveToTargetState ENTERED");
         }
 
         public void GameUpdate()
         {
             //TODO Delete
-            Debug.Log("MoveToTargetState START_UPDATE");
+            //Debug.Log("MoveToTargetState START_UPDATE");
             
             UpdateDetectors();
             
@@ -50,7 +50,7 @@ namespace _Game.Bundles.Units.Common.FSM.States
             _fsm.Enter<MoveForwardState>();
             
             //TODO Delete
-            Debug.Log("MoveToTargetState END_UPDATE");
+            //Debug.Log("MoveToTargetState END_UPDATE");
         }
 
         private void UpdateDetectors()
@@ -62,7 +62,7 @@ namespace _Game.Bundles.Units.Common.FSM.States
         public void Exit()
         {
             //TODO Delete
-            Debug.Log("MoveToTargetState Exited"); 
+            //Debug.Log("MoveToTargetState Exited"); 
         }
     }
 }

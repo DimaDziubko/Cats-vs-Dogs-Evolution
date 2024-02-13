@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Bundles.Units.Common.Scripts;
 using _Game.UI.Common.Scripts;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradeUnitItem : MonoBehaviour
     {
-        private Action _clickAction;
+        public event Action<UnitType> Upgrade;
         
         [SerializeField] private Image _backgroundHolder;
         
@@ -21,16 +22,34 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         [SerializeField] private TransactionButton _transactionButton;
         [SerializeField] private TMP_Text _unitNameLabel;
 
-        public void Setup(UnitType type, Action<UnitType> onPurchaseRequested)
-        {
-            _clickAction = () => onPurchaseRequested.Invoke(type);
-            _transactionButton.Click += _clickAction;
-        }
+        [ShowInInspector]
+        private UnitType _type;
         
-        public void UpdateUI(bool isBought, bool canAfford, float price, Sprite unitIcon, string unitName)
+        public void Init()
         {
-            _unitIconHolder.sprite = unitIcon;
+            //TODO Delete
+            Debug.Log("Inited transition button");
+            _transactionButton.Init();
+            _transactionButton.Click += OnTransactionButtonClick;
+        }
+
+        private void OnTransactionButtonClick()
+        {
+            Upgrade?.Invoke(_type);
+        }
+
+        public void UpdateUI(UnitType type, bool isBought, bool canAfford, float price, Sprite unitIcon, string unitName)
+        {
+            //TODO Delete
+            Debug.Log($"Transition button is null{_transactionButton == null}") ;
             
+            if(!_transactionButton) return;
+
+            _transactionButton.Show();
+            
+            _unitIconHolder.sprite = unitIcon;
+            _type = type;
+
             if (isBought)
             {
                 _backgroundHolder.sprite = _unlockedItemImage;
@@ -39,19 +58,21 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
                 _unitNameLabel.text = unitName;
                 return;
             }
-            
+
+            //TODO Delete
+            Debug.Log("Update transition button");
+
             _backgroundHolder.sprite = _lockedItemImage;
-            _transactionButton.Show();
             _unitNameLabel.enabled = false;
             _transactionButton.UpdateButtonState(canAfford, price);
         }
 
-        private void OnDisable()
+        public void Cleanup()
         {
-            if (_transactionButton != null)
-            {
-                _transactionButton.Click -= _clickAction;
-            }
+            //TODO Delete
+            Debug.Log("Clean transition button");
+            _transactionButton.Click -= OnTransactionButtonClick;
+            _transactionButton.Cleanup();
         }
     }
 }

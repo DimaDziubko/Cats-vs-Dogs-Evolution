@@ -10,6 +10,9 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="_Game" t="Include">
+          <e p="AssetProvider" t="Include">
+            <e p="AssetProvider.cs" t="Include" />
+          </e>
           <e p="Audio" t="Include">
             <e p="AudioClips" t="Include" />
             <e p="Scripts" t="Include">
@@ -22,19 +25,34 @@
                 <e p="1x" t="Include" />
               </e>
             </e>
+            <e p="Bases" t="Include">
+              <e p="Common" t="Include" />
+              <e p="Enemy" t="Include">
+                <e p="Prefabs" t="Include" />
+              </e>
+              <e p="Factory" t="Include">
+                <e p="BaseFactory.cs" t="Include" />
+                <e p="IBaseFactory.cs" t="Include" />
+              </e>
+              <e p="Player" t="Include">
+                <e p="Prefabs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="Base.cs" t="Include" />
+                <e p="BaseData.cs" t="Include" />
+              </e>
+              <e p="Sprites" t="Include" />
+            </e>
             <e p="Battle" t="Include">
               <e p="Backgrounds" t="Include" />
-              <e p="Bases" t="Include" />
             </e>
             <e p="Units" t="Include">
-              <e p="_Unit" t="Include" />
               <e p="Common" t="Include">
                 <e p="_Target" t="Include">
                   <e p="Target.cs" t="Include" />
                   <e p="TargetCollection.cs" t="Include" />
                 </e>
                 <e p="Animation" t="Include" />
-                <e p="Assets" t="Include" />
                 <e p="Factory" t="Include">
                   <e p="IUnitFactory.cs" t="Include" />
                   <e p="UnitFactory.cs" t="Include" />
@@ -53,21 +71,16 @@
                 <e p="Phisics" t="Include" />
                 <e p="PSB" t="Include" />
                 <e p="Scripts" t="Include">
-                  <e p="AgeUnitAsset.cs" t="Include" />
                   <e p="AnimatorState.cs" t="Include" />
-                  <e p="BattleEnemyAsset.cs" t="Include" />
-                  <e p="EnemyAsset.cs" t="Include" />
+                  <e p="Health.cs" t="Include" />
                   <e p="HealthBar.cs" t="Include" />
                   <e p="IDamageable.cs" t="Include" />
+                  <e p="TargetDetection.cs" t="Include" />
                   <e p="TriggerObserver.cs" t="Include" />
                   <e p="Unit.cs" t="Include" />
-                  <e p="UnitAggroDetection.cs" t="Include" />
                   <e p="UnitAnimator.cs" t="Include" />
-                  <e p="UnitAsset.cs" t="Include" />
                   <e p="UnitAttack.cs" t="Include" />
-                  <e p="UnitAttackDetection.cs" t="Include" />
                   <e p="UnitData.cs" t="Include" />
-                  <e p="UnitHealth.cs" t="Include" />
                   <e p="UnitMove.cs" t="Include" />
                   <e p="UnitType.cs" t="Include" />
                 </e>
@@ -179,6 +192,12 @@
               <e p="StateFactory.cs" t="Include" />
             </e>
             <e p="Services" t="Include">
+              <e p="Age" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="AgeStateService.cs" t="Include" />
+                  <e p="IAgeStateService.cs" t="Include" />
+                </e>
+              </e>
               <e p="Audio" t="Include">
                 <e p="AudioService.cs" t="Include" />
                 <e p="IAudioService.cs" t="Include" />
@@ -191,6 +210,12 @@
                 <e p="IWorldCameraService.cs" t="Include" />
                 <e p="WorldCameraService.cs" t="Include" />
               </e>
+              <e p="Evolution" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="EvolutionService.cs" t="Include" />
+                  <e p="IEvolutionService.cs" t="Include" />
+                </e>
+              </e>
               <e p="PersistentData" t="Include">
                 <e p="IPersistentDataService.cs" t="Include" />
               </e>
@@ -200,6 +225,12 @@
               </e>
               <e p="StaticData" t="Include">
                 <e p="IAssetProvider.cs" t="Include" />
+              </e>
+              <e p="Upgrades" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="IUpgradesService.cs" t="Include" />
+                  <e p="UpgradesService.cs" t="Include" />
+                </e>
               </e>
             </e>
             <e p="UserState" t="Include">
@@ -231,9 +262,6 @@
                 <e p="BattleField.cs" t="Include" />
               </e>
             </e>
-            <e p="_Enemy" t="Include">
-              <e p="Asset" t="Include" />
-            </e>
             <e p="_UnitBuilder" t="Include">
               <e p="Scripts" t="Include">
                 <e p="UnitBuildButton.cs" t="Include" />
@@ -245,12 +273,9 @@
               <e p="Asset" t="Include" />
               <e p="Scripts" t="Include">
                 <e p="Battle.cs" t="Include" />
-                <e p="BattleAsset.cs" t="Include" />
                 <e p="BattleData.cs" t="Include" />
-                <e p="GeneralBattleAsset.cs" t="Include" />
               </e>
             </e>
-            <e p="Common" t="Include" />
             <e p="Difficulty" t="Include">
               <e p="DifficultyConfig.cs" t="Include" />
               <e p="GameDifficulty.cs" t="Include" />
@@ -266,14 +291,8 @@
               <e p="IBeginGameHandler.cs" t="Include" />
               <e p="IBeginGameManager.cs" t="Include" />
             </e>
-            <e p="UpgradesAndEvolution" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="UpgradeAndEvolutionService.cs" t="Include" />
-              </e>
-            </e>
           </e>
           <e p="Scenes" t="Include">
-            <e p="QuickGame" t="Include" />
             <e p="Tests" t="Include">
               <e p="_RemoteConfigProvider.cs" t="Include" />
               <e p="ConfigHolder.cs" t="Include" />
@@ -281,9 +300,6 @@
               <e p="Kick.cs" t="Include" />
               <e p="TiggerTest.cs" t="Include" />
             </e>
-          </e>
-          <e p="StaticData" t="Include">
-            <e p="AssetProvider.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
             <e p="_MainMenu" t="Include">
@@ -377,9 +393,9 @@
               </e>
               <e p="Upgrades" t="Include">
                 <e p="Scripts" t="Include">
-                  <e p="UpgradeItemModel.cs" t="Include" />
                   <e p="UpgradesWindow.cs" t="Include" />
                   <e p="UpgradeUnitItem.cs" t="Include" />
+                  <e p="UpgradeUnitItemModel.cs" t="Include" />
                 </e>
               </e>
             </e>

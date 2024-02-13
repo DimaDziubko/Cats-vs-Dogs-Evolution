@@ -1,6 +1,6 @@
 ﻿using System;
 using _Game.Bundles.Units.Common.Scripts;
-using _Game.Core.Services.Battle;
+using _Game.Core.Services.Age.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts
@@ -10,12 +10,12 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         public event Action<UnitType, int> UnitBuildRequested;
         
         [SerializeField] private UnitBuildButton[] _buttons;
+        
+        private IAgeStateService _ageState;
 
-        private IBattleStateService _battleState;
-
-        public void Construct(IBattleStateService battleState)
+        public void Construct(IAgeStateService ageState)
         {
-            _battleState = battleState;
+            _ageState = ageState;
         }
 
         public void StartBuilder()
@@ -45,19 +45,21 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
                 button.Click -= OnButtonClick;
             }
         }
-
+        
         private void UpdateBuilderData()
         {
-            //TODO Init buttons
-            var data = _battleState.GetUnitBuilderData();
+            var data = _ageState.GetUnitBuilderData();
             
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.Length; i++)
             {
-                _buttons[i].Show(
-                    data[i].Type,
-                    data[i].Food,
-                    data[i].UnitIcon,
-                    data[i].FoodPrice);
+                if (data[i] != null)
+                {
+                    _buttons[i].Show(
+                        data[i].Type,
+                        data[i].Food,
+                        data[i].UnitIcon,
+                        data[i].FoodPrice);
+                }
             }
             
         }

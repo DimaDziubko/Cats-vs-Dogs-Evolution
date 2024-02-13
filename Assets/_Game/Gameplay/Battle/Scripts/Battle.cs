@@ -1,5 +1,6 @@
 ﻿using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Configs.Models;
+using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Battle;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._UnitBuilder.Scripts;
@@ -28,7 +29,8 @@ namespace _Game.Gameplay.Battle.Scripts
 
         public void Construct(
             IBattleStateService battleState,
-            FoodGenerator foodGenerator)
+            FoodGenerator foodGenerator,
+            IAgeStateService ageState)
         {
             _battleState = battleState;
             _foodGenerator = foodGenerator;
@@ -36,8 +38,10 @@ namespace _Game.Gameplay.Battle.Scripts
             _scenarioExecutor = new BattleScenarioExecutor();
             
             _battleState.BattlePrepared += UpdateBattle;
+            UpdateBattle(_battleState.BattleData);
+            _battleField.UpdatePlayerBase();
             
-            _unitBuilder.Construct(_battleState);
+            _unitBuilder.Construct(ageState);
         }
         
         public void StartBattle()
@@ -49,24 +53,8 @@ namespace _Game.Gameplay.Battle.Scripts
             _unitBuilder.UnitBuildRequested += OnUnitBuildRequested;
             _foodGenerator.FoodChanged += _unitBuilder.UpdateButtonsState;
             _unitBuilder.UpdateButtonsState(_foodGenerator.FoodAmount);
-        }
-
-        private void OnUnitBuildRequested(UnitType type, int foodPrice)
-        {
-            if(foodPrice > _foodGenerator.FoodAmount) return;
-            _battleField.SpawnPlayerUnit(type);
-            _foodGenerator.SpendFood(foodPrice);
-        }
-
-        private void UpdateBattle(BattleData data)
-        {
-            _environment.sprite = data.Environment;
-            _scenarioExecutor.Init(data.Scenario);
-        }
-
-        private void OnDisable()
-        {
-            _battleState.BattlePrepared -= UpdateBattle;
+            
+            //TODO Init player base health
         }
 
         public void GameUpdate()
@@ -88,6 +76,26 @@ namespace _Game.Gameplay.Battle.Scripts
             _unitBuilder.UnitBuildRequested -= OnUnitBuildRequested;
             _unitBuilder.StopBuilder();
             _foodGenerator.FoodChanged -= _unitBuilder.UpdateButtonsState;
+        }
+
+        private void OnUnitBuildRequested(UnitType type, int foodPrice)
+        {
+            if(foodPrice > _foodGenerator.FoodAmount) return;
+            _battleField.SpawnPlayerUnit(type);
+            _foodGenerator.SpendFood(foodPrice);
+        }
+
+        private void UpdateBattle(BattleData data)
+        {
+            _environment.sprite = data.Environment;
+            _battleField.UpdateEnemyBase();
+            _scenarioExecutor.Init(data.Scenario);
+        }
+
+        private void OnDisable()
+        {
+            //TODO Check place
+            _battleState.BattlePrepared -= UpdateBattle;
         }
     }
 }

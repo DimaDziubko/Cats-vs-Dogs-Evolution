@@ -7,16 +7,17 @@ using _Game.Core.Configs.Providers;
 using _Game.Core.Loading;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Prefabs;
+using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
+using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.StaticData;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Core.UserState;
 using _Game.Gameplay.GamePlayManager;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
-using _Game.StaticData;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
@@ -70,11 +71,35 @@ namespace _Game.Core.Scripts
             BindConfigControllers();
 
             BindBattleState();
-            BindUpgradesAndEvolutionService();
+
+            BindUpgradesService();
+            BindEvolutionService();
+            BindAgeStateService();
 
             BindStartBattleWindowProvider();
             BindUpgradeAndEvolutionWindowProvider();
             BindMainMenuProvider();
+        }
+
+        private void BindAgeStateService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<AgeStateService>()
+                .AsSingle();
+        }
+
+        private void BindEvolutionService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<EvolutionService>()
+                .AsSingle();
+        }
+
+        private void BindUpgradesService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<UpgradesService>()
+                .AsSingle();
         }
 
         private void BindLogger()
@@ -83,14 +108,7 @@ namespace _Game.Core.Scripts
                 .BindInterfacesAndSelfTo<MyLogger>()
                 .AsSingle();
         }
-
-        private void BindUpgradesAndEvolutionService()
-        {
-            Container
-                .BindInterfacesAndSelfTo<UpgradesAndEvolutionService>()
-                .AsSingle();
-        }
-
+        
         private void BindBattleState()
         {
             Container
@@ -254,7 +272,7 @@ namespace _Game.Core.Scripts
 
         private void BindStaticDataService()
         {
-            AssetProvider assetProvider = new AssetProvider();
+            AssetProvider.AssetProvider assetProvider = new AssetProvider.AssetProvider();
             assetProvider.Initialize();
             Container.Bind<IAssetProvider>()
                 .FromInstance(assetProvider)

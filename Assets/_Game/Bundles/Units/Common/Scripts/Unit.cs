@@ -11,10 +11,10 @@ namespace _Game.Bundles.Units.Common.Scripts
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private UnitAnimator _animator;
-        [SerializeField] private UnitHealth _health;
+        [SerializeField] private Health _health;
         [SerializeField] private UnitMove _move;
-        [SerializeField] private UnitAggroDetection _aggroDetection;
-        [SerializeField] private UnitAttackDetection _attackDetection;
+        [SerializeField] private TargetDetection _aggroDetection;
+        [SerializeField] private TargetDetection _attackDetection;
         [SerializeField] private UnitAttack _attack;
         public Vector3 Position
         {
@@ -42,20 +42,21 @@ namespace _Game.Bundles.Units.Common.Scripts
         }
 
         private UnitFsm _fsm;
+        
         private bool _isDead;
         public UnitFactory OriginFactory { get; set; }
 
         public void Construct(WarriorConfig config)
         {
             InitializeFsm();
+            
             _aggroDetection.Construct();
             _attackDetection.Construct();
             
-            //TODO Config
-            _attack.Construct(1.1f);
-            //TODO Config
-            _health.Construct(3);
-
+            _attack.Construct(config.Damage);
+            _health.Construct(config.Health);
+            _move.Construct(config.Speed);
+            
             _health.Death += OnDeath;
             
             Debug.Log($"Configured unit with health {config.Health}");

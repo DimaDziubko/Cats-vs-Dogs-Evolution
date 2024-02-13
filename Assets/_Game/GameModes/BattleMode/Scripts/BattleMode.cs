@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
+using _Game.Bundles.Bases.Factory;
 using _Game.Bundles.Units.Common.Factory;
 using _Game.Core.Communication;
 using _Game.Core.Factory;
 using _Game.Core.GameState;
 using _Game.Core.Pause.Scripts;
+using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Core.UserState;
 using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.Food.Scripts;
 using _Game.Gameplay.GamePlayManager;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.GameResult.Scripts;
 using _Game.UI.Hud;
@@ -36,7 +38,7 @@ namespace _Game.GameModes.BattleMode.Scripts
         private IAudioService _audioService;
         private IUserStateCommunicator  _communicator;
         private IAlertPopupProvider _alertPopupProvider;
-        private IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        private IAgeStateService _ageState;
 
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
 
@@ -52,6 +54,8 @@ namespace _Game.GameModes.BattleMode.Scripts
 
         private bool IsPaused => _pauseManager.IsPaused;
         private bool _scenarioInProcess;
+
+        private bool IsInitialized { get; set; }
 
         public void Construct(
             IWorldCameraService cameraService,
@@ -69,7 +73,8 @@ namespace _Game.GameModes.BattleMode.Scripts
             
             IHeader header,
             
-            IUpgradesAndEvolutionService upgradesAndEvolutionService)
+            IAgeStateService ageState,
+            IUpgradesService upgradesService)
         {
             _cameraService = cameraService;
             _stateMachine = stateMachine;
@@ -81,7 +86,8 @@ namespace _Game.GameModes.BattleMode.Scripts
 
             _beginGameManager = beginGameManager;
 
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _ageState = ageState;
+            
             
             InitializeCameras(cameraService);
             
@@ -91,30 +97,37 @@ namespace _Game.GameModes.BattleMode.Scripts
                 _cameraService,
                 _pauseManager,
                 _alertPopupProvider,
-                _audioService);
+                _audioService,
+                battleState,
+                _ageState);
             
             
-            _foodGenerator = new FoodGenerator(_upgradesAndEvolutionService);
-            
-            
+            _foodGenerator = new FoodGenerator(upgradesService);
+
             _battle.Construct(
                 battleState,
-                _foodGenerator);
+                _foodGenerator,
+                _ageState);
 
 
             //TODO unregister if necessary
             _beginGameManager.Register(this);
             
             header.ShowWallet(persistentData);
+
+            IsInitialized = true;
         }
         
         
         [Inject]
-        private void InitializeFactories(IUnitFactory unitFactory)
+        private void InitializeFactories(
+            IUnitFactory unitFactory,
+            IBaseFactory baseFactory)
         {
             Factories = new GameObjectFactory[]
             {
                unitFactory as GameObjectFactory, 
+               baseFactory as GameObjectFactory, 
             };
         }
 
@@ -127,6 +140,7 @@ namespace _Game.GameModes.BattleMode.Scripts
             _foodGenerator.Init();
             _foodGenerator.FoodProgressUpdated += _hud.UpdateFoodFillAmount;
             _foodGenerator.FoodChanged += _hud.OnFoodChanged;
+            _hud.OnFoodChanged(_foodGenerator.FoodAmount);
             
             _battle.StartBattle();
             _stateMachine.Enter<GameLoopState>();
@@ -146,6 +160,8 @@ namespace _Game.GameModes.BattleMode.Scripts
 
         private void Update()
         {
+            if(!IsInitialized) return;
+
             if(IsPaused) return;
             
             if (_battle.ScenarioInProcess)

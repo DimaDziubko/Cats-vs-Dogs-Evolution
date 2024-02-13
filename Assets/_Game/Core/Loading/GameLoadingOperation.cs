@@ -1,24 +1,20 @@
 ﻿using System;
 using _Game.Core.Communication;
-using _Game.Core.Configs.Controllers;
 using _Game.Core.GameState;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Scripts;
+using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.GameModes.BattleMode.Scripts;
-using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.GamePlayManager;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Settings.Scripts;
 using _Game.UI.Shop.Scripts;
-using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils;
 using _Game.Utils.Extensions;
 using _Game.Utils.Popups;
@@ -40,12 +36,12 @@ namespace _Game.Core.Loading
         private readonly IShopPopupProvider _shopPopupProvider;
         private readonly IAudioService _audioService;
         private readonly IUserStateCommunicator _communicator;
-        private readonly IMainMenuProvider _mainMenuProvider;
         private readonly IBeginGameManager _beginGameManager;
-        private readonly IGameConfigController _gameConfigController;
         private readonly IBattleStateService _battleState;
         private readonly IHeader _header;
-        private readonly IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        
+        private readonly IUpgradesService _upgradesService;
+        private readonly IAgeStateService _ageState;
 
         public string Description => "Game loading...";
         
@@ -60,18 +56,14 @@ namespace _Game.Core.Loading
 
             IAudioService audioService,
             IUserStateCommunicator communicator,
-            
-            IMainMenuProvider mainMenuProvider,
-            
+
             IBeginGameManager beginGameManager,
-            
-            IGameConfigController gameConfigController,
 
             IBattleStateService battleState,
             
             IHeader header,
-            
-            IUpgradesAndEvolutionService upgradesAndEvolutionService)
+            IUpgradesService upgradesService,
+            IAgeStateService ageState)
         {
             _sceneLoader = sceneLoader;
             _cameraService = cameraService;
@@ -84,17 +76,14 @@ namespace _Game.Core.Loading
             _audioService = audioService;
             _communicator = communicator;
 
-            _mainMenuProvider = mainMenuProvider;
-
             _beginGameManager = beginGameManager;
-
-            _gameConfigController = gameConfigController;
 
             _battleState = battleState;
 
             _header = header;
 
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _ageState = ageState;
+            _upgradesService = upgradesService;
         }
         public async UniTask Load(Action<float> onProgress)
         {
@@ -110,6 +99,11 @@ namespace _Game.Core.Loading
             Scene scene = _sceneLoader.GetSceneByName(Constants.Scenes.BATTLE_MODE);
             
             var gameMode = scene.GetRoot<BattleMode>();
+
+            await _ageState.Init();
+            await _upgradesService.Init();
+            await _battleState.Init();
+            
             onProgress?.Invoke(0.85f);
             gameMode.Construct(
                 _cameraService,
@@ -121,10 +115,10 @@ namespace _Game.Core.Loading
                 _audioService,
                 _communicator,
                 _beginGameManager,
-                
                 _battleState,
                 _header,
-                _upgradesAndEvolutionService);
+                _ageState,
+                _upgradesService);
 
             onProgress?.Invoke(1.0f);
             

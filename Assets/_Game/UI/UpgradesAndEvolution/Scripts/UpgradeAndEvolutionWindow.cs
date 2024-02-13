@@ -1,12 +1,12 @@
 using _Game.Core.Communication;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.PersistentData;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils.Popups;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +25,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private IUserStateCommunicator _communicator;
         private IAlertPopupProvider _alertPopupProvider;
         
-        public async UniTask Construct(
+        public void Construct(
             Camera uICamera, 
             IPersistentDataService persistentData, 
             IAudioService audioService,
@@ -34,7 +34,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             
             IHeader header,
             
-            IUpgradesAndEvolutionService upgradesAndEvolutionService)
+            IUpgradesService upgradesService,
+            IEvolutionService evolutionService)
         {
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
@@ -42,8 +43,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _communicator = communicator;
             _alertPopupProvider = alertPopupProvider;
             
-            await _upgradesWindow.Construct(header, upgradesAndEvolutionService);
-            _evolutionWindow.Construct(header, upgradesAndEvolutionService);
+            _upgradesWindow.Construct(header, upgradesService);
+            _evolutionWindow.Construct(header, evolutionService);
 
             _upgradesButton.onClick.AddListener(OnUpgradesButtonClick);
             _evolutionButton.onClick.AddListener(OnEvolutionButtonClick);

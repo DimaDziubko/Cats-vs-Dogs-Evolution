@@ -1,5 +1,6 @@
 ﻿using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Factory;
+using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Battle;
 using UnityEngine;
 
@@ -9,14 +10,19 @@ namespace _Game.Bundles.Units.Common.Factory
     public class UnitFactory : GameObjectFactory, IUnitFactory
     {
         private IBattleStateService _battleState;
-        public void Initialize(IBattleStateService battleState)
+        private IAgeStateService _ageState;
+
+        public void Initialize(
+            IBattleStateService battleState,
+            IAgeStateService ageState)
         {
             _battleState = battleState;
+            _ageState = ageState;
         }
             
         public Unit GetForPlayer(UnitType type)
         {
-            var playerUnitData = _battleState.GetPlayerUnit(type);
+            var playerUnitData = _ageState.GetPlayerUnit(type);
             Unit instance = CreateGameObjectInstance(playerUnitData.Prefab);
             
             instance.OriginFactory = this;
@@ -28,6 +34,7 @@ namespace _Game.Bundles.Units.Common.Factory
         
         public Unit GetForEnemy(UnitType type)
         {
+            //TODO Fix battle 1 initialization
             var enemyData = _battleState.GetEnemy(type);
             
             Unit instance = CreateGameObjectInstance(enemyData.Prefab);
@@ -39,9 +46,9 @@ namespace _Game.Bundles.Units.Common.Factory
             return instance;
         }
 
-        public void Reclaim(Unit item)
+        public void Reclaim(Unit unit)
         { 
-            Destroy(item.gameObject);
+            Destroy(unit.gameObject);
         }
     }
 }

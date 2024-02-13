@@ -6,6 +6,7 @@ namespace _Game.Gameplay.Food.Scripts
 {
     public class FoodPanel : MonoBehaviour
     {
+        [SerializeField] private Image _foodSlider;
         [SerializeField] private Image _foodIconHolder;
         [SerializeField] private TMP_Text _foodAmountLabel;
 
@@ -16,7 +17,7 @@ namespace _Game.Gameplay.Food.Scripts
         
         public void UpdateFillAmount(float progress)
         {
-            _foodIconHolder.fillAmount = progress;
+            _foodSlider.fillAmount = progress;
         }
 
         public void OnFoodChanged(int amount)

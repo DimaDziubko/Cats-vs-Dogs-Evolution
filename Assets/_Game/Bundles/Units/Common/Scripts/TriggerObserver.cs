@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace _Game.Bundles.Units.Common.Scripts
 {
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider2D))]
     public class TriggerObserver : MonoBehaviour
     {
-        public event Action<Collider> TriggerEnter;
-        public event Action<Collider> TriggerExit;
-
-        private void OnTriggerEnter(Collider other) => 
+        public event Action<Collider2D> TriggerEnter;
+        public event Action<Collider2D> TriggerExit;
+        
+        private void OnTriggerEnter2D(Collider2D other) => 
             TriggerEnter?.Invoke(other);
 
-        private void OnTriggerExit(Collider other) => 
+        private void OnTriggerExit2D(Collider2D other) => 
             TriggerExit?.Invoke(other);
     }
 }

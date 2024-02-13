@@ -95,6 +95,11 @@ namespace _Game.Core.Configs.Controllers
             var warrior = ageConfig.Warriors.FirstOrDefault(x => x.Type == unitType);
             return warrior?.Price ?? 0;
         }
+        
+        public BaseHealthConfig GetBaseHealthConfig()
+        {
+            return GetCurrentTimeline()?.Ages[TimelineState.AgeId].Economy.BaseHealth;
+        }
     }
 
     public interface IGameConfigController
@@ -109,5 +114,6 @@ namespace _Game.Core.Configs.Controllers
         List<WarriorConfig> GetOpenPlayerUnitConfigs();
         string GetFoodIconKey();
         float GetUnitPrice(in UnitType type);
+        BaseHealthConfig GetBaseHealthConfig();
     }
 }

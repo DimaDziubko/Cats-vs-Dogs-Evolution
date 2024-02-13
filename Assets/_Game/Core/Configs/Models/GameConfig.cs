@@ -23,6 +23,7 @@ namespace _Game.Core.Configs.Models
         public EconomyConfig Economy;
         public List<WarriorConfig> Warriors;
         public string FoodIconKey;
+        public string PlayerBaseKey;
     }
 
     public class BattleConfig
@@ -31,6 +32,8 @@ namespace _Game.Core.Configs.Models
         public BattleScenario Scenario;
         public List<WarriorConfig> Enemies;
         public string BackgroundKey;
+        public float EnemyBaseHealth;
+        public string EnemyBaseKey;
     }
 
     public class BattleScenario
@@ -79,6 +82,7 @@ namespace _Game.Core.Configs.Models
         public float PriceFactor;
         public float Speed;
         public float SpeedFactor;
+        public int InitialFoodAmount;
     }
 
     public class WarriorConfig

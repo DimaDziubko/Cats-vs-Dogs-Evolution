@@ -1,7 +1,8 @@
-﻿using _Game.Gameplay.UpgradesAndEvolution.Scripts;
+﻿using _Game.Core.Services.Evolution.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,19 +17,20 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         [SerializeField] private Image _nextAgeImage;
         [SerializeField] private TMP_Text _timelineLabel;
 
-        private IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        private IEvolutionService _evolutionService;
         private IHeader _header;
         public string Name => "Evolution";
 
         public void Construct(
             IHeader header,
-            IUpgradesAndEvolutionService upgradesAndEvolutionService)
+            IEvolutionService evolutionService)
         {
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _evolutionService = evolutionService;
             _header = header;
 
+            _evolveButton.Init();
             _evolveButton.Click += OnEvolveButtonClick;
-
+            
             UpdateUIElements();
         }
 
@@ -46,7 +48,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void OnEvolveButtonClick()
         {
-            _upgradesAndEvolutionService.MoveToNextAge();
+            _evolutionService.MoveToNextAge();
         }
 
         private void UpdateUIElements()
@@ -57,14 +59,14 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void UpdateTimelineLabel()
         {
-            var number = _upgradesAndEvolutionService.GetTimelineNumber();
-            _timelineLabel.text = $"Timeline {number}";
+            var id = _evolutionService.GetTimelineNumber();
+            _timelineLabel.text = $"Timeline {id + 1}";
         }
 
         private void UpdateEvolveButton()
         {
-            bool canAfford = _upgradesAndEvolutionService.IsNextAgeAvailable();
-            float evolutionPrice = _upgradesAndEvolutionService.GetEvolutionPrice();
+            bool canAfford = _evolutionService.IsNextAgeAvailable();
+            float evolutionPrice = _evolutionService.GetEvolutionPrice();
             _evolveButton.UpdateButtonState(canAfford, evolutionPrice);
         }
 

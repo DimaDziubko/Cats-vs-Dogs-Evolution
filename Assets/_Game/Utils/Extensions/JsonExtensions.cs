@@ -53,6 +53,7 @@ namespace _Game.Utils.Extensions
                         Economy = ParseEconomy((int)ageToken[Constants.ConfigKeys.ECONOMY], jsonData),
                         Warriors = ParseWarriors(ageToken[Constants.ConfigKeys.WARRIORS], jsonData),
                         FoodIconKey = ageToken[Constants.ConfigKeys.FOOD_ICON_KEY]?.ToString(),
+                        PlayerBaseKey = ageToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
                     };
                     ages.Add(ageConfig);
                 }
@@ -89,7 +90,8 @@ namespace _Game.Utils.Extensions
                     Price = (float)foodProductionToken[Constants.ConfigKeys.PRICE],
                     PriceFactor = (float)foodProductionToken[Constants.ConfigKeys.PRICE_FACTOR],
                     Speed = (float)foodProductionToken[Constants.ConfigKeys.SPEED],
-                    SpeedFactor = (float)foodProductionToken[Constants.ConfigKeys.SPEED_FACTOR]
+                    SpeedFactor = (float)foodProductionToken[Constants.ConfigKeys.SPEED_FACTOR],
+                    InitialFoodAmount = (int)foodProductionToken[Constants.ConfigKeys.INITIAL_FOOD_AMOUNT],
                 };
             }
             return null;
@@ -128,7 +130,9 @@ namespace _Game.Utils.Extensions
                         Id = (int)battleToken[Constants.ConfigKeys.ID],
                         Scenario = ParseBattleScenario((int)battleToken[Constants.ConfigKeys.BATTLE_SCENARIO], jsonData),
                         Enemies = ParseWarriors(battleToken[Constants.ConfigKeys.WARRIORS], jsonData),
-                        BackgroundKey = battleToken[Constants.ConfigKeys.BACKGROUND_KEY]?.ToString()
+                        BackgroundKey = battleToken[Constants.ConfigKeys.BACKGROUND_KEY]?.ToString(),
+                        EnemyBaseHealth = (float)battleToken[Constants.ConfigKeys.ENEMY_BASE_HEALTH],
+                        EnemyBaseKey = battleToken[Constants.ConfigKeys.ENEMY_BASE_KEY]?.ToString(),
                         
                     };
                     battles.Add(battleConfig);

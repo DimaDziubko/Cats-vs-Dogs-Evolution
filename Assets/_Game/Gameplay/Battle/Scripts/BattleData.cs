@@ -1,4 +1,5 @@
-﻿using _Game.Core.Configs.Models;
+﻿using _Game.Bundles.Bases.Scripts;
+using _Game.Core.Configs.Models;
 using UnityEngine;
 
 namespace _Game.Gameplay.Battle.Scripts
@@ -7,5 +8,6 @@ namespace _Game.Gameplay.Battle.Scripts
     {
         public BattleScenario Scenario;
         public Sprite Environment;
+        public BaseData EnemyBaseData;
     }
 }

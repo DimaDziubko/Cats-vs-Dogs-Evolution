@@ -12,9 +12,11 @@ namespace _Game.Core.UserState
         bool AllBattlesWon { get; }
         int FoodProductionLevel { get; }
         int BaseHealthLevel { get; }
-
         List<UnitType> OpenUnits { get; }
-
-        event Action Changed;
+        event Action<UnitType> OpenedUnit;
+        event Action NextAgeOpened;
+        event Action NextTimelineOpened;
+        event Action FoodProductionLevelChanged;
+        event Action BaseHealthLevelChanged;
     }
 }

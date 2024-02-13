@@ -1,8 +1,8 @@
-﻿using _Game.Bundles.Units.Common.Scripts;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
+﻿using System.Collections.Generic;
+using _Game.Bundles.Units.Common.Scripts;
+using _Game.Core.Services.Upgrades.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
@@ -14,48 +14,49 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         [SerializeField] private Canvas _canvas;
         [SerializeField] private UpgradeUnitItem[] _unitItems;
 
-        private IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        private IUpgradesService _upgradesService;
         private IHeader _header;
 
 
-        public async UniTask Construct(
+        public void Construct(
             IHeader header,
-            IUpgradesAndEvolutionService upgradesAndEvolutionService)
+            IUpgradesService upgradesService)
         {
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _upgradesService = upgradesService;
             _header = header;
             
             InitItems();
-            
-            await UpdateUIElements();
+            UpdateUIElements();
         }
 
         private void InitItems()
         {
-            for (int i = 0; i < _unitItems.Length; i++)
+            foreach (var unitItem in _unitItems)
             {
-                _unitItems[i].Setup((UnitType)i, HandleUnitItemClick);
+                unitItem.Init();
+                unitItem.Upgrade += HandleUnitItemUpgrade;
             }
         }
 
-        private async void HandleUnitItemClick(UnitType type)
+        private void HandleUnitItemUpgrade(UnitType type)
         {
-            _upgradesAndEvolutionService.PurchaseUnit(type);
-            await UpdateUIElements();
+            _upgradesService.PurchaseUnit(type);
         }
         
-        private async UniTask UpdateUIElements()
+        private void UpdateUIElements()
         {
-            await UpdateUnitItems();
+            //TODO Check
+            var models = _upgradesService.GetUpgradeUnitItems();
+            UpdateUnitUnitItems(models);
         }
 
-        private async UniTask UpdateUnitItems()
+        private void UpdateUnitUnitItems(List<UpgradeUnitItemModel> models)
         {
-            var models = await _upgradesAndEvolutionService.GetUpgradeItems();
-            for (int i = 0; i < models.Length; i++)
+            for (int i = 0; i < models.Count; i++)
             {
                 _unitItems[i]
                     .UpdateUI(
+                        models[i].Type,
                         models[i].IsBought,
                         models[i].CanAfford,
                         models[i].Price,
@@ -68,11 +69,19 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             _canvas.enabled = true;
             _header.ShowWindowName(Name);
+            _upgradesService.UpgradeUnitItemsUpdated += UpdateUnitUnitItems;
         }
         
         public void Hide()
         {
             _canvas.enabled = false;
+            _upgradesService.UpgradeUnitItemsUpdated -= UpdateUnitUnitItems;
+            
+            foreach (var item in _unitItems)
+            {
+                item.Upgrade -= HandleUnitItemUpgrade;
+                item.Cleanup();
+            }
         }
         
     }

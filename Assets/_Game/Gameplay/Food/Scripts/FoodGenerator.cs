@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.Gameplay.UpgradesAndEvolution.Scripts;
+using _Game.Core.Services.Upgrades.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay.Food.Scripts
@@ -9,7 +9,7 @@ namespace _Game.Gameplay.Food.Scripts
         public event Action<int> FoodChanged;
         public event Action<float> FoodProgressUpdated;
 
-        private readonly IUpgradesAndEvolutionService _upgradesAndEvolutionService;
+        private readonly IUpgradesService _upgradesService;
 
         private float _productionSpeed;
         private int _foodAmount;
@@ -25,14 +25,15 @@ namespace _Game.Gameplay.Food.Scripts
             }
         }
 
-        public FoodGenerator(IUpgradesAndEvolutionService upgradesAndEvolutionService)
+        public FoodGenerator(IUpgradesService upgradesService)
         {
-            _upgradesAndEvolutionService = upgradesAndEvolutionService;
+            _upgradesService = upgradesService;
         }
 
         public void Init()
         {
-            _productionSpeed = _upgradesAndEvolutionService.GetFoodProductionSpeed();
+            _productionSpeed = _upgradesService.GetFoodProductionSpeed();
+            _foodAmount = _upgradesService.GetInitialFoodAmount();
         }
 
         public void GameUpdate()
