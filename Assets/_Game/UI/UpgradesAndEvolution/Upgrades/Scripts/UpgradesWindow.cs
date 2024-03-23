@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-using _Game.Bundles.Units.Common.Scripts;
+﻿using System;
+using System.Collections.Generic;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
 using UnityEngine;
@@ -9,80 +11,143 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradesWindow : MonoBehaviour, IUIWindow
     {
+        public event Action Opened;
         public string Name => "Upgrades";
         
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private UpgradeUnitItem[] _unitItems;
+        [SerializeField] private UpgradeUnitItemView[] _unitItems;
+        [SerializeField] private UpgradeItemView _foodProduction, _baseHealth;
 
-        private IUpgradesService _upgradesService;
+        [SerializeField] private AudioClip _unitUpgradeSFX;
+        
+        private IEconomyUpgradesService _economyUpgradesService;
+        private IUnitUpgradesService _unitUpgradesService;
         private IHeader _header;
-
+        private IAudioService _audioService;
 
         public void Construct(
             IHeader header,
-            IUpgradesService upgradesService)
+            IEconomyUpgradesService economyUpgradesService,
+            IUnitUpgradesService unitUpgradesService,
+            IAudioService audioService)
         {
-            _upgradesService = upgradesService;
+            _economyUpgradesService = economyUpgradesService;
             _header = header;
+            _unitUpgradesService = unitUpgradesService;
+            _audioService = audioService;
+        }
+
+        public void Show()
+        {
+            _canvas.enabled = true;
+            _header.ShowWindowName(Name);
+
+            Unsubscribe();
+            Subscribe();
             
             InitItems();
-            UpdateUIElements();
+
+            Opened?.Invoke();
+        }
+
+        private void Subscribe()
+        {
+            foreach (var unitItem in _unitItems)
+            {
+                unitItem.Upgrade += OnUnitItemUpgrade;
+            }
+            
+            _foodProduction.Upgrade += OnItemUpgrade;
+            
+            _baseHealth.Upgrade += OnItemUpgrade;
+            
+            _unitUpgradesService.UpgradeUnitItemsUpdated += UpdateUnitItems;
+            _economyUpgradesService.UpgradeItemUpdated += UpdateEconomyUpgradeItem;
+            
+            Opened += OnUpgradesWindowOpened;
+        }
+
+        public void Hide()
+        {
+            _canvas.enabled = false;
+            
+            Unsubscribe();
+
+            _foodProduction.Cleanup();
+            _baseHealth.Cleanup();
+        }
+
+        private void Unsubscribe()
+        {
+            _unitUpgradesService.UpgradeUnitItemsUpdated -= UpdateUnitItems;
+            _economyUpgradesService.UpgradeItemUpdated -= UpdateEconomyUpgradeItem;
+
+            foreach (var item in _unitItems)
+            {
+                item.Upgrade -= OnUnitItemUpgrade;
+                item.Cleanup();
+            }
+
+            _baseHealth.Upgrade -= OnItemUpgrade;
+            _foodProduction.Upgrade -= OnItemUpgrade;
+
+            Opened -= OnUpgradesWindowOpened;
+        }
+
+        private void OnUnitItemUpgrade(UnitType type)
+        {
+            _unitUpgradesService.PurchaseUnit(type);
+            PlayUpgradeSound();
+        }
+
+        private void OnItemUpgrade(UpgradeItemType type) => _economyUpgradesService.UpgradeItem(type);
+
+        private void UpdateUnitItems(IEnumerable<UpgradeUnitItemViewModel> models)
+        {
+            foreach (var model in models)
+            {
+               _unitItems[(int)model.Type].UpdateUI(model); 
+            }
+        }
+
+        private void OnUpgradesWindowOpened()
+        {
+            _unitUpgradesService.OnUpgradesWindowOpened();
+            _economyUpgradesService.OnUpgradesWindowOpened();
         }
 
         private void InitItems()
         {
             foreach (var unitItem in _unitItems)
             {
-                unitItem.Init();
-                unitItem.Upgrade += HandleUnitItemUpgrade;
+                unitItem.Init(_audioService);
             }
-        }
-
-        private void HandleUnitItemUpgrade(UnitType type)
-        {
-            _upgradesService.PurchaseUnit(type);
-        }
-        
-        private void UpdateUIElements()
-        {
-            //TODO Check
-            var models = _upgradesService.GetUpgradeUnitItems();
-            UpdateUnitUnitItems(models);
-        }
-
-        private void UpdateUnitUnitItems(List<UpgradeUnitItemModel> models)
-        {
-            for (int i = 0; i < models.Count; i++)
-            {
-                _unitItems[i]
-                    .UpdateUI(
-                        models[i].Type,
-                        models[i].IsBought,
-                        models[i].CanAfford,
-                        models[i].Price,
-                        models[i].Icon,
-                        models[i].Name);
-            }
-        }
-        
-        public void Show()
-        {
-            _canvas.enabled = true;
-            _header.ShowWindowName(Name);
-            _upgradesService.UpgradeUnitItemsUpdated += UpdateUnitUnitItems;
-        }
-        
-        public void Hide()
-        {
-            _canvas.enabled = false;
-            _upgradesService.UpgradeUnitItemsUpdated -= UpdateUnitUnitItems;
             
-            foreach (var item in _unitItems)
+            _foodProduction.Init(_audioService);
+            _baseHealth.Init(_audioService);
+        }
+
+        private void UpdateEconomyUpgradeItem(UpgradeItemViewModel model)
+        {
+            switch (model.Type)
             {
-                item.Upgrade -= HandleUnitItemUpgrade;
-                item.Cleanup();
+                case UpgradeItemType.FoodProduction:
+                    _foodProduction.UpdateUI(model);
+                    break;
+                case UpgradeItemType.BaseHealth:
+                    _baseHealth.UpdateUI(model);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(model.Type), model.Type, null);
             }
         }
-        
+
+        private void PlayUpgradeSound()
+        {
+            if (_audioService != null && _unitUpgradeSFX != null)
+            {
+                _audioService.PlayOneShot(_unitUpgradeSFX);
+            }
+        }
     }
 }

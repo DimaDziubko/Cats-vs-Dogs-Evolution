@@ -6,6 +6,11 @@ namespace _Game.Core.Prefabs
     {
         //Sounds 
         public AudioClip ButtonSound;
-        public AudioClip[] TossSound;
+
+        public AudioClip[] CoinCollectSounds;
+        public AudioClip FillingWalletSound;
+        public AudioClip DropCoinSound;
+        
+        public AudioClip BaseDestructionSFX;
     }
 }

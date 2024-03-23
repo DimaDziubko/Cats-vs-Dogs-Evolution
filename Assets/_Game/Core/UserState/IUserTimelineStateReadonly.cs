@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Bundles.Units.Common.Scripts;
+using _Game.Gameplay._Units.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.UserState
 {
@@ -16,7 +17,8 @@ namespace _Game.Core.UserState
         event Action<UnitType> OpenedUnit;
         event Action NextAgeOpened;
         event Action NextTimelineOpened;
-        event Action FoodProductionLevelChanged;
-        event Action BaseHealthLevelChanged;
+        event Action NextBattleOpened;
+        event Action LastBattleWon;
+        event Action<UpgradeItemType> UpgradeItemChanged;
     }
 }

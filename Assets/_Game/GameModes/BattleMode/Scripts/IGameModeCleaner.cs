@@ -8,5 +8,6 @@ namespace _Game.GameModes.BattleMode.Scripts
         IEnumerable<GameObjectFactory> Factories { get; }
         string SceneName { get; }
         void Cleanup();
+        void ResetGame();
     }
 }

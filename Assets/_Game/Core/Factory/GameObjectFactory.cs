@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,16 +24,21 @@ namespace _Game.Core.Factory
             return instance.GetComponent<T>();
         }
 
-        public async Task Unload()
+        public async UniTask Unload()
         {
             if (_scene.isLoaded)
             {
                 var unloadOp = SceneManager.UnloadSceneAsync(_scene);
                 while (unloadOp.isDone == false)
                 {
-                    await Task.Delay(1);
+                    await UniTask.Delay(1);
                 }
             }
+        }
+
+        public virtual void Cleanup()
+        {
+            
         }
 
         private void GetOrCreateScene() 

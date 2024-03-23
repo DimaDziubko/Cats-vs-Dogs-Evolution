@@ -3,7 +3,7 @@ using _Game.Core.AssetManagement;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
-using _Game.Gameplay.GamePlayManager;
+using _Game.Gameplay.BattleLauncher;
 using _Game.UI.Common.Header.Scripts;
 using _Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
 
         private readonly IHeader _header;
         
-        private readonly IBeginGameManager _beginGameManager;
+        private readonly IBattleLaunchManager _battleLaunchManager;
         
         private readonly IBattleStateService _battleState;
         
@@ -29,7 +29,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             IAudioService audioService,
 
             IHeader header,
-            IBeginGameManager beginGameManager,
+            IBattleLaunchManager battleLaunchManager,
 
             IBattleStateService battleState,
             IMyLogger logger)
@@ -39,7 +39,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
 
             _header = header;
 
-            _beginGameManager = beginGameManager;
+            _battleLaunchManager = battleLaunchManager;
 
             _battleState = battleState;
 
@@ -55,7 +55,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
                 _audioService,
 
                 _header,
-                _beginGameManager,
+                _battleLaunchManager,
                 
                 _battleState,
                 _logger);

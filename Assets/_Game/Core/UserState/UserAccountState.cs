@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.Random;
+using _Game.Gameplay._Units.Scripts;
 
 namespace _Game.Core.UserState
 {
@@ -18,6 +18,8 @@ namespace _Game.Core.UserState
             IRandomService random, 
             GameConfig gameConfig)
         {
+            
+            //TODO Check index
             return new UserAccountState()
             {
                 Version = 0,
@@ -30,16 +32,15 @@ namespace _Game.Core.UserState
                     AllBattlesWon = false,
                     BaseHealthLevel = 0,
                     FoodProductionLevel = 0,
-                    MaxBattle = 3,
+                    MaxBattle = 0,
                     OpenUnits = new List<UnitType>(3)
                     {
                         UnitType.Light,
-                        UnitType.Heavy
                     }
                 },
                 Currencies = new UserCurrenciesState()
                 {
-                    Coins = 2000
+                    Coins = 0
                 },
             };
         }

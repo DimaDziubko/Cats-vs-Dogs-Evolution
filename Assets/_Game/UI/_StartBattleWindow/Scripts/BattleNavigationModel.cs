@@ -6,5 +6,6 @@
         public bool IsLastBattle;
         public bool CanMoveToNextBattle;
         public bool CanMoveToPreviousBattle;
+        public bool IsPrepared;
     }
 }

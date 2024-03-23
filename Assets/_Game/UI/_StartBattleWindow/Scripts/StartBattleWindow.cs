@@ -1,8 +1,8 @@
+using System;
 using _Game.Core._Logger;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.Gameplay.GamePlayManager;
+using _Game.Gameplay.BattleLauncher;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
 using UnityEngine;
@@ -12,6 +12,8 @@ namespace _Game.UI._StartBattleWindow.Scripts
 {
     public class StartBattleWindow : MonoBehaviour, IUIWindow
     {
+        public event Action Opened;
+        
         public string Name => $"Battle {_battleState.CurrentBattleIndex + 1}";
 
         [SerializeField] private Canvas _canvas;
@@ -19,21 +21,22 @@ namespace _Game.UI._StartBattleWindow.Scripts
         [SerializeField] private Button _startBattleButton;
         [SerializeField] private Button _nextBattleButton;
         [SerializeField] private Button _previousBattleButton;
+
+        [SerializeField] private AudioClip _startBattleSound;
         
         private IAudioService _audioService;
 
-        private IBeginGameManager _beginGameManager;
+        private IBattleLaunchManager _battleLaunchManager;
         private IBattleStateService _battleState;
         private IHeader _header;
         private IMyLogger _logger;
-
-
+        
         public void Construct(
             Camera uICamera,
             IAudioService audioService,
 
             IHeader header,
-            IBeginGameManager beginGameManager,
+            IBattleLaunchManager battleLaunchManager,
 
             IBattleStateService battleState,
             IMyLogger logger)
@@ -41,30 +44,56 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
 
-            _beginGameManager = beginGameManager;
+            _battleLaunchManager = battleLaunchManager;
 
             _header = header;
 
             _battleState = battleState;
             _logger = logger;
-            
-            UpdateNavigationButtons(_battleState.NavigationModel);
-            
-            _header.ShowWindowName(Name);
+        }
 
-            _battleState.BattleChange += UpdateNavigationButtons;
-            _battleState.BattlePrepared += OnBattlePrepared;
+        public void Show()
+        {
+            _header.ShowWindowName(Name);
+            
+            Unsubscribe();
+            Subscribe();
+
+            _canvas.enabled = true;
+            
+            Opened?.Invoke();
+        }
+
+        public void Hide()
+        {
+            //TODO Delete
+            _logger.Log("Start battle window HIDE");
+            
+            Unsubscribe();
+
+            _canvas.enabled = false;
+        }
+
+        private void Unsubscribe()
+        {
+            _startBattleButton.onClick.RemoveAllListeners();
+            _nextBattleButton.onClick.RemoveAllListeners();
+            _previousBattleButton.onClick.RemoveAllListeners();
+
+            _battleState.NavigationUpdated -= UpdateNavigationButtons;
+            Opened -= _battleState.OnStartBattleWindowOpened;
+        }
+
+        private void Subscribe()
+        {
+            _battleState.NavigationUpdated += UpdateNavigationButtons;
+            Opened += _battleState.OnStartBattleWindowOpened;
 
             _previousBattleButton.onClick.AddListener(OnPreviousBattleButtonClick);
             _nextBattleButton.onClick.AddListener(OnNextBattleButtonClick);
             _startBattleButton.onClick.AddListener(OnStartButtonClick);
         }
 
-        private void OnBattlePrepared(BattleData obj)
-        {
-            _logger.Log("OnBattle prepared (UI)");
-            _startBattleButton.interactable = true;
-        }
 
         private void UpdateNavigationButtons(BattleNavigationModel model)
         {
@@ -72,25 +101,46 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _nextBattleButton.gameObject.SetActive(!model.IsLastBattle);
             _previousBattleButton.interactable = model.CanMoveToPreviousBattle;
             _nextBattleButton.interactable = model.CanMoveToNextBattle;
-            
-            _startBattleButton.interactable = _battleState.IsBattlePrepared;
+
+            _startBattleButton.interactable = model.IsPrepared;
             _header.ShowWindowName(Name);
         }
         
-        private void OnStartButtonClick() => _beginGameManager.TriggerBeginGame();
-
-        private void OnPreviousBattleButtonClick() => _battleState.MoveToPreviousBattle();
-
-        private void OnNextBattleButtonClick() => _battleState.MoveToNextBattle();
-
-        private void OnDisable()
+        private void OnStartButtonClick()
         {
-            _startBattleButton.onClick.RemoveAllListeners();
-            _nextBattleButton.onClick.RemoveAllListeners();
-            _previousBattleButton.onClick.RemoveAllListeners();
+            PlayButtonSound();
+            _battleLaunchManager.TriggerLaunchBattle();
+            
+            if (_startBattleSound != null)
+            {
+                _audioService.PlayOneShot(_startBattleSound);
+            }
+        }
 
-            _battleState.BattlePrepared -= OnBattlePrepared;
-            _battleState.BattleChange -= UpdateNavigationButtons;
+        private void OnPreviousBattleButtonClick()
+        {
+            PlayButtonSound();
+            DisableButtons();
+            _battleState.MoveToPreviousBattle();
+        }
+
+        private void OnNextBattleButtonClick()
+        {
+            PlayButtonSound();
+            DisableButtons();
+            _battleState.MoveToNextBattle();
+        }
+
+        private void DisableButtons()
+        {
+            _nextBattleButton.interactable = false;
+            _previousBattleButton.interactable = false;
+            _startBattleButton.interactable = false;
+        }
+        
+        private void PlayButtonSound()
+        {
+            _audioService.PlayButtonSound();
         }
     }
 }

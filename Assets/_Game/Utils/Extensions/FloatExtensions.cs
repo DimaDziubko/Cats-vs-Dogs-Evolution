@@ -1,9 +1,16 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace _Game.Utils.Extensions
 {
     public static class FloatExtensions
     {
+        public static string ToSpeedFormat(this float value)
+        {
+            CultureInfo ci = CultureInfo.InvariantCulture;
+            return Math.Round(value, 2).ToString("0.##", ci) + "/s";
+        }
+        
         public static string FormatMoney(this float price)
         {
             CultureInfo ci = CultureInfo.InvariantCulture;

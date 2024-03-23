@@ -8,9 +8,11 @@ namespace _Game.Core.Scripts
         public override void InstallBindings()
         {
             Container.Bind<BootstrapState>().AsSingle().NonLazy();
-            Container.Bind<LoadProgressState>().AsSingle().NonLazy();
+            Container.Bind<ConfigurationState>().AsSingle().NonLazy();
+            Container.Bind<LoginState>().AsSingle().NonLazy();
+            Container.Bind<InitializationState>().AsSingle().NonLazy();
+            Container.Bind<GameLoadingState>().AsSingle().NonLazy();
             Container.Bind<MenuState>().AsSingle().NonLazy();
-            Container.Bind<PrepareBattleState>().AsSingle().NonLazy();
             Container.Bind<GameLoopState>().AsSingle().NonLazy();
 
             Container

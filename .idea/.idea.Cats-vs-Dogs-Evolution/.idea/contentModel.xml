@@ -20,79 +20,118 @@
             </e>
           </e>
           <e p="Bundles" t="Include">
-            <e p="Ages" t="Include">
-              <e p="Sprites" t="Include">
+            <e p="Shared" t="Include">
+              <e p="Environment" t="Include">
                 <e p="1x" t="Include" />
               </e>
-            </e>
-            <e p="Bases" t="Include">
-              <e p="Common" t="Include" />
-              <e p="Enemy" t="Include">
+              <e p="Items" t="Include">
+                <e p="1x" t="Include" />
+              </e>
+              <e p="Materials" t="Include" />
+              <e p="Prefabs" t="Include">
+                <e p="Coins" t="Include" />
+                <e p="HealthBar" t="Include" />
+              </e>
+              <e p="Sfx" t="Include">
+                <e p="BGM" t="Include" />
+              </e>
+              <e p="Shaders" t="Include" />
+              <e p="UIElements" t="Include">
+                <e p="1x" t="Include" />
+              </e>
+              <e p="Vfx" t="Include">
+                <e p="Materials" t="Include" />
+                <e p="Models" t="Include" />
+                <e p="ParticleSystems" t="Include" />
                 <e p="Prefabs" t="Include" />
-              </e>
-              <e p="Factory" t="Include">
-                <e p="BaseFactory.cs" t="Include" />
-                <e p="IBaseFactory.cs" t="Include" />
-              </e>
-              <e p="Player" t="Include">
-                <e p="Prefabs" t="Include" />
-              </e>
-              <e p="Scripts" t="Include">
-                <e p="Base.cs" t="Include" />
-                <e p="BaseData.cs" t="Include" />
-              </e>
-              <e p="Sprites" t="Include" />
-            </e>
-            <e p="Battle" t="Include">
-              <e p="Backgrounds" t="Include" />
-            </e>
-            <e p="Units" t="Include">
-              <e p="Common" t="Include">
-                <e p="_Target" t="Include">
-                  <e p="Target.cs" t="Include" />
-                  <e p="TargetCollection.cs" t="Include" />
+                <e p="Shaders" t="Include">
+                  <e p="CFXR.cginc" t="Include" />
+                  <e p="CFXR_PASSES.cginc" t="Include" />
+                  <e p="CFXR_SETTINGS.cginc" t="Include" />
+                  <e p="CFXR_URP.cginc" t="Include" />
                 </e>
-                <e p="Animation" t="Include" />
-                <e p="Factory" t="Include">
-                  <e p="IUnitFactory.cs" t="Include" />
-                  <e p="UnitFactory.cs" t="Include" />
-                </e>
-                <e p="FSM" t="Include">
-                  <e p="IUnitFsmState.cs" t="Include" />
-                  <e p="States" t="Include">
-                    <e p="AttackState.cs" t="Include" />
-                    <e p="DeathState.cs" t="Include" />
-                    <e p="IdleState.cs" t="Include" />
-                    <e p="MoveForwardState.cs" t="Include" />
-                    <e p="MoveToTargetState.cs" t="Include" />
+                <e p="Textures" t="Include" />
+              </e>
+            </e>
+            <e p="Timeline_1" t="Include">
+              <e p="Ages" t="Include">
+                <e p="Sprites" t="Include" />
+              </e>
+              <e p="Bases" t="Include">
+                <e p="Common" t="Include">
+                  <e p="BasePrefabs" t="Include" />
+                  <e p="Sprites" t="Include">
+                    <e p="1x" t="Include" />
                   </e>
-                  <e p="UnitFsm.cs" t="Include" />
                 </e>
-                <e p="Phisics" t="Include" />
-                <e p="PSB" t="Include" />
-                <e p="Scripts" t="Include">
-                  <e p="AnimatorState.cs" t="Include" />
-                  <e p="Health.cs" t="Include" />
-                  <e p="HealthBar.cs" t="Include" />
-                  <e p="IDamageable.cs" t="Include" />
-                  <e p="TargetDetection.cs" t="Include" />
-                  <e p="TriggerObserver.cs" t="Include" />
-                  <e p="Unit.cs" t="Include" />
-                  <e p="UnitAnimator.cs" t="Include" />
-                  <e p="UnitAttack.cs" t="Include" />
-                  <e p="UnitData.cs" t="Include" />
-                  <e p="UnitMove.cs" t="Include" />
-                  <e p="UnitType.cs" t="Include" />
+                <e p="Enemy" t="Include">
+                  <e p="Prefabs" t="Include" />
+                </e>
+                <e p="Player" t="Include">
+                  <e p="Prefabs" t="Include" />
                 </e>
               </e>
-              <e p="Enemies" t="Include">
-                <e p="Prefabs" t="Include" />
+              <e p="Battle" t="Include">
+                <e p="Environment" t="Include" />
               </e>
-              <e p="Icons" t="Include">
-                <e p="1x" t="Include" />
-              </e>
-              <e p="PlayerUnits" t="Include">
-                <e p="Prefab" t="Include" />
+              <e p="Units" t="Include">
+                <e p="Common" t="Include">
+                  <e p="Animation" t="Include">
+                    <e p="Unit_0" t="Include" />
+                    <e p="Unit_1" t="Include" />
+                    <e p="Unit_10" t="Include" />
+                    <e p="Unit_11" t="Include" />
+                    <e p="Unit_12" t="Include" />
+                    <e p="Unit_13" t="Include" />
+                    <e p="Unit_14" t="Include" />
+                    <e p="Unit_15" t="Include" />
+                    <e p="Unit_16" t="Include" />
+                    <e p="Unit_17" t="Include" />
+                    <e p="Unit_2" t="Include" />
+                    <e p="Unit_3" t="Include" />
+                    <e p="Unit_4" t="Include" />
+                    <e p="Unit_5" t="Include" />
+                    <e p="Unit_6" t="Include" />
+                    <e p="Unit_7" t="Include" />
+                    <e p="Unit_8" t="Include" />
+                    <e p="Unit_9" t="Include" />
+                  </e>
+                  <e p="BasePrefabs" t="Include" />
+                  <e p="Icons" t="Include">
+                    <e p="1x" t="Include" />
+                  </e>
+                  <e p="PSB" t="Include" />
+                  <e p="Sfx" t="Include">
+                    <e p="Unit_0" t="Include" />
+                    <e p="Unit_1" t="Include" />
+                    <e p="Unit_10" t="Include" />
+                    <e p="Unit_11" t="Include" />
+                    <e p="Unit_12" t="Include" />
+                    <e p="Unit_13" t="Include" />
+                    <e p="Unit_14" t="Include" />
+                    <e p="Unit_15" t="Include" />
+                    <e p="Unit_16" t="Include" />
+                    <e p="Unit_17" t="Include" />
+                    <e p="Unit_2" t="Include" />
+                    <e p="Unit_3" t="Include" />
+                    <e p="Unit_4" t="Include" />
+                    <e p="Unit_6" t="Include" />
+                    <e p="Unit_7" t="Include" />
+                    <e p="Unit_9" t="Include" />
+                  </e>
+                  <e p="Weapon" t="Include">
+                    <e p="Prepfabs" t="Include" />
+                    <e p="Sounds" t="Include">
+                      <e p="Old" t="Include" />
+                    </e>
+                  </e>
+                </e>
+                <e p="Enemies" t="Include">
+                  <e p="Prefabs" t="Include" />
+                </e>
+                <e p="PlayerUnits" t="Include">
+                  <e p="Prefab" t="Include" />
+                </e>
               </e>
             </e>
           </e>
@@ -103,13 +142,18 @@
                 <e p="IAnimationStateReader.cs" t="Include" />
               </e>
             </e>
+            <e p="CoroutineRunner.cs" t="Include" />
             <e p="CustomAttribute" t="Include">
               <e p="SerializeInterfaceAttribute.cs" t="Include" />
             </e>
             <e p="GameBehaviour.cs" t="Include" />
             <e p="GameBehaviourCollection.cs" t="Include" />
+            <e p="ICoroutineRunner.cs" t="Include" />
+            <e p="IRewardAnimator.cs" t="Include" />
+            <e p="RewardAnimator.cs" t="Include" />
           </e>
           <e p="Core" t="Include">
+            <e p="_Camera" t="Include" />
             <e p="_Logger" t="Include">
               <e p="IMyLogger.cs" t="Include" />
               <e p="MyLogger.cs" t="Include" />
@@ -132,9 +176,6 @@
                 <e p="GameConfigController.cs" t="Include" />
               </e>
               <e p="Models" t="Include">
-                <e p="BattleScenarioExecutor.cs" t="Include" />
-                <e p="EnemySpawnSequenceRunner.cs" t="Include" />
-                <e p="EnemyWaveScheduler.cs" t="Include" />
                 <e p="GameConfig.cs" t="Include" />
               </e>
               <e p="Providers" t="Include">
@@ -147,14 +188,15 @@
             </e>
             <e p="GameState" t="Include">
               <e p="BootstrapState.cs" t="Include" />
+              <e p="ConfigurationState.cs" t="Include" />
+              <e p="GameLoadingState.cs" t="Include" />
               <e p="GameLoopState.cs" t="Include" />
               <e p="GameStateMachine.cs" t="Include" />
               <e p="IGameStateMachine.cs" t="Include" />
+              <e p="InitializationState.cs" t="Include" />
               <e p="IState.cs" t="Include" />
-              <e p="LoadProgressState.cs" t="Include" />
+              <e p="LoginState.cs" t="Include" />
               <e p="MenuState.cs" t="Include" />
-              <e p="PrepareBattleState.cs" t="Include" />
-              <e p="ReadyToStartState.cs" t="Include" />
             </e>
             <e p="Loading" t="Include">
               <e p="AssetLoadingOperation.cs" t="Include" />
@@ -163,6 +205,7 @@
               <e p="GameLoadingOperation.cs" t="Include" />
               <e p="ILoadingOperation.cs" t="Include" />
               <e p="ILoadingScreenProvider.cs" t="Include" />
+              <e p="InitializationOperation.cs" t="Include" />
               <e p="LoadingScreen.cs" t="Include" />
               <e p="LoadingScreenProvider.cs" t="Include" />
               <e p="Prefabs" t="Include" />
@@ -183,9 +226,6 @@
             </e>
             <e p="Scripts" t="Include">
               <e p="BootstrapInstaller.cs" t="Include" />
-              <e p="BootstrapInstanceInstaller.cs" t="Include" />
-              <e p="GameBootstrapper.cs" t="Include" />
-              <e p="GameRunner.cs" t="Include" />
               <e p="GameStateMachineInstaller.cs" t="Include" />
               <e p="LocalInstaller.cs" t="Include" />
               <e p="SceneLoader.cs" t="Include" />
@@ -197,6 +237,9 @@
                   <e p="AgeStateService.cs" t="Include" />
                   <e p="IAgeStateService.cs" t="Include" />
                 </e>
+              </e>
+              <e p="AssetProvider" t="Include">
+                <e p="IAssetProvider.cs" t="Include" />
               </e>
               <e p="Audio" t="Include">
                 <e p="AudioService.cs" t="Include" />
@@ -223,18 +266,16 @@
                 <e p="IRandomService.cs" t="Include" />
                 <e p="UnityRandomService.cs" t="Include" />
               </e>
-              <e p="StaticData" t="Include">
-                <e p="IAssetProvider.cs" t="Include" />
-              </e>
               <e p="Upgrades" t="Include">
                 <e p="Scripts" t="Include">
-                  <e p="IUpgradesService.cs" t="Include" />
-                  <e p="UpgradesService.cs" t="Include" />
+                  <e p="EconomyUpgradesService.cs" t="Include" />
+                  <e p="IEconomyUpgradesService.cs" t="Include" />
+                  <e p="IUnitUpgradesService.cs" t="Include" />
+                  <e p="UnitUpgradesService.cs" t="Include" />
                 </e>
               </e>
             </e>
             <e p="UserState" t="Include">
-              <e p="AppConfiguration.cs" t="Include" />
               <e p="IUserCurrenciesStateReadonly.cs" t="Include" />
               <e p="IUserTimelineStateReadonly.cs" t="Include" />
               <e p="UserAccountState.cs" t="Include" />
@@ -250,35 +291,134 @@
                 <e p="IGameModeCleaner.cs" t="Include" />
               </e>
             </e>
-            <e p="Common" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="ScoreCounter.cs" t="Include" />
-              </e>
-            </e>
           </e>
           <e p="Gameplay" t="Include">
+            <e p="_Bases" t="Include">
+              <e p="Factory" t="Include">
+                <e p="BaseFactory.cs" t="Include" />
+                <e p="IBaseFactory.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="Base.cs" t="Include" />
+                <e p="BaseData.cs" t="Include" />
+                <e p="BaseDestructionAnimator.cs" t="Include" />
+              </e>
+            </e>
             <e p="_BattleField" t="Include">
               <e p="Scripts" t="Include">
+                <e p="BaseSpawner.cs" t="Include" />
                 <e p="BattleField.cs" t="Include" />
+                <e p="CoinSpawner.cs" t="Include" />
+                <e p="IBaseDestructionHandler.cs" t="Include" />
+                <e p="IBaseDestructionManager.cs" t="Include" />
+                <e p="IBaseSpawner.cs" t="Include" />
+                <e p="ICoinSpawner.cs" t="Include" />
+                <e p="InteractionCache.cs" t="Include" />
+                <e p="IShootProxy.cs" t="Include" />
+                <e p="IUnitSpawner.cs" t="Include" />
+                <e p="IVFXProxy.cs" t="Include" />
+                <e p="ProjectileSpawner.cs" t="Include" />
+                <e p="UnitSpawner.cs" t="Include" />
+                <e p="VfxSpawner.cs" t="Include" />
+              </e>
+            </e>
+            <e p="_Coins" t="Include">
+              <e p="Factory" t="Include">
+                <e p="CoinFactory.cs" t="Include" />
+                <e p="ICoinFactory.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="Coin.cs" t="Include" />
+                <e p="LootCoin.cs" t="Include" />
+                <e p="RewardCoin.cs" t="Include" />
               </e>
             </e>
             <e p="_UnitBuilder" t="Include">
               <e p="Scripts" t="Include">
                 <e p="UnitBuildButton.cs" t="Include" />
-                <e p="UnitBuilder.cs" t="Include" />
                 <e p="UnitBuilderBtnData.cs" t="Include" />
+                <e p="UnitBuilderUI.cs" t="Include" />
+                <e p="UnitBuilderViewController.cs" t="Include" />
+              </e>
+            </e>
+            <e p="_Units" t="Include">
+              <e p="_Target" t="Include">
+                <e p="TargetCollection.cs" t="Include" />
+              </e>
+              <e p="Factory" t="Include">
+                <e p="IUnitFactory.cs" t="Include" />
+                <e p="UnitFactory.cs" t="Include" />
+              </e>
+              <e p="FSM" t="Include">
+                <e p="IUnitFsmState.cs" t="Include" />
+                <e p="States" t="Include">
+                  <e p="AttackState.cs" t="Include" />
+                  <e p="DeathState.cs" t="Include" />
+                  <e p="IdleState.cs" t="Include" />
+                  <e p="MoveToPointState.cs" t="Include" />
+                  <e p="MoveToTargetState.cs" t="Include" />
+                </e>
+                <e p="UnitFsm.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="AnimatorState.cs" t="Include" />
+                <e p="Attack" t="Include">
+                  <e p="DamageFlashEffect.cs" t="Include" />
+                  <e p="MeleeAttack.cs" t="Include" />
+                  <e p="NonProjectileRangeAttack.cs" t="Include" />
+                  <e p="RangeAttack.cs" t="Include" />
+                </e>
+                <e p="DynamicSortingOrder.cs" t="Include" />
+                <e p="Faction.cs" t="Include" />
+                <e p="Health.cs" t="Include" />
+                <e p="HealthBar.cs" t="Include" />
+                <e p="IDamageable.cs" t="Include" />
+                <e p="ITarget.cs" t="Include" />
+                <e p="LookAtJob.cs" t="Include" />
+                <e p="TargetDetection.cs" t="Include" />
+                <e p="TargetPoint.cs" t="Include" />
+                <e p="TriggerObserver.cs" t="Include" />
+                <e p="Unit.cs" t="Include" />
+                <e p="UnitAnimator.cs" t="Include" />
+                <e p="UnitAttack.cs" t="Include" />
+                <e p="UnitAudioHolder.cs" t="Include" />
+                <e p="UnitData.cs" t="Include" />
+                <e p="UnitMove.cs" t="Include" />
+                <e p="UnitType.cs" t="Include" />
+              </e>
+            </e>
+            <e p="_Weapon" t="Include">
+              <e p="Factory" t="Include">
+                <e p="ProjectileFactory.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="BezierBallisticMove.cs" t="Include" />
+                <e p="Projectile.cs" t="Include" />
+                <e p="ProjectileMove.cs" t="Include" />
+                <e p="ShootData.cs" t="Include" />
+                <e p="SimpleProjectile.cs" t="Include" />
+                <e p="SplashProjectile.cs" t="Include" />
+                <e p="WeaponData.cs" t="Include" />
+                <e p="WeaponType.cs" t="Include" />
               </e>
             </e>
             <e p="Battle" t="Include">
-              <e p="Asset" t="Include" />
               <e p="Scripts" t="Include">
                 <e p="Battle.cs" t="Include" />
                 <e p="BattleData.cs" t="Include" />
+                <e p="BattleEnvironment.cs" t="Include" />
               </e>
             </e>
-            <e p="Difficulty" t="Include">
-              <e p="DifficultyConfig.cs" t="Include" />
-              <e p="GameDifficulty.cs" t="Include" />
+            <e p="BattleLauncher" t="Include">
+              <e p="BattleLaunchManager.cs" t="Include" />
+              <e p="IBattleLauncher.cs" t="Include" />
+              <e p="IBattleLaunchManager.cs" t="Include" />
+            </e>
+            <e p="CoinCounter" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="CoinCounter.cs" t="Include" />
+                <e p="ICoinCounter.cs" t="Include" />
+              </e>
             </e>
             <e p="Food" t="Include">
               <e p="Scripts" t="Include">
@@ -286,18 +426,51 @@
                 <e p="FoodPanel.cs" t="Include" />
               </e>
             </e>
-            <e p="GamePlayManager" t="Include">
-              <e p="BeginGameManager.cs" t="Include" />
-              <e p="IBeginGameHandler.cs" t="Include" />
-              <e p="IBeginGameManager.cs" t="Include" />
+            <e p="GameResult" t="Include">
+              <e p="Animation" t="Include" />
+              <e p="Prefabs" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="GameResultIntroAnimation.cs" t="Include" />
+                <e p="GameResultType.cs" t="Include" />
+                <e p="GameResultWindow.cs" t="Include" />
+                <e p="GameResultWindowProvider.cs" t="Include" />
+                <e p="IGameResultWindowProvider.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Scenario" t="Include">
+              <e p="BattleScenarioExecutor.cs" t="Include" />
+              <e p="EnemySpawnSequenceRunner.cs" t="Include" />
+              <e p="EnemyWaveScheduler.cs" t="Include" />
+            </e>
+            <e p="Vfx" t="Include">
+              <e p="Factory" t="Include">
+                <e p="IVfxFactory.cs" t="Include" />
+                <e p="VfxFactory.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="BaseSmoke.cs" t="Include" />
+                <e p="MuzzleData.cs" t="Include" />
+                <e p="MuzzleFlash.cs" t="Include" />
+                <e p="ProjectileExplosion.cs" t="Include" />
+                <e p="UnitBlot.cs" t="Include" />
+                <e p="UnitExplosion.cs" t="Include" />
+                <e p="VfxEntity.cs" t="Include" />
+              </e>
             </e>
           </e>
           <e p="Scenes" t="Include">
+            <e p="BattleMode" t="Include" />
             <e p="Tests" t="Include">
               <e p="_RemoteConfigProvider.cs" t="Include" />
+              <e p="Bullet.cs" t="Include" />
               <e p="ConfigHolder.cs" t="Include" />
               <e p="ConfigManager.cs" t="Include" />
               <e p="Kick.cs" t="Include" />
+              <e p="LootCoinTest.cs" t="Include" />
+              <e p="Mover.cs" t="Include" />
+              <e p="Proj_2.cs" t="Include" />
+              <e p="Projectile_1.cs" t="Include" />
+              <e p="Shooter.cs" t="Include" />
               <e p="TiggerTest.cs" t="Include" />
             </e>
           </e>
@@ -329,8 +502,10 @@
                   <e p="IHeader.cs" t="Include" />
                 </e>
               </e>
+              <e p="Prefabs" t="Include" />
               <e p="Scripts" t="Include">
                 <e p="CurrenciesUI.cs" t="Include" />
+                <e p="CustomButtonPressAnimator.cs" t="Include" />
                 <e p="IUIWindow.cs" t="Include" />
                 <e p="LivesUI.cs" t="Include" />
                 <e p="PlayerLivesView.cs" t="Include" />
@@ -339,27 +514,15 @@
                 <e p="ToggleWithSpriteSwap.cs" t="Include" />
                 <e p="TransactionButton.cs" t="Include" />
               </e>
-              <e p="Sprites" t="Include">
-                <e p="Backgrounds" t="Include">
-                  <e p="1x" t="Include" />
-                </e>
-                <e p="GameplayElements" t="Include">
-                  <e p="1x" t="Include" />
-                </e>
-                <e p="UIElements" t="Include">
-                  <e p="1x" t="Include" />
-                </e>
-              </e>
             </e>
-            <e p="GameResult" t="Include">
-              <e p="Animation" t="Include" />
+            <e p="GameplayUI" t="Include">
+              <e p="Prefabs" t="Include" />
               <e p="Scripts" t="Include">
-                <e p="GameResultIntroAnimation.cs" t="Include" />
-                <e p="GameResultType.cs" t="Include" />
-                <e p="GameResultWindow.cs" t="Include" />
+                <e p="GameplayUI.cs" t="Include" />
               </e>
             </e>
             <e p="Hud" t="Include">
+              <e p="CoinCounterView.cs" t="Include" />
               <e p="Hud.cs" t="Include" />
             </e>
             <e p="Prefabs" t="Include" />
@@ -382,7 +545,12 @@
             <e p="UpgradesAndEvolution" t="Include">
               <e p="Evolution" t="Include">
                 <e p="Scripts" t="Include">
+                  <e p="EvolutionBtnData.cs" t="Include" />
+                  <e p="EvolutionTab.cs" t="Include" />
+                  <e p="EvolutionViewModel.cs" t="Include" />
                   <e p="EvolutionWindow.cs" t="Include" />
+                  <e p="TravelTab.cs" t="Include" />
+                  <e p="TravelViewModel.cs" t="Include" />
                 </e>
               </e>
               <e p="Prefabs" t="Include" />
@@ -393,9 +561,12 @@
               </e>
               <e p="Upgrades" t="Include">
                 <e p="Scripts" t="Include">
+                  <e p="UpgradeItemType.cs" t="Include" />
+                  <e p="UpgradeItemView.cs" t="Include" />
+                  <e p="UpgradeItemViewModel.cs" t="Include" />
                   <e p="UpgradesWindow.cs" t="Include" />
-                  <e p="UpgradeUnitItem.cs" t="Include" />
-                  <e p="UpgradeUnitItemModel.cs" t="Include" />
+                  <e p="UpgradeUnitItemView.cs" t="Include" />
+                  <e p="UpgradeUnitItemViewModel.cs" t="Include" />
                 </e>
               </e>
             </e>
@@ -403,6 +574,12 @@
           <e p="Utils" t="Include">
             <e p="_LocalConfigSaver" t="Include">
               <e p="LocalConfigSaver.cs" t="Include" />
+            </e>
+            <e p="Bezier" t="Include">
+              <e p="Bezier.cs" t="Include" />
+              <e p="BezierCurve.cs" t="Include" />
+              <e p="BezierPoint.cs" t="Include" />
+              <e p="Prefabs" t="Include" />
             </e>
             <e p="Constants.cs" t="Include" />
             <e p="Disposable" t="Include">
@@ -421,6 +598,7 @@
               <e p="FpsDisplay.cs" t="Include" />
               <e p="Prefabs" t="Include" />
             </e>
+            <e p="IntRange.cs" t="Include" />
             <e p="Popups" t="Include">
               <e p="AlertPopup.cs" t="Include" />
               <e p="AlertPopupProvider.cs" t="Include" />
@@ -437,11 +615,21 @@
           <e p="AssetGroupTemplates" t="Include" />
           <e p="DataBuilders" t="Include" />
         </e>
+        <e p="BigRookGames Holder" t="Include">
+          <e p="M4 Scoped Assault Rifle" t="Include">
+            <e p="Audio" t="Include" />
+            <e p="Textures" t="Include" />
+          </e>
+          <e p="Vfx" t="Include">
+            <e p="Lights" t="Include" />
+          </e>
+        </e>
         <e p="Common" t="Include">
           <e p="Resources" t="Include" />
         </e>
         <e p="Editor" t="Include">
           <e p="FloatRangeSliderDrawer.cs" t="Include" />
+          <e p="IntRangeSliderDrawer.cs" t="Include" />
           <e p="SerializeInterfaceDrawer.cs" t="Include" />
           <e p="Tools.cs" t="Include" />
         </e>
@@ -479,6 +667,35 @@
           <e p="Plugins" t="Include">
             <e p="iOS" t="Include" />
             <e p="x86_64" t="Include" />
+          </e>
+        </e>
+        <e p="JMO Assets" t="Include">
+          <e p="Cartoon FX Remaster" t="Include">
+            <e p="CFXR Assets" t="Include">
+              <e p="Editor" t="Include">
+                <e p="CFXR Editor.asmdef" t="Include" />
+                <e p="CFXR_ExpressionParser.cs" t="Include" />
+                <e p="CFXR_MaterialInspector.cs" t="Include" />
+                <e p="CFXR_ShaderImporter.cs" t="Include" />
+                <e p="CFXR_ShaderPostProcessor.cs" t="Include" />
+                <e p="CFXR_Styles.cs" t="Include" />
+              </e>
+              <e p="Graphics" t="Include" />
+              <e p="meshes" t="Include" />
+              <e p="Misc" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="CFXR Runtime.asmdef" t="Include" />
+                <e p="CFXR_Effect.CameraShake.cs" t="Include" />
+                <e p="CFXR_Effect.cs" t="Include" />
+                <e p="CFXR_EmissionBySurface.cs" t="Include" />
+                <e p="CFXR_ParticleText.cs" t="Include" />
+                <e p="CFXR_ParticleTextFontAsset.cs" t="Include" />
+              </e>
+              <e p="Shaders" t="Include" />
+            </e>
+            <e p="CFXR Prefabs" t="Include">
+              <e p="Explosions" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Other" t="Include">
@@ -1573,12 +1790,7 @@
             <e p="zenject.asmdef" t="Include" />
           </e>
         </e>
-        <e p="Resources" t="Include">
-          <e p="Timeline_1" t="Include">
-            <e p="Battle" t="Include" />
-          </e>
-          <e p="Units" t="Include" />
-        </e>
+        <e p="Resources" t="Include" />
         <e p="Settings" t="Include" />
         <e p="StreamingAssets" t="Include">
           <e p="google-services-desktop.json" t="Include" />
@@ -1685,6 +1897,8 @@
         </e>
       </e>
       <e p="Cats-vs-Dogs-Evolution.sln" t="IncludeFlat" />
+      <e p="CFXREditor.csproj" t="IncludeRecursive" />
+      <e p="CFXRRuntime.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
       <e p="Sirenix.OdinInspector.Modules.Unity.Addressables.csproj" t="IncludeRecursive" />

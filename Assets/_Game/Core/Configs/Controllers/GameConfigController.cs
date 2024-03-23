@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using _Game.Bundles.Units.Common.Scripts;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
+using _Game.Gameplay._Units.Scripts;
 
 namespace _Game.Core.Configs.Controllers
 {
@@ -34,11 +34,16 @@ namespace _Game.Core.Configs.Controllers
             return GetCurrentTimeline()?.Battles[index];
         }
 
-        public int LastBattleIndex()
+        public int LastBattle()
         {
             return (GetCurrentTimeline().Battles.Count - 1);
         }
 
+        public int LastAge()
+        {
+            return (GetCurrentTimeline().Ages.Count - 1);
+        }
+        
         public float GetAgePrice(int ageId)
         {
             var ageConfig = GetCurrentTimeline()?.Ages
@@ -79,11 +84,6 @@ namespace _Game.Core.Configs.Controllers
             return new List<WarriorConfig>();
         }
 
-        public string GetFoodIconKey()
-        {
-            return GetCurrentTimeline()?.Ages[TimelineState.AgeId].FoodIconKey;
-        }
-
         public float GetUnitPrice(in UnitType type)
         {
             var timeline = GetCurrentTimeline();
@@ -95,10 +95,20 @@ namespace _Game.Core.Configs.Controllers
             var warrior = ageConfig.Warriors.FirstOrDefault(x => x.Type == unitType);
             return warrior?.Price ?? 0;
         }
-        
+
         public BaseHealthConfig GetBaseHealthConfig()
         {
             return GetCurrentTimeline()?.Ages[TimelineState.AgeId].Economy.BaseHealth;
+        }
+
+        public string GetFoodIconKey()
+        {
+            return _persistentData.GameConfig.CommonConfig.FoodIconKey;
+        }
+
+        public string GetBaseIconKey()
+        {
+            return _persistentData.GameConfig.CommonConfig.BaseIconKey;
         }
     }
 
@@ -106,7 +116,7 @@ namespace _Game.Core.Configs.Controllers
     {
         AgeConfig GetAgeConfig(int ageId);
         BattleConfig GetBattleConfig(int battleIndex);
-        int LastBattleIndex();
+        int LastBattle();
         float GetAgePrice(int timelineStateAgeId);
         List<WarriorConfig> GetCurrentAgeUnits();
         List<WarriorConfig> GetEnemyConfigs(in int currentBattleIndex);
@@ -115,5 +125,7 @@ namespace _Game.Core.Configs.Controllers
         string GetFoodIconKey();
         float GetUnitPrice(in UnitType type);
         BaseHealthConfig GetBaseHealthConfig();
+        string GetBaseIconKey();
+        int LastAge();
     }
 }

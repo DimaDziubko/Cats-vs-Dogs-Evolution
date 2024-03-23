@@ -1,5 +1,6 @@
-﻿using System;
-using _Game.Bundles.Units.Common.Scripts;
+﻿using _Game.Gameplay._Units.Scripts;
+using _Game.UI.Common.Scripts;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -7,11 +8,11 @@ using UnityEngine.UI;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts
 {
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class UnitBuildButton : MonoBehaviour
     {
-        public event Action<UnitType, int> Click;
-
+        [SerializeField] private GameObject _container;
+        
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private Image _foodIconHolder;
         [SerializeField] private Image _unitIconHolder;
@@ -22,47 +23,79 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         private readonly Color _affordableColor = new Color(1f, 1f, 1f); 
         private readonly Color _expensiveColor = new Color(1f, 0.3f, 0f);
+        
+        private readonly Color _unitIconAffordableColor = new Color(1f, 1f, 1f, 1f);
+        private readonly Color _unitIconExpensiveColor = new Color(1f, 1f, 1f, 0.3f);
 
         private int _foodPrice;
+
+        private bool _tempButtonState;
         
+        //Scale animation
+        [SerializeField] private RectTransform _transform;
+        [SerializeField] private float _animationDuration = 1f;
+        [SerializeField] private float _targetScale = 1.2f;
+        [SerializeField] private float _initialScale = 1;
+
         private void Awake()
         {
             _button = GetComponent<Button>();
+        }
+
+        public void Initialize(IUnitBuilder unitBuilder, UnitBuilderBtnData data)
+        {
+            _container.SetActive(true);
+            
+            _type = data.Type;
+
+            _foodPrice = data.FoodPrice;
+            _priceText.text = data.FoodPrice.ToString();
+            
+            _foodIconHolder.sprite = data.Food;
+            _unitIconHolder.sprite = data.UnitIcon;
+
+            _button.onClick.AddListener(() => unitBuilder.Build(_type, _foodPrice));
         }
         
         public void UpdateButtonState(int foodAmount)
         {
             bool canAfford = foodAmount >= _foodPrice;
             
-            //TODO play animation
+            if (canAfford && !_button.interactable)
+            {
+                DoScaleAnimation();
+            }
             
-            _button.interactable = canAfford;
+            _button.interactable = _tempButtonState = canAfford;
+            
             _priceText.color = canAfford ? _affordableColor : _expensiveColor;
+            _unitIconHolder.color = canAfford ? _unitIconAffordableColor : _unitIconExpensiveColor;
         }
 
-        public void Show(UnitType type, Sprite food, Sprite unitIcon, int foodPrice)
+        private void DoScaleAnimation()
         {
-            _type = type;
-            
-            _foodPrice = foodPrice;
-            
-            gameObject.SetActive(true);
-            _foodIconHolder.sprite = food;
-            _unitIconHolder.sprite = unitIcon;
-            _priceText.text = foodPrice.ToString();
-            
-            _button.onClick.AddListener(() => Click?.Invoke(_type, foodPrice));
+            _transform.DOScale(_targetScale, _animationDuration * 0.5f)
+                .SetEase(Ease.OutBack)
+                .OnComplete(() => _transform
+                    .DOScale(_initialScale, _animationDuration * 0.5f)
+                    .SetEase(Ease.InBack));
         }
 
         public void Hide()
         {
-            gameObject.SetActive(false);
+            _container.SetActive(false);
             Cleanup();
         }
 
         private void Cleanup()
         {
             _button.onClick.RemoveAllListeners();
+        }
+
+        public void SetPaused(in bool isPaused)
+        {
+            if(_tempButtonState == false) return;
+            _button.interactable = !isPaused;
         }
     }
 }

@@ -5,34 +5,36 @@ namespace _Game.Core.Services.Camera
 {
     public class WorldCameraService : IWorldCameraService
     {
-        public UnityEngine.Camera Camera => UnityEngine.Camera.main;
+        public UnityEngine.Camera MainCamera { get; private set; }
         public UnityEngine.Camera UICameraOverlay { get; private set; }
 
-        public WorldCameraService(UnityEngine.Camera uICameraOverlay)
+        public float CameraHeight => MainCamera.orthographicSize;
+        public float CameraWidth => CameraHeight * MainCamera.aspect;
+        
+        public WorldCameraService(UnityEngine.Camera mainCamera, UnityEngine.Camera uICameraOverlay)
         {
+            MainCamera = mainCamera;
             UICameraOverlay = uICameraOverlay;
         }
         
-        public void AddUICameraToStack(UnityEngine.Camera camera)
-        {
-            var cameraData = Camera.GetUniversalAdditionalCameraData();
-            cameraData.cameraStack.Add(camera);
-        }
-
-        public void SetCameraRenderType(UnityEngine.Camera camera, CameraRenderType type)
-        {
-            var cameraData = camera.GetUniversalAdditionalCameraData();
-            cameraData.renderType = type;
-        }
-
         public Ray ScreenPointToRay(Vector3 mousePosition)
         {
-            return Camera.ScreenPointToRay(mousePosition);
+            return MainCamera.ScreenPointToRay(mousePosition);
         }
 
         public Vector3 ScreenToWorldPoint(Vector3 point)
         {
-            return Camera.ScreenToWorldPoint(point);
+            return MainCamera.ScreenToWorldPoint(point);
+        }
+
+        public void DisableCamera()
+        {
+            MainCamera.enabled = false;
+        }
+
+        public void EnableCamera()
+        {
+            MainCamera.enabled = true;
         }
     }
 }

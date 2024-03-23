@@ -11,5 +11,9 @@ namespace _Game.Core.Services.Audio
         float GetSFXVolume();
         float GetMusicVolume();
         void PlayButtonSound();
+        void PlayCoinDropSound();
+        void PlayCoinCollectSound();
+        void Stop();
+        void PlayBaseDestructionSFX();
     }
 }

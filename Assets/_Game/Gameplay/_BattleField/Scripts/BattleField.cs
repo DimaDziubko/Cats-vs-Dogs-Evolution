@@ -1,114 +1,198 @@
-using _Game.Bundles.Bases.Factory;
-using _Game.Bundles.Bases.Scripts;
-using _Game.Bundles.Units.Common.Factory;
-using _Game.Bundles.Units.Common.Scripts;
-using _Game.Common;
+using System;
+using System.Collections.Generic;
+using _Game.Core.Pause.Scripts;
+using _Game.Core.Services.Age.Scripts;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
-using _Game.Utils;
+using _Game.Core.Services.Random;
+using _Game.Gameplay._Bases.Factory;
+using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._Coins.Factory;
+using _Game.Gameplay._Units.Factory;
+using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Weapon.Factory;
+using _Game.Gameplay.CoinCounter.Scripts;
+using _Game.Gameplay.Vfx.Factory;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class BattleField : MonoBehaviour
+    public class BattleField : MonoBehaviour, IBaseDestructionHandler
     {
-        //TODO Fix const positions due to screen size
-        [FloatRangeSlider(-0.4f, -0.8f)]
-        private FloatRange _spawnerYRange = new FloatRange(-0.4f, -0.8f);
-
-        private const float PLAYER_SPAWNER_X = -2.8f;
-        private const float ENEMY_SPAWNER_X = +2.8f;
-
+        public IUnitSpawner UnitSpawner => _unitSpawner;
+        
+        [SerializeField] private RectTransform _coinCounterViewTransform; 
+        
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
+
+        private Vector3 _enemySpawnPoint;
+        private Vector3 _playerSpawnPoint;
         
-        private IUnitFactory _unitFactory;
-        private IBaseFactory _baseFactory;
         private IWorldCameraService _cameraService;
+        private IAgeStateService _ageState;
+        private IRandomService _random;
+        private IAudioService _audioService;
+        private IBaseDestructionManager _baseDestructionManager;
 
-        private readonly GameBehaviourCollection _playerUnits = new GameBehaviourCollection();
-        private readonly GameBehaviourCollection _enemyUnits = new GameBehaviourCollection();
+        private CoinSpawner _coinSpawner;
+        private VfxSpawner _vfxSpawner;
+        private UnitSpawner _unitSpawner;
+        private ProjectileSpawner _projectileSpawner;
+        private BaseSpawner _baseSpawner;
 
-        private Base _enemyBase;
-        private Base _playerBase;
+        private readonly InteractionCache _interactionCache = new InteractionCache();
 
-        public bool IsEnemies => !_enemyUnits.IsEmpty;
 
-        [Inject]
+        //TODO Delete later
+        [ShowInInspector] public Dictionary<Collider2D, ITarget> Cache => _interactionCache.Cache;
+
         public void Construct(
             IUnitFactory unitFactory,
             IBaseFactory baseFactory,
-            IWorldCameraService cameraService)
+            IProjectileFactory projectileFactory,
+            IVfxFactory vfxFactory,
+            IWorldCameraService cameraService,
+            IPauseManager pauseManager,
+            IAgeStateService ageState,
+            IAudioService audioService,
+            ICoinFactory coinFactory,
+            IBaseDestructionManager baseDestructionManager,
+            ICoinCounter coinCounter)
         {
-            _unitFactory = unitFactory;
-            _baseFactory = baseFactory;
             _cameraService = cameraService;
+            _ageState = ageState;
+            _audioService = audioService;
+            
+            _coinSpawner = new CoinSpawner(
+                coinFactory, 
+                audioService, 
+                cameraService, 
+                coinCounter);
+            
+            _vfxSpawner = new VfxSpawner(vfxFactory);
+            
+            _projectileSpawner = new ProjectileSpawner(
+                projectileFactory, 
+                pauseManager, 
+                _interactionCache,
+                _vfxSpawner);
+            
+            _unitSpawner = new UnitSpawner(
+                unitFactory, 
+                _interactionCache, 
+                cameraService, 
+                pauseManager, 
+                _vfxSpawner, 
+                _projectileSpawner, 
+                _coinSpawner);
+            
+            _baseSpawner = new BaseSpawner(
+                baseFactory,
+                cameraService,
+                _coinSpawner,
+                baseDestructionManager,
+                _interactionCache);
 
-            CalculateBasePoints();
+
+            _baseDestructionManager = baseDestructionManager;
+            
+            baseDestructionManager.Register(this);
         }
 
-
-        public void UpdateEnemyBase()
+        public void Init()
         {
-            if (_enemyBase != null)
-            {
-                _enemyBase.Recycle();
-            }
-            _enemyBase = _baseFactory.GetEnemyBase();
-            _enemyBase.Position = _enemyBasePoint;
+            CalculateBasePoints();
+            CalculateUnitSpawnPoints();
+            
+            _unitSpawner.Init(
+                _enemyBasePoint, 
+                _playerBasePoint);
+            
+            _coinSpawner.Init(_coinCounterViewTransform);
+            _baseSpawner.Init();
+            
+            _ageState.BaseDataUpdated += OnPlayerBaseDataUpdated;
+            _ageState.AgeUpdated += OnAgeUpdated;
+
+            _baseSpawner.UpdatePlayerBase();
+        }
+
+        private void OnAgeUpdated()
+        {
+            _baseSpawner.UpdatePlayerBase();
+        }
+
+        private void OnPlayerBaseDataUpdated(BaseData data) => _baseSpawner.UpdateData(data);
+
+        public void ResetSelf() => UpdateBase(Faction.Player);
+
+        public void StartBattle()
+        {
+            _baseSpawner.OnStartBattle();
         }
 
         public void GameUpdate()
         {
-            _playerUnits.GameUpdate();
-            _enemyUnits.GameUpdate();
+            _vfxSpawner.GameUpdate();
+            _unitSpawner.GameUpdate();
+            _projectileSpawner.GameUpdate();
         }
 
-        public void SpawnEnemy(UnitType type)
+        public void UpdateBase(Faction faction)
         {
-            var enemy = _unitFactory.GetForEnemy(type);
-            
-            enemy.Position = new Vector3(ENEMY_SPAWNER_X, _spawnerYRange.RandomValueInRange, 0);
-            enemy.MovementDirection = Vector3.left;
-            _enemyUnits.Add(enemy);
+            switch (faction)
+            {
+                case Faction.Player:
+                    _baseSpawner.UpdatePlayerBase();
+                    break;
+                case Faction.Enemy:
+                    _baseSpawner.UpdateEnemyBase();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
+            }
         }
-
-        public void SpawnPlayerUnit(UnitType type)
-        {
-            var unit = _unitFactory.GetForPlayer(type);
-            unit.Position = new Vector3(PLAYER_SPAWNER_X, _spawnerYRange.RandomValueInRange, 0);
-            unit.MovementDirection = Vector3.right;
-            unit.Rotation = Quaternion.Euler(0, 180f, 0);
-            _playerUnits.Add(unit);
-        }
-
+        
         public void Cleanup()
         {
-            _playerUnits.Clear();
-            _enemyUnits.Clear();
+            _vfxSpawner.Cleanup();
+            _unitSpawner.Cleanup();
+            _projectileSpawner.Cleanup();
+            _interactionCache.Cleanup();
+        }
+        
+        void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base)
+        {
+            _vfxSpawner.SpawnBasesSmoke(@base.Position);
+            _audioService.PlayBaseDestructionSFX();
+            _unitSpawner.KillUnits(faction);
         }
 
-        public void UpdatePlayerBase()
-        {
-            if (_playerBase != null)
-            {
-                _playerBase.Recycle();
-            }
-            _playerBase = _baseFactory.GetPlayerBase();
-            _playerBase.Position = _playerBasePoint;
-            _playerBase.Rotation = Quaternion.Euler(0, 180f, 0);
-        }
+        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base) {}
 
         private void CalculateBasePoints()
         {
-            Vector3 screenEnemyBasePoint = new Vector3(Screen.width, Screen.height / 2f, 0);
-            var worldEnemyBasePosition = _cameraService.ScreenToWorldPoint(screenEnemyBasePoint);
-            _enemyBasePoint = new Vector3(worldEnemyBasePosition.x, worldEnemyBasePosition.y, 0);
+            _enemyBasePoint = new Vector3(_cameraService.CameraWidth, 0, 0);
+            _playerBasePoint = new Vector3(-_cameraService.CameraWidth, 0, 0);
+        }
 
+        private void CalculateUnitSpawnPoints()
+        {
+            float correction = 0.025f;
             
-            Vector3 screenPlayerBasePoint = new Vector3(0, Screen.height / 2f, 0);
-            var worldPlayerBasePosition = _cameraService.ScreenToWorldPoint(screenPlayerBasePoint);
-            _playerBasePoint = new Vector3(worldPlayerBasePosition.x, worldPlayerBasePosition.y, 0);
+            float offsetY = _cameraService.CameraHeight * correction;
+            
+            _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth, -offsetY, 0);
+            _enemySpawnPoint = new Vector3(_cameraService.CameraWidth, -offsetY, 0);
+        }
+
+        private void OnDestroy()
+        {
+            _ageState.BaseDataUpdated -= OnPlayerBaseDataUpdated;
+            _ageState.AgeUpdated -= OnAgeUpdated;
+            _baseDestructionManager.UnRegister(this);
         }
     }
 }

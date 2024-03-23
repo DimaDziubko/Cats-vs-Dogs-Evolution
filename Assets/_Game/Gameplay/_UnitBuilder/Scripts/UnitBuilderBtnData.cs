@@ -1,4 +1,4 @@
-﻿using _Game.Bundles.Units.Common.Scripts;
+﻿using _Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts

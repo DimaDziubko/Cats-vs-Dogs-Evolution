@@ -7,11 +7,11 @@ namespace _Game.Core.GameState
 {
     public class BootstrapState : IState
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         
         public BootstrapState(
-            GameStateMachine stateMachine, 
+            IGameStateMachine stateMachine, 
             SceneLoader sceneLoader)
         {
             _stateMachine = stateMachine;
@@ -32,7 +32,7 @@ namespace _Game.Core.GameState
 
         private void EnterLoadProgressState()
         {
-            _stateMachine.Enter<LoadProgressState>();
+            _stateMachine.Enter<ConfigurationState>();
         }
 
         public void Exit()

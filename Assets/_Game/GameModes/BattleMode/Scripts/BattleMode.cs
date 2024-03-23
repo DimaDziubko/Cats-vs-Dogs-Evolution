@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using _Game.Bundles.Bases.Factory;
-using _Game.Bundles.Units.Common.Factory;
+﻿using System;
+using System.Collections.Generic;
+using _Game.Common;
 using _Game.Core.Communication;
 using _Game.Core.Factory;
 using _Game.Core.GameState;
+using _Game.Core.Loading;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
@@ -13,20 +14,32 @@ using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Core.UserState;
+using _Game.Gameplay._Bases.Factory;
+using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Coins.Factory;
+using _Game.Gameplay._UnitBuilder.Scripts;
+using _Game.Gameplay._Units.Factory;
+using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Battle.Scripts;
+using _Game.Gameplay.BattleLauncher;
+using _Game.Gameplay.CoinCounter.Scripts;
 using _Game.Gameplay.Food.Scripts;
-using _Game.Gameplay.GamePlayManager;
+using _Game.Gameplay.GameResult.Scripts;
+using _Game.Gameplay.Vfx.Factory;
 using _Game.UI.Common.Header.Scripts;
-using _Game.UI.GameResult.Scripts;
 using _Game.UI.Hud;
 using _Game.Utils;
 using _Game.Utils.Popups;
+using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
 namespace _Game.GameModes.BattleMode.Scripts
 {
-    public class BattleMode : MonoBehaviour, IGameModeCleaner, IBeginGameHandler
+    public class BattleMode : MonoBehaviour, IGameModeCleaner, IBattleLauncher, IBaseDestructionHandler
     {
         public IEnumerable<GameObjectFactory> Factories { get; private set; }
         public string SceneName => Constants.Scenes.BATTLE_MODE;
@@ -38,43 +51,57 @@ namespace _Game.GameModes.BattleMode.Scripts
         private IAudioService _audioService;
         private IUserStateCommunicator  _communicator;
         private IAlertPopupProvider _alertPopupProvider;
-        private IAgeStateService _ageState;
+        private IHeader _header;
+        private IUnitBuilder _unitBuilder;
+        private IFoodGenerator _foodGenerator;
+        private IGameResultWindowProvider _gameResultWindowProvider;
+        private ILoadingScreenProvider _loadingScreenProvider;
+        private ICoinCounter _coinCounter;
+        private IRewardAnimator _rewardAnimator;
 
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private IUserCurrenciesStateReadonly Currencies => _persistentData.State.Currencies;
 
-        private IBeginGameManager _beginGameManager;
+        private IBattleLaunchManager _battleLaunchManager;
 
         [SerializeField] private Hud _hud;
 
-        [SerializeField] private GameResultWindow _gameResultWindow;
-
         [SerializeField] private Battle _battle;
 
-        private FoodGenerator _foodGenerator;
 
         private bool IsPaused => _pauseManager.IsPaused;
         private bool _scenarioInProcess;
 
         private bool IsInitialized { get; set; }
-
-        public void Construct(
-            IWorldCameraService cameraService,
+        
+        #region Ctor
+        
+        [Inject]
+        public void Construct(IWorldCameraService cameraService,
             IRandomService random,
             IGameStateMachine stateMachine,
             IPersistentDataService persistentData,
             IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
-
             IAudioService audioService,
             IUserStateCommunicator communicator,
-            IBeginGameManager beginGameManager,
-
+            IBattleLaunchManager battleLaunchManager,
             IBattleStateService battleState,
-            
             IHeader header,
-            
+            IEconomyUpgradesService economyUpgradesService,
+            IUnitFactory unitFactory,
+            IBaseFactory baseFactory,
+            IProjectileFactory projectileFactory,
+            ICoinFactory coinFactory,
+            IUnitBuilder unitBuilder,
+            IFoodGenerator foodGenerator,
+            IGameResultWindowProvider gameResultWindowProvider,
+            ILoadingScreenProvider loadingScreenProvider,
             IAgeStateService ageState,
-            IUpgradesService upgradesService)
+            ICoinCounter coinCounter,
+            IRewardAnimator rewardAnimator,
+            IVfxFactory vfxFactory,
+            IBaseDestructionManager baseDestructionManager)
         {
             _cameraService = cameraService;
             _stateMachine = stateMachine;
@@ -84,87 +111,131 @@ namespace _Game.GameModes.BattleMode.Scripts
             _communicator = communicator;
             _alertPopupProvider = alertPopupProvider;
 
-            _beginGameManager = beginGameManager;
+            _battleLaunchManager = battleLaunchManager;
+            
+            _header = header;
 
-            _ageState = ageState;
-            
-            
-            InitializeCameras(cameraService);
-            
-            _gameResultWindow.Construct(_cameraService);
+            _unitBuilder = unitBuilder;
+            _foodGenerator = foodGenerator;
+            _gameResultWindowProvider = gameResultWindowProvider;
+            _loadingScreenProvider = loadingScreenProvider;
+
+            _coinCounter = coinCounter;
+            _rewardAnimator = rewardAnimator;
             
             _hud.Construct(
                 _cameraService,
                 _pauseManager,
                 _alertPopupProvider,
-                _audioService,
-                battleState,
-                _ageState);
-            
-            
-            _foodGenerator = new FoodGenerator(upgradesService);
+                _audioService);
 
             _battle.Construct(
+                unitFactory,
+                baseFactory,
+                projectileFactory,
+                coinFactory,
+                vfxFactory,
                 battleState,
-                _foodGenerator,
-                _ageState);
-
-
-            //TODO unregister if necessary
-            _beginGameManager.Register(this);
+                cameraService,
+                ageState,
+                pauseManager,
+                audioService,
+                baseDestructionManager,
+                coinCounter);
             
-            header.ShowWallet(persistentData);
-
-            IsInitialized = true;
-        }
-        
-        
-        [Inject]
-        private void InitializeFactories(
-            IUnitFactory unitFactory,
-            IBaseFactory baseFactory)
-        {
             Factories = new GameObjectFactory[]
             {
                unitFactory as GameObjectFactory, 
                baseFactory as GameObjectFactory, 
+               projectileFactory as GameObjectFactory, 
+               coinFactory as GameObjectFactory, 
+               vfxFactory as GameObjectFactory, 
             };
+            
+            baseDestructionManager.Register(this);
         }
-
-        void IBeginGameHandler.BeginGame()
+        
+        #endregion
+        
+        public void Init()
+        {
+            _battleLaunchManager.Register(this);
+            _header.ShowWallet(
+                Currencies,
+                _cameraService);
+            
+            _battle.Init();
+            _foodGenerator.Init();
+            
+            IsInitialized = true;
+        }
+        
+        void IBattleLauncher.LaunchBattle()
         {
             Cleanup();
+            
             _hud.Show();
             _hud.QuitGame += GoToMainMenu;
+
+            _foodGenerator.StartGenerator();
+            _unitBuilder.StartBuilder();
             
-            _foodGenerator.Init();
-            _foodGenerator.FoodProgressUpdated += _hud.UpdateFoodFillAmount;
-            _foodGenerator.FoodChanged += _hud.OnFoodChanged;
-            _hud.OnFoodChanged(_foodGenerator.FoodAmount);
-            
+            _coinCounter.Changed += _hud.OnCoinsChanged;
+            _hud.OnCoinsChanged(_coinCounter.Coins);
+
+
             _battle.StartBattle();
+            
             _stateMachine.Enter<GameLoopState>();
         }
         
         public void Cleanup()
         {
+            _coinCounter.Changed -= _hud.OnCoinsChanged;
             _hud.QuitGame -= GoToMainMenu;
+            _hud.Hide();
             _battle.Cleanup();
         }
-        
-        private void InitializeCameras(IWorldCameraService cameraService)
+
+        public void ResetGame()
         {
-            var uICameraOverlay = cameraService.UICameraOverlay;
-            cameraService.AddUICameraToStack(uICameraOverlay);
+            _battle.ResetSelf();
+            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
         }
+
+        private async void BattleCompleted(GameResultType type)
+        {
+            StopBattle();
+            
+            var popup = await _gameResultWindowProvider.Load();
+
+            var isConfirmed = await popup.Value.ShowAndAwaitForExit(_coinCounter.Coins, type);
+            if (isConfirmed)
+            {
+                GoToMainMenu();
+                if (type == GameResultType.Victory) _battle.PrepareNextBattle();
+            }
+            popup.Dispose();
+
+            
+            SaveGame();
+        }
+
+        private void StopBattle()
+        {
+            _foodGenerator.StopGenerator();
+            _unitBuilder.StopBuilder();
+            _battle.StopBattle();
+        }
+
 
         private void Update()
         {
             if(!IsInitialized) return;
 
             if(IsPaused) return;
-            
-            if (_battle.ScenarioInProcess)
+
+            if (_battle.BattleInProcess)
             {
                 _battle.GameUpdate();
                 _foodGenerator.GameUpdate();
@@ -172,17 +243,52 @@ namespace _Game.GameModes.BattleMode.Scripts
         }
 
         private void SaveGame() => _communicator.SaveUserState(_persistentData.State);
-
-        private int CalculateAward()
-        {
-            //TODO Implement later
-            return 0;
-        }
-
+        
         private void GoToMainMenu()
         {
-            _hud.Hide();
+            var clearingOperation = new ClearGameOperation(this);
+            
+            _loadingScreenProvider.LoadAndDestroy(clearingOperation).Forget();
+
+            _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
+        }
+
+        private void OnLoadingCompleted()
+        {
+            _loadingScreenProvider.LoadingCompleted -= OnLoadingCompleted;
             _stateMachine.Enter<MenuState>();
+
+            _rewardAnimator.PlayCoins(_header.CoinsWalletWorldPosition);
+
+            if (_coinCounter.Coins > 0)
+            {
+                _persistentData.AddCoins(_coinCounter.Coins);
+                _coinCounter.Cleanup();
+            }
+        }
+
+        void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base) { }
+
+        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base)
+        {
+            switch (faction)
+            {
+                case Faction.Player:
+                    BattleCompleted(GameResultType.Defeat);
+                    break;
+                case Faction.Enemy:
+                    BattleCompleted(GameResultType.Victory);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
+            }
+        }
+
+        //TODO Delete
+        [Button]
+        public void CoinsTest()
+        {
+            _persistentData.AddCoins(1000);
         }
     }
 }

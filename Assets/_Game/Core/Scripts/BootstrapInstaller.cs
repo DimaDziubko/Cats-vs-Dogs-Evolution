@@ -1,4 +1,5 @@
 using _Game.Audio.Scripts;
+using _Game.Common;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
@@ -8,16 +9,17 @@ using _Game.Core.Loading;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Prefabs;
 using _Game.Core.Services.Age.Scripts;
+using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
-using _Game.Core.Services.StaticData;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Core.UserState;
-using _Game.Gameplay.GamePlayManager;
+using _Game.Gameplay.BattleLauncher;
+using _Game.Gameplay.GameResult.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
@@ -34,11 +36,13 @@ namespace _Game.Core.Scripts
     public class BootstrapInstaller : MonoInstaller
     {
         [SerializeField] private AudioMixer _audioMixer;
+        [SerializeField] private Camera _mainCamera;
         [SerializeField] private Camera _uICameraOverlay;
         [SerializeField] private SFXSourcesHolder _sfxSourcesHolder;
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private SoundsHolder _soundsHolder;
-
+        [SerializeField] private CoroutineRunner _coroutineRunner;
+        
         //PersistentUI
         [SerializeField] private Header _header;
 
@@ -60,8 +64,7 @@ namespace _Game.Core.Scripts
             BindPauseManager();
             BindISettingsPopupProvider();
             BindStateFactory();
-
-
+            
             BindHeader();
 
             BindBeginGameManager();
@@ -72,13 +75,28 @@ namespace _Game.Core.Scripts
 
             BindBattleState();
 
-            BindUpgradesService();
+            BindUpgradesServices();
+            
             BindEvolutionService();
             BindAgeStateService();
 
             BindStartBattleWindowProvider();
             BindUpgradeAndEvolutionWindowProvider();
             BindMainMenuProvider();
+
+            BindGameResultWindowProvider();
+
+            BindCoroutineRunner();
+        }
+
+        private void BindCoroutineRunner()
+        {
+            Container.BindInterfacesTo<CoroutineRunner>().FromInstance(_coroutineRunner).AsSingle();
+        }
+
+        private void BindGameResultWindowProvider()
+        {
+            Container.BindInterfacesTo<GameResultWindowProvider>().AsSingle();
         }
 
         private void BindAgeStateService()
@@ -95,10 +113,14 @@ namespace _Game.Core.Scripts
                 .AsSingle();
         }
 
-        private void BindUpgradesService()
+        private void BindUpgradesServices()
         {
             Container
-                .BindInterfacesAndSelfTo<UpgradesService>()
+                .BindInterfacesAndSelfTo<EconomyUpgradesService>()
+                .AsSingle();
+            
+            Container
+                .BindInterfacesAndSelfTo<UnitUpgradesService>()
                 .AsSingle();
         }
 
@@ -136,7 +158,7 @@ namespace _Game.Core.Scripts
         private void BindBeginGameManager()
         {
             Container
-                .BindInterfacesAndSelfTo<BeginGameManager>()
+                .BindInterfacesAndSelfTo<BattleLaunchManager>()
                 .AsSingle();
         }
 
@@ -245,7 +267,9 @@ namespace _Game.Core.Scripts
 
         private void BindCameraService()
         {
-            var cameraService = new WorldCameraService(_uICameraOverlay);
+            var cameraService = new WorldCameraService(_mainCamera, _uICameraOverlay);
+            
+            cameraService.DisableCamera();
             
             Container
                 .Bind<IWorldCameraService>()
@@ -273,7 +297,7 @@ namespace _Game.Core.Scripts
         private void BindStaticDataService()
         {
             AssetProvider.AssetProvider assetProvider = new AssetProvider.AssetProvider();
-            assetProvider.Initialize();
+            assetProvider.Init();
             Container.Bind<IAssetProvider>()
                 .FromInstance(assetProvider)
                 .AsSingle();

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - EnemyAttackZone
   - EnemyBase
   - PlayerBase
-  - 
-  - 
+  - PlayerProjectile
+  - EnemyProjectile
   - 
   - 
   - 
@@ -38,6 +39,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Back
+    uniqueID: 2009108723
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Units
+    uniqueID: 1012047827
+    locked: 0
+  - name: Projectiles
+    uniqueID: 2797901583
+    locked: 0
+  - name: Front
+    uniqueID: 3881398569
+    locked: 0
+  - name: VFX
+    uniqueID: 3132687493
     locked: 0

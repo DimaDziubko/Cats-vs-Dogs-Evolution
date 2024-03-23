@@ -4,8 +4,8 @@ namespace _Game.Core.Services.Random
 {
     public class UnityRandomService : IRandomService
     {
-        public int Next(int min, int max) =>
-            UnityEngine.Random.Range(min, max);
+        public int Next(int intMin, int intMax) =>
+            UnityEngine.Random.Range(intMin, intMax);
         
         public float Next(float min, float max) =>
             UnityEngine.Random.Range(min, max);

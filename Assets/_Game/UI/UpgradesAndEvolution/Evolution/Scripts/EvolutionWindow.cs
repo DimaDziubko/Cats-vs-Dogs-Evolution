@@ -1,10 +1,8 @@
-﻿using _Game.Core.Services.Evolution.Scripts;
+﻿using _Game.Core.Services.Audio;
+using _Game.Core.Services.Evolution.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
@@ -12,67 +10,74 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
     {
         [SerializeField] private Canvas _canvas;
 
-        [SerializeField] private TransactionButton _evolveButton;
-        [SerializeField] private Image _currentAgeImage; 
-        [SerializeField] private Image _nextAgeImage;
-        [SerializeField] private TMP_Text _timelineLabel;
-
+        [SerializeField] private EvolutionTab _evolutionTab;
+        [SerializeField] private TravelTab _travelTab;
+        
         private IEvolutionService _evolutionService;
         private IHeader _header;
         public string Name => "Evolution";
-
+        
         public void Construct(
             IHeader header,
-            IEvolutionService evolutionService)
+            IEvolutionService evolutionService,
+            IAudioService audioService)
         {
             _evolutionService = evolutionService;
             _header = header;
 
-            _evolveButton.Init();
-            _evolveButton.Click += OnEvolveButtonClick;
-            
-            UpdateUIElements();
+            _evolutionTab.Construct(evolutionService, audioService);
+            _travelTab.Construct(evolutionService, audioService);
         }
 
 
         public void Show()
         {
-            _canvas.enabled = true;
             _header.ShowWindowName(Name);
+            
+            _canvas.enabled = true;
+
+            if (IsTimeToTravel())
+            {
+                _travelTab.Show();
+            }
+            else
+            {
+                _evolutionTab.Show();
+            }
+
+            Unsubscribe();
+            Subscribe();
         }
 
         public void Hide()
         {
             _canvas.enabled = false;
+            _travelTab.Hide();
+            _evolutionTab.Hide();
+            
+            Unsubscribe();
         }
 
-        private void OnEvolveButtonClick()
+        private void Subscribe()
         {
-            _evolutionService.MoveToNextAge();
+            _evolutionService.LastAgeOpened += OnLastAgeOpened;
         }
 
-        private void UpdateUIElements()
+        private void Unsubscribe()
         {
-            UpdateEvolveButton();
-            UpdateTimelineLabel();
+            _evolutionService.LastAgeOpened -= OnLastAgeOpened;
         }
 
-        private void UpdateTimelineLabel()
+        private void OnLastAgeOpened()
         {
-            var id = _evolutionService.GetTimelineNumber();
-            _timelineLabel.text = $"Timeline {id + 1}";
+            _travelTab.Show();
+            _evolutionTab.Hide();
         }
 
-        private void UpdateEvolveButton()
+        private bool IsTimeToTravel()
         {
-            bool canAfford = _evolutionService.IsNextAgeAvailable();
-            float evolutionPrice = _evolutionService.GetEvolutionPrice();
-            _evolveButton.UpdateButtonState(canAfford, evolutionPrice);
+            return _evolutionService.IsTimeToTravel();
         }
-
-        private void OnDisable()
-        {
-            _evolveButton.Click -= OnEvolveButtonClick;
-        }
+        
     }
 }

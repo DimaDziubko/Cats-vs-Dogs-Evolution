@@ -11,11 +11,6 @@ namespace _Game.UI.Common.Scripts
         
         private void Awake()
         {
-            foreach (var button in _buttons)
-            {
-                button.Initialize(ActivateButton);
-            }
-
             HighlightDefaultButton();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Bundles.Units.Common.Scripts;
+using _Game.Gameplay._Units.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
 namespace _Game.Core.UserState
@@ -19,9 +20,10 @@ namespace _Game.Core.UserState
         //TODO Change save system
         public event Action<UnitType> OpenedUnit;
         public event Action NextAgeOpened;
+        public event Action NextBattleOpened;
         public event Action NextTimelineOpened;
-        public event Action FoodProductionLevelChanged;
-        public event Action BaseHealthLevelChanged;
+        public event Action<UpgradeItemType> UpgradeItemChanged;
+        public event Action LastBattleWon;
         
         int IUserTimelineStateReadonly.TimelineId => TimelineId;
         
@@ -41,9 +43,9 @@ namespace _Game.Core.UserState
             OpenedUnit?.Invoke(type);
         }
         
-        public void OpenNextAge(int ageId)
+        public void OpenNextAge()
         {
-            AgeId = ageId;
+            AgeId++;
             FoodProductionLevel = 0;
             BaseHealthLevel = 0;
             AllBattlesWon = false;
@@ -52,9 +54,9 @@ namespace _Game.Core.UserState
             NextAgeOpened?.Invoke();
         }
         
-        public void OpenNextTimeline(int timelineId)
+        public void OpenNextTimeline()
         {
-            TimelineId = timelineId;
+            TimelineId++;
             AgeId = 0;
             FoodProductionLevel = 0;
             BaseHealthLevel = 0;
@@ -66,14 +68,29 @@ namespace _Game.Core.UserState
 
         public void ChangeFoodProductionLevel()
         {
+            //TODO Delete
+            Debug.Log("ChangeFoodProductionLevel TIMELINE STATE");
+            
             FoodProductionLevel++;
-            FoodProductionLevelChanged?.Invoke();
+            UpgradeItemChanged?.Invoke(UpgradeItemType.FoodProduction);
         }
         
         public void ChangeBaseHealthLevel()
         {
             BaseHealthLevel++;
-            BaseHealthLevelChanged?.Invoke();
+            UpgradeItemChanged?.Invoke(UpgradeItemType.BaseHealth);
+        }
+
+        public void OpenNextBattle(int nextBattle)
+        {
+            MaxBattle = nextBattle;
+            NextBattleOpened?.Invoke();
+        }
+
+        public void SetAllBattlesWon(bool allBattlesWon)
+        {
+            AllBattlesWon = allBattlesWon;
+            LastBattleWon?.Invoke();
         }
     }
 }

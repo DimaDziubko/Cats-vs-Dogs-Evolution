@@ -1,4 +1,6 @@
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.PersistentData;
+using _Game.Core.UserState;
 using _Game.UI.Common.Scripts;
 using TMPro;
 using UnityEngine;
@@ -10,9 +12,13 @@ namespace _Game.UI.Common.Header.Scripts
         [SerializeField] private TMP_Text _windowNameLabel;
         [SerializeField] private CurrenciesUI _currenciesUI;
 
-        public void ShowWallet(IPersistentDataService persistentDataService)
+        public Vector3 CoinsWalletWorldPosition => _currenciesUI.CoinsWalletWorldPosition;
+
+        public void ShowWallet(
+            IUserCurrenciesStateReadonly currenciesState,
+            IWorldCameraService cameraService)
         {
-            _currenciesUI.Construct(persistentDataService.State.Currencies);
+            _currenciesUI.Construct(currenciesState, cameraService);
             _currenciesUI.Show();
         }
         

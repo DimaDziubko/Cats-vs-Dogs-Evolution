@@ -30,5 +30,6 @@ namespace _Game.Utils.Disposable
 
         public static Disposable<T> Borrow(T value, Action<T> dispose) => new Disposable<T>(value, dispose);
         public static Disposable<T> FakeBorrow(T value) => new Disposable<T>(value, EmptyDelegate);
+        
     }
 }

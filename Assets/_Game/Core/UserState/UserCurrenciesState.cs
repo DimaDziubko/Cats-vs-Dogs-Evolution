@@ -7,16 +7,16 @@ namespace _Game.Core.UserState
         public float Coins;
         public float Gems;
         
-        public event Action CoinsChanged;
+        public event Action<bool> CoinsChanged;
         public event Action GemsChanged;
 
         float IUserCurrenciesStateReadonly.Coins => Coins;
         float IUserCurrenciesStateReadonly.Gems => Gems;
 
-        public void ChangeCoins(in float delta)
+        public void ChangeCoins(in float delta, bool isPositive)
         {
             Coins += delta;
-            CoinsChanged?.Invoke();
+            CoinsChanged?.Invoke(isPositive);
         }
         
         public void ChangeGems(in float delta)

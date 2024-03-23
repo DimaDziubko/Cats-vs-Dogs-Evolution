@@ -1,9 +1,9 @@
 ﻿using System;
 using _Game.Core.Communication;
 using _Game.Core.Loading;
+using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
-using _Game.Core.Services.StaticData;
 using _Game.Core.UserState;
 using Cysharp.Threading.Tasks;
 
@@ -16,18 +16,15 @@ namespace _Game.Core.Login
         private Action<float> _onProgress;
         private readonly IPersistentDataService _persistentData;
         private readonly IUserStateCommunicator _communicator;
-        private readonly IAssetProvider _staticData;
         private readonly IRandomService _random;
 
         public LoginOperation(
             IPersistentDataService persistentData,
             IUserStateCommunicator communicator,
-            IAssetProvider staticData,
             IRandomService random)
         {
             _persistentData = persistentData;
             _communicator = communicator;
-            _staticData = staticData;
             _random = random;
         }
         

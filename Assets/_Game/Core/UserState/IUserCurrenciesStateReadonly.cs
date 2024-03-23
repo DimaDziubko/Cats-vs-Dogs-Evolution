@@ -6,7 +6,7 @@ namespace _Game.Core.UserState
     {
         float Coins { get; }
         float Gems { get; }
-        event Action CoinsChanged;
+        event Action<bool> CoinsChanged;
         event Action GemsChanged;
     }
 }

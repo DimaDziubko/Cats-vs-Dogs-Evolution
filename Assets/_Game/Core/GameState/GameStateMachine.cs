@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core.Scripts;
+using Zenject;
 
 namespace _Game.Core.GameState
 {
-    public class GameStateMachine : IGameStateMachine
+    public class GameStateMachine : IGameStateMachine, IInitializable
     {
         private readonly StateFactory _stateFactory;
         private Dictionary<Type, IExitableState> _states;
@@ -46,15 +47,21 @@ namespace _Game.Core.GameState
             {
                 [typeof(BootstrapState)] = _stateFactory
                     .CreateState<BootstrapState>(),
-                [typeof(LoadProgressState)] = _stateFactory
-                    .CreateState<LoadProgressState>(),
+                [typeof(ConfigurationState)] = _stateFactory
+                    .CreateState<ConfigurationState>(),
+                [typeof(LoginState)] = _stateFactory
+                    .CreateState<LoginState>(),
+                [typeof(InitializationState)] = _stateFactory
+                    .CreateState<InitializationState>(),
+                [typeof(GameLoadingState)] = _stateFactory
+                    .CreateState<GameLoadingState>(),
                 [typeof(MenuState)] = _stateFactory
                     .CreateState<MenuState>(),
-                [typeof(PrepareBattleState)] = _stateFactory
-                    .CreateState<PrepareBattleState>(),
                 [typeof(GameLoopState)] = _stateFactory
                     .CreateState<GameLoopState>(),
             };
+            
+            Enter<BootstrapState>();
         }
     }
 }

@@ -1,101 +1,197 @@
-﻿using _Game.Bundles.Units.Common.Scripts;
-using _Game.Core.Configs.Models;
+﻿using System;
+using System.Collections.Generic;
+using _Game.Core.AssetManagement;
+using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Age.Scripts;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
+using _Game.Core.Services.Camera;
+using _Game.Gameplay._Bases.Factory;
+using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay.Food.Scripts;
+using _Game.Gameplay._Coins.Factory;
+using _Game.Gameplay._Units.Factory;
+using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Weapon.Factory;
+using _Game.Gameplay.CoinCounter.Scripts;
+using _Game.Gameplay.Scenario;
+using _Game.Gameplay.Vfx.Factory;
+using _Game.Utils.Disposable;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace _Game.Gameplay.Battle.Scripts
 {
-    public class Battle : MonoBehaviour
+    public class Battle : MonoBehaviour, IBaseDestructionHandler
     {
-        [SerializeField] private Image _environment;
-        [SerializeField] private BattleField _battleField;
-        [SerializeField] private UnitBuilder _unitBuilder;
+        [SerializeField] private Canvas _environmentCanvas;
+        [SerializeField] private Transform _environmentAnchor;
         
+        [SerializeField] private BattleField _battleField;
+
         private BattleScenarioExecutor _scenarioExecutor;
         private BattleScenarioExecutor.State _activeScenario;
 
+        private AudioClip _bGM;
+
+        private IBaseDestructionManager _baseDestructionManager;
         private IBattleStateService _battleState;
+        private IPauseManager _pauseManager;
+        private IAudioService _audioService;
 
-        private int _currentBattleIndex;
-        
-        private FoodGenerator _foodGenerator;
+        private readonly Dictionary<string, Disposable<BattleEnvironment>> _environmentCache = new Dictionary<string, Disposable<BattleEnvironment>>();
 
-        public bool ScenarioInProcess { get; private set; }
+        private int _currentBattle;
+        private BattleEnvironment _currentBattleEnvironment;
+        public bool BattleInProcess { get; private set; }
 
         public void Construct(
+            IUnitFactory unitFactory,
+            IBaseFactory baseFactory,
+            IProjectileFactory projectileFactory,
+            ICoinFactory coinFactory,
+            IVfxFactory vfxFactory,
             IBattleStateService battleState,
-            FoodGenerator foodGenerator,
-            IAgeStateService ageState)
+            IWorldCameraService cameraService,
+            IAgeStateService ageState,
+            IPauseManager pauseManager,
+            IAudioService audioService,
+            IBaseDestructionManager baseDestructionManager,
+            ICoinCounter coinCounter)
         {
+            _battleField.Construct(
+                unitFactory,
+                baseFactory, 
+                projectileFactory,
+                vfxFactory,
+                cameraService,
+                pauseManager,
+                ageState,
+                audioService,
+                coinFactory,
+                baseDestructionManager,
+                coinCounter);
+            
+            _environmentCanvas.worldCamera = cameraService.MainCamera;
+
+            _audioService = audioService;
+            
             _battleState = battleState;
-            _foodGenerator = foodGenerator;
+            _pauseManager = pauseManager;
+
+            _baseDestructionManager = baseDestructionManager;
+            baseDestructionManager.Register(this);
+        }
+
+        public void Init()
+        {
+            _battleField.Init();
             
             _scenarioExecutor = new BattleScenarioExecutor();
-            
+
             _battleState.BattlePrepared += UpdateBattle;
+
             UpdateBattle(_battleState.BattleData);
-            _battleField.UpdatePlayerBase();
-            
-            _unitBuilder.Construct(ageState);
         }
         
         public void StartBattle()
         {
-            ScenarioInProcess = true;
-            _activeScenario = _scenarioExecutor.Begin(_battleField);
+            BattleInProcess = true;
+            _activeScenario = _scenarioExecutor.Begin(_battleField.UnitSpawner);
+            _battleField.StartBattle();
 
-            _unitBuilder.StartBuilder();
-            _unitBuilder.UnitBuildRequested += OnUnitBuildRequested;
-            _foodGenerator.FoodChanged += _unitBuilder.UpdateButtonsState;
-            _unitBuilder.UpdateButtonsState(_foodGenerator.FoodAmount);
-            
-            //TODO Init player base health
+            PlayBGM();
+        }
+
+        public void ResetSelf()
+        {
+            UpdateBattle(_battleState.BattleData);
+            _battleField.ResetSelf();
+        }
+
+        public void PrepareNextBattle()
+        {
+            _battleState.OpenNextBattle(_currentBattle + 1);
         }
 
         public void GameUpdate()
         {
-            if (ScenarioInProcess)
+            if (BattleInProcess)
             {
-                if (_activeScenario.Progress() == false && !_battleField.IsEnemies)
-                {
-                    ScenarioInProcess = false;
-                }
-
+                _activeScenario.Progress();
                 _battleField.GameUpdate();
             }
-        } 
+        }
 
         public void Cleanup()
         {
             _battleField.Cleanup();
-            _unitBuilder.UnitBuildRequested -= OnUnitBuildRequested;
-            _unitBuilder.StopBuilder();
-            _foodGenerator.FoodChanged -= _unitBuilder.UpdateButtonsState;
         }
 
-        private void OnUnitBuildRequested(UnitType type, int foodPrice)
+        public void StopBattle()
         {
-            if(foodPrice > _foodGenerator.FoodAmount) return;
-            _battleField.SpawnPlayerUnit(type);
-            _foodGenerator.SpendFood(foodPrice);
+            StopBGM();
+            BattleInProcess = false;
+            _pauseManager.SetPaused(true);
         }
 
-        private void UpdateBattle(BattleData data)
+        private async void UpdateBattle(BattleData data)
         {
-            _environment.sprite = data.Environment;
-            _battleField.UpdateEnemyBase();
-            _scenarioExecutor.Init(data.Scenario);
+            _currentBattle = data.Battle;
+            _bGM = data.BGM;
+            _battleField.UpdateBase(Faction.Enemy);
+            _scenarioExecutor.UpdateScenario(data.Scenario);
+
+            if (_currentBattleEnvironment != null)
+            {
+                _currentBattleEnvironment.Hide();
+            }
+            
+            if (_environmentCache.ContainsKey(data.EnvironmentKey))
+            {
+                var battleEnvironment = _environmentCache[data.EnvironmentKey];
+                battleEnvironment.Value.Show();
+                _currentBattleEnvironment = battleEnvironment.Value;
+            }
+            else
+            {
+                LocalAssetLoader assetLoader = new LocalAssetLoader();
+                Disposable<BattleEnvironment> environment =
+                    await assetLoader.LoadDisposable<BattleEnvironment>(data.EnvironmentKey, _environmentAnchor);
+                _environmentCache.Add(data.EnvironmentKey, environment);
+            }
         }
 
         private void OnDisable()
         {
             //TODO Check place
             _battleState.BattlePrepared -= UpdateBattle;
+            _baseDestructionManager.UnRegister(this);
+        }
+
+        private void PlayBGM()
+        {
+            if (_audioService != null && _bGM != null)
+            {
+                _audioService.Play(_bGM);
+            }
+        }
+
+        private void StopBGM()
+        {
+            if (_audioService != null && _bGM != null)
+            {
+                _audioService.Stop();
+            }
+        }
+
+        void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base)
+        {
+            StopBattle();
+        }
+
+        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base)
+        {
+            
         }
     }
 }

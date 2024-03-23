@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Gameplay._BattleField.Scripts;
+using UnityEngine;
 
 namespace _Game.Common
 {
@@ -9,6 +11,8 @@ namespace _Game.Common
         private List<GameBehaviour> _behaviors = new List<GameBehaviour>();
         //private List<Transform> _transforms = new List<Transform>();
 
+        public IEnumerable<GameBehaviour> Behaviours => _behaviors;
+        
         public bool IsEmpty => _behaviors.Count == 0;
 
         public int Count

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using _Game.Core.Services.StaticData;
+using _Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -14,7 +14,7 @@ namespace _Game.AssetProvider
         private readonly Dictionary<string, AsyncOperationHandle> _completeCache = new Dictionary<string, AsyncOperationHandle>();
         private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new Dictionary<string, List<AsyncOperationHandle>>();
 
-        public void Initialize()
+        public void Init()
         {
             Addressables.InitializeAsync();
         }
@@ -47,6 +47,27 @@ namespace _Game.AssetProvider
                 cacheKey: address);
         }
 
+        public void Release(string key)
+        {
+            if (_completeCache.TryGetValue(key, out AsyncOperationHandle handle) && handle.IsValid())
+            {
+                Addressables.Release(handle);
+                _completeCache.Remove(key);
+            }
+
+            if (_handles.TryGetValue(key, out List<AsyncOperationHandle> handlesList))
+            {
+                foreach (var opHandle in handlesList)
+                {
+                    if(opHandle.IsValid())
+                    {
+                        Addressables.Release(opHandle);
+                    }
+                }
+                _handles.Remove(key);
+            }
+        }
+        
         
         //TODO Choose place
         public void CleanUp()
@@ -72,7 +93,7 @@ namespace _Game.AssetProvider
             resourceHandles.Add(handle);
         }
 
-        private async Task<T> RunWithCacheOnComplete<T>(AsyncOperationHandle<T> handle, string cacheKey) where T : class
+        private async UniTask<T> RunWithCacheOnComplete<T>(AsyncOperationHandle<T> handle, string cacheKey) where T : class
         {
             handle.Completed += completeHandle =>
             {

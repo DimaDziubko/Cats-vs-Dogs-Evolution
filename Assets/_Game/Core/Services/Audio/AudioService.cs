@@ -1,5 +1,6 @@
 ﻿using _Game.Audio.Scripts;
 using _Game.Core.Prefabs;
+using _Game.Core.Services.Random;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -10,16 +11,16 @@ namespace _Game.Core.Services.Audio
         private const float MIN_VOLUME_DB = -80f;
         private const string SFX_VOLUME = "SFX";
         private const string MUSIC_VOLUME = "MUSIC";
-        
+
         private readonly AudioMixer _mixer;
-        
+
         private readonly AudioSource[] _sFXSources;
         private readonly AudioSource _musicSource;
-        
+
         private int _freeSource;
-        
+
         private readonly SoundsHolder _soundsHolder;
-        
+
         private int _tossSoundIndex;
 
         public AudioService(
@@ -56,6 +57,30 @@ namespace _Game.Core.Services.Audio
         {
             var buttonSound = _soundsHolder.ButtonSound;
             PlayOneShot(buttonSound);
+        }
+
+        public void PlayBaseDestructionSFX()
+        {
+            var baseDestructionSFX = _soundsHolder.BaseDestructionSFX;
+            PlayOneShot(baseDestructionSFX);
+        }
+        
+        public void PlayCoinCollectSound()
+        {
+            var index = UnityEngine.Random.Range(0, _soundsHolder.CoinCollectSounds.Length);
+            var coinCollectSound = _soundsHolder.CoinCollectSounds[index];
+            PlayOneShot(coinCollectSound);
+        }
+
+        public void Stop()
+        {
+            _musicSource.Stop();
+        }
+
+        public void PlayCoinDropSound()
+        {
+            var dropSound = _soundsHolder.DropCoinSound;
+            PlayOneShot(dropSound);
         }
         
         public void SetSFXVolume(in float volume)
