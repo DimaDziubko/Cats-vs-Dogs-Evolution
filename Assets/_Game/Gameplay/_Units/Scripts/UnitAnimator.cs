@@ -103,6 +103,7 @@ namespace _Game.Gameplay._Units.Scripts
         //Animation event
         public void ActivateAiming()
         {
+            if(!_weaponAimBone) return;
             if(_lookAtJob.isActive) return;
             _lookAtJob.isActive = true;
             _lookAtPlayable.SetJobData(_lookAtJob);
@@ -111,6 +112,7 @@ namespace _Game.Gameplay._Units.Scripts
         //Animation event
         public void DeactivateAiming()
         {
+            if(!_weaponAimBone) return;
             if(!_lookAtJob.isActive) return;
             _lookAtJob.isActive = false;
             _lookAtPlayable.SetJobData(_lookAtJob);

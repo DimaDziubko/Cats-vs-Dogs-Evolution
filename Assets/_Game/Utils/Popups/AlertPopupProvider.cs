@@ -11,8 +11,7 @@ namespace _Game.Utils.Popups
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-
-        [Inject]
+        
         public AlertPopupProvider(
             IWorldCameraService cameraService,
             IAudioService audioService)

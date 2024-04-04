@@ -31,8 +31,7 @@ namespace _Game.Core.GameState
             loadingOperations.Enqueue(
                 new GameLoadingOperation(
                     _sceneLoader, 
-                    _cameraService, 
-                    _stateMachine));
+                    _cameraService));
 
             _loadingProvider.LoadingCompleted += OnLoadingCompleted;
             _loadingProvider.LoadAndDestroy(loadingOperations).Forget();

@@ -43,7 +43,12 @@ namespace _Game.Core.Configs.Controllers
         {
             return (GetCurrentTimeline().Ages.Count - 1);
         }
-        
+
+        public IEnumerable<AgeConfig> GetAgeConfigs()
+        {
+            return GetCurrentTimeline().Ages;
+        }
+
         public float GetAgePrice(int ageId)
         {
             var ageConfig = GetCurrentTimeline()?.Ages
@@ -52,7 +57,7 @@ namespace _Game.Core.Configs.Controllers
             if (ageConfig != null) return ageConfig.Price;
             return 0;
         }
-        
+
         public List<WarriorConfig> GetCurrentAgeUnits()
         {
             return GetCurrentTimeline()?.Ages[TimelineState.AgeId].Warriors;
@@ -110,6 +115,11 @@ namespace _Game.Core.Configs.Controllers
         {
             return _persistentData.GameConfig.CommonConfig.BaseIconKey;
         }
+
+        public FoodBoostConfig GetFoodBoostConfig()
+        {
+            return _persistentData.GameConfig.FoodBoostConfig;
+        }
     }
 
     public interface IGameConfigController
@@ -127,5 +137,7 @@ namespace _Game.Core.Configs.Controllers
         BaseHealthConfig GetBaseHealthConfig();
         string GetBaseIconKey();
         int LastAge();
+        IEnumerable<AgeConfig> GetAgeConfigs();
+        FoodBoostConfig GetFoodBoostConfig();
     }
 }

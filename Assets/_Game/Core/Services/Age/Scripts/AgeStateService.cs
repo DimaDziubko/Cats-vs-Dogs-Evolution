@@ -16,12 +16,13 @@ using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils;
+using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.Core.Services.Age.Scripts
 {
-    public class AgeStateService : IAgeStateService
+    public sealed class AgeStateService : IAgeStateService
     {
         public event Action AgeUpdated;
         public event Action<BaseData> BaseDataUpdated;
@@ -38,6 +39,7 @@ namespace _Game.Core.Services.Age.Scripts
         private readonly IMyLogger _logger;
 
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
 
         private readonly HashSet<string> _loadedResources = new HashSet<string>();
         
@@ -76,13 +78,18 @@ namespace _Game.Core.Services.Age.Scripts
             TimelineState.OpenedUnit += OnOpenedUnit;
             _economyUpgrades.UpgradeItemUpdated += OnUpgradeItemUpdated;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
+
             await PrepareAge();
         }
 
-        public void OnBuilderStarted()
+        public async UniTask ChangeRace()
         {
-            BuilderDataUpdated?.Invoke(_unitBuilderData);
+            await PrepareAge();
+            AgeUpdated?.Invoke();
         }
+
+        public void OnBuilderStarted() => 
+            BuilderDataUpdated?.Invoke(_unitBuilderData);
 
         private async void OnNextAgeOpened()
         {
@@ -161,6 +168,7 @@ namespace _Game.Core.Services.Age.Scripts
                 await PrepareWeaponData(openPlayerUnitConfigs, ct);
                 await PrepareUnitBuilderData(openPlayerUnitConfigs, ct);
                 await PreparePlayerBaseData(ct);
+
                 ct.ThrowIfCancellationRequested();
                 
             }
@@ -175,14 +183,18 @@ namespace _Game.Core.Services.Age.Scripts
             var ageConfig = _gameConfigController.GetAgeConfig(TimelineState.AgeId);
             
             ct.ThrowIfCancellationRequested();
-            var playerBasePrefab = await _assetProvider.Load<GameObject>(ageConfig.PlayerBaseKey);
+
+            string baseKey = ageConfig.GetBaseKeyForRace(RaceState.CurrentRace);
             
-            RegisterKey(ageConfig.PlayerBaseKey);
+            var playerBasePrefab = await _assetProvider.Load<GameObject>(baseKey);
+            
+            RegisterKey(baseKey);
             
             _playerBaseData = new BaseData()
             {
                 Health = _economyUpgrades.GetBaseHealth(),
-                BasePrefab = playerBasePrefab.GetComponent<Base>()
+                BasePrefab = playerBasePrefab.GetComponent<Base>(),
+                Layer = Constants.Layer.PLAYER_BASE
             };
         }
 
@@ -200,9 +212,10 @@ namespace _Game.Core.Services.Age.Scripts
                 ct.ThrowIfCancellationRequested();
 
                 var config = openPlayerUnitConfigs[i];
-                var unitIcon = await _assetProvider.Load<Sprite>(config.IconKey);
+                string iconKey = config.GetUnitIconKeyForRace(RaceState.CurrentRace);
+                var unitIcon = await _assetProvider.Load<Sprite>(iconKey);
 
-                RegisterKey(config.IconKey);
+                RegisterKey(iconKey);
                 
                 var newData = new UnitBuilderBtnData
                 {
@@ -226,14 +239,19 @@ namespace _Game.Core.Services.Age.Scripts
             {
                 ct.ThrowIfCancellationRequested();
 
-                var go = await _assetProvider.Load<GameObject>(config.PlayerKey);
+                var unitKey = config.GetUnitKeyForCurrentRace(RaceState.CurrentRace);
                 
-                RegisterKey(config.PlayerKey);
+                var go = await _assetProvider.Load<GameObject>(unitKey);
+                
+                RegisterKey(unitKey);
                 
                 var newData = new UnitData
                 {
                     Config = config,
-                    Prefab = go.GetComponent<Unit>()
+                    Prefab = go.GetComponent<Unit>(),
+                    UnitLayer = Constants.Layer.PLAYER,
+                    AggroLayer = Constants.Layer.PLAYER_AGGRO,
+                    AttackLayer = Constants.Layer.PLAYER_ATTACK,
                 };
 
                 _playerUnitData[config.Type] = newData;
@@ -241,8 +259,7 @@ namespace _Game.Core.Services.Age.Scripts
 
             _logger.Log("PlayerUnitData prepared");
         }
-
-
+        
         private async UniTask PrepareWeaponData(List<WarriorConfig> warriorConfigs, CancellationToken ct)
         {
             _weaponData.Clear();
@@ -349,14 +366,19 @@ namespace _Game.Core.Services.Age.Scripts
 
         private async UniTask AddPlayerUnitData(UnitType type, WarriorConfig config)
         {
-            var prefab = await _assetProvider.Load<GameObject>(config.PlayerKey);
+            var unitKey = config.GetUnitKeyForCurrentRace(RaceState.CurrentRace);
             
-            RegisterKey(config.PlayerKey);
+            var prefab = await _assetProvider.Load<GameObject>(unitKey);
+            
+            RegisterKey(unitKey);
             
             var unitData = new UnitData
             {
                 Config = config,
-                Prefab = prefab.GetComponent<Unit>()
+                Prefab = prefab.GetComponent<Unit>(),
+                UnitLayer = Constants.Layer.PLAYER,
+                AggroLayer = Constants.Layer.PLAYER_AGGRO,
+                AttackLayer = Constants.Layer.PLAYER_ATTACK,
             };
 
             _playerUnitData[type] = unitData;
@@ -366,9 +388,11 @@ namespace _Game.Core.Services.Age.Scripts
         
         private async UniTask AddUnitBuilderData(UnitType type, WarriorConfig config)
         {
-            var unitIcon = await _assetProvider.Load<Sprite>(config.IconKey);
+            string iconKey = config.GetUnitIconKeyForRace(RaceState.CurrentRace);
             
-            RegisterKey(config.IconKey);
+            var unitIcon = await _assetProvider.Load<Sprite>(iconKey);
+            
+            RegisterKey(iconKey);
             
             var newData = new UnitBuilderBtnData
             {

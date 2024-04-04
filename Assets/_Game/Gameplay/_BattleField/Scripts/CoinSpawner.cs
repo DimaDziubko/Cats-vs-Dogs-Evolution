@@ -1,8 +1,8 @@
 ﻿using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
+using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._Coins.Scripts;
-using _Game.Gameplay.CoinCounter.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts
@@ -32,6 +32,9 @@ namespace _Game.Gameplay._BattleField.Scripts
         public void Init(RectTransform coinCounterViewTransform)
         {
             CalculateLootCoinTargetPosition(coinCounterViewTransform);
+            
+            //TODO Delete
+            Debug.Log($"Coin target position {_coinTargetPosition}");
         }
         
         void ICoinSpawner.SpawnLootCoin(Vector3 position, float amount)
@@ -56,15 +59,15 @@ namespace _Game.Gameplay._BattleField.Scripts
         }
 
 
-        private void CalculateLootCoinTargetPosition(RectTransform _coinCounterViewTransform)
+        private void CalculateLootCoinTargetPosition(RectTransform coinCounterViewTransform)
         {
             Vector2 screenPoint = 
                 RectTransformUtility.WorldToScreenPoint(
                     _cameraService.UICameraOverlay, 
-                    _coinCounterViewTransform.position);
+                    coinCounterViewTransform.position);
             
             RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                _coinCounterViewTransform,
+                coinCounterViewTransform,
                 screenPoint, 
                 _cameraService.UICameraOverlay, 
                 out _coinTargetPosition);

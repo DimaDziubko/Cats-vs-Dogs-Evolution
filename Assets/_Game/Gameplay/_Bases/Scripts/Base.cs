@@ -13,9 +13,6 @@ namespace _Game.Gameplay._Bases.Scripts
     [RequireComponent(typeof(TargetPoint))]
     public class Base : GameBehaviour
     {
-        public event Action<Faction, Base> DestructionStarted;
-        public event Action<Faction, Base> DestructionCompleted;
-        
         [SerializeField] private Transform _transform;
         [SerializeField] private Health _health;
 
@@ -47,13 +44,13 @@ namespace _Game.Gameplay._Bases.Scripts
         public Vector3 Position
         {
             get => _transform.position;
-            set => _transform.position = value;
+            private set => _transform.position = value;
         }
 
-        public Quaternion Rotation
+        private Quaternion Rotation
         {
             get => _transform.rotation;
-            set => _transform.rotation = value;
+            set => _transform.rotation = _health.HealthBarRotation = value;
         }
 
         public IBaseFactory OriginFactory { get; set; }
@@ -62,8 +59,11 @@ namespace _Game.Gameplay._Bases.Scripts
             Faction faction,
             float health,
             float coinsPerBase,
-            IWorldCameraService cameraService)
+            IWorldCameraService cameraService,
+            int baseLayer)
         {
+            _bodyCollider.gameObject.layer = baseLayer;
+            
             _coinsPerBase = coinsPerBase;
             
             _faction = faction;
@@ -93,6 +93,7 @@ namespace _Game.Gameplay._Bases.Scripts
             _baseDestructionManager = baseDestructionManager;
             _coinSpawner = coinSpawner;
             Position = position;
+            Rotation = Quaternion.Euler(0, Position.x < 0 ? 0 : 180, 0);
         }
 
         public void UpdateData(BaseData data)
@@ -122,8 +123,6 @@ namespace _Game.Gameplay._Bases.Scripts
 
         private void OnBaseDeath()
         {
-            //DestructionStarted?.Invoke(_faction, this);
-
             _baseDestructionManager.BaseDestructionStarted(_faction, this);
             
             _animator.AnimationCompleted += HandleAnimationCompleted;
@@ -138,8 +137,7 @@ namespace _Game.Gameplay._Bases.Scripts
 
         private void HandleAnimationCompleted()
         {
-            //DestructionCompleted?.Invoke(_faction, this);
-
+            
             _baseDestructionManager.BaseDestructionCompleted(_faction, this);
             
             _animator.AnimationCompleted -= HandleAnimationCompleted;

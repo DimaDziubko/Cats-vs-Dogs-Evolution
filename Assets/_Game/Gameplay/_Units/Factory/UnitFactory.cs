@@ -69,7 +69,10 @@ namespace _Game.Gameplay._Units.Factory
                     faction, 
                     type,
                     _random, 
-                    _audioService);
+                    _audioService,
+                    unitData.UnitLayer,
+                    unitData.AggroLayer,
+                    unitData.AttackLayer);
             }
             
             return instance;

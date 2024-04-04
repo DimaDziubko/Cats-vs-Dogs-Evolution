@@ -24,7 +24,7 @@ namespace _Game.Gameplay._Units.Scripts
             
             UpdateData(health);
         }
-
+        
         public void ResetHealth()
         {
             UpdateData(_maxHealth);
@@ -38,6 +38,10 @@ namespace _Game.Gameplay._Units.Scripts
         }
 
         public bool IsDead => _currentHealth <= 0;
+        public Quaternion HealthBarRotation
+        {
+            set => _healthBar.Rotation = value;
+        }
 
         public void HideHealth()
         {

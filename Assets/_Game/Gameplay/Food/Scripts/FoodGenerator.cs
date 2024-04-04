@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core._Logger;
 using _Game.Core.Services.Age.Scripts;
+using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.UI.GameplayUI.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -27,6 +28,7 @@ namespace _Game.Gameplay.Food.Scripts
         private readonly IEconomyUpgradesService _economyUpgradesService;
         private readonly IAgeStateService _ageState;
         private readonly IMyLogger _logger;
+        private readonly IBonusRewardService _bonusRewardService;
 
         private float _productionSpeed;
         private int _foodAmount;
@@ -48,12 +50,14 @@ namespace _Game.Gameplay.Food.Scripts
             IEconomyUpgradesService economyUpgradesService, 
             IAgeStateService ageState,
             IMyLogger logger,
-            GameplayUI gameplayUI)
+            GameplayUI gameplayUI,
+            IBonusRewardService bonusRewardService)
         {
             _economyUpgradesService = economyUpgradesService;
             _panel = gameplayUI.FoodPanel;
             _ageState = ageState;
             _logger = logger;
+            _bonusRewardService = bonusRewardService;
         }
 
         public void Init()
@@ -64,17 +68,20 @@ namespace _Game.Gameplay.Food.Scripts
 
         public void StartGenerator()
         {
-            _productionSpeed = _economyUpgradesService.GetFoodProductionSpeed();
-            _foodAmount = _economyUpgradesService.GetInitialFoodAmount();
-            
-            _panel.UpdateFillAmount(0);
             FoodChanged += _panel.OnFoodChanged;
+            _bonusRewardService.FoodBoost += AddFood;
+            
+            _productionSpeed = _economyUpgradesService.GetFoodProductionSpeed();
+            FoodAmount = _economyUpgradesService.GetInitialFoodAmount();
+
+            _panel.UpdateFillAmount(0);
             _panel.OnFoodChanged(FoodAmount);
         }
 
         public void StopGenerator()
         {
             FoodChanged -= _panel.OnFoodChanged;
+            _bonusRewardService.FoodBoost -= AddFood;
         }
         
         private void UpdateGeneratorData(UpgradeItemViewModel model)
@@ -83,6 +90,7 @@ namespace _Game.Gameplay.Food.Scripts
             {
                 _productionSpeed = model.Amount;
 
+                //TODO Delete later
                 _logger.Log($"Food production speed updated {model.Amount}");
             }
         }

@@ -10,11 +10,9 @@ namespace _Game.UI.Settings.Scripts
     public class SettingsPopup : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        
         [SerializeField] private Button _closeButton;
 
-        [SerializeField] private Slider _soundsSlider;
-        [SerializeField] private Slider _musicSlider;
+        [SerializeField] private CustomToggle _sfxToggle, _ambienceToggle;
 
         private UniTaskCompletionSource<bool> _taskCompletion;
         
@@ -30,17 +28,18 @@ namespace _Game.UI.Settings.Scripts
             
             _closeButton.onClick.AddListener(OnCloseBtnClick);
 
-            UpdateSlidersView();
+            InitializeUIElements();
             
-            _soundsSlider.onValueChanged.AddListener(OnSoundsSliderChanged);
-            _musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
         }
 
-        public void UpdateSlidersView()
+        private void InitializeUIElements()
         {
-            _soundsSlider.value = _audioService.GetSFXVolume();
-            _musicSlider.value = _audioService.GetMusicVolume();
+            Unsubscribe();
+            Subscribe();
+            _sfxToggle.Initialize(_audioService.IsOnSFX(), _audioService);
+            _ambienceToggle.Initialize(_audioService.IsOnAmbience(), _audioService);
         }
+
 
         public async UniTask<bool> AwaitForExit()
         {
@@ -50,21 +49,27 @@ namespace _Game.UI.Settings.Scripts
             _canvas.enabled = false;
             return result;
         }
-        
+
         private void OnCloseBtnClick()
         {
+            Unsubscribe();
+            _sfxToggle.Cleanup();
+            _ambienceToggle.Cleanup();
+            
             _audioService.PlayButtonSound();
             _taskCompletion.TrySetResult(true);
         }
-        
-        private void OnSoundsSliderChanged(float value)
+
+        private void Subscribe()
         {
-            _audioService.SetSFXVolume(value);
+            _sfxToggle.ValueChanged += _audioService.SwitchSFX;
+            _ambienceToggle.ValueChanged += _audioService.SwitchAmbience;
         }
 
-        private void OnMusicSliderChanged(float value)
+        private void Unsubscribe()
         {
-            _audioService.SetMusicVolume(value);
+            _sfxToggle.ValueChanged -= _audioService.SwitchSFX;
+            _ambienceToggle.ValueChanged -= _audioService.SwitchAmbience;
         }
     }
 }

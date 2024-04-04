@@ -15,6 +15,7 @@ using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.Utils;
+using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -24,13 +25,14 @@ namespace _Game.Core.Services.Battle
     {
         public event Action<BattleNavigationModel> NavigationUpdated;
         public event Action<BattleData> BattlePrepared;
-        private event Action BattleChange;
+        private event Action BattleChanged;
 
         private readonly IGameConfigController _gameConfigController;
         private readonly IPersistentDataService _persistentData;
         private readonly IAssetProvider _assetProvider;
         private readonly IMyLogger _logger;
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
 
         private int? _currentBattleIndex;
         private bool IsBattlePrepared { get; set; }
@@ -51,25 +53,28 @@ namespace _Game.Core.Services.Battle
 
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
-        public BaseData ForEnemyBase()
-        {
-            return _currentBattleData.EnemyBaseData;
-        }
+        public BaseData ForEnemyBase() => 
+            _currentBattleData.EnemyBaseData;
 
         public async UniTask Init()
         {
             IsBattlePrepared = false;
-            BattleChange += OnBattleChange;
+            BattleChanged += OnBattleChanged;
 
             TimelineState.NextBattleOpened += MoveToNextBattle;
+            TimelineState.NextAgeOpened += OnNextAgeOpened;
             
             await PrepareBattle();
         }
 
-        public void OnStartBattleWindowOpened()
-        {
+        public async UniTask ChangeRace() =>
+            await PrepareBattle();
+
+        private void OnNextAgeOpened() => 
+            CurrentBattleIndex = TimelineState.MaxBattle;
+
+        public void OnStartBattleWindowOpened() => 
             NavigationUpdated?.Invoke(NavigationModel);
-        }
 
         public WeaponData ForWeapon(WeaponType type)
         {
@@ -103,10 +108,7 @@ namespace _Game.Core.Services.Battle
             }
         }
 
-        public BattleData BattleData
-        {
-            get => _currentBattleData;
-        }
+        public BattleData BattleData => _currentBattleData;
 
         public UnitData GetEnemy(UnitType type)
         {
@@ -153,7 +155,7 @@ namespace _Game.Core.Services.Battle
             private set
             {
                 _currentBattleIndex = value;
-                BattleChange?.Invoke();
+                BattleChanged?.Invoke();
             }
         }
 
@@ -213,7 +215,7 @@ namespace _Game.Core.Services.Battle
             }
         }
 
-        private async void OnBattleChange()
+        private async void OnBattleChanged()
         {
             _logger.Log("Battle change service");
             IsBattlePrepared = false;
@@ -225,23 +227,27 @@ namespace _Game.Core.Services.Battle
             BattleConfig battleConfig = _gameConfigController.GetBattleConfig(CurrentBattleIndex);
 
             ct.ThrowIfCancellationRequested();
+
+            string baseKey = battleConfig.GetBaseKeyForAnotherRace(RaceState.CurrentRace);
             
-            var enemyBasePrefab = await _assetProvider.Load<GameObject>(battleConfig.EnemyBaseKey);
-            var bGM = await _assetProvider.Load<AudioClip>(battleConfig.BGMKey);
+            var enemyBasePrefab = await _assetProvider.Load<GameObject>(baseKey);
             
-            RegisterKey(battleConfig.EnemyBaseKey);
+            var bGm = await _assetProvider.Load<AudioClip>(battleConfig.BGMKey);
+            
+            RegisterKey(baseKey);
             RegisterKey(battleConfig.BGMKey);
 
             _currentBattleData.Battle = CurrentBattleIndex;
             _currentBattleData.Scenario = battleConfig.Scenario;
             _currentBattleData.EnvironmentKey = battleConfig.EnvironmentKey;
-            _currentBattleData.BGM = bGM;
+            _currentBattleData.BGM = bGm;
             
             _currentBattleData.EnemyBaseData = new BaseData()
             {
                 Health = battleConfig.EnemyBaseHealth,
                 BasePrefab = enemyBasePrefab.GetComponent<Base>(),
-                CoinsAmount = battleConfig.CoinsPerBase
+                CoinsAmount = battleConfig.CoinsPerBase,
+                Layer = Constants.Layer.ENEMY_BASE
             };
 
             _logger.Log("BattleData prepared");
@@ -322,14 +328,19 @@ namespace _Game.Core.Services.Battle
             {
                 ct.ThrowIfCancellationRequested();
 
-                var go = await _assetProvider.Load<GameObject>(config.EnemyKey);
+                string unitKey = config.GetUnitKeyForAnotherRace(RaceState.CurrentRace);
+                
+                var go = await _assetProvider.Load<GameObject>(unitKey);
 
-                RegisterKey(config.EnemyKey);
+                RegisterKey(unitKey);
                 
                 var newData = new UnitData
                 {
                     Config = config,
-                    Prefab = go.GetComponent<Unit>()
+                    Prefab = go.GetComponent<Unit>(),
+                    UnitLayer = Constants.Layer.ENEMY,
+                    AggroLayer = Constants.Layer.ENEMY_AGGRO,
+                    AttackLayer = Constants.Layer.ENEMY_ATTACK,
                 };
 
                 _enemyData[config.Type] = newData;

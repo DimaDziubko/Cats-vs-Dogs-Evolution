@@ -1,4 +1,5 @@
 ﻿using _Game.Core._Logger;
+using _Game.Core.Ads;
 using _Game.Core.AssetManagement;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
@@ -11,16 +12,19 @@ namespace _Game.Gameplay.GameResult.Scripts
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-        
+        private readonly IAdsService _adsService;
+
         private readonly IMyLogger _logger;
 
         public GameResultWindowProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
-            IMyLogger logger)
+            IMyLogger logger,
+            IAdsService adService)
         {
             _cameraService = cameraService;
             _audioService = audioService;
+            _adsService = adService;
 
             _logger = logger;
         }
@@ -32,7 +36,8 @@ namespace _Game.Gameplay.GameResult.Scripts
             window.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
-                _logger);
+                _logger,
+                _adsService);
             return window;
         }
     }

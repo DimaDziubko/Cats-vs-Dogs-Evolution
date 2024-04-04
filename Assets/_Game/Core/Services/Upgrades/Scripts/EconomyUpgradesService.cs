@@ -7,6 +7,7 @@ using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using _Game.Utils;
 using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -68,11 +69,11 @@ namespace _Game.Core.Services.Upgrades.Scripts
         private void OnCoinsChanged(bool isPositive)
         {
             var foodItem = _upgradeItems[UpgradeItemType.FoodProduction];
-            foodItem.CanAfford = Currency.Coins > foodItem.Price;
+            foodItem.CanAfford = Currency.Coins >= foodItem.Price;
             UpgradeItemUpdated?.Invoke(foodItem);
             
             var baseHealth = _upgradeItems[UpgradeItemType.BaseHealth];
-            baseHealth.CanAfford = Currency.Coins > baseHealth.Price;
+            baseHealth.CanAfford = Currency.Coins >= baseHealth.Price;
             UpgradeItemUpdated?.Invoke(baseHealth);
         }
 

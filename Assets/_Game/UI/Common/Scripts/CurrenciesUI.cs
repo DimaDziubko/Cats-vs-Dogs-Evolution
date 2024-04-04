@@ -32,7 +32,10 @@ namespace _Game.UI.Common.Scripts
         public void Show()
         {
             _currentCoinsValue = _currencies.Coins;
+            
+            _currencies.CoinsChanged -= OnCurrenciesChanged;
             _currencies.CoinsChanged += OnCurrenciesChanged;
+            
             OnCurrenciesChanged(false);
         }
 
@@ -64,7 +67,7 @@ namespace _Game.UI.Common.Scripts
         public void Hide()
         {
             //TODO Fix later
-            _currencies.CoinsChanged -= OnCurrenciesChanged;
+            //_currencies.CoinsChanged -= OnCurrenciesChanged;
         }
 
         private Vector3 CalculateWorldPosition(RectTransform coinsWalletTransform)

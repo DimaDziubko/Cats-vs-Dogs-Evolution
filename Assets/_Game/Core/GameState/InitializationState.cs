@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Ads;
 using _Game.Core.Loading;
 using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.Battle;
+using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
 
@@ -17,6 +19,8 @@ namespace _Game.Core.GameState
         private readonly IAgeStateService _ageState;
         private readonly IUnitUpgradesService _unitUpgradeService;
         private readonly IEvolutionService _evolutionService;
+        private readonly IAdsService _adsService;
+        private readonly IBonusRewardService _bonusRewardService;
 
         public InitializationState(
             IGameStateMachine stateMachine,
@@ -25,7 +29,9 @@ namespace _Game.Core.GameState
             IEconomyUpgradesService economyUpgradesService,
             IAgeStateService ageState, 
             IUnitUpgradesService unitUpgradeService,
-            IEvolutionService evolutionService)
+            IEvolutionService evolutionService,
+            IAdsService adsService,
+            IBonusRewardService bonusRewardService)
         {
             _stateMachine = stateMachine;
             _assetProvider = assetProvider;
@@ -34,6 +40,8 @@ namespace _Game.Core.GameState
             _ageState = ageState;
             _unitUpgradeService = unitUpgradeService;
             _evolutionService = evolutionService;
+            _adsService = adsService;
+            _bonusRewardService = bonusRewardService;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
@@ -45,7 +53,9 @@ namespace _Game.Core.GameState
                     _economyUpgradesService, 
                     _unitUpgradeService,
                     _assetProvider,
-                    _evolutionService));
+                    _evolutionService,
+                    _adsService,
+                    _bonusRewardService));
             
             _stateMachine.Enter<GameLoadingState, Queue<ILoadingOperation>>(loadingOperations);
         }

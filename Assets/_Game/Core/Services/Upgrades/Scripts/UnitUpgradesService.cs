@@ -10,6 +10,8 @@ using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using _Game.Utils;
+using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -25,6 +27,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
         private readonly IMyLogger _logger;
         
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
         private IUserCurrenciesStateReadonly Currency => _persistentData.State.Currencies;
         
         private readonly List<UpgradeUnitItemViewModel> _upgradeUnitItems = new List<UpgradeUnitItemViewModel>(3);
@@ -49,14 +52,15 @@ namespace _Game.Core.Services.Upgrades.Scripts
             Currency.CoinsChanged += OnCoinsChanged;
 
             TimelineState.NextAgeOpened += OnNextAgeOpened;
+            RaceState.Changed += OnRaceChanged;
             
             await PrepareUpgrades();
         }
 
-        private async void OnNextAgeOpened()
-        {
+        private async void OnRaceChanged() => await PrepareUpgrades();
+
+        private async void OnNextAgeOpened() => 
             await PrepareUpgrades();
-        }
 
         public void PurchaseUnit(UnitType type)
         {
@@ -75,6 +79,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
         private async UniTask PrepareUpgrades()
         {
             List<WarriorConfig> openPlayerUnitConfigs = _gameConfigController.GetOpenPlayerUnitConfigs();
+            
             _logger.Log($"OpenPlayerUnits : {openPlayerUnitConfigs.Count}");
 
             var ct = _cts.Token;
@@ -111,8 +116,10 @@ namespace _Game.Core.Services.Upgrades.Scripts
             foreach (var config in warriorConfigs)
             {
                 ct.ThrowIfCancellationRequested();
+
+                string iconKey = config.GetUnitIconKeyForRace(RaceState.CurrentRace);
                 
-                Sprite icon = await _assetProvider.Load<Sprite>(config.IconKey);
+                Sprite icon = await _assetProvider.Load<Sprite>(iconKey);
 
                 var item = new UpgradeUnitItemViewModel
                 {
@@ -138,14 +145,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
             UpgradeUnitItemsUpdated?.Invoke(_upgradeUnitItems);
         }
         
-
-        public void OnUpgradesWindowOpened()
-        {
+        public void OnUpgradesWindowOpened() => 
             UpgradeUnitItemsUpdated?.Invoke(_upgradeUnitItems);
-            
-            //TODO Delete
-            _logger.Log("Upgrades updated");
-        }
-        
     }
 }

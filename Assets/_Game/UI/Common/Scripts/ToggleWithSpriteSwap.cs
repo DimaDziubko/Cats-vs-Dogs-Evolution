@@ -21,11 +21,21 @@ namespace _Game.UI.Common.Scripts
         {
             _button = GetComponent<Button>();
             _isOn = false;
+            _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(OnButtonClicked);
+        }
+
+        public void UpdateToggleStateManually(bool isPaused)
+        {
+            _isOn = isPaused;
+            _changableImage.sprite = _isOn ? _onSprite : _offSprite;
         }
 
         private void OnButtonClicked()
         {
+            //TODO Delete
+            Debug.Log("On toggle clicked");
+            
             _isOn = !_isOn;
             _changableImage.sprite = _isOn ? _onSprite : _offSprite;
             ValueChanged?.Invoke(_isOn);

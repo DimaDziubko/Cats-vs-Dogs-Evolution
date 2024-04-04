@@ -1,5 +1,4 @@
 ﻿using System;
-using _Game.Core.GameState;
 using _Game.Core.Scripts;
 using _Game.Core.Services.Camera;
 using _Game.GameModes.BattleMode.Scripts;
@@ -8,7 +7,6 @@ using _Game.UI.Shop.Scripts;
 using _Game.Utils;
 using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _Game.Core.Loading
@@ -17,7 +15,6 @@ namespace _Game.Core.Loading
     {
         private readonly SceneLoader _sceneLoader;
         private readonly IWorldCameraService _cameraService;
-        private readonly IGameStateMachine _stateMachine;
         private readonly ISettingsPopupProvider _settingsPopupProvider;
         private readonly IShopPopupProvider _shopPopupProvider;
 
@@ -25,12 +22,10 @@ namespace _Game.Core.Loading
         
         public GameLoadingOperation(
             SceneLoader sceneLoader,
-            IWorldCameraService cameraService,
-            IGameStateMachine stateMachine)
+            IWorldCameraService cameraService)
         {
             _sceneLoader = sceneLoader;
             _cameraService = cameraService;
-            _stateMachine = stateMachine;
         }
         public async UniTask Load(Action<float> onProgress)
         {
@@ -54,8 +49,6 @@ namespace _Game.Core.Loading
             gameMode.Init();
             
             onProgress?.Invoke(1.0f);
-            
-            //_stateMachine.Enter<MenuState>();
         }
     }
 }

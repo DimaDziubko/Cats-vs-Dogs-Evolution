@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
@@ -23,5 +22,6 @@ namespace _Game.Core.Services.Battle
         WeaponData ForWeapon(WeaponType type);
         void OpenNextBattle(int nextBattle);
         void OnStartBattleWindowOpened();
+        UniTask ChangeRace();
     }
 }

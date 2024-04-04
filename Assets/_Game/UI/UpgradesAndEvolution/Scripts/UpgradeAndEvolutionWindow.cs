@@ -4,6 +4,7 @@ using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils.Popups;
@@ -47,7 +48,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             IEconomyUpgradesService economyUpgradesService,
             IEvolutionService evolutionService,
             IUnitUpgradesService unitUpgradesService,
-            IMyLogger logger)
+            IMyLogger logger,
+            ITimelineInfoWindowProvider timelineInfoWindowProvider)
         {
             _logger = logger;
             
@@ -56,12 +58,13 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _alertPopupProvider = alertPopupProvider;
             
             _upgradesWindow.Construct(header, economyUpgradesService, unitUpgradesService, audioService);
-            _evolutionWindow.Construct(header, evolutionService, audioService);
+            _evolutionWindow.Construct(header, evolutionService, audioService, timelineInfoWindowProvider);
             
         }
 
         public void Show()
         {
+            //TODO Delete later
             _logger.Log("UpgradeAndEvolutionWindow SHOW");
             
             Unsubscribe();
@@ -85,6 +88,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         public void Hide()
         {
+            //TODO Delete later
             _logger.Log("UpgradeAndEvolutionWindow HIDE");
             
             Unsubscribe();

@@ -63,10 +63,11 @@ namespace _Game.Gameplay._Units.Scripts
         [ShowInInspector, ReadOnly]
         public List<ITarget> Targets => _targetCollection.Targets;
 
-        public void Construct()
+        public void Construct(int layer)
         {
             if (_triggerObserver != null)
             {
+                _triggerObserver.Construct(layer);
                 _triggerObserver.TriggerEnter += OnTargetEnter;
                 _triggerObserver.TriggerExit += OnTargetExit;
             }

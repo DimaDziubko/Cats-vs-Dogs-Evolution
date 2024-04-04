@@ -19,5 +19,6 @@ namespace _Game.Core.Services.Age.Scripts
         event Action<UnitBuilderBtnData[]> BuilderDataUpdated;
         event Action AgeUpdated;
         void OnBuilderStarted();
+        UniTask ChangeRace();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using _Game.Core.Communication;
 using _Game.Core.Loading;
-using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Core.UserState;
@@ -45,7 +44,7 @@ namespace _Game.Core.Login
 
             if (result == null || result.IsValid() == false)
             {
-                result = UserAccountState.GetInitial(_random, _persistentData.GameConfig);
+                result = UserAccountState.GetInitial(_random);
 
                 await _communicator.SaveUserState(result);
             }

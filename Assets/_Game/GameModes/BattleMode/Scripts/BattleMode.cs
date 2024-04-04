@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Common;
+using _Game.Core.Ads;
 using _Game.Core.Communication;
 using _Game.Core.Factory;
 using _Game.Core.GameState;
@@ -9,6 +10,7 @@ using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
+using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
@@ -17,6 +19,7 @@ using _Game.Core.UserState;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay._Units.Factory;
@@ -24,13 +27,15 @@ using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.BattleLauncher;
-using _Game.Gameplay.CoinCounter.Scripts;
+using _Game.Gameplay.Common.Scripts;
 using _Game.Gameplay.Food.Scripts;
 using _Game.Gameplay.GameResult.Scripts;
 using _Game.Gameplay.Vfx.Factory;
 using _Game.UI.Common.Header.Scripts;
+using _Game.UI.FactionSelectionWindow.Scripts;
 using _Game.UI.Hud;
 using _Game.Utils;
+using _Game.Utils.Disposable;
 using _Game.Utils.Popups;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
@@ -58,8 +63,9 @@ namespace _Game.GameModes.BattleMode.Scripts
         private ILoadingScreenProvider _loadingScreenProvider;
         private ICoinCounter _coinCounter;
         private IRewardAnimator _rewardAnimator;
-
-        private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private IFactionSelectionWindowProvider _factionSelectionWindowProvider;
+        
+        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
         private IUserCurrenciesStateReadonly Currencies => _persistentData.State.Currencies;
 
         private IBattleLaunchManager _battleLaunchManager;
@@ -67,7 +73,6 @@ namespace _Game.GameModes.BattleMode.Scripts
         [SerializeField] private Hud _hud;
 
         [SerializeField] private Battle _battle;
-
 
         private bool IsPaused => _pauseManager.IsPaused;
         private bool _scenarioInProcess;
@@ -77,7 +82,8 @@ namespace _Game.GameModes.BattleMode.Scripts
         #region Ctor
         
         [Inject]
-        public void Construct(IWorldCameraService cameraService,
+        public void Construct(
+            IWorldCameraService cameraService,
             IRandomService random,
             IGameStateMachine stateMachine,
             IPersistentDataService persistentData,
@@ -101,7 +107,10 @@ namespace _Game.GameModes.BattleMode.Scripts
             ICoinCounter coinCounter,
             IRewardAnimator rewardAnimator,
             IVfxFactory vfxFactory,
-            IBaseDestructionManager baseDestructionManager)
+            IBaseDestructionManager baseDestructionManager,
+            IBonusRewardService bonusRewardService,
+            IAdsService adsService,
+            IFactionSelectionWindowProvider factionSelectionWindowProvider)
         {
             _cameraService = cameraService;
             _stateMachine = stateMachine;
@@ -110,6 +119,7 @@ namespace _Game.GameModes.BattleMode.Scripts
             _audioService = audioService;
             _communicator = communicator;
             _alertPopupProvider = alertPopupProvider;
+            _factionSelectionWindowProvider = factionSelectionWindowProvider;
 
             _battleLaunchManager = battleLaunchManager;
             
@@ -127,7 +137,8 @@ namespace _Game.GameModes.BattleMode.Scripts
                 _cameraService,
                 _pauseManager,
                 _alertPopupProvider,
-                _audioService);
+                _audioService,
+                bonusRewardService);
 
             _battle.Construct(
                 unitFactory,
@@ -159,23 +170,43 @@ namespace _Game.GameModes.BattleMode.Scripts
         
         public void Init()
         {
-            _battleLaunchManager.Register(this);
-            _header.ShowWallet(
-                Currencies,
-                _cameraService);
+            _battleLaunchManager
+                .Register(this);
+            
+            _header
+                .ShowWallet(Currencies, _cameraService);
+
+            if (RaceState.CurrentRace == Race.None)
+            {
+                AskForRace();
+            }
             
             _battle.Init();
             _foodGenerator.Init();
             
             IsInitialized = true;
         }
-        
+
+        public void ResetGame()
+        {
+            _battle.ResetSelf();
+            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
+        }
+
+        public void Cleanup()
+        {
+            _coinCounter.Changed -= _hud.OnCoinsChanged;
+            _hud.QuitBattle -= OnBattleQuit;
+            _hud.Hide();
+            _battle.Cleanup();
+        }
+
         void IBattleLauncher.LaunchBattle()
         {
             Cleanup();
             
             _hud.Show();
-            _hud.QuitGame += GoToMainMenu;
+            _hud.QuitBattle += OnBattleQuit;
 
             _foodGenerator.StartGenerator();
             _unitBuilder.StartBuilder();
@@ -188,20 +219,8 @@ namespace _Game.GameModes.BattleMode.Scripts
             
             _stateMachine.Enter<GameLoopState>();
         }
-        
-        public void Cleanup()
-        {
-            _coinCounter.Changed -= _hud.OnCoinsChanged;
-            _hud.QuitGame -= GoToMainMenu;
-            _hud.Hide();
-            _battle.Cleanup();
-        }
 
-        public void ResetGame()
-        {
-            _battle.ResetSelf();
-            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
-        }
+        private void OnBattleQuit() => BattleCompleted(GameResultType.Defeat);
 
         private async void BattleCompleted(GameResultType type)
         {
@@ -209,14 +228,13 @@ namespace _Game.GameModes.BattleMode.Scripts
             
             var popup = await _gameResultWindowProvider.Load();
 
-            var isConfirmed = await popup.Value.ShowAndAwaitForExit(_coinCounter.Coins, type);
+            var isConfirmed = await popup.Value.ShowAndAwaitForExit(_coinCounter, type);
             if (isConfirmed)
             {
                 GoToMainMenu();
                 if (type == GameResultType.Victory) _battle.PrepareNextBattle();
             }
             popup.Dispose();
-
             
             SaveGame();
         }
@@ -243,7 +261,7 @@ namespace _Game.GameModes.BattleMode.Scripts
         }
 
         private void SaveGame() => _communicator.SaveUserState(_persistentData.State);
-        
+
         private void GoToMainMenu()
         {
             var clearingOperation = new ClearGameOperation(this);
@@ -258,10 +276,10 @@ namespace _Game.GameModes.BattleMode.Scripts
             _loadingScreenProvider.LoadingCompleted -= OnLoadingCompleted;
             _stateMachine.Enter<MenuState>();
 
-            _rewardAnimator.PlayCoins(_header.CoinsWalletWorldPosition);
-
             if (_coinCounter.Coins > 0)
             {
+                _rewardAnimator.PlayCoins(_header.CoinsWalletWorldPosition);
+                
                 _persistentData.AddCoins(_coinCounter.Coins);
                 _coinCounter.Cleanup();
             }
@@ -282,6 +300,14 @@ namespace _Game.GameModes.BattleMode.Scripts
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
             }
+        }
+
+        private async void AskForRace()
+        {
+            Disposable<FactionSelectionWindow> factionSelectionWindow = await _factionSelectionWindowProvider.Load();
+            var result = await factionSelectionWindow.Value.AwaitForDecision();
+            if(result)
+                factionSelectionWindow.Dispose();
         }
 
         //TODO Delete

@@ -10,8 +10,6 @@
         
         public sealed class SortingLayer
         {
-            public const float SORTING_MAX_Y = 5f;
-            public const float SORTING_MIN_Y = -5f;
             public const float SORTING_TRESHOLD = 0.1f;
             public const int SORTING_ORDER_MIN = -32768;
             public const int SORTING_ORDER_MAX = 32767;
@@ -25,10 +23,25 @@
             public const int ENEMY = 9;
             public const int ENEMY_BASE = 14;
             public const int PLAYER_BASE = 15;
+            public const int PLAYER_AGGRO = 10;
+            public const int ENEMY_AGGRO = 11;
+            public const int PLAYER_ATTACK = 12;
+            public const int ENEMY_ATTACK = 13;
+        }
+        
+        public sealed class ComparisonThreshold
+        {
+            public const float MONEY_EPSILON = 0.01f;
         }
         
         public sealed class ConfigKeys
         {
+            //FoodBoost
+            public const string FOOD_BOOST = "FoodBoost";
+            public const string FOOD_BOOST_COEFFICIENT = "FoodBoostCoefficient";
+            public const string DAILY_FOOD_BOOST_COUNT = "DailyFoodBoostCount";
+            public const string RECOVER_TIME_MINUTES = "RecoverTimeMinutes";
+
             //Common
             public const string COMMON = "Common";
             public const string FOOD_ICON_KEY = "FoodIconKey";
@@ -55,6 +68,8 @@
             public const string WARRIORS = "Warriors";
             public const string PLAYER_BASE_KEY = "PlayerBaseKey";
             public const string AGE_ICON_KEY = "AgeIconKey";
+            public const string DESCRIPTION = "Description";
+            public const string DATE_RANGE = "DateRange";
 
             //Economy
             public const string ECONOMY = "Economy";
@@ -93,12 +108,13 @@
 
             //Warriors
             public const string WARRIOR = "Warrior";
-            public const string ICON_KEY = "IconKey";
+            public const string PLAYER_ICON_KEY = "PlayerIconKey";
             public const string ENEMY_KEY = "EnemyKey";
             public const string PLAYER_KEY = "PlayerKey";
             public const string FOOD_PRICE = "FoodPrice";
             public const string COINS_PER_KILL = "CoinsPerKill";
-
+            public const string ENEMY_ICON_KEY = "EnemyIconKey";
+            
             //Weapon
             public const string WEAPON = "Weapon";
             public const string DAMAGE = "Damage";

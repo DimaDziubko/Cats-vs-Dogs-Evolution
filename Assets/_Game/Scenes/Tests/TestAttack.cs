@@ -1,0 +1,26 @@
+using _Game.Gameplay._Units.Scripts;
+using UnityEngine;
+
+namespace _Game.Scenes.Tests
+{
+    public class TestAttack : UnitAttack
+    {
+        [SerializeField] private AudioClip _sfx;
+        [SerializeField] private ParticleSystem _muzzleFlash;
+
+        [SerializeField] private AudioManager _audioManager;
+
+        protected override void OnAttack()
+        {
+            if (_muzzleFlash != null)
+            {
+                _muzzleFlash.Play();
+            }
+        
+            if (_audioManager!= null && _sfx != null)
+            {
+                _audioManager.PlayOneShot(_sfx);
+            }
+        }
+    }
+}

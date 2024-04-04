@@ -17,8 +17,14 @@ namespace _Game.Gameplay._Units.Scripts
         [SerializeField] private float _effectDelay = 0.5f;
         [SerializeField] private float _effectDuration = 1.0f;
         [SerializeField] private TMP_Text _label;
+        [SerializeField] private RectTransform _rectTransform;
         
         private Coroutine _effectBarCoroutine;
+
+        public Quaternion Rotation
+        {
+            set => _rectTransform.rotation = value;
+        }
 
         public void Construct(IWorldCameraService cameraService)
         {

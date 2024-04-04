@@ -1,6 +1,5 @@
 ﻿using _Game.Audio.Scripts;
 using _Game.Core.Prefabs;
-using _Game.Core.Services.Random;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -20,8 +19,12 @@ namespace _Game.Core.Services.Audio
         private int _freeSource;
 
         private readonly SoundsHolder _soundsHolder;
-
-        private int _tossSoundIndex;
+        
+        private bool _isSFXOn = true;
+        private bool _isAmbienceOn = true;
+        private float _sfxVolumeBeforeMute;
+        private float _musicVolumeBeforeMute;
+        
 
         public AudioService(
             AudioMixer mixer,
@@ -72,6 +75,24 @@ namespace _Game.Core.Services.Audio
             PlayOneShot(coinCollectSound);
         }
 
+        public void PlayCoinAppearanceSFX()
+        {
+            var sfx = _soundsHolder.CoinAppearanceSound;
+            if (sfx != null)
+            {
+                PlayOneShot(sfx);
+            }
+        }
+
+        public void PlayFillingWalletSFX()
+        {
+            var sfx = _soundsHolder.FillingWalletSound;
+            if (sfx != null)
+            {
+                PlayOneShot(sfx);
+            }
+        }
+        
         public void Stop()
         {
             _musicSource.Stop();
@@ -80,7 +101,42 @@ namespace _Game.Core.Services.Audio
         public void PlayCoinDropSound()
         {
             var dropSound = _soundsHolder.DropCoinSound;
-            PlayOneShot(dropSound);
+            if (dropSound != null)
+            {
+                PlayOneShot(dropSound);
+            }
+        }
+
+        public bool IsOnSFX() => _isSFXOn;
+
+        public bool IsOnAmbience() => _isAmbienceOn;
+
+        public void SwitchSFX(bool isOn)
+        {
+            _isSFXOn = isOn;
+            if (isOn)
+            {
+                SetSFXVolume(_sfxVolumeBeforeMute);
+            }
+            else
+            {
+                _sfxVolumeBeforeMute = GetSFXVolume();
+                _mixer.SetFloat(SFX_VOLUME, MIN_VOLUME_DB);
+            } 
+        }
+
+        public void SwitchAmbience(bool isOn)
+        {
+            _isAmbienceOn = isOn;
+            if (isOn)
+            {
+                SetMusicVolume(_musicVolumeBeforeMute);
+            }
+            else
+            {
+                _musicVolumeBeforeMute = GetMusicVolume();
+                _mixer.SetFloat(MUSIC_VOLUME, MIN_VOLUME_DB);
+            }
         }
         
         public void SetSFXVolume(in float volume)

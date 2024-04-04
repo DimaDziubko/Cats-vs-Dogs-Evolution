@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Camera;
 using _Game.UI.Common.Scripts;
 using _Game.Utils.Popups;
@@ -11,79 +12,114 @@ namespace _Game.UI.Hud
 {
     public class Hud : MonoBehaviour
     {
+        public event Action Opened;
+        
         [SerializeField] private Canvas _canvas;
 
         [SerializeField] private Button _quitButton;
         [SerializeField] private ToggleWithSpriteSwap _pauseToggle;
         [SerializeField] private CoinCounterView _counterView;
-        
-        public event Action QuitGame;
+
+        [SerializeField] private FoodBoostBtn _foodBoostBtn;
+
+        public event Action QuitBattle;
         
         private IPauseManager _pauseManager;
         private IAlertPopupProvider _alertPopupProvider;
         private IAudioService _audioService;
+        private IBonusRewardService _bonusRewardService;
 
         public void Construct(
             IWorldCameraService cameraService,
             IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
-            IAudioService audioService)
+            IAudioService audioService,
+            IBonusRewardService bonusRewardService)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _pauseManager = pauseManager;
             _alertPopupProvider = alertPopupProvider;
             _audioService = audioService;
-            
-            Hide();
+            _bonusRewardService = bonusRewardService;
 
-            //_quitButton.onClick.AddListener(OnQuitButtonClicked);
-            //_pauseToggle.ValueChanged += OnPauseClicked;
+            Hide();
         }
 
         public void Show()
         {
             _canvas.enabled = true;
-            _quitButton.onClick.AddListener(OnQuitButtonClicked);
-            _pauseToggle.ValueChanged += OnPauseClicked;
+            
+            _foodBoostBtn.Initialize(OnFoodBoostBtnClicked);
+
+            Unsubscribe();
+            Subscribe();
+            
+            Opened?.Invoke();
         }
-        
+
         public void Hide()
         {
             _canvas.enabled = false;
             _quitButton.onClick.RemoveAllListeners();
-            _pauseToggle.ValueChanged -= OnPauseClicked;
-            _counterView.Clear();
-        }
-        
-        private void OnPauseClicked(bool isPaused)
-        {
-            _audioService.PlayButtonSound();
-            _pauseManager.SetPaused(isPaused);
-        }
-
-        private async void OnQuitButtonClicked()
-        {
-            //_audioService.PlayButtonSound();
             
-            // OnPauseClicked(true);
-            // var popup = await _alertPopupProvider.Load();
-            //  var isConfirmed = await popup.Value.AwaitForDecision("Are you sure to quit?");
-            // OnPauseClicked(false);
-            //  if (isConfirmed)
-            //      QuitGame?.Invoke();
-            //  popup.Dispose();
-             
-             QuitGame?.Invoke();
-        }
+            _foodBoostBtn.Cleanup();
+            
+            Unsubscribe();
 
-        private void OnDestroy()
-        {
-            _pauseToggle.ValueChanged -= OnPauseClicked;
+            _counterView.Clear();
         }
 
         public void OnCoinsChanged(float amount)
         {
             _counterView.UpdateCoins(amount);
+        }
+
+        private void Subscribe()
+        {
+            _bonusRewardService.FoodBoostBtnModelChanged += _foodBoostBtn.UpdateBtnState;
+
+            _pauseToggle.ValueChanged += OnPauseClicked;
+
+            Opened += _bonusRewardService.OnHudOpened;
+        }
+
+        private void Unsubscribe()
+        {
+            _bonusRewardService.FoodBoostBtnModelChanged -= _foodBoostBtn.UpdateBtnState;
+
+            _pauseToggle.ValueChanged -= OnPauseClicked;
+
+            Opened -= _bonusRewardService.OnHudOpened;
+        }
+
+        private void OnFoodBoostBtnClicked()
+        {
+            _audioService.PlayButtonSound();
+            _pauseManager.SetPaused(true);
+            _bonusRewardService.OnFoodBoostBtnClicked();
+        }
+
+        private void OnPauseClicked(bool isPaused)
+        {
+            _audioService.PlayButtonSound();
+            _pauseManager.SetPaused(isPaused);
+            ShowAlertPopup();
+        }
+
+        private async void ShowAlertPopup()
+        {
+            var popup = await _alertPopupProvider.Load();
+            var isConfirmed = await popup.Value.AwaitForDecision("End battle?");
+            
+            _pauseManager.SetPaused(false);
+            _pauseToggle.UpdateToggleStateManually(false);
+            
+            if (isConfirmed)
+            {
+                QuitBattle?.Invoke();
+            }
+            
+            popup.Dispose();
         }
     }
 }

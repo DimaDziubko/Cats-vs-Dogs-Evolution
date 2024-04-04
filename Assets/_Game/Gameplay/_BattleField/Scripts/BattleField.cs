@@ -7,11 +7,11 @@ using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Factory;
-using _Game.Gameplay.CoinCounter.Scripts;
 using _Game.Gameplay.Vfx.Factory;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -27,6 +27,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
 
+        //TODO Use later
         private Vector3 _enemySpawnPoint;
         private Vector3 _playerSpawnPoint;
         

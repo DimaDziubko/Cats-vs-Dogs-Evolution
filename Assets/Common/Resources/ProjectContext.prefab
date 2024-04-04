@@ -50,7 +50,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1c7078be887b9644490c3c321117da87, type: 3}
   - {fileID: 8300000, guid: 35ecefb37918be74abc0dc8c23ab29c7, type: 3}
   - {fileID: 8300000, guid: 01d95179b6d3de246b2243520ad870ad, type: 3}
-  FillingWalletSound: {fileID: 8300000, guid: bf63ff2fcf779494b9a691b7eff2bbc2, type: 3}
+  FillingWalletSound: {fileID: 8300000, guid: 83621d146d8be9e44a63e1f1caf29406, type: 3}
+  CoinAppearanceSound: {fileID: 8300000, guid: 7d5f66d1c761d2642a63348840538966, type: 3}
   DropCoinSound: {fileID: 8300000, guid: 1e8b33291e294c24fa87f50be1b7ed2e, type: 3}
   BaseDestructionSFX: {fileID: 8300000, guid: a2d5aab1e9b76524eb328b70bc8f1e9a, type: 3}
 --- !u!1 &660151963573810294
@@ -545,7 +546,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1258253947384861881}
   - component: {fileID: 5180834647038271119}
-  - component: {fileID: -7608252014859261637}
+  - component: {fileID: 332449148820911838}
+  - component: {fileID: 4049454704554127754}
+  - component: {fileID: 2472212416254111113}
+  - component: {fileID: 887475558977660336}
+  - component: {fileID: 5017407520400509462}
   - component: {fileID: 5932694215118979118}
   m_Layer: 0
   m_Name: ProjectContext
@@ -591,7 +596,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: -7608252014859261637}
+  - {fileID: 332449148820911838}
+  - {fileID: 4049454704554127754}
+  - {fileID: 2472212416254111113}
+  - {fileID: 887475558977660336}
+  - {fileID: 5017407520400509462}
   - {fileID: 5932694215118979118}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
@@ -607,7 +616,7 @@ MonoBehaviour:
       _missingHandlerDefaultResponse: 2
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1
---- !u!114 &-7608252014859261637
+--- !u!114 &332449148820911838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -616,7 +625,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6033977587745188400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb85e35a779d9f41bc6a286b598fef4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e93e63a33b6418f8e44d055f22235da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coroutineRunner: {fileID: 2942010692569547753}
+--- !u!114 &4049454704554127754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033977587745188400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18d82d8c85e4bdab30d6de0b41169e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _audioMixer: {fileID: 24100000, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}
@@ -625,8 +647,43 @@ MonoBehaviour:
   _sfxSourcesHolder: {fileID: 5440731370771149726}
   _musicSource: {fileID: 8906116136196940069}
   _soundsHolder: {fileID: 8141187709970298041}
-  _coroutineRunner: {fileID: 2942010692569547753}
+--- !u!114 &2472212416254111113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033977587745188400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f657299b911b4f17b1b7d1d621d021b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _header: {fileID: 7868244799142840903}
+--- !u!114 &887475558977660336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033977587745188400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a90237f2200b43f9bda53faf49d285d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5017407520400509462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033977587745188400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c46ba0670a4072a56583ab5eee003c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5932694215118979118
 MonoBehaviour:
   m_ObjectHideFlags: 0

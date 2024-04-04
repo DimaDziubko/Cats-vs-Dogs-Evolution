@@ -20,8 +20,9 @@ namespace _Game.Core.Loading
         {
             var loadingScreen = await Load<LoadingScreen>(AssetsConstants.LOADING_SCREEN);
             await loadingScreen.Load(loadingOperations);
-            Unload();
             LoadingCompleted?.Invoke();
+            await loadingScreen.PlayFadeAnimation();
+            Unload();
         }
     }
 }

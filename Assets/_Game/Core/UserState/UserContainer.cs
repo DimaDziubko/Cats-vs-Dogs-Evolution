@@ -2,6 +2,7 @@
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.PersistentData;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
@@ -29,12 +30,28 @@ namespace _Game.Core.UserState
 
         public void OpenNextAge()
         {
+            State.Currencies.RemoveAllCoins();
             State.TimelineState.OpenNextAge();
         }
 
         public void OpenNextTimeline()
         {
             State.TimelineState.OpenNextTimeline();
+        }
+
+        public void RecoverFoodBoost(int dailyFoodBoostCount)
+        {
+            State.FoodBoost.SetFoodBoostCount(dailyFoodBoostCount);
+        }
+
+        public void SpendFoodBoost()
+        {
+            SpendFoodBoostAfterBoost(1, false);
+        }
+
+        public void ChooseRace(Race race)
+        {
+            State.RaceState.Change(race);
         }
 
         public void OpenNextBattle(int nextBattle)
@@ -68,6 +85,12 @@ namespace _Game.Core.UserState
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
             }
+        }
+
+        private void SpendFoodBoostAfterBoost(int delta, bool isPositive)
+        {
+            delta = isPositive ? delta : (delta * -1);
+            State.FoodBoost.ChangeFoodBoostCount(delta);
         }
 
         private void ChangeAfterPurchase(float price, bool isPositive)

@@ -15,5 +15,13 @@ namespace _Game.Core.Services.Audio
         void PlayCoinCollectSound();
         void Stop();
         void PlayBaseDestructionSFX();
+
+        public void PlayCoinAppearanceSFX();
+        public void PlayFillingWalletSFX();
+
+        bool IsOnSFX();
+        bool IsOnAmbience();
+        void SwitchSFX(bool isOn);
+        void SwitchAmbience(bool isOn);
     }
 }

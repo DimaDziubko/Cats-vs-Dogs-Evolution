@@ -58,8 +58,6 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         public void Cleanup()
         {
-            //TODO Delete
-            Debug.Log("Clean transition button");
             Unsubscribe();
             _transactionButton.Cleanup();
         }

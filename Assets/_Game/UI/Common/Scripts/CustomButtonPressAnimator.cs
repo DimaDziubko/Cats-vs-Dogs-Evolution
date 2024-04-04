@@ -29,7 +29,7 @@ namespace _Game.UI.Common.Scripts
             for (int i = 0; i < _animatableObjects.Length; i++)
             {
                 if (_animatableObjects[i] != null)
-                    _originalPositions[i] = _animatableObjects[i].localPosition;
+                    _originalPositions[i] = _animatableObjects[i].anchoredPosition;
             }
         }
 
@@ -39,8 +39,10 @@ namespace _Game.UI.Common.Scripts
 
             foreach (var rectTransform in _animatableObjects)
             {
+                var initialPosition = rectTransform.anchoredPosition;
+                
                 if (rectTransform != null)
-                    rectTransform.localPosition += new Vector3(0, -_buttonTransform.sizeDelta.y / _pressOffsetFactor, 0);
+                    rectTransform.anchoredPosition = new Vector3(initialPosition.x,  (initialPosition.y -(_buttonTransform.sizeDelta.y / _pressOffsetFactor)), 0);
             }
         }
 
@@ -49,17 +51,18 @@ namespace _Game.UI.Common.Scripts
             for (int i = 0; i < _animatableObjects.Length; i++)
             {
                 if (_animatableObjects[i] != null)
-                    _animatableObjects[i].localPosition = _originalPositions[i];
+                    _animatableObjects[i].anchoredPosition = _originalPositions[i];
             }
         }
         
+#if UNITY_EDITOR
         //Helper
-        [ExecuteAlways]
         [Button]
         private void ManualInit()
         {
             _buttonTransform = GetComponent<RectTransform>();
             _animatableObjects = GetComponentsInChildren<RectTransform>();
         }
+#endif
     }
 }

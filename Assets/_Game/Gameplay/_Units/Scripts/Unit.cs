@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using _Game.Common;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
@@ -54,7 +54,7 @@ namespace _Game.Gameplay._Units.Scripts
 
         private IRandomService _random;
 
-        public Vector3 Position
+        private Vector3 Position
         {
             get => _transform.position;
             set => _transform.position = value;
@@ -76,6 +76,7 @@ namespace _Game.Gameplay._Units.Scripts
             {
                 _destination = value;
                 _fsm.Enter<MoveToPointState, Vector3>(_destination);
+                _health.HealthBarRotation = Quaternion.Euler(0, _destination.x < Position.x ? 180 : 0, 0);
             }
         }
 
@@ -117,36 +118,42 @@ namespace _Game.Gameplay._Units.Scripts
             Faction faction,
             UnitType type,
             IRandomService random,
-            IAudioService audioService)
+            IAudioService audioService,
+            int unitLayer,
+            int aggroLayer,
+            int attackLayer)
         {
             Faction = faction;
             Type = type;
+
+            gameObject.layer = unitLayer;
             
             _random = random;
 
             WeaponType = config.WeaponConfig.WeaponType;
             _coinsPerKill = config.CoinsPerKill;
-            
-            InitializeFsm();
 
-            _aggroDetection.Construct();
-            _attackDetection.Construct();
+
+            _aggroDetection.Construct(aggroLayer);
+            _attackDetection.Construct(attackLayer);
 
             //TODO Config
             _attack.Construct(
                 config.WeaponConfig,
                 faction,
-                audioService);
+                audioService,
+                _transform);
 
             _health.Construct(
                 config.Health,
                 cameraService);
+
             _move.Construct(
                 transform,
                 config.Speed);
 
             _damageFlash.Construct();
-            
+
             _health.Death += OnDeath;
             _health.HideHealth();
 
@@ -154,22 +161,24 @@ namespace _Game.Gameplay._Units.Scripts
             _targetPoint.Transform = _transform;
 
             _animator.Construct();
+            
+            InitializeFsm();
         }
 
 
         public void Initialize(
             IInteractionCache interactionCache, 
-            Vector3 playerSpawnPoint, 
+            Vector3 unitSpawnPoint, 
             Vector3 destination,
             IShootProxy shootProxy,
             IVFXProxy vFXProxy,
             ICoinSpawner coinSpawner)
         {
             //TODO Delete
-            Debug.Log($"{playerSpawnPoint} UNIT");
+            Debug.Log($"{unitSpawnPoint} UNIT");
             
             InteractionCache = interactionCache;
-            Position = playerSpawnPoint;
+            Position = unitSpawnPoint;
             Destination = destination;
             _attack.SetShootProxy(shootProxy);
             _attack.SetVFXProxy(vFXProxy);
@@ -251,9 +260,6 @@ namespace _Game.Gameplay._Units.Scripts
         IEnumerator ReturnToPoolAfterDelay()
         {
             yield return new WaitForSeconds(RETURN_TO_POOL_DELAY);
-            
-            //TODO Delete
-            Debug.Log("Origin factory reclaim");
             _isDead = true;
         }
         

@@ -8,14 +8,20 @@ namespace _Game.Gameplay._Units.Scripts
     {
         [SerializeField] private NavMeshAgent _agent;
         
-        private Transform _transform;
-        public Vector3 Position => _transform.position;
+        private Transform _unitTransform;
+        public Vector3 Position => _unitTransform.position;
+
+        private Quaternion Rotation
+        {
+            get => _unitTransform.rotation;
+            set => _unitTransform.rotation = value;
+        }
 
         private float _speed;
         
-        public void Construct(Transform transform, float speed)
+        public void Construct(Transform unitTransform, float speed)
         {
-            _transform = transform;
+            _unitTransform = unitTransform;
             _agent.speed = speed;
             _agent.updateRotation = false;
             _agent.updateUpAxis = false;
@@ -28,8 +34,15 @@ namespace _Game.Gameplay._Units.Scripts
             {
                 _agent.isStopped = false;
             }
+
+            RotateToTarget(destination);
             
             _agent.SetDestination(destination);
+        }
+
+        private void RotateToTarget(Vector3 destination)
+        {
+            Rotation = Quaternion.Euler(0, destination.x < Position.x ? 180 : 0, 0);
         }
 
         public void Stop()

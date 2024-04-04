@@ -14,7 +14,20 @@ namespace _Game.Gameplay._Units.Scripts
         protected IVFXProxy _vFXProxy;
 
         private IAudioService _audioService;
+        
+        private Transform _unitTransform;
 
+        private Vector3 Position
+        {
+            get => _unitTransform.position;
+            set => _unitTransform.position = value;
+        }
+        private Quaternion Rotation
+        {
+            get => _unitTransform.rotation;
+            set => _unitTransform.rotation = value;
+        }
+        
         public void SetTarget(ITarget target)
         {
             _target = target;
@@ -33,19 +46,27 @@ namespace _Game.Gameplay._Units.Scripts
         public virtual void Construct(
             WeaponConfig config,
             Faction faction,
-            IAudioService audioService)
+            IAudioService audioService,
+            Transform unitTransform)
         {
             _audioService = audioService;
+            _unitTransform = unitTransform;
         }
 
         //Animation event
         protected virtual void OnAttack()
         {
+            RotateToTarget(_target.Transform.position);
+            
             if (_audioService != null && _attackSFX != null)
             {
                 _audioService.PlayOneShot(_attackSFX);
             }   
         }
         
+        private void RotateToTarget(Vector3 destination)
+        {
+            Rotation = Quaternion.Euler(0, destination.x < Position.x ? 180 : 0, 0);
+        }
     }
 }

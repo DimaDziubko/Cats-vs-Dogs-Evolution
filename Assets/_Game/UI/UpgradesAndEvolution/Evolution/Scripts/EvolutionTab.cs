@@ -3,6 +3,7 @@ using _Game.Core.Services.Audio;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.TimelineInfoWindow.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,16 +26,21 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         [SerializeField] private TMP_Text _timelineLabel;
     
+        private IDisposable _disposable;
+        
         private IEvolutionService _evolutionService;
         private IHeader _header;
         private IAudioService _audioService;
+        private ITimelineInfoWindowProvider _timelineInfoProvider;
 
         public void Construct(
             IEvolutionService evolutionService,
-            IAudioService audioService)
+            IAudioService audioService,
+            ITimelineInfoWindowProvider timelineInfoProvider)
         {
             _audioService = audioService;
             _evolutionService = evolutionService;
+            _timelineInfoProvider = timelineInfoProvider;
         }
     
         public void Show()
@@ -68,7 +74,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         {
             Unsubscribe();
             _evolveButton.Cleanup();
-            
+            _disposable?.Dispose();
             _canvas.enabled = false;
         }
 
@@ -77,6 +83,8 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             UpdateTimelineLabel(viewModel.CurrentTimelineId);
             UpdateButtonData(viewModel.EvolutionBtnData);
 
+            _currentAgeImage.sprite = viewModel.CurrentAgeIcon;
+            _nextAgeImage.sprite = viewModel.NextAgeIcon;
             _currentAgeName.text = viewModel.CurrentAgeName;
             _nextAgeName.text = viewModel.NextAgeName;
         }
@@ -84,10 +92,18 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void UpdateButtonData(EvolutionBtnData data) => 
             _evolveButton.UpdateButtonState(data.CanAfford, data.Price);
 
-        private void OnEvolveButtonClick()
+        private async void OnEvolveButtonClick()
         {
             PlayButtonSound();
-            _evolutionService.MoveToNextAge();
+            
+            var window = await _timelineInfoProvider.Load();
+            var isExited = await window.Value.AwaitForDecision(true);
+            
+            if(isExited) window.Dispose();
+            _disposable = window;
+            
+            //TODO Play animation here then evolve
+            //_evolutionService.MoveToNextAge();
         }
 
         private void PlayButtonSound() => 

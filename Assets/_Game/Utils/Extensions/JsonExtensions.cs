@@ -38,6 +38,20 @@ namespace _Game.Utils.Extensions
                 };
             }
             
+            var foodBoostToken = jsonData[Constants.ConfigKeys.FOOD_BOOST]?
+                .FirstOrDefault(t => ((int)t[Constants.ConfigKeys.ID] - ID_OFFSET) == 0); 
+            
+            if (foodBoostToken != null)
+            {
+                config.FoodBoostConfig = new FoodBoostConfig()
+                {
+                    Id = ((int)foodBoostToken[Constants.ConfigKeys.ID] - ID_OFFSET),
+                    RecoverTimeMinutes = ((int)foodBoostToken[Constants.ConfigKeys.RECOVER_TIME_MINUTES]),
+                    DailyFoodBoostCount = ((int)foodBoostToken[Constants.ConfigKeys.DAILY_FOOD_BOOST_COUNT]),
+                    FoodBoostCoefficient = ((int)foodBoostToken[Constants.ConfigKeys.FOOD_BOOST_COEFFICIENT]),
+                };
+            }
+            
             return config;
         }
 
@@ -70,8 +84,11 @@ namespace _Game.Utils.Extensions
                         Economy = ParseEconomy((int)ageToken[Constants.ConfigKeys.ECONOMY], jsonData),
                         Warriors = ParseWarriors(ageToken[Constants.ConfigKeys.WARRIORS], jsonData),
                         PlayerBaseKey = ageToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
+                        EnemyBaseKey = ageToken[Constants.ConfigKeys.ENEMY_BASE_KEY]?.ToString(),
                         Name = ageToken[Constants.ConfigKeys.NAME]?.ToString(),
                         AgeIconKey = ageToken[Constants.ConfigKeys.AGE_ICON_KEY]?.ToString(),
+                        Description = ageToken[Constants.ConfigKeys.DESCRIPTION]?.ToString(),
+                        DateRange = ageToken[Constants.ConfigKeys.DATE_RANGE]?.ToString(),
                     };
                     ages.Add(ageConfig);
                 }
@@ -169,6 +186,7 @@ namespace _Game.Utils.Extensions
                         EnvironmentKey = battleToken[Constants.ConfigKeys.BACKGROUND_KEY]?.ToString(),
                         EnemyBaseHealth = (float)battleToken[Constants.ConfigKeys.ENEMY_BASE_HEALTH],
                         EnemyBaseKey = battleToken[Constants.ConfigKeys.ENEMY_BASE_KEY]?.ToString(),
+                        PlayerBaseKey = battleToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
                         BGMKey = battleToken[Constants.ConfigKeys.BGM_KEY]?.ToString(),
                         CoinsPerBase = (float)battleToken[Constants.ConfigKeys.COINS_PER_BASE],
                         
@@ -260,7 +278,7 @@ namespace _Game.Utils.Extensions
                         Speed = (float)warriorToken[Constants.ConfigKeys.SPEED],
                         WeaponConfig = ParseWeapon((int)warriorToken[Constants.ConfigKeys.WEAPON], jsonData),
                         Name = warriorToken[Constants.ConfigKeys.NAME]?.ToString(),
-                        IconKey = warriorToken[Constants.ConfigKeys.ICON_KEY]?.ToString(),
+                        PlayerIconKey = warriorToken[Constants.ConfigKeys.PLAYER_ICON_KEY]?.ToString(),
                         Price = (float)warriorToken[Constants.ConfigKeys.PRICE],
                         EnemyKey = warriorToken[Constants.ConfigKeys.ENEMY_KEY]?.ToString(),
                         PlayerKey = warriorToken[Constants.ConfigKeys.PLAYER_KEY]?.ToString(),
@@ -270,6 +288,7 @@ namespace _Game.Utils.Extensions
                                 warriorToken[Constants.ConfigKeys.UNIT_TYPE].ToString(), 
                                 true) : default(UnitType),
                         CoinsPerKill = (int)warriorToken[Constants.ConfigKeys.COINS_PER_KILL],
+                        EnemyIconKey = warriorToken[Constants.ConfigKeys.ENEMY_ICON_KEY]?.ToString(),
                     };
                     warriors.Add(warriorConfig);
                 }

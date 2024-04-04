@@ -9,6 +9,15 @@ namespace _Game.Core.Configs.Models
     {
         public TimelineConfig Timeline;
         public CommonConfig CommonConfig;
+        public FoodBoostConfig FoodBoostConfig;
+    }
+
+    public class FoodBoostConfig
+    {
+        public int Id;
+        public int FoodBoostCoefficient;
+        public int DailyFoodBoostCount;
+        public int RecoverTimeMinutes;
     }
 
     public class CommonConfig
@@ -33,8 +42,11 @@ namespace _Game.Core.Configs.Models
         public EconomyConfig Economy;
         public List<WarriorConfig> Warriors;
         public string PlayerBaseKey;
+        public string EnemyBaseKey;
         public string Name;
         public string AgeIconKey;
+        public string Description;
+        public string DateRange;
     }
 
     public class BattleConfig
@@ -45,6 +57,7 @@ namespace _Game.Core.Configs.Models
         public string EnvironmentKey;
         public float EnemyBaseHealth;
         public string EnemyBaseKey;
+        public string PlayerBaseKey;
         public string BGMKey;
         public float CoinsPerBase;
     }
@@ -107,7 +120,8 @@ namespace _Game.Core.Configs.Models
         public float Speed;
         public WeaponConfig WeaponConfig;
         public string Name;
-        public string IconKey;
+        public string PlayerIconKey;
+        public string EnemyIconKey;
         public string EnemyKey;
         public float Price;
         public string PlayerKey;

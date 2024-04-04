@@ -41,22 +41,22 @@ namespace _Game.Utils.Extensions
             {
                 if (price % 1_000_000 == 0)
                 {
-                    return (price / 1_000_000).ToString("0", ci) + "M";
+                    return (price / 1_000_000).ToString("0", ci) + "m";
                 }
                 else
                 {
-                    return (price / 1_000_000).ToString("0.#", ci) + "M";
+                    return (price / 1_000_000).ToString("0.#", ci) + "m";
                 }
             }
             else if (price >= 1_000_000_000)
             {
                 if (price % 1_000_000_000 == 0)
                 {
-                    return (price / 1_000_000_000).ToString("0", ci) + "B";
+                    return (price / 1_000_000_000).ToString("0", ci) + "b";
                 }
                 else
                 {
-                    return (price / 1_000_000_000).ToString("0.#", ci) + "B";
+                    return (price / 1_000_000_000).ToString("0.#", ci) + "b";
                 }
             }
             else

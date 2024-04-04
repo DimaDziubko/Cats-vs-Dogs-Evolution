@@ -55,7 +55,6 @@ namespace _Game.UI._MainMenu.Scripts
         private bool IsCardsLocked => true;
         private bool IsShopLocked => true;
         
-        
         enum ActiveWindow
         {
             None,
@@ -157,6 +156,7 @@ namespace _Game.UI._MainMenu.Scripts
                 {
                     _upgradeAndEvolutionWindow.Value.Hide();
                     _upgradeAndEvolutionWindow?.Dispose();
+                    _upgradeAndEvolutionWindow = null;
                 }
             }
         }
@@ -177,6 +177,7 @@ namespace _Game.UI._MainMenu.Scripts
                 {
                     _startBattleWindow.Value.Hide();
                     _startBattleWindow?.Dispose();
+                    _startBattleWindow = null;
                 }
             }
             
@@ -192,26 +193,6 @@ namespace _Game.UI._MainMenu.Scripts
             var shop = await _shopPopupProvider.Load();
             var isExit = await shop.Value.AwaitForExit();
             if (isExit) shop.Dispose();
-        }
-        
-        private void OnQuitBtnClicked()
-        {
-            //TODO Check
-            //SaveGame();
-
-            PlayButtonSound();
-
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-
-#elif UNITY_ANDROID || UNITY_STANDALONE || UNITY_IOS
-            Application.Quit();
-#endif
-        }
-
-        private void SaveGame()
-        {
-            _communicator.SaveUserState(_persistentData.State);
         }
     }
 }

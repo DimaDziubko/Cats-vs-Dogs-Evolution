@@ -1,6 +1,7 @@
 ﻿using _Game.Core.Configs.Models;
 using _Game.Core.UserState;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.Services.PersistentData
@@ -16,5 +17,8 @@ namespace _Game.Core.Services.PersistentData
         void UpgradeItem(UpgradeItemType type, float price);
         void OpenNextAge();
         void OpenNextTimeline();
+        void RecoverFoodBoost(int dailyFoodBoostCount);
+        void SpendFoodBoost();
+        void ChooseRace(Race race);
     }
 }

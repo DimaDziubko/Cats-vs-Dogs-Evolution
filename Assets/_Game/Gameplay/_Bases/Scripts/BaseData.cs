@@ -5,5 +5,6 @@
         public float Health;
         public Base BasePrefab;
         public float CoinsAmount;
+        public int Layer;
     }
 }

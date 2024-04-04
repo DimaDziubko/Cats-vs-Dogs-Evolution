@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using UnityEngine;
 
 namespace _Game.Core.UserState
 {
@@ -16,8 +15,7 @@ namespace _Game.Core.UserState
         public int FoodProductionLevel;
         public int BaseHealthLevel;
         public List<UnitType> OpenUnits;
-
-        //TODO Change save system
+        
         public event Action<UnitType> OpenedUnit;
         public event Action NextAgeOpened;
         public event Action NextBattleOpened;
@@ -51,6 +49,7 @@ namespace _Game.Core.UserState
             AllBattlesWon = false;
             MaxBattle = 0;
             OpenUnits = new List<UnitType>() {UnitType.Light};
+            
             NextAgeOpened?.Invoke();
         }
         
@@ -63,14 +62,12 @@ namespace _Game.Core.UserState
             AllBattlesWon = false;
             MaxBattle = 0;
             OpenUnits = new List<UnitType>() {UnitType.Light};
+            
             NextTimelineOpened?.Invoke();
         }
 
         public void ChangeFoodProductionLevel()
         {
-            //TODO Delete
-            Debug.Log("ChangeFoodProductionLevel TIMELINE STATE");
-            
             FoodProductionLevel++;
             UpgradeItemChanged?.Invoke(UpgradeItemType.FoodProduction);
         }

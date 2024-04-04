@@ -22,9 +22,6 @@ namespace _Game.UI.Common.Scripts
 
         public void Init()
         {
-            //TODO Delete
-            Debug.Log("Transition button get component");
-            
             _button = GetComponent<Button>();
             
             Unsubscribe();
@@ -59,8 +56,6 @@ namespace _Game.UI.Common.Scripts
 
         public void Cleanup()
         {
-            //TODO Delete
-            Debug.Log("Transition button cleanup");
             Unsubscribe();
         }
 

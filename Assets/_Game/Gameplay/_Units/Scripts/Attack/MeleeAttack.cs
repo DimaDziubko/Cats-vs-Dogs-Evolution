@@ -1,5 +1,6 @@
 ﻿using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
+using UnityEngine;
 
 namespace _Game.Gameplay._Units.Scripts.Attack
 {
@@ -10,9 +11,10 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         public override void Construct(
             WeaponConfig config,
             Faction faction,
-            IAudioService audioService)
+            IAudioService audioService,
+            Transform unitTransform)
         {
-            base.Construct(config, faction, audioService);
+            base.Construct(config, faction, audioService, unitTransform);
             _damage = config.Damage;
         }
 

@@ -29,7 +29,7 @@ namespace _Game.UI.Common.Scripts
         {
             if (_iconTransform != null)
             {
-                _normalIconPosition = _iconTransform.position;
+                _normalIconPosition = _iconTransform.anchoredPosition;
                 _highlightedIconPosition = new Vector3(
                     _normalIconPosition.x, 
                     _normalIconPosition.y + _iconWarp, 
@@ -83,7 +83,7 @@ namespace _Game.UI.Common.Scripts
 
             if (_iconTransform)
             {
-                _iconTransform.position = _highlightedIconPosition;
+                _iconTransform.anchoredPosition = _highlightedIconPosition;
             }
 
             _button.transform.localScale = _highlightedScale;
@@ -98,7 +98,7 @@ namespace _Game.UI.Common.Scripts
 
             if (_iconTransform)
             {
-                _iconTransform.position = _normalIconPosition;
+                _iconTransform.anchoredPosition = _normalIconPosition;
             }
             
             _button.transform.localScale = _normalScale;

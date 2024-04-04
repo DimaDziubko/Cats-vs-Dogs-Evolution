@@ -50,7 +50,8 @@ namespace _Game.Gameplay._Bases.Factory
                 faction, 
                 baseData.Health, 
                 baseData.CoinsAmount, 
-                _cameraService);
+                _cameraService,
+                baseData.Layer);
             
             return instance;
         }

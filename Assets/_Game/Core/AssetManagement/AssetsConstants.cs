@@ -2,6 +2,8 @@ namespace _Game.Core.AssetManagement
 {
     public static class AssetsConstants
     {
+        public const string FACTION_SELECTION_WINDOW = "FactionSelectionWindow";
+        public const string TIMELINE_INFO_WINDOW = "TimelineInfoWindow";
         public const string TUTORIAL = "Tutorial";
         public const string UPGRADE_AND_EVOLUTION_WINDOW = "UpgradeAndEvolutionWindow";
         public const string START_BATTLE_WINDOW = "StartBattleWindow";
