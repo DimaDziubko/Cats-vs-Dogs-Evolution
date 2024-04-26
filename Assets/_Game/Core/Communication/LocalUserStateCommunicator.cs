@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using _Game.Core.UserState;
+using _Game.Gameplay.Common.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -33,7 +35,20 @@ namespace _Game.Core.Communication
 
         public async UniTask<UserAccountState> GetUserState()
         {
-            return await _strategy.GetUserState(Path);
+            var result =  await _strategy.GetUserState(Path);
+            
+            // result.RaceState ??= new RaceState()
+            // {
+            //     CurrentRace = Race.None
+            // };
+            //
+            // result.FoodBoost ??= new FoodBoostState()
+            // {
+            //     DailyFoodBoostCount = 2,
+            //     LastDailyFoodBoost = DateTime.UtcNow
+            // };
+            
+            return result;
         }
     }
 }

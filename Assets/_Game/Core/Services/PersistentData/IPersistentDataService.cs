@@ -20,5 +20,7 @@ namespace _Game.Core.Services.PersistentData
         void RecoverFoodBoost(int dailyFoodBoostCount);
         void SpendFoodBoost();
         void ChooseRace(Race race);
+        void AddCompletedBattle();
+        void CompleteTutorialStep(int tutorialDataStep);
     }
 }

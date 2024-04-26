@@ -22,8 +22,12 @@ namespace _Game.Core.Loading
         public async UniTask Load(Action<float> onProgress)
         {
             onProgress.Invoke(0.2f);
+            _ageStateService.ReleaseResources();
+            onProgress.Invoke(0.3f);
+            _battleStateService.ReleaseResources();
+            onProgress.Invoke(0.6f);
             await _ageStateService.ChangeRace();
-            onProgress.Invoke(0.5f);
+            onProgress.Invoke(0.8f);
             await _battleStateService.ChangeRace();
             onProgress.Invoke(1.0f);
         }

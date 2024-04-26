@@ -10,11 +10,12 @@ namespace _Game.UI.Common.Scripts
     public class CurrenciesUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text _coinsLabel;
-        [SerializeField] private float _textIncreaseAnimationDuration = 1f;
         [SerializeField] private RectTransform _coinsWalletTransform;
-        [SerializeField] private float _increaseAnimationDelay = 3f;
         
-        private float _currentCoinsValue;
+        [SerializeField] private float _scaleAnimationDuration = 0.1f;
+        [SerializeField] private float _targetScale = 1.1f;
+        [SerializeField] private float _normalScale = 1.0f;
+        
         
         private IUserCurrenciesStateReadonly _currencies;
         private IWorldCameraService _cameraService;
@@ -31,8 +32,6 @@ namespace _Game.UI.Common.Scripts
 
         public void Show()
         {
-            _currentCoinsValue = _currencies.Coins;
-            
             _currencies.CoinsChanged -= OnCurrenciesChanged;
             _currencies.CoinsChanged += OnCurrenciesChanged;
             
@@ -43,7 +42,8 @@ namespace _Game.UI.Common.Scripts
         {
             if (isPositive)
             {
-                DOVirtual.DelayedCall(_increaseAnimationDelay, PlayIncreaseAnimation);
+                PlayScaleAnimation();
+                _coinsLabel.text = _currencies.Coins.FormatMoney();
             }
             else
             {
@@ -51,19 +51,16 @@ namespace _Game.UI.Common.Scripts
             }
         }
 
-        private void PlayIncreaseAnimation()
+        private void PlayScaleAnimation()
         {
-            DOTween.To(
-                () => _currentCoinsValue, 
-                x => _currentCoinsValue = x, 
-                _currencies.Coins,
-                _textIncreaseAnimationDuration).OnUpdate(
-                () =>
-                {
-                    _coinsLabel.text = _currentCoinsValue.FormatMoney();
-                });
+            _coinsLabel.transform.DOKill(); 
+            _coinsLabel.transform.localScale = Vector3.one;
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(_coinsLabel.transform.DOScale(_targetScale, _scaleAnimationDuration/2))
+                .Append(_coinsLabel.transform.DOScale(_normalScale, _scaleAnimationDuration/2));
+            sequence.Play();
         }
-
+        
         public void Hide()
         {
             //TODO Fix later

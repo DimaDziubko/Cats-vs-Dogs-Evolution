@@ -7,6 +7,7 @@ using _Game.Core.Services.Battle;
 using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 
 namespace _Game.Core.GameState
 {
@@ -21,6 +22,7 @@ namespace _Game.Core.GameState
         private readonly IEvolutionService _evolutionService;
         private readonly IAdsService _adsService;
         private readonly IBonusRewardService _bonusRewardService;
+        private readonly TutorialManager _tutorialManager;
 
         public InitializationState(
             IGameStateMachine stateMachine,
@@ -31,7 +33,8 @@ namespace _Game.Core.GameState
             IUnitUpgradesService unitUpgradeService,
             IEvolutionService evolutionService,
             IAdsService adsService,
-            IBonusRewardService bonusRewardService)
+            IBonusRewardService bonusRewardService,
+            TutorialManager tutorialManager)
         {
             _stateMachine = stateMachine;
             _assetProvider = assetProvider;
@@ -42,6 +45,7 @@ namespace _Game.Core.GameState
             _evolutionService = evolutionService;
             _adsService = adsService;
             _bonusRewardService = bonusRewardService;
+            _tutorialManager = tutorialManager;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
@@ -55,7 +59,8 @@ namespace _Game.Core.GameState
                     _assetProvider,
                     _evolutionService,
                     _adsService,
-                    _bonusRewardService));
+                    _bonusRewardService,
+                    _tutorialManager));
             
             _stateMachine.Enter<GameLoadingState, Queue<ILoadingOperation>>(loadingOperations);
         }

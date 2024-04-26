@@ -1,22 +1,26 @@
 ﻿using System;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Button))]
-    public class ToggleWithSpriteSwap : MonoBehaviour
+    public class ToggleWithSpriteSwap : MonoBehaviour, IFeature
     {
         [SerializeField] private Sprite _offSprite;
         [SerializeField] private Sprite _onSprite;
         [SerializeField] private Image _changableImage;
-        
+
         private Button _button;
 
         private bool _isOn;
-        
+
+        public Feature Feature => Feature.Pause;
+
         public event Action<bool> ValueChanged;
-        
+
+
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -24,6 +28,9 @@ namespace _Game.UI.Common.Scripts
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(OnButtonClicked);
         }
+
+        public void SetActive(bool isPauseAvailable) => 
+            gameObject.SetActive(isPauseAvailable);
 
         public void UpdateToggleStateManually(bool isPaused)
         {
@@ -33,9 +40,6 @@ namespace _Game.UI.Common.Scripts
 
         private void OnButtonClicked()
         {
-            //TODO Delete
-            Debug.Log("On toggle clicked");
-            
             _isOn = !_isOn;
             _changableImage.sprite = _isOn ? _onSprite : _offSprite;
             ValueChanged?.Invoke(_isOn);

@@ -1,28 +1,20 @@
 using System;
-using System.Collections.Generic;
+using _Game.Core.Factory;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
-using _Game.Core.Services.Random;
-using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Gameplay._Coins.Factory;
-using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Factory;
-using _Game.Gameplay.Vfx.Factory;
-using Sirenix.OdinInspector;
+using _Game.UI._Hud;
 using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class BattleField : MonoBehaviour, IBaseDestructionHandler
+    public class BattleField : IBaseDestructionHandler
     {
         public IUnitSpawner UnitSpawner => _unitSpawner;
-        
-        [SerializeField] private RectTransform _coinCounterViewTransform; 
         
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
@@ -31,57 +23,52 @@ namespace _Game.Gameplay._BattleField.Scripts
         private Vector3 _enemySpawnPoint;
         private Vector3 _playerSpawnPoint;
         
-        private IWorldCameraService _cameraService;
-        private IAgeStateService _ageState;
-        private IRandomService _random;
-        private IAudioService _audioService;
-        private IBaseDestructionManager _baseDestructionManager;
+        private readonly IWorldCameraService _cameraService;
+        private readonly IAudioService _audioService;
 
-        private CoinSpawner _coinSpawner;
-        private VfxSpawner _vfxSpawner;
-        private UnitSpawner _unitSpawner;
-        private ProjectileSpawner _projectileSpawner;
-        private BaseSpawner _baseSpawner;
+        private readonly CoinSpawner _coinSpawner;
+        private readonly VfxSpawner _vfxSpawner;
+        private readonly UnitSpawner _unitSpawner;
+        private readonly ProjectileSpawner _projectileSpawner;
+        private readonly BaseSpawner _baseSpawner;
 
+        private readonly CoinCounterView _coinCounterView;
+        
         private readonly InteractionCache _interactionCache = new InteractionCache();
 
 
         //TODO Delete later
-        [ShowInInspector] public Dictionary<Collider2D, ITarget> Cache => _interactionCache.Cache;
+        //[ShowInInspector] public Dictionary<Collider2D, ITarget> Cache => _interactionCache.Cache;
 
-        public void Construct(
-            IUnitFactory unitFactory,
-            IBaseFactory baseFactory,
-            IProjectileFactory projectileFactory,
-            IVfxFactory vfxFactory,
+        public BattleField(
             IWorldCameraService cameraService,
             IPauseManager pauseManager,
             IAgeStateService ageState,
             IAudioService audioService,
-            ICoinFactory coinFactory,
             IBaseDestructionManager baseDestructionManager,
-            ICoinCounter coinCounter)
+            ICoinCounter coinCounter,
+            IFactoriesHolder factoriesHolder,
+            Hud hud)
         {
             _cameraService = cameraService;
-            _ageState = ageState;
             _audioService = audioService;
             
             _coinSpawner = new CoinSpawner(
-                coinFactory, 
+                factoriesHolder.CoinFactory, 
                 audioService, 
                 cameraService, 
                 coinCounter);
             
-            _vfxSpawner = new VfxSpawner(vfxFactory);
+            _vfxSpawner = new VfxSpawner(factoriesHolder.VfxFactory);
             
             _projectileSpawner = new ProjectileSpawner(
-                projectileFactory, 
+                factoriesHolder.ProjectileFactory, 
                 pauseManager, 
                 _interactionCache,
                 _vfxSpawner);
             
             _unitSpawner = new UnitSpawner(
-                unitFactory, 
+                factoriesHolder.UnitFactory, 
                 _interactionCache, 
                 cameraService, 
                 pauseManager, 
@@ -90,14 +77,15 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _coinSpawner);
             
             _baseSpawner = new BaseSpawner(
-                baseFactory,
+                factoriesHolder.BaseFactory,
                 cameraService,
                 _coinSpawner,
                 baseDestructionManager,
-                _interactionCache);
+                _interactionCache,
+                ageState);
 
 
-            _baseDestructionManager = baseDestructionManager;
+            _coinCounterView = hud.CounterView;
             
             baseDestructionManager.Register(this);
         }
@@ -111,22 +99,10 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _enemyBasePoint, 
                 _playerBasePoint);
             
-            _coinSpawner.Init(_coinCounterViewTransform);
+            _coinSpawner.Init(_coinCounterView.CoinIconHolderPosition);
             _baseSpawner.Init();
-            
-            _ageState.BaseDataUpdated += OnPlayerBaseDataUpdated;
-            _ageState.AgeUpdated += OnAgeUpdated;
-
-            _baseSpawner.UpdatePlayerBase();
         }
-
-        private void OnAgeUpdated()
-        {
-            _baseSpawner.UpdatePlayerBase();
-        }
-
-        private void OnPlayerBaseDataUpdated(BaseData data) => _baseSpawner.UpdateData(data);
-
+        
         public void ResetSelf() => UpdateBase(Faction.Player);
 
         public void StartBattle()
@@ -162,6 +138,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _unitSpawner.Cleanup();
             _projectileSpawner.Cleanup();
             _interactionCache.Cleanup();
+            _baseSpawner.Cleanup();
         }
         
         void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base)
@@ -188,12 +165,6 @@ namespace _Game.Gameplay._BattleField.Scripts
             _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth, -offsetY, 0);
             _enemySpawnPoint = new Vector3(_cameraService.CameraWidth, -offsetY, 0);
         }
-
-        private void OnDestroy()
-        {
-            _ageState.BaseDataUpdated -= OnPlayerBaseDataUpdated;
-            _ageState.AgeUpdated -= OnAgeUpdated;
-            _baseDestructionManager.UnRegister(this);
-        }
+        
     }
 }

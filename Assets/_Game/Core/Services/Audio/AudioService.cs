@@ -61,6 +61,12 @@ namespace _Game.Core.Services.Audio
             var buttonSound = _soundsHolder.ButtonSound;
             PlayOneShot(buttonSound);
         }
+        
+        public void PlayVictorySound()
+        {
+            var victorySound = _soundsHolder.VictorySound;
+            PlayOneShot(victorySound);
+        }
 
         public void PlayBaseDestructionSFX()
         {

@@ -13,5 +13,6 @@ namespace _Game.Core.Prefabs
         public AudioClip DropCoinSound;
         
         public AudioClip BaseDestructionSFX;
+        public AudioClip VictorySound;
     }
 }

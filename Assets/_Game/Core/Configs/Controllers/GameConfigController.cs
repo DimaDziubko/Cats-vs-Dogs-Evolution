@@ -29,15 +29,11 @@ namespace _Game.Core.Configs.Controllers
                 .FirstOrDefault(age => age.Id == ageId);
         }
 
-        public BattleConfig GetBattleConfig(int index)
-        {
-            return GetCurrentTimeline()?.Battles[index];
-        }
+        public BattleConfig GetBattleConfig(int index) => 
+            GetCurrentTimeline()?.Battles[index];
 
-        public int LastBattle()
-        {
-            return (GetCurrentTimeline().Battles.Count - 1);
-        }
+        public int LastBattle() => 
+            (GetCurrentTimeline().Battles.Count - 1);
 
         public int LastAge()
         {
@@ -120,6 +116,11 @@ namespace _Game.Core.Configs.Controllers
         {
             return _persistentData.GameConfig.FoodBoostConfig;
         }
+
+        public float GetMinimalCoinsForBattle()
+        {
+            return GetCurrentTimeline().Ages[TimelineState.AgeId].Economy.CoinPerBattle;
+        }
     }
 
     public interface IGameConfigController
@@ -139,5 +140,6 @@ namespace _Game.Core.Configs.Controllers
         int LastAge();
         IEnumerable<AgeConfig> GetAgeConfigs();
         FoodBoostConfig GetFoodBoostConfig();
+        float GetMinimalCoinsForBattle();
     }
 }

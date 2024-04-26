@@ -11,9 +11,11 @@ namespace _Game.Gameplay._Units.Scripts
         [SerializeField] private Collider2D _bodyCollider;
         
         public event Action Death;
-        public event Action<float> Hit;
+        public event Action<float, float> Hit;
         
         private float _maxHealth;
+        
+        [ShowInInspector]
         private float _currentHealth;
 
         public void Construct(
@@ -71,10 +73,8 @@ namespace _Game.Gameplay._Units.Scripts
                     _bodyCollider.enabled = false;
                 }
             }
-            
-            float percentage = damage / _maxHealth;
-            
-            Hit?.Invoke(percentage);
+
+            Hit?.Invoke(damage, _maxHealth);
             
             _healthBar.UpdateHealthView(_currentHealth, _maxHealth);
         }

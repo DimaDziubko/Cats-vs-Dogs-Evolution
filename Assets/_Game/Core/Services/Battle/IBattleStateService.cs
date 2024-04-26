@@ -23,5 +23,6 @@ namespace _Game.Core.Services.Battle
         void OpenNextBattle(int nextBattle);
         void OnStartBattleWindowOpened();
         UniTask ChangeRace();
+        void ReleaseResources();
     }
 }

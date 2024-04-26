@@ -7,7 +7,7 @@ namespace _Game.UI.Common.Header.Scripts
     public interface IHeader
     {
         void ShowWindowName(string windowName);
-        void ShowWallet(IUserCurrenciesStateReadonly currenciesState, IWorldCameraService cameraService);
+        void Construct(IUserCurrenciesStateReadonly currenciesState, IWorldCameraService cameraService);
         Vector3 CoinsWalletWorldPosition { get; }
     }
 }

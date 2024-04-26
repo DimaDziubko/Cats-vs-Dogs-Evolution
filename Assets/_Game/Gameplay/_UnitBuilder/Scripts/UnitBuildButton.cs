@@ -1,4 +1,5 @@
-﻿using _Game.Gameplay._Units.Scripts;
+﻿using System;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Scripts;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -11,6 +12,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class UnitBuildButton : MonoBehaviour
     {
+        private event Action BecomeInteractable;
+        
         [SerializeField] private GameObject _container;
         
         [SerializeField] private TMP_Text _priceText;
@@ -18,19 +21,22 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         [SerializeField] private Image _unitIconHolder;
 
         private Button _button;
-        
+
         [ShowInInspector] private UnitType _type;
 
-        private readonly Color _affordableColor = new Color(1f, 1f, 1f); 
+        public bool IsInteractable => _button.interactable;
+
+        private readonly Color _affordableColor = new Color(1f, 1f, 1f);
         private readonly Color _expensiveColor = new Color(1f, 0.3f, 0f);
-        
+
         private readonly Color _unitIconAffordableColor = new Color(1f, 1f, 1f, 1f);
         private readonly Color _unitIconExpensiveColor = new Color(1f, 1f, 1f, 0.3f);
 
-        private int _foodPrice;
+        [ShowInInspector]
+        private int _foodPrice = int.MaxValue;
 
         private bool _tempButtonState;
-        
+
         //Scale animation
         [SerializeField] private RectTransform _transform;
         [SerializeField] private float _animationDuration = 1f;
@@ -40,6 +46,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         private void Awake()
         {
             _button = GetComponent<Button>();
+            Disable();
         }
 
         public void Initialize(IUnitBuilder unitBuilder, UnitBuilderBtnData data)
@@ -51,12 +58,15 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             _foodPrice = data.FoodPrice;
             _priceText.text = data.FoodPrice.ToString();
             
-            _foodIconHolder.sprite = data.Food;
+            _foodIconHolder.sprite = data.FoodIcon;
             _unitIconHolder.sprite = data.UnitIcon;
-
+            
             _button.onClick.AddListener(() => unitBuilder.Build(_type, _foodPrice));
+
+            BecomeInteractable -= unitBuilder.OnButtonBecameInteractable;
+            BecomeInteractable += unitBuilder.OnButtonBecameInteractable;
         }
-        
+
         public void UpdateButtonState(int foodAmount)
         {
             bool canAfford = foodAmount >= _foodPrice;
@@ -67,9 +77,20 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             }
             
             _button.interactable = _tempButtonState = canAfford;
+
+            if (_button.interactable)
+            {
+                BecomeInteractable?.Invoke();
+            }
             
             _priceText.color = canAfford ? _affordableColor : _expensiveColor;
             _unitIconHolder.color = canAfford ? _unitIconAffordableColor : _unitIconExpensiveColor;
+        }
+
+        public void Disable()
+        {
+            _button.interactable = false;
+            _foodPrice = int.MaxValue;
         }
 
         private void DoScaleAnimation()
@@ -87,10 +108,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             Cleanup();
         }
 
-        private void Cleanup()
-        {
+        private void Cleanup() => 
             _button.onClick.RemoveAllListeners();
-        }
 
         public void SetPaused(in bool isPaused)
         {

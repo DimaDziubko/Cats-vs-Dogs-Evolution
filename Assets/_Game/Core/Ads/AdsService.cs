@@ -1,4 +1,5 @@
 using System;
+using _Game.Core._Logger;
 using _Game.Core.Pause.Scripts;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -20,9 +21,10 @@ namespace _Game.Core.Ads
         public event Action RewardedVideoLoaded;
 
         private readonly IPauseManager _pauseManager;
+        private readonly IMyLogger _logger;
 
-        public bool IsRewardedVideoReady => _isRewardedVideoReady;
-        
+        public bool IsRewardedVideoReady => _isRewardedVideoReady && IsInternetConnected();
+
         public void Init()
         {
             _gameId = Application.platform switch
@@ -39,16 +41,19 @@ namespace _Game.Core.Ads
             }
         }
 
-        public AdsService(IPauseManager pauseManager)
+        public AdsService(
+            IPauseManager pauseManager,
+            IMyLogger logger)
         {
             _pauseManager = pauseManager;
+            _logger = logger;
         }
 
         public void ShowRewardedVideo(Action onVideoCompleted)
         {
             if (!IsRewardedVideoReady)
             {
-                Debug.LogWarning("Attempted to show rewarded video before it was ready.");
+                _logger.LogWarning("Attempted to show rewarded video before it was ready.");
                 return;
             }
 
@@ -58,14 +63,14 @@ namespace _Game.Core.Ads
 
         public void OnInitializationComplete()
         {
-            Debug.Log("Unity Ads initialization complete.");
+            _logger.Log("Unity Ads initialization complete.");
             LoadAd();
         }
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message)
         {
             _isRewardedVideoReady = false;
-            Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
+            _logger.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
         }
 
         public void OnUnityAdsAdLoaded(string placementId)
@@ -78,16 +83,16 @@ namespace _Game.Core.Ads
         }
 
         public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message) => 
-            Debug.LogError($"OnUnityAdsFailedToLoad {placementId} {error} {message}");
+            _logger.LogError($"OnUnityAdsFailedToLoad {placementId} {error} {message}");
 
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message) => 
-            Debug.LogError($"OnUnityAdsShowFailure {placementId} {error} {message}");
+            _logger.LogError($"OnUnityAdsShowFailure {placementId} {error} {message}");
 
         public void OnUnityAdsShowStart(string placementId) => 
-            Debug.Log($"OnUnityAdsShowStart {placementId}");
+            _logger.Log($"OnUnityAdsShowStart {placementId}");
 
         public void OnUnityAdsShowClick(string placementId) => 
-            Debug.Log($"OnUnityAdsShowClick {placementId}");
+            _logger.Log($"OnUnityAdsShowClick {placementId}");
 
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
         {
@@ -96,13 +101,13 @@ namespace _Game.Core.Ads
             switch (showCompletionState)
             {
                 case UnityAdsShowCompletionState.SKIPPED:
-                    Debug.LogWarning($"OnUnityAdsShowComplete {placementId} {showCompletionState}");
+                    _logger.LogWarning($"OnUnityAdsShowComplete {placementId} {showCompletionState}");
                     break;
                 case UnityAdsShowCompletionState.COMPLETED:
                     _onVideoCompleted?.Invoke();
                     break;
                 case UnityAdsShowCompletionState.UNKNOWN:
-                    Debug.LogError($"OnUnityAdsShowComplete {placementId} {showCompletionState}");
+                    _logger.LogError($"OnUnityAdsShowComplete {placementId} {showCompletionState}");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(showCompletionState), showCompletionState, null);
@@ -117,11 +122,16 @@ namespace _Game.Core.Ads
         {
             if (!Advertisement.isInitialized)
             {
-                Debug.LogWarning("Attempting to load ad before initialization.");
+                _logger.LogWarning("Attempting to load ad before initialization.");
                 return;
             }
         
             Advertisement.Load(REWARDED_VIDEO_PLACEMENT_ID, this);
+        }
+        
+        private bool IsInternetConnected()
+        {
+            return Application.internetReachability != NetworkReachability.NotReachable;
         }
     }
 }

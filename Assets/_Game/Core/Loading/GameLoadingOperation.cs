@@ -1,7 +1,6 @@
 ﻿using System;
 using _Game.Core.Scripts;
 using _Game.Core.Services.Camera;
-using _Game.GameModes.BattleMode.Scripts;
 using _Game.UI.Settings.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.Utils;
@@ -38,15 +37,15 @@ namespace _Game.Core.Loading
             }
             onProgress?.Invoke(0.7f);
             
-            Scene scene = _sceneLoader.GetSceneByName(Constants.Scenes.BATTLE_MODE);
-            
-            var gameMode = scene.GetRoot<BattleMode>();
+            // Scene scene = _sceneLoader.GetSceneByName(Constants.Scenes.BATTLE_MODE);
+            //
+            // var gameMode = scene.GetRoot<BattleMode>();
             
             _cameraService.EnableCamera();
             
-            onProgress?.Invoke(0.85f);
-            
-            gameMode.Init();
+            // onProgress?.Invoke(0.85f);
+            //
+            // gameMode.Init();
             
             onProgress?.Invoke(1.0f);
         }

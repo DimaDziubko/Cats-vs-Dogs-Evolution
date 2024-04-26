@@ -23,10 +23,13 @@ namespace _Game.Gameplay._Units.Scripts.Attack
             base.Construct(config, faction, audioService, unitTransform);
             _type = config.WeaponType;
             _faction = faction;
+            DisableAttackDelay = 0;
         }
 
         protected override void OnAttack()
         {
+            if(_target == null || !_isActive) return;
+            
             var data = new ShootData()
             {
                 Faction = _faction,

@@ -38,13 +38,7 @@ namespace _Game.Gameplay._Units.Factory
         
         public Unit Get(Faction faction, UnitType type)
         {
-            if (_unitsPools != null && _unitsPools.ContainsKey((Faction.Player, UnitType.Light)))
-            {
-                //TODO Delete 
-                Debug.Log($"Unit pool light count {_unitsPools[(Faction.Player, UnitType.Light)].Count}");
-            }
-
-            UnitData unitData = faction == Faction.Player ? _ageState.GetPlayerUnit(type) : _battleState.GetEnemy(type);
+            UnitData unitData = faction == Faction.Player ? _ageState.ForPlayerUnit(type) : _battleState.GetEnemy(type);
 
             if (!_unitsPools.TryGetValue((faction, type), out Queue<Unit> pool))
             {
@@ -80,9 +74,6 @@ namespace _Game.Gameplay._Units.Factory
 
         public void Reclaim(Unit unit)
         {
-            //TODO Delete
-            Debug.Log("Factory reclaim");
-            
             unit.gameObject.SetActive(false); 
             
             var key = (unit.Faction, unit.Type);

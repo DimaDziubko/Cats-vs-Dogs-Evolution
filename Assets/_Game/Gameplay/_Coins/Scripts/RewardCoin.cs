@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services.Audio;
+using _Game.Core.Services.PersistentData;
 using DG.Tweening;
 using UnityEngine;
 
@@ -19,11 +20,16 @@ namespace _Game.Gameplay._Coins.Scripts
         [SerializeField] private float _moveToWalletDuration = 0.5f;
 
         private IAudioService _audioService;
-
-        public void Init(IAudioService audioService)
+        private IPersistentDataService _persistentDataService;
+        
+        private float _coinsValue;
+        
+        public void Init(IAudioService audioService, float coinsValue, IPersistentDataService persistentDataService)
         {
             _audioService = audioService;
-            
+            _coinsValue = coinsValue;
+            _persistentDataService = persistentDataService;
+
             _spriteRenderer.DOFade(_startAlphaValue, _startFadeDuration).OnComplete(() =>
             {
                 _spriteRenderer.DOFade(_endAlphaValue, _endFadeDuration); 
@@ -41,6 +47,7 @@ namespace _Game.Gameplay._Coins.Scripts
                     _transform.DOMove(targetPoint, _moveToWalletDuration).SetEase(Ease.InQuad).OnComplete(() =>
                     {
                         _audioService.PlayFillingWalletSFX();
+                        _persistentDataService.AddCoins(_coinsValue);
                         Recycle();
                     });
                 });

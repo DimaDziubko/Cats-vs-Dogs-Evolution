@@ -40,7 +40,7 @@ namespace _Game.Core.GameState
             _mainMenu = await _mainMenuProvider.Load();
             _mainMenu.Value.Show();
 
-            RaceStateReadonly.Changed += OnFactionChanged;
+            RaceStateReadonly.Changed += OnRaceChanged;
         }
 
         public void Exit()
@@ -48,10 +48,10 @@ namespace _Game.Core.GameState
             _mainMenu.Value.Hide();
             _mainMenu.Dispose();
             
-            RaceStateReadonly.Changed -= OnFactionChanged;
+            RaceStateReadonly.Changed -= OnRaceChanged;
         }
 
-        private void OnFactionChanged()
+        private void OnRaceChanged()
         {
            var changeFactionOperation = new ChangingRaceOperation(_ageState, _battleState);
            _loadingScreenProvider.LoadAndDestroy(changeFactionOperation);

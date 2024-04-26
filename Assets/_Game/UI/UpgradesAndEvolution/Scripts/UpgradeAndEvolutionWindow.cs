@@ -2,6 +2,7 @@ using _Game.Core._Logger;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
@@ -49,15 +50,16 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             IEvolutionService evolutionService,
             IUnitUpgradesService unitUpgradesService,
             IMyLogger logger,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider)
+            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITutorialManager tutorialManager)
         {
             _logger = logger;
             
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
             _alertPopupProvider = alertPopupProvider;
-            
-            _upgradesWindow.Construct(header, economyUpgradesService, unitUpgradesService, audioService);
+
+            _upgradesWindow.Construct(header, economyUpgradesService, unitUpgradesService, audioService, tutorialManager);
             _evolutionWindow.Construct(header, evolutionService, audioService, timelineInfoWindowProvider);
             
         }

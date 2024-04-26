@@ -10,15 +10,17 @@ namespace _Game.Core.Services.Age.Scripts
 {
     public interface IAgeStateService
     {
-        UnitData GetPlayerUnit(UnitType type);
+        event Action<BaseData> BaseDataUpdated;
+        event Action<UnitBuilderBtnData[]> BuilderDataUpdated;
+        event Action AgeUpdated;
+        event Action RaceChangingBegun;
+        UnitData ForPlayerUnit(UnitType type);
         Sprite GetCurrentFoodIcon { get; }
         BaseData GetForPlayerBase();
         UniTask Init();
         WeaponData ForWeapon(WeaponType type);
-        event Action<BaseData> BaseDataUpdated;
-        event Action<UnitBuilderBtnData[]> BuilderDataUpdated;
-        event Action AgeUpdated;
         void OnBuilderStarted();
         UniTask ChangeRace();
+        void ReleaseResources();
     }
 }

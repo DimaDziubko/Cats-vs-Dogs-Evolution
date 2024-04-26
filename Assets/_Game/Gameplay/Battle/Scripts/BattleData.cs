@@ -1,5 +1,6 @@
 ﻿using _Game.Core.Configs.Models;
 using _Game.Gameplay._Bases.Scripts;
+using _Game.UI._Environment;
 using UnityEngine;
 
 namespace _Game.Gameplay.Battle.Scripts
@@ -10,6 +11,7 @@ namespace _Game.Gameplay.Battle.Scripts
         public BattleScenario Scenario;
         public BaseData EnemyBaseData;
         public AudioClip BGM;
-        public string EnvironmentKey;
+        public float MaxCoinsPerBattle;
+        public EnvironmentData EnvironmentData;
     }
 }

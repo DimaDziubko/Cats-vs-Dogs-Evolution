@@ -14,7 +14,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly IWorldCameraService _cameraService;
         private readonly ICoinCounter _coinCounter;
 
-        private Vector3 _coinTargetPosition;
+        private Vector3 _coinCounterPosition;
 
         public CoinSpawner(
             ICoinFactory coinFactory,
@@ -29,14 +29,12 @@ namespace _Game.Gameplay._BattleField.Scripts
             
         }
 
-        public void Init(RectTransform coinCounterViewTransform)
+        public void Init(Vector3 coinCounterPosition)
         {
-            CalculateLootCoinTargetPosition(coinCounterViewTransform);
-            
-            //TODO Delete
-            Debug.Log($"Coin target position {_coinTargetPosition}");
+            _coinCounterPosition = coinCounterPosition;
+            //CalculateLootCoinTargetPosition(coinCounterViewTransform);
         }
-        
+
         void ICoinSpawner.SpawnLootCoin(Vector3 position, float amount)
         {
             _audioService.PlayCoinDropSound();
@@ -44,7 +42,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             var lootCoin =  _coinFactory.GetLootCoin();
             lootCoin.Position = position;
             
-            lootCoin.Init(amount, _coinTargetPosition);
+            lootCoin.Init(amount, _coinCounterPosition);
             
             lootCoin.AnimationCompleted += OnCoinAnimationCompleted;
             lootCoin.Jump();
@@ -70,7 +68,7 @@ namespace _Game.Gameplay._BattleField.Scripts
                 coinCounterViewTransform,
                 screenPoint, 
                 _cameraService.UICameraOverlay, 
-                out _coinTargetPosition);
+                out _coinCounterPosition);
         }
     }
 }

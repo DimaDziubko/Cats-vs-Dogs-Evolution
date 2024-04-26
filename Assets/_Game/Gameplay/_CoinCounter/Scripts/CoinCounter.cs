@@ -9,6 +9,27 @@ namespace _Game.Gameplay._CoinCounter.Scripts
         private float _coins;
         public float Coins => _coins;
 
+        public float CoinsRation
+        {
+            get
+            {
+                if (_maxCoinsPerBattle > 0)
+                {
+                    return _coins / _maxCoinsPerBattle;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        
+        private float _maxCoinsPerBattle;
+        public float MaxCoinsPerBattle
+        {
+            set => _maxCoinsPerBattle = value;
+        }
+        
         private int _factor;
 
         public CoinCounter(

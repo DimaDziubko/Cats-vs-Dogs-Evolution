@@ -60,6 +60,7 @@ namespace _Game.Core.Configs.Models
         public string PlayerBaseKey;
         public string BGMKey;
         public float CoinsPerBase;
+        public float MaxCoinsPerBattle;
     }
 
     public class BattleScenario
@@ -127,6 +128,9 @@ namespace _Game.Core.Configs.Models
         public string PlayerKey;
         public int FoodPrice;
         public int CoinsPerKill;
+        public float PlayerHealthMultiplier;
+        public float EnemyHealthMultiplier;
+        public float AttackPerSecond;
     }
 
     public class WeaponConfig
@@ -140,6 +144,8 @@ namespace _Game.Core.Configs.Models
         public string MuzzleKey;
         public string ProjectileExplosionKey;
         public float SplashRadius;
+        public float PlayerDamageMultiplier;
+        public float EnemyDamageMultiplier;
     }
 
     public class Exponential

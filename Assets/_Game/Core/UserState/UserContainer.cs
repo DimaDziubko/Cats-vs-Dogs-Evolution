@@ -14,6 +14,16 @@ namespace _Game.Core.UserState
         
         public GameConfig GameConfig { get; set; }
 
+        public void AddCompletedBattle()
+        {
+            State.BattleStatistics.AddCompletedBattle();
+        }
+
+        public void CompleteTutorialStep(int step)
+        {
+            State.TutorialState.ChangeCompletedStep(step);
+        }
+
         public void AddCoins(in float count)
         {
             State.Currencies.ChangeCoins(count, true);

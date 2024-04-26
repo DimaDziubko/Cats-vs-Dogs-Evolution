@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Communication;
@@ -8,7 +9,7 @@ using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Core.UserState;
-using _Game.UI.Hud;
+using _Game.UI._Hud;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -61,10 +62,8 @@ namespace _Game.Core.Services.BonusReward.Scripts
 
         }
 
-        private void OnRewardVideoLoaded()
-        {
+        private void OnRewardVideoLoaded() => 
             UpdateFoodBoostBtnModel();
-        }
 
         public void OnHudOpened()
         {
@@ -79,15 +78,11 @@ namespace _Game.Core.Services.BonusReward.Scripts
             _adsService.ShowRewardedVideo(OnRewardedVideoComplete);
         }
 
-        private void OnFoodBoostChanged()
-        {
+        private void OnFoodBoostChanged() => 
             UpdateFoodBoostBtnModel();
-        }
 
-        private void UpdateBonuses()
-        {
+        private void UpdateBonuses() => 
             UpdateFoodBoost();
-        }
 
         private void UpdateFoodBoost()
         {
@@ -110,9 +105,6 @@ namespace _Game.Core.Services.BonusReward.Scripts
             {
                  
                 await PrepareFoodBoostBtnModel(ct);
-                //var prepareEnemyDataTask = PrepareEnemy(ct);
-
-                //await UniTask.WhenAll(prepareBattleDataTask, prepareEnemyDataTask);
                 
                 ct.ThrowIfCancellationRequested();
                 
@@ -147,13 +139,15 @@ namespace _Game.Core.Services.BonusReward.Scripts
             var foodBoostConfig = _configController.GetFoodBoostConfig();
             
             _foodBoostBtnModel.FoodAmount = (int)(_economyUpgradesService.GetFoodProductionSpeed() * foodBoostConfig.FoodBoostCoefficient);
-            _foodBoostBtnModel.IsAvailable = FoodBoostState.DailyFoodBoostCount > 0;
+            
+            _foodBoostBtnModel.IsAvailable = 
+                FoodBoostState.DailyFoodBoostCount > 0;
             
             _foodBoostBtnModel.IsInteractable = _adsService.IsRewardedVideoReady;
 
             FoodBoostBtnModelChanged?.Invoke(_foodBoostBtnModel);
         }
-
+        
         public void Cleanup()
         {
             //TODO Implement later

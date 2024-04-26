@@ -2,6 +2,13 @@
 {
     public sealed class Constants
     {
+        public sealed class CacheContext
+        {
+            public const int GENERAL = 0;
+            public const int AGE = 1;
+            public const int BATTLE = 2;
+        }
+        
         public sealed class Scenes
         {
             public const string STARTUP = "Startup";
@@ -32,6 +39,22 @@
         public sealed class ComparisonThreshold
         {
             public const float MONEY_EPSILON = 0.01f;
+            public const float UNIT_ROTATION_EPSILON = 0.05f;
+        }
+        
+        public sealed class TutorialSteps
+        {
+            public const int UNIT_BUILDER_BUTTON = 0;
+            public const int UPGRADES_WINDOW = 1;
+            public const int FOOD_UPGRADE_ITEM = 2;
+        }
+
+        public static class FeatureCompletedBattleThresholds
+        {
+            public const int FOOD_BOOST = 3;
+            public const int PAUSE = 1;
+            public const int UPGRADES_WINDOW = 1; 
+            public const int EVOLUTION_WINDOW = 2; 
         }
         
         public sealed class ConfigKeys
@@ -82,6 +105,7 @@
             public const string ENEMY_BASE_HEALTH = "EnemyBaseHealth";
             public const string ENEMY_BASE_KEY = "EnemyBaseKey";
             public const string BGM_KEY = "BGMKey";
+            public const string MAX_COINS_PER_BATTLE = "MaxCoinsPerBattle";
 
             //BattleScenario
             public const string WAVES = "Waves";
@@ -114,7 +138,10 @@
             public const string FOOD_PRICE = "FoodPrice";
             public const string COINS_PER_KILL = "CoinsPerKill";
             public const string ENEMY_ICON_KEY = "EnemyIconKey";
-            
+            public const string PLAYER_HEALTH_MULTIPLIER = "PlayerHealthMultiplier";
+            public const string ENEMY_HEALTH_MULTIPLIER = "EnemyHealthMultiplier";
+            public const string ATTACK_PER_SECOND = "AttackPerSecond";
+
             //Weapon
             public const string WEAPON = "Weapon";
             public const string DAMAGE = "Damage";
@@ -125,6 +152,8 @@
             public const string PROJECTILE_EXPLOSION_KEY = "ProjectileExplosionKey";
             public const string MUZZLE_KEY = "MuzzleKey";
             public const string SPLASH_RADIUS = "SplashRadius" ;
+            public const string ENEMY_DAMAGE_MULTIPLIER = "EnemyDamageMultiplier";
+            public const string PLAYER_DAMAGE_MULTIPLIER = "PlayerDamageMultiplier";
 
             //Polynomial
             public const string EXPONENTIAL = "Exponential";

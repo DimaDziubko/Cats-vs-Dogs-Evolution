@@ -1,18 +1,19 @@
 ﻿using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Units.Scripts.Movement;
 
 namespace _Game.Gameplay._Units.FSM.States
 {
     public class MoveToTargetState : IUnitFsmState
     {
         private readonly UnitFsm _fsm;
-        private readonly UnitMove _unitMove;
+        private readonly IMovable _unitMove;
         private readonly UnitAnimator _animator;
         private readonly TargetDetection _aggroDetection;
         private readonly TargetDetection _attackDetection;
 
         public MoveToTargetState(
             UnitFsm fsm,
-            UnitMove unitMove,
+            IMovable unitMove,
             TargetDetection aggroDetection,
             TargetDetection attackDetection,
             UnitAnimator animator)
@@ -26,15 +27,11 @@ namespace _Game.Gameplay._Units.FSM.States
 
         public void Enter()
         {
-            //TODO Delete
-            //Debug.Log("MoveToTargetState ENTERED");
+
         }
 
         public void GameUpdate()
         {
-            //TODO Delete
-            //Debug.Log("MoveToTargetState START_UPDATE");
-            
             UpdateDetectors();
             
             if (_attackDetection.HasTarget)
@@ -50,9 +47,6 @@ namespace _Game.Gameplay._Units.FSM.States
             }
             
             _fsm.Enter<MoveToPointState>();
-            
-            //TODO Delete
-            //Debug.Log("MoveToTargetState END_UPDATE");
         }
 
         public void Cleanup()
@@ -69,9 +63,6 @@ namespace _Game.Gameplay._Units.FSM.States
         public void Exit()
         {
             _unitMove.Stop();
-            
-            //TODO Delete
-            //Debug.Log("MoveToTargetState Exited"); 
         }
     }
 }

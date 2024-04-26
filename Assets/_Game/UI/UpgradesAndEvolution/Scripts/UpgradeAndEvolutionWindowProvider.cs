@@ -1,10 +1,10 @@
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
-using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.Utils.Disposable;
@@ -24,9 +24,9 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private readonly IEconomyUpgradesService _economyUpgradesService;
         private readonly IEvolutionService _evolutionService;
         private readonly IUnitUpgradesService _unitUpgradesService;
-        private readonly IAgeStateService _ageState;
         private readonly IMyLogger _logger;
         private readonly ITimelineInfoWindowProvider _timelineInfoWindowProvider;
+        private readonly ITutorialManager _tutorialManager;
 
         public UpgradeAndEvolutionWindowProvider(
             IWorldCameraService cameraService,
@@ -36,9 +36,9 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             IEconomyUpgradesService economyUpgradesService,
             IEvolutionService evolutionService,
             IUnitUpgradesService unitUpgradesService,
-            IAgeStateService ageState,
             IMyLogger logger,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider)
+            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITutorialManager tutorialManager)
         {
             _logger = logger;
             
@@ -52,9 +52,9 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _evolutionService = evolutionService;
             _unitUpgradesService = unitUpgradesService;
 
-            _ageState = ageState;
-
             _timelineInfoWindowProvider = timelineInfoWindowProvider;
+
+            _tutorialManager = tutorialManager;
         }
         public async UniTask<Disposable<UpgradeAndEvolutionWindow>> Load()
         {
@@ -72,7 +72,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 _unitUpgradesService,
                 _logger,
                 
-                _timelineInfoWindowProvider);
+                _timelineInfoWindowProvider,
+                _tutorialManager);
             return popup;
         }
     }

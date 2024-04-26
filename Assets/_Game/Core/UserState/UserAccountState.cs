@@ -16,7 +16,9 @@ namespace _Game.Core.UserState
         public UserTimelineState TimelineState;
         public UserCurrenciesState Currencies;
         public FoodBoostState FoodBoost;
-
+        public BattleStatistics BattleStatistics;
+        public TutorialState TutorialState;
+        
         
         //TODO Check later
         public static UserAccountState GetInitial(
@@ -47,6 +49,7 @@ namespace _Game.Core.UserState
                         UnitType.Light,
                     }
                 },
+                
                 Currencies = new UserCurrenciesState()
                 {
                     Coins = 0
@@ -56,7 +59,18 @@ namespace _Game.Core.UserState
                 {
                     DailyFoodBoostCount = 2,
                     LastDailyFoodBoost = DateTime.UtcNow
+                },
+                
+                BattleStatistics = new BattleStatistics()
+                {
+                    BattlesCompleted = 0
+                },
+                
+                TutorialState = new TutorialState()
+                {
+                    StepsCompleted = 0
                 }
+                
             };
         }
 

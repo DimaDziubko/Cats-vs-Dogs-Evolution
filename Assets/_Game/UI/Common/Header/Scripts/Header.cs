@@ -14,7 +14,7 @@ namespace _Game.UI.Common.Header.Scripts
 
         public Vector3 CoinsWalletWorldPosition => _currenciesUI.CoinsWalletWorldPosition;
 
-        public void ShowWallet(
+        public void Construct(
             IUserCurrenciesStateReadonly currenciesState,
             IWorldCameraService cameraService)
         {

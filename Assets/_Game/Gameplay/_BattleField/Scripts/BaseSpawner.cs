@@ -1,4 +1,6 @@
-﻿using _Game.Core.Services.Camera;
+﻿using _Game.Core.Services.Age.Scripts;
+using _Game.Core.Services.Battle;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._Units.Scripts;
@@ -13,6 +15,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly ICoinSpawner _coinSpawner;
         private readonly IBaseDestructionManager _baseDestructionManager;
         private readonly IInteractionCache _interactionCache;
+        private readonly IAgeStateService _ageState;
 
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
@@ -24,13 +27,15 @@ namespace _Game.Gameplay._BattleField.Scripts
             IWorldCameraService cameraService,
             ICoinSpawner coinSpawner,
             IBaseDestructionManager baseDestructionManager,
-            IInteractionCache interactionCache)
+            IInteractionCache interactionCache,
+            IAgeStateService ageState)
         {
             _baseFactory = baseFactory;
             _cameraService = cameraService;
             _coinSpawner = coinSpawner;
             _baseDestructionManager = baseDestructionManager;
             _interactionCache = interactionCache;
+            _ageState = ageState;
         }
 
         public void OnStartBattle()
@@ -39,11 +44,17 @@ namespace _Game.Gameplay._BattleField.Scripts
             _playerBase.InteractionCache = _interactionCache;
             _enemyBase.ShowHealth();
             _playerBase.ShowHealth();
+            
         }
 
         public void Init()
         {
             CalculateBasePoints();
+            UpdatePlayerBase();
+
+            _ageState.BaseDataUpdated += UpdateData;
+            _ageState.AgeUpdated += UpdatePlayerBase;
+            _ageState.RaceChangingBegun += RemoveBases;
         }
 
         public void UpdatePlayerBase()
@@ -74,12 +85,23 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _baseDestructionManager);
         }
 
-        public void UpdateData(BaseData data) => _playerBase.UpdateData(data);
+        private void RemoveBases()
+        {
+            _playerBase.Recycle();
+            _enemyBase.Recycle();
+        }
+        
+        private void UpdateData(BaseData data) => _playerBase.UpdateData(data);
 
         private void CalculateBasePoints()
         {
             _enemyBasePoint = new Vector3(_cameraService.CameraWidth, 0, 0);
             _playerBasePoint = new Vector3(-_cameraService.CameraWidth, 0, 0);
+        }
+
+        public void Cleanup()
+        {
+
         }
     }
 }

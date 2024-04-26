@@ -20,6 +20,7 @@ namespace _Game.Gameplay.GameResult.Scripts
         [SerializeField] private Button _quitButton;
         [SerializeField] private Button _adsButton;
         [SerializeField] private DoubleCoinsBtn _doubleCoinsBtn;
+        [SerializeField] private TMP_Text _victoryText;
         
         [SerializeField] private Canvas _canvas;
 
@@ -46,6 +47,14 @@ namespace _Game.Gameplay.GameResult.Scripts
 
         public async UniTask<bool> ShowAndAwaitForExit(ICoinCounter coinCounter, GameResultType result)
         {
+            _victoryText.enabled = false;
+
+            if (result == GameResultType.Victory)
+            {
+                _victoryText.enabled = true;
+                _audioService.PlayVictorySound();
+            }
+            
             _quitButton.onClick.AddListener(OnQuitClicked);
 
             _doubleCoinsBtn.Initialize(OnAdsBtnClicked);

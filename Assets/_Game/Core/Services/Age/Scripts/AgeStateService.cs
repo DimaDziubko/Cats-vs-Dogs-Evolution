@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using _Game.Core._Logger;
+using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Controllers;
 using _Game.Core.Configs.Models;
-using _Game.Core.Services.AssetProvider;
+using _Game.Core.DataProviders;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Core.UserState;
@@ -13,7 +14,6 @@ using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils;
 using _Game.Utils.Extensions;
@@ -24,6 +24,7 @@ namespace _Game.Core.Services.Age.Scripts
 {
     public sealed class AgeStateService : IAgeStateService
     {
+        public event Action RaceChangingBegun;
         public event Action AgeUpdated;
         public event Action<BaseData> BaseDataUpdated;
         public event Action<UnitBuilderBtnData[]> BuilderDataUpdated;
@@ -32,17 +33,19 @@ namespace _Game.Core.Services.Age.Scripts
 
         private readonly IGameConfigController _gameConfigController;
 
-        private readonly IAssetProvider _assetProvider;
+        private readonly IAssetRegistry _assetRegistry;
 
         private readonly IEconomyUpgradesService _economyUpgrades;
 
         private readonly IMyLogger _logger;
 
+        private readonly IUnitDataProvider _unitDataProvider;
+        private readonly IWeaponDataProvider _weaponDataProvider;
+        private readonly IBaseDataProvider _baseDataProvider;
+
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
 
-        private readonly HashSet<string> _loadedResources = new HashSet<string>();
-        
         private readonly Dictionary<UnitType, UnitData> _playerUnitData = 
             new Dictionary<UnitType, UnitData>(3);
 
@@ -53,7 +56,7 @@ namespace _Game.Core.Services.Age.Scripts
 
         private BaseData _playerBaseData;
 
-        public Sprite GetCurrentFoodIcon { get; private set; }
+        public Sprite GetCurrentFoodIcon => _unitBuilderData[0].FoodIcon;
 
         public BaseData GetForPlayerBase() => _playerBaseData;
 
@@ -62,15 +65,21 @@ namespace _Game.Core.Services.Age.Scripts
         public AgeStateService(
             IPersistentDataService persistentData,
             IGameConfigController gameConfigController,
-            IAssetProvider assetProvider,
+            IAssetRegistry assetRegistry,
             IEconomyUpgradesService economyUpgrades,
-            IMyLogger logger)
+            IMyLogger logger,
+            IUnitDataProvider unitDataProvider,
+            IWeaponDataProvider weaponDataProvider,
+            IBaseDataProvider baseDataProvider)
         {
             _persistentData = persistentData;
             _gameConfigController = gameConfigController;
-            _assetProvider = assetProvider;
+            _assetRegistry = assetRegistry;
             _economyUpgrades = economyUpgrades;
             _logger = logger;
+            _unitDataProvider = unitDataProvider;
+            _weaponDataProvider = weaponDataProvider;
+            _baseDataProvider = baseDataProvider;
         }
 
         public async UniTask Init()
@@ -84,9 +93,12 @@ namespace _Game.Core.Services.Age.Scripts
 
         public async UniTask ChangeRace()
         {
+            RaceChangingBegun?.Invoke();
             await PrepareAge();
             AgeUpdated?.Invoke();
         }
+
+        public void ReleaseResources() => _assetRegistry.ClearContext(Constants.CacheContext.AGE);
 
         public void OnBuilderStarted() => 
             BuilderDataUpdated?.Invoke(_unitBuilderData);
@@ -98,20 +110,6 @@ namespace _Game.Core.Services.Age.Scripts
             BuilderDataUpdated?.Invoke(_unitBuilderData);
             
             AgeUpdated?.Invoke();
-        }
-
-        private void OnUpgradeItemUpdated(UpgradeItemViewModel model)
-        {
-            if (model.Type == UpgradeItemType.BaseHealth)
-            {
-                UpdateBaseHealth(model.Amount);
-            }
-        }
-
-        private void UpdateBaseHealth(float amount)
-        {
-            _playerBaseData.Health = amount;
-            BaseDataUpdated?.Invoke(_playerBaseData);
         }
 
         public WeaponData ForWeapon(WeaponType type)
@@ -127,18 +125,21 @@ namespace _Game.Core.Services.Age.Scripts
             }
         }
 
-        private async void OnOpenedUnit(UnitType type)
+        private void OnUpgradeItemUpdated(UpgradeItemViewModel model)
         {
-            var config = _gameConfigController.GetCurrentAgeUnits().FirstOrDefault(w => w.Type == type);
-            if (config != null)
+            if (model.Type == UpgradeItemType.BaseHealth)
             {
-                await AddPlayerUnitData(type, config);
-                await AddUnitBuilderData(type, config);
-                await AddWeaponData(type, config);
+                UpdateBaseDataHealth(model.Amount);
             }
         }
 
-        public UnitData GetPlayerUnit(UnitType type)
+        private void UpdateBaseDataHealth(float amount)
+        {
+            _playerBaseData.Health = amount;
+            BaseDataUpdated?.Invoke(_playerBaseData);
+        }
+
+        public UnitData ForPlayerUnit(UnitType type)
         {
             if (_playerUnitData.TryGetValue(type, out var unitData))
             {
@@ -150,7 +151,18 @@ namespace _Game.Core.Services.Age.Scripts
                 return null;
             }
         }
-        
+
+        private async void OnOpenedUnit(UnitType type)
+        {
+            var config = _gameConfigController.GetCurrentAgeUnits().FirstOrDefault(w => w.Type == type);
+            if (config != null)
+            {
+                await AddPlayerUnitData(type, config);
+                await AddUnitBuilderData(type, config);
+                await AddWeaponData(type, config);
+            }
+        }
+
         private async UniTask PrepareAge()
         {
             List<WarriorConfig> openPlayerUnitConfigs = _gameConfigController.GetOpenPlayerUnitConfigs();
@@ -161,12 +173,11 @@ namespace _Game.Core.Services.Age.Scripts
             try
             {
                 Cleanup();
-                UnloadResources();
-                ClearKeyCache();
-                
-                await PreparePlayerUnits(openPlayerUnitConfigs, ct);
-                await PrepareWeaponData(openPlayerUnitConfigs, ct);
-                await PrepareUnitBuilderData(openPlayerUnitConfigs, ct);
+                ReleaseResources();
+
+                await PreparePlayerUnitsData(openPlayerUnitConfigs, ct);
+                await PrepareWeaponsData(openPlayerUnitConfigs, ct);
+                await PrepareUnitsBuilderData(openPlayerUnitConfigs, ct);
                 await PreparePlayerBaseData(ct);
 
                 ct.ThrowIfCancellationRequested();
@@ -178,251 +189,145 @@ namespace _Game.Core.Services.Age.Scripts
             }
         }
 
+        private async UniTask PreparePlayerUnitsData(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
+        {
+            _playerUnitData.Clear();
+            
+            foreach (var config in openPlayerUnitConfigs)
+            {
+                await PreparePlayerUnitData(config, ct);
+            }
+            
+            _logger.Log("PlayerUnitData prepared");
+        }
+
+        private async UniTask PreparePlayerUnitData(WarriorConfig config, CancellationToken ct)
+        {
+            var unitLoadOption = new UnitLoadOptions()
+            {
+                Faction = Faction.Player, 
+                Config = config,
+                CacheContext = Constants.CacheContext.AGE,
+                CurrentRace = RaceState.CurrentRace,
+                CancellationToken = ct
+            };
+            
+            _playerUnitData[config.Type] =
+                await _unitDataProvider.LoadUnitData(unitLoadOption);
+        }
+
+        private async UniTask AddPlayerUnitData(UnitType type, WarriorConfig config)
+        {
+            var ct = _cts.Token;                
+            try
+            {
+                await PreparePlayerUnitData(config, ct);
+                
+                _logger.Log($"Added new unit data for {type}.");
+            }
+            catch (Exception e)
+            {
+                _logger.Log("AddPlayerUnitData was canceled.");
+            }
+        }
+        
         private async UniTask PreparePlayerBaseData(CancellationToken ct)
         {
             var ageConfig = _gameConfigController.GetAgeConfig(TimelineState.AgeId);
+            string key = ageConfig.GetBaseKeyForRace(RaceState.CurrentRace);
             
-            ct.ThrowIfCancellationRequested();
-
-            string baseKey = ageConfig.GetBaseKeyForRace(RaceState.CurrentRace);
-            
-            var playerBasePrefab = await _assetProvider.Load<GameObject>(baseKey);
-            
-            RegisterKey(baseKey);
-            
-            _playerBaseData = new BaseData()
+            var baseLoadOptions = new BaseLoadOptions()
             {
+                Faction = Faction.Player,
+                CacheContext = Constants.CacheContext.AGE,
+                PrefabKey = key,
                 Health = _economyUpgrades.GetBaseHealth(),
-                BasePrefab = playerBasePrefab.GetComponent<Base>(),
-                Layer = Constants.Layer.PLAYER_BASE
+                CoinsAmount = 0,
+                CancellationToken = ct,
             };
+            
+            _playerBaseData = await _baseDataProvider.LoadBase(baseLoadOptions);
         }
 
-        private async UniTask PrepareUnitBuilderData(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
+        private async UniTask PrepareUnitsBuilderData(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
         {
-            var foodIconKey = _gameConfigController.GetFoodIconKey();
-            
-            ct.ThrowIfCancellationRequested();
-            var foodSprite = await _assetProvider.Load<Sprite>(foodIconKey);
-            
-            GetCurrentFoodIcon = foodSprite;
-
-            for (int i = 0; i < openPlayerUnitConfigs.Count; i++)
+            foreach (var config in openPlayerUnitConfigs)
             {
-                ct.ThrowIfCancellationRequested();
-
-                var config = openPlayerUnitConfigs[i];
-                string iconKey = config.GetUnitIconKeyForRace(RaceState.CurrentRace);
-                var unitIcon = await _assetProvider.Load<Sprite>(iconKey);
-
-                RegisterKey(iconKey);
-                
-                var newData = new UnitBuilderBtnData
-                {
-                    Type = config.Type,
-                    Food = foodSprite,
-                    UnitIcon = unitIcon,
-                    FoodPrice = config.FoodPrice,
-                };
-                
-                _unitBuilderData[(int)config.Type] = newData; 
+                await PrepareUnitBuilderData(ct, config);
             }
 
             _logger.Log($"UnitBuilderData prepared {_unitBuilderData.Length}");
         }
 
-        private async UniTask PreparePlayerUnits(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
+        private async UniTask PrepareUnitBuilderData(CancellationToken ct, WarriorConfig config)
         {
-            _playerUnitData.Clear();
-    
-            foreach (var config in openPlayerUnitConfigs)
+            var builderLoadOptions = new BuilderLoadOptions()
             {
-                ct.ThrowIfCancellationRequested();
+                Config = config,
+                CurrentRace = RaceState.CurrentRace,
+                CancellationToken = ct
+            };
 
-                var unitKey = config.GetUnitKeyForCurrentRace(RaceState.CurrentRace);
-                
-                var go = await _assetProvider.Load<GameObject>(unitKey);
-                
-                RegisterKey(unitKey);
-                
-                var newData = new UnitData
-                {
-                    Config = config,
-                    Prefab = go.GetComponent<Unit>(),
-                    UnitLayer = Constants.Layer.PLAYER,
-                    AggroLayer = Constants.Layer.PLAYER_AGGRO,
-                    AttackLayer = Constants.Layer.PLAYER_ATTACK,
-                };
-
-                _playerUnitData[config.Type] = newData;
-            }
-
-            _logger.Log("PlayerUnitData prepared");
+            _unitBuilderData[(int) config.Type] =
+                await _unitDataProvider.LoadUnitBuilderData(builderLoadOptions);
         }
-        
-        private async UniTask PrepareWeaponData(List<WarriorConfig> warriorConfigs, CancellationToken ct)
+
+        private async UniTask PrepareWeaponsData(List<WarriorConfig> warriorConfigs, CancellationToken ct)
         {
             _weaponData.Clear();
     
             foreach (var config in warriorConfigs)
             {
-                ct.ThrowIfCancellationRequested();
-
-                if(config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
-
-                Projectile projectilePrefab = await PrepareProjectilePrefab(config);
-        
-                MuzzleFlash muzzlePrefab = await PrepareMuzzleFlash(config);
-        
-                ProjectileExplosion projectileExplosionPrefab = await PrepareProjectileExplosionPrefab(config);
-
-                var newData = new WeaponData()
-                {
-                    Config = config.WeaponConfig,
-                    Layer = Constants.Layer.PLAYER_PROJECTILE,
-                    ProjectilePrefab = projectilePrefab,
-                    MuzzlePrefab = muzzlePrefab,
-                    ProjectileExplosionPrefab = projectileExplosionPrefab,
-                };
-
-                _weaponData[config.WeaponConfig.WeaponType] = newData;
+                await PrepareWeaponData(ct, config.WeaponConfig);
             }
 
             _logger.Log($"WeaponData prepared {_weaponData.Count}");
         }
 
-        private async UniTask<ProjectileExplosion> PrepareProjectileExplosionPrefab(WarriorConfig config)
-        {
-            ProjectileExplosion projectileExplosionPrefab = null;
-            if (config.WeaponConfig.ProjectileExplosionKey != Constants.ConfigKeys.MISSING_KEY)
-            {
-                var projectileExplosionGameObject =
-                    await _assetProvider.Load<GameObject>(config.WeaponConfig.ProjectileExplosionKey);
-                if (projectileExplosionGameObject != null)
-                {
-                    projectileExplosionPrefab = projectileExplosionGameObject.GetComponent<ProjectileExplosion>();
-                    RegisterKey(config.WeaponConfig.ProjectileExplosionKey);
-                }
-            }
-
-            return projectileExplosionPrefab;
-        }
-
-        private async UniTask<MuzzleFlash> PrepareMuzzleFlash(WarriorConfig config)
-        {
-            MuzzleFlash muzzlePrefab = null;
-            if (config.WeaponConfig.MuzzleKey != Constants.ConfigKeys.MISSING_KEY)
-            {
-                var muzzleGameObject = await _assetProvider.Load<GameObject>(config.WeaponConfig.MuzzleKey);
-                if (muzzleGameObject != null)
-                {
-                    muzzlePrefab = muzzleGameObject.GetComponent<MuzzleFlash>();
-                    RegisterKey(config.WeaponConfig.MuzzleKey);
-                }
-            }
-            return muzzlePrefab;
-        }
-
-        private async UniTask<Projectile> PrepareProjectilePrefab(WarriorConfig config)
-        {
-            Projectile projectilePrefab = null;
-            if (config.WeaponConfig.ProjectileKey != Constants.ConfigKeys.MISSING_KEY)
-            {
-                var projectileGameObject = await _assetProvider.Load<GameObject>(config.WeaponConfig.ProjectileKey);
-                if (projectileGameObject != null)
-                {
-                    projectilePrefab = projectileGameObject.GetComponent<Projectile>();
-                    RegisterKey(config.WeaponConfig.ProjectileKey);
-                }
-            }
-            
-            return projectilePrefab;
-        }
-
-
         private async UniTask AddWeaponData(UnitType type, WarriorConfig config)
         {
-            if(config.WeaponConfig.WeaponType == WeaponType.Melee) return;
-            
-            Projectile projectilePrefab = await PrepareProjectilePrefab(config);
-        
-            MuzzleFlash muzzlePrefab = await PrepareMuzzleFlash(config);
-        
-            ProjectileExplosion projectileExplosionPrefab = await PrepareProjectileExplosionPrefab(config);
-            
-            
-            var newData = new WeaponData()
+            var ct = _cts.Token;                
+            try
             {
-                Config = config.WeaponConfig,
-                Layer = Constants.Layer.PLAYER_PROJECTILE,
-                ProjectilePrefab = projectilePrefab,
-                MuzzlePrefab = muzzlePrefab,
-                ProjectileExplosionPrefab = projectileExplosionPrefab,
-            };
-
-            _weaponData[config.WeaponConfig.WeaponType] = newData;
-            _logger.Log($"Added new weapon data for {type}.");
-        }
-
-        private async UniTask AddPlayerUnitData(UnitType type, WarriorConfig config)
-        {
-            var unitKey = config.GetUnitKeyForCurrentRace(RaceState.CurrentRace);
-            
-            var prefab = await _assetProvider.Load<GameObject>(unitKey);
-            
-            RegisterKey(unitKey);
-            
-            var unitData = new UnitData
-            {
-                Config = config,
-                Prefab = prefab.GetComponent<Unit>(),
-                UnitLayer = Constants.Layer.PLAYER,
-                AggroLayer = Constants.Layer.PLAYER_AGGRO,
-                AttackLayer = Constants.Layer.PLAYER_ATTACK,
-            };
-
-            _playerUnitData[type] = unitData;
-            
-            _logger.Log($"Added new player unit data for {type}.");
-        }
-        
-        private async UniTask AddUnitBuilderData(UnitType type, WarriorConfig config)
-        {
-            string iconKey = config.GetUnitIconKeyForRace(RaceState.CurrentRace);
-            
-            var unitIcon = await _assetProvider.Load<Sprite>(iconKey);
-            
-            RegisterKey(iconKey);
-            
-            var newData = new UnitBuilderBtnData
-            {
-                Type = type,
-                Food = GetCurrentFoodIcon,
-                UnitIcon = unitIcon,
-                FoodPrice = config.FoodPrice,
-            };
-
-            _unitBuilderData[(int)type] = newData;
+                await PrepareWeaponData(ct, config.WeaponConfig);
                 
-            _logger.Log($"Added new unit builder data for {type}.");
-        }
-
-        private void RegisterKey(string key)
-        {
-            _loadedResources.Add(key);
-        }
-        
-        private void UnloadResources()
-        {
-            foreach (var key in _loadedResources)
+                _logger.Log($"Added new weapon data for {type}.");
+            }
+            catch (Exception e)
             {
-                _assetProvider.Release(key);
+                _logger.Log("AddWeapon was canceled.");
             }
         }
 
-        private void ClearKeyCache()
+        private async UniTask AddUnitBuilderData(UnitType type, WarriorConfig config)
         {
-            _loadedResources.Clear();
+            var ct = _cts.Token;                
+            try
+            {
+                await PrepareUnitBuilderData(ct, config);
+                
+                _logger.Log($"Added new unit builder data for {type}.");
+            }
+            catch (Exception e)
+            {
+                _logger.Log("AddUnitBuilderData was canceled.");
+            }
+        }
+
+        private async UniTask PrepareWeaponData(CancellationToken ct, WeaponConfig config)
+        {
+            if (config.WeaponType == WeaponType.Melee) return;
+
+            var weaponLoadOptions = new WeaponLoadOptions()
+            {
+                Faction = Faction.Player,
+                Config = config,
+                CacheContext = Constants.CacheContext.AGE,
+                CancellationToken = ct
+            };
+            
+            _weaponData[config.WeaponType] =
+                await _weaponDataProvider.LoadWeapon(weaponLoadOptions);
         }
 
 

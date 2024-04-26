@@ -10,7 +10,10 @@ using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.FSM;
 using _Game.Gameplay._Units.FSM.States;
 using _Game.Gameplay._Units.Scripts.Attack;
+using _Game.Gameplay._Units.Scripts.Movement;
 using _Game.Gameplay._Weapon.Scripts;
+using _Game.Utils.Extensions;
+using Pathfinding.RVO;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -18,17 +21,19 @@ namespace _Game.Gameplay._Units.Scripts
 {
     public class Unit : GameBehaviour
     {
-        private const float RETURN_TO_POOL_DELAY = 3f;
-        private readonly Vector3 _poolPosition = new Vector3(20f,0f,0f);  
-        
-        
+        private const float RETURN_TO_POOL_DELAY = 4f;
+
+        private readonly Vector3 _playerPoolPosition = new Vector3(-20f,0f,0f);
+        private readonly Vector3 _enemyPoolPosition = new Vector3(20f,0f,0f);
+
+
         [SerializeField] private Transform _transform;
 
         [SerializeField] private UnitAnimator _animator;
 
         [SerializeField] private Health _health;
 
-        [SerializeField] private UnitMove _move;
+        [SerializeField] private AUnitMove _aMove;
 
         [SerializeField] private TargetDetection _aggroDetection;
 
@@ -44,6 +49,12 @@ namespace _Game.Gameplay._Units.Scripts
 
         [SerializeField] private DynamicSortingOrder _dynamicSortingOrder;
         
+        [SerializeField] private RVOController _rVOController;
+
+
+        //Utils
+        [SerializeField] private StateIndіcator _stateIndіcator;
+
         private WeaponType WeaponType { get; set; }
 
         public Faction Faction { get; private set; }
@@ -53,6 +64,7 @@ namespace _Game.Gameplay._Units.Scripts
         private int _coinsPerKill;
 
         private IRandomService _random;
+
 
         private Vector3 Position
         {
@@ -91,7 +103,7 @@ namespace _Game.Gameplay._Units.Scripts
         public IUnitFactory OriginFactory { get; set; }
 
         private IInteractionCache _interactionCache;
-        
+
         private ICoinSpawner _coinSpawner;
         private IVFXProxy _vfxProxy;
 
@@ -123,6 +135,8 @@ namespace _Game.Gameplay._Units.Scripts
             int aggroLayer,
             int attackLayer)
         {
+            SetupRVOLayers(faction);
+
             Faction = faction;
             Type = type;
 
@@ -136,8 +150,7 @@ namespace _Game.Gameplay._Units.Scripts
 
             _aggroDetection.Construct(aggroLayer);
             _attackDetection.Construct(attackLayer);
-
-            //TODO Config
+            
             _attack.Construct(
                 config.WeaponConfig,
                 faction,
@@ -145,13 +158,13 @@ namespace _Game.Gameplay._Units.Scripts
                 _transform);
 
             _health.Construct(
-                config.Health,
+                config.GetUnitHealthForFaction(faction),
                 cameraService);
-
-            _move.Construct(
+            
+            _aMove.Construct(
                 transform,
                 config.Speed);
-
+            
             _damageFlash.Construct();
 
             _health.Death += OnDeath;
@@ -160,9 +173,22 @@ namespace _Game.Gameplay._Units.Scripts
             _targetPoint.Damageable = _health;
             _targetPoint.Transform = _transform;
 
-            _animator.Construct();
+            _animator.Construct(config.AttackPerSecond);
             
             InitializeFsm();
+        }
+
+        private void SetupRVOLayers(Faction faction)
+        {
+            if (faction == Faction.Enemy)
+            {
+                _rVOController.layer = RVOLayer.Layer3;
+                _rVOController.collidesWith = RVOLayer.Layer3;
+                return;
+            }
+
+            _rVOController.layer = RVOLayer.Layer2;
+            _rVOController.collidesWith = RVOLayer.Layer2;
         }
 
 
@@ -174,9 +200,6 @@ namespace _Game.Gameplay._Units.Scripts
             IVFXProxy vFXProxy,
             ICoinSpawner coinSpawner)
         {
-            //TODO Delete
-            Debug.Log($"{unitSpawnPoint} UNIT");
-            
             InteractionCache = interactionCache;
             Position = unitSpawnPoint;
             Destination = destination;
@@ -194,12 +217,16 @@ namespace _Game.Gameplay._Units.Scripts
             _health.HideHealth();
             _aggroDetection.Enable();
             _attackDetection.Enable();
+            _attack.Enable();
             _fsm.Enter<IdleState>();
             _damageFlash.Reset();
         }
 
         public override bool GameUpdate()
         {
+            if(_stateIndіcator != null)
+                _stateIndіcator.SetColor(_fsm.StateIndicator());
+            
             if (_isDead)
             {
                 Recycle();
@@ -222,9 +249,9 @@ namespace _Game.Gameplay._Units.Scripts
 
             IdleState idleState = new IdleState(_fsm);
             MoveToPointState moveState =
-                new MoveToPointState(_fsm, _move, _aggroDetection, _attackDetection, _animator, _random);
+                new MoveToPointState(_fsm, _aMove, _aggroDetection, _attackDetection, _animator, _random);
             MoveToTargetState moveToTargetState =
-                new MoveToTargetState(_fsm, _move, _aggroDetection, _attackDetection, _animator);
+                new MoveToTargetState(_fsm, _aMove, _aggroDetection, _attackDetection, _animator);
             AttackState attackState = new AttackState(_fsm, _animator, _attack, _aggroDetection, _attackDetection);
             DeathState deathState = new DeathState();
 
@@ -238,9 +265,6 @@ namespace _Game.Gameplay._Units.Scripts
 
         private void OnDeath()
         {
-            //TODO Delete
-            Debug.Log("OnUnitDeath");
-            
             _vfxProxy.SpawnUnitVfx(Position);
             
             if (Faction == Faction.Enemy)
@@ -250,13 +274,30 @@ namespace _Game.Gameplay._Units.Scripts
             
             _aggroDetection.Disable();
             _attackDetection.Disable();
-            
+            _attack.Disable();
+
             _fsm.Enter<IdleState>();
             
-            Position = _poolPosition;
+            ReturnToPoolPosition();
+
             StartCoroutine(ReturnToPoolAfterDelay());
         }
-        
+
+        private void ReturnToPoolPosition()
+        {
+            switch (Faction)
+            {
+                case Faction.Player:
+                    Position = _playerPoolPosition;
+                    break;
+                case Faction.Enemy:
+                    Position = _enemyPoolPosition;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         IEnumerator ReturnToPoolAfterDelay()
         {
             yield return new WaitForSeconds(RETURN_TO_POOL_DELAY);
@@ -279,10 +320,10 @@ namespace _Game.Gameplay._Units.Scripts
             if (isPaused)
             {
                 _tempAnimatorSpeedFactor = _animator.SpeedFactor;
-                _tempMoveSpeedFactor = _move.SpeedFactor;
+                _tempMoveSpeedFactor = _aMove.SpeedFactor;
             }
             _animator.SetSpeedFactor(isPaused ? 0 : _tempAnimatorSpeedFactor);
-            _move.SetSpeedFactor(isPaused ? 0 : _tempMoveSpeedFactor);
+            _aMove.SetSpeedFactor(isPaused ? 0 : _tempMoveSpeedFactor);
         }
 
         #region Helpers
@@ -295,54 +336,16 @@ namespace _Game.Gameplay._Units.Scripts
             _transform = GetComponent<Transform>();
             _dynamicSortingOrder = GetComponent<DynamicSortingOrder>();
             _health = GetComponent<Health>();
+            _rVOController = GetComponent<RVOController>();
             _damageFlash = GetComponent<DamageFlashEffect>();
             _attack = GetComponentInChildren<UnitAttack>();
             _bodyCollider = GetComponent<Collider2D>();
-            _move = GetComponent<UnitMove>();
+            _aMove = GetComponent<AUnitMove>();
             _targetPoint = GetComponent<TargetPoint>();
             _aggroDetection = GetComponents<TargetDetection>()[0];
             _attackDetection = GetComponents<TargetDetection>()[1];
         }
-        [Button]
-        private void Player()
-        {
-            SetLayerRecursive(transform, 8);  
-            SetLayerForChildWithName(transform, "AggroZone", 10);  
-            SetLayerForChildWithName(transform, "AttackZone", 12); 
-        }
-        [Button]
-        private void Enemy()
-        {
-            SetLayerRecursive(transform, 9);  
-            SetLayerForChildWithName(transform, "AggroZone", 11);  
-            SetLayerForChildWithName(transform, "AttackZone", 13); 
-        }
-
-        private void SetLayerRecursive(Transform parent, int layer)
-        {
-            if (parent == null)
-                return;
-
-            parent.gameObject.layer = layer;
-
-            foreach (Transform child in parent)
-            {
-                SetLayerRecursive(child, layer);
-            }
-        }
-
-        private void SetLayerForChildWithName(Transform parent, string childName, int layer)
-        {
-            Transform child = parent.Find(childName);
-
-            if (child != null)
-            {
-                child.gameObject.layer = layer;
-            }
-        }
-    
 #endif
-
         #endregion
     }
 

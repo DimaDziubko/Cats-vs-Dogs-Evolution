@@ -50,7 +50,7 @@ namespace _Game.Gameplay._Units.Scripts.Attack
             }
         }
 
-        private void CallDamageFlash(float _)
+        private void CallDamageFlash(float _, float __)
         {
             if(!gameObject.activeInHierarchy) return;
             _damageFlashCoroutine = StartCoroutine(DamageFlasher());

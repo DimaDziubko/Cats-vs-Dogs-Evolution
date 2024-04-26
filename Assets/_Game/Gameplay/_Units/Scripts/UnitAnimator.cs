@@ -11,9 +11,11 @@ namespace _Game.Gameplay._Units.Scripts
     {
         private const string IDLE_ANIMATOR_STATE = "Idle";
         private const string ATTACK_ANIMATOR_STATE = "Attack";
+        private const string ATTACK_PER_SECOND = "DPS";
         
         private readonly int _idleStateHash = Animator.StringToHash(IDLE_ANIMATOR_STATE);
         private readonly int _attackStateHash = Animator.StringToHash(ATTACK_ANIMATOR_STATE);
+        private readonly int _dPSHash = Animator.StringToHash(ATTACK_PER_SECOND);
         
         [SerializeField] private Animator _animator;
 
@@ -22,33 +24,39 @@ namespace _Game.Gameplay._Units.Scripts
         [SerializeField] private float _minAngle = -60f;
         [SerializeField] private float _maxAngle = 60f;
 
-        private Transform _target;
-        
-        private LookAtJob _lookAtJob;
-        private AnimationScriptPlayable _lookAtPlayable;
-
-        [ShowInInspector] 
-        private bool IsIkActive => _lookAtJob.isActive;
-        
-        private bool _isLookAtJobInitialized;
-        private bool _lookAtPlayableConnected;
-        
         public float SpeedFactor => _animator.speed;
-        
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
-
         public AnimatorState State { get; private set; }
 
+        private Transform _target;
+
+        private LookAtJob _lookAtJob;
+        private AnimationScriptPlayable _lookAtPlayable;
+        
+        [ShowInInspector] 
+        private bool IsIkActive => _lookAtJob.isActive;
+
+        private bool _isLookAtJobInitialized;
+        private bool _lookAtPlayableConnected;
+
+        private float _attackPerSecond;
+        
         public bool IsAttacking => State == AnimatorState.Attack;
         
-        public void PlayAttack() => _animator.SetBool(_attackStateHash, true);
+        public void PlayAttack()
+        {
+            _animator.SetFloat(_dPSHash, _attackPerSecond);
+            _animator.SetBool(_attackStateHash, true);
+        }
+
         public void StopAttack() => _animator.SetBool(_attackStateHash, false);
         public void ResetToIdle() => _animator.SetTrigger(_idleStateHash);
 
-        public void Construct()
+        public void Construct(float attackPerSecond)
         {
             InitializeLookAtJob();
+            _attackPerSecond = attackPerSecond;
         }
         
         private void InitializeLookAtJob()

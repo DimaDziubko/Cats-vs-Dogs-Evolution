@@ -4,74 +4,77 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Toggle))]
-public class CustomToggle : MonoBehaviour
+namespace _Game.UI.Common.Scripts
 {
-    public event Action<bool> ValueChanged;
-
-    private IAudioService _audioService;
-    
-    [SerializeField] private Toggle _toggle;
-    private bool IsOn => _toggle.isOn;
-    
-    //Animation data
-    [SerializeField] private RectTransform _toggleBtnTransform;
-    [SerializeField] private Image _background;
-    [SerializeField] private Color _onColor = Color.green;
-    [SerializeField] private Color _offColor = Color.red;
-    
-    [SerializeField] private Vector2 _toggleOnPosition;
-    [SerializeField] private Vector2 _toggleOffPosition;
-    [SerializeField] private float _animationDuration;
-    public void Initialize(bool isOn, IAudioService audioService)
+    [RequireComponent(typeof(Toggle))]
+    public class CustomToggle : MonoBehaviour
     {
-        _audioService = audioService;
+        public event Action<bool> ValueChanged;
+
+        private IAudioService _audioService;
+    
+        [SerializeField] private Toggle _toggle;
+        private bool IsOn => _toggle.isOn;
+    
+        //Animation data
+        [SerializeField] private RectTransform _toggleBtnTransform;
+        [SerializeField] private Image _background;
+        [SerializeField] private Color _onColor = Color.green;
+        [SerializeField] private Color _offColor = Color.red;
+    
+        [SerializeField] private Vector2 _toggleOnPosition;
+        [SerializeField] private Vector2 _toggleOffPosition;
+        [SerializeField] private float _animationDuration;
+        public void Initialize(bool isOn, IAudioService audioService)
+        {
+            _audioService = audioService;
         
-        Cleanup();
+            Cleanup();
 
-        _toggle.isOn = isOn;
+            _toggle.isOn = isOn;
 
-        SetupToggleBtnPosition();
+            SetupToggleBtnPosition();
 
-        _toggle.onValueChanged.AddListener(OnValueChanged);
-    }
-
-    private void SetupToggleBtnPosition()
-    {
-        _toggleBtnTransform.anchoredPosition = IsOn ? _toggleOnPosition : _toggleOffPosition;
-        _background.color = IsOn ? _onColor : _offColor;
-    }
-
-    private void OnValueChanged(bool arg0)
-    {
-        PlayTransitionAnimation();
-        _audioService.PlayButtonSound();
-        ValueChanged?.Invoke(arg0);
-    }
-    
-    private void PlayTransitionAnimation()
-    {
-        if (IsOn)
-        {
-            PlayOn();
+            _toggle.onValueChanged.AddListener(OnValueChanged);
         }
-        else
+
+        private void SetupToggleBtnPosition()
         {
-            PlayOff();
+            _toggleBtnTransform.anchoredPosition = IsOn ? _toggleOnPosition : _toggleOffPosition;
+            _background.color = IsOn ? _onColor : _offColor;
         }
-    }
 
-    private void PlayOff()
-    {
-        _toggleBtnTransform.DOAnchorPos(_toggleOffPosition, _animationDuration);
-        _background.DOColor(_offColor, _animationDuration);
-    }
-
-    private void PlayOn()
-    {
-        _toggleBtnTransform.DOAnchorPos(_toggleOnPosition, _animationDuration);
-        _background.DOColor(_onColor, _animationDuration);
-    }
+        private void OnValueChanged(bool arg0)
+        {
+            PlayTransitionAnimation();
+            _audioService.PlayButtonSound();
+            ValueChanged?.Invoke(arg0);
+        }
     
-    public void Cleanup() => _toggle.onValueChanged.RemoveAllListeners();
+        private void PlayTransitionAnimation()
+        {
+            if (IsOn)
+            {
+                PlayOn();
+            }
+            else
+            {
+                PlayOff();
+            }
+        }
+
+        private void PlayOff()
+        {
+            _toggleBtnTransform.DOAnchorPos(_toggleOffPosition, _animationDuration);
+            _background.DOColor(_offColor, _animationDuration);
+        }
+
+        private void PlayOn()
+        {
+            _toggleBtnTransform.DOAnchorPos(_toggleOnPosition, _animationDuration);
+            _background.DOColor(_onColor, _animationDuration);
+        }
+    
+        public void Cleanup() => _toggle.onValueChanged.RemoveAllListeners();
+    }
 }

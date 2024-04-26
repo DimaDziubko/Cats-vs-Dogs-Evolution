@@ -43,6 +43,8 @@ namespace _Game.Core.Services.Upgrades.Scripts
             _logger = logger;
         }
 
+        public float MinimalCoinsForBattle { get; private set; }
+
         public async UniTask Init()
         {
             TimelineState.UpgradeItemChanged += OnUpgradeItemChanged;
@@ -50,6 +52,12 @@ namespace _Game.Core.Services.Upgrades.Scripts
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             
             await PrepareUpgrades();
+            PrepareMinimalCoinForBattle();
+        }
+
+        private void PrepareMinimalCoinForBattle()
+        {
+            MinimalCoinsForBattle = _gameConfigController.GetMinimalCoinsForBattle();
         }
 
         private async void OnNextAgeOpened()

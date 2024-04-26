@@ -1,16 +1,17 @@
 ﻿using System;
+using _Game.Core._Logger;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
-using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Food.Scripts;
 using _Game.UI.GameplayUI.Scripts;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts
 {
-    public class UnitBuilderViewController : IUnitBuilder, IBaseDestructionHandler, IPauseHandler
+    public class UnitBuilderViewController : IUnitBuilder, IPauseHandler, ITutorialStep
     {
         public event Action BuilderStarted;
         
@@ -21,17 +22,25 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         private readonly IAgeStateService _ageState;
         private readonly IAudioService _audioService;
         private readonly IPauseManager _pauseManager;
+        private readonly ITutorialManager _tutorialManager;
+        private readonly IMyLogger _logger;
 
-        public bool IsPaused => _pauseManager.IsPaused;
+        private bool IsPaused => _pauseManager.IsPaused;
         private UnitBuilderUI UnitBuilderUI => _gameplayUI.UnitBuilderUI;
+        TutorialStep ITutorialStep.TutorialStep => UnitBuilderUI.TutorialStep;
+        public event Action<ITutorialStep> ShowTutorialStep;
+        public event Action<ITutorialStep> CompleteTutorialStep;
+        public event Action<ITutorialStep> BreakTutorial;
 
         public UnitBuilderViewController(
-            GameplayUI gameplayUI, 
-            BattleField battleField, 
+            GameplayUI gameplayUI,
+            BattleField battleField,
             IFoodGenerator foodGenerator,
             IAgeStateService ageState,
             IAudioService audioService,
-            IPauseManager pauseManager)
+            IPauseManager pauseManager,
+            ITutorialManager tutorialManager,
+            IMyLogger logger)
         {
             _gameplayUI = gameplayUI;
             _battleField = battleField;
@@ -39,32 +48,49 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             _ageState = ageState;
             _audioService = audioService;
             _pauseManager = pauseManager;
+            _tutorialManager = tutorialManager;
+            _logger = logger;
         }
-        
+
         public void StartBuilder()
         {
             Unsubscribe();
             Subscribe();
 
             _pauseManager.Register(this);
-            
+
             BuilderStarted?.Invoke();
             _gameplayUI.Show();
-            OnFoodChanged(_foodGenerator.FoodAmount);
-        }
 
+            OnFoodChanged(_foodGenerator.FoodAmount);
+            _tutorialManager.Register(this);
+        }
+        
         public void StopBuilder()
         {
             _gameplayUI.Hide();
-            
+
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 button.Hide();
-            }  
-            
+            }
+
             _pauseManager.UnRegister(this);
-            
+
             Unsubscribe();
+
+            BreakTutorial?.Invoke(this);
+            _tutorialManager.UnRegister(this);
+
+            DisableButtons();
+        }
+
+        private void DisableButtons()
+        {
+            foreach (var button in UnitBuilderUI.Buttons)
+            {
+                button.Disable();
+            }
         }
 
         private void Unsubscribe()
@@ -99,6 +125,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             }
             
             int dataIndex = 0;
+            
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 var data = builderData[dataIndex];
@@ -116,6 +143,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         {
             if(IsPaused) return;
 
+            CompleteTutorialStep?.Invoke(this);
+            
             if(foodPrice > _foodGenerator.FoodAmount) return;
             _battleField.UnitSpawner.SpawnPlayerUnit(type);
             _foodGenerator.SpendFood(foodPrice);
@@ -123,18 +152,15 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             PlayButtonSound();
         }
 
-        private void PlayButtonSound()
+        void IUnitBuilder.OnButtonBecameInteractable()
         {
+            ShowTutorialStep?.Invoke(this);   
+        }
+
+        private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-        }
 
-        void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base)
-        {
-            StopBuilder();
-        }
-
-        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base) { }
-        public void SetPaused(bool isPaused)
+        void IPauseHandler.SetPaused(bool isPaused)
         {
             foreach (var button in UnitBuilderUI.Buttons)
             {
@@ -148,5 +174,6 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         public void StartBuilder();
         public void StopBuilder();
         void Build(UnitType type, int foodPrice);
+        void OnButtonBecameInteractable();
     }
 }

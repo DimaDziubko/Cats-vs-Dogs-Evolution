@@ -1,8 +1,11 @@
 ﻿using System;
 using _Game.Core._Logger;
+using _Game.Core._SystemUpdate;
+using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay.Battle.Scripts;
 using _Game.UI.GameplayUI.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
@@ -14,14 +17,14 @@ namespace _Game.Gameplay.Food.Scripts
         event Action<int> FoodChanged;
         int FoodAmount { get; set; }
         public void Init();
-        public void GameUpdate();
         public void AddFood(int delta);
         public void SpendFood(int delta);
         void StartGenerator();
         void StopGenerator();
+        void SetMediator(IBattleMediator battleMediator);
     }
 
-    public class FoodGenerator : IFoodGenerator
+    public class FoodGenerator : IFoodGenerator, IGameUpdate
     {
         public event Action<int> FoodChanged;
 
@@ -29,6 +32,11 @@ namespace _Game.Gameplay.Food.Scripts
         private readonly IAgeStateService _ageState;
         private readonly IMyLogger _logger;
         private readonly IBonusRewardService _bonusRewardService;
+        private readonly IPauseManager _pauseManager;
+        
+        private IBattleMediator _battleMediator;
+
+        private bool IsPaused => _pauseManager.IsPaused;
 
         private float _productionSpeed;
         private int _foodAmount;
@@ -51,13 +59,18 @@ namespace _Game.Gameplay.Food.Scripts
             IAgeStateService ageState,
             IMyLogger logger,
             GameplayUI gameplayUI,
-            IBonusRewardService bonusRewardService)
+            IBonusRewardService bonusRewardService,
+            ISystemUpdate systemUpdate,
+            IPauseManager pauseManager)
         {
             _economyUpgradesService = economyUpgradesService;
             _panel = gameplayUI.FoodPanel;
             _ageState = ageState;
             _logger = logger;
             _bonusRewardService = bonusRewardService;
+
+            _pauseManager = pauseManager;
+            systemUpdate.Register(this);
         }
 
         public void Init()
@@ -83,20 +96,24 @@ namespace _Game.Gameplay.Food.Scripts
             FoodChanged -= _panel.OnFoodChanged;
             _bonusRewardService.FoodBoost -= AddFood;
         }
-        
+
+        public void SetMediator(IBattleMediator battleMediator)
+        {
+            _battleMediator = battleMediator;
+        }
+
         private void UpdateGeneratorData(UpgradeItemViewModel model)
         {
             if (model.Type == UpgradeItemType.FoodProduction)
             {
                 _productionSpeed = model.Amount;
-
-                //TODO Delete later
-                _logger.Log($"Food production speed updated {model.Amount}");
             }
         }
         
-        public void GameUpdate()
+        void IGameUpdate.GameUpdate()
         {
+            if(IsPaused || !_battleMediator.BattleInProcess) return;
+
             _accumulatedTime += Time.deltaTime;
             float foodProgress = _accumulatedTime * _productionSpeed;
 

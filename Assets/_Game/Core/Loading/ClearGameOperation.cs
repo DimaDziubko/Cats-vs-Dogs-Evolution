@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.GameModes.BattleMode.Scripts;
+using _Game.GameModes._BattleMode.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

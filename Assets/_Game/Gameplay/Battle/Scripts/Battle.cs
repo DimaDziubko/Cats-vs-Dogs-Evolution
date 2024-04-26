@@ -1,85 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using _Game.Core.AssetManagement;
+﻿using System.Threading;
+using _Game.Core._SystemUpdate;
 using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
-using _Game.Gameplay._Bases.Factory;
-using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Gameplay._Coins.Factory;
-using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Scenario;
-using _Game.Gameplay.Vfx.Factory;
-using _Game.Utils.Disposable;
+using _Game.UI._Environment;
 using UnityEngine;
 
 namespace _Game.Gameplay.Battle.Scripts
 {
-    public class Battle : MonoBehaviour, IBaseDestructionHandler
+    public class Battle : IGameUpdate
     {
-        [SerializeField] private Canvas _environmentCanvas;
-        [SerializeField] private Transform _environmentAnchor;
-        
-        [SerializeField] private BattleField _battleField;
+        private readonly BattleField _battleField;
+        private readonly EnvironmentController _environmentController;
 
         private BattleScenarioExecutor _scenarioExecutor;
         private BattleScenarioExecutor.State _activeScenario;
 
         private AudioClip _bGM;
 
-        private IBaseDestructionManager _baseDestructionManager;
-        private IBattleStateService _battleState;
-        private IPauseManager _pauseManager;
-        private IAudioService _audioService;
-
-        private readonly Dictionary<string, Disposable<BattleEnvironment>> _environmentCache = new Dictionary<string, Disposable<BattleEnvironment>>();
+        private readonly IBattleStateService _battleState;
+        private readonly IPauseManager _pauseManager;
+        private readonly IAudioService _audioService;
+        private readonly ISystemUpdate _systemUpdate;
+        private readonly ICoinCounter _coinCounter;
 
         private int _currentBattle;
-        private BattleEnvironment _currentBattleEnvironment;
         public bool BattleInProcess { get; private set; }
+        private bool IsPaused => _pauseManager.IsPaused;
 
-        public void Construct(
-            IUnitFactory unitFactory,
-            IBaseFactory baseFactory,
-            IProjectileFactory projectileFactory,
-            ICoinFactory coinFactory,
-            IVfxFactory vfxFactory,
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+
+        public Battle(
             IBattleStateService battleState,
-            IWorldCameraService cameraService,
-            IAgeStateService ageState,
             IPauseManager pauseManager,
             IAudioService audioService,
-            IBaseDestructionManager baseDestructionManager,
-            ICoinCounter coinCounter)
+            ISystemUpdate systemUpdate,
+            ICoinCounter coinCounter,
+            BattleField battleField,
+            EnvironmentController environmentController)
         {
-            _battleField.Construct(
-                unitFactory,
-                baseFactory, 
-                projectileFactory,
-                vfxFactory,
-                cameraService,
-                pauseManager,
-                ageState,
-                audioService,
-                coinFactory,
-                baseDestructionManager,
-                coinCounter);
+            _systemUpdate = systemUpdate;
+            _battleField = battleField;
+            _coinCounter = coinCounter;
             
-            _environmentCanvas.worldCamera = cameraService.MainCamera;
-
             _audioService = audioService;
             
             _battleState = battleState;
             _pauseManager = pauseManager;
-
-            _baseDestructionManager = baseDestructionManager;
-            baseDestructionManager.Register(this);
+            _environmentController = environmentController;
         }
 
         public void Init()
@@ -91,6 +64,7 @@ namespace _Game.Gameplay.Battle.Scripts
             _battleState.BattlePrepared += UpdateBattle;
 
             UpdateBattle(_battleState.BattleData);
+            _systemUpdate.Register(this);
         }
         
         public void StartBattle()
@@ -106,15 +80,15 @@ namespace _Game.Gameplay.Battle.Scripts
         {
             UpdateBattle(_battleState.BattleData);
             _battleField.ResetSelf();
+            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
         }
 
-        public void PrepareNextBattle()
-        {
+        public void PrepareNextBattle() => 
             _battleState.OpenNextBattle(_currentBattle + 1);
-        }
 
-        public void GameUpdate()
+        void IGameUpdate.GameUpdate()
         {
+            if(IsPaused) return;
             if (BattleInProcess)
             {
                 _activeScenario.Progress();
@@ -134,40 +108,17 @@ namespace _Game.Gameplay.Battle.Scripts
             _pauseManager.SetPaused(true);
         }
 
-        private async void UpdateBattle(BattleData data)
+        private void UpdateBattle(BattleData data)
         {
+            _environmentController.ShowEnvironment(data.EnvironmentData);
             _currentBattle = data.Battle;
             _bGM = data.BGM;
             _battleField.UpdateBase(Faction.Enemy);
             _scenarioExecutor.UpdateScenario(data.Scenario);
-
-            if (_currentBattleEnvironment != null)
-            {
-                _currentBattleEnvironment.Hide();
-            }
-            
-            if (_environmentCache.ContainsKey(data.EnvironmentKey))
-            {
-                var battleEnvironment = _environmentCache[data.EnvironmentKey];
-                battleEnvironment.Value.Show();
-                _currentBattleEnvironment = battleEnvironment.Value;
-            }
-            else
-            {
-                LocalAssetLoader assetLoader = new LocalAssetLoader();
-                Disposable<BattleEnvironment> environment =
-                    await assetLoader.LoadDisposable<BattleEnvironment>(data.EnvironmentKey, _environmentAnchor);
-                _environmentCache.Add(data.EnvironmentKey, environment);
-            }
+            _coinCounter.MaxCoinsPerBattle = data.MaxCoinsPerBattle;
         }
-
-        private void OnDisable()
-        {
-            //TODO Check place
-            _battleState.BattlePrepared -= UpdateBattle;
-            _baseDestructionManager.UnRegister(this);
-        }
-
+        
+        
         private void PlayBGM()
         {
             if (_audioService != null && _bGM != null)
@@ -184,12 +135,7 @@ namespace _Game.Gameplay.Battle.Scripts
             }
         }
 
-        void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base)
-        {
-            StopBattle();
-        }
-
-        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base)
+        public void SetMediator(IBattleMediator battleMediator)
         {
             
         }

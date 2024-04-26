@@ -1,12 +1,16 @@
-﻿using _Game.Core.Configs.Models;
+﻿using System.Collections;
+using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Utils;
 using UnityEngine;
 
 namespace _Game.Gameplay._Units.Scripts
 {
     public abstract class UnitAttack : MonoBehaviour
     {
+        protected float DisableAttackDelay { get; set; } = 0.1f;
+
         [SerializeField] AudioClip _attackSFX;
         
         protected ITarget _target;
@@ -17,6 +21,8 @@ namespace _Game.Gameplay._Units.Scripts
         
         private Transform _unitTransform;
 
+        protected bool _isActive;
+        
         private Vector3 Position
         {
             get => _unitTransform.position;
@@ -51,6 +57,23 @@ namespace _Game.Gameplay._Units.Scripts
         {
             _audioService = audioService;
             _unitTransform = unitTransform;
+            _isActive = true;
+        }
+
+        public void Disable()
+        {
+            StartCoroutine(DisableAttackAfterDelay());
+        }
+
+        IEnumerator DisableAttackAfterDelay()
+        {
+            yield return new WaitForSeconds(DisableAttackDelay);
+            _isActive = false;
+        }
+        
+        public void Enable()
+        {
+            _isActive = true;
         }
 
         //Animation event
@@ -63,10 +86,17 @@ namespace _Game.Gameplay._Units.Scripts
                 _audioService.PlayOneShot(_attackSFX);
             }   
         }
-        
+
         private void RotateToTarget(Vector3 destination)
         {
-            Rotation = Quaternion.Euler(0, destination.x < Position.x ? 180 : 0, 0);
+            if (destination.x < Position.x - Constants.ComparisonThreshold.UNIT_ROTATION_EPSILON)
+            {
+                Rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else if (destination.x > Position.x + Constants.ComparisonThreshold.UNIT_ROTATION_EPSILON)
+            {
+                Rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 }

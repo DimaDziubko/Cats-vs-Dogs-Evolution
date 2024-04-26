@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._Coins.Scripts;
@@ -10,9 +11,9 @@ namespace _Game.Common
 {
     public class RewardAnimator : IRewardAnimator
     {
-        private const float SPAWN_DELAY = 0.15f;
-        private const int MIN_OBJECTS_AMOUNT = 15;
-        private const int MAX_OBJECTS_AMOUNT = 25;
+        private const float SPAWN_DELAY = 0.1f;
+        private const int MIN_OBJECTS_AMOUNT = 4;
+        private const int MAX_OBJECTS_AMOUNT = 20;
         
         private FloatRange _movementDistance = new FloatRange(0.5f, 1f);
         
@@ -21,40 +22,49 @@ namespace _Game.Common
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IRandomService _random;
         private readonly IAudioService _audioService;
+        private readonly IPersistentDataService _persistentData;
 
         public RewardAnimator(
             ICoinFactory coinFactory, 
             ICoroutineRunner coroutineRunner,
             IRandomService random,
-            IAudioService audioService)
+            IAudioService audioService,
+            IPersistentDataService persistentData)
         {
             _coinFactory = coinFactory;
             _coroutineRunner = coroutineRunner;
             _random = random;
             _audioService = audioService;
+            _persistentData = persistentData;
         }
 
-        public void PlayCoins(Vector3 animationTargetPoint)
+        public void PlayCoins(Vector3 animationTargetPoint, float totalCoins, float coinsRatio)
         {
-            int coinsCount = _random.Next(MIN_OBJECTS_AMOUNT, MAX_OBJECTS_AMOUNT);
-            _coroutineRunner.StartCoroutine(SpawnCoins(coinsCount, animationTargetPoint));
-            
-            _audioService.PlayCoinAppearanceSFX();
+            int coinsToSpawn = CalculateCoinsToSpawn(coinsRatio);
+            float coinsPerCoin = totalCoins / coinsToSpawn;
+
+            PlayCoinsSound();
+            _coroutineRunner.StartCoroutine(SpawnCoins(coinsToSpawn, coinsPerCoin, animationTargetPoint));
         }
 
-        private IEnumerator SpawnCoins(int count, Vector3 targetPoint)
+        private void PlayCoinsSound() => 
+            _audioService.PlayCoinAppearanceSFX();
+
+        private int CalculateCoinsToSpawn(float ratio) => 
+            Mathf.CeilToInt(Mathf.Lerp(MIN_OBJECTS_AMOUNT, MAX_OBJECTS_AMOUNT, ratio));
+
+        private IEnumerator SpawnCoins(int count, float coinsPerCoin, Vector3 targetPoint)
         {
             for (int i = 0; i < count; i++)
             {
                 RewardCoin rewardCoin = _coinFactory.GetRewardCoin();
-                rewardCoin.Init(_audioService);
+                rewardCoin.Init(_audioService, coinsPerCoin, _persistentData);
 
                 Vector3 randomDirection = _random.OnUnitSphere();
                 Vector3 movementVector = randomDirection * _movementDistance.RandomValueInRange;
                 rewardCoin.StartMovement(targetPoint, movementVector);
                 yield return new WaitForSeconds(SPAWN_DELAY);
             }
-
         }
     }
 }

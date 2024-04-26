@@ -1,12 +1,13 @@
 ﻿using _Game.Core.Services.Random;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Units.Scripts.Movement;
 using UnityEngine;
 
 namespace _Game.Gameplay._Units.FSM.States
 {
     public class MoveToPointState : IUnitFsmPayloadedState<Vector3>, IUnitFsmState
     {
-        private const float MAX_PATH_DEVIATION = 1f;
+        private const float MAX_PATH_DEVIATION = 0.5f;
         
         private const float DECISION_TIME_MIN = 5;
         private const float DECISION_TIME_MAX = 10;
@@ -16,7 +17,7 @@ namespace _Game.Gameplay._Units.FSM.States
         private const float NOISE_FREQUENCY = 1f;
 
         private readonly IRandomService _random;
-        private readonly UnitMove _unitMove;
+        private readonly IMovable _unitMove;
         private readonly UnitAnimator _animator;
         private readonly TargetDetection _unitAggroDetection;
         private readonly TargetDetection _unitAttackDetection;
@@ -32,7 +33,7 @@ namespace _Game.Gameplay._Units.FSM.States
         
         public MoveToPointState(
             UnitFsm fsm, 
-            UnitMove unitMove, 
+            IMovable unitMove, 
             TargetDetection unitAggroDetection,
             TargetDetection unitAttackDetection,
             UnitAnimator animator,
@@ -91,8 +92,12 @@ namespace _Game.Gameplay._Units.FSM.States
 
         private bool NeedNewPath()
         {
+            if(!_unitMove.IsMoving)
+             Debug.Log("Unit stopped without reason need new path");
+            
             return Time.time - _lastPathUpdateTime >= _pathUpdateFrequency
-                   || Vector3.Distance(_unitMove.Position, _currentTarget) <= MIN_DISTANCE_TO_DEVIATION_POINT;
+                   || Vector3.Distance(_unitMove.Position, _currentTarget) <= MIN_DISTANCE_TO_DEVIATION_POINT
+                   || !_unitMove.IsMoving;
         }
 
         private void UpdatePath()

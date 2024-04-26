@@ -7,6 +7,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
     public interface IEconomyUpgradesService 
     {
         event Action<UpgradeItemViewModel> UpgradeItemUpdated;
+        float MinimalCoinsForBattle { get;}
         UniTask Init();
         float GetFoodProductionSpeed();
         int GetInitialFoodAmount();

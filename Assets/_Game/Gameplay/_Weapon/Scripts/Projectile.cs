@@ -4,6 +4,7 @@ using _Game.Core.Services.Audio;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Factory;
+using _Game.Utils.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -63,7 +64,8 @@ namespace _Game.Gameplay._Weapon.Scripts
             
             gameObject.layer = layer;
             
-            _damage = config.Damage;
+            _damage = config.GetProjectileDamageForFaction(faction);
+            
             _move.Construct(
                 _transform, 
                 config.ProjectileSpeed,

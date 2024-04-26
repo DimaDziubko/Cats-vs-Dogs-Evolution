@@ -7,6 +7,7 @@ using _Game.Core.Services.Battle;
 using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.Core.Loading
@@ -23,6 +24,7 @@ namespace _Game.Core.Loading
         private readonly IEvolutionService _evolutionService;
         private readonly IAdsService _adsService;
         private readonly IBonusRewardService _bonusRewardService;
+        private readonly ITutorialManager _tutorialManager;
 
         public InitializationOperation(
             IBattleStateService battleState,
@@ -32,7 +34,8 @@ namespace _Game.Core.Loading
             IAssetProvider assetProvider,
             IEvolutionService evolutionService,
             IAdsService adsService,
-            IBonusRewardService bonusRewardService)
+            IBonusRewardService bonusRewardService,
+            ITutorialManager tutorialManager)
         {
             _battleState = battleState;
             _ageState = ageState;
@@ -42,6 +45,7 @@ namespace _Game.Core.Loading
             _evolutionService = evolutionService;
             _adsService = adsService;
             _bonusRewardService = bonusRewardService;
+            _tutorialManager = tutorialManager;
         }
         
         public async UniTask Load(Action<float> onProgress)
@@ -62,6 +66,8 @@ namespace _Game.Core.Loading
             _adsService.Init();
             onProgress.Invoke(0.8f);
             await _bonusRewardService.Init();
+            onProgress.Invoke(0.9f);
+            _tutorialManager.Initialize();
             onProgress.Invoke(1.0f);
         }
     }

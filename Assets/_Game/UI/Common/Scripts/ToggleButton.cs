@@ -1,21 +1,29 @@
 using System;
+using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI.Pin.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Button))]
-    public class ToggleButton : MonoBehaviour
+    public class ToggleButton : MonoBehaviour, IFeature, ITutorialStep
     {
+        [SerializeField] private Feature _feature;
+        
         [SerializeField] private Button _button;
         [SerializeField] private Sprite _activeSprite;
         [SerializeField] private Sprite _inactiveSprite;
         [SerializeField] private Image _changableImage;
 
+        [SerializeField] private PinView _pin;
+        
         [SerializeField] private Sprite _icon;
         [SerializeField] private Sprite _lock;
         [SerializeField] private Image _iconHolder;
-        
+
+
         //Animation
         [SerializeField] private RectTransform _iconTransform;
         [SerializeField] private float _iconWarp = 0.1f;
@@ -25,8 +33,18 @@ namespace _Game.UI.Common.Scripts
         private Vector3 _normalIconPosition;
         private Vector3 _highlightedIconPosition;
 
-        public void Initialize(bool isLocked, Action<ToggleButton> callback, Action playSound)
+        public Feature Feature => _feature;
+
+        [SerializeField] private TutorialStep _tutorialStep;
+        public TutorialStep TutorialStep => _tutorialStep;
+        public event Action<ITutorialStep> ShowTutorialStep;
+        public event Action<ITutorialStep> CompleteTutorialStep;
+        public event Action<ITutorialStep> BreakTutorial;
+
+        public void Initialize(bool isUnlocked, Action<ToggleButton> callback, Action playSound)
         {
+            HidePin();
+            
             if (_iconTransform != null)
             {
                 _normalIconPosition = _iconTransform.anchoredPosition;
@@ -36,7 +54,7 @@ namespace _Game.UI.Common.Scripts
                     0);
             }
             
-            if (isLocked)
+            if (!isUnlocked)
             {
                 Lock();
                 return;
@@ -45,14 +63,28 @@ namespace _Game.UI.Common.Scripts
             _button = GetComponent<Button>();
             _button.onClick.AddListener(() =>
             {
-                callback?.Invoke(this);
+                HidePin();
                 playSound?.Invoke();
+                CompleteTutorialStep?.Invoke(this);
+                callback?.Invoke(this);
             });
             Unlock();
+            ShowTutorialStep?.Invoke(this);
         }
 
+        private void HidePin()
+        {
+            _pin.Hide();
+        }
+
+        public void ShowPin()
+        {
+            _pin.Show();
+        }
+        
         public void Cleanup()
         {
+            BreakTutorial?.Invoke(this);
             _button.onClick.RemoveAllListeners();
         }
 
@@ -73,7 +105,7 @@ namespace _Game.UI.Common.Scripts
                 _iconHolder.sprite = _icon;
             }
         }
-        
+
         public void HighlightBtn()
         {
             if (_activeSprite != null && _changableImage != null)
@@ -103,6 +135,5 @@ namespace _Game.UI.Common.Scripts
             
             _button.transform.localScale = _normalScale;
         }
-        
     }
 }

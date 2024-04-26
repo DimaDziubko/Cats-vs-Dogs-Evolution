@@ -1,5 +1,4 @@
-﻿using System;
-using _Game.Common;
+﻿using _Game.Common;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._BattleField.Scripts;
@@ -29,8 +28,11 @@ namespace _Game.Gameplay._Bases.Scripts
 
         private Faction _faction;
 
+        [ShowInInspector]
         private float _coinsPerBase;
-
+        [ShowInInspector]
+        private float _coinsPerHp;
+        
         public IInteractionCache InteractionCache
         {
             get => _interactionCache;
@@ -75,14 +77,19 @@ namespace _Game.Gameplay._Bases.Scripts
             _targetPoint.Transform = _transform;
             _targetPoint.Damageable = _health;
 
-            _health.Death += OnBaseDeath;
-            _health.Hit += OnBaseHit;
+            Subscribe();
 
             _animator.Construct();
             
             _damageFlash.Construct();
             
             HideHealth();
+        }
+
+        private void Subscribe()
+        {
+            _health.Death += OnBaseDeath;
+            _health.Hit += OnBaseHit;
         }
 
         public void PrepareIntro(
@@ -113,6 +120,7 @@ namespace _Game.Gameplay._Bases.Scripts
 
         public override void Recycle()
         {
+            Unsubscribe();
             OriginFactory.Reclaim(this);
         }
 
@@ -127,12 +135,18 @@ namespace _Game.Gameplay._Bases.Scripts
             
             _animator.AnimationCompleted += HandleAnimationCompleted;
             _animator.StartDestructionAnimation();
-            _health.Death -= OnBaseDeath;
-            _health.Hit -= OnBaseHit;
             
+            Unsubscribe();
+
             _damageFlash.Cleanup();
             
             HideHealth();
+        }
+
+        private void Unsubscribe()
+        {
+            _health.Death -= OnBaseDeath;
+            _health.Hit -= OnBaseHit;
         }
 
         private void HandleAnimationCompleted()
@@ -143,11 +157,15 @@ namespace _Game.Gameplay._Bases.Scripts
             _animator.AnimationCompleted -= HandleAnimationCompleted;
         }
 
-        private void OnBaseHit(float percentage)
+        private void OnBaseHit(float damage, float maxHealth)
         {
             if(_faction == Faction.Player) return;
 
-            float coinsToDrop = percentage * _coinsPerBase;
+            if(_coinsPerHp <= 0) _coinsPerHp = _coinsPerBase / maxHealth;
+             
+            float coinsToDrop = damage * _coinsPerHp;
+            
+            Debug.Log($"Data {damage}, {coinsToDrop}");
 
             if (coinsToDrop > _coinsPerBase)
             {

@@ -20,6 +20,8 @@ namespace _Game.Gameplay._Units.Scripts.Attack
 
         protected override void OnAttack()
         {
+            if(_target == null || !_isActive) return;
+            
             _target?.Damageable.GetDamage(_damage);
             base.OnAttack();
         }

@@ -1,0 +1,28 @@
+﻿using _Game.Core._SystemUpdate;
+using _Game.Gameplay._Race;
+using UnityEngine;
+using Zenject;
+
+namespace _Game.Core.Installers.BattleMode
+{
+    public class LocalCoreSystemInstaller : MonoInstaller
+    {
+        [SerializeField] private SystemUpdate _systemUpdate;
+
+        public override void InstallBindings()
+        {
+            BindSystemUpdate();
+            BindRaceSelectionController();
+        }
+
+        private void BindRaceSelectionController()
+        {
+            Container.Bind<RaceSelectionController>().AsSingle();
+        }
+
+        private void BindSystemUpdate()
+        {
+            Container.Bind<ISystemUpdate>().To<SystemUpdate>().FromInstance(_systemUpdate).AsSingle();
+        }
+    }
+}

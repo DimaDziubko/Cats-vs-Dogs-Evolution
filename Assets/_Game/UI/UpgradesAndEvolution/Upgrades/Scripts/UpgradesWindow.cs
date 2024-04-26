@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
@@ -24,17 +25,20 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private IUnitUpgradesService _unitUpgradesService;
         private IHeader _header;
         private IAudioService _audioService;
+        private ITutorialManager _tutorialManager;
 
         public void Construct(
             IHeader header,
             IEconomyUpgradesService economyUpgradesService,
             IUnitUpgradesService unitUpgradesService,
-            IAudioService audioService)
+            IAudioService audioService,
+            ITutorialManager tutorialManager)
         {
             _economyUpgradesService = economyUpgradesService;
             _header = header;
             _unitUpgradesService = unitUpgradesService;
             _audioService = audioService;
+            _tutorialManager = tutorialManager;
         }
 
         public void Show()
@@ -44,6 +48,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
             Unsubscribe();
             Subscribe();
+            
+            _tutorialManager.Register(_foodProduction);
             
             InitItems();
 
@@ -75,6 +81,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
             _foodProduction.Cleanup();
             _baseHealth.Cleanup();
+            
+            _tutorialManager.UnRegister(_foodProduction);
         }
 
         private void Unsubscribe()

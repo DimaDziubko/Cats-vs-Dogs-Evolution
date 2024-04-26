@@ -9,7 +9,7 @@ namespace _Game.Scenes.Tests
         [SerializeField] private Transform _target;
         private void Start()
         {
-            _animator.Construct();
+            _animator.Construct(0.8f);
             _animator.PlayAttack();
             _animator.SetTarget(_target);
         }

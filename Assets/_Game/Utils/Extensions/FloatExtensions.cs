@@ -14,55 +14,78 @@ namespace _Game.Utils.Extensions
         public static string FormatMoney(this float price)
         {
             CultureInfo ci = CultureInfo.InvariantCulture;
-            
-            if (price >= 1_000 && price < 10_000)
+
+            if (price < 1_000)
             {
-                if (price % 1000 == 0)
-                {
-                    return (price / 1000).ToString("0", ci) + "k";
-                }
-                else
-                {
-                    return (price / 1000).ToString("0.##", ci) + "k"; 
-                }
+                // Prices below 1,000 are displayed as whole numbers
+                return Math.Round(price).ToString("0", ci);
             }
-            else if (price >= 10_000 && price < 1_000_000)
+            else if (price >= 1_000 && price < 1_000_000)
             {
-                if (price % 1000 == 0)
+                // Handle formatting for thousands
+                float priceInThousands = price / 1_000;
+                int integerPart = (int)priceInThousands;
+                float decimalPart = priceInThousands - integerPart;
+
+                if (Math.Abs(decimalPart) < 0.01f)
                 {
-                    return (price / 1000).ToString("0", ci) + "k";
+                    return integerPart.ToString("0", ci) + "k";
+                }
+                else if (Math.Abs(decimalPart) < 0.1f)
+                {
+                    // Round to no decimal places if the first decimal place is zero
+                    return integerPart.ToString("0", ci) + "k";
                 }
                 else
                 {
-                    return (price / 1000).ToString("0.#", ci) + "k"; 
+                    // Use two decimal places only when necessary
+                    return priceInThousands.ToString("0.##", ci) + "k";
                 }
             }
             else if (price >= 1_000_000 && price < 1_000_000_000)
             {
-                if (price % 1_000_000 == 0)
+                // Handle formatting for millions
+                float priceInMillions = price / 1_000_000;
+                int integerPart = (int)priceInMillions;
+                float decimalPart = priceInMillions - integerPart;
+
+                if (Math.Abs(decimalPart) < 0.01f)
                 {
-                    return (price / 1_000_000).ToString("0", ci) + "m";
+                    return integerPart.ToString("0", ci) + "m";
+                }
+                else if (Math.Abs(decimalPart) < 0.1f)
+                {
+                    // If the first decimal is zero, display without decimals
+                    return integerPart.ToString("0", ci) + "m";
                 }
                 else
                 {
-                    return (price / 1_000_000).ToString("0.#", ci) + "m";
+                    return priceInMillions.ToString("0.##", ci) + "m";
                 }
             }
             else if (price >= 1_000_000_000)
             {
-                if (price % 1_000_000_000 == 0)
+                // Handle formatting for billions
+                float priceInBillions = price / 1_000_000_000;
+                int integerPart = (int)priceInBillions;
+                float decimalPart = priceInBillions - integerPart;
+
+                if (Math.Abs(decimalPart) < 0.01f)
                 {
-                    return (price / 1_000_000_000).ToString("0", ci) + "b";
+                    return integerPart.ToString("0", ci) + "b";
+                }
+                else if (Math.Abs(decimalPart) < 0.1f)
+                {
+                    return integerPart.ToString("0", ci) + "b";
                 }
                 else
                 {
-                    return (price / 1_000_000_000).ToString("0.#", ci) + "b";
+                    return priceInBillions.ToString("0.##", ci) + "b";
                 }
             }
-            else
-            {
-                return price.ToString("0", ci);
-            }
+            
+            return price.ToString("0", ci);
+
         }
     }
 }

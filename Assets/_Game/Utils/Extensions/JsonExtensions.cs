@@ -189,6 +189,7 @@ namespace _Game.Utils.Extensions
                         PlayerBaseKey = battleToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
                         BGMKey = battleToken[Constants.ConfigKeys.BGM_KEY]?.ToString(),
                         CoinsPerBase = (float)battleToken[Constants.ConfigKeys.COINS_PER_BASE],
+                        MaxCoinsPerBattle = (float)battleToken[Constants.ConfigKeys.MAX_COINS_PER_BATTLE],
                         
                     };
                     battles.Add(battleConfig);
@@ -289,6 +290,9 @@ namespace _Game.Utils.Extensions
                                 true) : default(UnitType),
                         CoinsPerKill = (int)warriorToken[Constants.ConfigKeys.COINS_PER_KILL],
                         EnemyIconKey = warriorToken[Constants.ConfigKeys.ENEMY_ICON_KEY]?.ToString(),
+                        PlayerHealthMultiplier = (float)warriorToken[Constants.ConfigKeys.PLAYER_HEALTH_MULTIPLIER],
+                        EnemyHealthMultiplier = (float)warriorToken[Constants.ConfigKeys.ENEMY_HEALTH_MULTIPLIER],
+                        AttackPerSecond = (float)warriorToken[Constants.ConfigKeys.ATTACK_PER_SECOND],
                     };
                     warriors.Add(warriorConfig);
                 }
@@ -322,6 +326,9 @@ namespace _Game.Utils.Extensions
                     ProjectileExplosionKey = weaponConfigToken[Constants.ConfigKeys.PROJECTILE_EXPLOSION_KEY]?.ToString(),
                     
                     SplashRadius = (float)weaponConfigToken[Constants.ConfigKeys.SPLASH_RADIUS],
+                    
+                    PlayerDamageMultiplier = (float)weaponConfigToken[Constants.ConfigKeys.PLAYER_DAMAGE_MULTIPLIER],
+                    EnemyDamageMultiplier = (float)weaponConfigToken[Constants.ConfigKeys.ENEMY_DAMAGE_MULTIPLIER],
                 };
             }
 

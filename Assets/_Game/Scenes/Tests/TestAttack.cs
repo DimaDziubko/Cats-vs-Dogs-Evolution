@@ -12,6 +12,8 @@ namespace _Game.Scenes.Tests
 
         protected override void OnAttack()
         {
+            if(_target == null || !_isActive) return;
+            
             if (_muzzleFlash != null)
             {
                 _muzzleFlash.Play();

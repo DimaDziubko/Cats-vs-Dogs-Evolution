@@ -26,6 +26,8 @@ namespace _Game.UI._StartBattleWindow.Scripts
         [SerializeField] private Button _previousBattleButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
+
+        [SerializeField] private Button _cheatBtn;
         
         [SerializeField] private AudioClip _startBattleSound;
         
@@ -97,6 +99,8 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _settingsButton.onClick.RemoveAllListeners();
             _quitButton.onClick.RemoveAllListeners();
             
+            _cheatBtn.onClick.RemoveAllListeners();
+            
             _battleState.NavigationUpdated -= UpdateNavigationButtons;
             Opened -= _battleState.OnStartBattleWindowOpened;
         }
@@ -110,7 +114,16 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _nextBattleButton.onClick.AddListener(OnNextBattleButtonClick);
             _startBattleButton.onClick.AddListener(OnStartButtonClick);
             _settingsButton.onClick.AddListener(OnSettingsBtnClick);
+            
+            _cheatBtn.onClick.AddListener(OnCheatBtnClicked);
+            
             _quitButton.onClick.AddListener(OnQuitBtnClick);
+        }
+
+        private void OnCheatBtnClicked()
+        {
+            PlayButtonSound();
+            _persistentData.AddCoins(100000);
         }
 
         private void OnQuitBtnClick()
