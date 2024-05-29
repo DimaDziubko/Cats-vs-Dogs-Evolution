@@ -1,6 +1,5 @@
 ﻿using System;
 using _Game.Core.Services.Audio;
-using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI.Common.Scripts;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -9,8 +8,9 @@ using UnityEngine.UI;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
-    public class UpgradeItemView : MonoBehaviour, ITutorialStep
+    public class UpgradeItemView : MonoBehaviour
     {
+        public event Action<ButtonState> ButtonStateChanged;
         public event Action<UpgradeItemType> Upgrade;
 
         private IAudioService _audioService;
@@ -22,30 +22,30 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         
         [ShowInInspector]
         private UpgradeItemType _type;
-
-        [SerializeField] private TutorialStep _tutorialStep;
-        public TutorialStep TutorialStep => _tutorialStep;
-        public event Action<ITutorialStep> ShowTutorialStep;
-        public event Action<ITutorialStep> CompleteTutorialStep;
-        public event Action<ITutorialStep> BreakTutorial;
-
+        
         public void Init(IAudioService audioService)
         {
             _audioService = audioService;
             _transactionButton.Init();
             Unsubscribe();
             Subscribe();
-            ShowTutorialStep?.Invoke(this);
         }
 
         private void Subscribe()
         {
             _transactionButton.Click += OnTransactionButtonClick;
+            _transactionButton.ButtonStateChanged += OnButtonStateChanged;
+        }
+
+        private void OnButtonStateChanged(ButtonState state)
+        {
+            ButtonStateChanged?.Invoke(state);
         }
 
         private void Unsubscribe()
         {
             _transactionButton.Click -= OnTransactionButtonClick;
+            _transactionButton.ButtonStateChanged += OnButtonStateChanged;
         }
 
         public void UpdateUI(UpgradeItemViewModel model)
@@ -68,19 +68,15 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             Unsubscribe();
             _transactionButton.Cleanup();
-            BreakTutorial?.Invoke(this);
         }
 
         private void OnTransactionButtonClick()
         {
             PlayButtonSound();
             Upgrade?.Invoke(_type);
-            CompleteTutorialStep?.Invoke(this);
         }
 
-        private void PlayButtonSound()
-        {
+        private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-        }
     }
 }

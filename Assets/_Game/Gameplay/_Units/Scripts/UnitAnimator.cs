@@ -12,19 +12,20 @@ namespace _Game.Gameplay._Units.Scripts
         private const string IDLE_ANIMATOR_STATE = "Idle";
         private const string ATTACK_ANIMATOR_STATE = "Attack";
         private const string ATTACK_PER_SECOND = "DPS";
-        
+
         private readonly int _idleStateHash = Animator.StringToHash(IDLE_ANIMATOR_STATE);
         private readonly int _attackStateHash = Animator.StringToHash(ATTACK_ANIMATOR_STATE);
         private readonly int _dPSHash = Animator.StringToHash(ATTACK_PER_SECOND);
-        
+
         [SerializeField] private Animator _animator;
 
         [SerializeField] private Transform _weaponAimBone;
 
         [SerializeField] private float _minAngle = -60f;
         [SerializeField] private float _maxAngle = 60f;
+        public float Speed => _animator.speed;
+        public float DefaultSpeed { get; private set; }
 
-        public float SpeedFactor => _animator.speed;
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
         public AnimatorState State { get; private set; }
@@ -57,6 +58,7 @@ namespace _Game.Gameplay._Units.Scripts
         {
             InitializeLookAtJob();
             _attackPerSecond = attackPerSecond;
+            DefaultSpeed = _animator.speed;
         }
         
         private void InitializeLookAtJob()
@@ -103,9 +105,9 @@ namespace _Game.Gameplay._Units.Scripts
             _lookAtPlayable.SetJobData(_lookAtJob);
         }
 
-        public void SetSpeedFactor(float speedFactor)
+        public void SetSpeed(float speed)
         {
-            _animator.speed = speedFactor;
+            _animator.speed = speed;
         }
 
         //Animation event

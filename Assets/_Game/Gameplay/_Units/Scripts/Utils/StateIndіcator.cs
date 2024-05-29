@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StateIndіcator : MonoBehaviour
+namespace _Game.Gameplay._Units.Scripts.Utils
 {
-    [SerializeField] private SpriteRenderer _indicator;
-
-    public void SetColor(Color color)
+    public class StateIndіcator : MonoBehaviour
     {
-        if(_indicator.color == color) return; 
-        _indicator.color = color;
+        [SerializeField] private SpriteRenderer _indicator;
+
+        public void SetColor(Color color)
+        {
+            if(_indicator.color == color) return; 
+            _indicator.color = color;
+        }
     }
 }

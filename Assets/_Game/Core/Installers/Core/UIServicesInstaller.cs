@@ -1,11 +1,11 @@
-﻿using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.Loading;
+﻿using _Game.Core.Loading;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Gameplay.GameResult.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.Settings.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
@@ -23,7 +23,6 @@ namespace _Game.Core.Installers.Core
         
         public override void InstallBindings()
         {
-            BindFeatureUnlockSystem();
             BindHeader();
             BindAlertPopupProvider();
             BindTutorialPointerView();
@@ -38,16 +37,6 @@ namespace _Game.Core.Installers.Core
             BindTimelineInfoWindowProvider();
             BindFactionSelectionWindowProvider();
         }
-
-        private void BindFeatureUnlockSystem() =>
-            Container
-                .BindInterfacesAndSelfTo<FeatureUnlockSystem>()
-                .AsSingle();
-
-        private void BindFactionSelectionWindowProvider() =>
-            Container
-                .BindInterfacesAndSelfTo<RaceSelectionWindowProvider>()
-                .AsSingle();
 
         private void BindHeader() =>
             Container
@@ -66,6 +55,7 @@ namespace _Game.Core.Installers.Core
         private void BindTutorialController() => 
             Container.BindInterfacesAndSelfTo<TutorialManager>().AsSingle();
         
+
         private void BindAlertPopupProvider() =>
             Container.Bind<IAlertPopupProvider>()
                 .To<AlertPopupProvider>()
@@ -75,7 +65,7 @@ namespace _Game.Core.Installers.Core
             Container.Bind<IShopPopupProvider>()
                 .To<ShopPopupProvider>()
                 .AsSingle();
-        
+
         private void BindLoadingScreenProvider() =>
             Container.Bind<ILoadingScreenProvider>()
                 .To<LoadingScreenProvider>()
@@ -90,7 +80,7 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<MainMenuProvider>()
                 .AsSingle();
-        
+
         private void BindStartBattleWindowProvider() =>
             Container
                 .BindInterfacesAndSelfTo<UpgradeAndEvolutionWindowProvider>()
@@ -105,10 +95,15 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesTo<GameResultWindowProvider>()
                 .AsSingle();
-        
+
         private void BindTimelineInfoWindowProvider() => 
             Container
                 .BindInterfacesAndSelfTo<TimelineInfoWindowProvider>()
+                .AsSingle();
+
+        private void BindFactionSelectionWindowProvider() =>
+            Container
+                .BindInterfacesAndSelfTo<RaceSelectionWindowProvider>()
                 .AsSingle();
     }
 }

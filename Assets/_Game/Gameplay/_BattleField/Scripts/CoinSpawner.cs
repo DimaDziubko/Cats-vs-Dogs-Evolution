@@ -11,7 +11,6 @@ namespace _Game.Gameplay._BattleField.Scripts
     {
         private readonly ICoinFactory _coinFactory;
         private readonly IAudioService _audioService;
-        private readonly IWorldCameraService _cameraService;
         private readonly ICoinCounter _coinCounter;
 
         private Vector3 _coinCounterPosition;
@@ -19,31 +18,30 @@ namespace _Game.Gameplay._BattleField.Scripts
         public CoinSpawner(
             ICoinFactory coinFactory,
             IAudioService audioService,
-            IWorldCameraService cameraService,
             ICoinCounter coinCounter)
         {
             _coinFactory = coinFactory;
             _audioService = audioService;
-            _cameraService = cameraService;
             _coinCounter = coinCounter;
             
         }
 
-        public void Init(Vector3 coinCounterPosition)
-        {
+        public void Init(Vector3 coinCounterPosition) => 
             _coinCounterPosition = coinCounterPosition;
-            //CalculateLootCoinTargetPosition(coinCounterViewTransform);
-        }
 
         void ICoinSpawner.SpawnLootCoin(Vector3 position, float amount)
         {
             _audioService.PlayCoinDropSound();
-            
-            var lootCoin =  _coinFactory.GetLootCoin();
+    
+            var lootCoin = _coinFactory.GetLootCoin();
+    
+            if (lootCoin == null)
+            {
+                return;
+            }
+    
             lootCoin.Position = position;
-            
             lootCoin.Init(amount, _coinCounterPosition);
-            
             lootCoin.AnimationCompleted += OnCoinAnimationCompleted;
             lootCoin.Jump();
         }
@@ -54,21 +52,6 @@ namespace _Game.Gameplay._BattleField.Scripts
             
             _coinCounter.AddCoins(lootCoin.Amount);
             lootCoin.AnimationCompleted -= OnCoinAnimationCompleted;
-        }
-
-
-        private void CalculateLootCoinTargetPosition(RectTransform coinCounterViewTransform)
-        {
-            Vector2 screenPoint = 
-                RectTransformUtility.WorldToScreenPoint(
-                    _cameraService.UICameraOverlay, 
-                    coinCounterViewTransform.position);
-            
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                coinCounterViewTransform,
-                screenPoint, 
-                _cameraService.UICameraOverlay, 
-                out _coinCounterPosition);
         }
     }
 }

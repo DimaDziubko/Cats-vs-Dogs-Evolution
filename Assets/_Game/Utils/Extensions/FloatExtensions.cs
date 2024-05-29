@@ -1,10 +1,35 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace _Game.Utils.Extensions
 {
     public static class FloatExtensions
     {
+        public static string ToInvariantString(this float number)
+        {
+            return number.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+        public static string FormatTime(this float value)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds(value);
+            StringBuilder sb = new StringBuilder();
+
+            bool includeDays = timeSpan.Days > 0;
+            bool includeHours = timeSpan.Hours > 0 || includeDays;
+            bool includeMinutes = timeSpan.Minutes > 0 || includeHours;
+
+            if (includeDays)
+                sb.Append($"{timeSpan.Days}d ");
+            if (includeHours)
+                sb.Append($"{timeSpan.Hours}h ");
+            if (includeMinutes)
+                sb.Append($"{timeSpan.Minutes}m ");
+            sb.Append($"{timeSpan.Seconds}s");
+
+            return sb.ToString().Trim();
+        }
+        
         public static string ToSpeedFormat(this float value)
         {
             CultureInfo ci = CultureInfo.InvariantCulture;

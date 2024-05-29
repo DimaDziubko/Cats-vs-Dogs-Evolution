@@ -23,19 +23,37 @@
         "com.unity.ugui": "1.0.0"
       }
     },
+    "com.cleversolutions.ads.consent.unity": {
+      "version": "https://github.com/cleveradssolutions/CAS-Unity-Consent.git#2.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.cleversolutions.ads.unity": "2.7.2"
+      },
+      "hash": "ad8e0494772eaf4c0ed42c2635320dd7606f7b88"
+    },
+    "com.cleversolutions.ads.unity": {
+      "version": "https://github.com/cleveradssolutions/CAS-Unity.git#3.7.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4380bd869e08733911d4104470e461eb08d36c87"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "66de0d3a58b256b6e0194f285cc530fd0c08407b"
+      "hash": "fbe0bf85155f42f8832205f7b3ac3df571ada33e"
     },
-    "com.h8man.2d.navmeshplus": {
-      "version": "https://github.com/h8man/NavMeshPlus.git",
+    "com.devtodev.sdk.analytics": {
+      "version": "https://github.com/devtodev-analytics/package_Analytics.git",
       "depth": 0,
       "source": "git",
-      "dependencies": {},
-      "hash": "f8a1aedbf0bc7c4aebe0f52300b002912690ce1a"
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "fe486e02f65a496f551f724ce554d470ae53a814"
     },
     "com.unity.2d.animation": {
       "version": "7.1.0",
@@ -100,7 +118,7 @@
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
-      "depth": 0,
+      "depth": 1,
       "source": "builtin",
       "dependencies": {}
     },
@@ -135,34 +153,16 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.addressables": {
-      "version": "1.21.12",
+      "version": "1.19.19",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.21.5",
+        "com.unity.scriptablebuildpipeline": "1.19.6",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ads": {
-      "version": "4.4.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ai.navigation": {
-      "version": "1.1.4",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.ai": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -176,7 +176,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.0.5",
+      "version": "2.2.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -216,7 +216,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
+      "version": "3.0.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -225,7 +225,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -248,7 +248,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.mobile.android-logcat": {
-      "version": "1.4.0",
+      "version": "1.4.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -259,6 +259,22 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.recorder": {
+      "version": "3.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
@@ -272,7 +288,7 @@
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "14.0.8",
+      "version": "12.1.14",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
@@ -283,7 +299,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.21.5",
+      "version": "1.20.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -326,7 +342,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.7.5",
+      "version": "1.6.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -347,7 +363,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.8.0",
+      "version": "1.9.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {

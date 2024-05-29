@@ -11,12 +11,9 @@ namespace _Game.Gameplay.Scenario
         private List<EnemyWaveScheduler> _waves;
         
         public State Begin(IUnitSpawner unitSpawner) => new State(this, unitSpawner);
-
+        
         public void UpdateScenario(BattleScenario scenarioData)
         {
-            //TODO Delete
-            Debug.Log($"BattleScenarioExecutor init with Id {scenarioData.Id}");
-            
             if (_waves == null) _waves = new List<EnemyWaveScheduler>();
             
             for (int i = 0; i < scenarioData.Waves.Count; i++)
@@ -61,9 +58,9 @@ namespace _Game.Gameplay.Scenario
                 _unitSpawner = unitSpawner;
             }
 
-            public bool Progress()
+            public bool Progress(float speedFactor)
             {
-                float deltaTime = _wave.Progress(Time.deltaTime);
+                float deltaTime = _wave.Progress(Time.deltaTime) * speedFactor;
                 while (deltaTime >= 0f)
                 {
                     if (++_index >= _scenarioExecutor._waves.Count)

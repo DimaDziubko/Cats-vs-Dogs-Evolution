@@ -24,5 +24,6 @@ namespace _Game.Core.Services.Audio
         void SwitchSFX(bool isOn);
         void SwitchAmbience(bool isOn);
         void PlayVictorySound();
+        void PlayStartBattleSound();
     }
 }

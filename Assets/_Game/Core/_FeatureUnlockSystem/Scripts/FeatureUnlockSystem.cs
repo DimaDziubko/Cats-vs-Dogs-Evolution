@@ -5,20 +5,72 @@ using _Game.Utils;
 
 namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
-    public class FeatureUnlockSystem : IFeatureUnlockSystem
+    public interface IFeatureUnlockSystem
     {
+        void Init();
+        bool IsFeatureUnlocked(IFeature feature);
+        bool IsFeatureUnlocked(Feature feature);
+        event Action<Feature> FeatureUnlocked;
+    }
+
+    public class FeatureUnlockSystem : IFeatureUnlockSystem, IDisposable
+    {
+        public event Action<Feature> FeatureUnlocked;
+
         private readonly IPersistentDataService _persistentData;
+
         private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
+
         private IBattleStatisticsReadonly BattleStatisticsState => _persistentData.State.BattleStatistics;
-        
-        public FeatureUnlockSystem(IPersistentDataService persistentData)
+
+        public FeatureUnlockSystem(IPersistentDataService persistentData) => _persistentData = persistentData;
+
+        public void Init()
         {
-            _persistentData = persistentData;
+            TutorialState.StepsCompletedChanged += OnTutorialStepCompleted;
+            BattleStatisticsState.CompletedBattlesCountChanged += OnBattleStatisticsChanged;
         }
 
-        public bool IsFeatureUnlocked(IFeature feature)
+        public void Dispose()
         {
-            switch (feature.Feature)
+            TutorialState.StepsCompletedChanged -= OnTutorialStepCompleted;
+            BattleStatisticsState.CompletedBattlesCountChanged -= OnBattleStatisticsChanged;
+        }
+
+        private void OnBattleStatisticsChanged() => 
+            CheckForFeaturesUnlock();
+
+        private void OnTutorialStepCompleted(int step) => 
+            CheckForFeaturesUnlock();
+
+        private void CheckForFeaturesUnlock()
+        {
+            CheckForEvolutionFeatureUnlock();
+            CheckForBattleSpeedFeatureUnlock();
+        }
+
+        private void CheckForBattleSpeedFeatureUnlock()
+        {
+            if (GetTresholdForBattleSpeed())
+            {
+                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
+            }
+        }
+
+        private void CheckForEvolutionFeatureUnlock()
+        {
+            if (GetTresholdForEvolutionWindow())
+            {
+                FeatureUnlocked?.Invoke(Feature.EvolutionWindow);
+            }
+        }
+
+        public bool IsFeatureUnlocked(IFeature feature) => 
+            IsFeatureUnlocked(feature.Feature);
+
+        public bool IsFeatureUnlocked(Feature feature)
+        {
+            switch (feature)
             {
                 case Feature.None:
                     return true;
@@ -30,32 +82,40 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
                     return true;
                 case Feature.UpgradesWindow:
                     return GetTresholdForUpgradesWindow();
+                case Feature.EvolutionWindow:
+                    return GetTresholdForEvolutionWindow();
+                case Feature.BattleSpeed:
+                    return GetTresholdForBattleSpeed();
+                case Feature.X2:
+                    return GetTresholdForX2();
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(feature), feature, null);
+                    return false;
             }
         }
 
-        private bool GetTresholdForFoodBoost()
-        {
-            return TutorialState.StepsCompleted >= Constants.TutorialSteps.FOOD_UPGRADE_ITEM &&
-                   BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.FOOD_BOOST;
-        }
+        private bool GetTresholdForX2() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.FOOD_UPGRADE_ITEM &&
+                BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.X2;
+        
 
-        private bool GetTresholdForPause()
-        {
-            return TutorialState.StepsCompleted > Constants.TutorialSteps.UNIT_BUILDER_BUTTON &&
-                   BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.PAUSE;
-        }
+        private bool GetTresholdForBattleSpeed() =>
+            TutorialState.StepsCompleted > Constants.TutorialStepTreshold.EVOLUTION_WINDOW &&
+            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.BATTLE_SPEED;
 
-        private bool GetTresholdForUpgradesWindow()
-        {
-            return TutorialState.StepsCompleted >= Constants.TutorialSteps.UPGRADES_WINDOW &&
-                   BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.UPGRADES_WINDOW;
-        }
-    }
+        private bool GetTresholdForEvolutionWindow() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_WINDOW &&
+                BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.EVOLUTION_WINDOW;
 
-    public interface IFeatureUnlockSystem
-    {
-        bool IsFeatureUnlocked(IFeature feature);
+        private bool GetTresholdForFoodBoost() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.FOOD_UPGRADE_ITEM &&
+            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.FOOD_BOOST;
+
+        private bool GetTresholdForPause() =>
+            TutorialState.StepsCompleted > Constants.TutorialStepTreshold.UNIT_BUILDER_BUTTON &&
+            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.PAUSE;
+
+        private bool GetTresholdForUpgradesWindow() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.UPGRADES_WINDOW &&
+            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.UPGRADES_WINDOW;
     }
 }

@@ -7,11 +7,20 @@ using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Food.Scripts;
-using _Game.UI.GameplayUI.Scripts;
+using _Game.UI.Common.Scripts;
+using _Game.UI.UnitBuilderBtn.Scripts;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts
 {
-    public class UnitBuilderViewController : IUnitBuilder, IPauseHandler, ITutorialStep
+    public interface IUnitBuilder
+    {
+        public void StartBuilder();
+        public void StopBuilder();
+        void Build(UnitType type, int foodPrice);
+        void OnButtonChangeState(ButtonState state);
+    }
+
+    public class UnitBuilderViewController : IUnitBuilder, IPauseHandler
     {
         public event Action BuilderStarted;
         
@@ -27,11 +36,9 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         private bool IsPaused => _pauseManager.IsPaused;
         private UnitBuilderUI UnitBuilderUI => _gameplayUI.UnitBuilderUI;
-        TutorialStep ITutorialStep.TutorialStep => UnitBuilderUI.TutorialStep;
-        public event Action<ITutorialStep> ShowTutorialStep;
-        public event Action<ITutorialStep> CompleteTutorialStep;
-        public event Action<ITutorialStep> BreakTutorial;
 
+        private TutorialStep TutorialStep => UnitBuilderUI.TutorialStep;
+        
         public UnitBuilderViewController(
             GameplayUI gameplayUI,
             BattleField battleField,
@@ -63,7 +70,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             _gameplayUI.Show();
 
             OnFoodChanged(_foodGenerator.FoodAmount);
-            _tutorialManager.Register(this);
+            _tutorialManager.Register(TutorialStep);
         }
         
         public void StopBuilder()
@@ -79,8 +86,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
             Unsubscribe();
 
-            BreakTutorial?.Invoke(this);
-            _tutorialManager.UnRegister(this);
+            TutorialStep.CancelStep();
+            _tutorialManager.UnRegister(TutorialStep);
 
             DisableButtons();
         }
@@ -143,7 +150,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         {
             if(IsPaused) return;
 
-            CompleteTutorialStep?.Invoke(this);
+            TutorialStep.CompleteStep();
             
             if(foodPrice > _foodGenerator.FoodAmount) return;
             _battleField.UnitSpawner.SpawnPlayerUnit(type);
@@ -152,9 +159,12 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             PlayButtonSound();
         }
 
-        void IUnitBuilder.OnButtonBecameInteractable()
+        void IUnitBuilder.OnButtonChangeState(ButtonState state)
         {
-            ShowTutorialStep?.Invoke(this);   
+            if (state == ButtonState.Active)
+            {
+                TutorialStep.ShowStep();
+            } 
         }
 
         private void PlayButtonSound() => 
@@ -167,13 +177,5 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
                 button.SetPaused(isPaused);
             }
         }
-    }
-
-    public interface IUnitBuilder
-    {
-        public void StartBuilder();
-        public void StopBuilder();
-        void Build(UnitType type, int foodPrice);
-        void OnButtonBecameInteractable();
     }
 }

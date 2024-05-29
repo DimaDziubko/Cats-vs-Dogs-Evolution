@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
-using _Game.Core.Configs.Controllers;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.DataProviders;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Upgrades.Scripts;
@@ -22,7 +22,7 @@ using UnityEngine;
 
 namespace _Game.Core.Services.Age.Scripts
 {
-    public sealed class AgeStateService : IAgeStateService
+    public sealed class AgeStateService : IAgeStateService, IDisposable
     {
         public event Action RaceChangingBegun;
         public event Action AgeUpdated;
@@ -30,13 +30,9 @@ namespace _Game.Core.Services.Age.Scripts
         public event Action<UnitBuilderBtnData[]> BuilderDataUpdated;
 
         private readonly IPersistentDataService _persistentData;
-
-        private readonly IGameConfigController _gameConfigController;
-
+        private readonly IAgeConfigRepository _ageConfigRepository;
         private readonly IAssetRegistry _assetRegistry;
-
         private readonly IEconomyUpgradesService _economyUpgrades;
-
         private readonly IMyLogger _logger;
 
         private readonly IUnitDataProvider _unitDataProvider;
@@ -64,7 +60,7 @@ namespace _Game.Core.Services.Age.Scripts
 
         public AgeStateService(
             IPersistentDataService persistentData,
-            IGameConfigController gameConfigController,
+            IAgeConfigRepository ageConfigRepository,
             IAssetRegistry assetRegistry,
             IEconomyUpgradesService economyUpgrades,
             IMyLogger logger,
@@ -73,7 +69,7 @@ namespace _Game.Core.Services.Age.Scripts
             IBaseDataProvider baseDataProvider)
         {
             _persistentData = persistentData;
-            _gameConfigController = gameConfigController;
+            _ageConfigRepository = ageConfigRepository;
             _assetRegistry = assetRegistry;
             _economyUpgrades = economyUpgrades;
             _logger = logger;
@@ -89,6 +85,14 @@ namespace _Game.Core.Services.Age.Scripts
             TimelineState.NextAgeOpened += OnNextAgeOpened;
 
             await PrepareAge();
+        }
+
+        public void Dispose()
+        {
+            _cts?.Dispose();
+            TimelineState.OpenedUnit -= OnOpenedUnit;
+            _economyUpgrades.UpgradeItemUpdated -= OnUpgradeItemUpdated;
+            TimelineState.NextAgeOpened -= OnNextAgeOpened;
         }
 
         public async UniTask ChangeRace()
@@ -154,7 +158,10 @@ namespace _Game.Core.Services.Age.Scripts
 
         private async void OnOpenedUnit(UnitType type)
         {
-            var config = _gameConfigController.GetCurrentAgeUnits().FirstOrDefault(w => w.Type == type);
+            WarriorConfig config = _ageConfigRepository
+                .GetAgeUnits(TimelineState.AgeId)
+                .FirstOrDefault(w => w.Type == type);
+            
             if (config != null)
             {
                 await AddPlayerUnitData(type, config);
@@ -165,7 +172,10 @@ namespace _Game.Core.Services.Age.Scripts
 
         private async UniTask PrepareAge()
         {
-            List<WarriorConfig> openPlayerUnitConfigs = _gameConfigController.GetOpenPlayerUnitConfigs();
+            List<WarriorConfig> openPlayerUnitConfigs = _ageConfigRepository
+                .GetAgeUnits(TimelineState.AgeId)
+                .Where(w => TimelineState.OpenUnits.Contains(w.Type))
+                .ToList();
             
             _logger.Log($"OpenPlayerUnits : {openPlayerUnitConfigs.Count}");
 
@@ -189,7 +199,7 @@ namespace _Game.Core.Services.Age.Scripts
             }
         }
 
-        private async UniTask PreparePlayerUnitsData(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
+        private async UniTask PreparePlayerUnitsData(IEnumerable<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
         {
             _playerUnitData.Clear();
             
@@ -230,10 +240,10 @@ namespace _Game.Core.Services.Age.Scripts
                 _logger.Log("AddPlayerUnitData was canceled.");
             }
         }
-        
+
         private async UniTask PreparePlayerBaseData(CancellationToken ct)
         {
-            var ageConfig = _gameConfigController.GetAgeConfig(TimelineState.AgeId);
+            var ageConfig = _ageConfigRepository.GetAgeConfig(TimelineState.AgeId);
             string key = ageConfig.GetBaseKeyForRace(RaceState.CurrentRace);
             
             var baseLoadOptions = new BaseLoadOptions()
@@ -249,7 +259,7 @@ namespace _Game.Core.Services.Age.Scripts
             _playerBaseData = await _baseDataProvider.LoadBase(baseLoadOptions);
         }
 
-        private async UniTask PrepareUnitsBuilderData(List<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
+        private async UniTask PrepareUnitsBuilderData(IEnumerable<WarriorConfig> openPlayerUnitConfigs, CancellationToken ct)
         {
             foreach (var config in openPlayerUnitConfigs)
             {
@@ -272,7 +282,7 @@ namespace _Game.Core.Services.Age.Scripts
                 await _unitDataProvider.LoadUnitBuilderData(builderLoadOptions);
         }
 
-        private async UniTask PrepareWeaponsData(List<WarriorConfig> warriorConfigs, CancellationToken ct)
+        private async UniTask PrepareWeaponsData(IEnumerable<WarriorConfig> warriorConfigs, CancellationToken ct)
         {
             _weaponData.Clear();
     

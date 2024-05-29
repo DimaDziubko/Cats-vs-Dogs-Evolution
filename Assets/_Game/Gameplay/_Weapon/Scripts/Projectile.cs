@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace _Game.Gameplay._Weapon.Scripts
 {
+    //TODO Fix bug
     [RequireComponent(typeof(CircleCollider2D))]
     public abstract class Projectile : GameBehaviour
     {
@@ -28,8 +29,7 @@ namespace _Game.Gameplay._Weapon.Scripts
         public IProjectileFactory OriginFactory { get; set; }
 
         private bool _isInitialized;
-
-
+        
         private Vector3 Position
         {
             get => _transform.position;
@@ -47,6 +47,7 @@ namespace _Game.Gameplay._Weapon.Scripts
 
         protected float _damage;
 
+        [ShowInInspector]
         protected bool _isDead;
 
 
@@ -70,19 +71,25 @@ namespace _Game.Gameplay._Weapon.Scripts
                 _transform, 
                 config.ProjectileSpeed,
                 config.TrajectoryWarpFactor);
+            
             _isDead = false;
         }
 
         public override bool GameUpdate()
         {
-            if (_isDead || !_target.IsActive)
+            if (!_move.IsMoving)
+            {
+                Debug.Log("Handle not moving because of not moving");
+                HandleNotMoving();
+            }
+            
+            if (_isDead)
             {
                 Recycle();
                 return false;
             }
 
-
-            if (_isInitialized && _target.Transform != null)
+            if (_isInitialized)
             {
                 _move.Move();
             }
@@ -95,7 +102,8 @@ namespace _Game.Gameplay._Weapon.Scripts
             Vector3 launchPosition, 
             ITarget target, 
             IInteractionCache cache, 
-            Quaternion rotation)
+            Quaternion rotation,
+            float speedFactor)
         {
             _vfxProxy = vfxProxy;
             Position = launchPosition;
@@ -103,9 +111,10 @@ namespace _Game.Gameplay._Weapon.Scripts
             _target = target;
             _interactionCache = cache;
             
-            _move.PrepareIntro(target.Transform, launchPosition);
+            _move.PrepareIntro(target, launchPosition);
             _move.Reset();
             
+            SetSpeedFactor(speedFactor);
             _isInitialized = true;
         }
 
@@ -114,12 +123,12 @@ namespace _Game.Gameplay._Weapon.Scripts
             OriginFactory.Reclaim(this);
         }
 
-        private void OnTriggerEnter2D(Collider2D targetCollider)
-        {
+        private void OnTriggerEnter2D(Collider2D targetCollider) => 
             HandleCollision(targetCollider);
-        }
 
         protected abstract void HandleCollision(Collider2D targetCollider);
+
+        protected virtual void HandleNotMoving() { }
 
         protected void SpawnVfx()
         {
@@ -138,6 +147,12 @@ namespace _Game.Gameplay._Weapon.Scripts
             {
                 _audioService.PlayOneShot(_hitSFX);
             }
+        }
+
+        public override void SetSpeedFactor(float speedFactor)
+        {
+            var newSpeed = speedFactor * _move.DefaultSpeed;
+            _move.ChangeSpeed(newSpeed);
         }
     }
 }

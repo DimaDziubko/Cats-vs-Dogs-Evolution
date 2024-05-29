@@ -2,6 +2,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Game.UI._Hud
 {
@@ -12,11 +13,16 @@ namespace _Game.UI._Hud
         [SerializeField] private float _targetScale = 1.2f;
         [SerializeField] private float _defaultScale = 1f;
 
-        [SerializeField] private RectTransform _coinIconHolderTransform;
+        [SerializeField] private RectTransform _coinTargetTransform;
+        public Vector3 CoinIconHolderPosition
+        {
+            get
+            {
+                Canvas.ForceUpdateCanvases();
+                return _coinTargetTransform.TransformPoint(_coinTargetTransform.rect.center);
+            }
+        }
 
-        //public RectTransform CoinIconHolderTransform => _coinIconHolderTransform;
-        public Vector3 CoinIconHolderPosition => _coinIconHolderTransform.TransformPoint(_coinIconHolderTransform.rect.center);
-        
         private bool _isAnimating;
 
         public void UpdateCoins(float newAmount)
@@ -32,6 +38,16 @@ namespace _Game.UI._Hud
         public void Clear()
         {
             _coinLabel.text = "0";
+        }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+        
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

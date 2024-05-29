@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._SceneLoader;
 using _Game.Core.Loading;
-using _Game.Core.Scripts;
 using _Game.Core.Services.Camera;
 using Cysharp.Threading.Tasks;
 

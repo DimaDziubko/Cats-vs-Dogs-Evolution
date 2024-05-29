@@ -15,12 +15,14 @@ namespace _Game.Core.Services.PersistentData
         void OpenNextBattle(int currentBattle);
         void SetAllBattlesWon(bool allBattlesWon);
         void UpgradeItem(UpgradeItemType type, float price);
-        void OpenNextAge();
+        void OnOpenNextAge();
         void OpenNextTimeline();
         void RecoverFoodBoost(int dailyFoodBoostCount);
         void SpendFoodBoost();
         void ChooseRace(Race race);
         void AddCompletedBattle();
         void CompleteTutorialStep(int tutorialDataStep);
+        void ChangeNormalSpeed(bool isNormal);
+        void ChangeBattleTimerDurationLeft(float timerTimeLeft);
     }
 }

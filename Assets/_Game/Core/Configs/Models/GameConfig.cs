@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace _Game.Core.Configs.Models
         public TimelineConfig Timeline;
         public CommonConfig CommonConfig;
         public FoodBoostConfig FoodBoostConfig;
+        public List<BattleSpeedConfig> BattleSpeedConfigs;
     }
 
     public class FoodBoostConfig
@@ -25,6 +27,13 @@ namespace _Game.Core.Configs.Models
         public int Id;
         public string FoodIconKey;
         public string BaseIconKey;
+    }
+    
+    public class BattleSpeedConfig
+    {
+        public int Id;
+        public float SpeedFactor;
+        public float Duration;
     }
     
     public class TimelineConfig
@@ -113,6 +122,7 @@ namespace _Game.Core.Configs.Models
         public int InitialFoodAmount;
     }
 
+    [Serializable]
     public class WarriorConfig
     {
         public int Id;
@@ -133,6 +143,7 @@ namespace _Game.Core.Configs.Models
         public float AttackPerSecond;
     }
 
+    [Serializable]
     public class WeaponConfig
     {
         public int Id;

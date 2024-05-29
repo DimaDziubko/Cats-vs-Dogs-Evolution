@@ -9,9 +9,6 @@ namespace _Game.Gameplay._BattleField.Scripts
     {
         private readonly Dictionary<Collider2D, ITarget> _cache = new Dictionary<Collider2D, ITarget>();
         private float _timeSinceLastCleanup;
-
-        //TODO Delete
-        public Dictionary<Collider2D, ITarget> Cache => _cache;
         
         public void Register(Collider2D collider, ITarget target)
         {

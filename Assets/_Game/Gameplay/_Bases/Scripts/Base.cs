@@ -46,7 +46,7 @@ namespace _Game.Gameplay._Bases.Scripts
         public Vector3 Position
         {
             get => _transform.position;
-            private set => _transform.position = value;
+            set => _transform.position = value;
         }
 
         private Quaternion Rotation
@@ -164,8 +164,6 @@ namespace _Game.Gameplay._Bases.Scripts
             if(_coinsPerHp <= 0) _coinsPerHp = _coinsPerBase / maxHealth;
              
             float coinsToDrop = damage * _coinsPerHp;
-            
-            Debug.Log($"Data {damage}, {coinsToDrop}");
 
             if (coinsToDrop > _coinsPerBase)
             {

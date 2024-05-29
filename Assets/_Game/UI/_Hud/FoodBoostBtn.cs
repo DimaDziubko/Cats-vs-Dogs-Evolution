@@ -1,12 +1,11 @@
 ﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Game.UI._Hud
 {
-    public class FoodBoostBtn : MonoBehaviour, IFeature
+    public class FoodBoostBtn : MonoBehaviour
     {
         [SerializeField] private Image _adsIconHolder;
         [SerializeField] private TMP_Text _loadingText;
@@ -17,20 +16,16 @@ namespace _Game.UI._Hud
 
         private bool _isSpent;
 
-        public Feature Feature => Feature.FoodBoost;
-
         public void Initialize(Action callback)
         {
             _isSpent = false;
-            _button.onClick.AddListener(() => callback?.Invoke());
-            _button.onClick.AddListener(OnButtonClicked);
+            _button.onClick.AddListener(() =>
+            {
+                callback?.Invoke();
+                OnButtonClicked();
+            });
         }
-
-        public void SetActive(bool isFoodBoostAvailable)
-        {
-            gameObject.SetActive(isFoodBoostAvailable);
-        }
-
+        
         public void UpdateBtnState(FoodBoostBtnModel model)
         {
             gameObject.SetActive(!_isSpent && model.IsAvailable);
@@ -59,6 +54,16 @@ namespace _Game.UI._Hud
         public void Cleanup()
         {
             _button.onClick.RemoveAllListeners();
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
         }
     }
 }

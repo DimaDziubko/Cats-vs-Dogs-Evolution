@@ -10,11 +10,14 @@ namespace _Game.Gameplay._Units.Scripts.Movement
     {
         [SerializeField] private AIPath _aiPath;
         [SerializeField] private Rigidbody2D _rigidbody2D;
-        
+
         private Transform _unitTransform;
         public Vector3 Position => _unitTransform.position;
+        
+        public float DefaultSpeed { get; private set; }
 
         private Vector3 _lastPosition;
+
         private float _updateInterval = 2f; 
         private float _lastUpdateTime = 0;
         
@@ -30,7 +33,7 @@ namespace _Game.Gameplay._Units.Scripts.Movement
         public void Construct(Transform unitTransform, float speed)
         {
             _unitTransform = unitTransform;
-            _aiPath.maxSpeed = speed;
+            _aiPath.maxSpeed = DefaultSpeed = speed;
         }
 
         public void Move(Vector3 destination)
@@ -70,31 +73,30 @@ namespace _Game.Gameplay._Units.Scripts.Movement
             _rigidbody2D.velocity = Vector3.zero;
         }
 
-        public void SetSpeedFactor(float speedFactor)
+        public void SetSpeed(float speed)
         {
-            _aiPath.maxSpeed = speedFactor;
+            _aiPath.maxSpeed = speed;
         }
         
         public Vector3 Destination { get; set; }
         public Vector3 DeviationPoint { get; set; }
         public float SpeedFactor => _aiPath.maxSpeed;
-
-        //TODO Delete 
-        private void OnDrawGizmos()
-        {
-            // If the destination vector is set
-            if (Destination != Vector3.zero)
-            {
-                Gizmos.color = Color.blue;
-                Gizmos.DrawSphere(Destination, 0.1f); 
-            }
-            
-            if (DeviationPoint != Vector3.zero && DeviationPoint != Destination)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(DeviationPoint, 0.1f); 
-            }
-        }
+        
+        // private void OnDrawGizmos()
+        // {
+        //     // If the destination vector is set
+        //     if (Destination != Vector3.zero)
+        //     {
+        //         Gizmos.color = Color.blue;
+        //         Gizmos.DrawSphere(Destination, 0.1f); 
+        //     }
+        //     
+        //     if (DeviationPoint != Vector3.zero && DeviationPoint != Destination)
+        //     {
+        //         Gizmos.color = Color.green;
+        //         Gizmos.DrawSphere(DeviationPoint, 0.1f); 
+        //     }
+        // }
         
         [Button]
         private void ManualInit()
@@ -111,7 +113,7 @@ namespace _Game.Gameplay._Units.Scripts.Movement
         public bool IsMoving { get; }
         void Move(Vector3 destination);
         void Stop();
-        void SetSpeedFactor(float speedFactor);
+        void SetSpeed(float speed);
         public Vector3 Destination { set; }
         public Vector3 DeviationPoint { set; }
 

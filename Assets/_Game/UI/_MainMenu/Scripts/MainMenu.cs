@@ -1,12 +1,12 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.Communication;
+using _Game.Core._Logger;
 using _Game.Core.GameState;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
-using _Game.Core.Services.PersistentData;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Disposable;
@@ -14,6 +14,15 @@ using UnityEngine;
 
 namespace _Game.UI._MainMenu.Scripts
 {
+    public enum Window
+    {
+        None,
+        Battle,
+        Upgrades,
+        Evolution,
+        UpgradesAndEvolution,
+    }
+    
     [RequireComponent(typeof(Canvas))]
     public class MainMenu : MonoBehaviour
     {
@@ -24,6 +33,8 @@ namespace _Game.UI._MainMenu.Scripts
         [SerializeField] private ToggleButton _cardsButton;
         [SerializeField] private ToggleButton _shopButton;
 
+        [SerializeField] private TutorialStep _upgradesTutorialStep;
+        
         private ToggleButton _activeButton;
         
         private ToggleButton ActiveButton
@@ -43,16 +54,14 @@ namespace _Game.UI._MainMenu.Scripts
         private IGameStateMachine _stateMachine;
         private IShopPopupProvider _shopPopupProvider;
         private IWorldCameraService _cameraService;
-
         private IAudioService _audioService;
-        private IUserStateCommunicator _communicator;
-
         private IStartBattleWindowProvider _startBattleWindowProvider;
         private IUpgradeAndEvolutionWindowProvider _upgradeAndEvolutionWindowProvider;
         private IFeatureUnlockSystem _featureUnlockSystem;
         private ITutorialManager _tutorialManager;
-
-
+        private IUpgradesAvailabilityChecker _upgradesChecker;
+        private IMyLogger _logger;
+        
         //TODO Change step by step
         private bool IsDungeonUnlocked => false;
         private bool IsUpgradesUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_upgradeButton);
@@ -60,53 +69,70 @@ namespace _Game.UI._MainMenu.Scripts
         private bool IsCardsUnlocked => false;
         private bool IsShopUnlocked => false;
 
-
-        enum ActiveWindow
-        {
-            None,
-            StartBattleWindow,
-            UpgradeAndEvolutionWindow,
-        }
-
-        private ActiveWindow _activeWindow = ActiveWindow.None;
+        private Window _window = Window.None;
 
         private Disposable<StartBattleWindow> _startBattleWindow;
         private Disposable<UpgradeAndEvolutionWindow> _upgradeAndEvolutionWindow;
 
         public void Construct(
-            IWorldCameraService cameraService, 
-            IPersistentDataService persistentData,
-            IAudioService audioService, 
-            IUserStateCommunicator communicator,
-            
+            IWorldCameraService cameraService,
+            IAudioService audioService,
             IStartBattleWindowProvider startBattleWindowProvider,
             IUpgradeAndEvolutionWindowProvider upgradeAndEvolutionWindowProvider,
             IFeatureUnlockSystem featureUnlockSystem,
-            ITutorialManager tutorialManager
-        )
+            ITutorialManager tutorialManager,
+            IUpgradesAvailabilityChecker upgradesChecker,
+            IMyLogger logger)
         {
 
             _audioService = audioService;
             _canvas.worldCamera = cameraService.UICameraOverlay;
-            
             _startBattleWindowProvider = startBattleWindowProvider;
             _upgradeAndEvolutionWindowProvider = upgradeAndEvolutionWindowProvider;
             _featureUnlockSystem = featureUnlockSystem;
             _tutorialManager = tutorialManager;
+            _upgradesChecker = upgradesChecker;
+            _logger = logger;
         }
 
         public void Show()
         {
-            _tutorialManager.Register(_upgradeButton);
+            _tutorialManager.Register(_upgradesTutorialStep);
+
+            Unsubscribe();
+            Subscribe();
+
+            if (IsUpgradesUnlocked)
+            {
+                _upgradesTutorialStep.ShowStep();
+            }
             
             _dungeonButton.Initialize(IsDungeonUnlocked, OnDungeonClick, PlayButtonSound);
-            _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound);
+            _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound, _upgradesChecker.GetNotificationData(Window.UpgradesAndEvolution));
             _battleButton.Initialize(IsBattleUnlocked, OnBattleButtonClick, PlayButtonSound);
             _cardsButton.Initialize(IsCardsUnlocked, OnCardsButtonClick, PlayButtonSound);
             _shopButton.Initialize(IsCardsUnlocked, OnShopButtonClick, PlayButtonSound);
 
 
             OnBattleButtonClick(_battleButton);
+        }
+
+        private void Subscribe()
+        {
+            _upgradesChecker.Notify += OnUpgradesNotified;
+        }
+
+        private void OnUpgradesNotified(NotificationData data)
+        {
+            if (data.Window == Window.UpgradesAndEvolution)
+            {
+                _upgradeButton.SetupPin(data);
+            }
+        }
+        
+        private void Unsubscribe()
+        {
+            _upgradesChecker.Notify -= OnUpgradesNotified;
         }
 
         private void OnShopButtonClick(ToggleButton obj)
@@ -126,9 +152,7 @@ namespace _Game.UI._MainMenu.Scripts
 
         public void Hide()
         {
-            //TODO Delete later
-            Debug.Log("MainMenu HIDE");
-            
+            Unsubscribe();
             _upgradeButton.Cleanup();
             _battleButton.Cleanup();
             _dungeonButton.Cleanup();
@@ -137,32 +161,27 @@ namespace _Game.UI._MainMenu.Scripts
             
             if (_startBattleWindow != null)
             {
-                //TODO Delete later
-                Debug.Log("StartBattleWindow HIDE");
-                
                 _startBattleWindow.Value.Hide();
                 _startBattleWindow?.Dispose();
             }
 
             if (_upgradeAndEvolutionWindow != null)
             {
-                //TODO Delete later
-                Debug.Log("UpgradeAndEvolution window HIDE");
-                
                 _upgradeAndEvolutionWindow.Value.Hide();
                 _upgradeAndEvolutionWindow?.Dispose();
             }
             
-            _tutorialManager.UnRegister(_upgradeButton);
+            _upgradesTutorialStep.CancelStep();
+            _tutorialManager.UnRegister(_upgradesTutorialStep);
         }
 
         private async void OnBattleButtonClick(ToggleButton button)
         {
-            if (_activeWindow != ActiveWindow.StartBattleWindow)
+            if (_window != Window.Battle)
             {
                 _startBattleWindow
                     = await _startBattleWindowProvider.Load();
-                _activeWindow = ActiveWindow.StartBattleWindow;
+                _window = Window.Battle;
                 _startBattleWindow.Value.Show();
 
                 ActiveButton = button;
@@ -178,13 +197,15 @@ namespace _Game.UI._MainMenu.Scripts
 
         private async void OnUpgradeButtonClick(ToggleButton button)
         {
-            if (_activeWindow != ActiveWindow.UpgradeAndEvolutionWindow)
+            if (_window != Window.UpgradesAndEvolution)
             {
+                _upgradesTutorialStep.CompleteStep();
+                
                 _upgradeAndEvolutionWindow 
                     = await _upgradeAndEvolutionWindowProvider.Load();
                 
                 _upgradeAndEvolutionWindow.Value.Show();
-                _activeWindow = ActiveWindow.UpgradeAndEvolutionWindow;
+                _window = Window.UpgradesAndEvolution;
 
                 ActiveButton = button;
 

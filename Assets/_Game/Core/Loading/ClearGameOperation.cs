@@ -18,9 +18,6 @@ namespace _Game.Core.Loading
         
         public async UniTask Load(Action<float> onProgress)
         {
-            //TODO Delete
-            Debug.Log("Clearing game operation");
-            
             onProgress?.Invoke(0.2f);
             _gameCleanUp.Cleanup();
         

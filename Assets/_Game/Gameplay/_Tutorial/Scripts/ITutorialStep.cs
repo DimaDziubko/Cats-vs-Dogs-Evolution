@@ -4,10 +4,10 @@ namespace _Game.Gameplay._Tutorial.Scripts
 {
     public interface ITutorialStep
     {
-        TutorialStep TutorialStep { get; }
+        event Action<ITutorialStep> Show;
+        event Action<ITutorialStep> Complete;
+        event Action<ITutorialStep> Cancel;
 
-        event Action<ITutorialStep> ShowTutorialStep;
-        event Action<ITutorialStep> CompleteTutorialStep;
-        event Action<ITutorialStep> BreakTutorial;
+        TutorialStepData GetTutorialStepData();
     }
 }

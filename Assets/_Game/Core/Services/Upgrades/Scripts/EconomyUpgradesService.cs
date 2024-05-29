@@ -2,76 +2,82 @@
 using System.Collections.Generic;
 using System.Threading;
 using _Game.Core._Logger;
-using _Game.Core.Configs.Controllers;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using _Game.Utils;
 using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.Core.Services.Upgrades.Scripts
 {
-    public class EconomyUpgradesService : IEconomyUpgradesService
+    public class EconomyUpgradesService : IEconomyUpgradesService, IDisposable
     {
         public event Action<UpgradeItemViewModel> UpgradeItemUpdated;
 
         private readonly IPersistentDataService _persistentData;
-        private readonly IGameConfigController _gameConfigController;
+        private readonly IEconomyConfigRepository _economyConfigRepository;
         private readonly IAssetProvider _assetProvider;
         private readonly IMyLogger _logger;
+        private readonly IUpgradesAvailabilityChecker _upgradesChecker;
 
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IUserCurrenciesStateReadonly Currency => _persistentData.State.Currencies;
-        
+
+
         private readonly Dictionary<UpgradeItemType, UpgradeItemViewModel> _upgradeItems =
             new Dictionary<UpgradeItemType, UpgradeItemViewModel>(2);
 
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        
+
         public EconomyUpgradesService(
             IPersistentDataService persistentData,
-            IGameConfigController gameConfigController,
+            IEconomyConfigRepository economyConfigRepository,
             IAssetProvider assetProvider,
-            IMyLogger logger)
+            IMyLogger logger,
+            IUpgradesAvailabilityChecker upgradesChecker)
         {
             _persistentData = persistentData;
-            _gameConfigController = gameConfigController;
+            _economyConfigRepository = economyConfigRepository;
             _assetProvider = assetProvider;
             _logger = logger;
+            _upgradesChecker = upgradesChecker;
         }
 
         public float MinimalCoinsForBattle { get; private set; }
 
         public async UniTask Init()
         {
+            UpgradeItemUpdated += _upgradesChecker.OnUpgradeUnitItemsUpdated;
             TimelineState.UpgradeItemChanged += OnUpgradeItemChanged;
             Currency.CoinsChanged += OnCoinsChanged;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
-            
+
             await PrepareUpgrades();
             PrepareMinimalCoinForBattle();
         }
 
-        private void PrepareMinimalCoinForBattle()
+        public void Dispose()
         {
-            MinimalCoinsForBattle = _gameConfigController.GetMinimalCoinsForBattle();
+            _cts?.Dispose();
+            UpgradeItemUpdated -= _upgradesChecker.OnUpgradeUnitItemsUpdated;
+            TimelineState.UpgradeItemChanged -= OnUpgradeItemChanged;
+            Currency.CoinsChanged -= OnCoinsChanged;
+            TimelineState.NextAgeOpened -= OnNextAgeOpened;
         }
 
-        private async void OnNextAgeOpened()
-        {
-            await PrepareUpgrades();
-        }
+        private void PrepareMinimalCoinForBattle() => 
+            MinimalCoinsForBattle = _economyConfigRepository.GetMinimalCoinsForBattle();
+
+        private async void OnNextAgeOpened() => await PrepareUpgrades();
 
         public void OnUpgradesWindowOpened()
         {
             UpgradeItemUpdated?.Invoke(_upgradeItems[UpgradeItemType.FoodProduction]);
             UpgradeItemUpdated?.Invoke(_upgradeItems[UpgradeItemType.BaseHealth]);
-
-            //TODO Delete
-            _logger.Log("Upgrades updated");
         }
 
         private void OnCoinsChanged(bool isPositive)
@@ -106,9 +112,6 @@ namespace _Game.Core.Services.Upgrades.Scripts
                     break;
             }
             
-            //TODO Delete 
-            _logger.Log($"OnUpgradeItemChanged {type}");
-            
             model.CanAfford = model.Price <= Currency.Coins;
             
             UpgradeItemUpdated?.Invoke(model);
@@ -116,56 +119,41 @@ namespace _Game.Core.Services.Upgrades.Scripts
 
         public float GetFoodProductionSpeed()
         {
-            var foodProduction = _gameConfigController.GetFoodProduction();
-
+            var foodProduction = _economyConfigRepository.GetFoodProduction();
             float initialSpeed = foodProduction.Speed;
-
             float totalSpeed = initialSpeed + foodProduction.SpeedStep * TimelineState.FoodProductionLevel;
-
             return totalSpeed;
         }
 
         private float GetFoodProductionPrice()
         {
-            var foodProduction = _gameConfigController.GetFoodProduction();
-
+            var foodProduction = _economyConfigRepository.GetFoodProduction();
             float initialPrice = foodProduction.Price;
-            
-            float totalPrice = initialPrice + foodProduction.PriceExponential.GetValue(TimelineState.FoodProductionLevel); 
-            
+            float totalPrice = initialPrice + foodProduction.PriceExponential.GetValue(TimelineState.FoodProductionLevel);
             totalPrice = Mathf.Round(totalPrice);
-            
-            //TODO Delete 
-            _logger.Log($"INITIAL PRICE {initialPrice},  LEVEL {TimelineState.FoodProductionLevel}, TOTAL PRICE {totalPrice}");
-
             return totalPrice;
         }
 
         public int GetInitialFoodAmount()
         {
-            var foodProduction = _gameConfigController.GetFoodProduction();
+            var foodProduction = _economyConfigRepository.GetFoodProduction();
             return foodProduction.InitialFoodAmount;
         }
 
         public float GetBaseHealth()
         {
-            var healthConfig = _gameConfigController.GetBaseHealthConfig();
+            var healthConfig = _economyConfigRepository.GetBaseHealthConfig();
             float startHealth = healthConfig.Health;
-
             float totalHealth = startHealth + (healthConfig.HealthStep * TimelineState.BaseHealthLevel);
-            
             return totalHealth;
         }
 
         private float GetBaseHealthUpgradePrice()
         {
-            var healthConfig = _gameConfigController.GetBaseHealthConfig();
+            var healthConfig = _economyConfigRepository.GetBaseHealthConfig();
             float initialPrice = healthConfig.Price;
-            
             float totalPrice = initialPrice + healthConfig.PriceExponential.GetValue(TimelineState.BaseHealthLevel);
-
             totalPrice = Mathf.Round(totalPrice);
-            
             return totalPrice;
         }
 
@@ -194,7 +182,9 @@ namespace _Game.Core.Services.Upgrades.Scripts
             {
                 _upgradeItems[UpgradeItemType.FoodProduction] = await PrepareFoodUpgradeItem(ct);
                 _upgradeItems[UpgradeItemType.BaseHealth] = await PrepareBaseUpgradeItem(ct);
-
+                UpgradeItemUpdated?.Invoke(_upgradeItems[UpgradeItemType.FoodProduction]);
+                UpgradeItemUpdated?.Invoke(_upgradeItems[UpgradeItemType.BaseHealth]);
+                
                 ct.ThrowIfCancellationRequested();
             }
             catch (OperationCanceledException)
@@ -206,7 +196,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
         private async UniTask<UpgradeItemViewModel> PrepareFoodUpgradeItem(CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
-            var icon = await _assetProvider.Load<Sprite>(_gameConfigController.GetFoodIconKey()); 
+            var icon = await _assetProvider.Load<Sprite>(_economyConfigRepository.GetFoodIconKey()); 
             var price = GetFoodProductionPrice();
 
             var amount = GetFoodProductionSpeed();
@@ -226,7 +216,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
         private async UniTask<UpgradeItemViewModel> PrepareBaseUpgradeItem(CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
-            var icon = await _assetProvider.Load<Sprite>(_gameConfigController.GetBaseIconKey());
+            var icon = await _assetProvider.Load<Sprite>(_economyConfigRepository.GetBaseIconKey());
             var price = GetBaseHealthUpgradePrice();
 
             var health = GetBaseHealth();

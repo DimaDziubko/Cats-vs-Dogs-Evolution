@@ -78,15 +78,15 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _canvas.enabled = false;
         }
 
-        private void OnEvolutionViewModelUpdated(EvolutionViewModel viewModel)
+        private void OnEvolutionViewModelUpdated(EvolutionTabData tabData)
         {
-            UpdateTimelineLabel(viewModel.CurrentTimelineId);
-            UpdateButtonData(viewModel.EvolutionBtnData);
+            UpdateTimelineLabel(tabData.CurrentTimelineId);
+            UpdateButtonData(tabData.EvolutionBtnData);
 
-            _currentAgeImage.sprite = viewModel.CurrentAgeIcon;
-            _nextAgeImage.sprite = viewModel.NextAgeIcon;
-            _currentAgeName.text = viewModel.CurrentAgeName;
-            _nextAgeName.text = viewModel.NextAgeName;
+            _currentAgeImage.sprite = tabData.CurrentAgeIcon;
+            _nextAgeImage.sprite = tabData.NextAgeIcon;
+            _currentAgeName.text = tabData.CurrentAgeName;
+            _nextAgeName.text = tabData.NextAgeName;
         }
 
         private void UpdateButtonData(EvolutionBtnData data) => 
@@ -101,9 +101,6 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             
             if(isExited) window.Dispose();
             _disposable = window;
-            
-            //TODO Play animation here then evolve
-            //_evolutionService.MoveToNextAge();
         }
 
         private void PlayButtonSound() => 

@@ -92,9 +92,6 @@ namespace _Game.Gameplay._Units.FSM.States
 
         private bool NeedNewPath()
         {
-            if(!_unitMove.IsMoving)
-             Debug.Log("Unit stopped without reason need new path");
-            
             return Time.time - _lastPathUpdateTime >= _pathUpdateFrequency
                    || Vector3.Distance(_unitMove.Position, _currentTarget) <= MIN_DISTANCE_TO_DEVIATION_POINT
                    || !_unitMove.IsMoving;
@@ -107,9 +104,9 @@ namespace _Game.Gameplay._Units.FSM.States
             
             CalculateRandomPathUpdateFrequency();
             
-            //TODO Delete later
-            _unitMove.Destination = _destination;
-            _unitMove.DeviationPoint = _currentTarget;
+            //For GUI
+            // _unitMove.Destination = _destination;
+            // _unitMove.DeviationPoint = _currentTarget;
         }
 
 

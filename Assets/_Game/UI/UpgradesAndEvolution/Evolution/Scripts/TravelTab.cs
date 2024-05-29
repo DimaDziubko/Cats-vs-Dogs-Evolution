@@ -65,11 +65,11 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _travelButton.Click -= OnTravelButtonClick;
         }
 
-        private void OnTravelViewModelUpdated(TravelViewModel viewModel)
+        private void OnTravelViewModelUpdated(TravelTabData tabData)
         {
-            UpdateTravelConditionHint(viewModel.CanTravel);
-            UpdateTravelInfoText(viewModel.NextTimelineNumber);
-            UpdateTravelButton(viewModel.CanTravel);
+            UpdateTravelConditionHint(tabData.CanTravel);
+            UpdateTravelInfoText(tabData.NextTimelineNumber);
+            UpdateTravelButton(tabData.CanTravel);
         }
 
         private void UpdateTravelConditionHint(in bool viewModelCanTravel) => 

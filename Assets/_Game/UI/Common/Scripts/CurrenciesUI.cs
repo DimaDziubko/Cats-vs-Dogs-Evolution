@@ -16,6 +16,10 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private float _targetScale = 1.1f;
         [SerializeField] private float _normalScale = 1.0f;
         
+        [SerializeField] private float _textAnimationDuration = 1f;
+        [SerializeField] private float _textAnimationDelay = 1.5f;
+        
+        private float _currentCoins;
         
         private IUserCurrenciesStateReadonly _currencies;
         private IWorldCameraService _cameraService;
@@ -43,12 +47,23 @@ namespace _Game.UI.Common.Scripts
             if (isPositive)
             {
                 PlayScaleAnimation();
-                _coinsLabel.text = _currencies.Coins.FormatMoney();
+                DOVirtual.DelayedCall(_textAnimationDelay, () => AnimateCoinText(_currencies.Coins));
             }
             else
             {
+                _currentCoins = _currencies.Coins;
                 _coinsLabel.text = _currencies.Coins.FormatMoney();
             }
+        }
+
+        private void AnimateCoinText(float newCoinsValue)
+        {
+            DOTween.To(() => _currentCoins, 
+                    x => _coinsLabel.text = x.FormatMoney(),
+                    newCoinsValue, 
+                    _textAnimationDuration)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() => _currentCoins = newCoinsValue);
         }
 
         private void PlayScaleAnimation()
@@ -63,8 +78,7 @@ namespace _Game.UI.Common.Scripts
         
         public void Hide()
         {
-            //TODO Fix later
-            //_currencies.CoinsChanged -= OnCurrenciesChanged;
+            
         }
 
         private Vector3 CalculateWorldPosition(RectTransform coinsWalletTransform)

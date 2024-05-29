@@ -2,13 +2,14 @@
 using _Game.Common;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Camera;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class UnitSpawner : IUnitSpawner, IPauseHandler
+    public class UnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedHandler
     {
         private readonly IUnitFactory _unitFactory;
         private readonly IInteractionCache _cache;
@@ -17,13 +18,14 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly IVFXProxy _vfxProxy;
         private readonly IShootProxy _shootProxy;
         private readonly ICoinSpawner _coinSpawner;
+        private readonly IBattleSpeedManager _speedManager;
 
         private readonly GameBehaviourCollection _playerUnits = new GameBehaviourCollection();
         private readonly GameBehaviourCollection _enemyUnits = new GameBehaviourCollection();
 
         private Vector3 _playerDestinationPoint;
         private Vector3 _enemyDestinationPoint;
-        
+
         private Vector3 _playerSpawnPoint;
         private Vector3 _enemySpawnPoint;
 
@@ -34,7 +36,8 @@ namespace _Game.Gameplay._BattleField.Scripts
             IPauseManager pauseManager,
             IVFXProxy vfxProxy,
             IShootProxy shootProxy,
-            ICoinSpawner coinSpawner)
+            ICoinSpawner coinSpawner,
+            IBattleSpeedManager speedManager)
         {
             _unitFactory = unitFactory;
             _cache = cache;
@@ -43,6 +46,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _vfxProxy = vfxProxy;
             _coinSpawner = coinSpawner;
             _shootProxy = shootProxy;
+            _speedManager = speedManager;
         }
         
         public void Init(
@@ -54,6 +58,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             
             CalculateUnitSpawnPoints();
             _pauseManager.Register(this);
+            _speedManager.Register(this);
         }
 
         public void Cleanup()
@@ -68,7 +73,13 @@ namespace _Game.Gameplay._BattleField.Scripts
             _enemyUnits.GameUpdate();
         }
 
-        public void SetPaused(bool isPaused)
+        void IBattleSpeedHandler.SetFactor(float speedFactor)
+        {
+            _enemyUnits.SetBattleSpeedFactor(speedFactor);
+            _playerUnits.SetBattleSpeedFactor(speedFactor);
+        }
+
+        void IPauseHandler.SetPaused(bool isPaused)
         {
             _playerUnits.SetPaused(isPaused);
             _enemyUnits.SetPaused(isPaused);
@@ -84,16 +95,14 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _enemyDestinationPoint,
                 _shootProxy,
                 _vfxProxy,
-                _coinSpawner);
+                _coinSpawner,
+                _speedManager.CurrentSpeedFactor);
             
             _enemyUnits.Add(enemy);
         }
 
         void IUnitSpawner.SpawnPlayerUnit(UnitType type)
         {
-            //TODO Delete
-            Debug.Log($"{_playerSpawnPoint} SPAWNER");
-            
             var unit = _unitFactory.Get(Faction.Player, type);
 
             unit.Initialize(
@@ -102,7 +111,8 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _playerDestinationPoint,
                 _shootProxy,
                 _vfxProxy,
-                _coinSpawner);
+                _coinSpawner,
+                _speedManager.CurrentSpeedFactor);
             
             _playerUnits.Add(unit);
         }
@@ -127,9 +137,10 @@ namespace _Game.Gameplay._BattleField.Scripts
             float correction = 0.025f;
             
             float offsetY = _cameraService.CameraHeight * correction;
+            float offsetX = 0f;
             
-            _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth, -offsetY, 0);
-            _enemySpawnPoint = new Vector3(_cameraService.CameraWidth, -offsetY, 0);
+            _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth - offsetX, -offsetY, 0);
+            _enemySpawnPoint = new Vector3(_cameraService.CameraWidth + offsetX , -offsetY, 0);
         }
     }
 }

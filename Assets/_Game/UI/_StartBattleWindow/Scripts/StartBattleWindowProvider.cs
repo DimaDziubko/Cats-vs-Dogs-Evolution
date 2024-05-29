@@ -17,16 +17,11 @@ namespace _Game.UI._StartBattleWindow.Scripts
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-
         private readonly IHeader _header;
-        
         private readonly IBattleLaunchManager _battleLaunchManager;
-        
         private readonly IBattleStateService _battleState;
-        
         private readonly IMyLogger _logger;
         private readonly IPersistentDataService _persistentData;
-        private readonly IUserStateCommunicator _communicator;
         private readonly ISettingsPopupProvider _settingsPopupProvider;
 
         public StartBattleWindowProvider(
@@ -37,22 +32,15 @@ namespace _Game.UI._StartBattleWindow.Scripts
             IBattleStateService battleState,
             IMyLogger logger,
             IPersistentDataService persistentData,
-            IUserStateCommunicator communicator,
             ISettingsPopupProvider settingsPopupProvider)
         {
             _cameraService = cameraService;
             _audioService = audioService;
-
             _header = header;
-
             _battleLaunchManager = battleLaunchManager;
-
             _battleState = battleState;
-
             _logger = logger;
-
             _persistentData = persistentData;
-            _communicator = communicator;
             _settingsPopupProvider = settingsPopupProvider;
         }
         public async UniTask<Disposable<StartBattleWindow>> Load()
@@ -63,14 +51,11 @@ namespace _Game.UI._StartBattleWindow.Scripts
             window.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
-
                 _header,
                 _battleLaunchManager,
-                
                 _battleState,
                 _logger,
                 _persistentData,
-                _communicator,
                 _settingsPopupProvider);
             return window;
         }

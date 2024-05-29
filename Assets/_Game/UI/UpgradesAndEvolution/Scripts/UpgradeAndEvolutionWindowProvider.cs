@@ -1,3 +1,4 @@
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Services.Audio;
@@ -6,9 +7,9 @@ using _Game.Core.Services.Evolution.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI.Common.Header.Scripts;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.Utils.Disposable;
-using _Game.Utils.Popups;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.UI.UpgradesAndEvolution.Scripts
@@ -17,8 +18,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-        private readonly IAlertPopupProvider _alertPopupProvider;
-        
+
         private readonly IHeader _header;
         
         private readonly IEconomyUpgradesService _economyUpgradesService;
@@ -27,34 +27,34 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private readonly IMyLogger _logger;
         private readonly ITimelineInfoWindowProvider _timelineInfoWindowProvider;
         private readonly ITutorialManager _tutorialManager;
+        private readonly IFeatureUnlockSystem _featureUnlockSystem;
+        private readonly IUpgradesAvailabilityChecker _upgradesChecker;
 
         public UpgradeAndEvolutionWindowProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
-            IAlertPopupProvider alertPopupProvider,
             IHeader header,
             IEconomyUpgradesService economyUpgradesService,
             IEvolutionService evolutionService,
             IUnitUpgradesService unitUpgradesService,
             IMyLogger logger,
             ITimelineInfoWindowProvider timelineInfoWindowProvider,
-            ITutorialManager tutorialManager)
+            ITutorialManager tutorialManager,
+            IFeatureUnlockSystem featureUnlockSystem,
+            IUpgradesAvailabilityChecker upgradesChecker)
         {
             _logger = logger;
             
             _cameraService = cameraService;
             _audioService = audioService;
-            _alertPopupProvider = alertPopupProvider;
-            
             _header = header;
-
             _economyUpgradesService = economyUpgradesService;
             _evolutionService = evolutionService;
             _unitUpgradesService = unitUpgradesService;
-
             _timelineInfoWindowProvider = timelineInfoWindowProvider;
-
             _tutorialManager = tutorialManager;
+            _featureUnlockSystem = featureUnlockSystem;
+            _upgradesChecker = upgradesChecker;
         }
         public async UniTask<Disposable<UpgradeAndEvolutionWindow>> Load()
         {
@@ -63,17 +63,15 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             popup.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
-                _alertPopupProvider,
-                
                 _header,
-                
                 _economyUpgradesService,
                 _evolutionService,
                 _unitUpgradesService,
                 _logger,
-                
                 _timelineInfoWindowProvider,
-                _tutorialManager);
+                _tutorialManager,
+                _featureUnlockSystem,
+                _upgradesChecker);
             return popup;
         }
     }

@@ -1,9 +1,4 @@
-﻿using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Factory;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Game.Gameplay._Weapon.Scripts
 {
@@ -15,6 +10,11 @@ namespace _Game.Gameplay._Weapon.Scripts
             var target = _interactionCache.Get(collider);
             target?.Damageable.GetDamage(_damage);
             PlaySound();
+            _isDead = true;
+        }
+
+        protected override void HandleNotMoving()
+        {
             _isDead = true;
         }
     }

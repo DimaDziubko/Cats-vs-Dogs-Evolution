@@ -11,11 +11,14 @@ using _Game.Gameplay._Units.FSM;
 using _Game.Gameplay._Units.FSM.States;
 using _Game.Gameplay._Units.Scripts.Attack;
 using _Game.Gameplay._Units.Scripts.Movement;
+using _Game.Gameplay._Units.Scripts.Utils;
 using _Game.Gameplay._Weapon.Scripts;
+using _Game.Utils;
 using _Game.Utils.Extensions;
 using Pathfinding.RVO;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace _Game.Gameplay._Units.Scripts
 {
@@ -28,37 +31,23 @@ namespace _Game.Gameplay._Units.Scripts
 
 
         [SerializeField] private Transform _transform;
-
         [SerializeField] private UnitAnimator _animator;
-
         [SerializeField] private Health _health;
-
         [SerializeField] private AUnitMove _aMove;
-
         [SerializeField] private TargetDetection _aggroDetection;
-
         [SerializeField] private TargetDetection _attackDetection;
-
         [SerializeField] private UnitAttack _attack;
-
         [SerializeField] private Collider2D _bodyCollider;
-
         [SerializeField] private TargetPoint _targetPoint;
-
         [SerializeField] private DamageFlashEffect _damageFlash;
-
         [SerializeField] private DynamicSortingOrder _dynamicSortingOrder;
-        
         [SerializeField] private RVOController _rVOController;
-
 
         //Utils
         [SerializeField] private StateIndіcator _stateIndіcator;
 
         private WeaponType WeaponType { get; set; }
-
         public Faction Faction { get; private set; }
-
         public UnitType Type { get; private set; }
 
         private int _coinsPerKill;
@@ -66,7 +55,7 @@ namespace _Game.Gameplay._Units.Scripts
         private IRandomService _random;
 
 
-        private Vector3 Position
+        public Vector3 Position
         {
             get => _transform.position;
             set => _transform.position = value;
@@ -88,7 +77,6 @@ namespace _Game.Gameplay._Units.Scripts
             {
                 _destination = value;
                 _fsm.Enter<MoveToPointState, Vector3>(_destination);
-                _health.HealthBarRotation = Quaternion.Euler(0, _destination.x < Position.x ? 180 : 0, 0);
             }
         }
 
@@ -103,7 +91,6 @@ namespace _Game.Gameplay._Units.Scripts
         public IUnitFactory OriginFactory { get; set; }
 
         private IInteractionCache _interactionCache;
-
         private ICoinSpawner _coinSpawner;
         private IVFXProxy _vfxProxy;
 
@@ -119,10 +106,7 @@ namespace _Game.Gameplay._Units.Scripts
             }
         }
 
-        private void RegisterSelf()
-        {
-            InteractionCache.Register(_bodyCollider, _targetPoint);
-        }
+        private void RegisterSelf() => InteractionCache.Register(_bodyCollider, _targetPoint);
 
         public void Construct(
             WarriorConfig config,
@@ -135,7 +119,7 @@ namespace _Game.Gameplay._Units.Scripts
             int aggroLayer,
             int attackLayer)
         {
-            SetupRVOLayers(faction);
+            SetupRVOLayers(faction, config.WeaponConfig.WeaponType);
 
             Faction = faction;
             Type = type;
@@ -178,27 +162,33 @@ namespace _Game.Gameplay._Units.Scripts
             InitializeFsm();
         }
 
-        private void SetupRVOLayers(Faction faction)
+        private void SetupRVOLayers(Faction faction, WeaponType weaponType)
         {
             if (faction == Faction.Enemy)
             {
-                _rVOController.layer = RVOLayer.Layer3;
-                _rVOController.collidesWith = RVOLayer.Layer3;
+                _rVOController.layer =
+                    (weaponType == WeaponType.Melee) 
+                        ? Constants.Layer.RVO_MELEE_ENEMY 
+                        : Constants.Layer.RVO_RANGE_ENEMY;
+                _rVOController.collidesWith = _rVOController.layer;
                 return;
             }
-
-            _rVOController.layer = RVOLayer.Layer2;
-            _rVOController.collidesWith = RVOLayer.Layer2;
+            
+            _rVOController.layer =
+                (weaponType == WeaponType.Melee) 
+                    ? Constants.Layer.RVO_MELEE_PLAYER 
+                    : Constants.Layer.RVO_RANGE_PLAYER;
+            _rVOController.collidesWith = _rVOController.layer;
         }
-
-
+        
         public void Initialize(
             IInteractionCache interactionCache, 
             Vector3 unitSpawnPoint, 
             Vector3 destination,
             IShootProxy shootProxy,
             IVFXProxy vFXProxy,
-            ICoinSpawner coinSpawner)
+            ICoinSpawner coinSpawner,
+            float speedFactor)
         {
             InteractionCache = interactionCache;
             Position = unitSpawnPoint;
@@ -208,6 +198,8 @@ namespace _Game.Gameplay._Units.Scripts
 
             _coinSpawner = coinSpawner;
             _vfxProxy = vFXProxy;
+            
+            SetSpeedFactor(speedFactor);
         }
 
         public void ResetUnit()
@@ -224,8 +216,10 @@ namespace _Game.Gameplay._Units.Scripts
 
         public override bool GameUpdate()
         {
-            if(_stateIndіcator != null)
-                _stateIndіcator.SetColor(_fsm.StateIndicator());
+            RotateHeathBarToCamera();
+            
+            //if(_stateIndіcator != null)
+                //_stateIndіcator.SetColor(_fsm.StateIndicator());
             
             if (_isDead)
             {
@@ -237,6 +231,9 @@ namespace _Game.Gameplay._Units.Scripts
             _dynamicSortingOrder.GameUpdate();
             return true;
         }
+
+        private void RotateHeathBarToCamera() => 
+            _health.HealthBarRotation = Quaternion.Euler(0, Rotation.y < 90 ? 0 : 180, 0);
 
         public override void Recycle()
         {
@@ -319,11 +316,20 @@ namespace _Game.Gameplay._Units.Scripts
         {
             if (isPaused)
             {
-                _tempAnimatorSpeedFactor = _animator.SpeedFactor;
+                _tempAnimatorSpeedFactor = _animator.Speed;
                 _tempMoveSpeedFactor = _aMove.SpeedFactor;
             }
-            _animator.SetSpeedFactor(isPaused ? 0 : _tempAnimatorSpeedFactor);
-            _aMove.SetSpeedFactor(isPaused ? 0 : _tempMoveSpeedFactor);
+            _animator.SetSpeed(isPaused ? 0 : _tempAnimatorSpeedFactor);
+            _aMove.SetSpeed(isPaused ? 0 : _tempMoveSpeedFactor);
+        }
+
+        public override void SetSpeedFactor(float speedFactor)
+        {
+            float newAnimatorSpeed = speedFactor * _animator.DefaultSpeed;
+            float newMoveSpeed = speedFactor * _aMove.DefaultSpeed;
+            
+            _animator.SetSpeed(newAnimatorSpeed);
+            _aMove.SetSpeed(newMoveSpeed);
         }
 
         #region Helpers
@@ -345,8 +351,23 @@ namespace _Game.Gameplay._Units.Scripts
             _aggroDetection = GetComponents<TargetDetection>()[0];
             _attackDetection = GetComponents<TargetDetection>()[1];
         }
+        
+        [Button]
+        private void ManualInitUnitSortingLayers()
+        {
+            SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var renderer in spriteRenderers)
+            {
+                renderer.sortingLayerID = SortingLayer.NameToID("Units");
+            }
+            
+            SortingGroup[] sortingGroups = GetComponentsInChildren<SortingGroup>(true);
+            foreach (var group in sortingGroups)
+            {
+                group.sortingLayerID = SortingLayer.NameToID("Units");
+            }
+        }
 #endif
         #endregion
     }
-
 }

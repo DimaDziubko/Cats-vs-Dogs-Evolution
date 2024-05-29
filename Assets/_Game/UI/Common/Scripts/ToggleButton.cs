@@ -1,75 +1,81 @@
 using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI.Pin.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Game.UI.Common.Scripts
 {
-    [RequireComponent(typeof(Button))]
-    public class ToggleButton : MonoBehaviour, IFeature, ITutorialStep
+    [RequireComponent(
+        typeof(Button),
+        typeof(ToggleButtonStateAnimator),
+        typeof(ToggleButtonView))]
+    public class ToggleButton : MonoBehaviour, IFeature
     {
+        public event Action<ButtonState> ButtonStateChanged;
+
         [SerializeField] private Feature _feature;
         
         [SerializeField] private Button _button;
-        [SerializeField] private Sprite _activeSprite;
-        [SerializeField] private Sprite _inactiveSprite;
-        [SerializeField] private Image _changableImage;
-
         [SerializeField] private PinView _pin;
+        [SerializeField] private RectTransform _buttonTransform;
         
-        [SerializeField] private Sprite _icon;
-        [SerializeField] private Sprite _lock;
-        [SerializeField] private Image _iconHolder;
-
-
-        //Animation
-        [SerializeField] private RectTransform _iconTransform;
-        [SerializeField] private float _iconWarp = 0.1f;
-        [SerializeField] private Vector3 _normalScale = Vector3.one;
-        [SerializeField] private Vector3 _highlightedScale = new Vector3(1f, 1.1f, 1f);
-
-        private Vector3 _normalIconPosition;
-        private Vector3 _highlightedIconPosition;
-
+        [SerializeField] private ToggleButtonStateAnimator _animator;
+        [SerializeField] private ToggleButtonView _view;
+        
         public Feature Feature => _feature;
 
-        [SerializeField] private TutorialStep _tutorialStep;
-        public TutorialStep TutorialStep => _tutorialStep;
-        public event Action<ITutorialStep> ShowTutorialStep;
-        public event Action<ITutorialStep> CompleteTutorialStep;
-        public event Action<ITutorialStep> BreakTutorial;
-
-        public void Initialize(bool isUnlocked, Action<ToggleButton> callback, Action playSound)
+        private ButtonState _state;
+        
+        public void Initialize(bool isUnlocked, Action<ToggleButton> callback, Action playSound, NotificationData data = null)
         {
             HidePin();
-            
-            if (_iconTransform != null)
+            if(isUnlocked && data != null) SetupPin(data);
+
+            var newState = isUnlocked ? ButtonState.Active : ButtonState.Inactive;
+            if (_state != newState)
             {
-                _normalIconPosition = _iconTransform.anchoredPosition;
-                _highlightedIconPosition = new Vector3(
-                    _normalIconPosition.x, 
-                    _normalIconPosition.y + _iconWarp, 
-                    0);
+                _state = newState;
+                ButtonStateChanged?.Invoke(_state);
             }
             
+            _animator.Initialize(_buttonTransform);
+            SetupButton(isUnlocked, callback, playSound);
+        }
+        
+        private void SetupButton(bool isUnlocked, Action<ToggleButton> callback, Action playSound)
+        {
             if (!isUnlocked)
             {
                 Lock();
                 return;
             }
 
-            _button = GetComponent<Button>();
+            Unlock();
+            
             _button.onClick.AddListener(() =>
             {
-                HidePin();
                 playSound?.Invoke();
-                CompleteTutorialStep?.Invoke(this);
                 callback?.Invoke(this);
             });
-            Unlock();
-            ShowTutorialStep?.Invoke(this);
+        }
+
+        public void SetupPin(NotificationData data)
+        {
+            if(_state == ButtonState.Inactive) return; 
+            if (data.IsReviewed || !data.IsAvailable)
+            {
+                HidePin(); 
+            }
+            else
+            {
+                ShowPin(); 
+            }
+        }
+
+        private void ShowPin()
+        {
+            _pin.Show();
         }
 
         private void HidePin()
@@ -77,63 +83,36 @@ namespace _Game.UI.Common.Scripts
             _pin.Hide();
         }
 
-        public void ShowPin()
-        {
-            _pin.Show();
-        }
-        
-        public void Cleanup()
-        {
-            BreakTutorial?.Invoke(this);
+        public void Cleanup() => 
             _button.onClick.RemoveAllListeners();
-        }
 
         private void Lock()
         {
-            _button.interactable = false;
-            if (_iconHolder != null && _lock != null)
-            {
-                _iconHolder.sprite = _lock;
-            }
+            SetInteractable(false);
+            _view.SetIcon(true);
+            _view.SetText(true);
         }
 
         private void Unlock()
         {
-            _button.interactable = true;
-            if (_iconHolder != null && _lock != null)
-            {
-                _iconHolder.sprite = _icon;
-            }
+            SetInteractable(true);
+            _view.SetIcon(false);
+            _view.SetText(false);
         }
+
+        private void SetInteractable(bool isInteractable) => 
+            _button.interactable = isInteractable;
 
         public void HighlightBtn()
         {
-            if (_activeSprite != null && _changableImage != null)
-            {
-                _changableImage.sprite = _activeSprite;
-            }
-
-            if (_iconTransform)
-            {
-                _iconTransform.anchoredPosition = _highlightedIconPosition;
-            }
-
-            _button.transform.localScale = _highlightedScale;
+            _view.Highlight();
+            _animator.Highlight();
         }
 
         public void UnHighlightBtn()
         {
-            if (_inactiveSprite != null && _changableImage != null)
-            {
-                _changableImage.sprite = _inactiveSprite;
-            }
-
-            if (_iconTransform)
-            {
-                _iconTransform.anchoredPosition = _normalIconPosition;
-            }
-            
-            _button.transform.localScale = _normalScale;
+            _view.UnHighlight();
+            _animator.UnHighlight();
         }
     }
 }

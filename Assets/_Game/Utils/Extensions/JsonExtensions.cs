@@ -12,7 +12,6 @@ namespace _Game.Utils.Extensions
     {
         private const int ID_OFFSET = 1;
         
-        //TODO Check magic number
         public static GameConfig ToGameConfig(this JObject jsonData, int timelineId = 0)
         {
             var config = new GameConfig();
@@ -24,7 +23,18 @@ namespace _Game.Utils.Extensions
             {
                 config.Timeline = ParseTimeline(timelineToken, jsonData);
             }
-
+            
+            var battleSpeedTokens = jsonData[Constants.ConfigKeys.BATTLE_SPEED];
+            if (battleSpeedTokens != null)
+            {
+                config.BattleSpeedConfigs = battleSpeedTokens.Select(battleSpeedToken => new BattleSpeedConfig()
+                {
+                    Id = ((int)battleSpeedToken[Constants.ConfigKeys.ID] - ID_OFFSET),
+                    SpeedFactor = (float)battleSpeedToken[Constants.ConfigKeys.SPEED_FACTOR],
+                    Duration = (float)battleSpeedToken[Constants.ConfigKeys.DURATION],
+                }).ToList();
+            }
+            
             var commonToken = jsonData[Constants.ConfigKeys.COMMON]?
                 .FirstOrDefault(t => ((int)t[Constants.ConfigKeys.ID] - ID_OFFSET) == 0);
             

@@ -1,0 +1,18 @@
+﻿using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Weapon.Scripts;
+using _Game.Gameplay.Vfx.Scripts;
+using UnityEngine;
+
+namespace _Game.Creatives._LocalUnitConfigs
+{
+    [CreateAssetMenu(fileName = "LocalUnitConfig", menuName = "LocalConfigs/Units", order = 0)]
+    public class LocalUnitConfig : ScriptableObject
+    {
+        public UnitType Type;
+        public UnitData Data;
+        public Sprite Icon;
+        public MuzzleFlash MuzzlePrefab;
+        public Projectile ProjectilePrefab;
+        public ProjectileExplosion ProjectileExplosionPrefab;
+    }
+}

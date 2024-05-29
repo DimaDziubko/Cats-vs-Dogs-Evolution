@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3934605262024444094}
   - component: {fileID: 4066651728725475743}
   - component: {fileID: 7035784660073990189}
+  - component: {fileID: 4664376488197094698}
   m_Layer: 5
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -107,8 +108,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: -2005096801, guid: fd622819c05dbbe42883f3a9124accae,
-      type: 3}
+    m_PressedSprite: {fileID: -2005096801, guid: fd622819c05dbbe42883f3a9124accae, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -122,6 +122,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4664376488197094698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3305765399123442589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a60bc0fcd654243bc558887f2ec90dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonTransform: {fileID: 7295395839828327740}
+  _contentPanel: {fileID: 0}
+  _pressWarp: 0.9
 --- !u!1 &5098400626848513253
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +149,7 @@ GameObject:
   - component: {fileID: 6020052458120123216}
   - component: {fileID: 29167080555944668}
   - component: {fileID: 3172432428252808639}
+  - component: {fileID: 45236421573573390}
   m_Layer: 5
   m_Name: 'CancelButton '
   m_TagString: Untagged
@@ -243,6 +259,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &45236421573573390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5098400626848513253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a60bc0fcd654243bc558887f2ec90dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonTransform: {fileID: 5552189981625677299}
+  _contentPanel: {fileID: 0}
+  _pressWarp: 0.9
 --- !u!1 &5119973546864951354
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +327,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 12
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -431,9 +462,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Are you sure \n to quit?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 59920eeb35134a74aa54bd314f9ed9a1, type: 2}
-  m_sharedMaterial: {fileID: -488540152738550469, guid: 59920eeb35134a74aa54bd314f9ed9a1,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
+  m_sharedMaterial: {fileID: -488540152738550469, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

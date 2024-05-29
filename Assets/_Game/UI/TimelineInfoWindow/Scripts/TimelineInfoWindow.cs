@@ -34,7 +34,6 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         private IEvolutionService _evolutionService;
         private IMyLogger _logger;
 
-
         //Animation data
         private int _currentAge;
         private int _ages;
@@ -69,6 +68,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             PlayEvolveSound();
             
             Sequence preAnimationSequence = DOTween.Sequence().AppendInterval(_animationDelay);
+            
             preAnimationSequence.OnComplete(() =>
             {
                 Sequence sequence = DOTween.Sequence();
@@ -148,7 +148,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         {
             for (int i = 0; i < _items.Length; i++)
             {
-                _items[i].Initialize(data.Models[i]);
+                _items[i].UpdateModel(data.Models[i]);
             }
         }
 

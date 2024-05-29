@@ -1,5 +1,5 @@
-﻿using _Game.Core.Configs.Controllers;
-using _Game.Core.Configs.Providers;
+﻿using _Game.Core.Configs.Providers;
+using _Game.Core.Configs.Repositories;
 using Zenject;
 
 namespace _Game.Core.Installers.Core
@@ -9,7 +9,10 @@ namespace _Game.Core.Installers.Core
         public override void InstallBindings()
         {
             BindConfigProviders();
-            BindConfigControllers();
+            BindTimelineConfigRepository();
+            BindAgeConfigRepository();
+            BindBattleConfigRepository();
+            BindEconomyConfigRepository();
         }
 
         private void BindConfigProviders()
@@ -22,9 +25,30 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
         }
 
-        private void BindConfigControllers() =>
+        private void BindEconomyConfigRepository() =>
             Container
-                .BindInterfacesAndSelfTo<GameConfigController>()
+                .BindInterfacesAndSelfTo<EconomyConfigRepository>()
                 .AsSingle();
+
+        private void BindTimelineConfigRepository()
+        {
+            Container
+                .BindInterfacesAndSelfTo<TimelineConfigRepository>()
+                .AsSingle();
+        }
+
+        private void BindAgeConfigRepository()
+        {
+            Container
+                .BindInterfacesAndSelfTo<AgeConfigRepository>()
+                .AsSingle();
+        }
+
+        private void BindBattleConfigRepository()
+        {
+            Container
+                .BindInterfacesAndSelfTo<BattleSpeedConfigRepository>()
+                .AsSingle();
+        }
     }
 }

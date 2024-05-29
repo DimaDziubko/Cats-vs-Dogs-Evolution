@@ -1,8 +1,10 @@
 ﻿using System;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Evolution.Scripts;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,24 +20,27 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         [SerializeField] private Button _timelineInfoButton;
 
         private IDisposable _disposable;
-        
+
         private IEvolutionService _evolutionService;
         private ITimelineInfoWindowProvider _timelineInfoProvider;
         private IAudioService _audioService;
         private IHeader _header;
-        public string Name => "Evolution";
-        
+        private IUpgradesAvailabilityChecker _upgradesChecker;
+        public Window Window => Window.Evolution;
+
+
         public void Construct(
             IHeader header,
             IEvolutionService evolutionService,
             IAudioService audioService,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider)
+            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            IUpgradesAvailabilityChecker upgradesChecker)
         {
             _evolutionService = evolutionService;
             _timelineInfoProvider = timelineInfoWindowProvider;
             _audioService = audioService;
             _header = header;
-
+            _upgradesChecker = upgradesChecker;
             _evolutionTab.Construct(evolutionService, audioService, timelineInfoWindowProvider);
             _travelTab.Construct(evolutionService, audioService);
         }
@@ -43,10 +48,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         public void Show()
         {
-            //TODO Delete 
-            Debug.Log("Evolution window show");
-            
-            _header.ShowWindowName(Name);
+            _header.ShowWindowName(Window.ToString());
             
             _canvas.enabled = true;
 
@@ -61,6 +63,9 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
             Unsubscribe();
             Subscribe();
+
+            _upgradesChecker.MarkAsReviewed(Window);
+            _upgradesChecker.MarkAsReviewed(Window.UpgradesAndEvolution);
         }
 
         public void Hide()
@@ -73,9 +78,6 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _disposable?.Dispose();
 
             Unsubscribe();
-            
-            //TODO Delete 
-            Debug.Log("Evolution window hide");
         }
 
         private void Subscribe()
@@ -97,6 +99,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         }
 
         private bool IsTimeToTravel() => _evolutionService.IsTimeToTravel();
+
 
         private async void OnTimelineInfoBtnClicked()
         {

@@ -42,18 +42,27 @@ namespace _Game.Common
 
         public void SetPaused(in bool isPaused)
         {
-            for (var i = 0; i < _behaviors.Count; i++)
+            foreach (var t in _behaviors)
             {
-                _behaviors[i].SetPaused(isPaused);
+                t.SetPaused(isPaused);
             }
         }
-
-        public void Clear()
+        
+        public void SetBattleSpeedFactor(float speedFactor)
         {
             for (var i = 0; i < _behaviors.Count; i++)
             {
-                _behaviors[i].Recycle();
+                _behaviors[i].SetSpeedFactor(speedFactor);
             }
+        }
+        
+        public void Clear()
+        {
+            foreach (var t in _behaviors)
+            {
+                t.Recycle();
+            }
+
             _behaviors.Clear();
         }
 

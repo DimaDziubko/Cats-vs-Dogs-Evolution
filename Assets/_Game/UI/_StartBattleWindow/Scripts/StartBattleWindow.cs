@@ -1,10 +1,10 @@
 using System;
 using _Game.Core._Logger;
-using _Game.Core.Communication;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Battle;
 using _Game.Core.Services.PersistentData;
 using _Game.Gameplay.BattleLauncher;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Settings.Scripts;
@@ -16,8 +16,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
     public class StartBattleWindow : MonoBehaviour, IUIWindow
     {
         public event Action Opened;
-        
-        public string Name => $"Battle {_battleState.CurrentBattleIndex + 1}";
+        public Window Window => Window.Battle;
 
         [SerializeField] private Canvas _canvas;
 
@@ -29,8 +28,6 @@ namespace _Game.UI._StartBattleWindow.Scripts
 
         [SerializeField] private Button _cheatBtn;
         
-        [SerializeField] private AudioClip _startBattleSound;
-        
         private IAudioService _audioService;
 
         private IBattleLaunchManager _battleLaunchManager;
@@ -38,20 +35,17 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private IHeader _header;
         private IMyLogger _logger;
         private IPersistentDataService _persistentData;
-        private IUserStateCommunicator _communicator;
         private ISettingsPopupProvider _settingsPopupProvider;
+
 
         public void Construct(
             Camera uICamera,
             IAudioService audioService,
-
             IHeader header,
             IBattleLaunchManager battleLaunchManager,
-
             IBattleStateService battleState,
             IMyLogger logger,
             IPersistentDataService persistentData,
-            IUserStateCommunicator communicator,
             ISettingsPopupProvider settingsPopupProvider)
         {
             _canvas.worldCamera = uICamera;
@@ -65,14 +59,13 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _logger = logger;
 
             _persistentData = persistentData;
-            _communicator = communicator;
             _settingsPopupProvider = settingsPopupProvider;
         }
 
         public void Show()
         {
-            _header.ShowWindowName(Name);
-            
+            ShowName();
+
             Unsubscribe();
             Subscribe();
 
@@ -81,11 +74,14 @@ namespace _Game.UI._StartBattleWindow.Scripts
             Opened?.Invoke();
         }
 
+        private void ShowName()
+        {
+            var fullName = $"{Window} {_battleState.CurrentBattleIndex + 1}";
+            _header.ShowWindowName(fullName);
+        }
+
         public void Hide()
         {
-            //TODO Delete
-            _logger.Log("Start battle window HIDE");
-            
             Unsubscribe();
 
             _canvas.enabled = false;
@@ -123,13 +119,11 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void OnCheatBtnClicked()
         {
             PlayButtonSound();
-            _persistentData.AddCoins(100000);
+            _persistentData.AddCoins(10_000_000);
         }
 
         private void OnQuitBtnClick()
         {
-            SaveGame();
-
             PlayButtonSound();
 
 #if UNITY_EDITOR
@@ -147,53 +141,32 @@ namespace _Game.UI._StartBattleWindow.Scripts
             await popup.Value.AwaitForExit();
             popup.Dispose();
         }
-        
-        
-        private void SaveGame() => 
-            _communicator.SaveUserState(_persistentData.State);
-
 
         private void UpdateNavigationButtons(BattleNavigationModel model)
         {
-            _previousBattleButton.gameObject.SetActive(model.IsFirstBattle);
-            _nextBattleButton.gameObject.SetActive(!model.IsLastBattle);
-            _previousBattleButton.interactable = model.CanMoveToPreviousBattle;
-            _nextBattleButton.interactable = model.CanMoveToNextBattle;
-
+            _previousBattleButton.gameObject.SetActive(model.CanMoveToPreviousBattle);
+            _nextBattleButton.gameObject.SetActive(model.CanMoveToNextBattle);
             _startBattleButton.interactable = model.IsPrepared;
-            _header.ShowWindowName(Name);
+            
+            ShowName();
         }
-        
+
         private void OnStartButtonClick()
         {
             PlayButtonSound();
             _battleLaunchManager.TriggerLaunchBattle();
-            
-            if (_startBattleSound != null)
-            {
-                _audioService.PlayOneShot(_startBattleSound);
-            }
         }
 
         private void OnPreviousBattleButtonClick()
         {
             PlayButtonSound();
-            DisableButtons();
             _battleState.MoveToPreviousBattle();
         }
 
         private void OnNextBattleButtonClick()
         {
             PlayButtonSound();
-            DisableButtons();
             _battleState.MoveToNextBattle();
-        }
-
-        private void DisableButtons()
-        {
-            _nextBattleButton.interactable = false;
-            _previousBattleButton.interactable = false;
-            _startBattleButton.interactable = false;
         }
         
         private void PlayButtonSound()

@@ -1,7 +1,7 @@
 ﻿using _Game.Core.GameState;
 using Zenject;
 
-namespace _Game.Core.Scripts
+namespace _Game.Core.StateFactory
 {
     public class StateFactory 
     {

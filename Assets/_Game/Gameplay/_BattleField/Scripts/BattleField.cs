@@ -5,6 +5,7 @@ using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI._Hud;
@@ -33,13 +34,9 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly BaseSpawner _baseSpawner;
 
         private readonly CoinCounterView _coinCounterView;
-        
+
         private readonly InteractionCache _interactionCache = new InteractionCache();
-
-
-        //TODO Delete later
-        //[ShowInInspector] public Dictionary<Collider2D, ITarget> Cache => _interactionCache.Cache;
-
+        
         public BattleField(
             IWorldCameraService cameraService,
             IPauseManager pauseManager,
@@ -48,6 +45,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             IBaseDestructionManager baseDestructionManager,
             ICoinCounter coinCounter,
             IFactoriesHolder factoriesHolder,
+            IBattleSpeedManager speedManager,
             Hud hud)
         {
             _cameraService = cameraService;
@@ -55,8 +53,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             
             _coinSpawner = new CoinSpawner(
                 factoriesHolder.CoinFactory, 
-                audioService, 
-                cameraService, 
+                audioService,
                 coinCounter);
             
             _vfxSpawner = new VfxSpawner(factoriesHolder.VfxFactory);
@@ -65,7 +62,8 @@ namespace _Game.Gameplay._BattleField.Scripts
                 factoriesHolder.ProjectileFactory, 
                 pauseManager, 
                 _interactionCache,
-                _vfxSpawner);
+                _vfxSpawner,
+                speedManager);
             
             _unitSpawner = new UnitSpawner(
                 factoriesHolder.UnitFactory, 
@@ -74,7 +72,8 @@ namespace _Game.Gameplay._BattleField.Scripts
                 pauseManager, 
                 _vfxSpawner, 
                 _projectileSpawner, 
-                _coinSpawner);
+                _coinSpawner,
+                speedManager);
             
             _baseSpawner = new BaseSpawner(
                 factoriesHolder.BaseFactory,
@@ -105,10 +104,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         
         public void ResetSelf() => UpdateBase(Faction.Player);
 
-        public void StartBattle()
-        {
-            _baseSpawner.OnStartBattle();
-        }
+        public void StartBattle() => _baseSpawner.OnStartBattle();
 
         public void GameUpdate()
         {

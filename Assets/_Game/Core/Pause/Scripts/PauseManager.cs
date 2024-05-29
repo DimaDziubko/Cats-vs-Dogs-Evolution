@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace _Game.Core.Pause.Scripts
 {
@@ -21,9 +20,6 @@ namespace _Game.Core.Pause.Scripts
         
         public void SetPaused(bool isPaused)
         {
-            //TODO Delete
-            Debug.Log($"Pause manager set paused {isPaused}");
-            
             IsPaused = isPaused;
             foreach (var handler in _handlers)
             {

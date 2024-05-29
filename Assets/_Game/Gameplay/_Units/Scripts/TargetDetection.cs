@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units._Target;
@@ -56,12 +55,10 @@ namespace _Game.Gameplay._Units.Scripts
 
         private readonly TargetCollection _targetCollection = new TargetCollection();
         private float _timeSinceLastUpdate;
-
-
-        //TODO Delete
-
+        
+        //Debug
         [ShowInInspector, ReadOnly]
-        public List<ITarget> Targets => _targetCollection.Targets;
+        //public List<ITarget> Targets => _targetCollection.Targets;
 
         public void Construct(int layer)
         {
@@ -141,11 +138,11 @@ namespace _Game.Gameplay._Units.Scripts
         private void UpdateCurrentTarget()
         {
             _currentTarget = _targetCollection.Targets
-                .Where(t => !t.Damageable.IsDead)
+                .Where(t => !t.Damageable.IsDead && t.Transform != null)
                 .OrderBy(t => (t.Transform.position - transform.position).sqrMagnitude)
                 .FirstOrDefault();
             
-            _currentTarget =  _currentTarget?.Transform != null ?  _currentTarget : null;
+            _currentTarget = _currentTarget?.Transform != null ? _currentTarget : null;
             
             TargetUpdated?.Invoke(_currentTarget);
         }

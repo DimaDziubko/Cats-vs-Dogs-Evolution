@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -30,6 +31,11 @@ namespace _Game.Gameplay._Units.Scripts.Attack
             {
                 _materials[i] = _spriteRenderers[i].material;
             }
+
+            if (_materials.Any(m => m == null))
+            {
+                _materials = null;
+            }
         }
 
         public void Reset()
@@ -52,7 +58,16 @@ namespace _Game.Gameplay._Units.Scripts.Attack
 
         private void CallDamageFlash(float _, float __)
         {
-            if(!gameObject.activeInHierarchy) return;
+            if (!gameObject.activeInHierarchy || _materials == null)
+            {
+                return;
+            }
+
+            if (_damageFlashCoroutine != null)
+            {
+                StopCoroutine(_damageFlashCoroutine);
+            }
+
             _damageFlashCoroutine = StartCoroutine(DamageFlasher());
 
         }

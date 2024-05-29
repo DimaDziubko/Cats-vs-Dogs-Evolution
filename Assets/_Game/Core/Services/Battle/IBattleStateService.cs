@@ -13,7 +13,7 @@ namespace _Game.Core.Services.Battle
         event Action<BattleData> BattlePrepared;
         event Action<BattleNavigationModel> NavigationUpdated;
         int CurrentBattleIndex { get; }
-        BattleData BattleData { get; }
+        BattleData GetCurrentBattleData();
         void MoveToNextBattle();
         void MoveToPreviousBattle();
         UnitData GetEnemy(UnitType type);

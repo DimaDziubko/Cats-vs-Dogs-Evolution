@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,25 +8,26 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace _Game._AssetProvider
 {
-    public class AssetProvider : IAssetProvider
+    public class AssetProvider : IAssetProvider, IDisposable
     {
-        
         private readonly Dictionary<string, AsyncOperationHandle> _completeCache = new Dictionary<string, AsyncOperationHandle>();
+
         private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new Dictionary<string, List<AsyncOperationHandle>>();
 
         public void Init()
         {
             Addressables.InitializeAsync();
         }
-        
+
         public UniTask<GameObject> Instantiate(string address) => 
             Addressables.InstantiateAsync(address).ToUniTask();
 
         public UniTask<GameObject> Instantiate(string address, Vector3 at) => 
             Addressables.InstantiateAsync(address, at, Quaternion.identity).ToUniTask();
-        
+
         public UniTask<GameObject> Instantiate(string address, Transform under) => 
             Addressables.InstantiateAsync(address, under).ToUniTask();
+
         public async UniTask<T> Load<T>(AssetReference assetReference) where T : class
         {
             if (_completeCache.TryGetValue(assetReference.AssetGUID, out AsyncOperationHandle completeHandle))
@@ -67,8 +69,11 @@ namespace _Game._AssetProvider
             }
         }
         
-        
-        //TODO Choose place
+        public void Dispose()
+        {
+            CleanUp();
+        }
+
         public void CleanUp()
         {
             foreach (List<AsyncOperationHandle> resourcesHandles in _handles.Values)

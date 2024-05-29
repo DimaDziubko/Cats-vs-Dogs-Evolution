@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Common.Scripts;
 
 namespace _Game.Utils.Extensions
@@ -70,13 +71,16 @@ namespace _Game.Utils.Extensions
             switch (faction)
             {
                 case Faction.Player:
-                    return Constants.Layer.PLAYER;
+                    if(config.WeaponConfig.WeaponType == WeaponType.Melee) return Constants.Layer.MELEE_PLAYER;
+                    else return Constants.Layer.RANGE_PLAYER;
                 case Faction.Enemy:
-                    return Constants.Layer.ENEMY;
+                    if(config.WeaponConfig.WeaponType == WeaponType.Melee) return Constants.Layer.MELEE_ENEMY;
+                    else return Constants.Layer.RANGE_ENEMY;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
             }
         }
+        
         public static int GetAggroLayerForFaction(this WarriorConfig config, Faction faction)
         {
             switch (faction)

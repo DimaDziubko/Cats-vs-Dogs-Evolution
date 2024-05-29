@@ -1,7 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Game.UI.Common.Scripts
@@ -10,49 +9,44 @@ namespace _Game.UI.Common.Scripts
     public class CustomButtonPressAnimator : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] private RectTransform _buttonTransform;
-        [SerializeField] private RectTransform[] _animatableObjects;
-        
-        private Vector3[] _originalPositions;
-        
-        [FormerlySerializedAs("pressOffsetFactor")] 
-        [SerializeField, Tooltip("Fraction of the object's height by which it will shift when pressed.")]
-        private float _pressOffsetFactor = 5f;
+        [SerializeField] private RectTransform _contentPanel;
+
+        [SerializeField] private float _pressWarp = 0.9f;
 
         private Button _button;
         
+        private float _normalHeight;
+        private float _pressedHeight;
+
+        private float _normalPanelPosition;
+        private float _pressedPanelPosition;
+        
         private void Awake()
         {
-
             _button = GetComponent<Button>();
+            _normalHeight = _buttonTransform.rect.height;
+            _pressedHeight = _normalHeight * _pressWarp;
             
-            _originalPositions = new Vector3[_animatableObjects.Length];
-            for (int i = 0; i < _animatableObjects.Length; i++)
+            if (_contentPanel != null)
             {
-                if (_animatableObjects[i] != null)
-                    _originalPositions[i] = _animatableObjects[i].anchoredPosition;
+                _normalPanelPosition = _contentPanel.anchoredPosition.y;
+                _pressedPanelPosition = 0;
             }
         }
-
+        
         public void OnPointerDown(PointerEventData eventData)
         {
-            if(_button.interactable == false) return;
-
-            foreach (var rectTransform in _animatableObjects)
-            {
-                var initialPosition = rectTransform.anchoredPosition;
-                
-                if (rectTransform != null)
-                    rectTransform.anchoredPosition = new Vector3(initialPosition.x,  (initialPosition.y -(_buttonTransform.sizeDelta.y / _pressOffsetFactor)), 0);
-            }
+            if(!_button.interactable) return;
+            _buttonTransform.sizeDelta = new Vector2(_buttonTransform.sizeDelta.x, _pressedHeight);
+            if(_contentPanel != null)
+                _contentPanel.anchoredPosition = new Vector2(_contentPanel.anchoredPosition.x, _pressedPanelPosition);
         }
-
+        
         public void OnPointerUp(PointerEventData eventData)
         {
-            for (int i = 0; i < _animatableObjects.Length; i++)
-            {
-                if (_animatableObjects[i] != null)
-                    _animatableObjects[i].anchoredPosition = _originalPositions[i];
-            }
+            _buttonTransform.sizeDelta = new Vector2(_buttonTransform.sizeDelta.x, _normalHeight);
+            if(_contentPanel != null)
+                _contentPanel.anchoredPosition = new Vector2(_contentPanel.anchoredPosition.x, _normalPanelPosition);
         }
         
 #if UNITY_EDITOR
@@ -61,7 +55,6 @@ namespace _Game.UI.Common.Scripts
         private void ManualInit()
         {
             _buttonTransform = GetComponent<RectTransform>();
-            _animatableObjects = GetComponentsInChildren<RectTransform>();
         }
 #endif
     }

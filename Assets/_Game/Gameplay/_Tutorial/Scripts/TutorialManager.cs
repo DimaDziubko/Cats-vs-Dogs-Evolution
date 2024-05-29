@@ -5,7 +5,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
 {
     public interface ITutorialManager
     {
-        void Initialize();
+        void Init();
         public void Register(ITutorialStep tutorialStep);
         public void UnRegister(ITutorialStep tutorialStep);
     }
@@ -26,7 +26,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
             _persistentData = persistentData;
         }
 
-        public void Initialize()
+        public void Init()
         {
             TutorialStateReadonly.StepsCompletedChanged += OnStepCompleted;
             _pointerView.Hide();
@@ -35,41 +35,43 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public void Register(ITutorialStep tutorialStep)
         {
-            if(tutorialStep.TutorialStep == null) return;
-            var step = tutorialStep.TutorialStep.GetTutorialStepData().Step;
+            if(tutorialStep == null) return;
+            var step = tutorialStep.GetTutorialStepData().Step;
             if(TutorialStateReadonly.StepsCompleted >= step) return;
-            tutorialStep.ShowTutorialStep += ShowTutorialStep;
-            tutorialStep.CompleteTutorialStep += OnStepComplete;
-            tutorialStep.BreakTutorial += OnTutorialBroke;
+            tutorialStep.Show += Show;
+            tutorialStep.Complete += OnStepComplete;
+            tutorialStep.Cancel += OnTutorialBroke;
         }
 
         public void UnRegister(ITutorialStep tutorialStep)
         {
-            if(tutorialStep.TutorialStep == null) return;
-            tutorialStep.ShowTutorialStep -= ShowTutorialStep;
-            tutorialStep.CompleteTutorialStep -= OnStepComplete;
-            tutorialStep.BreakTutorial -= OnTutorialBroke;
+            if(tutorialStep == null) return;
+            tutorialStep.Show -= Show;
+            tutorialStep.Complete -= OnStepComplete;
+            tutorialStep.Cancel -= OnTutorialBroke;
         }
 
-        private void ShowTutorialStep(ITutorialStep tutorialStep)
+        private void Show(ITutorialStep tutorialStep)
         {
             if(_inProgress) return;
-            var tutorialData = tutorialStep.TutorialStep.GetTutorialStepData();
+            var tutorialData = tutorialStep.GetTutorialStepData();
             _pointerView.Show(tutorialData);
             _inProgress = true;
         }
 
         private void OnTutorialBroke(ITutorialStep tutorialStep) => 
-            OnStepCompleted();
+            Break();
 
         private void OnStepComplete(ITutorialStep tutorialStep)
         {
             UnRegister(tutorialStep);
-            var tutorialData = tutorialStep.TutorialStep.GetTutorialStepData();
+            var tutorialData = tutorialStep.GetTutorialStepData();
             _persistentData.CompleteTutorialStep(tutorialData.Step);
         }
         
-        private void OnStepCompleted()
+        private void OnStepCompleted(int step) => Break();
+
+        private void Break()
         {
             _pointerView.Hide();
             _inProgress = false;

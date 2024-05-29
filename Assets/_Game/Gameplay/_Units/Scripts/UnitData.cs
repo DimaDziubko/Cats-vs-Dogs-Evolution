@@ -1,7 +1,9 @@
-﻿using _Game.Core.Configs.Models;
+﻿using System;
+using _Game.Core.Configs.Models;
 
 namespace _Game.Gameplay._Units.Scripts
 {
+    [Serializable]
     public class UnitData
     {
         public WarriorConfig Config;

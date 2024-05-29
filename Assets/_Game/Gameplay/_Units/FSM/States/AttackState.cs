@@ -30,26 +30,19 @@ namespace _Game.Gameplay._Units.FSM.States
         private void OnUpdatedTarget(ITarget target)
         {
             if(target == null) return;
-            
-            //TODO Check
+
             _attack.SetTarget(target);
             _animator.SetTarget(target.Transform);
         }
 
         public void Enter()
         {
-            //TODO Delete
-            //Debug.Log("AttackState ENTERED");
             _animator.PlayAttack();
-            
         }
 
 
         public void GameUpdate()
         {
-            //TODO Delete
-            //Debug.Log("AttackState START_UPDATE");
-            
             UpdateDetectors();
             
             if (_attackDetection.HasTarget)
@@ -64,16 +57,10 @@ namespace _Game.Gameplay._Units.FSM.States
             }
             
             _fsm.Enter<MoveToPointState>();
-            
-            //TODO Delete
-            //Debug.Log("AttackState END_UPDATE");
-            
         }
 
         public void Cleanup()
         {
-            //TODO Delete
-            Debug.Log("AttackState cleanup");
             _attackDetection.TargetUpdated -= OnUpdatedTarget;
         }
 
@@ -85,8 +72,6 @@ namespace _Game.Gameplay._Units.FSM.States
 
         public void Exit()
         {
-            //TODO Delete
-            Debug.Log("AttackState EXITED");
             _animator.StopAttack();
         }
     }

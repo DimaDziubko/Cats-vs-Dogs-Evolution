@@ -30,24 +30,13 @@ namespace _Game.Core.Communication
 
         public async UniTask<bool> SaveUserState(UserAccountState state)
         {
+            state.Version = Application.version;
             return await _strategy.SaveUserState(state, Path);
         }
 
         public async UniTask<UserAccountState> GetUserState()
         {
             var result =  await _strategy.GetUserState(Path);
-            
-            // result.RaceState ??= new RaceState()
-            // {
-            //     CurrentRace = Race.None
-            // };
-            //
-            // result.FoodBoost ??= new FoodBoostState()
-            // {
-            //     DailyFoodBoostCount = 2,
-            //     LastDailyFoodBoost = DateTime.UtcNow
-            // };
-            
             return result;
         }
     }

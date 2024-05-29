@@ -2,8 +2,9 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.Loading;
 using _Game.Core.Pause.Scripts;
+using _Game.Core.Services._BattleSpeedService._Scripts;
+using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.PersistentData;
 using _Game.Gameplay._CoinCounter.Scripts;
@@ -23,6 +24,7 @@ namespace _Game.UI._BattleUIController
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IHeader _header;
         private readonly IRewardAnimator _rewardAnimator;
+        private readonly IPersistentDataService _persistentData;
 
         private IBattleMediator _battleMediator;
 
@@ -33,13 +35,15 @@ namespace _Game.UI._BattleUIController
             IAudioService audioService,
             IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
-            IBonusRewardService bonusRewardService,
+            IFoodBoostService foodBoostService,
             IHeader header,
             IPersistentDataService persistentData,
             ILoadingScreenProvider loadingScreenProvider,
             IRewardAnimator rewardAnimator,
-            IFeatureUnlockSystem featureUnlockSystem)
+            IFeatureUnlockSystem featureUnlockSystem,
+            IBattleSpeedService battleSpeedService)
         {
+            _persistentData = persistentData;
             _hud = hud;
             _coinCounter = coinCounter;
             _loadingScreenProvider = loadingScreenProvider;
@@ -50,24 +54,29 @@ namespace _Game.UI._BattleUIController
                 pauseManager,
                 alertPopupProvider,
                 audioService,
-                bonusRewardService,
-                featureUnlockSystem);
+                foodBoostService,
+                featureUnlockSystem,
+                battleSpeedService);
             
             header.Construct(persistentData.State.Currencies, cameraService);
             _header = header;
         }
         
-        public void ShowHud()
+        public void OnStartBattle()
         {
-            _hud.Show();
+            _hud.ShowCoinCounter();
+            _hud.ShowPauseToggle();
+            _hud.ShowFoodBoostBtn();
+            
             Unsubscribe();
             Subscribe();
             _hud.OnCoinsChanged(_coinCounter.Coins);
         }
         
-        public void HideHud()
+        public void OnStopBattle()
         {
-            _hud.Hide();
+            _hud.HidePauseToggle();
+            _hud.HideFoodBoostBtn();
             Unsubscribe();
         }
 
@@ -78,8 +87,8 @@ namespace _Game.UI._BattleUIController
 
         public void HideAndHandleLoadingOperation(ILoadingOperation clearingOperation)
         {
+            _hud.HideCoinCounter();
             _loadingScreenProvider.LoadAndDestroy(clearingOperation).Forget();
-
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
         }
 
@@ -87,13 +96,23 @@ namespace _Game.UI._BattleUIController
         {
             if (_coinCounter.Coins > 0)
             {
-                _rewardAnimator.PlayCoins(
-                    _header.CoinsWalletWorldPosition,
-                    _coinCounter.Coins,
-                    _coinCounter.CoinsRation);
-                
+                PlayCoinAnimation();
+                _persistentData.AddCoins(_coinCounter.Coins);
                 _coinCounter.Cleanup();
             }
+        }
+
+        private void PlayCoinAnimation()
+        {
+            _rewardAnimator.PlayCoins(
+                _header.CoinsWalletWorldPosition,
+                _coinCounter.CoinsRation);
+        }
+
+        private void Subscribe()
+        {
+            _hud.QuitBattle += OnBattleQuit;
+            _coinCounter.Changed += _hud.OnCoinsChanged;
         }
 
         private void Unsubscribe()
@@ -102,12 +121,6 @@ namespace _Game.UI._BattleUIController
             _coinCounter.Changed -= _hud.OnCoinsChanged;
         }
 
-        private void Subscribe()
-        {
-            _hud.QuitBattle += OnBattleQuit;
-            _coinCounter.Changed += _hud.OnCoinsChanged;
-        }
-        
         private void OnBattleQuit()
         {
             _battleMediator.StopBattle();

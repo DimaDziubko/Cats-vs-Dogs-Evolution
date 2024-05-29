@@ -1,113 +1,185 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.Pause.Scripts;
+using _Game.Core.Services._BattleSpeedService._Scripts;
+using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Camera;
-using _Game.Core.UserState;
+using _Game.Gameplay._Timer.Scripts;
+using _Game.UI._SpeedBoostBtn.Scripts;
 using _Game.UI.Common.Scripts;
-using _Game.Utils.Popups;
+using _Game.Utils.Popups; 
 using UnityEngine;
 
 namespace _Game.UI._Hud
 {
     public class Hud : MonoBehaviour
     {
-        public event Action Opened;
-        
-        [SerializeField] private Canvas _canvas;
-        
-        [SerializeField] private ToggleWithSpriteSwap _pauseToggle;
-        [SerializeField] private CoinCounterView _counterView;
-
-        [SerializeField] private FoodBoostBtn _foodBoostBtn;
-
-        public CoinCounterView CounterView => _counterView;
-        
         public event Action QuitBattle;
         
+        [SerializeField] private Canvas _canvas;
+        [SerializeField] private ToggleWithSpriteSwap _pauseToggle;
+        [SerializeField] private CoinCounterView _counterView;
+        [SerializeField] private FoodBoostBtn _foodBoostBtn;
+        [SerializeField] private BattleSpeedBtn _battleSpeedBtn;
+        
+        public CoinCounterView CounterView => _counterView;
+
         private IPauseManager _pauseManager;
         private IAlertPopupProvider _alertPopupProvider;
         private IAudioService _audioService;
-        private IBonusRewardService _bonusRewardService;
+        private IFoodBoostService _foodBoostService;
         private IFeatureUnlockSystem _featureUnlockSystem;
+        private IBattleSpeedService _battleSpeed;
 
         public void Construct(
             IWorldCameraService cameraService,
             IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
             IAudioService audioService,
-            IBonusRewardService bonusRewardService,
-            IFeatureUnlockSystem featureUnlockSystem)
+            IFoodBoostService foodBoostService,
+            IFeatureUnlockSystem featureUnlockSystem,
+            IBattleSpeedService battleSpeed)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _pauseManager = pauseManager;
             _alertPopupProvider = alertPopupProvider;
             _audioService = audioService;
-            _bonusRewardService = bonusRewardService;
+            _foodBoostService = foodBoostService;
             _featureUnlockSystem = featureUnlockSystem;
+            _battleSpeed = battleSpeed;
 
-            Hide();
+            Show();
         }
 
         public void Show()
         {
             _canvas.enabled = true;
+            ShowBattleSpeedBtn();
+            HideCoinCounter();
+            HideFoodBoostBtn();
+            HidePauseToggle();
+        }
 
-            var isFoodBoostAvailable = _featureUnlockSystem.IsFeatureUnlocked(_foodBoostBtn);
+        public void ShowCoinCounter()
+        {
+            _counterView.Show();
+        }
 
-            _foodBoostBtn.SetActive(isFoodBoostAvailable);
-            
-            if (isFoodBoostAvailable)
+        public void HideCoinCounter()
+        {
+            _counterView.Clear();
+            _counterView.Hide();
+        }
+
+        public void ShowFoodBoostBtn()
+        {
+            SubscribeFoodBoostBtn();
+            _foodBoostBtn.Initialize(OnFoodBoostBtnClicked);
+            _foodBoostBtn.Show();
+            OnFoodBoostBtnShown();
+        }
+
+        private void OnFoodBoostBtnShown()
+        {
+            _foodBoostService.OnFoodBoostShown();
+        }
+
+        private void SubscribeFoodBoostBtn()
+        {
+            _foodBoostService.FoodBoostBtnModelChanged += _foodBoostBtn.UpdateBtnState;
+        }
+
+        public void HideFoodBoostBtn()
+        {
+            _foodBoostBtn.Hide();
+            _foodBoostBtn.Cleanup();
+            UnsubscribeFoodBoostBtn();
+        }
+
+        private void UnsubscribeFoodBoostBtn()
+        {
+            _foodBoostService.FoodBoostBtnModelChanged -= _foodBoostBtn.UpdateBtnState;
+        }
+
+        public void ShowBattleSpeedBtn()
+        {
+            SubscribeBattleSpeedButton();
+            _battleSpeedBtn.Initialize(OnBattleSpeedBtnClicked);
+            OnBattleSpeedBtnShown();
+        }
+
+        private void OnBattleSpeedBtnShown() => 
+            _battleSpeed.OnBattleSpeedBtnShown();
+
+        private void SubscribeBattleSpeedButton()
+        {
+            _battleSpeed.SpeedBoostTimerActivityChanged += OnTimerChanged;
+            _battleSpeed.BattleSpeedBtnModelChanged += _battleSpeedBtn.UpdateBtnState;
+        }
+
+        private void OnTimerChanged(GameTimer timer, bool isActive)
+        {
+            if (isActive)
             {
-                _foodBoostBtn.Initialize(OnFoodBoostBtnClicked);
-                _bonusRewardService.FoodBoostBtnModelChanged += _foodBoostBtn.UpdateBtnState;
+                timer.Tick += OnBattleSpeedTimerTick;
+                return;
             }
+            timer.Tick -= OnBattleSpeedTimerTick;
+        }
 
+        public void HideBattleSpeedBtn()
+        {
+            UnsubscribeBattleSpeedButton();
+        }
+
+        private void UnsubscribeBattleSpeedButton()
+        {
+            _battleSpeed.SpeedBoostTimerActivityChanged -= OnTimerChanged;
+            _battleSpeed.BattleSpeedBtnModelChanged -= _battleSpeedBtn.UpdateBtnState;
+        }
+        
+        public void ShowPauseToggle()
+        {
+            SubscribePauseToggle();
             var isPauseAvailable = _featureUnlockSystem.IsFeatureUnlocked(_pauseToggle);
             _pauseToggle.SetActive(isPauseAvailable);
-            
-            Unsubscribe();
-            Subscribe();
-            
-            Opened?.Invoke();
         }
 
-        public void Hide()
+        private void SubscribePauseToggle()
         {
-            _canvas.enabled = false;
-
-            _foodBoostBtn.Cleanup();
-            
-            Unsubscribe();
-
-            _counterView.Clear();
+            _pauseToggle.ValueChanged += OnPauseClicked;
         }
+
+        public void HidePauseToggle()
+        {
+            UnsubscribePauseToggle();
+            _pauseToggle.SetActive(false);
+        }
+
+        private void UnsubscribePauseToggle() => 
+            _pauseToggle.ValueChanged -= OnPauseClicked;
+
+        public void Hide() => 
+            _canvas.enabled = false;
 
         public void OnCoinsChanged(float amount) => 
             _counterView.UpdateCoins(amount);
+        
+        private void OnBattleSpeedTimerTick(float timeLeft) => 
+            _battleSpeedBtn.UpdateTimer(timeLeft);
+        
 
-        private void Subscribe()
+        private void OnBattleSpeedBtnClicked(BattleSpeedBtnState state)
         {
-            _pauseToggle.ValueChanged += OnPauseClicked;
-
-            Opened += _bonusRewardService.OnHudOpened;
-        }
-
-        private void Unsubscribe()
-        {
-            _bonusRewardService.FoodBoostBtnModelChanged -= _foodBoostBtn.UpdateBtnState;
-
-            _pauseToggle.ValueChanged -= OnPauseClicked;
-
-            Opened -= _bonusRewardService.OnHudOpened;
+            _audioService.PlayButtonSound();
+            _battleSpeed.OnBattleSpeedBtnClicked(state);
         }
 
         private void OnFoodBoostBtnClicked()
         {
             _audioService.PlayButtonSound();
-            _pauseManager.SetPaused(true);
-            _bonusRewardService.OnFoodBoostBtnClicked();
+            _foodBoostService.OnFoodBoostBtnClicked();
         }
 
         private void OnPauseClicked(bool isPaused)

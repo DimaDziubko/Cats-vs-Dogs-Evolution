@@ -1,15 +1,17 @@
 ﻿using _Game.Common;
 using _Game.Core.Pause.Scripts;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay._Weapon.Scripts;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class ProjectileSpawner : IShootProxy, IPauseHandler
+    public class ProjectileSpawner : IShootProxy, IPauseHandler, IBattleSpeedHandler
     {
         private readonly IProjectileFactory _projectileFactory;
         private readonly IVFXProxy _vfxProxy;
-        
+        private readonly IBattleSpeedManager _speedManager;
+
         private readonly GameBehaviourCollection _projectiles = new GameBehaviourCollection();
         private readonly IInteractionCache _cache;
 
@@ -17,13 +19,16 @@ namespace _Game.Gameplay._BattleField.Scripts
             IProjectileFactory projectileFactory,
             IPauseManager pauseManager,
             IInteractionCache cache,
-            IVFXProxy vfxProxy)
+            IVFXProxy vfxProxy,
+            IBattleSpeedManager speedManager)
         {
             _projectileFactory = projectileFactory;
             _cache = cache;
             _vfxProxy = vfxProxy;
+            _speedManager = speedManager;
             
             pauseManager.Register(this);
+            speedManager.Register(this);
         }
 
         public void GameUpdate()
@@ -50,9 +55,15 @@ namespace _Game.Gameplay._BattleField.Scripts
                 data.LaunchPosition, 
                 data.Target, 
                 _cache,
-                data.LaunchRotation);
+                data.LaunchRotation,
+                _speedManager.CurrentSpeedFactor);
             
             _projectiles.Add(projectile);
+        }
+
+        public void SetFactor(float speedFactor)
+        {
+            _projectiles.SetBattleSpeedFactor(speedFactor);
         }
     }
 }

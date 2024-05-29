@@ -1,5 +1,7 @@
-﻿using _Game.Core._Logger;
+﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
+using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Utils.Extensions;
@@ -29,9 +31,8 @@ namespace _Game.Gameplay.GameResult.Scripts
         private IMyLogger _logger;
         private IAudioService _audioService;
         private IAdsService _adsService;
-
         private ICoinCounter _coinCounter;
-        
+
         public void Construct(
             Camera uiCamera, 
             IAudioService audioService, 
@@ -40,12 +41,14 @@ namespace _Game.Gameplay.GameResult.Scripts
         {
             _audioService = audioService;
             _adsService = adsService;
-                
+
             _logger = logger;
             _canvas.worldCamera = uiCamera;
         }
 
-        public async UniTask<bool> ShowAndAwaitForExit(ICoinCounter coinCounter, GameResultType result)
+        public async UniTask<bool> ShowAndAwaitForExit(
+            ICoinCounter coinCounter, 
+            GameResultType result)
         {
             _victoryText.enabled = false;
 
@@ -58,7 +61,6 @@ namespace _Game.Gameplay.GameResult.Scripts
             _quitButton.onClick.AddListener(OnQuitClicked);
 
             _doubleCoinsBtn.Initialize(OnAdsBtnClicked);
-
             _doubleCoinsBtn.SetInteractable(_adsService.IsRewardedVideoReady);
 
             _adsService.RewardedVideoLoaded += OnRewardedVideoLoaded;
@@ -82,10 +84,8 @@ namespace _Game.Gameplay.GameResult.Scripts
             return isExit;
         }
 
-        private void OnRewardedVideoLoaded()
-        {
+        private void OnRewardedVideoLoaded() => 
             _doubleCoinsBtn.SetInteractable(_adsService.IsRewardedVideoReady);
-        }
 
         private void OnQuitClicked()
         {
@@ -98,7 +98,7 @@ namespace _Game.Gameplay.GameResult.Scripts
         private void OnAdsBtnClicked()
         {
             _audioService.PlayButtonSound();
-            _adsService.ShowRewardedVideo(MultiplyRewardAndQuit);
+            _adsService.ShowRewardedVideo(MultiplyRewardAndQuit, RewardType.X2);
         }
 
         private void MultiplyRewardAndQuit()

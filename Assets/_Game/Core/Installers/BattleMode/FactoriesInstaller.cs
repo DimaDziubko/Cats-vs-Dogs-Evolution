@@ -40,13 +40,16 @@ namespace _Game.Core.Installers.BattleMode
             BindProjectileFactory(battleState, ageState, audioService);
             BindUnitFactory(battleState, ageState, cameraService, random, audioService);
             BindBaseFactory(battleState, ageState, cameraService);
-            BindCoinFactory();
+            BindCoinFactory(audioService);
             BindVfxFactory(battleState, ageState);
             BindEnvironmentFactory(cameraService);
         }
 
-        private void BindCoinFactory() => 
+        private void BindCoinFactory(IAudioService audioService)
+        {
+            _coinFactory.Construct(audioService);
             Container.Bind<ICoinFactory>().To<CoinFactory>().FromInstance(_coinFactory).AsSingle();
+        }
 
         private void BindVfxFactory(
             IBattleStateService battleState, 

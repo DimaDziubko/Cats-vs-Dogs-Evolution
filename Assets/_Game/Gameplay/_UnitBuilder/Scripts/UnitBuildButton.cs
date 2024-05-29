@@ -12,7 +12,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class UnitBuildButton : MonoBehaviour
     {
-        private event Action BecomeInteractable;
+        public event Action<ButtonState> ChangeState;
         
         [SerializeField] private GameObject _container;
         
@@ -23,9 +23,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         private Button _button;
 
         [ShowInInspector] private UnitType _type;
-
-        public bool IsInteractable => _button.interactable;
-
+        private ButtonState _state = ButtonState.Inactive;
+        
         private readonly Color _affordableColor = new Color(1f, 1f, 1f);
         private readonly Color _expensiveColor = new Color(1f, 0.3f, 0f);
 
@@ -42,7 +41,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         [SerializeField] private float _animationDuration = 1f;
         [SerializeField] private float _targetScale = 1.2f;
         [SerializeField] private float _initialScale = 1;
-
+        public RectTransform RectTransform => _transform;
+        
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -61,16 +61,21 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             _foodIconHolder.sprite = data.FoodIcon;
             _unitIconHolder.sprite = data.UnitIcon;
             
+            ChangeState -= unitBuilder.OnButtonChangeState;
+            ChangeState += unitBuilder.OnButtonChangeState;
             _button.onClick.AddListener(() => unitBuilder.Build(_type, _foodPrice));
-
-            BecomeInteractable -= unitBuilder.OnButtonBecameInteractable;
-            BecomeInteractable += unitBuilder.OnButtonBecameInteractable;
         }
 
         public void UpdateButtonState(int foodAmount)
         {
             bool canAfford = foodAmount >= _foodPrice;
-            
+            var newState = canAfford ? ButtonState.Active : ButtonState.Inactive;
+            if (_state != newState)
+            {
+                _state = newState;
+                ChangeState?.Invoke(_state);
+            }
+
             if (canAfford && !_button.interactable)
             {
                 DoScaleAnimation();
@@ -78,11 +83,6 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             
             _button.interactable = _tempButtonState = canAfford;
 
-            if (_button.interactable)
-            {
-                BecomeInteractable?.Invoke();
-            }
-            
             _priceText.color = canAfford ? _affordableColor : _expensiveColor;
             _unitIconHolder.color = canAfford ? _unitIconAffordableColor : _unitIconExpensiveColor;
         }

@@ -4917,7 +4917,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1162279803
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 100
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -14720,7 +14720,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1162279803
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
@@ -19669,7 +19669,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1162279803
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 100
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -19771,11 +19771,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1497065713
+  m_SortingLayerID: -389912175
   m_SortingLayer: 2
   m_SortingOrder: 6
-  m_Sprite: {fileID: 5977994653045723483, guid: a70627ae5284c6b48a5d7c6cf3e54483,
-    type: 3}
+  m_Sprite: {fileID: 5977994653045723483, guid: a70627ae5284c6b48a5d7c6cf3e54483, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19830,8 +19829,8 @@ GameObject:
   - component: {fileID: 1097833219250537064}
   - component: {fileID: -1731718461110379784}
   - component: {fileID: 1455034448351381595}
-  - component: {fileID: 4782881472514779018}
   - component: {fileID: 5527438879446429561}
+  - component: {fileID: 2987514443081642004}
   m_Layer: 0
   m_Name: JavelinMissile
   m_TagString: Untagged
@@ -19884,20 +19883,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 1097833219250537064}
-  _move: {fileID: 4782881472514779018}
+  _move: {fileID: 2987514443081642004}
   _hitSFX: {fileID: 8300000, guid: 526c30c1efe735d47a4721073cb0416f, type: 3}
---- !u!114 &4782881472514779018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6605424467867271132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aa7c7b5446f4e189341328c3594900c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &5527438879446429561
 Rigidbody2D:
   serializedVersion: 4
@@ -19919,3 +19906,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2987514443081642004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605424467867271132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48ed3fcfda749b4a3f031f7ccba6696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

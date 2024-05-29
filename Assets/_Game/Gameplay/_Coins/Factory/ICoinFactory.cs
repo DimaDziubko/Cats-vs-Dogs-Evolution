@@ -1,4 +1,5 @@
 ﻿using _Game.Gameplay._Coins.Scripts;
+using _Game.Gameplay.Vfx.Scripts;
 
 namespace _Game.Gameplay._Coins.Factory
 {
@@ -6,6 +7,7 @@ namespace _Game.Gameplay._Coins.Factory
     {
         LootCoin GetLootCoin();
         RewardCoin GetRewardCoin();
+        RewardCoinVFX GetRewardCoinVfx();
         void Reclaim(Coin coin);
     }
 }

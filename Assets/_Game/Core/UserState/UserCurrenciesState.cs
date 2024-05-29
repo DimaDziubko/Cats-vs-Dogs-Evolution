@@ -7,7 +7,7 @@ namespace _Game.Core.UserState
     {
         public float Coins;
         public float Gems;
-        
+
         public event Action<bool> CoinsChanged;
         public event Action GemsChanged;
 

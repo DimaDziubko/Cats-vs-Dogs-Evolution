@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Game.UI.Common.Scripts
@@ -12,25 +13,30 @@ namespace _Game.UI.Common.Scripts
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class TransactionButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
+        public event Action<ButtonState> ButtonStateChanged;
         public event Action Click;
 
+        [SerializeField] private RectTransform _buttonRectTransform;
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private TMP_Text _infoText;
 
         [SerializeField] private bool _isHoldable;
-        
+
         private Button _button;
-        
+
+        private ButtonState _state = ButtonState.Inactive;
+
         private readonly Color _affordableColor = new Color(1f, 1f, 1f);
 
         private readonly Color _expensiveColor = new Color(1f, 0.3f, 0f);
 
         private bool _isPointerDown;
-        private float _initialDelay = 0.5f; 
-        private float _repeatRate = 0.05f; 
-        
+        private float _initialDelay = 0.5f;
+        private float _repeatRate = 0.05f;
+
         private CancellationTokenSource _cancellationTokenSource;
-        
+        public RectTransform ButtonRectTransform => _buttonRectTransform;
+
         public void Init()
         {
             _button = GetComponent<Button>();
@@ -43,6 +49,13 @@ namespace _Game.UI.Common.Scripts
         {
             _button.interactable = canAfford;
 
+             var newState = canAfford ? ButtonState.Active : ButtonState.Inactive;
+             if (_state != newState)
+             {
+                 _state = newState;
+                 ButtonStateChanged?.Invoke(_state);
+             }
+            
             if (!canAfford) _isPointerDown = false;
             
             if (_priceText != null)

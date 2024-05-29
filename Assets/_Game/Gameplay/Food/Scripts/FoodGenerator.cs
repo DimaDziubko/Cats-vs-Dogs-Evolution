@@ -2,11 +2,12 @@
 using _Game.Core._Logger;
 using _Game.Core._SystemUpdate;
 using _Game.Core.Pause.Scripts;
+using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services.Age.Scripts;
-using _Game.Core.Services.BonusReward.Scripts;
 using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay.Battle.Scripts;
-using _Game.UI.GameplayUI.Scripts;
+using _Game.UI.UnitBuilderBtn.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
@@ -24,18 +25,21 @@ namespace _Game.Gameplay.Food.Scripts
         void SetMediator(IBattleMediator battleMediator);
     }
 
-    public class FoodGenerator : IFoodGenerator, IGameUpdate
+    public class FoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler
     {
         public event Action<int> FoodChanged;
 
         private readonly IEconomyUpgradesService _economyUpgradesService;
         private readonly IAgeStateService _ageState;
         private readonly IMyLogger _logger;
-        private readonly IBonusRewardService _bonusRewardService;
+        private readonly IFoodBoostService _foodBoostService;
         private readonly IPauseManager _pauseManager;
-        
+        private readonly IBattleSpeedManager _speedManager;
+        private readonly ISystemUpdate _systemUpdate;
+
         private IBattleMediator _battleMediator;
 
+        private float _defaultProductionSpeed;
         private bool IsPaused => _pauseManager.IsPaused;
 
         private float _productionSpeed;
@@ -43,7 +47,7 @@ namespace _Game.Gameplay.Food.Scripts
         private float _accumulatedTime;
 
         private readonly FoodPanel _panel;
-
+        
         public int FoodAmount
         {
             get => _foodAmount;
@@ -59,18 +63,20 @@ namespace _Game.Gameplay.Food.Scripts
             IAgeStateService ageState,
             IMyLogger logger,
             GameplayUI gameplayUI,
-            IBonusRewardService bonusRewardService,
+            IFoodBoostService foodBoostService,
             ISystemUpdate systemUpdate,
-            IPauseManager pauseManager)
+            IPauseManager pauseManager,
+            IBattleSpeedManager speedManager)
         {
             _economyUpgradesService = economyUpgradesService;
             _panel = gameplayUI.FoodPanel;
             _ageState = ageState;
             _logger = logger;
-            _bonusRewardService = bonusRewardService;
-
+            _foodBoostService = foodBoostService;
+            _speedManager = speedManager;
+            _systemUpdate = systemUpdate;
+            
             _pauseManager = pauseManager;
-            systemUpdate.Register(this);
         }
 
         public void Init()
@@ -81,10 +87,15 @@ namespace _Game.Gameplay.Food.Scripts
 
         public void StartGenerator()
         {
-            FoodChanged += _panel.OnFoodChanged;
-            _bonusRewardService.FoodBoost += AddFood;
+            _systemUpdate.Register(this);
+            _speedManager.Register(this);
             
-            _productionSpeed = _economyUpgradesService.GetFoodProductionSpeed();
+            FoodChanged += _panel.OnFoodChanged;
+            _foodBoostService.FoodBoost += AddFood;
+            
+            _defaultProductionSpeed =  _economyUpgradesService.GetFoodProductionSpeed();
+            _productionSpeed = _defaultProductionSpeed * _speedManager.CurrentSpeedFactor;
+            
             FoodAmount = _economyUpgradesService.GetInitialFoodAmount();
 
             _panel.UpdateFillAmount(0);
@@ -93,8 +104,11 @@ namespace _Game.Gameplay.Food.Scripts
 
         public void StopGenerator()
         {
+            _accumulatedTime = 0;
             FoodChanged -= _panel.OnFoodChanged;
-            _bonusRewardService.FoodBoost -= AddFood;
+            _foodBoostService.FoodBoost -= AddFood;
+            _systemUpdate.Unregister(this);
+            _speedManager.UnRegister(this);
         }
 
         public void SetMediator(IBattleMediator battleMediator)
@@ -134,6 +148,11 @@ namespace _Game.Gameplay.Food.Scripts
         public void SpendFood(int delta)
         {
             FoodAmount -= delta;
+        }
+
+        public void SetFactor(float speedFactor)
+        {
+            _productionSpeed = _defaultProductionSpeed * speedFactor;
         }
     }
 }

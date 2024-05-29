@@ -5,7 +5,10 @@
         None,
         AlwaysUnlocked,
         UpgradesWindow,
+        EvolutionWindow,
         Pause,
-        FoodBoost
+        FoodBoost,
+        BattleSpeed,
+        X2
     }
 }

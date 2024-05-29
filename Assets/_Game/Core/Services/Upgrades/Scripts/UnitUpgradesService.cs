@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using _Game.Core._Logger;
-using _Game.Core.Configs.Controllers;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 using _Game.Gameplay._Units.Scripts;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils;
 using _Game.Utils.Extensions;
@@ -17,44 +18,57 @@ using UnityEngine;
 
 namespace _Game.Core.Services.Upgrades.Scripts
 {
-    public class UnitUpgradesService : IUnitUpgradesService 
+    public class UnitUpgradesService : IUnitUpgradesService, IDisposable 
     {
         public event Action<List<UpgradeUnitItemViewModel>> UpgradeUnitItemsUpdated;
         
         private readonly IPersistentDataService _persistentData;
-        private readonly IGameConfigController _gameConfigController;
+        private readonly IAgeConfigRepository _ageConfigRepository;
         private readonly IAssetProvider _assetProvider;
         private readonly IMyLogger _logger;
-        
+        private readonly IUpgradesAvailabilityChecker _upgradesChecker;
+
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
         private IUserCurrenciesStateReadonly Currency => _persistentData.State.Currencies;
-        
+
         private readonly List<UpgradeUnitItemViewModel> _upgradeUnitItems = new List<UpgradeUnitItemViewModel>(3);
-        
+
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        
+
         public UnitUpgradesService(
             IPersistentDataService persistentData,
-            IGameConfigController gameConfigController,
+            IAgeConfigRepository ageConfigRepository,
             IAssetProvider assetProvider,
-            IMyLogger logger)
+            IMyLogger logger,
+            IUpgradesAvailabilityChecker upgradesChecker)
         {
             _persistentData = persistentData;
-            _gameConfigController = gameConfigController;
+            _ageConfigRepository = ageConfigRepository;
             _assetProvider = assetProvider;
             _logger = logger;
+            _upgradesChecker = upgradesChecker;
         }
-        
+
         public async UniTask Init()
         {
+            UpgradeUnitItemsUpdated += _upgradesChecker.OnUpgradeUnitItemsUpdated;
             TimelineState.OpenedUnit += OnUnitOpened;
             Currency.CoinsChanged += OnCoinsChanged;
-
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             RaceState.Changed += OnRaceChanged;
-            
+
             await PrepareUpgrades();
+        }
+
+        public void Dispose()
+        {
+            _cts?.Dispose();
+            UpgradeUnitItemsUpdated -= _upgradesChecker.OnUpgradeUnitItemsUpdated;
+            TimelineState.OpenedUnit -= OnUnitOpened;
+            Currency.CoinsChanged -= OnCoinsChanged;
+            TimelineState.NextAgeOpened -= OnNextAgeOpened;
+            RaceState.Changed -= OnRaceChanged;
         }
 
         private async void OnRaceChanged() => await PrepareUpgrades();
@@ -64,28 +78,29 @@ namespace _Game.Core.Services.Upgrades.Scripts
 
         public void PurchaseUnit(UnitType type)
         {
-            var unitPrice = _gameConfigController.GetUnitPrice(type);
+            float? unitPrice = _ageConfigRepository
+                .GetAgeUnits(TimelineState.AgeId)
+                .Where(x => x.Type == type)
+                .Select(x => (float?)x.Price)
+                .FirstOrDefault();
             
-            if (Currency.Coins >= unitPrice)
+            if (unitPrice.HasValue && Currency.Coins >= unitPrice.Value)
             {
-                _persistentData.PurchaseUnit(type, unitPrice);
+                _persistentData.PurchaseUnit(type, unitPrice.Value);
             }
             else
             {
-                Debug.LogError($"Cannot purchase unit {type}. Either already opened or not enough coins.");
+                Debug.LogError($"Cannot purchase unit {type}. Not enough coins or unit not found.");
             }
         }
 
         private async UniTask PrepareUpgrades()
         {
-            List<WarriorConfig> openPlayerUnitConfigs = _gameConfigController.GetOpenPlayerUnitConfigs();
-            
-            _logger.Log($"OpenPlayerUnits : {openPlayerUnitConfigs.Count}");
-
             var ct = _cts.Token;
             try
             {
                 await PrepareUnitUpgradeItems(ct);
+                UpgradeUnitItemsUpdated?.Invoke(_upgradeUnitItems);
 
                 ct.ThrowIfCancellationRequested();
             }
@@ -94,7 +109,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
                 _logger.Log("PrepareBattle was canceled.");
             }
         }
-        
+
         private void OnUnitOpened(UnitType type)
         {
             UpdateUnitItem(type);
@@ -109,7 +124,7 @@ namespace _Game.Core.Services.Upgrades.Scripts
 
         private async UniTask PrepareUnitUpgradeItems(CancellationToken ct)
         {
-            List<WarriorConfig> warriorConfigs = _gameConfigController.GetCurrentAgeUnits();
+            IEnumerable<WarriorConfig> warriorConfigs = _ageConfigRepository.GetAgeUnits(TimelineState.AgeId);
 
             _upgradeUnitItems.Clear();
             
@@ -144,8 +159,8 @@ namespace _Game.Core.Services.Upgrades.Scripts
             
             UpgradeUnitItemsUpdated?.Invoke(_upgradeUnitItems);
         }
-        
-        public void OnUpgradesWindowOpened() => 
+
+        void IUnitUpgradesService.OnUpgradesWindowOpened() => 
             UpgradeUnitItemsUpdated?.Invoke(_upgradeUnitItems);
     }
 }

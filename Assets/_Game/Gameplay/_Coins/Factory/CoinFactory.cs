@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Factory;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay._Coins.Scripts;
+using _Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._Coins.Factory
@@ -10,33 +12,61 @@ namespace _Game.Gameplay._Coins.Factory
     {
         [SerializeField] private LootCoin _lootCoinPrefab;
         [SerializeField] private RewardCoin _rewardCoinPrefab;
+        [SerializeField] private RewardCoinVFX _rewardCoinVFXPrefab;
 
         private readonly Queue<LootCoin> _lootCoinsPool = new Queue<LootCoin>();
         
+        private IAudioService _audioService;
+        public void Construct(IAudioService audioService)
+        {
+            _audioService = audioService;
+        }
+        
         public LootCoin GetLootCoin()
         {
-            LootCoin lootCoin;
             if (_lootCoinsPool.Count > 0)
             {
-                lootCoin = _lootCoinsPool.Dequeue();
+                var lootCoin = _lootCoinsPool.Dequeue();
                 lootCoin.gameObject.SetActive(true);
+                return lootCoin;
             }
-            else
-            {
-                lootCoin = CreateGameObjectInstance(_lootCoinPrefab);
-                lootCoin.OriginFactory = this;
-            }
-    
-            return lootCoin;
+
+            return CreateNewLootCoin();
         }
 
         public RewardCoin GetRewardCoin()
         {
-            RewardCoin rewardCoin  = CreateGameObjectInstance(_rewardCoinPrefab);
-            
+            var rewardCoin = CreateGameObjectInstance(_rewardCoinPrefab);
             rewardCoin.OriginFactory = this;
-            
             return rewardCoin;
+        }
+        
+        public RewardCoinVFX GetRewardCoinVfx()
+        {
+            var rewardCoin = CreateGameObjectInstance(_rewardCoinVFXPrefab);
+            rewardCoin.OriginFactory = this;
+            rewardCoin.Construct(_audioService);
+            return rewardCoin;
+        }
+
+        private LootCoin CreateNewLootCoin()
+        {
+            if (_lootCoinPrefab == null)
+            {
+                Debug.LogError("LootCoin prefab is not assigned in the CoinFactory.");
+                return null;
+            }
+
+            var newLootCoin = CreateGameObjectInstance(_lootCoinPrefab);
+            if (newLootCoin != null)
+            {
+                newLootCoin.OriginFactory = this;
+            }
+            else
+            {
+                Debug.LogError("Failed to instantiate LootCoin from prefab.");
+            }
+            return newLootCoin;
         }
 
         public void Reclaim(Coin coin)
@@ -57,8 +87,7 @@ namespace _Game.Gameplay._Coins.Factory
         {
             while (_lootCoinsPool.Count > 0)
             {
-                var lootCoin = _lootCoinsPool.Dequeue();
-                Destroy(lootCoin.gameObject);
+                Destroy(_lootCoinsPool.Dequeue().gameObject);
             }
             _lootCoinsPool.Clear();
         }

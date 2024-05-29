@@ -2,6 +2,7 @@
 using _Game.Core.UserState;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace _Game.Core.Communication
 {
@@ -19,7 +20,27 @@ namespace _Game.Core.Communication
             if (!File.Exists(path)) return null;
 
             string json = await File.ReadAllTextAsync(path);
-            return JsonConvert.DeserializeObject<UserAccountState>(json);
+
+            var settings = new JsonSerializerSettings
+            {
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Populate
+            };
+
+            var state = JsonConvert.DeserializeObject<UserAccountState>(json, settings);
+
+            if (state != null && state.Version != Application.version)
+            {
+                MigrateState(ref state);
+            }
+            
+            return state;
+        }
+
+        private void MigrateState(ref UserAccountState state)
+        {
+
         }
     }
 }

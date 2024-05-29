@@ -19,6 +19,13 @@ namespace _Game.Gameplay._Units.Scripts
         public void ProcessAnimation(AnimationStream stream)
         {
             if(!isActive) return;
+            
+            if (!joint.IsValid(stream) || !target.IsValid(stream))
+            {
+                //Debug.LogWarning("LookAtJob: One of the transform handles is invalid in Solve.");
+                return;
+            }
+            
             Solve(stream, joint, target, axis, minAngle, maxAngle);
         }
 

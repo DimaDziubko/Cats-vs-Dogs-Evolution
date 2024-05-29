@@ -62,6 +62,12 @@ namespace _Game.Core.Services.Audio
             PlayOneShot(buttonSound);
         }
         
+        public void PlayStartBattleSound()
+        {
+            var startBattleSound = _soundsHolder.StartBattrleSound;
+            PlayOneShot(startBattleSound);
+        }
+        
         public void PlayVictorySound()
         {
             var victorySound = _soundsHolder.VictorySound;

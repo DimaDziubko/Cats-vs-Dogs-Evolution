@@ -8,15 +8,15 @@ namespace _Game.Core.Services.Evolution.Scripts
     public interface IEvolutionService
     {
         UniTask Init();
+        event Action<EvolutionTabData> EvolutionViewModelUpdated;
+        event Action<TravelTabData> TravelViewModelUpdated;
+        event Action<TimelineInfoData> TimelineInfoDataUpdated;
+        event Action LastAgeOpened;
         void MoveToNextAge();
         bool IsTimeToTravel();
         void OnEvolutionTabOpened();
         void OnTimelineInfoWindowOpened();
-        event Action<EvolutionViewModel> EvolutionViewModelUpdated;
         void OnTravelTabOpened();
-        event Action<TravelViewModel> TravelViewModelUpdated;
         void MoveToNextTimeline();
-        event Action LastAgeOpened;
-        event Action<TimelineInfoData> TimelineInfoDataUpdated;
     }
 }

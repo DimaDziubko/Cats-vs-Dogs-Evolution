@@ -1,7 +1,9 @@
 #if !ASTAR_NO_GRID_GRAPH
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 using Pathfinding.Serialization;
+using Pathfinding.Graphs.Grid;
 
 namespace Pathfinding {
 	/// <summary>

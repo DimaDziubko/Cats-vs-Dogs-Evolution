@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Scripts;
 using Zenject;
 
 namespace _Game.Core.GameState
 {
     public class GameStateMachine : IGameStateMachine, IInitializable
     {
-        private readonly StateFactory _stateFactory;
+        private readonly StateFactory.StateFactory _stateFactory;
         private Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
         
-        public GameStateMachine(StateFactory stateFactory)
+        public GameStateMachine(StateFactory.StateFactory stateFactory)
         {
             _stateFactory = stateFactory;
         }

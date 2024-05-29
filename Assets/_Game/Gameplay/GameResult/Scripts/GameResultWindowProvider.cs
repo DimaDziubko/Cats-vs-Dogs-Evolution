@@ -1,4 +1,5 @@
-﻿using _Game.Core._Logger;
+﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.AssetManagement;
 using _Game.Core.Services.Audio;
@@ -13,7 +14,6 @@ namespace _Game.Gameplay.GameResult.Scripts
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
         private readonly IAdsService _adsService;
-
         private readonly IMyLogger _logger;
 
         public GameResultWindowProvider(

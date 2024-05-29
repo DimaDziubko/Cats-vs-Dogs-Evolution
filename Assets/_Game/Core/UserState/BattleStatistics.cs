@@ -6,20 +6,20 @@ namespace _Game.Core.UserState
     {
         public int BattlesCompleted;
 
-        public event Action<int> CompletedBattlesCountChanged;
+        public event Action CompletedBattlesCountChanged;
 
         int IBattleStatisticsReadonly.BattlesCompleted => BattlesCompleted;
 
         public void AddCompletedBattle()
         {
             BattlesCompleted++;    
-            CompletedBattlesCountChanged?.Invoke(BattlesCompleted);
+            CompletedBattlesCountChanged?.Invoke();
         }
     }
 
     public interface IBattleStatisticsReadonly
     {
         int BattlesCompleted { get; }
-        event Action<int> CompletedBattlesCountChanged;
+        event Action CompletedBattlesCountChanged;
     }
 }

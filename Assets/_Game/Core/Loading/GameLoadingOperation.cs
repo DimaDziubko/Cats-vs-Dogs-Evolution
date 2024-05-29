@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.Core.Scripts;
+using _Game.Core._SceneLoader;
 using _Game.Core.Services.Camera;
 using _Game.UI.Settings.Scripts;
 using _Game.UI.Shop.Scripts;

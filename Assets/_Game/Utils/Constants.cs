@@ -1,4 +1,6 @@
-﻿namespace _Game.Utils
+﻿using Pathfinding.RVO;
+
+namespace _Game.Utils
 {
     public sealed class Constants
     {
@@ -26,14 +28,23 @@
         {
             public const int PLAYER_PROJECTILE = 16;
             public const int ENEMY_PROJECTILE = 17;
-            public const int PLAYER = 8;
-            public const int ENEMY = 9;
+            public const int MELEE_PLAYER = 8;
+            public const int MELEE_ENEMY = 9;
             public const int ENEMY_BASE = 14;
             public const int PLAYER_BASE = 15;
             public const int PLAYER_AGGRO = 10;
             public const int ENEMY_AGGRO = 11;
             public const int PLAYER_ATTACK = 12;
             public const int ENEMY_ATTACK = 13;
+            public const int RANGE_PLAYER = 19;
+            public const int RANGE_ENEMY = 20;
+            
+            public const RVOLayer RVO_MELEE_ENEMY = RVOLayer.Layer3;
+            public const RVOLayer RVO_RANGE_ENEMY = RVOLayer.Layer4;
+
+            public const RVOLayer RVO_MELEE_PLAYER = RVOLayer.Layer5;
+            public const RVOLayer RVO_RANGE_PLAYER = RVOLayer.Layer2;
+
         }
         
         public sealed class ComparisonThreshold
@@ -42,23 +53,31 @@
             public const float UNIT_ROTATION_EPSILON = 0.05f;
         }
         
-        public sealed class TutorialSteps
+        public sealed class TutorialStepTreshold
         {
             public const int UNIT_BUILDER_BUTTON = 0;
             public const int UPGRADES_WINDOW = 1;
             public const int FOOD_UPGRADE_ITEM = 2;
+            public const int EVOLUTION_WINDOW = 3;
         }
 
         public static class FeatureCompletedBattleThresholds
         {
-            public const int FOOD_BOOST = 3;
+            public const int BATTLE_SPEED = 10;
+            public const int FOOD_BOOST = 2;
             public const int PAUSE = 1;
             public const int UPGRADES_WINDOW = 1; 
-            public const int EVOLUTION_WINDOW = 2; 
+            public const int EVOLUTION_WINDOW = 3;
+            public const int X2 = 2;
         }
         
         public sealed class ConfigKeys
         {
+            //BattleSpeed
+            public const string BATTLE_SPEED = "BattleSpeed";
+            public const string SPEED_FACTOR = "SpeedFactor";
+            public const string DURATION = "Duration";
+
             //FoodBoost
             public const string FOOD_BOOST = "FoodBoost";
             public const string FOOD_BOOST_COEFFICIENT = "FoodBoostCoefficient";

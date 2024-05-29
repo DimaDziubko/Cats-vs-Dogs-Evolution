@@ -6,20 +6,20 @@ namespace _Game.Core.UserState
     {
         public int StepsCompleted;
 
-        public event Action StepsCompletedChanged;
+        public event Action<int> StepsCompletedChanged;
 
         int ITutorialStateReadonly.StepsCompleted => StepsCompleted;
 
         public void ChangeCompletedStep(int step)
         {
             StepsCompleted = step;    
-            StepsCompletedChanged?.Invoke();
+            StepsCompletedChanged?.Invoke(step);
         }
     }
 
     public interface ITutorialStateReadonly
     {
         int StepsCompleted { get; }
-        event Action StepsCompletedChanged;
+        event Action<int> StepsCompletedChanged;
     }
 }

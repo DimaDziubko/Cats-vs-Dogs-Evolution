@@ -79,9 +79,9 @@ namespace _Game.Gameplay._Units.Scripts.Movement
                 Gizmos.DrawSphere(DeviationPoint, 0.1f); 
             }
         }
-        public void SetSpeedFactor(float speedFactor)
+        public void SetSpeed(float speed)
         {
-            _agent.speed = speedFactor;
+            _agent.speed = speed;
         }
 
         //Helper

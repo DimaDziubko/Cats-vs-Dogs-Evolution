@@ -1,5 +1,5 @@
 ﻿using _Game.Core.AssetManagement;
-using _Game.Core.Configs.Controllers;
+using _Game.Core.Configs.Repositories;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Utils;
@@ -12,14 +12,14 @@ namespace _Game.Core.DataProviders
     public class UnitDataProvider : IUnitDataProvider
     {
         private readonly IAssetRegistry _assetRegistry;
-        private readonly IGameConfigController _gameConfigController;
+        private readonly IEconomyConfigRepository _economyConfigRepository;
 
         public UnitDataProvider(
             IAssetRegistry assetRegistry,
-            IGameConfigController gameConfigController)
+            IEconomyConfigRepository economyConfigRepository)
         {
             _assetRegistry = assetRegistry;
-            _gameConfigController = gameConfigController;
+            _economyConfigRepository = economyConfigRepository;
         }
 
         public async UniTask<UnitData> LoadUnitData(UnitLoadOptions options)
@@ -55,7 +55,7 @@ namespace _Game.Core.DataProviders
 
         public async UniTask<UnitBuilderBtnData> LoadUnitBuilderData(BuilderLoadOptions options)
         {
-            var foodIconKey = _gameConfigController.GetFoodIconKey();
+            var foodIconKey = _economyConfigRepository.GetFoodIconKey();
             
             options.CancellationToken.ThrowIfCancellationRequested();
             var foodSprite = await _assetRegistry.LoadAsset<Sprite>(foodIconKey, Constants.CacheContext.AGE);

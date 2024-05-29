@@ -3,32 +3,29 @@ using System.Collections.Generic;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Common.Scripts;
+using UnityEngine;
 
 namespace _Game.Core.UserState
 {
     public class UserAccountState
     {
-        public int Version;
+        public string Version;
         public int Id;
 
         public RaceState RaceState;
-        
         public UserTimelineState TimelineState;
         public UserCurrenciesState Currencies;
         public FoodBoostState FoodBoost;
         public BattleStatistics BattleStatistics;
         public TutorialState TutorialState;
+        public BattleSpeedState BattleSpeedState;
         
-        
-        //TODO Check later
         public static UserAccountState GetInitial(
             IRandomService random)
         {
-            
-            //TODO Check index
             return new UserAccountState()
             {
-                Version = 0,
+                Version = Application.version,
                 Id = random.Next(1, int.MaxValue),
                 
                 RaceState = new RaceState()
@@ -69,6 +66,13 @@ namespace _Game.Core.UserState
                 TutorialState = new TutorialState()
                 {
                     StepsCompleted = 0
+                },
+                
+                BattleSpeedState = new BattleSpeedState()
+                {
+                    IsNormalSpeedActive = true,
+                    PermanentSpeedId = 0,
+                    DurationLeft = 0.0f
                 }
                 
             };

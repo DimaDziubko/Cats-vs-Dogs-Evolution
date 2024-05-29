@@ -62,7 +62,6 @@ namespace _Game.Core.Loading
             }
             catch (Exception e)
             {
-                //TODO Delete
                 _logger.Log("Remote config are not available. Using local config.");
                 var localConfigString = _localConfigProvider.GetConfig(); 
                 
@@ -73,7 +72,6 @@ namespace _Game.Core.Loading
                 }
                 else
                 {
-                    //TODO Delete
                     _logger.Log("No local configuration available.");
                     onProgress?.Invoke(0.8f);
                     return;

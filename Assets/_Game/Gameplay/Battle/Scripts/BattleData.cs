@@ -13,5 +13,13 @@ namespace _Game.Gameplay.Battle.Scripts
         public AudioClip BGM;
         public float MaxCoinsPerBattle;
         public EnvironmentData EnvironmentData;
+        public BattleAnalyticsData AnalyticsData;
+    }
+
+    public struct BattleAnalyticsData
+    {
+        public int TimelineNumber;
+        public int AgeNumber;
+        public int BattleNumber;
     }
 }

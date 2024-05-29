@@ -2,37 +2,36 @@
 using System.Collections.Generic;
 using System.Threading;
 using _Game.Core._Logger;
-using _Game.Core.Configs.Controllers;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
+using _Game.UI.Pin.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
-using _Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.Core.Services.Evolution.Scripts
 {
-    public class EvolutionService : IEvolutionService
+    public class EvolutionService : IEvolutionService, IDisposable
     {
-        public event Action<EvolutionViewModel> EvolutionViewModelUpdated;
-        public event Action<TravelViewModel> TravelViewModelUpdated;
+        public event Action<EvolutionTabData> EvolutionViewModelUpdated;
+        public event Action<TravelTabData> TravelViewModelUpdated;
         public event Action<TimelineInfoData> TimelineInfoDataUpdated;
         public event Action LastAgeOpened;
 
         private readonly IPersistentDataService _persistentData;
-
-        private readonly IGameConfigController _gameConfigController;
-
+        private readonly ITimelineConfigRepository _timelineConfigRepository;
+        private readonly IAgeConfigRepository _ageConfigRepository;
         private readonly IMyLogger _logger;
-
         private readonly IAssetProvider _assetProvider;
+        private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
 
         private IUserCurrenciesStateReadonly Currency => _persistentData.State.Currencies;
 
-        private EvolutionViewModel _evolutionViewModel;
+        private EvolutionTabData _evolutionTabData;
 
         private TimelineInfoData _timelineInfoData;
 
@@ -40,21 +39,45 @@ namespace _Game.Core.Services.Evolution.Scripts
 
         public EvolutionService(
             IPersistentDataService persistentData,
-            IGameConfigController gameConfigController,
+            ITimelineConfigRepository timelineConfigRepository,
+            IAgeConfigRepository ageConfigRepository,
             IMyLogger logger,
-            IAssetProvider assetProvider)
+            IAssetProvider assetProvider,
+            IUpgradesAvailabilityChecker upgradesChecker)
         {
             _persistentData = persistentData;
-            _gameConfigController = gameConfigController;
+            _timelineConfigRepository = timelineConfigRepository;
+            _ageConfigRepository = ageConfigRepository;
             _logger = logger;
             _assetProvider = assetProvider;
+            _upgradesChecker = upgradesChecker;
         }
 
         public async UniTask Init()
         {
+            TravelViewModelUpdated += _upgradesChecker.OnTravelModelUpdated;
+            EvolutionViewModelUpdated += _upgradesChecker.OnEvolutionModelUpdated;
             await PrepareTimelineInfoData();
+            UpdateTravelData();
+            UpdateEvolutionData();
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             TimelineState.NextTimelineOpened += OnNextTimelineOpened;
+            Currency.CoinsChanged += OnCoinsChanged;
+        }
+
+        public void Dispose()
+        {
+            _cts?.Dispose();
+            TravelViewModelUpdated -= _upgradesChecker.OnTravelModelUpdated;
+            EvolutionViewModelUpdated -= _upgradesChecker.OnEvolutionModelUpdated;
+            TimelineState.NextAgeOpened -= OnNextAgeOpened;
+            TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
+            Currency.CoinsChanged -= OnCoinsChanged;
+        }
+
+        private void OnCoinsChanged(bool _)
+        {
+            UpdateEvolutionData();
         }
 
         private void OnNextTimelineOpened()
@@ -64,7 +87,7 @@ namespace _Game.Core.Services.Evolution.Scripts
 
         private async UniTask PrepareTimelineInfoData()
         {
-            var ageConfigs = _gameConfigController.GetAgeConfigs();
+            var ageConfigs = _timelineConfigRepository.GetAgeConfigs();
 
             var ct = _cts.Token;
             try
@@ -75,19 +98,25 @@ namespace _Game.Core.Services.Evolution.Scripts
                     Models = new List<TimelineInfoItemModel>(6)
                 };
 
+                int ageIndex = 0;
+                int nextAgeIndex = TimelineState.AgeId + 1;
+                
                 foreach (var config in ageConfigs)
                 {
                     var model = new TimelineInfoItemModel
                     {
                         Name = config.Name, 
                         Description = config.Description, 
-                        DateRange = config.DateRange
+                        DateRange = config.DateRange,
+                        IsUnlocked = nextAgeIndex >= ageIndex
                     };
                     
                     ct.ThrowIfCancellationRequested();
                     model.AgeIcon = await _assetProvider.Load<Sprite>(config.AgeIconKey);
                     
                     _timelineInfoData.Models.Add(model);
+
+                    ageIndex++;
                 }
                 
                 ct.ThrowIfCancellationRequested();
@@ -111,13 +140,22 @@ namespace _Game.Core.Services.Evolution.Scripts
         private void UpdateTimelineInfoData()
         {
             _timelineInfoData.CurrentAge = TimelineState.AgeId;
+
+            int ageIndex = 0;
+            int nextAgeIndex = TimelineState.AgeId + 1;
+            
+            foreach (var model in _timelineInfoData.Models)
+            {
+                model.IsUnlocked = nextAgeIndex >= ageIndex;
+                ageIndex++;
+            }
         }
 
         public void MoveToNextAge()
         {
             if (IsNextAge())
             {
-                _persistentData.OpenNextAge();
+                _persistentData.OnOpenNextAge();
             }
             else
             {
@@ -130,24 +168,22 @@ namespace _Game.Core.Services.Evolution.Scripts
             //TODO Implement later
         }
 
-        public void OnTimelineInfoWindowOpened()
-        {
+        public void OnTimelineInfoWindowOpened() => 
             TimelineInfoDataUpdated?.Invoke(_timelineInfoData);
-        }
-        
-        public bool IsTimeToTravel() => !IsNextAge();
 
-        public void OnEvolutionTabOpened() => UpdateEvolutionData();
+        bool IEvolutionService.IsTimeToTravel() => !IsNextAge();
 
-        public void OnTravelTabOpened() => UpdateTravelData();
+        void IEvolutionService.OnEvolutionTabOpened() => UpdateEvolutionData();
+
+        void IEvolutionService.OnTravelTabOpened() => UpdateTravelData();
 
         private void UpdateTravelData()
         {
             int timelineNumberOffset = 2;
             
-            var travelViewModel = new TravelViewModel()
+            var travelViewModel = new TravelTabData()
             {
-                NextTimelineNumber = GetTimelineId() + timelineNumberOffset,
+                NextTimelineNumber = TimelineState.TimelineId + timelineNumberOffset,
                 CanTravel = TimelineState.AllBattlesWon,
             };
             
@@ -165,9 +201,9 @@ namespace _Game.Core.Services.Evolution.Scripts
                 Price = GetEvolutionPrice()
             };
 
-            _evolutionViewModel = new EvolutionViewModel()
+            _evolutionTabData = new EvolutionTabData()
             {
-                CurrentTimelineId = GetTimelineId(),
+                CurrentTimelineId = TimelineState.TimelineId,
                 CurrentAgeIcon = _timelineInfoData.Models[currentAgeNumber].AgeIcon,
                 EvolutionBtnData = evolutionButtonData,
                 CurrentAgeName = _timelineInfoData.Models[currentAgeNumber].Name,
@@ -175,29 +211,23 @@ namespace _Game.Core.Services.Evolution.Scripts
 
             if (IsNextAge())
             {
-                _evolutionViewModel.NextAgeIcon = _timelineInfoData.Models[nextAgeNumber].AgeIcon;
-                _evolutionViewModel.NextAgeName = _timelineInfoData.Models[nextAgeNumber].Name;
+                _evolutionTabData.NextAgeIcon = _timelineInfoData.Models[nextAgeNumber].AgeIcon;
+                _evolutionTabData.NextAgeName = _timelineInfoData.Models[nextAgeNumber].Name;
             }
             
-            EvolutionViewModelUpdated?.Invoke(_evolutionViewModel);
+            EvolutionViewModelUpdated?.Invoke(_evolutionTabData);
         }
 
         private bool IsNextAge() => 
-            TimelineState.AgeId < _gameConfigController.LastAge();
+            TimelineState.AgeId < _timelineConfigRepository.LastAge();
 
-        private int GetTimelineId() => TimelineState.TimelineId;
-
-        private bool IsNextAgeAffordable()
-        {
-            return _gameConfigController
+        private bool IsNextAgeAffordable() =>
+            _ageConfigRepository
                 .GetAgePrice(TimelineState.AgeId) <= Currency.Coins;
-        }
 
-        private float GetEvolutionPrice()
-        {
-            return _gameConfigController
+        private float GetEvolutionPrice() =>
+            _ageConfigRepository
                 .GetAgePrice(TimelineState.AgeId);
-        }
     }
     
 }

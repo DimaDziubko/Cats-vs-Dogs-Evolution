@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _Game.Gameplay._Tutorial.Scripts
 {
-    public class TutorialStep : MonoBehaviour
+    public class TutorialStep : MonoBehaviour, ITutorialStep
     {
+        public event Action<ITutorialStep> Show;
+        public event Action<ITutorialStep> Complete;
+        public event Action<ITutorialStep> Cancel;
+        
         [SerializeField] private int _step;
         [SerializeField] private Vector2 _requiredPointerSize;
         [SerializeField] private Vector2 _offset;
@@ -13,6 +18,12 @@ namespace _Game.Gameplay._Tutorial.Scripts
         [SerializeField] private bool _needAppearanceAnimation;
 
         private TutorialStepData _data;
+
+        public void ShowStep() => Show?.Invoke(this);
+
+        public void CompleteStep() => Complete?.Invoke(this);
+
+        public void CancelStep() => Cancel?.Invoke(this);
         
         public TutorialStepData GetTutorialStepData()
         {
@@ -38,8 +49,10 @@ namespace _Game.Gameplay._Tutorial.Scripts
         {
             var positionMultiplier = _isUnderneath ? -1 : 1;
 
+            Canvas.ForceUpdateCanvases();
+            
             Vector3 worldPosition = _tutorialObjectRectTransform.TransformPoint(_tutorialObjectRectTransform.rect.center);
-
+            
             RectTransformUtility.ScreenPointToLocalPointInRectangle(_rootCanvasTransform, worldPosition, null, out var canvasPosition);
 
             Vector3 requiredPointerPosition = new Vector3(

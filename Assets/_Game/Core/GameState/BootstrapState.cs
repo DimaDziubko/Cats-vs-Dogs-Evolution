@@ -1,4 +1,4 @@
-﻿using _Game.Core.Scripts;
+﻿using _Game.Core._SceneLoader;
 using _Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;

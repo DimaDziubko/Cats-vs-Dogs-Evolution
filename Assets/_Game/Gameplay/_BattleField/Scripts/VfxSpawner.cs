@@ -13,16 +13,12 @@ namespace _Game.Gameplay._BattleField.Scripts
 
         private readonly GameBehaviourCollection _vfxEntities = new GameBehaviourCollection();
         
-        public VfxSpawner(IVfxFactory vfxFactory)
-        {
+        public VfxSpawner(IVfxFactory vfxFactory) => 
             _vfxFactory = vfxFactory;
-        }
 
-        public void GameUpdate()
-        {
+        public void GameUpdate() => 
             _vfxEntities.GameUpdate();
-        }
-        
+
         void IVFXProxy.SpawnMuzzleFlash(MuzzleData data)
         {
             MuzzleFlash muzzle = _vfxFactory.GetMuzzleFlash(data.Faction, data.WeaponType);
@@ -48,10 +44,8 @@ namespace _Game.Gameplay._BattleField.Scripts
             unitBlot.Initialize(position);
         }
 
-        public void Cleanup()
-        {
+        public void Cleanup() => 
             _vfxEntities.Clear();
-        }
 
         public void SpawnBasesSmoke(Vector3 basePosition)
         {
@@ -61,7 +55,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         }
     }
 
-    public class ExplosionData
+    public struct ExplosionData
     {
         public Faction Faction;
         public Vector3 Positon;
