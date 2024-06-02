@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Newtonsoft.Json.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace _Game.Utils._LocalConfigSaver

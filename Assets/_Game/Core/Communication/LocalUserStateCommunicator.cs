@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using _Game.Core.UserState;
-using _Game.Gameplay.Common.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -39,5 +37,6 @@ namespace _Game.Core.Communication
             var result =  await _strategy.GetUserState(Path);
             return result;
         }
+
     }
 }

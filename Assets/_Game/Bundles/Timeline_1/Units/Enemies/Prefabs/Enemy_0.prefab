@@ -1310,6 +1310,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
     - target: {fileID: 4194791445867457061, guid: 8392b44a3279c5341acea661364f2df1, type: 3}
+      propertyPath: m_Color.a
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194791445867457061, guid: 8392b44a3279c5341acea661364f2df1, type: 3}
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1382,7 +1386,7 @@ Animator:
   m_GameObject: {fileID: 8536718030578321160}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e9231abdb924b634c8a4f3d935ae1542, type: 2}
+  m_Controller: {fileID: 22100000, guid: 333b9358a7cf149728995cd89fc68e69, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1393,6 +1397,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &892835475411445949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536718030578321160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 981b0c509a294e00b98c2dc06b1269d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackSFX: {fileID: 8300000, guid: ac60bd089b5cb654f99fae2e998c562e, type: 3}
 --- !u!114 &6416256633866388096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1409,16 +1426,3 @@ MonoBehaviour:
   _weaponAimBone: {fileID: 0}
   _minAngle: -60
   _maxAngle: 60
---- !u!114 &892835475411445949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8536718030578321160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 981b0c509a294e00b98c2dc06b1269d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: ac60bd089b5cb654f99fae2e998c562e, type: 3}
