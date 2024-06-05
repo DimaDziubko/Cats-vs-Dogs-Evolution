@@ -204,7 +204,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.12
 --- !u!50 &2502333109075962033
 Rigidbody2D:
   serializedVersion: 4
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1073741824
-  radius: 0.1
+  radius: 0.12
   height: 2
   canMove: 1
   maxSpeed: 1
@@ -1218,11 +1218,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 68e981221b038894eb9da286e1e92e61, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.22
+      value: 0.245
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 68e981221b038894eb9da286e1e92e61, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.105
+      value: -0.234
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 68e981221b038894eb9da286e1e92e61, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1402,6 +1402,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &365555686549161607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805618510114508154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackSFX: {fileID: 8300000, guid: 824b31fb0794f6b4fb8235cc48fe621b, type: 3}
+  _projectileGenerator: {fileID: 1702502254456479057}
+  _muzzleTransform: {fileID: 0}
 --- !u!114 &8430758370529593890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1418,18 +1433,3 @@ MonoBehaviour:
   _weaponAimBone: {fileID: 1702502254456479057}
   _minAngle: -60
   _maxAngle: 60
---- !u!114 &365555686549161607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8805618510114508154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: 824b31fb0794f6b4fb8235cc48fe621b, type: 3}
-  _projectileGenerator: {fileID: 1702502254456479057}
-  _muzzleTransform: {fileID: 0}
