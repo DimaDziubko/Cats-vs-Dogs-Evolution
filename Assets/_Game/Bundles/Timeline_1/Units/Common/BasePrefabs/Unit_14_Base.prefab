@@ -731,6 +731,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
     - target: {fileID: 4194791445867457061, guid: 8c39b13a04f43304ab0a9cdabc83217e, type: 3}
+      propertyPath: m_Color.a
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194791445867457061, guid: 8c39b13a04f43304ab0a9cdabc83217e, type: 3}
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
@@ -847,6 +851,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e48b581918a42af9a47ab77eef59906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundData:
+    Clip: {fileID: 0}
+    MixerGroup: {fileID: 0}
+    Loop: 0
+    PlayOnAwake: 0
+    FrequentSound: 0
+    Mute: 0
+    BypassEffects: 0
+    BypassListenerEffects: 0
+    BypassReverbZones: 0
+    Priority: 128
+    Volume: 1
+    Pitch: 1
+    PanStereo: 0
+    SpatialBlend: 0
+    ReverbZoneMix: 1
+    DopplerLevel: 1
+    Spread: 0
+    MinDistance: 1
+    MaxDistance: 500
+    IgnoreListenerVolume: 0
+    IgnoreListenerPause: 0
+    RolloffMode: 0
   _attackSFX: {fileID: 8300000, guid: 699db0476f3f93041ac5132aeb1bbd73, type: 3}
   _muzzleTransform: {fileID: 5117904361427397389}
 --- !u!4 &6292218248912689391 stripped
