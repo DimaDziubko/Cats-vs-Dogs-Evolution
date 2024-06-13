@@ -158,12 +158,12 @@ namespace _Game.Utils
 
             //Warriors
             public const string WARRIOR = "Warrior";
-            public const string PLAYER_ICON_KEY = "PlayerIconKey";
-            public const string ENEMY_KEY = "EnemyKey";
-            public const string PLAYER_KEY = "PlayerKey";
+            public const string PLAYER_ICON_KEY = "CatIconKey";
+            public const string ENEMY_KEY = "DogKey";
+            public const string PLAYER_KEY = "CatKey";
             public const string FOOD_PRICE = "FoodPrice";
             public const string COINS_PER_KILL = "CoinsPerKill";
-            public const string ENEMY_ICON_KEY = "EnemyIconKey";
+            public const string ENEMY_ICON_KEY = "DogIconKey";
             public const string PLAYER_HEALTH_MULTIPLIER = "PlayerHealthMultiplier";
             public const string ENEMY_HEALTH_MULTIPLIER = "EnemyHealthMultiplier";
             public const string ATTACK_PER_SECOND = "AttackPerSecond";
