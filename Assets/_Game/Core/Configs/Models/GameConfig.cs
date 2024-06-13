@@ -50,8 +50,6 @@ namespace _Game.Core.Configs.Models
         public float GemsPerAge;
         public EconomyConfig Economy;
         public List<WarriorConfig> Warriors;
-        public string PlayerBaseKey;
-        public string EnemyBaseKey;
         public string Name;
         public string AgeIconKey;
         public string Description;
@@ -66,8 +64,6 @@ namespace _Game.Core.Configs.Models
         public List<WarriorConfig> Enemies;
         public string EnvironmentKey;
         public float EnemyTowerHealth;
-        public string EnemyBaseKey;
-        public string PlayerBaseKey;
         public string AmbienceKey;
         public float CoinsPerBase;
         public float MaxCoinsPerBattle;
@@ -113,7 +109,6 @@ namespace _Game.Core.Configs.Models
         public Exponential PriceExponential;
         public float Value;
         public float ValueStep;
-        public int InitialAmount;
     }
     
     [Serializable]

@@ -115,7 +115,6 @@ namespace _Game.Utils
             public const string AGE = "Age";
             public const string GEMS_PER_AGE = "GemsPerAge";
             public const string WARRIORS = "Warriors";
-            public const string PLAYER_BASE_KEY = "PlayerBaseKey";
             public const string AGE_ICON_KEY = "AgeIconKey";
             public const string DESCRIPTION = "Description";
             public const string DATE_RANGE = "DateRange";
@@ -129,7 +128,6 @@ namespace _Game.Utils
             public const string BATTLE_SCENARIO = "BattleScenario";
             public const string BACKGROUND_KEY = "BackgroundKey";
             public const string ENEMY_BASE_HEALTH = "EnemyBaseHealth";
-            public const string ENEMY_BASE_KEY = "EnemyBaseKey";
             public const string BGM_KEY = "BGMKey";
             public const string MAX_COINS_PER_BATTLE = "MaxCoinsPerBattle";
 

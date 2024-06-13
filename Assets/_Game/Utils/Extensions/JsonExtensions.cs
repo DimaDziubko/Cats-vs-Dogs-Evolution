@@ -93,8 +93,6 @@ namespace _Game.Utils.Extensions
                         GemsPerAge = (float)ageToken[Constants.ConfigKeys.GEMS_PER_AGE],
                         Economy = ParseEconomy((int)ageToken[Constants.ConfigKeys.ECONOMY], jsonData),
                         Warriors = ParseWarriors(ageToken[Constants.ConfigKeys.WARRIORS], jsonData),
-                        PlayerBaseKey = ageToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
-                        EnemyBaseKey = ageToken[Constants.ConfigKeys.ENEMY_BASE_KEY]?.ToString(),
                         Name = ageToken[Constants.ConfigKeys.NAME]?.ToString(),
                         AgeIconKey = ageToken[Constants.ConfigKeys.AGE_ICON_KEY]?.ToString(),
                         Description = ageToken[Constants.ConfigKeys.DESCRIPTION]?.ToString(),
@@ -138,7 +136,6 @@ namespace _Game.Utils.Extensions
                     PriceExponential = ParsePolynomial((int)foodProductionToken[Constants.ConfigKeys.PRICE_EXPONENTIAL], jsonData),
                     Value = (float)foodProductionToken[Constants.ConfigKeys.SPEED],
                     ValueStep = (float)foodProductionToken[Constants.ConfigKeys.SPEED_STEP],
-                    InitialAmount = (int)foodProductionToken[Constants.ConfigKeys.INITIAL_FOOD_AMOUNT],
                 };
             }
             return null;
@@ -197,8 +194,6 @@ namespace _Game.Utils.Extensions
                         Enemies = ParseWarriors(battleToken[Constants.ConfigKeys.WARRIORS], jsonData),
                         EnvironmentKey = battleToken[Constants.ConfigKeys.BACKGROUND_KEY]?.ToString(),
                         EnemyTowerHealth = (float)battleToken[Constants.ConfigKeys.ENEMY_BASE_HEALTH],
-                        EnemyBaseKey = battleToken[Constants.ConfigKeys.ENEMY_BASE_KEY]?.ToString(),
-                        PlayerBaseKey = battleToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
                         AmbienceKey = battleToken[Constants.ConfigKeys.BGM_KEY]?.ToString(),
                         CoinsPerBase = (float)battleToken[Constants.ConfigKeys.COINS_PER_BASE],
                         MaxCoinsPerBattle = (float)battleToken[Constants.ConfigKeys.MAX_COINS_PER_BATTLE],
