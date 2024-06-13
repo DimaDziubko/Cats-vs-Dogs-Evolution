@@ -128,7 +128,7 @@ MonoBehaviour:
   _aMove: {fileID: 590626271198022637}
   _aggroDetection: {fileID: 3112122452185169024}
   _attackDetection: {fileID: 9073645176878596570}
-  _attack: {fileID: 4741586691984239076}
+  _attack: {fileID: 5262718915909719983}
   _bodyCollider: {fileID: 6716712692595760017}
   _targetPoint: {fileID: 5968335290415384006}
   _damageFlash: {fileID: 3989997081288150206}
@@ -443,15 +443,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5562371957453458329}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0598, y: -0.2179, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.0598, y: -0.2237, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 323603872838544799}
   m_Father: {fileID: 5562371957400219988}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &6020798850381036301
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +514,37 @@ Transform:
   m_Father: {fileID: 5562371957400219988}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8764459891366313891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652197610643299058}
+  m_Layer: 0
+  m_Name: BulletSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1652197610643299058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8764459891366313891}
+  m_LocalRotation: {x: -0, y: -0, z: 0.00741246, w: 0.9999725}
+  m_LocalPosition: {x: 0.5703482, y: 0.024292275, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8881631939068893928}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1392309414394762305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -543,7 +574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_LocalRotation.x
@@ -551,7 +582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_LocalRotation.z
@@ -563,7 +594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -593,6 +624,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
+    - target: {fileID: 4194791445867457061, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
+      propertyPath: m_Color.a
+      value: 0.29803923
+      objectReference: {fileID: 0}
     - target: {fileID: 4194791445867457061, guid: 3aa4daaf16d001e408ad6b4cb78d44ae, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -694,7 +729,7 @@ MonoBehaviour:
   _weaponAimBone: {fileID: 5632878778454677638}
   _minAngle: -60
   _maxAngle: 60
---- !u!114 &4741586691984239076
+--- !u!114 &5262718915909719983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -703,10 +738,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1492298785843328508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e48b581918a42af9a47ab77eef59906, type: 3}
+  m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: caa056e29c678ee4692497aa3a54a97d, type: 3}
+  _attackSFX: {fileID: 8300000, guid: a86f41b20d67e6341b596067a1182abe, type: 3}
+  _projectileGenerator: {fileID: 1652197610643299058}
   _muzzleTransform: {fileID: 428771133359471590}
 --- !u!212 &1799415604820524774 stripped
 SpriteRenderer:
