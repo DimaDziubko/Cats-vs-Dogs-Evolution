@@ -18,7 +18,7 @@ namespace _Game.Gameplay._Bases.Scripts
         [SerializeField] private Collider2D _bodyCollider;
         [SerializeField] private TargetPoint _targetPoint;
 
-        [SerializeField] private BaseDestructionAnimator _animator;
+        [SerializeField] private TowerDestructionAnimator _animator;
 
         [SerializeField] private DamageFlashEffect _damageFlash;
 
@@ -66,14 +66,18 @@ namespace _Game.Gameplay._Bases.Scripts
         {
             _bodyCollider.gameObject.layer = baseLayer;
             
+            Rotation = faction == Faction.Enemy
+                ? Quaternion.Euler(0, 180, 0) 
+                : Quaternion.Euler(0, 0, 0);
+            
             _coinsPerBase = coinsPerBase;
-            
+
             _faction = faction;
-            
+
             _health.Construct(
                 health,
                 cameraService);
-
+            
             _targetPoint.Transform = _transform;
             _targetPoint.Damageable = _health;
 
@@ -100,23 +104,13 @@ namespace _Game.Gameplay._Bases.Scripts
             _baseDestructionManager = baseDestructionManager;
             _coinSpawner = coinSpawner;
             Position = position;
-            Rotation = Quaternion.Euler(0, Position.x < 0 ? 0 : 180, 0);
         }
 
-        public void UpdateData(BaseData data)
-        {
-            _health.UpdateData(data.Health);
-        }
+        public void UpdateData(BaseModel model) => _health.UpdateData(model.Health);
 
-        public void ShowHealth()
-        {
-            _health.ShowHealth();
-        }
+        public void ShowHealth() => _health.ShowHealth();
 
-        private void HideHealth()
-        {
-            _health.HideHealth();
-        }
+        private void HideHealth() => _health.HideHealth();
 
         public override void Recycle()
         {

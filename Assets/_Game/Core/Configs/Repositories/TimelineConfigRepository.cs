@@ -16,10 +16,10 @@ namespace _Game.Core.Configs.Repositories
 
     public class TimelineConfigRepository : ITimelineConfigRepository
     {
-        private readonly IPersistentDataService _persistentData;
-        private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private readonly IUserContainer _persistentData;
+        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
 
-        public TimelineConfigRepository(IPersistentDataService persistentData)
+        public TimelineConfigRepository(IUserContainer persistentData)
         {
             _persistentData = persistentData;
         }

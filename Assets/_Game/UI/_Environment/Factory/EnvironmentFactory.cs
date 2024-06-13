@@ -5,6 +5,12 @@ using UnityEngine;
 
 namespace _Game.UI._Environment.Factory
 {
+    public interface IEnvironmentFactory
+    {
+        BattleEnvironment Get(BattleEnvironment battleEnvironment);
+        void Reclaim(BattleEnvironment environment);
+    }
+
     [CreateAssetMenu(fileName = "Environment Factory", menuName = "Factories/Environment")]
     public class EnvironmentFactory : GameObjectFactory, IEnvironmentFactory
     {
@@ -39,11 +45,5 @@ namespace _Game.UI._Environment.Factory
         {
             Destroy(environment.gameObject);
         }
-    }
-
-    public interface IEnvironmentFactory
-    {
-        BattleEnvironment Get(BattleEnvironment battleEnvironment);
-        void Reclaim(BattleEnvironment environment);
     }
 }

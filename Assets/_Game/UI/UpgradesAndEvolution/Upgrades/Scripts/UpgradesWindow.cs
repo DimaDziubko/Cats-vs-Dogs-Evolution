@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._UpgradesChecker;
+using _Game.Core.DataPresenters._UpgradeItemPresenter;
+using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI._MainMenu.Scripts;
@@ -25,8 +27,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         [SerializeField] private TutorialStep _foodProductionStep;
 
-        private IEconomyUpgradesService _economyUpgradesService;
-        private IUnitUpgradesService _unitUpgradesService;
+        private IUpgradeItemPresenter _upgradeItemPresenter;
+        private IUnitUpgradesPresenter _unitUpgradesPresenter;
         private IHeader _header;
         private IAudioService _audioService;
         private ITutorialManager _tutorialManager;
@@ -35,15 +37,15 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         public void Construct(
             IHeader header,
-            IEconomyUpgradesService economyUpgradesService,
-            IUnitUpgradesService unitUpgradesService,
+            IUpgradeItemPresenter upgradeItemPresenter,
+            IUnitUpgradesPresenter unitUpgradesPresenter,
             IAudioService audioService,
             ITutorialManager tutorialManager,
             IUpgradesAvailabilityChecker upgradesChecker)
         {
-            _economyUpgradesService = economyUpgradesService;
+            _upgradeItemPresenter = upgradeItemPresenter;
             _header = header;
-            _unitUpgradesService = unitUpgradesService;
+            _unitUpgradesPresenter = unitUpgradesPresenter;
             _audioService = audioService;
             _tutorialManager = tutorialManager;
             _upgradesChecker = upgradesChecker;
@@ -78,8 +80,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _foodProduction.ButtonStateChanged += OnFoodProductionButtonStateChanged;
             _baseHealth.Upgrade += OnItemUpgrade;
             
-            _unitUpgradesService.UpgradeUnitItemsUpdated += UpdateUnitItems;
-            _economyUpgradesService.UpgradeItemUpdated += UpdateEconomyUpgradeItem;
+            _unitUpgradesPresenter.UpgradeUnitItemsUpdated += UpdateUnitItems;
+            _upgradeItemPresenter.UpgradeItemUpdated += UpdateUpgradeItemItem;
 
             Opened += OnUpgradesWindowOpened;
         }
@@ -99,8 +101,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private void Unsubscribe()
         {
-            _unitUpgradesService.UpgradeUnitItemsUpdated -= UpdateUnitItems;
-            _economyUpgradesService.UpgradeItemUpdated -= UpdateEconomyUpgradeItem;
+            _unitUpgradesPresenter.UpgradeUnitItemsUpdated -= UpdateUnitItems;
+            _upgradeItemPresenter.UpgradeItemUpdated -= UpdateUpgradeItemItem;
 
             foreach (var item in _unitItems)
             {
@@ -123,32 +125,36 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             }
         }
 
-        private void OnUnitItemUpgrade(UnitType type)
+        private void OnUnitItemUpgrade(UnitType type, float price)
         {
-            _unitUpgradesService.PurchaseUnit(type);
+            _unitUpgradesPresenter.PurchaseUnit(type, price);
             PlayUpgradeSound();
         }
 
-        private void OnItemUpgrade(UpgradeItemType type)
+        private void OnItemUpgrade(UpgradeItemType type, float price)
         {
             if(type == UpgradeItemType.FoodProduction)
                 _foodProductionStep.CompleteStep();
 
-            _economyUpgradesService.UpgradeItem(type);
+            _upgradeItemPresenter.UpgradeItem(type, price);
         }
 
-        private void UpdateUnitItems(IEnumerable<UpgradeUnitItemViewModel> models)
+        private void UpdateUnitItems(Dictionary<UnitType, UnitUpgradeItemModel> models)
         {
-            foreach (var model in models)
+            foreach (var item in _unitItems)
             {
-               _unitItems[(int)model.Type].UpdateUI(model); 
+                var model = models[item.Type];
+                if (model != null)
+                {
+                    item.UpdateUI(model);
+                }
             }
         }
 
         private void OnUpgradesWindowOpened()
         {
-            _unitUpgradesService.OnUpgradesWindowOpened();
-            _economyUpgradesService.OnUpgradesWindowOpened();
+            _unitUpgradesPresenter.OnUpgradesWindowOpened();
+            _upgradeItemPresenter.OnUpgradesWindowOpened();
         }
 
         private void InitItems()
@@ -162,9 +168,9 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _baseHealth.Init(_audioService);
         }
 
-        private void UpdateEconomyUpgradeItem(UpgradeItemViewModel model)
+        private void UpdateUpgradeItemItem(UpgradeItemModel model)
         {
-            switch (model.Type)
+            switch (model.StaticData.Type)
             {
                 case UpgradeItemType.FoodProduction:
                     _foodProduction.UpdateUI(model);
@@ -173,7 +179,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
                     _baseHealth.UpdateUI(model);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(model.Type), model.Type, null);
+                    throw new ArgumentOutOfRangeException(nameof(model.StaticData.Type), model.StaticData.Type, null);
             }
         }
 

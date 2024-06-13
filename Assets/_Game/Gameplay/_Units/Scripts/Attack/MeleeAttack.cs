@@ -12,9 +12,10 @@ namespace _Game.Gameplay._Units.Scripts.Attack
             WeaponConfig config,
             Faction faction,
             IAudioService audioService,
+            ISoundService soundService,
             Transform unitTransform)
         {
-            base.Construct(config, faction, audioService, unitTransform);
+            base.Construct(config, faction, audioService, soundService, unitTransform);
             _damage = config.Damage;
         }
 

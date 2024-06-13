@@ -1,5 +1,4 @@
-﻿using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Vfx.Scripts;
+﻿using _Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts

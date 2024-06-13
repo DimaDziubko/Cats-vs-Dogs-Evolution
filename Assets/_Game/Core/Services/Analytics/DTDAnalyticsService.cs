@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.Ads;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
@@ -9,21 +10,25 @@ namespace _Game.Core.Services.Analytics
 {
     public class DTDAnalyticsService : IDTDAnalyticsService, IDisposable
     {
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
         private readonly IAdsService _adsService;
+        private readonly IGameInitializer _gameInitializer;
 
-        private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
 
         public DTDAnalyticsService(
-            IPersistentDataService persistentData,
-            IAdsService adsService)
+            IUserContainer persistentData,
+            IAdsService adsService,
+            IGameInitializer gameInitializer)
         {
             _persistentData = persistentData;
             _adsService = adsService;
+            _gameInitializer = gameInitializer;
+            gameInitializer.OnPostInitialization += Init;
         }
 
-        public void Init()
+        private void Init()
         {
             TimelineState.NextBattleOpened += OnNextBattleOpened;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
@@ -37,6 +42,7 @@ namespace _Game.Core.Services.Analytics
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
             _adsService.RewardedAdImpression -= TrackRewardedVideoAdImpression;
             TutorialState.StepsCompletedChanged -= OnStepCompleted;
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
         private void OnStepCompleted(int step) => 

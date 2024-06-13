@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Game.Core._Logger;
+using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
@@ -12,14 +13,6 @@ using _Game.UI.UnitBuilderBtn.Scripts;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts
 {
-    public interface IUnitBuilder
-    {
-        public void StartBuilder();
-        public void StopBuilder();
-        void Build(UnitType type, int foodPrice);
-        void OnButtonChangeState(ButtonState state);
-    }
-
     public class UnitBuilderViewController : IUnitBuilder, IPauseHandler
     {
         public event Action BuilderStarted;
@@ -27,8 +20,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         private readonly GameplayUI _gameplayUI;
         private readonly BattleField _battleField;
         private readonly IFoodGenerator _foodGenerator;
-
-        private readonly IAgeStateService _ageState;
+        
+        private readonly IUnitBuilderDataPresenter _presenter;
         private readonly IAudioService _audioService;
         private readonly IPauseManager _pauseManager;
         private readonly ITutorialManager _tutorialManager;
@@ -43,7 +36,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             GameplayUI gameplayUI,
             BattleField battleField,
             IFoodGenerator foodGenerator,
-            IAgeStateService ageState,
+            IUnitBuilderDataPresenter presenter,
             IAudioService audioService,
             IPauseManager pauseManager,
             ITutorialManager tutorialManager,
@@ -52,15 +45,17 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             _gameplayUI = gameplayUI;
             _battleField = battleField;
             _foodGenerator = foodGenerator;
-            _ageState = ageState;
             _audioService = audioService;
             _pauseManager = pauseManager;
             _tutorialManager = tutorialManager;
             _logger = logger;
+            _presenter = presenter;
         }
 
         public void StartBuilder()
         {
+            InitButtonTypes();
+
             Unsubscribe();
             Subscribe();
 
@@ -72,7 +67,17 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             OnFoodChanged(_foodGenerator.FoodAmount);
             _tutorialManager.Register(TutorialStep);
         }
-        
+
+        private void InitButtonTypes()
+        {
+            int index = 0;
+            foreach (var button in UnitBuilderUI.Buttons)
+            {
+                button.UnitType = (UnitType)index;
+                index++;
+            }
+        }
+
         public void StopBuilder()
         {
             _gameplayUI.Hide();
@@ -102,8 +107,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         private void Unsubscribe()
         {
-            BuilderStarted -= _ageState.OnBuilderStarted;
-            _ageState.BuilderDataUpdated -= UpdateButtonsData;
+            BuilderStarted -= _presenter.OnBuilderStarted;
+            _presenter.BuilderModelUpdated -= UpdateButtonsData;
 
             _foodGenerator.FoodChanged -= OnFoodChanged;
             OnFoodChanged(_foodGenerator.FoodAmount);
@@ -111,8 +116,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         private void Subscribe()
         {
-            BuilderStarted += _ageState.OnBuilderStarted;
-            _ageState.BuilderDataUpdated += UpdateButtonsData;
+            BuilderStarted += _presenter.OnBuilderStarted;
+            _presenter.BuilderModelUpdated += UpdateButtonsData;
             _foodGenerator.FoodChanged += OnFoodChanged;
         }
 
@@ -124,25 +129,20 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             }
         }
 
-        private void UpdateButtonsData(UnitBuilderBtnData[] builderData)
+        private void UpdateButtonsData(Dictionary<UnitType, UnitBuilderBtnModel> models)
         {
-            foreach (var button in UnitBuilderUI.Buttons)
+            if (models == null || models.Count == 0)
             {
-                button.Hide();
+                DisableButtons();
+                return;
             }
             
-            int dataIndex = 0;
-            
-            foreach (var button in UnitBuilderUI.Buttons)
+            foreach (UnitBuildButton button in UnitBuilderUI.Buttons)
             {
-                var data = builderData[dataIndex];
-                
-                if (data != null)
+                if (models.TryGetValue(button.UnitType, out var data))
                 {
                     button.Initialize(this, data);
                 }
-
-                dataIndex++;
             }
         }
 

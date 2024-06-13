@@ -1,33 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
-using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Battle;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
+using _Game.Utils;
 using UnityEngine;
 
 namespace _Game.Gameplay._Weapon.Factory
 {
+    public interface IProjectileFactory
+    {
+        Projectile Get(Faction faction, WeaponType type);
+        public void Reclaim(Projectile proj);
+    }
+
     [CreateAssetMenu(fileName = "Projectile Factory", menuName = "Factories/Projectile")]
     public class ProjectileFactory : GameObjectFactory, IProjectileFactory
     {
-        private IBattleStateService _battleState;
-        private IAgeStateService _ageState;
         private IAudioService _audioService;
-        
+        private IWeaponDataPresenter _weaponDataPresenter;
+
         private readonly Dictionary<(Faction, WeaponType), Queue<Projectile>> _projectilesPools =
             new Dictionary<(Faction, WeaponType), Queue<Projectile>>();
 
         public void Initialize(
-            IBattleStateService battleState,
-            IAgeStateService ageState,
-            IAudioService audioService)
+            IAudioService audioService,
+            IWeaponDataPresenter weaponDataPresenter)
         {
-            _battleState = battleState;
-            _ageState = ageState;
             _audioService = audioService;
+            _weaponDataPresenter = weaponDataPresenter;
         }
         
         public Projectile Get(Faction faction,  WeaponType type)
@@ -62,10 +65,10 @@ namespace _Game.Gameplay._Weapon.Factory
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _ageState.ForWeapon(type);
+                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _battleState.ForWeapon(type);
+                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
@@ -98,11 +101,5 @@ namespace _Game.Gameplay._Weapon.Factory
             }
             _projectilesPools.Clear(); 
         }
-    }
-    
-    public interface IProjectileFactory
-    {
-        Projectile Get(Faction faction, WeaponType type);
-        public void Reclaim(Projectile proj);
     }
 }

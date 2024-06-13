@@ -17,22 +17,22 @@ namespace _Game.UI._Environment
             _factory = factory;
         }
 
-        public void ShowEnvironment(EnvironmentData dataEnvironmentData)
+        public void ShowEnvironment(EnvironmentData environmentData)
         {
             if(_currentBattleEnvironment) _currentBattleEnvironment.Hide();
             
-            if (_environmentCache.ContainsKey(dataEnvironmentData.Key))
+            if (_environmentCache.ContainsKey(environmentData.Key))
             {
-                _currentBattleEnvironment = _environmentCache[dataEnvironmentData.Key];
+                _currentBattleEnvironment = _environmentCache[environmentData.Key];
                 _currentBattleEnvironment.Show();
                 return;
             }
             
-            BattleEnvironment newEnvironment = _factory.Get(dataEnvironmentData.Prefab);
+            BattleEnvironment newEnvironment = _factory.Get(environmentData.Prefab);
             _currentBattleEnvironment = newEnvironment;
             _currentBattleEnvironment.Show();
             
-            _environmentCache.Add(dataEnvironmentData.Key, newEnvironment);
+            _environmentCache.Add(environmentData.Key, newEnvironment);
         }
 
 

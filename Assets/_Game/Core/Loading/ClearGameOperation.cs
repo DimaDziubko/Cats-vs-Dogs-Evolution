@@ -1,7 +1,6 @@
 ﻿using System;
 using _Game.GameModes._BattleMode.Scripts;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace _Game.Core.Loading
 {

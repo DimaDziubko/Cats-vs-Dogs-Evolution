@@ -1,12 +1,13 @@
+using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.GameState;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Scripts;
-using _Game.UI.Pin.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Disposable;
@@ -26,6 +27,8 @@ namespace _Game.UI._MainMenu.Scripts
     [RequireComponent(typeof(Canvas))]
     public class MainMenu : MonoBehaviour
     {
+        public event Action Open;
+
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ToggleButton _dungeonButton;
         [SerializeField] private ToggleButton _upgradeButton;
@@ -106,7 +109,7 @@ namespace _Game.UI._MainMenu.Scripts
             {
                 _upgradesTutorialStep.ShowStep();
             }
-            
+
             _dungeonButton.Initialize(IsDungeonUnlocked, OnDungeonClick, PlayButtonSound);
             _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound, _upgradesChecker.GetNotificationData(Window.UpgradesAndEvolution));
             _battleButton.Initialize(IsBattleUnlocked, OnBattleButtonClick, PlayButtonSound);
@@ -115,11 +118,13 @@ namespace _Game.UI._MainMenu.Scripts
 
 
             OnBattleButtonClick(_battleButton);
+            Open?.Invoke();
         }
 
         private void Subscribe()
         {
             _upgradesChecker.Notify += OnUpgradesNotified;
+            Open += _upgradesChecker.OnMenuOpen;
         }
 
         private void OnUpgradesNotified(NotificationData data)
@@ -133,6 +138,7 @@ namespace _Game.UI._MainMenu.Scripts
         private void Unsubscribe()
         {
             _upgradesChecker.Notify -= OnUpgradesNotified;
+            Open -= _upgradesChecker.OnMenuOpen;
         }
 
         private void OnShopButtonClick(ToggleButton obj)
@@ -219,10 +225,7 @@ namespace _Game.UI._MainMenu.Scripts
             
         }
 
-        private void PlayButtonSound()
-        {
-            _audioService.PlayButtonSound();
-        }
+        private void PlayButtonSound() => _audioService.PlayButtonSound();
 
         private async void OnShopBtnClicked()
         {

@@ -1,8 +1,11 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
+using _Game.Core._UpgradesChecker;
+using _Game.Core.DataPresenters._UpgradeItemPresenter;
+using _Game.Core.DataPresenters.Evolution;
+using _Game.Core.DataPresenters.TimelineTravel;
+using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Evolution.Scripts;
-using _Game.Core.Services.Upgrades.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Header.Scripts;
@@ -50,9 +53,10 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             Camera uICamera,
             IAudioService audioService,
             IHeader header,
-            IEconomyUpgradesService economyUpgradesService,
-            IEvolutionService evolutionService,
-            IUnitUpgradesService unitUpgradesService,
+            IUpgradeItemPresenter upgradeItemPresenter,
+            IEvolutionPresenter evolutionPresenter,
+            ITimelineTravelPresenter timelineTravelPresenter,
+            IUnitUpgradesPresenter unitUpgradesPresenter,
             IMyLogger logger,
             ITimelineInfoWindowProvider timelineInfoWindowProvider,
             ITutorialManager tutorialManager,
@@ -68,8 +72,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _audioService = audioService;
             _upgradesChecker = upgradesChecker;
             
-            _upgradesWindow.Construct(header, economyUpgradesService, unitUpgradesService, audioService, tutorialManager, upgradesChecker);
-            _evolutionWindow.Construct(header, evolutionService, audioService, timelineInfoWindowProvider, upgradesChecker);
+            _upgradesWindow.Construct(header, upgradeItemPresenter, unitUpgradesPresenter, audioService, tutorialManager, upgradesChecker);
+            _evolutionWindow.Construct(header, evolutionPresenter, audioService, timelineInfoWindowProvider, timelineTravelPresenter, upgradesChecker);
             
         }
 

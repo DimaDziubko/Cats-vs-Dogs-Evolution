@@ -1,6 +1,6 @@
 using System;
+using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Evolution.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
@@ -28,18 +28,18 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
     
         private IDisposable _disposable;
         
-        private IEvolutionService _evolutionService;
+        private IEvolutionPresenter _evolutionPresenter;
         private IHeader _header;
         private IAudioService _audioService;
         private ITimelineInfoWindowProvider _timelineInfoProvider;
 
         public void Construct(
-            IEvolutionService evolutionService,
+            IEvolutionPresenter evolutionPresenter,
             IAudioService audioService,
             ITimelineInfoWindowProvider timelineInfoProvider)
         {
             _audioService = audioService;
-            _evolutionService = evolutionService;
+            _evolutionPresenter = evolutionPresenter;
             _timelineInfoProvider = timelineInfoProvider;
         }
     
@@ -59,15 +59,15 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void Subscribe()
         {
             _evolveButton.Click += OnEvolveButtonClick;
-            EvolutionTabOpened += _evolutionService.OnEvolutionTabOpened;
-            _evolutionService.EvolutionViewModelUpdated += OnEvolutionViewModelUpdated;
+            EvolutionTabOpened += _evolutionPresenter.OnEvolutionTabOpened;
+            _evolutionPresenter.EvolutionModelUpdated += OnEvolutionViewModelUpdated;
         }
 
         private void Unsubscribe()
         {
             _evolveButton.Click -= OnEvolveButtonClick;
-            EvolutionTabOpened -= _evolutionService.OnEvolutionTabOpened;
-            _evolutionService.EvolutionViewModelUpdated -= OnEvolutionViewModelUpdated;
+            EvolutionTabOpened -= _evolutionPresenter.OnEvolutionTabOpened;
+            _evolutionPresenter.EvolutionModelUpdated -= OnEvolutionViewModelUpdated;
         }
 
         public void Hide()
@@ -78,15 +78,15 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _canvas.enabled = false;
         }
 
-        private void OnEvolutionViewModelUpdated(EvolutionTabData tabData)
+        private void OnEvolutionViewModelUpdated(EvolutionTabModel tabModel)
         {
-            UpdateTimelineLabel(tabData.CurrentTimelineId);
-            UpdateButtonData(tabData.EvolutionBtnData);
+            UpdateTimelineLabel(tabModel.CurrentTimelineId);
+            UpdateButtonData(tabModel.EvolutionBtnData);
 
-            _currentAgeImage.sprite = tabData.CurrentAgeIcon;
-            _nextAgeImage.sprite = tabData.NextAgeIcon;
-            _currentAgeName.text = tabData.CurrentAgeName;
-            _nextAgeName.text = tabData.NextAgeName;
+            _currentAgeImage.sprite = tabModel.CurrentAgeIcon;
+            _nextAgeImage.sprite = tabModel.NextAgeIcon;
+            _currentAgeName.text = tabModel.CurrentAgeName;
+            _nextAgeName.text = tabModel.NextAgeName;
         }
 
         private void UpdateButtonData(EvolutionBtnData data) => 

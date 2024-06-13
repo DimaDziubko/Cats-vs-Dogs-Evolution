@@ -5,7 +5,6 @@ namespace _Game.Core.Ads
 {
     public interface IAdsService
     {
-        void Init();
         event Action RewardedVideoLoaded;
         bool IsRewardedVideoReady { get; }
         event Action<AdImpressionDto> RewardedAdImpression;

@@ -99,6 +99,7 @@ namespace _Game.Utils.Extensions
                         AgeIconKey = ageToken[Constants.ConfigKeys.AGE_ICON_KEY]?.ToString(),
                         Description = ageToken[Constants.ConfigKeys.DESCRIPTION]?.ToString(),
                         DateRange = ageToken[Constants.ConfigKeys.DATE_RANGE]?.ToString(),
+                        BaseKey = ageToken[Constants.ConfigKeys.BASE_KEY]?.ToString(),
                     };
                     ages.Add(ageConfig);
                 }
@@ -116,6 +117,7 @@ namespace _Game.Utils.Extensions
                 {
                     Id = ((int)economyToken[Constants.ConfigKeys.ID] - ID_OFFSET),
                     CoinPerBattle = (int)economyToken[Constants.ConfigKeys.COINS_PER_BATTLE],
+                    InitialFoodAmount = (int)economyToken[Constants.ConfigKeys.INITIAL_FOOD_AMOUNT],
                     FoodProduction = ParseFoodProduction((int)economyToken[Constants.ConfigKeys.FOOD_PRODUCTION], jsonData),
                     BaseHealth = ParseBaseHealth((int)economyToken[Constants.ConfigKeys.BASE_HEALTH], jsonData),
                 };
@@ -123,20 +125,20 @@ namespace _Game.Utils.Extensions
             return null;
         }
 
-        private static FoodProductionConfig ParseFoodProduction(int foodProductionId, JObject jsonData)
+        private static UpgradeItemConfig ParseFoodProduction(int foodProductionId, JObject jsonData)
         {
             var foodProductionToken = jsonData[Constants.ConfigKeys.FOOD_PRODUCTION]?
                 .FirstOrDefault(f => (int)f[Constants.ConfigKeys.ID] == foodProductionId);
             if (foodProductionToken != null)
             {
-                return new FoodProductionConfig
+                return new UpgradeItemConfig
                 {
                     Id = ((int)foodProductionToken[Constants.ConfigKeys.ID] - ID_OFFSET),
                     Price = (float)foodProductionToken[Constants.ConfigKeys.PRICE],
                     PriceExponential = ParsePolynomial((int)foodProductionToken[Constants.ConfigKeys.PRICE_EXPONENTIAL], jsonData),
-                    Speed = (float)foodProductionToken[Constants.ConfigKeys.SPEED],
-                    SpeedStep = (float)foodProductionToken[Constants.ConfigKeys.SPEED_STEP],
-                    InitialFoodAmount = (int)foodProductionToken[Constants.ConfigKeys.INITIAL_FOOD_AMOUNT],
+                    Value = (float)foodProductionToken[Constants.ConfigKeys.SPEED],
+                    ValueStep = (float)foodProductionToken[Constants.ConfigKeys.SPEED_STEP],
+                    InitialAmount = (int)foodProductionToken[Constants.ConfigKeys.INITIAL_FOOD_AMOUNT],
                 };
             }
             return null;
@@ -160,19 +162,19 @@ namespace _Game.Utils.Extensions
             return null;
         }
 
-        private static BaseHealthConfig ParseBaseHealth(int baseHealthId, JObject jsonData)
+        private static UpgradeItemConfig ParseBaseHealth(int baseHealthId, JObject jsonData)
         {
             var baseHealthToken = jsonData[Constants.ConfigKeys.BASE_HEALTH]?
                 .FirstOrDefault(b => (int)b[Constants.ConfigKeys.ID] == baseHealthId);
             if (baseHealthToken != null)
             {
-                return new BaseHealthConfig
+                return new UpgradeItemConfig
                 {
                     Id = ((int)baseHealthToken[Constants.ConfigKeys.ID] - ID_OFFSET),
                     Price = (float)baseHealthToken[Constants.ConfigKeys.PRICE],
                     PriceExponential = ParsePolynomial((int)baseHealthToken[Constants.ConfigKeys.PRICE_EXPONENTIAL], jsonData),
-                    Health = (float)baseHealthToken[Constants.ConfigKeys.HEALTH],
-                    HealthStep = (float)baseHealthToken[Constants.ConfigKeys.HEALTH_STEP]
+                    Value = (float)baseHealthToken[Constants.ConfigKeys.HEALTH],
+                    ValueStep = (float)baseHealthToken[Constants.ConfigKeys.HEALTH_STEP]
                 };
             }
             return null;
@@ -194,13 +196,13 @@ namespace _Game.Utils.Extensions
                         Scenario = ParseBattleScenario((int)battleToken[Constants.ConfigKeys.BATTLE_SCENARIO], jsonData),
                         Enemies = ParseWarriors(battleToken[Constants.ConfigKeys.WARRIORS], jsonData),
                         EnvironmentKey = battleToken[Constants.ConfigKeys.BACKGROUND_KEY]?.ToString(),
-                        EnemyBaseHealth = (float)battleToken[Constants.ConfigKeys.ENEMY_BASE_HEALTH],
+                        EnemyTowerHealth = (float)battleToken[Constants.ConfigKeys.ENEMY_BASE_HEALTH],
                         EnemyBaseKey = battleToken[Constants.ConfigKeys.ENEMY_BASE_KEY]?.ToString(),
                         PlayerBaseKey = battleToken[Constants.ConfigKeys.PLAYER_BASE_KEY]?.ToString(),
-                        BGMKey = battleToken[Constants.ConfigKeys.BGM_KEY]?.ToString(),
+                        AmbienceKey = battleToken[Constants.ConfigKeys.BGM_KEY]?.ToString(),
                         CoinsPerBase = (float)battleToken[Constants.ConfigKeys.COINS_PER_BASE],
                         MaxCoinsPerBattle = (float)battleToken[Constants.ConfigKeys.MAX_COINS_PER_BATTLE],
-                        
+                        BaseKey = battleToken[Constants.ConfigKeys.BASE_KEY]?.ToString(),
                     };
                     battles.Add(battleConfig);
                 }

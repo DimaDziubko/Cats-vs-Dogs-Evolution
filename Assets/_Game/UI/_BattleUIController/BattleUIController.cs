@@ -1,6 +1,7 @@
 ﻿using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.Loading;
+using _Game.Core.LoadingScreen;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
@@ -24,7 +25,7 @@ namespace _Game.UI._BattleUIController
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IHeader _header;
         private readonly IRewardAnimator _rewardAnimator;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
 
         private IBattleMediator _battleMediator;
 
@@ -37,7 +38,7 @@ namespace _Game.UI._BattleUIController
             IAlertPopupProvider alertPopupProvider,
             IFoodBoostService foodBoostService,
             IHeader header,
-            IPersistentDataService persistentData,
+            IUserContainer persistentData,
             ILoadingScreenProvider loadingScreenProvider,
             IRewardAnimator rewardAnimator,
             IFeatureUnlockSystem featureUnlockSystem,

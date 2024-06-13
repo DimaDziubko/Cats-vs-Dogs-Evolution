@@ -7,7 +7,7 @@ using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.UserState
 {
-    public class UserContainer : IPersistentDataService
+    public class UserContainer : IUserContainer
     {
         public UserAccountState State { get; set; }
         

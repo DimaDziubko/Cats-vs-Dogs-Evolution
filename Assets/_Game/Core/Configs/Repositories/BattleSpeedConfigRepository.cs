@@ -12,10 +12,10 @@ namespace _Game.Core.Configs.Repositories
 
     public class BattleSpeedConfigRepository : IBattleSpeedConfigRepository
     {
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
 
         public BattleSpeedConfigRepository(
-            IPersistentDataService persistentData)
+            IUserContainer persistentData)
         {
             _persistentData = persistentData;
         }

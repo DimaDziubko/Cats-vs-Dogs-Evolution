@@ -11,18 +11,20 @@ namespace _Game.Gameplay._Units.Scripts
     {
         protected float DisableAttackDelay { get; set; } = 0.1f;
 
-        [SerializeField] AudioClip _attackSFX;
-        
+        [SerializeField] private SoundData _soundData;
+        [SerializeField] private AudioClip _attackSFX;
+
         protected ITarget _target;
         protected IShootProxy _shootProxy;
         protected IVFXProxy _vFXProxy;
 
         private IAudioService _audioService;
-        
+        private ISoundService _soundService;
+
         private Transform _unitTransform;
 
         protected bool _isActive;
-        
+
         private Vector3 Position
         {
             get => _unitTransform.position;
@@ -53,10 +55,12 @@ namespace _Game.Gameplay._Units.Scripts
             WeaponConfig config,
             Faction faction,
             IAudioService audioService,
+            ISoundService soundService,
             Transform unitTransform)
         {
             _audioService = audioService;
             _unitTransform = unitTransform;
+            _soundService = soundService;
             _isActive = true;
         }
 
@@ -84,7 +88,16 @@ namespace _Game.Gameplay._Units.Scripts
             if (_audioService != null && _attackSFX != null)
             {
                 _audioService.PlayOneShot(_attackSFX);
-            }   
+            }
+
+            if (_soundService != null && _soundData != null)
+            {
+                _soundService.CreateSound()
+                    .WithSoundData(_soundData)
+                    .WithRandomPitch()
+                    .WithPosition(Vector3.zero)
+                    .Play();
+            }
         }
 
         private void RotateToTarget(Vector3 destination)

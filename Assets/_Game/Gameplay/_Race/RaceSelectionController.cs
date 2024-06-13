@@ -9,12 +9,12 @@ namespace _Game.Gameplay._Race
     public class RaceSelectionController
     {
         private readonly IRaceSelectionWindowProvider _raceSelectionWindowProvider;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
         
         private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
         
         public RaceSelectionController(
-            IPersistentDataService persistentData,
+            IUserContainer persistentData,
             IRaceSelectionWindowProvider raceSelectionWindowProvider)
         {
             _persistentData = persistentData;

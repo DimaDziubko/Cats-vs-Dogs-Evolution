@@ -13,16 +13,17 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
     public class UnitBuildButton : MonoBehaviour
     {
         public event Action<ButtonState> ChangeState;
+
+        public UnitType UnitType;
         
         [SerializeField] private GameObject _container;
-        
+
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private Image _foodIconHolder;
         [SerializeField] private Image _unitIconHolder;
 
         private Button _button;
-
-        [ShowInInspector] private UnitType _type;
+        
         private ButtonState _state = ButtonState.Inactive;
         
         private readonly Color _affordableColor = new Color(1f, 1f, 1f);
@@ -49,21 +50,32 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             Disable();
         }
 
-        public void Initialize(IUnitBuilder unitBuilder, UnitBuilderBtnData data)
+        private void Show()
         {
             _container.SetActive(true);
-            
-            _type = data.Type;
+        }
 
-            _foodPrice = data.FoodPrice;
-            _priceText.text = data.FoodPrice.ToString();
+        public void Initialize(IUnitBuilder unitBuilder, UnitBuilderBtnModel model)
+        {
+            if (!model.DynamicData.IsUnlocked)
+            {
+                Hide();
+                return;
+            }
             
-            _foodIconHolder.sprite = data.FoodIcon;
-            _unitIconHolder.sprite = data.UnitIcon;
+            Show();
+            
+            UnitType = model.StaticData.Type;
+
+            _foodPrice = model.StaticData.FoodPrice;
+            _priceText.text = _foodPrice.ToString();
+            
+            _foodIconHolder.sprite = model.DynamicData.FoodIcon;
+            _unitIconHolder.sprite = model.StaticData.UnitIcon;
             
             ChangeState -= unitBuilder.OnButtonChangeState;
             ChangeState += unitBuilder.OnButtonChangeState;
-            _button.onClick.AddListener(() => unitBuilder.Build(_type, _foodPrice));
+            _button.onClick.AddListener(() => unitBuilder.Build(UnitType, _foodPrice));
         }
 
         public void UpdateButtonState(int foodAmount)

@@ -20,15 +20,15 @@ namespace _Game.Gameplay._Coins.Scripts
         [SerializeField] private float _moveToWalletDuration = 0.5f;
 
         private IAudioService _audioService;
-        private IPersistentDataService _persistentDataService;
+        private IUserContainer _userContainer;
         
         private float _coinsValue;
         
-        public void Init(IAudioService audioService, float coinsValue, IPersistentDataService persistentDataService)
+        public void Init(IAudioService audioService, float coinsValue, IUserContainer userContainer)
         {
             _audioService = audioService;
             _coinsValue = coinsValue;
-            _persistentDataService = persistentDataService;
+            _userContainer = userContainer;
 
             _spriteRenderer.DOFade(_startAlphaValue, _startFadeDuration).OnComplete(() =>
             {
@@ -47,7 +47,7 @@ namespace _Game.Gameplay._Coins.Scripts
                     _transform.DOMove(targetPoint, _moveToWalletDuration).SetEase(Ease.InQuad).OnComplete(() =>
                     {
                         _audioService.PlayFillingWalletSFX();
-                        _persistentDataService.AddCoins(_coinsValue);
+                        _userContainer.AddCoins(_coinsValue);
                         Recycle();
                     });
                 });

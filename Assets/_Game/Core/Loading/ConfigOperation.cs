@@ -14,13 +14,13 @@ namespace _Game.Core.Loading
     {
         public string Description => "Configuration loading...";
         
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
         private readonly IRemoteConfigProvider _remoteConfigProvider;
         private readonly ILocalConfigProvider _localConfigProvider;
         private readonly IMyLogger _logger;
 
         public ConfigOperation(
-            IPersistentDataService persistentData,
+            IUserContainer persistentData,
             IRemoteConfigProvider remoteConfigProvider,
             ILocalConfigProvider localConfigProvider,
             IMyLogger logger)

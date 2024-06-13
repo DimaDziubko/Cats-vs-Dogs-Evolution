@@ -95,7 +95,7 @@ namespace _Game.Creatives.Scripts
             _foodGenerator.FoodChanged += OnFoodChanged;
         }
         
-        private void UpdateButtonsData(UnitBuilderBtnData[] builderData)
+        private void UpdateButtonsData(UnitBuilderBtnModel[] builderData)
         {
             foreach (var button in UnitBuilderUI.Buttons)
             {
