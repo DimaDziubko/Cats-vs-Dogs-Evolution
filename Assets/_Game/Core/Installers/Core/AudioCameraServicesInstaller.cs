@@ -16,18 +16,20 @@ namespace _Game.Core.Installers.Core
         [SerializeField] private SFXSourcesHolder _sfxSourcesHolder;
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private SoundsHolder _soundsHolder;
+        [SerializeField] private SoundService _soundService;
 
         public override void InstallBindings()
         {
             BindCameraService();
             BindAudioService();
+            BindSoundService();
         }
 
         private void BindCameraService()
         {
             var cameraService = new WorldCameraService(_mainCamera, _uICameraOverlay);
             
-            cameraService.DisableCamera();
+            cameraService.DisableMainCamera();
             
             Container
                 .Bind<IWorldCameraService>()
@@ -47,6 +49,15 @@ namespace _Game.Core.Installers.Core
             Container
                 .Bind<IAudioService>()
                 .FromInstance(audioService)
+                .AsSingle(); 
+        }
+
+        private void BindSoundService()
+        {
+            _soundService.Init();
+            Container
+                .Bind<ISoundService>()
+                .FromInstance(_soundService)
                 .AsSingle(); 
         }
     }

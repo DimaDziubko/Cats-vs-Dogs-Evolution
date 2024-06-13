@@ -136,9 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonTransform: {fileID: 3776527711312889192}
-  _animatableObjects:
-  - {fileID: 7936230646444233707}
-  _pressOffsetFactor: 5
+  _contentPanel: {fileID: 0}
+  _pressWarp: 0.9
 --- !u!1 &517301151554114492
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,9 +620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonTransform: {fileID: 3840314372685945887}
-  _animatableObjects:
-  - {fileID: 1942913642993945310}
-  _pressOffsetFactor: 5
+  _contentPanel: {fileID: 0}
+  _pressWarp: 0.9
 --- !u!1 &4690993738808838054
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +755,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 12
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

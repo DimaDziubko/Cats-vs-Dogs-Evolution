@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
-using _Game.Core.Services.Age.Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Battle;
-using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
+using _Game.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -25,29 +23,27 @@ namespace _Game.Gameplay.Vfx.Factory
     {
         [SerializeField] private UnitBlot _blotPrefab;
         [SerializeField] private UnitExplosion _unitExplosionPrefab;
-        [FormerlySerializedAs("_baseExplosionPrefab")] [SerializeField] private BaseSmoke baseSmokePrefab;
-
-        private IBattleStateService _battleState;
-        private IAgeStateService _ageState;
+        [FormerlySerializedAs("baseSmokePrefab")] [FormerlySerializedAs("_baseExplosionPrefab")] [SerializeField] private TowerSmoke towerSmokePrefab;
+        
+        private IWeaponDataPresenter _weaponDataPresenter;
 
         private readonly Dictionary<VfxType, Queue<VfxEntity>> _sharedPools = new Dictionary<VfxType, Queue<VfxEntity>>();
-        
+
+
         private readonly Dictionary<WeaponType, Queue<MuzzleFlash>> _muzzlesPools =
             new Dictionary<WeaponType, Queue<MuzzleFlash>>(6);
-        
+
         private readonly Dictionary<WeaponType, Queue<ProjectileExplosion>> _projectileExplosionPools =
             new Dictionary<WeaponType, Queue<ProjectileExplosion>>(6);
-        
+
         public UnitBlot GetUnitBlot() => (UnitBlot)Get(VfxType.UnitBlot, _blotPrefab);
         public UnitExplosion GetUnitExplosion() => (UnitExplosion)Get(VfxType.UnitExplosion, _unitExplosionPrefab);
-        public BaseSmoke GetBaseSmoke() => (BaseSmoke)Get(VfxType.BaseExplosion, baseSmokePrefab);
+        public TowerSmoke GetBaseSmoke() => (TowerSmoke)Get(VfxType.BaseExplosion, towerSmokePrefab);
         
         public void Initialize(
-            IBattleStateService battleState,
-            IAgeStateService ageState)
+            IWeaponDataPresenter weaponDataPresenter)
         {
-            _battleState = battleState;
-            _ageState = ageState;
+            _weaponDataPresenter = weaponDataPresenter;
         }
         
         private WeaponData GetWeaponData(Faction faction, WeaponType type)
@@ -56,10 +52,10 @@ namespace _Game.Gameplay.Vfx.Factory
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _ageState.ForWeapon(type);
+                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _battleState.ForWeapon(type);
+                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);

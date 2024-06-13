@@ -3,7 +3,7 @@ using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace _Game.Creatives._LocalUnitConfigs
+namespace _Game.Creatives.LocalUnitConfigs.Scr
 {
     [CreateAssetMenu(fileName = "LocalUnitConfig", menuName = "LocalConfigs/Units", order = 0)]
     public class LocalUnitConfig : ScriptableObject

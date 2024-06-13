@@ -4,11 +4,17 @@ namespace _Game.Utils
 {
     public sealed class Constants
     {
+        public sealed class Money
+        {
+            public const int MIN_COINS_PER_BATTLE = 9;
+        }
+        
         public sealed class CacheContext
         {
-            public const int GENERAL = 0;
+            public const int TIMELINE = 0;
             public const int AGE = 1;
             public const int BATTLE = 2;
+            public const int GENERAL = 3;
         }
         
         public sealed class Scenes
@@ -89,6 +95,7 @@ namespace _Game.Utils
             public const string FOOD_ICON_KEY = "FoodIconKey";
             public const string BASE_ICON_KEY = "BaseIconKey";
             public const string MISSING_KEY = "-";
+            public const string BASE_KEY = "BaseKey";
 
             //Timeline common
             public const string ID = "Id";

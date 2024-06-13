@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services.Analytics;
@@ -15,24 +16,27 @@ namespace _Game.Core.Ads
         private bool _isRewardedVideoReady;
         public bool IsRewardedVideoReady => _isRewardedVideoReady && IsInternetConnected();
 
-        private IMediationManager _manager;
-
+        private readonly IGameInitializer _gameInitializer;
         private readonly IPauseManager _pauseManager;
-
         private readonly IMyLogger _logger;
+        
+        private IMediationManager _manager;
 
         private Action _onVideoCompleted;
         private RewardType _placement;
 
         public CasAdsService(
             IMyLogger logger,
-            IPauseManager pauseManager)
+            IPauseManager pauseManager,
+            IGameInitializer gameInitializer)
         {
             _logger = logger;
             _pauseManager = pauseManager;
+            _gameInitializer = gameInitializer;
+            gameInitializer.OnPostInitialization += Init;
         }
 
-        public void Init()
+        private void Init()
         {
             _manager = MobileAds.BuildManager()
                 .WithInitListener((success, error) =>
@@ -54,6 +58,7 @@ namespace _Game.Core.Ads
             _manager.OnRewardedAdCompleted -= OnRewardedAdCompleted;
             _manager.OnRewardedAdClosed -= OnRewardedAdClosed;
             _manager.OnRewardedAdImpression -= OnRewardedAdImpression;
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
         public void ShowRewardedVideo(Action onVideoCompleted, RewardType placement)

@@ -1,40 +1,41 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 using _Game.Utils;
 
 namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
-    public interface IFeatureUnlockSystem
-    {
-        void Init();
-        bool IsFeatureUnlocked(IFeature feature);
-        bool IsFeatureUnlocked(Feature feature);
-        event Action<Feature> FeatureUnlocked;
-    }
-
     public class FeatureUnlockSystem : IFeatureUnlockSystem, IDisposable
     {
         public event Action<Feature> FeatureUnlocked;
 
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
+        private readonly IGameInitializer _gameInitializer;
 
         private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
-
         private IBattleStatisticsReadonly BattleStatisticsState => _persistentData.State.BattleStatistics;
 
-        public FeatureUnlockSystem(IPersistentDataService persistentData) => _persistentData = persistentData;
+        public FeatureUnlockSystem(
+            IUserContainer persistentData,
+            IGameInitializer gameInitializer)
+        {
+            _persistentData = persistentData;
+            _gameInitializer = gameInitializer;
+            gameInitializer.OnPostInitialization += Init;
+        }
 
-        public void Init()
+        private void Init()
         {
             TutorialState.StepsCompletedChanged += OnTutorialStepCompleted;
             BattleStatisticsState.CompletedBattlesCountChanged += OnBattleStatisticsChanged;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             TutorialState.StepsCompletedChanged -= OnTutorialStepCompleted;
             BattleStatisticsState.CompletedBattlesCountChanged -= OnBattleStatisticsChanged;
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
         private void OnBattleStatisticsChanged() => 

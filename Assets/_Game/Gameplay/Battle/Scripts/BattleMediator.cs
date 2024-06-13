@@ -1,5 +1,7 @@
 ﻿using _Game.Core._GameSaver;
 using _Game.Core.Loading;
+using _Game.Core.Navigation;
+using _Game.Core.Navigation.Battle;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.PersistentData;
@@ -34,10 +36,11 @@ namespace _Game.Gameplay.Battle.Scripts
         private readonly IFoodGenerator _foodGenerator;
         private readonly RaceSelectionController _raceSelectionController;
         private readonly GameResultHandler _gameResultHandler;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IBattleSpeedService _battleSpeed;
         private readonly IAudioService _audioService;
         private readonly IGameSaver _gameSaver;
+        private readonly IBattleNavigator _battleNavigator;
 
         public bool BattleInProcess => _battle.BattleInProcess;
 
@@ -50,8 +53,9 @@ namespace _Game.Gameplay.Battle.Scripts
             IUnitBuilder unitBuilder,
             RaceSelectionController raceSelectionController,
             GameResultHandler gameResultHandler,
-            IPersistentDataService persistentData,
-            IAudioService audioService)
+            IUserContainer userContainer,
+            IAudioService audioService,
+            IBattleNavigator battleNavigator)
         {
             _battleMode = battleMode;
             _battle = battle;
@@ -62,8 +66,9 @@ namespace _Game.Gameplay.Battle.Scripts
             _raceSelectionController = raceSelectionController;
             _gameResultHandler = gameResultHandler;
             _audioService = audioService;
+            _battleNavigator = battleNavigator;
             
-            _persistentData = persistentData;
+            _userContainer = userContainer;
 
             _battleMode.SetMediator(this);
             _battle.SetMediator(this);
@@ -75,7 +80,7 @@ namespace _Game.Gameplay.Battle.Scripts
         public void Initialize()
         {
             _battleMode.Init();
-            //_raceSelectionController.Init();
+            _raceSelectionController.Init();
             _battle.Init();
             _foodGenerator.Init();
         }
@@ -100,12 +105,12 @@ namespace _Game.Gameplay.Battle.Scripts
 
         public async void EndBattle(GameResultType result, bool wasExit = false)
         {
-            if (!wasExit) _persistentData.AddCompletedBattle();
+            if (!wasExit) _userContainer.AddCompletedBattle();
             
             var isConfirmed = await _gameResultHandler.ShowGameResultAndWaitForDecision(result, wasExit);
             if (isConfirmed)
             {
-                if(result == GameResultType.Victory) PrepareNextBattle();
+                if(result == GameResultType.Victory) _battleNavigator.OpenNextBattle();
                 _battleStateHandler.GoToMainMenu();
                 ClearBattleMode();
             }
@@ -119,11 +124,8 @@ namespace _Game.Gameplay.Battle.Scripts
 
         public void Reset() => 
             _battle.ResetSelf();
-
-        private void PrepareNextBattle() => 
-            _battle.PrepareNextBattle();
-
-
+        
+        
         public void Cleanup() => 
             _battle.Cleanup();
     }

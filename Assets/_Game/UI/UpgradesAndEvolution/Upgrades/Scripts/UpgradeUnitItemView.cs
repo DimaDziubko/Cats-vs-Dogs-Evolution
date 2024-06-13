@@ -2,7 +2,6 @@
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Scripts;
-using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradeUnitItemView : MonoBehaviour
     {
-        public event Action<UnitType> Upgrade;
+        public event Action<UnitType, float> Upgrade;
         
         [SerializeField] private Image _backgroundHolder;
         
@@ -25,8 +24,10 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private IAudioService _audioService;
         
-        [ShowInInspector]
-        private UnitType _type;
+        [SerializeField] private UnitType _type;
+        private float _price;
+
+        public UnitType Type => _type;
         
         public void Init(IAudioService audioService)
         {
@@ -38,44 +39,41 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _transactionButton.Init();
         }
 
-        private void Subscribe()
-        {
+        private void Subscribe() => 
             _transactionButton.Click += OnTransactionButtonClick;
-        }
-        
-        private void Unsubscribe()
-        {
+
+        private void Unsubscribe() => 
             _transactionButton.Click -= OnTransactionButtonClick;
-        }
 
         private void OnTransactionButtonClick()
         {
             PlayButtonSound();
-            Upgrade?.Invoke(_type);
+            Upgrade?.Invoke(_type, _price);
         }
 
-        public void UpdateUI(UpgradeUnitItemViewModel model)
+        public void UpdateUI(UnitUpgradeItemModel model)
         {
             
             if(!_transactionButton) return;
 
             _transactionButton.Show();
             
-            _unitIconHolder.sprite = model.Icon;
-            _type = model.Type;
-
+            _unitIconHolder.sprite = model.StaticData.Icon;
+            _type = model.StaticData.Type;
+            _price = model.StaticData.Price;
+            
             if (model.IsBought)
             {
                 _backgroundHolder.sprite = _unlockedItemImage;
                 _transactionButton.Hide();
                 _unitNameLabel.enabled = true;
-                _unitNameLabel.text = model.Name;
+                _unitNameLabel.text = model.StaticData.Name;
                 return;
             }
             
             _backgroundHolder.sprite = _lockedItemImage;
             _unitNameLabel.enabled = false;
-            _transactionButton.UpdateButtonState(model.CanAfford, model.Price);
+            _transactionButton.UpdateButtonState(model.CanAfford, model.StaticData.Price);
         }
 
         public void Cleanup()
@@ -84,9 +82,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _transactionButton.Cleanup();
         }
 
-        private void PlayButtonSound()
-        {
+        private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-        }
     }
 }

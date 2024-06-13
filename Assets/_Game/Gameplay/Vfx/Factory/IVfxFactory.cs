@@ -8,7 +8,7 @@ namespace _Game.Gameplay.Vfx.Factory
     {
         public UnitBlot GetUnitBlot();
         public UnitExplosion GetUnitExplosion();
-        public BaseSmoke GetBaseSmoke();
+        public TowerSmoke GetBaseSmoke();
         void Reclaim(VfxType type, VfxEntity entity);
         void Reclaim(WeaponType type, MuzzleFlash muzzleFlash);
         void Reclaim(WeaponType type, ProjectileExplosion projectileExplosion);

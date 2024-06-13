@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class CrSpawnMarker : MonoBehaviour
+namespace _Game.Creatives.Scripts
 {
-    [SerializeField]
-    private Color _color = Color.red;
-    private void OnDrawGizmos()
+    public class CrSpawnMarker : MonoBehaviour
     {
-        Gizmos.color = _color;
-        Gizmos.DrawSphere(transform.position, 0.1f);
+        [SerializeField]
+        private Color _color = Color.red;
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = _color;
+            Gizmos.DrawSphere(transform.position, 0.1f);
+        }
     }
 }

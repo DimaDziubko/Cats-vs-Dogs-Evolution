@@ -18,7 +18,7 @@ namespace _Game.UI.Settings.Scripts
         private UniTaskCompletionSource<bool> _taskCompletion;
         
         private IAudioService _audioService;
-        private IPersistentDataService _persistentData;
+        private IUserContainer _persistentData;
 
         public void Construct(
             Camera uICamera,

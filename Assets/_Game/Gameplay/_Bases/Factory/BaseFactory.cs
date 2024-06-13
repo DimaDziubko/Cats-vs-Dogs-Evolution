@@ -1,10 +1,10 @@
 ﻿using System;
+using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Core.Factory;
-using _Game.Core.Services.Age.Scripts;
-using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Utils;
 using UnityEngine;
 
 namespace _Game.Gameplay._Bases.Factory
@@ -12,46 +12,43 @@ namespace _Game.Gameplay._Bases.Factory
     [CreateAssetMenu(fileName = "Base Factory", menuName = "Factories/Base")]
     public class BaseFactory : GameObjectFactory, IBaseFactory
     {
-        private IBattleStateService _battleState;
-        private IAgeStateService _ageState;
+        private IBasePresenter _basePresenter;
         private IWorldCameraService _cameraService;
 
         public void Initialize(
-            IBattleStateService battleState, 
-            IAgeStateService ageState,
+            IBasePresenter basePresenter,
             IWorldCameraService cameraService)
         {
-            _battleState = battleState;
-            _ageState = ageState;
+            _basePresenter = basePresenter;
             _cameraService = cameraService;
         }
         
         public Base GetBase(Faction faction)
         {
-            BaseData baseData;
+            BaseModel baseModel;
             
             switch (faction)
             {
                 case Faction.Player:
-                    baseData = _ageState.GetForPlayerBase();
+                    baseModel = _basePresenter.GetTowerData(Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    baseData = _battleState.ForEnemyBase();
+                    baseModel = _basePresenter.GetTowerData(Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, "Base data is null");
             }
             
-            Base instance = CreateGameObjectInstance(baseData.BasePrefab);
+            Base instance = CreateGameObjectInstance(baseModel.StaticData.BasePrefab);
             
             instance.OriginFactory = this;
             
             instance.Construct(
                 faction, 
-                baseData.Health, 
-                baseData.CoinsAmount, 
+                baseModel.Health, 
+                baseModel.StaticData.CoinsAmount, 
                 _cameraService,
-                baseData.Layer);
+                baseModel.StaticData.Layer);
             
             return instance;
         }

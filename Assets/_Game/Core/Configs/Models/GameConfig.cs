@@ -56,6 +56,7 @@ namespace _Game.Core.Configs.Models
         public string AgeIconKey;
         public string Description;
         public string DateRange;
+        public string BaseKey;
     }
 
     public class BattleConfig
@@ -64,12 +65,13 @@ namespace _Game.Core.Configs.Models
         public BattleScenario Scenario;
         public List<WarriorConfig> Enemies;
         public string EnvironmentKey;
-        public float EnemyBaseHealth;
+        public float EnemyTowerHealth;
         public string EnemyBaseKey;
         public string PlayerBaseKey;
-        public string BGMKey;
+        public string AmbienceKey;
         public float CoinsPerBase;
         public float MaxCoinsPerBattle;
+        public string BaseKey;
     }
 
     public class BattleScenario
@@ -98,30 +100,22 @@ namespace _Game.Core.Configs.Models
     {
         public int Id;
         public float CoinPerBattle;
-
-        public FoodProductionConfig FoodProduction;
-        public BaseHealthConfig BaseHealth;
-    }
-
-    public class BaseHealthConfig
-    {
-        public int Id;
-        public float Price;
-        public Exponential PriceExponential;
-        public float Health;
-        public float HealthStep;
-    }
-
-    public class FoodProductionConfig
-    {
-        public int Id;
-        public float Price;
-        public Exponential PriceExponential;
-        public float Speed;
-        public float SpeedStep;
         public int InitialFoodAmount;
+
+        public UpgradeItemConfig FoodProduction;
+        public UpgradeItemConfig BaseHealth;
     }
 
+    public class UpgradeItemConfig
+    {
+        public int Id;
+        public float Price;
+        public Exponential PriceExponential;
+        public float Value;
+        public float ValueStep;
+        public int InitialAmount;
+    }
+    
     [Serializable]
     public class WarriorConfig
     {

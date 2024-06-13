@@ -9,12 +9,12 @@ namespace _Game.UI._RaceSelectionWindow.Scripts
 {
     public class RaceSelectionWindowProvider : LocalAssetLoader, IRaceSelectionWindowProvider
     {
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
         private readonly IAudioService _audioService;
         private readonly IWorldCameraService _cameraService;
 
         public RaceSelectionWindowProvider(
-            IPersistentDataService persistentData,
+            IUserContainer persistentData,
             IAudioService audioService,
             IWorldCameraService cameraService)
         {

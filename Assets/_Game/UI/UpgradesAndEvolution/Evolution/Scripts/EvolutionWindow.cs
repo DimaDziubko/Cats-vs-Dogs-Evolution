@@ -1,6 +1,8 @@
 ﻿using System;
+using _Game.Core._UpgradesChecker;
+using _Game.Core.DataPresenters.Evolution;
+using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Evolution.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Common.Scripts;
@@ -21,7 +23,8 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private IDisposable _disposable;
 
-        private IEvolutionService _evolutionService;
+        private IEvolutionPresenter _evolutionPresenter;
+        private ITimelineTravelPresenter _timelineTravelPresenter;
         private ITimelineInfoWindowProvider _timelineInfoProvider;
         private IAudioService _audioService;
         private IHeader _header;
@@ -31,18 +34,20 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         public void Construct(
             IHeader header,
-            IEvolutionService evolutionService,
+            IEvolutionPresenter evolutionPresenter,
             IAudioService audioService,
             ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITimelineTravelPresenter timelineTravelPresenter,
             IUpgradesAvailabilityChecker upgradesChecker)
         {
-            _evolutionService = evolutionService;
+            _evolutionPresenter = evolutionPresenter;
             _timelineInfoProvider = timelineInfoWindowProvider;
+            _timelineTravelPresenter = timelineTravelPresenter;
             _audioService = audioService;
             _header = header;
             _upgradesChecker = upgradesChecker;
-            _evolutionTab.Construct(evolutionService, audioService, timelineInfoWindowProvider);
-            _travelTab.Construct(evolutionService, audioService);
+            _evolutionTab.Construct(evolutionPresenter, audioService, timelineInfoWindowProvider);
+            _travelTab.Construct(timelineTravelPresenter, audioService);
         }
 
 
@@ -82,13 +87,13 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void Subscribe()
         {
-            _evolutionService.LastAgeOpened += OnLastAgeOpened;
+            _evolutionPresenter.LastAgeOpened += OnLastAgeOpened;
             _timelineInfoButton.onClick.AddListener(OnTimelineInfoBtnClicked);
         }
 
         private void Unsubscribe()
         {
-            _evolutionService.LastAgeOpened -= OnLastAgeOpened;
+            _evolutionPresenter.LastAgeOpened -= OnLastAgeOpened;
              _timelineInfoButton.onClick.RemoveAllListeners();
         }
 
@@ -98,8 +103,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _evolutionTab.Hide();
         }
 
-        private bool IsTimeToTravel() => _evolutionService.IsTimeToTravel();
-
+        private bool IsTimeToTravel() => _timelineTravelPresenter.IsTimeToTravel();
 
         private async void OnTimelineInfoBtnClicked()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
@@ -22,16 +23,18 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 
         private readonly IBattleSpeedManager _battleSpeedManager;
         private readonly IAdsService _adsService;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
         private readonly IBattleSpeedConfigRepository _battleSpeedConfigRepository;
         private readonly IMyLogger _logger;
         private readonly ITimerService _timerService;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
+        private readonly IGameInitializer _gameInitializer;
 
         private IBattleSpeedStateReadonly BattleSpeed => _persistentData.State.BattleSpeedState;
 
         private int _maxAvailableSpeedId;
         private int _currentBattleSpeedId;
+
 
         private int CurrentBattleSpeedId
         {
@@ -50,11 +53,12 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         public BattleSpeedService(
             IBattleSpeedManager battleSpeedManager,
             IAdsService adsService,
-            IPersistentDataService persistentData,
+            IUserContainer persistentData,
             IBattleSpeedConfigRepository battleSpeedConfigRepository,
             IMyLogger logger,
             ITimerService timerService,
-            IFeatureUnlockSystem featureUnlockSystem)
+            IFeatureUnlockSystem featureUnlockSystem,
+            IGameInitializer gameInitializer)
         {
             _battleSpeedManager = battleSpeedManager;
             _adsService = adsService;
@@ -63,9 +67,11 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             _logger = logger;
             _timerService = timerService;
             _featureUnlockSystem = featureUnlockSystem;
+            _gameInitializer = gameInitializer;
+            _gameInitializer.OnPostInitialization += Init;
         }
 
-        public void Init()
+        private void Init()
         {
             var maxSpeedId = _battleSpeedConfigRepository.GetBattleSpeedConfigs().Count - 1;
             _maxAvailableSpeedId = Mathf.Min(BattleSpeed.PermanentSpeedId + 1, maxSpeedId); 
@@ -76,11 +82,12 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             BattleSpeed.IsNormalSpeedActiveChanged += OnSpeedChanged;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _adsService.RewardedVideoLoaded -= OnRewardVideoLoaded;
             _featureUnlockSystem.FeatureUnlocked -= OnFeatureUnlocked;
             BattleSpeed.IsNormalSpeedActiveChanged -= OnSpeedChanged;
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
         public void OnBattleSpeedBtnClicked(BattleSpeedBtnState state)

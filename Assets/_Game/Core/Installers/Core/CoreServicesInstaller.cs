@@ -1,11 +1,15 @@
 ﻿using _Game._AssetProvider;
 using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._GameInitializer;
 using _Game.Core._GameSaver;
 using _Game.Core._Logger;
 using _Game.Core._SceneLoader;
+using _Game.Core._StateFactory;
 using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
+using _Game.Core.Data;
+using _Game.Core.Debugger;
 using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
@@ -18,10 +22,13 @@ namespace _Game.Core.Installers.Core
     public class CoreServicesInstaller : MonoInstaller
     {
         [SerializeField] private CoroutineRunner _coroutineRunner;
+        [SerializeField] private MyDebugger _debugger;
 
         public override void InstallBindings()
         {
             BindLogger();
+            BindDebugger();
+            BindInitializer();
             BindSceneLoader();
             BindStaticDataService();
             BindAssetRegistry();
@@ -33,11 +40,23 @@ namespace _Game.Core.Installers.Core
             BindStateFactory();
             BindFeatureUnlockSystem();
             BindGameSaver();
+            BindDataPool();
         }
+        
+        private void BindInitializer() =>
+            Container
+                .BindInterfacesAndSelfTo<GameInitializer>()
+                .AsSingle();
 
         private void BindLogger() =>
             Container
                 .BindInterfacesAndSelfTo<MyLogger>()
+                .AsSingle();
+
+        private void BindDebugger() =>
+            Container
+                .BindInterfacesAndSelfTo<MyDebugger>()
+                .FromInstance(_debugger)
                 .AsSingle();
 
         private void BindSceneLoader() => 
@@ -49,10 +68,9 @@ namespace _Game.Core.Installers.Core
         private void BindStaticDataService()
         {
             AssetProvider assetProvider = new AssetProvider();
-            assetProvider.Init();
             Container.Bind<IAssetProvider>()
                 .FromInstance(assetProvider)
-                .AsSingle();
+                .AsSingle().NonLazy();
         }
 
         private void BindAssetRegistry() => 
@@ -60,7 +78,7 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
 
         private void BindPersistentData() =>
-            Container.Bind<IPersistentDataService>()
+            Container.Bind<IUserContainer>()
                 .To<UserContainer>()
                 .AsSingle();
 
@@ -91,8 +109,8 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
 
         private void BindStateFactory() => 
-            Container.Bind<StateFactory.StateFactory>()
-                .FromMethod(ctx => new StateFactory.StateFactory(ctx.Container))
+            Container.Bind<StateFactory>()
+                .FromMethod(ctx => new StateFactory(ctx.Container))
                 .AsSingle();
 
         private void BindFeatureUnlockSystem() =>
@@ -100,11 +118,14 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<FeatureUnlockSystem>()
                 .AsSingle();
 
-        private void BindGameSaver()
-        {
+        private void BindGameSaver() =>
             Container
                 .BindInterfacesAndSelfTo<GameSaver>()
                 .AsSingle();
-        }
+
+        private void BindDataPool() =>
+            Container
+                .BindInterfacesAndSelfTo<GeneralDataPool>()
+                .AsSingle();
     }
 }

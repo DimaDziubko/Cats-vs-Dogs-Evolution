@@ -11,7 +11,6 @@ namespace _Game.Core.Services.AssetProvider
         UniTask<T> Load<T>(AssetReference assetReference) where T : class;
         UniTask<T> Load<T>(string address) where T : class;
         void CleanUp();
-        void Init();
         UniTask<GameObject> Instantiate(string address, Transform under);
         void Release(string key);
     }

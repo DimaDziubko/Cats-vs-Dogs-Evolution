@@ -6,7 +6,6 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
 {
     public interface IFoodBoostService
     {
-        UniTask Init();
         event Action<FoodBoostBtnModel> FoodBoostBtnModelChanged;
         event Action<int> FoodBoost;
         public void OnFoodBoostShown();

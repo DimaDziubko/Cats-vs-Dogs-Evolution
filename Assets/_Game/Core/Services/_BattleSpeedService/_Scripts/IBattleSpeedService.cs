@@ -6,7 +6,6 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 {
     public interface IBattleSpeedService
     {
-        void Init();
         event Action<BattleSpeedBtnModel> BattleSpeedBtnModelChanged;
         event Action<GameTimer, bool> SpeedBoostTimerActivityChanged;
         void OnBattleSpeedBtnClicked(BattleSpeedBtnState state);

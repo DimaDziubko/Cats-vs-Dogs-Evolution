@@ -1,34 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticlesMoveToTarget : MonoBehaviour
+namespace _Game.Scenes.Tests
 {
-    public ParticleSystem particles;
-    public Transform target;
-    public float delay = 1.0f;
-    private ParticleSystem.Particle[] particleArray;
-
-    void Start()
+    public class ParticlesMoveToTarget : MonoBehaviour
     {
-        particles = GetComponent<ParticleSystem>();
-        particleArray = new ParticleSystem.Particle[particles.main.maxParticles];
-    }
+        public ParticleSystem particles;
+        public Transform target;
+        public float delay = 1.0f;
+        private ParticleSystem.Particle[] particleArray;
 
-    void Update()
-    {
-        int numParticlesAlive = particles.GetParticles(particleArray);
-
-        for (int i = 0; i < numParticlesAlive; i++)
+        void Start()
         {
-            float particleAge = particleArray[i].startLifetime - particleArray[i].remainingLifetime;
-            if (particleAge > delay)
-            {
-                Vector3 directionToTarget = (target.position - particleArray[i].position).normalized;
-                particleArray[i].velocity = directionToTarget * particleArray[i].velocity.magnitude;
-            }
+            particles = GetComponent<ParticleSystem>();
+            particleArray = new ParticleSystem.Particle[particles.main.maxParticles];
         }
 
-        particles.SetParticles(particleArray, numParticlesAlive);
+        void Update()
+        {
+            int numParticlesAlive = particles.GetParticles(particleArray);
+
+            for (int i = 0; i < numParticlesAlive; i++)
+            {
+                float particleAge = particleArray[i].startLifetime - particleArray[i].remainingLifetime;
+                if (particleAge > delay)
+                {
+                    Vector3 directionToTarget = (target.position - particleArray[i].position).normalized;
+                    particleArray[i].velocity = directionToTarget * particleArray[i].velocity.magnitude;
+                }
+            }
+
+            particles.SetParticles(particleArray, numParticlesAlive);
+        }
     }
 }

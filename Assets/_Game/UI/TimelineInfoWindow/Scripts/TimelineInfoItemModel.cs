@@ -1,13 +1,10 @@
-﻿using UnityEngine;
+﻿using _Game.Core.Data.Timeline.Static;
 
 namespace _Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoItemModel
     {
-        public string Name;
-        public Sprite AgeIcon;
-        public string DateRange;
-        public string Description;
+        public TimlineInfoItemStaticData StaticData;
         public bool IsUnlocked;
     }
 }

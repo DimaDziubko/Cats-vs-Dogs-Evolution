@@ -8,6 +8,8 @@ using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
+namespace _Game.Creatives.Factories
+{
     [CreateAssetMenu(fileName = "CrProjectileFactory", menuName = "CrFactories/Projectile")]
     public class CrProjectileFactory : GameObjectFactory, IProjectileFactory
     {
@@ -90,4 +92,5 @@ using UnityEngine;
             _projectilesPools.Clear(); 
         }
     }
+}
     

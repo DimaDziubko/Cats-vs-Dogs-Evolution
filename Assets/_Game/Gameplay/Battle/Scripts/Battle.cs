@@ -1,11 +1,11 @@
 ﻿using System;
 using _Game.Core._GameSaver;
 using _Game.Core._SystemUpdate;
+using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Battle;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._CoinCounter.Scripts;
@@ -22,7 +22,6 @@ namespace _Game.Gameplay.Battle.Scripts
         public event Action BattleStopped;
         public event Action<bool> BattlePaused;
         
-        
         private readonly BattleField _battleField;
         private readonly EnvironmentController _environmentController;
 
@@ -30,8 +29,7 @@ namespace _Game.Gameplay.Battle.Scripts
         private BattleScenarioExecutor.State _activeScenario;
 
         private AudioClip _bGM;
-
-        private readonly IBattleStateService _battleState;
+        
         private readonly IPauseManager _pauseManager;
         private readonly IAudioService _audioService;
         private readonly ISystemUpdate _systemUpdate;
@@ -41,14 +39,13 @@ namespace _Game.Gameplay.Battle.Scripts
         private readonly IGameSaver _gameSaver;
         private readonly IAnalyticsService _analytics;
         private readonly IDTDAnalyticsService _dtdAnalytics;
+        private readonly IBattlePresenter _battlePresenter;
 
         private BattleAnalyticsData _battleAnalyticsData;
-        private int _currentBattle;
         public bool BattleInProcess { get; private set; }
         private bool IsPaused => _pauseManager.IsPaused;
 
         public Battle(
-            IBattleStateService battleState,
             IPauseManager pauseManager,
             IBattleSpeedManager speedManager,
             IAudioService audioService,
@@ -59,7 +56,8 @@ namespace _Game.Gameplay.Battle.Scripts
             IBattleSpeedService battleSpeed,
             IGameSaver gameSaver,
             IAnalyticsService analytics,
-            IDTDAnalyticsService dtdAnalytics)
+            IDTDAnalyticsService dtdAnalytics,
+            IBattlePresenter battlePresenter)
         {
             _systemUpdate = systemUpdate;
             _speedManager = speedManager;
@@ -68,13 +66,13 @@ namespace _Game.Gameplay.Battle.Scripts
 
             _audioService = audioService;
             
-            _battleState = battleState;
             _pauseManager = pauseManager;
             _environmentController = environmentController;
             _battleSpeed = battleSpeed;
             _gameSaver = gameSaver;
             _analytics = analytics;
             _dtdAnalytics = dtdAnalytics;
+            _battlePresenter = battlePresenter;
         }
 
         public void Init()
@@ -82,10 +80,10 @@ namespace _Game.Gameplay.Battle.Scripts
             _battleField.Init();
             
             _scenarioExecutor = new BattleScenarioExecutor();
+            
+            _battlePresenter.BattleDataUpdated += UpdateBattle;
+            UpdateBattle(_battlePresenter.BattleData);
 
-            _battleState.BattlePrepared += UpdateBattle;
-
-            UpdateBattle(_battleState.GetCurrentBattleData());
             _systemUpdate.Register(this);
             
             BattleStarted += OnBattleStarted;
@@ -95,7 +93,7 @@ namespace _Game.Gameplay.Battle.Scripts
 
         public void Dispose()
         {
-            _battleState.BattlePrepared -= UpdateBattle;
+            _battlePresenter.BattleDataUpdated -= UpdateBattle;
             _systemUpdate.Unregister(this);
             
             BattleStarted -= OnBattleStarted;
@@ -112,7 +110,7 @@ namespace _Game.Gameplay.Battle.Scripts
             _activeScenario = _scenarioExecutor.Begin(_battleField.UnitSpawner);
             _battleField.StartBattle();
 
-            PlayBGM();
+            PlayAmbience();
             
             BattleStarted?.Invoke();
         }
@@ -126,16 +124,11 @@ namespace _Game.Gameplay.Battle.Scripts
 
         public void ResetSelf()
         {
-            UpdateBattle(_battleState.GetCurrentBattleData());
+            UpdateBattle(_battlePresenter.BattleData);
             _battleField.ResetSelf();
             if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
         }
-
-        public void PrepareNextBattle()
-        {
-            _battleState.OpenNextBattle(_currentBattle + 1);
-        }
-
+        
         void IGameUpdate.GameUpdate()
         {
             if(IsPaused) return;
@@ -168,16 +161,15 @@ namespace _Game.Gameplay.Battle.Scripts
         private void UpdateBattle(BattleData data)
         {
             _environmentController.ShowEnvironment(data.EnvironmentData);
-            _currentBattle = data.Battle;
-            _bGM = data.BGM;
+            _bGM = data.Ambience;
             _battleField.UpdateBase(Faction.Enemy);
-            _scenarioExecutor.UpdateScenario(data.Scenario);
-            _coinCounter.MaxCoinsPerBattle = data.MaxCoinsPerBattle;
-            _battleAnalyticsData = data.AnalyticsData;
+            _scenarioExecutor.UpdateScenario(data.ScenarioData.Scenario);
+            _coinCounter.MaxCoinsPerBattle = data.ScenarioData.MaxCoinsPerBattle;
+            _battleAnalyticsData = data.ScenarioData.AnalyticsData;
         }
 
 
-        private void PlayBGM()
+        private void PlayAmbience()
         {
             if (_audioService != null && _bGM != null)
             {
@@ -193,12 +185,9 @@ namespace _Game.Gameplay.Battle.Scripts
             }
         }
 
-        public void SetMediator(IBattleMediator battleMediator)
-        {
-            
-        }
-        
         void IPauseHandler.SetPaused(bool isPaused) => 
             BattlePaused?.Invoke(isPaused);
+
+        public void SetMediator(IBattleMediator battleMediator){}
     }
 }

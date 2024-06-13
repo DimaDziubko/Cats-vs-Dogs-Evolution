@@ -13,7 +13,7 @@ namespace _Game.Core.UserState
         public int Id;
 
         public RaceState RaceState;
-        public UserTimelineState TimelineState;
+        public TimelineState TimelineState;
         public UserCurrenciesState Currencies;
         public FoodBoostState FoodBoost;
         public BattleStatistics BattleStatistics;
@@ -33,7 +33,7 @@ namespace _Game.Core.UserState
                     CurrentRace = Race.None
                 },
                 
-                TimelineState = new UserTimelineState()
+                TimelineState = new TimelineState()
                 {
                     TimelineId = 0,
                     AgeId = 0,
