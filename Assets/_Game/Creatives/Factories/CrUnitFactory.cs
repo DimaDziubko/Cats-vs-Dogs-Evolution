@@ -16,6 +16,7 @@ namespace _Game.Creatives.Factories
         private IWorldCameraService _cameraService;
         private IRandomService _random;
         private IAudioService _audioService;
+        private ISoundService _soundService;
 
         private readonly Dictionary<(Faction, UnitType), Queue<Unit>> _unitsPools = 
             new Dictionary<(Faction, UnitType), Queue<Unit>>();
@@ -28,6 +29,7 @@ namespace _Game.Creatives.Factories
             _cameraService = cameraService;
             _random = random;
             _audioService = audioService;
+            //TODO add SoundService
         }
         
         public Unit Get(Faction faction, UnitType type)
@@ -58,6 +60,7 @@ namespace _Game.Creatives.Factories
                     type,
                     _random, 
                     _audioService,
+                    _soundService,
                     unitData.UnitLayer,
                     unitData.AggroLayer,
                     unitData.AttackLayer);

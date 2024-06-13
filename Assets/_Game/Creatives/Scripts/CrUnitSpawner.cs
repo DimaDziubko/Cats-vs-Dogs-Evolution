@@ -9,8 +9,10 @@ using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-public class CrUnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedHandler
+namespace _Game.Creatives.Scripts
 {
+    public class CrUnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedHandler
+    {
         private readonly IUnitFactory _unitFactory;
         private readonly IInteractionCache _cache;
         private readonly IWorldCameraService _cameraService;
@@ -154,4 +156,5 @@ public class CrUnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedHandler
             _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth - offsetX, -offsetY, 0);
             _enemySpawnPoint = new Vector3(_cameraService.CameraWidth + offsetX , -offsetY, 0);
         }
+    }
 }

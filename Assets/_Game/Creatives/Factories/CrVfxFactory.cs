@@ -7,13 +7,16 @@ using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Factory;
 using _Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "CrVfxFactory", menuName = "CrFactories/Vfx")]
+namespace _Game.Creatives.Factories
+{
+    [CreateAssetMenu(fileName = "CrVfxFactory", menuName = "CrFactories/Vfx")]
     public class CrVfxFactory : GameObjectFactory, IVfxFactory
     {
         [SerializeField] private UnitBlot _blotPrefab;
         [SerializeField] private UnitExplosion _unitExplosionPrefab;
-        [SerializeField] private BaseSmoke baseSmokePrefab;
+        [FormerlySerializedAs("baseSmokePrefab")] [SerializeField] private TowerSmoke towerSmokePrefab;
 
         private readonly Dictionary<VfxType, Queue<VfxEntity>> _sharedPools = new Dictionary<VfxType, Queue<VfxEntity>>();
         
@@ -25,7 +28,7 @@ using UnityEngine;
         
         public UnitBlot GetUnitBlot() => (UnitBlot)Get(VfxType.UnitBlot, _blotPrefab);
         public UnitExplosion GetUnitExplosion() => (UnitExplosion)Get(VfxType.UnitExplosion, _unitExplosionPrefab);
-        public BaseSmoke GetBaseSmoke() => (BaseSmoke)Get(VfxType.BaseExplosion, baseSmokePrefab);
+        public TowerSmoke GetBaseSmoke() => (TowerSmoke)Get(VfxType.BaseExplosion, towerSmokePrefab);
         
         private WeaponData GetWeaponData(Faction faction, WeaponType type)
         {
@@ -189,3 +192,4 @@ using UnityEngine;
             _projectileExplosionPools.Clear();
         }
     }
+}

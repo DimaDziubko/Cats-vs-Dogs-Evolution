@@ -17,24 +17,16 @@ namespace _Game.Core.Services.Camera
             UICameraOverlay = uICameraOverlay;
         }
         
-        public Ray ScreenPointToRay(Vector3 mousePosition)
-        {
-            return MainCamera.ScreenPointToRay(mousePosition);
-        }
+        public Ray ScreenPointToRay(Vector3 mousePosition) => 
+            MainCamera.ScreenPointToRay(mousePosition);
 
-        public Vector3 ScreenToWorldPoint(Vector3 point)
-        {
-            return MainCamera.ScreenToWorldPoint(point);
-        }
+        public Vector3 ScreenToWorldPoint(Vector3 point) => 
+            MainCamera.ScreenToWorldPoint(point);
 
-        public void DisableCamera()
-        {
+        public void DisableMainCamera() => 
             MainCamera.enabled = false;
-        }
 
-        public void EnableCamera()
-        {
+        public void EnableMainCamera() => 
             MainCamera.enabled = true;
-        }
     }
 }

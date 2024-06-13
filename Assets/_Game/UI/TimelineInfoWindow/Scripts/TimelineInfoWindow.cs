@@ -1,7 +1,8 @@
 using System;
 using _Game.Core._Logger;
+using _Game.Core.DataPresenters._TimelineInfoPresenter;
+using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Evolution.Scripts;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -17,11 +18,8 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         [SerializeField] private ScrollRect _scrollRect;
         
         [SerializeField] private TimelineInfoItem[] _items;
-
         [SerializeField] private TimelineProgressBar _progressBar;
-
         [SerializeField] private Button _exitBtn;
-        
         [SerializeField] private AudioClip _evolveSFX;
 
         [SerializeField] private float _animationDelay = 1.0f;
@@ -31,7 +29,8 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         private UniTaskCompletionSource<bool> _taskCompletion;
 
         private IAudioService _audioService;
-        private IEvolutionService _evolutionService;
+        private ITimelineInfoPresenter _timelineInfoPresenter;
+        private IEvolutionPresenter _evolutionPresenter;
         private IMyLogger _logger;
 
         //Animation data
@@ -40,11 +39,13 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         public void Construct(
             IAudioService audioService, 
-            IEvolutionService evolutionService, 
+            ITimelineInfoPresenter evolutionService,
+            IEvolutionPresenter evolutionPresenter, 
             IMyLogger logger)
         {
             _audioService = audioService;
-            _evolutionService = evolutionService;
+            _timelineInfoPresenter = evolutionService;
+            _evolutionPresenter = evolutionPresenter;
             _logger = logger;
         }
 
@@ -87,7 +88,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
                 sequence.OnComplete(() =>
                 {
-                    _evolutionService.MoveToNextAge();
+                    _evolutionPresenter.OpenNextAge();
                     _exitBtn.gameObject.SetActive(true);
                 });
             });
@@ -117,26 +118,26 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         private void Subscribe()
         {
-            Opened += _evolutionService.OnTimelineInfoWindowOpened;
-            _evolutionService.TimelineInfoDataUpdated += UpdateUIElements;
+            Opened += _timelineInfoPresenter.OnTimelineInfoWindowOpened;
+            _timelineInfoPresenter.TimelineInfoDataUpdated += UpdateUIElements;
             _exitBtn.onClick.AddListener(OnExit);
         }
 
         private void Unsubscribe()
         {
-            Opened -= _evolutionService.OnTimelineInfoWindowOpened;
-            _evolutionService.TimelineInfoDataUpdated -= UpdateUIElements;
+            Opened -= _timelineInfoPresenter.OnTimelineInfoWindowOpened;
+            _timelineInfoPresenter.TimelineInfoDataUpdated -= UpdateUIElements;
             _exitBtn.onClick.RemoveAllListeners();
         }
 
-        private void UpdateUIElements(TimelineInfoData data)
+        private void UpdateUIElements(TimelineInfoModel model)
         {
-            _currentAge = data.CurrentAge;
-            _ages = data.Models.Count;
+            _currentAge = model.CurrentAge;
+            _ages = model.Models.Count;
             
-            UpdateItems(data);
-            UpdateSlider(data.CurrentAge, data.Models.Count);
-            AdjustScrollPosition(data.CurrentAge, data.Models.Count);
+            UpdateItems(model);
+            UpdateSlider(model.CurrentAge, model.Models.Count);
+            AdjustScrollPosition(model.CurrentAge, model.Models.Count);
         }
 
         private void UpdateSlider(int currentAge, int ages)
@@ -144,11 +145,11 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _progressBar.UpdateValue(currentAge, ages);
         }
 
-        private void UpdateItems(TimelineInfoData data)
+        private void UpdateItems(TimelineInfoModel model)
         {
             for (int i = 0; i < _items.Length; i++)
             {
-                _items[i].UpdateModel(data.Models[i]);
+                _items[i].UpdateModel(model.Models[i]);
             }
         }
 

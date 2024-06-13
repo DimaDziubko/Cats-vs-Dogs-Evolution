@@ -1,7 +1,8 @@
 using System;
 using _Game.Core._Logger;
+using _Game.Core.Navigation;
+using _Game.Core.Navigation.Battle;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Battle;
 using _Game.Core.Services.PersistentData;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._MainMenu.Scripts;
@@ -31,11 +32,11 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private IAudioService _audioService;
 
         private IBattleLaunchManager _battleLaunchManager;
-        private IBattleStateService _battleState;
         private IHeader _header;
         private IMyLogger _logger;
-        private IPersistentDataService _persistentData;
+        private IUserContainer _persistentData;
         private ISettingsPopupProvider _settingsPopupProvider;
+        private IBattleNavigator _battleNavigator;
 
 
         public void Construct(
@@ -43,10 +44,10 @@ namespace _Game.UI._StartBattleWindow.Scripts
             IAudioService audioService,
             IHeader header,
             IBattleLaunchManager battleLaunchManager,
-            IBattleStateService battleState,
             IMyLogger logger,
-            IPersistentDataService persistentData,
-            ISettingsPopupProvider settingsPopupProvider)
+            IUserContainer persistentData,
+            ISettingsPopupProvider settingsPopupProvider,
+            IBattleNavigator battleNavigator)
         {
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
@@ -54,12 +55,11 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _battleLaunchManager = battleLaunchManager;
 
             _header = header;
-
-            _battleState = battleState;
             _logger = logger;
 
             _persistentData = persistentData;
             _settingsPopupProvider = settingsPopupProvider;
+            _battleNavigator = battleNavigator;
         }
 
         public void Show()
@@ -76,7 +76,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
 
         private void ShowName()
         {
-            var fullName = $"{Window} {_battleState.CurrentBattleIndex + 1}";
+            var fullName = $"{Window} {_battleNavigator.CurrentBattle + 1}";
             _header.ShowWindowName(fullName);
         }
 
@@ -85,6 +85,21 @@ namespace _Game.UI._StartBattleWindow.Scripts
             Unsubscribe();
 
             _canvas.enabled = false;
+        }
+
+        private void Subscribe()
+        {
+            _battleNavigator.NavigationUpdated += UpdateNavigationButtons;
+            Opened += _battleNavigator.OnStartBattleWindowOpened;
+            
+            _previousBattleButton.onClick.AddListener(OnPreviousBattleButtonClick);
+            _nextBattleButton.onClick.AddListener(OnNextBattleButtonClick);
+            _startBattleButton.onClick.AddListener(OnStartButtonClick);
+            _settingsButton.onClick.AddListener(OnSettingsBtnClick);
+            
+            _cheatBtn.onClick.AddListener(OnCheatBtnClicked);
+            
+            _quitButton.onClick.AddListener(OnQuitBtnClick);
         }
 
         private void Unsubscribe()
@@ -96,24 +111,9 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _quitButton.onClick.RemoveAllListeners();
             
             _cheatBtn.onClick.RemoveAllListeners();
-            
-            _battleState.NavigationUpdated -= UpdateNavigationButtons;
-            Opened -= _battleState.OnStartBattleWindowOpened;
-        }
 
-        private void Subscribe()
-        {
-            _battleState.NavigationUpdated += UpdateNavigationButtons;
-            Opened += _battleState.OnStartBattleWindowOpened;
-
-            _previousBattleButton.onClick.AddListener(OnPreviousBattleButtonClick);
-            _nextBattleButton.onClick.AddListener(OnNextBattleButtonClick);
-            _startBattleButton.onClick.AddListener(OnStartButtonClick);
-            _settingsButton.onClick.AddListener(OnSettingsBtnClick);
-            
-            _cheatBtn.onClick.AddListener(OnCheatBtnClicked);
-            
-            _quitButton.onClick.AddListener(OnQuitBtnClick);
+            _battleNavigator.NavigationUpdated -= UpdateNavigationButtons;
+            Opened -= _battleNavigator.OnStartBattleWindowOpened;
         }
 
         private void OnCheatBtnClicked()
@@ -160,18 +160,15 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void OnPreviousBattleButtonClick()
         {
             PlayButtonSound();
-            _battleState.MoveToPreviousBattle();
+            _battleNavigator.MoveToPreviousBattle();
         }
 
         private void OnNextBattleButtonClick()
         {
             PlayButtonSound();
-            _battleState.MoveToNextBattle();
+            _battleNavigator.MoveToNextBattle();
         }
         
-        private void PlayButtonSound()
-        {
-            _audioService.PlayButtonSound();
-        }
+        private void PlayButtonSound() => _audioService.PlayButtonSound();
     }
 }

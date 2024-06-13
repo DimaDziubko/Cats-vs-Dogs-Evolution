@@ -1,7 +1,7 @@
 using System;
+using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Core.Factory;
 using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Age.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Scripts;
@@ -36,17 +36,17 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly CoinCounterView _coinCounterView;
 
         private readonly InteractionCache _interactionCache = new InteractionCache();
-        
+
         public BattleField(
             IWorldCameraService cameraService,
             IPauseManager pauseManager,
-            IAgeStateService ageState,
             IAudioService audioService,
             IBaseDestructionManager baseDestructionManager,
             ICoinCounter coinCounter,
             IFactoriesHolder factoriesHolder,
             IBattleSpeedManager speedManager,
-            Hud hud)
+            Hud hud,
+            IBasePresenter basePresenter)
         {
             _cameraService = cameraService;
             _audioService = audioService;
@@ -81,7 +81,7 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _coinSpawner,
                 baseDestructionManager,
                 _interactionCache,
-                ageState);
+                basePresenter);
 
 
             _coinCounterView = hud.CounterView;

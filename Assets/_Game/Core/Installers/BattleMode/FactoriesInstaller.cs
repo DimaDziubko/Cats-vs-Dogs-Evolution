@@ -1,7 +1,8 @@
-﻿using _Game.Core.Factory;
-using _Game.Core.Services.Age.Scripts;
+﻿using _Game.Core.DataPresenters._BaseDataPresenter;
+using _Game.Core.DataPresenters.UnitDataPresenter;
+using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Core.Factory;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Battle;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Bases.Factory;
@@ -11,6 +12,7 @@ using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Vfx.Factory;
 using _Game.UI._Environment.Factory;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Game.Core.Installers.BattleMode
@@ -18,7 +20,7 @@ namespace _Game.Core.Installers.BattleMode
     public class FactoriesInstaller : MonoInstaller
     {
         [SerializeField] private UnitFactory _unitFactory;
-        [SerializeField] private BaseFactory _baseFactory;
+        [FormerlySerializedAs("towerFactory")] [FormerlySerializedAs("_baseFactory")] [SerializeField] private BaseFactory baseFactory;
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private CoinFactory _coinFactory;
         [SerializeField] private VfxFactory _vfxFactory;
@@ -31,18 +33,40 @@ namespace _Game.Core.Installers.BattleMode
         }
         private void BindFactories()
         {
-            var battleState = Container.Resolve<IBattleStateService>();
-            var ageState = Container.Resolve<IAgeStateService>();
+            var unitDataPresenter = Container.Resolve<IUnitDataPresenter>();
+            var weaponDataPresenter = Container.Resolve<IWeaponDataPresenter>();
+            var towerDataPresenter = Container.Resolve<IBasePresenter>();
+            
             var cameraService = Container.Resolve<IWorldCameraService>();
             var random = Container.Resolve<IRandomService>();
             var audioService = Container.Resolve<IAudioService>();
+            var soundService = Container.Resolve<ISoundService>();
 
-            BindProjectileFactory(battleState, ageState, audioService);
-            BindUnitFactory(battleState, ageState, cameraService, random, audioService);
-            BindBaseFactory(battleState, ageState, cameraService);
+            BindProjectileFactory(audioService, weaponDataPresenter);
+            BindUnitFactory(cameraService, random, audioService, soundService, unitDataPresenter);
+            BindTowerFactory(towerDataPresenter, cameraService);
             BindCoinFactory(audioService);
-            BindVfxFactory(battleState, ageState);
+            BindVfxFactory(weaponDataPresenter);
             BindEnvironmentFactory(cameraService);
+        }
+
+        private void BindProjectileFactory(
+            IAudioService audioService,
+            IWeaponDataPresenter weaponDataPresenter)
+        {
+            _projectileFactory.Initialize(audioService, weaponDataPresenter);
+            Container.Bind<IProjectileFactory>().To<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
+        }
+
+        private void BindUnitFactory(
+            IWorldCameraService cameraService,
+            IRandomService random,
+            IAudioService audioService,
+            ISoundService soundService,
+            IUnitDataPresenter unitDataPresenter)
+        {
+            _unitFactory.Initialize(cameraService, random, audioService, soundService, unitDataPresenter);
+            Container.Bind<IUnitFactory>().To<UnitFactory>().FromInstance(_unitFactory).AsSingle();
         }
 
         private void BindCoinFactory(IAudioService audioService)
@@ -52,40 +76,18 @@ namespace _Game.Core.Installers.BattleMode
         }
 
         private void BindVfxFactory(
-            IBattleStateService battleState, 
-            IAgeStateService ageState)
+            IWeaponDataPresenter weaponDataPresenter)
         {
-            _vfxFactory.Initialize(battleState, ageState);
+            _vfxFactory.Initialize(weaponDataPresenter);
             Container.Bind<IVfxFactory>().To<VfxFactory>().FromInstance(_vfxFactory).AsSingle();
         }
 
-        private void BindProjectileFactory(
-            IBattleStateService battleState, 
-            IAgeStateService ageState,
-            IAudioService audioService)
-        {
-            _projectileFactory.Initialize(battleState, ageState, audioService);
-            Container.Bind<IProjectileFactory>().To<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
-        }
-
-        private void BindUnitFactory(
-            IBattleStateService battleState, 
-            IAgeStateService ageState,
-            IWorldCameraService cameraService,
-            IRandomService random,
-            IAudioService audioService)
-        {
-            _unitFactory.Initialize(battleState, ageState, cameraService, random, audioService);
-            Container.Bind<IUnitFactory>().To<UnitFactory>().FromInstance(_unitFactory).AsSingle();
-        }
-
-        private void BindBaseFactory(
-            IBattleStateService battleState, 
-            IAgeStateService ageState,
+        private void BindTowerFactory(
+            IBasePresenter basePresenter,
             IWorldCameraService cameraService)
         {
-            _baseFactory.Initialize(battleState, ageState, cameraService);
-            Container.Bind<IBaseFactory>().To<BaseFactory>().FromInstance(_baseFactory).AsSingle();
+            baseFactory.Initialize(basePresenter, cameraService);
+            Container.Bind<IBaseFactory>().To<BaseFactory>().FromInstance(baseFactory).AsSingle();
         }
 
 
@@ -99,9 +101,6 @@ namespace _Game.Core.Installers.BattleMode
                 .AsSingle();
         }
 
-        private void BindFactoriesHolder()
-        {
-            Container.BindInterfacesAndSelfTo<FactoriesHolder>().AsSingle();
-        }
+        private void BindFactoriesHolder() => Container.BindInterfacesAndSelfTo<FactoriesHolder>().AsSingle();
     }
 }

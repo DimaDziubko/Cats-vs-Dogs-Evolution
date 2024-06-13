@@ -8,8 +8,8 @@ using _Game.Core.Prefabs;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
-using _Game.Creatives._LocalUnitConfigs;
 using _Game.Creatives.Factories;
+using _Game.Creatives.LocalUnitConfigs.Scr;
 using _Game.Creatives.Scripts;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
@@ -25,6 +25,7 @@ using _Game.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace _Game.Creatives.Creative_1.Scenario
 {
@@ -41,7 +42,7 @@ namespace _Game.Creatives.Creative_1.Scenario
         [SerializeField] private CrVfxFactory _vfxFactory;
         [SerializeField] private CrUnitFactory _unitFactory;
         [SerializeField] private CrProjectileFactory _projectileFactory;
-        [SerializeField] private BaseFactory _baseFactory;
+        [FormerlySerializedAs("towerFactory")] [FormerlySerializedAs("_baseFactory")] [SerializeField] private BaseFactory baseFactory;
 
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private Camera _overlayCamera;
@@ -67,8 +68,8 @@ namespace _Game.Creatives.Creative_1.Scenario
         [SerializeField] private float _speedFactor = 1;
 
 
-        [SerializeField] private Base _playerBase;
-        [SerializeField] private Base _enemyBase;
+        [FormerlySerializedAs("playerTower")] [FormerlySerializedAs("_playerBase")] [SerializeField] private Base playerBase;
+        [FormerlySerializedAs("enemyTower")] [FormerlySerializedAs("_enemyBase")] [SerializeField] private Base enemyBase;
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
 
@@ -97,14 +98,14 @@ namespace _Game.Creatives.Creative_1.Scenario
         public ISystemUpdate SystemUpdate => _systemUpdate;
         public static CrSceneContext I { get; private set; }
         public float FoodProductionSpeed => _foodProductionSpeed;
-        public UnitBuilderBtnData[] UnitBuilderButtonsData { get; private set; }
+        public UnitBuilderBtnModel[] UnitBuilderButtonsData { get; private set; }
 
         private void Awake()
         {
             I = this;
             _cameraService = new WorldCameraService(_mainCamera, _overlayCamera);
             _audioService = new AudioService(_mixer, _holder, _musicSource, _soundsHolder);
-            _factories = new FactoriesHolder(_unitFactory, _coinFactory, _vfxFactory, _baseFactory, _projectileFactory);
+            _factories = new FactoriesHolder(_unitFactory, _coinFactory, _vfxFactory, baseFactory, _projectileFactory);
             _hud.Construct(_cameraService, _pauseManager, _audioService);
             _unitFactory.Initialize(_cameraService, _random, _audioService);
             _projectileFactory.Initialize(_audioService);
@@ -154,17 +155,25 @@ namespace _Game.Creatives.Creative_1.Scenario
 
         private void SetupUnitBuilderBtnData()
         {
-            UnitBuilderButtonsData = new UnitBuilderBtnData[3];
+            UnitBuilderButtonsData = new UnitBuilderBtnModel[3];
             int index = 0;
 
             foreach (var unit in _playerUnits)
             {
-                var newData = new UnitBuilderBtnData()
+                var newData = new UnitBuilderBtnModel()
                 {
-                    FoodIcon = _foodSprite,
-                    FoodPrice = unit.Data.Config.FoodPrice,
-                    Type = unit.Type,
-                    UnitIcon = unit.Icon
+                    StaticData = new UnitBuilderBtnStaticData()
+                    {
+                        FoodPrice = unit.Data.Config.FoodPrice,
+                        Type = unit.Type,
+                        UnitIcon = unit.Icon
+                    },
+                    
+                    DynamicData = new UnitBuilderBtnDynamicData()
+                    {
+                        FoodIcon = _foodSprite,
+                    }
+
                 };
 
                 UnitBuilderButtonsData[index] = newData;
@@ -190,10 +199,10 @@ namespace _Game.Creatives.Creative_1.Scenario
         {
             CalculateBasePoints();
             
-            if(_playerBase != null)
-                _playerBase.Position = _playerBasePoint;
-            if(_enemyBase != null)
-                _enemyBase.Position = _enemyBasePoint;
+            if(playerBase != null)
+                playerBase.Position = _playerBasePoint;
+            if(enemyBase != null)
+                enemyBase.Position = _enemyBasePoint;
         }
         
         private void CalculateBasePoints()

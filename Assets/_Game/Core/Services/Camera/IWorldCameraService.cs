@@ -10,6 +10,6 @@ namespace _Game.Core.Services.Camera
         float CameraWidth { get; }
         Ray ScreenPointToRay(Vector3 mousePosition);
         Vector3 ScreenToWorldPoint(Vector3 vector3);
-        void EnableCamera();
+        void EnableMainCamera();
     }
 }

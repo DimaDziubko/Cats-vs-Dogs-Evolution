@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._GameInitializer;
 using _Game.Core.Communication;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
@@ -11,39 +12,44 @@ namespace _Game.Core._GameSaver
 {
     public class GameSaver : IGameSaver, IDisposable
     {
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
         private readonly IUserStateCommunicator _communicator;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
+        private readonly IGameInitializer _gameInitializer;
 
         private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
-        private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IFoodBoostStateReadonly FoodBoostState => _persistentData.State.FoodBoost;
         private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
         private IBattleSpeedStateReadonly BattleSpeed => _persistentData.State.BattleSpeedState;
+        private IUserCurrenciesStateReadonly Currencies => _persistentData.State.Currencies;
 
         private readonly float _debounceTime = 2.0f;
         private float _lastSaveTime;
 
         public GameSaver(
-            IPersistentDataService persistentData, 
+            IUserContainer persistentData, 
             IUserStateCommunicator communicator,
-            IFeatureUnlockSystem featureUnlockSystem)
+            IFeatureUnlockSystem featureUnlockSystem,
+            IGameInitializer gameInitializer)
         {
             _persistentData = persistentData;
             _communicator = communicator;
             _featureUnlockSystem = featureUnlockSystem;
+            _gameInitializer = gameInitializer;
+            gameInitializer.OnPreInitialization += Init;
         }
 
         public void Init()
         {
             TutorialState.StepsCompletedChanged += OnStepCompleted;
             TimelineState.OpenedUnit += OnUnitOpened;
-            TimelineState.UpgradeItemChanged += OnUpgradeItemChanged;
+            TimelineState.UpgradeItemLevelChanged += OnUpgradeItemLevelChanged;
             TimelineState.NextBattleOpened += OnNextBattleOpened;
-            TimelineState.NextAgeOpened += OnNextAgeOpened;
             TimelineState.NextTimelineOpened += OnNextTimelineOpened;
             _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
             FoodBoostState.FoodBoostChanged += OnFoodBoostChanged;
+            TimelineState.NextAgeOpened += OnNextAgeOpened;
             RaceState.Changed += OnRaceChanged;
             BattleSpeed.IsNormalSpeedActiveChanged += OnBattleSpeedChanged;
         }
@@ -53,13 +59,14 @@ namespace _Game.Core._GameSaver
             TimelineState.NextBattleOpened -= OnNextBattleOpened;
             TutorialState.StepsCompletedChanged -= OnStepCompleted;
             TimelineState.OpenedUnit -= OnUnitOpened;
-            TimelineState.UpgradeItemChanged -= OnUpgradeItemChanged;
+            TimelineState.UpgradeItemLevelChanged -= OnUpgradeItemLevelChanged;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
             TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
             _featureUnlockSystem.FeatureUnlocked -= OnFeatureUnlocked;
             FoodBoostState.FoodBoostChanged -= OnFoodBoostChanged;
             RaceState.Changed -= OnRaceChanged;
             BattleSpeed.IsNormalSpeedActiveChanged -= OnBattleSpeedChanged;
+            _gameInitializer.OnPreInitialization -= Init;
         }
 
         private void OnBattleSpeedChanged(bool _) => 
@@ -86,7 +93,7 @@ namespace _Game.Core._GameSaver
         private void OnNextAgeOpened() => 
             SaveGame();
 
-        private void OnUpgradeItemChanged(UpgradeItemType _) => 
+        private void OnUpgradeItemLevelChanged(UpgradeItemType _, int __) => 
             DebounceSaveGame();
 
         private void OnUnitOpened(UnitType _) => 

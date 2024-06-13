@@ -115,6 +115,7 @@ namespace _Game.Gameplay._Units.Scripts
             UnitType type,
             IRandomService random,
             IAudioService audioService,
+            ISoundService soundService,
             int unitLayer,
             int aggroLayer,
             int attackLayer)
@@ -139,6 +140,7 @@ namespace _Game.Gameplay._Units.Scripts
                 config.WeaponConfig,
                 faction,
                 audioService,
+                soundService,
                 _transform);
 
             _health.Construct(

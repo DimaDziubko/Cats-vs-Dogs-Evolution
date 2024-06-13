@@ -13,16 +13,16 @@ namespace _Game.Core.Login
         public string Description => "Login...";
         
         private Action<float> _onProgress;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IUserStateCommunicator _communicator;
         private readonly IRandomService _random;
 
         public LoginOperation(
-            IPersistentDataService persistentData,
+            IUserContainer userContainer,
             IUserStateCommunicator communicator,
             IRandomService random)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _communicator = communicator;
             _random = random;
         }
@@ -32,14 +32,15 @@ namespace _Game.Core.Login
             _onProgress = onProgress;
             _onProgress?.Invoke(0.3f);
 
-            _persistentData.State = await GetAccountState();
+            _userContainer.State = await GetAccountState();
 
             _onProgress?.Invoke(1f);
         }
         
         private async UniTask<UserAccountState> GetAccountState()
         {
-            var result = await _communicator.GetUserState();
+            UserAccountState result = await _communicator.GetUserState();
+            
             _onProgress?.Invoke(0.6f);
 
             if (result == null || result.IsValid() == false)

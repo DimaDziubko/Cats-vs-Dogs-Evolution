@@ -4,7 +4,6 @@ using _Game.Core.Services.Camera;
 using _Game.UI.Settings.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.Utils;
-using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
@@ -36,17 +35,8 @@ namespace _Game.Core.Loading
                 await UniTask.Yield();
             }
             onProgress?.Invoke(0.7f);
-            
-            // Scene scene = _sceneLoader.GetSceneByName(Constants.Scenes.BATTLE_MODE);
-            //
-            // var gameMode = scene.GetRoot<BattleMode>();
-            
-            _cameraService.EnableCamera();
-            
-            // onProgress?.Invoke(0.85f);
-            //
-            // gameMode.Init();
-            
+
+            _cameraService.EnableMainCamera();
             onProgress?.Invoke(1.0f);
         }
     }

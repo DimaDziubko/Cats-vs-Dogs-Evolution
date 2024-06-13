@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._StateFactory;
 using Zenject;
 
 namespace _Game.Core.GameState
 {
     public class GameStateMachine : IGameStateMachine, IInitializable
     {
-        private readonly StateFactory.StateFactory _stateFactory;
+        private readonly StateFactory _stateFactory;
         private Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
         
-        public GameStateMachine(StateFactory.StateFactory stateFactory)
+        public GameStateMachine(StateFactory stateFactory)
         {
             _stateFactory = stateFactory;
         }
@@ -50,6 +51,8 @@ namespace _Game.Core.GameState
                     .CreateState<ConfigurationState>(),
                 [typeof(LoginState)] = _stateFactory
                     .CreateState<LoginState>(),
+                [typeof(DataLoadingState)] = _stateFactory
+                    .CreateState<DataLoadingState>(),
                 [typeof(InitializationState)] = _stateFactory
                     .CreateState<InitializationState>(),
                 [typeof(GameLoadingState)] = _stateFactory

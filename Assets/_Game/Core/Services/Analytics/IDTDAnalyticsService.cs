@@ -5,7 +5,6 @@ namespace _Game.Core.Services.Analytics
 {
     public interface IDTDAnalyticsService
     {
-        void Init();
         void OnBattleStarted(BattleAnalyticsData battleAnalyticsData);
     }
 }

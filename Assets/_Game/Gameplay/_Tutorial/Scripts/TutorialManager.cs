@@ -1,36 +1,41 @@
+using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 
 namespace _Game.Gameplay._Tutorial.Scripts
 {
-    public interface ITutorialManager
-    {
-        void Init();
-        public void Register(ITutorialStep tutorialStep);
-        public void UnRegister(ITutorialStep tutorialStep);
-    }
-
-    public class TutorialManager : ITutorialManager
+    public class TutorialManager : ITutorialManager, IDisposable
     {
         private readonly TutorialPointerView _pointerView;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _persistentData;
+        private readonly IGameInitializer _gameInitializer;
         private ITutorialStateReadonly TutorialStateReadonly => _persistentData.State.TutorialState;
 
         private bool _inProgress;
-        
+
         public TutorialManager(
             TutorialPointerView pointerView,
-            IPersistentDataService persistentData)
+            IUserContainer persistentData,
+            IGameInitializer gameInitializer)
         {
             _pointerView = pointerView;
             _persistentData = persistentData;
+            _gameInitializer = gameInitializer;
+            gameInitializer.OnPostInitialization += Init;
         }
 
-        public void Init()
+        private void Init()
         {
             TutorialStateReadonly.StepsCompletedChanged += OnStepCompleted;
             _pointerView.Hide();
             _inProgress = false;
+        }
+
+        void IDisposable.Dispose()
+        {
+            TutorialStateReadonly.StepsCompletedChanged -= OnStepCompleted;
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
         public void Register(ITutorialStep tutorialStep)
@@ -68,7 +73,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
             var tutorialData = tutorialStep.GetTutorialStepData();
             _persistentData.CompleteTutorialStep(tutorialData.Step);
         }
-        
+
         private void OnStepCompleted(int step) => Break();
 
         private void Break()

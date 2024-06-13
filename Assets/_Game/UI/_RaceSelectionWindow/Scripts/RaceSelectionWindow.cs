@@ -14,13 +14,13 @@ namespace _Game.UI._RaceSelectionWindow.Scripts
         [SerializeField] private Button _firstFactionBtn;
         [SerializeField] private Button _secondFactionBtn;
 
-        private IPersistentDataService _persistentData;
+        private IUserContainer _persistentData;
         private IAudioService _audioService;
 
         private UniTaskCompletionSource<bool> _taskCompletion;
 
         public void Construct(
-            IPersistentDataService persistentData,
+            IUserContainer persistentData,
             IAudioService audioService,
             IWorldCameraService worldCameraService)
         {

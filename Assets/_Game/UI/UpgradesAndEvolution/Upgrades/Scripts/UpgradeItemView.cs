@@ -11,7 +11,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
     public class UpgradeItemView : MonoBehaviour
     {
         public event Action<ButtonState> ButtonStateChanged;
-        public event Action<UpgradeItemType> Upgrade;
+        public event Action<UpgradeItemType, float> Upgrade;
 
         private IAudioService _audioService;
         
@@ -22,6 +22,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         
         [ShowInInspector]
         private UpgradeItemType _type;
+
+        private float _price;
         
         public void Init(IAudioService audioService)
         {
@@ -48,20 +50,21 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _transactionButton.ButtonStateChanged += OnButtonStateChanged;
         }
 
-        public void UpdateUI(UpgradeItemViewModel model)
+        public void UpdateUI(UpgradeItemModel model)
         {
             if(!_transactionButton) return;
 
             _transactionButton.Show();
             
-            _itemIconHolder.sprite = model.Icon;
+            _itemIconHolder.sprite = model.StaticData.Icon;
             
-            _type = model.Type;
-
+            _type = model.StaticData.Type;
+            _price = model.DynamicData.Price;
+            
             _amountLabel.text = model.AmountText;
-            _itemNameLabel.text = model.Name;
+            _itemNameLabel.text = model.StaticData.Name;
             
-            _transactionButton.UpdateButtonState(model.CanAfford, model.Price);
+            _transactionButton.UpdateButtonState(model.CanAfford, model.DynamicData.Price);
         }
 
         public void Cleanup()
@@ -73,7 +76,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private void OnTransactionButtonClick()
         {
             PlayButtonSound();
-            Upgrade?.Invoke(_type);
+            Upgrade?.Invoke(_type, _price);
         }
 
         private void PlayButtonSound() => 

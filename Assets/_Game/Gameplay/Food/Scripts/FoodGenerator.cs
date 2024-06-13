@@ -1,10 +1,13 @@
-﻿using System;
+﻿using System; 
 using _Game.Core._Logger;
 using _Game.Core._SystemUpdate;
+using _Game.Core.Configs.Repositories;
+using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services.Age.Scripts;
-using _Game.Core.Services.Upgrades.Scripts;
+using _Game.Core.Services.PersistentData;
+using _Game.Core.UserState;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay.Battle.Scripts;
 using _Game.UI.UnitBuilderBtn.Scripts;
@@ -25,17 +28,21 @@ namespace _Game.Gameplay.Food.Scripts
         void SetMediator(IBattleMediator battleMediator);
     }
 
-    public class FoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler
+    public class FoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler, IDisposable
     {
         public event Action<int> FoodChanged;
-
-        private readonly IEconomyUpgradesService _economyUpgradesService;
-        private readonly IAgeStateService _ageState;
+        
         private readonly IMyLogger _logger;
         private readonly IFoodBoostService _foodBoostService;
         private readonly IPauseManager _pauseManager;
         private readonly IBattleSpeedManager _speedManager;
         private readonly ISystemUpdate _systemUpdate;
+        private readonly IGeneralDataPool _generalDataPool;
+        private readonly IEconomyConfigRepository _economyConfig;
+        private readonly IUserContainer _userContainer;
+
+        private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
 
         private IBattleMediator _battleMediator;
 
@@ -47,7 +54,7 @@ namespace _Game.Gameplay.Food.Scripts
         private float _accumulatedTime;
 
         private readonly FoodPanel _panel;
-        
+
         public int FoodAmount
         {
             get => _foodAmount;
@@ -59,31 +66,36 @@ namespace _Game.Gameplay.Food.Scripts
         }
 
         public FoodGenerator(
-            IEconomyUpgradesService economyUpgradesService, 
-            IAgeStateService ageState,
+            IEconomyConfigRepository economyConfig,
             IMyLogger logger,
             GameplayUI gameplayUI,
             IFoodBoostService foodBoostService,
             ISystemUpdate systemUpdate,
             IPauseManager pauseManager,
-            IBattleSpeedManager speedManager)
+            IBattleSpeedManager speedManager,
+            IGeneralDataPool generalDataPool,
+            IUserContainer userContainer)
         {
-            _economyUpgradesService = economyUpgradesService;
+            _economyConfig = economyConfig;
             _panel = gameplayUI.FoodPanel;
-            _ageState = ageState;
             _logger = logger;
             _foodBoostService = foodBoostService;
             _speedManager = speedManager;
             _systemUpdate = systemUpdate;
+            _generalDataPool = generalDataPool;
+            _userContainer = userContainer;
             
             _pauseManager = pauseManager;
         }
 
         public void Init()
         {
-            _panel.SetupIcon(_ageState.GetCurrentFoodIcon);
-            _economyUpgradesService.UpgradeItemUpdated += UpdateGeneratorData;
+            UpgradeItems.Changed += UpdateGeneratorData;
+            _panel.SetupIcon(_generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace));
         }
+
+        void IDisposable.Dispose() => 
+            UpgradeItems.Changed -= UpdateGeneratorData;
 
         public void StartGenerator()
         {
@@ -93,10 +105,10 @@ namespace _Game.Gameplay.Food.Scripts
             FoodChanged += _panel.OnFoodChanged;
             _foodBoostService.FoodBoost += AddFood;
             
-            _defaultProductionSpeed =  _economyUpgradesService.GetFoodProductionSpeed();
+            _defaultProductionSpeed = UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount;
             _productionSpeed = _defaultProductionSpeed * _speedManager.CurrentSpeedFactor;
             
-            FoodAmount = _economyUpgradesService.GetInitialFoodAmount();
+            FoodAmount = _economyConfig.GetInitialFoodAmount();
 
             _panel.UpdateFillAmount(0);
             _panel.OnFoodChanged(FoodAmount);
@@ -111,16 +123,13 @@ namespace _Game.Gameplay.Food.Scripts
             _speedManager.UnRegister(this);
         }
 
-        public void SetMediator(IBattleMediator battleMediator)
-        {
-            _battleMediator = battleMediator;
-        }
+        public void SetMediator(IBattleMediator battleMediator) => _battleMediator = battleMediator;
 
-        private void UpdateGeneratorData(UpgradeItemViewModel model)
+        private void UpdateGeneratorData(UpgradeItemType type, UpgradeItemDynamicData data)
         {
-            if (model.Type == UpgradeItemType.FoodProduction)
+            if (type == UpgradeItemType.FoodProduction)
             {
-                _productionSpeed = model.Amount;
+                _productionSpeed = data.Amount;
             }
         }
         
@@ -140,19 +149,11 @@ namespace _Game.Gameplay.Food.Scripts
             _panel.UpdateFillAmount(foodProgress % 1);
         }
 
-        public void AddFood(int delta)
-        {
-            FoodAmount += delta;
-        }
-        
-        public void SpendFood(int delta)
-        {
-            FoodAmount -= delta;
-        }
+        public void AddFood(int delta) => FoodAmount += delta;
 
-        public void SetFactor(float speedFactor)
-        {
+        public void SpendFood(int delta) => FoodAmount -= delta;
+
+        public void SetFactor(float speedFactor) => 
             _productionSpeed = _defaultProductionSpeed * speedFactor;
-        }
     }
 }

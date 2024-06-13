@@ -1,11 +1,10 @@
-﻿using _Game.Core.Loading;
+﻿using _Game.Core.LoadingScreen;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Gameplay.GameResult.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Pin.Scripts;
 using _Game.UI.Settings.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;

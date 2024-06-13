@@ -1,5 +1,4 @@
-﻿using _Game.Core.Services.Age.Scripts;
-using _Game.Core.Services.Battle;
+﻿using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
@@ -15,7 +14,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly ICoinSpawner _coinSpawner;
         private readonly IBaseDestructionManager _baseDestructionManager;
         private readonly IInteractionCache _interactionCache;
-        private readonly IAgeStateService _ageState;
+        private readonly IBasePresenter _basePresenter;
 
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
@@ -28,14 +27,14 @@ namespace _Game.Gameplay._BattleField.Scripts
             ICoinSpawner coinSpawner,
             IBaseDestructionManager baseDestructionManager,
             IInteractionCache interactionCache,
-            IAgeStateService ageState)
+            IBasePresenter basePresenter)
         {
             _baseFactory = baseFactory;
             _cameraService = cameraService;
             _coinSpawner = coinSpawner;
             _baseDestructionManager = baseDestructionManager;
             _interactionCache = interactionCache;
-            _ageState = ageState;
+            _basePresenter = basePresenter;
         }
 
         public void OnStartBattle()
@@ -52,9 +51,12 @@ namespace _Game.Gameplay._BattleField.Scripts
             CalculateBasePoints();
             UpdatePlayerBase();
 
-            _ageState.BaseDataUpdated += UpdateData;
-            _ageState.AgeUpdated += UpdatePlayerBase;
-            _ageState.RaceChangingBegun += RemoveBases;
+            _basePresenter.PlayerBaseDataUpdated += UpdateData;
+            _basePresenter.PlayerBaseUpdated += UpdatePlayerBase;
+
+            //_ageState.BaseDataUpdated += UpdateData;
+            //_ageState.AgeUpdated += UpdatePlayerBase;
+            //_ageState.RaceChangingBegun += RemoveBases;
         }
 
         public void UpdatePlayerBase()
@@ -63,7 +65,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             {
                 _playerBase.Recycle();
             }
-
+            
             _playerBase = _baseFactory.GetBase(Faction.Player);
             _playerBase.PrepareIntro(
                 _playerBasePoint, 
@@ -91,7 +93,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _enemyBase.Recycle();
         }
         
-        private void UpdateData(BaseData data) => _playerBase.UpdateData(data);
+        private void UpdateData(BaseModel model) => _playerBase.UpdateData(model);
 
         private void CalculateBasePoints()
         {

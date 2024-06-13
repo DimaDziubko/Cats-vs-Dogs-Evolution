@@ -5,20 +5,21 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Zenject;
 
 namespace _Game._AssetProvider
 {
-    public class AssetProvider : IAssetProvider, IDisposable
+    public class AssetProvider : IAssetProvider, IDisposable, IInitializable
     {
         private readonly Dictionary<string, AsyncOperationHandle> _completeCache = new Dictionary<string, AsyncOperationHandle>();
 
         private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new Dictionary<string, List<AsyncOperationHandle>>();
 
-        public void Init()
+        public void Initialize()
         {
             Addressables.InitializeAsync();
         }
-
+        
         public UniTask<GameObject> Instantiate(string address) => 
             Addressables.InstantiateAsync(address).ToUniTask();
 
@@ -68,7 +69,7 @@ namespace _Game._AssetProvider
                 _handles.Remove(key);
             }
         }
-        
+
         public void Dispose()
         {
             CleanUp();

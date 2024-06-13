@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
@@ -20,17 +21,21 @@ namespace _Game.Core.Services.Analytics
         private string UniqueID { get; set; }
 
         private readonly IMyLogger _logger;
-        private readonly IPersistentDataService _persistentData;
+        private readonly IUserContainer _userContainer;
 
-        private IUserTimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
-        public AnalyticsService(IMyLogger logger, IPersistentDataService persistentData)
+        public AnalyticsService(
+            IMyLogger logger, 
+            IUserContainer userContainer,
+            IGameInitializer gameInitializer)
         {
             _logger = logger;
-            _persistentData = persistentData;
+            _userContainer = userContainer;
+            gameInitializer.RegisterAsyncInitialization(Init);
         }
 
-        public async UniTask Init()
+        private async UniTask Init()
         {
             var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
             if (dependencyStatus == DependencyStatus.Available)
@@ -51,7 +56,7 @@ namespace _Game.Core.Services.Analytics
             TimelineState.NextAgeOpened += OnNextAgeOpened;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             TimelineState.NextBattleOpened -= OnNextBattleOpened;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
@@ -77,7 +82,7 @@ namespace _Game.Core.Services.Analytics
 
         private bool IsComponentsReady()
         {
-            return _isFirebaseInitialized || _persistentData != null;
+            return _isFirebaseInitialized || _userContainer != null;
         }
 
         private void OnNextBattleOpened()
@@ -165,7 +170,6 @@ namespace _Game.Core.Services.Analytics
                 _logger.LogWarning($"Firebase app not initialized. Cannot log event: {eventName}");
             }
         }
-        
     }
 
 }

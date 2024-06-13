@@ -22,10 +22,10 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         public void UpdateModel(TimelineInfoItemModel model)
         {
-            _nameLabel.text = model.Name; 
-            _ageIconHolder.sprite = model.AgeIcon;
-            _dateRangeLabel.text = model.DateRange;
-            _descriptionLabel.text = model.Description;
+            _nameLabel.text = model.StaticData.Name; 
+            _ageIconHolder.sprite = model.StaticData.AgeIcon;
+            _dateRangeLabel.text = model.StaticData.DateRange;
+            _descriptionLabel.text = model.StaticData.Description;
 
             HandleLock(model.IsUnlocked);
         }

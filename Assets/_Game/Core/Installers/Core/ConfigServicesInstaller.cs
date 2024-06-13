@@ -9,6 +9,7 @@ namespace _Game.Core.Installers.Core
         public override void InstallBindings()
         {
             BindConfigProviders();
+            BindCommonConfigRepository();
             BindTimelineConfigRepository();
             BindAgeConfigRepository();
             BindBattleConfigRepository();
@@ -25,30 +26,30 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
         }
 
+        private void BindCommonConfigRepository() =>
+            Container
+                .BindInterfacesAndSelfTo<CommonItemsConfigRepository>()
+                .AsSingle();
+
+        
         private void BindEconomyConfigRepository() =>
             Container
                 .BindInterfacesAndSelfTo<EconomyConfigRepository>()
                 .AsSingle();
 
-        private void BindTimelineConfigRepository()
-        {
+        private void BindTimelineConfigRepository() =>
             Container
                 .BindInterfacesAndSelfTo<TimelineConfigRepository>()
                 .AsSingle();
-        }
 
-        private void BindAgeConfigRepository()
-        {
+        private void BindAgeConfigRepository() =>
             Container
                 .BindInterfacesAndSelfTo<AgeConfigRepository>()
                 .AsSingle();
-        }
 
-        private void BindBattleConfigRepository()
-        {
+        private void BindBattleConfigRepository() =>
             Container
                 .BindInterfacesAndSelfTo<BattleSpeedConfigRepository>()
                 .AsSingle();
-        }
     }
 }

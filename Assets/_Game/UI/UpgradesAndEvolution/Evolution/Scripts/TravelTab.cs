@@ -1,6 +1,6 @@
 using System;
+using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.Evolution.Scripts;
 using _Game.UI.Common.Scripts;
 using TMPro;
 using UnityEngine;
@@ -19,15 +19,15 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         
         [SerializeField] private TMP_Text _travelConditionHint;
 
-        private IEvolutionService _evolutionService;
+        private ITimelineTravelPresenter _timelineTravelPresenter;
         private IAudioService _audioService;
         
         public void Construct(
-            IEvolutionService evolutionService,
+            ITimelineTravelPresenter timelineTravelPresenter,
             IAudioService audioService)
         {
             _audioService = audioService;
-            _evolutionService = evolutionService;
+            _timelineTravelPresenter = timelineTravelPresenter;
         }
         
         public void Show()
@@ -45,8 +45,8 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void Subscribe()
         {
             _travelButton.Click += OnTravelButtonClick;
-            TravelTabOpened += _evolutionService.OnTravelTabOpened;
-            _evolutionService.TravelViewModelUpdated += OnTravelViewModelUpdated;
+            TravelTabOpened += _timelineTravelPresenter.OnTravelTabOpened;
+            _timelineTravelPresenter.TravelViewModelUpdated += OnTravelViewModelUpdated;
         }
 
         public void Hide()
@@ -60,16 +60,16 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void Unsubscribe()
         {
-            TravelTabOpened -= _evolutionService.OnTravelTabOpened;
-            _evolutionService.TravelViewModelUpdated -= OnTravelViewModelUpdated;
+            TravelTabOpened -= _timelineTravelPresenter.OnTravelTabOpened;
+            _timelineTravelPresenter.TravelViewModelUpdated -= OnTravelViewModelUpdated;
             _travelButton.Click -= OnTravelButtonClick;
         }
 
-        private void OnTravelViewModelUpdated(TravelTabData tabData)
+        private void OnTravelViewModelUpdated(TravelTabModel tabModel)
         {
-            UpdateTravelConditionHint(tabData.CanTravel);
-            UpdateTravelInfoText(tabData.NextTimelineNumber);
-            UpdateTravelButton(tabData.CanTravel);
+            UpdateTravelConditionHint(tabModel.CanTravel);
+            UpdateTravelInfoText(tabModel.NextTimelineNumber);
+            UpdateTravelButton(tabModel.CanTravel);
         }
 
         private void UpdateTravelConditionHint(in bool viewModelCanTravel) => 
@@ -81,7 +81,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void OnTravelButtonClick()
         {
             PlayButtonSound();
-            _evolutionService.MoveToNextTimeline();
+            _timelineTravelPresenter.OpenNextTimeline();
         }
 
         private void PlayButtonSound() => 
