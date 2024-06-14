@@ -12,7 +12,6 @@ namespace _Game.Gameplay._Units.Scripts
         protected float DisableAttackDelay { get; set; } = 0.1f;
 
         [SerializeField] private SoundData _soundData;
-        [SerializeField] private AudioClip _attackSFX;
 
         protected ITarget _target;
         protected IShootProxy _shootProxy;
@@ -36,21 +35,15 @@ namespace _Game.Gameplay._Units.Scripts
             set => _unitTransform.rotation = value;
         }
         
-        public void SetTarget(ITarget target)
-        {
+        public void SetTarget(ITarget target) => 
             _target = target;
-        }
 
-        public void SetShootProxy(IShootProxy shootProxy)
-        {
+        public void SetShootProxy(IShootProxy shootProxy) => 
             _shootProxy = shootProxy;
-        }
 
-        public void SetVFXProxy(IVFXProxy vFXProxy)
-        {
+        public void SetVFXProxy(IVFXProxy vFXProxy) => 
             _vFXProxy = vFXProxy;
-        }
-        
+
         public virtual void Construct(
             WeaponConfig config,
             Faction faction,
@@ -64,10 +57,8 @@ namespace _Game.Gameplay._Units.Scripts
             _isActive = true;
         }
 
-        public void Disable()
-        {
+        public void Disable() => 
             StartCoroutine(DisableAttackAfterDelay());
-        }
 
         IEnumerator DisableAttackAfterDelay()
         {
@@ -75,21 +66,14 @@ namespace _Game.Gameplay._Units.Scripts
             _isActive = false;
         }
         
-        public void Enable()
-        {
+        public void Enable() => 
             _isActive = true;
-        }
 
         //Animation event
         protected virtual void OnAttack()
         {
             RotateToTarget(_target.Transform.position);
             
-            if (_audioService != null && _attackSFX != null)
-            {
-                _audioService.PlayOneShot(_attackSFX);
-            }
-
             if (_soundService != null && _soundData != null)
             {
                 _soundService.CreateSound()

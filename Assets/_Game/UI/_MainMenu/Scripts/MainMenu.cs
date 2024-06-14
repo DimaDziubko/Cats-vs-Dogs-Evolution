@@ -11,7 +11,10 @@ using _Game.UI.Common.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Disposable;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace _Game.UI._MainMenu.Scripts
 {
@@ -23,13 +26,14 @@ namespace _Game.UI._MainMenu.Scripts
         Evolution,
         UpgradesAndEvolution,
     }
-    
+
     [RequireComponent(typeof(Canvas))]
     public class MainMenu : MonoBehaviour
     {
         public event Action Open;
 
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private RectTransform _layoutTransform;
         [SerializeField] private ToggleButton _dungeonButton;
         [SerializeField] private ToggleButton _upgradeButton;
         [SerializeField] private ToggleButton _battleButton;
@@ -37,23 +41,25 @@ namespace _Game.UI._MainMenu.Scripts
         [SerializeField] private ToggleButton _shopButton;
 
         [SerializeField] private TutorialStep _upgradesTutorialStep;
-        
+
         private ToggleButton _activeButton;
-        
+
+
         private ToggleButton ActiveButton
         {
             get => _activeButton;
-            set 
+            set
             {
                 if (_activeButton != null)
                 {
                     _activeButton.UnHighlightBtn();
                 }
+
                 _activeButton = value;
                 _activeButton.HighlightBtn();
             }
         }
-        
+
         private IGameStateMachine _stateMachine;
         private IShopPopupProvider _shopPopupProvider;
         private IWorldCameraService _cameraService;
@@ -64,7 +70,8 @@ namespace _Game.UI._MainMenu.Scripts
         private ITutorialManager _tutorialManager;
         private IUpgradesAvailabilityChecker _upgradesChecker;
         private IMyLogger _logger;
-        
+
+
         //TODO Change step by step
         private bool IsDungeonUnlocked => false;
         private bool IsUpgradesUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_upgradeButton);
@@ -76,6 +83,7 @@ namespace _Game.UI._MainMenu.Scripts
 
         private Disposable<StartBattleWindow> _startBattleWindow;
         private Disposable<UpgradeAndEvolutionWindow> _upgradeAndEvolutionWindow;
+
 
         public void Construct(
             IWorldCameraService cameraService,
@@ -111,7 +119,8 @@ namespace _Game.UI._MainMenu.Scripts
             }
 
             _dungeonButton.Initialize(IsDungeonUnlocked, OnDungeonClick, PlayButtonSound);
-            _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound, _upgradesChecker.GetNotificationData(Window.UpgradesAndEvolution));
+            _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound,
+                _upgradesChecker.GetNotificationData(Window.UpgradesAndEvolution));
             _battleButton.Initialize(IsBattleUnlocked, OnBattleButtonClick, PlayButtonSound);
             _cardsButton.Initialize(IsCardsUnlocked, OnCardsButtonClick, PlayButtonSound);
             _shopButton.Initialize(IsCardsUnlocked, OnShopButtonClick, PlayButtonSound);
@@ -134,7 +143,7 @@ namespace _Game.UI._MainMenu.Scripts
                 _upgradeButton.SetupPin(data);
             }
         }
-        
+
         private void Unsubscribe()
         {
             _upgradesChecker.Notify -= OnUpgradesNotified;
@@ -164,7 +173,7 @@ namespace _Game.UI._MainMenu.Scripts
             _dungeonButton.Cleanup();
             _cardsButton.Cleanup();
             _shopButton.Cleanup();
-            
+
             if (_startBattleWindow != null)
             {
                 _startBattleWindow.Value.Hide();
@@ -176,7 +185,7 @@ namespace _Game.UI._MainMenu.Scripts
                 _upgradeAndEvolutionWindow.Value.Hide();
                 _upgradeAndEvolutionWindow?.Dispose();
             }
-            
+
             _upgradesTutorialStep.CancelStep();
             _tutorialManager.UnRegister(_upgradesTutorialStep);
         }
@@ -191,7 +200,7 @@ namespace _Game.UI._MainMenu.Scripts
                 _startBattleWindow.Value.Show();
 
                 ActiveButton = button;
-                
+
                 if (_upgradeAndEvolutionWindow != null)
                 {
                     _upgradeAndEvolutionWindow.Value.Hide();
@@ -199,6 +208,8 @@ namespace _Game.UI._MainMenu.Scripts
                     _upgradeAndEvolutionWindow = null;
                 }
             }
+            
+            RebuildLayout();
         }
 
         private async void OnUpgradeButtonClick(ToggleButton button)
@@ -206,10 +217,10 @@ namespace _Game.UI._MainMenu.Scripts
             if (_window != Window.UpgradesAndEvolution)
             {
                 _upgradesTutorialStep.CompleteStep();
-                
-                _upgradeAndEvolutionWindow 
+
+                _upgradeAndEvolutionWindow
                     = await _upgradeAndEvolutionWindowProvider.Load();
-                
+
                 _upgradeAndEvolutionWindow.Value.Show();
                 _window = Window.UpgradesAndEvolution;
 
@@ -222,16 +233,23 @@ namespace _Game.UI._MainMenu.Scripts
                     _startBattleWindow = null;
                 }
             }
-            
+
+            RebuildLayout();
         }
 
         private void PlayButtonSound() => _audioService.PlayButtonSound();
+
 
         private async void OnShopBtnClicked()
         {
             var shop = await _shopPopupProvider.Load();
             var isExit = await shop.Value.AwaitForExit();
             if (isExit) shop.Dispose();
+        }
+
+        private void RebuildLayout()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_layoutTransform);
         }
     }
 }

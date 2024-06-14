@@ -25,10 +25,8 @@ namespace _Game.Core.LoadingScreen
         
         private float _targetProgress;
 
-        private void Awake()
-        {
+        private void Awake() => 
             DontDestroyOnLoad(this);
-        }
 
         public async UniTask Load(
             Queue<ILoadingOperation> loadingOperations)

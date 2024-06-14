@@ -65,7 +65,7 @@ namespace _Game.Core.UserState
                 
                 TutorialState = new TutorialState()
                 {
-                    StepsCompleted = 0
+                    StepsCompleted = -1
                 },
                 
                 BattleSpeedState = new BattleSpeedState()

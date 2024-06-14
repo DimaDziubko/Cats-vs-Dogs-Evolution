@@ -91,5 +91,16 @@ namespace _Game.Gameplay._Tutorial.Scripts
         {
             gameObject.SetActive(false);
         }
+
+        public void SetActive(bool isVisible)
+        {
+            if (isVisible)
+            {
+                Enable();
+                StartAnimation();
+                return;
+            }
+            Disable();
+        }
     }
 }

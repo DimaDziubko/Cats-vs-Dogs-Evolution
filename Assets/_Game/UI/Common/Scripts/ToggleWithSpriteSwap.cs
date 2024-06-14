@@ -19,8 +19,7 @@ namespace _Game.UI.Common.Scripts
         public Feature Feature => Feature.Pause;
 
         public event Action<bool> ValueChanged;
-
-
+        
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -29,12 +28,12 @@ namespace _Game.UI.Common.Scripts
             _button.onClick.AddListener(OnButtonClicked);
         }
 
-        public void SetActive(bool isPauseAvailable) => 
-            gameObject.SetActive(isPauseAvailable);
+        public void SetActive(bool isAvailable) => 
+            gameObject.SetActive(isAvailable);
 
-        public void UpdateToggleStateManually(bool isPaused)
+        public void UpdateToggleStateManually(bool isOn)
         {
-            _isOn = isPaused;
+            _isOn = isOn;
             _changableImage.sprite = _isOn ? _onSprite : _offSprite;
         }
 
