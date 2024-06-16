@@ -35,7 +35,7 @@ namespace _Game.Core.Configs.Providers
             return _cachedConfig;
         }
 
-        public void CleanCache()
+        public void ClearCache()
         {
             _cachedConfig = null;
             _isConfigLoaded = false;
@@ -100,6 +100,6 @@ namespace _Game.Core.Configs.Providers
     public interface IRemoteConfigProvider
     {
         Task<JObject> GetConfig();
-        void CleanCache();
+        void ClearCache();
     }
 }
