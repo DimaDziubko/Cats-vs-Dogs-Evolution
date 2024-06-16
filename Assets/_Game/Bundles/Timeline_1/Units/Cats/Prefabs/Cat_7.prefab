@@ -599,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 357445535975499552, guid: 49e9e45335dd01140ab058d70a3227e6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.414
+      value: 0.237
       objectReference: {fileID: 0}
     - target: {fileID: 357445535975499552, guid: 49e9e45335dd01140ab058d70a3227e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -758,6 +758,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
+    - target: {fileID: 4257508509235537429, guid: 9edc26a2459312c4294fd3c3a884f8ec, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5136997018928029791, guid: 9edc26a2459312c4294fd3c3a884f8ec, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -782,6 +786,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
+    - target: {fileID: 5975029146629421758, guid: 9edc26a2459312c4294fd3c3a884f8ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6736957807164001479, guid: 9edc26a2459312c4294fd3c3a884f8ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5287502
@@ -871,7 +879,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: 724994b0a44f7b44a9ffcfa3b49fc157, type: 3}
+  _soundData:
+    Clip: {fileID: 8300000, guid: 77560011cb19a0d4cbaf195d58b55935, type: 3}
+    MixerGroup: {fileID: 1224378660055227196, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}
+    Loop: 0
+    PlayOnAwake: 0
+    FrequentSound: 1
+    Mute: 0
+    BypassEffects: 0
+    BypassListenerEffects: 0
+    BypassReverbZones: 0
+    Priority: 128
+    Volume: 1
+    Pitch: 1
+    PanStereo: 0
+    SpatialBlend: 0
+    ReverbZoneMix: 1
+    DopplerLevel: 1
+    Spread: 0
+    MinDistance: 1
+    MaxDistance: 500
+    IgnoreListenerVolume: 0
+    IgnoreListenerPause: 0
+    RolloffMode: 0
   _projectileGenerator: {fileID: 1525764814750168395}
   _muzzleTransform: {fileID: 0}
 --- !u!114 &8383625912500381115
