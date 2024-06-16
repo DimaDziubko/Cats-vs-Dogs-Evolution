@@ -428,8 +428,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 208
-      y: 60
+      x: 24
+      y: 146
       width: 29
       height: 18
     spriteID: 6b9f597ef249c3242bd67391856532c7
@@ -637,7 +637,7 @@ ScriptedImporter:
     - {x: 15, y: 16}
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 208, y: 60}
+    uvTransform: {x: 24, y: 146}
     spritePosition: {x: 120, y: 28}
   - name: Body
     originalName: 
@@ -996,8 +996,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 115
-      y: 90
+      x: 24
+      y: 172
       width: 28
       height: 18
     spriteID: 76d43e037e017d24092d6fb622da15c0
@@ -1205,8 +1205,30 @@ ScriptedImporter:
     - {x: 15, y: 16}
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 115, y: 90}
+    uvTransform: {x: 24, y: 172}
     spritePosition: {x: 147, y: 28}
+  - name: Arrow
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 146
+      width: 12
+      height: 94
+    spriteID: 19651dba473b4a74983eecc1c59d2169
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 146}
+    spritePosition: {x: 142, y: 25}
   - name: Shadow
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -1214,8 +1236,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 115
-      y: 60
+      x: 4
+      y: 116
       width: 85
       height: 22
     spriteID: c1b97ffd3fff987409747dfb7db9b0a1
@@ -1491,7 +1513,7 @@ ScriptedImporter:
     - {x: 22, y: 23}
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 115, y: 60}
+    uvTransform: {x: 4, y: 116}
     spritePosition: {x: 104, y: 21}
   characterData:
     bones:
@@ -1631,7 +1653,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 6b9f597ef249c3242bd67391856532c7
     layerID: 14
-    mosaicPosition: {x: 208, y: 60}
+    mosaicPosition: {x: 24, y: 146}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -1651,7 +1673,17 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 76d43e037e017d24092d6fb622da15c0
     layerID: 4
-    mosaicPosition: {x: 115, y: 90}
+    mosaicPosition: {x: 24, y: 172}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Arrow
+    spriteName: Arrow
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 19651dba473b4a74983eecc1c59d2169
+    layerID: 23
+    mosaicPosition: {x: 4, y: 146}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -1661,7 +1693,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: c1b97ffd3fff987409747dfb7db9b0a1
     layerID: 2
-    mosaicPosition: {x: 115, y: 60}
+    mosaicPosition: {x: 4, y: 116}
     flatten: 0
     isImported: 1
     isVisible: 1
