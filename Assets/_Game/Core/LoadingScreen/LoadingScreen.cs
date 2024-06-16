@@ -49,6 +49,7 @@ namespace _Game.Core.LoadingScreen
                     await DarkFadeLoading(loadingOperations);
                     break;
             }
+            
         }
 
         private async UniTask TransparentLoading(Queue<ILoadingOperation> loadingOperations)
@@ -67,12 +68,11 @@ namespace _Game.Core.LoadingScreen
             {
                 image.enabled = true;
             }
-            
-            
+
             ResetFade(1);
 
             await LoadOperations(loadingOperations);
-            await PlayFadeAnimation(1, 0,2);
+            await PlayFadeAnimation(1, 0, 2);
         }
 
         private async UniTask DarkFadeLoading(Queue<ILoadingOperation> loadingOperations)
@@ -87,12 +87,11 @@ namespace _Game.Core.LoadingScreen
             }
             
             ResetFade(0);
-
+            
             var fadeTask = PlayFadeAnimation(0, 1, 2);
             var loadTask = LoadOperations(loadingOperations);
 
             await UniTask.WhenAll(fadeTask, loadTask);
-            
             await PlayFadeAnimation(1, 0, 2);
         }
 
@@ -101,10 +100,8 @@ namespace _Game.Core.LoadingScreen
         {
             foreach (var operation in loadingOperations)
             {
-                ResetFill();
                 _loadingInfo.text = operation.Description;
                 await operation.Load(OnProgress);
-                //await WaitForBarFill();
             }
         }
 
@@ -112,7 +109,9 @@ namespace _Game.Core.LoadingScreen
         private async UniTask PlayFadeAnimation(float startValue, float endValue, float duration)
         {
             Sequence fadeSequence = DOTween.Sequence();
-
+            
+            fadeSequence.Join(_splashImage.DOFade(endValue, duration).From(startValue));
+            
             foreach (var image in _fadableImages)
             {
                 fadeSequence.Join(image.DOFade(endValue, duration).From(startValue));

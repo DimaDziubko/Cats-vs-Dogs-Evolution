@@ -93,6 +93,8 @@ namespace _Game.Utils
             //Common
             public const string COMMON = "Common";
             public const string FOOD_ICON_KEY = "FoodIconKey";
+            public const string CAT_FOOD_ICON_KEY = "CatFoodIconKey";
+            public const string DOG_FOOD_ICON_KEY = "DogFoodIconKey";
             public const string BASE_ICON_KEY = "BaseIconKey";
             public const string MISSING_KEY = "-";
             public const string BASE_KEY = "BaseKey";

@@ -26,6 +26,8 @@ namespace _Game.Core.Configs.Models
     {
         public int Id;
         public string FoodIconKey;
+        public string CatFoodIconKey;
+        public string DogFoodIconKey;
         public string BaseIconKey;
     }
     

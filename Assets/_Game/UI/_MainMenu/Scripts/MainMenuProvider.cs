@@ -6,7 +6,6 @@ using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
-using _Game.UI.Pin.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
@@ -23,6 +22,8 @@ namespace _Game.UI._MainMenu.Scripts
         private readonly ITutorialManager _tutorialManager;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly IMyLogger _logger;
+        
+        private Disposable<MainMenu> _mainMenu;
 
         public MainMenuProvider(
             IWorldCameraService cameraService,
@@ -43,11 +44,11 @@ namespace _Game.UI._MainMenu.Scripts
             _upgradesChecker = upgradesChecker;
             _logger = logger;
         }
-        public async UniTask<Disposable<MainMenu>> Load()
+        public async UniTask Load()
         {
-            var popup = await LoadDisposable<MainMenu>(AssetsConstants.MAIN_MENU);
+            _mainMenu = await LoadDisposable<MainMenu>(AssetsConstants.MAIN_MENU);
             
-            popup.Value.Construct(
+            _mainMenu.Value.Construct(
                 _cameraService,
                 _audioService,
                 _startBattleWindowProvide,
@@ -56,7 +57,33 @@ namespace _Game.UI._MainMenu.Scripts
                 _tutorialManager,
                 _upgradesChecker,
                 _logger);
-            return popup;
+
+            ShowMainMenu();
+        }
+        
+        public void Unload()
+        {
+            if (_mainMenu != null)
+            {
+                _mainMenu.Dispose();
+                _mainMenu = null;
+            }
+        }
+
+        private void ShowMainMenu()
+        {
+            if (_mainMenu != null)
+            {
+                _mainMenu.Value.Show();
+            }
+        }
+
+        public void HideMainMenu()
+        {
+            if (_mainMenu != null)
+            {
+                _mainMenu.Value.Hide();
+            }
         }
     }
 }

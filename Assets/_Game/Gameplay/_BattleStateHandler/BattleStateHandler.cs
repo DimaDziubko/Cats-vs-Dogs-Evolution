@@ -1,4 +1,6 @@
-﻿using _Game.Core.GameState;
+﻿using System.Collections.Generic;
+using _Game.Core.GameState;
+using _Game.Core.Loading;
 using _Game.Gameplay.Battle.Scripts;
 
 namespace _Game.Gameplay._BattleStateHandler
@@ -24,9 +26,9 @@ namespace _Game.Gameplay._BattleStateHandler
             _stateMachine.Enter<GameLoopState>();
         }
 
-        public void GoToMainMenu()
+        public void GoToMainMenu(Queue<ILoadingOperation> operations)
         {
-            _stateMachine.Enter<MenuState>();
+            _stateMachine.Enter<MenuState, Queue<ILoadingOperation>>(operations);
         }
     }
 }

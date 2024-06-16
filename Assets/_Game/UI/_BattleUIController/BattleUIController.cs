@@ -86,10 +86,13 @@ namespace _Game.UI._BattleUIController
             _battleMediator = battleMediator;
         }
 
-        public void HideAndHandleLoadingOperation(ILoadingOperation clearingOperation)
+        public void HideCoinCounter()
         {
             _hud.HideCoinCounter();
-            _loadingScreenProvider.LoadAndDestroy(clearingOperation, LoadingScreenType.DarkFade).Forget();
+        }
+
+        public void ShowRewardCoinsAfterLoading()
+        {
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
         }
 
@@ -101,6 +104,8 @@ namespace _Game.UI._BattleUIController
                 _persistentData.AddCoins(_coinCounter.Coins);
                 _coinCounter.Cleanup();
             }
+            
+            _loadingScreenProvider.LoadingCompleted -= OnLoadingCompleted;
         }
 
         private void PlayCoinAnimation()
@@ -127,6 +132,5 @@ namespace _Game.UI._BattleUIController
             _battleMediator.StopBattle();
             _battleMediator.EndBattle(GameResultType.Defeat, true);
         }
-        
     }
 }

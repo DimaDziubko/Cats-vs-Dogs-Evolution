@@ -1,8 +1,6 @@
 ﻿using System;
 using _Game.Core._SceneLoader;
 using _Game.Core.Services.Camera;
-using _Game.UI.Settings.Scripts;
-using _Game.UI.Shop.Scripts;
 using _Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
@@ -13,8 +11,6 @@ namespace _Game.Core.Loading
     {
         private readonly SceneLoader _sceneLoader;
         private readonly IWorldCameraService _cameraService;
-        private readonly ISettingsPopupProvider _settingsPopupProvider;
-        private readonly IShopPopupProvider _shopPopupProvider;
 
         public string Description => "Game loading...";
         

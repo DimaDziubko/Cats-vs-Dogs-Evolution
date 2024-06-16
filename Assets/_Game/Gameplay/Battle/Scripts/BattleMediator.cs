@@ -1,4 +1,6 @@
-﻿using _Game.Core._GameSaver;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _Game.Core._GameSaver;
 using _Game.Core.Loading;
 using _Game.Core.Navigation;
 using _Game.Core.Navigation.Battle;
@@ -111,17 +113,19 @@ namespace _Game.Gameplay.Battle.Scripts
             if (isConfirmed)
             {
                 if(result == GameResultType.Victory) _battleNavigator.OpenNextBattle();
-                _battleStateHandler.GoToMainMenu();
-                ClearBattleMode();
+                GoToMainMenu();
             }
         }
 
-        private void ClearBattleMode()
+        private void GoToMainMenu()
         {
-            var clearGameOperation = new ClearGameOperation(_battleMode);
-            _battleUIController.HideAndHandleLoadingOperation(clearGameOperation);
+            Queue <ILoadingOperation> loadingOperations = new Queue<ILoadingOperation>();
+            loadingOperations.Enqueue(new ClearGameOperation(_battleMode));
+            _battleUIController.HideCoinCounter();
+            _battleUIController.ShowRewardCoinsAfterLoading();
+            _battleStateHandler.GoToMainMenu(loadingOperations);
         }
-
+        
         public void Reset() => 
             _battle.ResetSelf();
         

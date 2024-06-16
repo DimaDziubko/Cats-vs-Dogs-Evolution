@@ -13,18 +13,15 @@ namespace _Game.Core.GameState
         private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IWorldCameraService _cameraService;
-        private readonly ILoadingScreenProvider _loadingProvider;
 
         public GameLoadingState(
             IGameStateMachine stateMachine,
             SceneLoader sceneLoader,
-            IWorldCameraService cameraService,
-            ILoadingScreenProvider loadingProvider)
+            IWorldCameraService cameraService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _cameraService = cameraService;
-            _loadingProvider = loadingProvider;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
@@ -34,20 +31,12 @@ namespace _Game.Core.GameState
                     _sceneLoader, 
                     _cameraService));
 
-            _loadingProvider.LoadingCompleted += OnLoadingCompleted;
-            _loadingProvider.LoadAndDestroy(loadingOperations, LoadingScreenType.Simple).Forget();
-            
+            _stateMachine.Enter<MenuState, Queue<ILoadingOperation>>(loadingOperations);
         }
 
         public void Exit()
         {
 
-        }
-
-        private void OnLoadingCompleted()
-        {
-            _loadingProvider.LoadingCompleted -= OnLoadingCompleted;
-            _stateMachine.Enter<MenuState>();
         }
     }
 }

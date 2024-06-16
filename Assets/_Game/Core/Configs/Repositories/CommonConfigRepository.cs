@@ -26,12 +26,28 @@ namespace _Game.Core.Configs.Repositories
                 case Race.None:
                     return GetCommonFoodIconKey();
                 case Race.Cat:
-                    return GetCommonFoodIconKey();
+                    return GetCatFoodIconKey();
                 case Race.Dog:
-                    return GetCommonFoodIconKey();
+                    return GetDogFoodIconKey();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(race), race, null);
             }
+        }
+
+        private string GetDogFoodIconKey()
+        {
+            return _userContainer
+                .GameConfig
+                .CommonConfig
+                .DogFoodIconKey;
+        }
+
+        private string GetCatFoodIconKey()
+        {
+            return _userContainer
+                .GameConfig
+                .CommonConfig
+                .CatFoodIconKey;
         }
 
         public string GetTowerIconKey() => 

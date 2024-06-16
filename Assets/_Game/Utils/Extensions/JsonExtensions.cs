@@ -5,7 +5,6 @@ using _Game.Core.Configs.Models;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 
 namespace _Game.Utils.Extensions
 {
@@ -45,6 +44,8 @@ namespace _Game.Utils.Extensions
                 {
                     Id = ((int)commonToken[Constants.ConfigKeys.ID] - ID_OFFSET),
                     FoodIconKey = commonToken[Constants.ConfigKeys.FOOD_ICON_KEY]?.ToString(),
+                    CatFoodIconKey = commonToken[Constants.ConfigKeys.CAT_FOOD_ICON_KEY]?.ToString(),
+                    DogFoodIconKey = commonToken[Constants.ConfigKeys.DOG_FOOD_ICON_KEY]?.ToString(),
                     BaseIconKey = commonToken[Constants.ConfigKeys.BASE_ICON_KEY]?.ToString(),
                 };
             }
