@@ -8,7 +8,7 @@ namespace _Game.Core.LoadingScreen
     public interface ILoadingScreenProvider
     {
         event Action LoadingCompleted;
-        UniTask LoadAndDestroy(ILoadingOperation loadingOperation);
-        UniTask LoadAndDestroy(Queue<ILoadingOperation> loadingOperations);
+        UniTask LoadAndDestroy(ILoadingOperation loadingOperation, LoadingScreenType type);
+        UniTask LoadAndDestroy(Queue<ILoadingOperation> loadingOperations, LoadingScreenType type);
     }
 }

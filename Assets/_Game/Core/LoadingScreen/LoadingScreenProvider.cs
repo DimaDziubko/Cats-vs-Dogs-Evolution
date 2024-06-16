@@ -10,19 +10,18 @@ namespace _Game.Core.LoadingScreen
     {
         public event Action LoadingCompleted;
 
-        public async UniTask LoadAndDestroy(ILoadingOperation loadingOperation)
+        public async UniTask LoadAndDestroy(ILoadingOperation loadingOperation, LoadingScreenType type)
         {
             var operations = new Queue<ILoadingOperation>();
             operations.Enqueue(loadingOperation);
-            await LoadAndDestroy(operations);
+            await LoadAndDestroy(operations, type);
         }
 
-        public async UniTask LoadAndDestroy(Queue<ILoadingOperation> loadingOperations)
+        public async UniTask LoadAndDestroy(Queue<ILoadingOperation> loadingOperations, LoadingScreenType type)
         {
             var loadingScreen = await Load<LoadingScreen>(AssetsConstants.LOADING_SCREEN);
-            await loadingScreen.Load(loadingOperations);
+            await loadingScreen.Load(loadingOperations, type);
             LoadingCompleted?.Invoke();
-            await loadingScreen.PlayFadeAnimation();
             Unload();
         }
     }

@@ -13,6 +13,7 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private Image iconHolder;
         [SerializeField] private Sprite activeIcon;
         [SerializeField] private Sprite lockedIcon;
+        
         [SerializeField] private TMP_Text lockedText;
         [SerializeField] private TMP_Text unlockedText;
         [SerializeField] private bool hideLockIcon;

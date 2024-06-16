@@ -35,7 +35,7 @@ namespace _Game.Core.GameState
                     _cameraService));
 
             _loadingProvider.LoadingCompleted += OnLoadingCompleted;
-            _loadingProvider.LoadAndDestroy(loadingOperations).Forget();
+            _loadingProvider.LoadAndDestroy(loadingOperations, LoadingScreenType.Simple).Forget();
             
         }
 

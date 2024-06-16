@@ -65,7 +65,7 @@ namespace _Game.Core.DataPresenters._RaceChanger
                 _assetRegistry);
             
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
-            _loadingScreenProvider.LoadAndDestroy(raceChangingOperation);
+            _loadingScreenProvider.LoadAndDestroy(raceChangingOperation, LoadingScreenType.Simple);
         }
 
         private void OnLoadingCompleted()

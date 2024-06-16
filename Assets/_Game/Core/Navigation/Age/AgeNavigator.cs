@@ -60,7 +60,7 @@ namespace _Game.Core.Navigation.Age
                 _assetRegistry);
 
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
-            _loadingScreenProvider.LoadAndDestroy(ageLoadingOperation);
+            _loadingScreenProvider.LoadAndDestroy(ageLoadingOperation, LoadingScreenType.Transparent);
             
         }
 
