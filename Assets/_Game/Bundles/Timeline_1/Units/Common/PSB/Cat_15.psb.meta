@@ -1194,6 +1194,28 @@ ScriptedImporter:
     parentGroupIndex: -1
     uvTransform: {x: 41, y: 189}
     spritePosition: {x: 147, y: 30}
+  - name: Laser
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 78
+      y: 103
+      width: 20
+      height: 39
+    spriteID: 12e126e53bb34fc4eba0cd754c1297b4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 78, y: 103}
+    spritePosition: {x: 139, y: 57}
   - name: Shadow
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -1480,28 +1502,6 @@ ScriptedImporter:
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 159}
     spritePosition: {x: 102, y: 23}
-  - name: Laser
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 78
-      y: 103
-      width: 26
-      height: 29
-    spriteID: e139193eeff4ccb48b6f22355cc6eea5
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 78, y: 103}
-    spritePosition: {x: 136, y: 62}
   characterData:
     bones:
     - name: bone_1
@@ -1673,6 +1673,16 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
+  - name: Laser
+    spriteName: Laser
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 12e126e53bb34fc4eba0cd754c1297b4
+    layerID: 26
+    mosaicPosition: {x: 78, y: 103}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Shadow
     spriteName: Shadow
     isGroup: 0
@@ -1680,16 +1690,6 @@ ScriptedImporter:
     spriteID: c602812e34b987246b635571caba8447
     layerID: 2
     mosaicPosition: {x: 4, y: 159}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Laser
-    spriteName: Laser
-    isGroup: 0
-    parentIndex: -1
-    spriteID: e139193eeff4ccb48b6f22355cc6eea5
-    layerID: 25
-    mosaicPosition: {x: 78, y: 103}
     flatten: 0
     isImported: 1
     isVisible: 1

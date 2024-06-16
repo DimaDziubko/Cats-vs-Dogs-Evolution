@@ -3,10 +3,13 @@
     public enum WeaponType
     {
         Melee,
+        Range,
         Stone,
         Tomato,
         Arrow,
         Bomb,
+        Ak,
+        Tank,
         Laser
     }
 }
