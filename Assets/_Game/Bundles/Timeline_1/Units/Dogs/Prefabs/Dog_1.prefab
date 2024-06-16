@@ -1391,7 +1391,7 @@ Animator:
   m_GameObject: {fileID: 8805618510114508154}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 7644ddd0cc655ec4096b871be49fd3f9, type: 2}
+  m_Controller: {fileID: 22100000, guid: 6b1655cd0b254a748926daae4aeceaa1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1414,7 +1414,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: 824b31fb0794f6b4fb8235cc48fe621b, type: 3}
+  _soundData:
+    Clip: {fileID: 0}
+    MixerGroup: {fileID: 0}
+    Loop: 0
+    PlayOnAwake: 0
+    FrequentSound: 0
+    Mute: 0
+    BypassEffects: 0
+    BypassListenerEffects: 0
+    BypassReverbZones: 0
+    Priority: 128
+    Volume: 1
+    Pitch: 1
+    PanStereo: 0
+    SpatialBlend: 0
+    ReverbZoneMix: 1
+    DopplerLevel: 1
+    Spread: 0
+    MinDistance: 1
+    MaxDistance: 500
+    IgnoreListenerVolume: 0
+    IgnoreListenerPause: 0
+    RolloffMode: 0
   _projectileGenerator: {fileID: 1702502254456479057}
   _muzzleTransform: {fileID: 0}
 --- !u!114 &8430758370529593890

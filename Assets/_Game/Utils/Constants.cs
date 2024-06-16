@@ -8,7 +8,7 @@ namespace _Game.Utils
         {
             public const int MIN_COINS_PER_BATTLE = 9;
         }
-        
+
         public sealed class CacheContext
         {
             public const int TIMELINE = 0;
@@ -16,20 +16,20 @@ namespace _Game.Utils
             public const int BATTLE = 2;
             public const int GENERAL = 3;
         }
-        
+
         public sealed class Scenes
         {
             public const string STARTUP = "Startup";
             public const string BATTLE_MODE = "BattleMode";
         }
-        
+
         public sealed class SortingLayer
         {
             public const float SORTING_TRESHOLD = 0.1f;
             public const int SORTING_ORDER_MIN = -32768;
             public const int SORTING_ORDER_MAX = 32767;
         }
-        
+
         public sealed class Layer
         {
             public const int PLAYER_PROJECTILE = 16;
@@ -44,7 +44,7 @@ namespace _Game.Utils
             public const int ENEMY_ATTACK = 13;
             public const int RANGE_PLAYER = 19;
             public const int RANGE_ENEMY = 20;
-            
+
             public const RVOLayer RVO_MELEE_ENEMY = RVOLayer.Layer3;
             public const RVOLayer RVO_RANGE_ENEMY = RVOLayer.Layer4;
 
@@ -52,13 +52,13 @@ namespace _Game.Utils
             public const RVOLayer RVO_RANGE_PLAYER = RVOLayer.Layer2;
 
         }
-        
+
         public sealed class ComparisonThreshold
         {
             public const float MONEY_EPSILON = 0.01f;
             public const float UNIT_ROTATION_EPSILON = 0.05f;
         }
-        
+
         public sealed class TutorialStepTreshold
         {
             public const int UNIT_BUILDER_BUTTON = 0;
@@ -72,11 +72,11 @@ namespace _Game.Utils
             public const int BATTLE_SPEED = 10;
             public const int FOOD_BOOST = 2;
             public const int PAUSE = 1;
-            public const int UPGRADES_WINDOW = 1; 
+            public const int UPGRADES_WINDOW = 1;
             public const int EVOLUTION_WINDOW = 3;
             public const int X2 = 2;
         }
-        
+
         public sealed class ConfigKeys
         {
             //BattleSpeed
@@ -156,12 +156,12 @@ namespace _Game.Utils
 
             //Warriors
             public const string WARRIOR = "Warrior";
-            public const string PLAYER_ICON_KEY = "CatIconKey";
-            public const string ENEMY_KEY = "DogKey";
-            public const string PLAYER_KEY = "CatKey";
+            public const string CAT_ICON_KEY = "CatIconKey";
+            public const string DOG_KEY = "DogKey";
+            public const string CAT_KEY = "CatKey";
             public const string FOOD_PRICE = "FoodPrice";
             public const string COINS_PER_KILL = "CoinsPerKill";
-            public const string ENEMY_ICON_KEY = "DogIconKey";
+            public const string DOG_ICON_KEY = "DogIconKey";
             public const string PLAYER_HEALTH_MULTIPLIER = "PlayerHealthMultiplier";
             public const string ENEMY_HEALTH_MULTIPLIER = "EnemyHealthMultiplier";
             public const string ATTACK_PER_SECOND = "AttackPerSecond";
@@ -175,7 +175,7 @@ namespace _Game.Utils
             public const string TRAJECTORY_WARP_FACTOR = "TrajectoryWarpFactor";
             public const string PROJECTILE_EXPLOSION_KEY = "ProjectileExplosionKey";
             public const string MUZZLE_KEY = "MuzzleKey";
-            public const string SPLASH_RADIUS = "SplashRadius" ;
+            public const string SPLASH_RADIUS = "SplashRadius";
             public const string ENEMY_DAMAGE_MULTIPLIER = "EnemyDamageMultiplier";
             public const string PLAYER_DAMAGE_MULTIPLIER = "PlayerDamageMultiplier";
 

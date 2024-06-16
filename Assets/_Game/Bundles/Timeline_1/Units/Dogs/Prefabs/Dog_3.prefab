@@ -1394,7 +1394,7 @@ Animator:
   m_GameObject: {fileID: 6471929532788684739}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 8ed44e606512c814cb5879c0f6c9294a, type: 2}
+  m_Controller: {fileID: 22100000, guid: f640d02e7ab2cf34181373564bfb4182, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1433,7 +1433,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981b0c509a294e00b98c2dc06b1269d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: 1735dfa0bd4a8a04ebb948941ba8beca, type: 3}
+  _soundData:
+    Clip: {fileID: 0}
+    MixerGroup: {fileID: 0}
+    Loop: 0
+    PlayOnAwake: 0
+    FrequentSound: 0
+    Mute: 0
+    BypassEffects: 0
+    BypassListenerEffects: 0
+    BypassReverbZones: 0
+    Priority: 128
+    Volume: 1
+    Pitch: 1
+    PanStereo: 0
+    SpatialBlend: 0
+    ReverbZoneMix: 1
+    DopplerLevel: 1
+    Spread: 0
+    MinDistance: 1
+    MaxDistance: 500
+    IgnoreListenerVolume: 0
+    IgnoreListenerPause: 0
+    RolloffMode: 0
 --- !u!212 &6854285711182856593 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 83447198426273775, guid: 1af79ea5a04a0824e8e89db17201801e, type: 3}

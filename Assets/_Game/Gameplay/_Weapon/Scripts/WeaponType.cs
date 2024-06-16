@@ -3,15 +3,10 @@
     public enum WeaponType
     {
         Melee,
-        Javelin,
-        Himars,
-        ThrowingAxe,
-        Bow,
         Stone,
-        Mortar,
-        PPSh,
-        AK,
-        Maksim,
-        Musketeer
+        Tomato,
+        Arrow,
+        Bomb,
+        Laser
     }
 }

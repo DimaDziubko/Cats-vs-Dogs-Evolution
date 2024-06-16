@@ -908,7 +908,7 @@ Animator:
   m_GameObject: {fileID: 3778580764757168806}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 054c548c5bbbe9f409df6c707ed238cf, type: 2}
+  m_Controller: {fileID: 22100000, guid: 67f1163d340749440a42efcd2de088d7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -919,6 +919,43 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2901493924784154951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3778580764757168806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundData:
+    Clip: {fileID: 0}
+    MixerGroup: {fileID: 0}
+    Loop: 0
+    PlayOnAwake: 0
+    FrequentSound: 0
+    Mute: 0
+    BypassEffects: 0
+    BypassListenerEffects: 0
+    BypassReverbZones: 0
+    Priority: 128
+    Volume: 1
+    Pitch: 1
+    PanStereo: 0
+    SpatialBlend: 0
+    ReverbZoneMix: 1
+    DopplerLevel: 1
+    Spread: 0
+    MinDistance: 1
+    MaxDistance: 500
+    IgnoreListenerVolume: 0
+    IgnoreListenerPause: 0
+    RolloffMode: 0
+  _projectileGenerator: {fileID: 8100904177530917558}
+  _muzzleTransform: {fileID: 0}
 --- !u!114 &3588388638147090109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,21 +972,6 @@ MonoBehaviour:
   _weaponAimBone: {fileID: 8100904177530917558}
   _minAngle: -60
   _maxAngle: 60
---- !u!114 &2901493924784154951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3778580764757168806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackSFX: {fileID: 8300000, guid: 824b31fb0794f6b4fb8235cc48fe621b, type: 3}
-  _projectileGenerator: {fileID: 8100904177530917558}
-  _muzzleTransform: {fileID: 0}
 --- !u!212 &4052478854698539452 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 840683276609890983, guid: ab4edce5ea2447a44b74a7ae2ce19f38, type: 3}
