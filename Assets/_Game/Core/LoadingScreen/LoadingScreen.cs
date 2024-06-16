@@ -104,7 +104,7 @@ namespace _Game.Core.LoadingScreen
                 ResetFill();
                 _loadingInfo.text = operation.Description;
                 await operation.Load(OnProgress);
-                await WaitForBarFill();
+                //await WaitForBarFill();
             }
         }
 

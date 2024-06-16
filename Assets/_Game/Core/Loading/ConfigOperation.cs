@@ -52,7 +52,7 @@ namespace _Game.Core.Loading
                     
                     LocalConfigSaver.SaveConfig(configString); 
                     
-                    _remoteConfigProvider.CleanCache();
+                    _remoteConfigProvider.ClearCache();
                 }
                 else
                 {

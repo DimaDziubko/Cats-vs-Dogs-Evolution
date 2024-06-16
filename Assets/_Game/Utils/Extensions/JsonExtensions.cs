@@ -5,6 +5,7 @@ using _Game.Core.Configs.Models;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 namespace _Game.Utils.Extensions
 {
@@ -301,6 +302,7 @@ namespace _Game.Utils.Extensions
                         EnemyHealthMultiplier = (float)warriorToken[Constants.ConfigKeys.ENEMY_HEALTH_MULTIPLIER],
                         AttackPerSecond = (float)warriorToken[Constants.ConfigKeys.ATTACK_PER_SECOND],
                     };
+                    
                     warriors.Add(warriorConfig);
                 }
             }
@@ -337,8 +339,9 @@ namespace _Game.Utils.Extensions
                     PlayerDamageMultiplier = (float)weaponConfigToken[Constants.ConfigKeys.PLAYER_DAMAGE_MULTIPLIER],
                     EnemyDamageMultiplier = (float)weaponConfigToken[Constants.ConfigKeys.ENEMY_DAMAGE_MULTIPLIER],
                 };
+                
             }
-
+            
             return null;
         }
         
