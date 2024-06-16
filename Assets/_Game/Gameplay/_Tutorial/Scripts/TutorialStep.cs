@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Gameplay._Tutorial.Scripts
@@ -17,6 +18,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
         [SerializeField] private bool _isUnderneath;
         [SerializeField] private bool _needAppearanceAnimation;
 
+        [ShowInInspector]
         private TutorialStepData _data;
 
         public void ShowStep() => Show?.Invoke(this);
@@ -33,6 +35,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
             return _data;
         }
 
+        [Button]
         private void SetupData()
         {
             _data = new TutorialStepData()

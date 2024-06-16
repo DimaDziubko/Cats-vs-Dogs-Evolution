@@ -24,6 +24,7 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private ToggleButtonStateAnimator _animator;
         [SerializeField] private ToggleButtonView _view;
         
+        public RectTransform RectTransform => _buttonTransform;
         public Feature Feature => _feature;
 
         private ButtonState _state;
@@ -74,15 +75,9 @@ namespace _Game.UI.Common.Scripts
             }
         }
 
-        private void ShowPin()
-        {
-            _pin.Show();
-        }
+        private void ShowPin() => _pin.Show();
 
-        private void HidePin()
-        {
-            _pin.Hide();
-        }
+        private void HidePin() => _pin.Hide();
 
         public void Cleanup() => 
             _button.onClick.RemoveAllListeners();

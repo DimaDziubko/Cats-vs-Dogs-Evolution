@@ -89,7 +89,7 @@ namespace _Game.UI._BattleUIController
         public void HideAndHandleLoadingOperation(ILoadingOperation clearingOperation)
         {
             _hud.HideCoinCounter();
-            _loadingScreenProvider.LoadAndDestroy(clearingOperation).Forget();
+            _loadingScreenProvider.LoadAndDestroy(clearingOperation, LoadingScreenType.DarkFade).Forget();
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
         }
 

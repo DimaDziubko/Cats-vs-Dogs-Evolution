@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
@@ -11,10 +12,7 @@ using _Game.UI.Common.Scripts;
 using _Game.UI.Shop.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Disposable;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace _Game.UI._MainMenu.Scripts
 {
@@ -30,20 +28,26 @@ namespace _Game.UI._MainMenu.Scripts
     [RequireComponent(typeof(Canvas))]
     public class MainMenu : MonoBehaviour
     {
+        private static float TUTORIAL_POINTER_DELAY = 2F;
+        
         public event Action Open;
 
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private RectTransform _layoutTransform;
+        [SerializeField] private RectTransform _canvasRectTransform;
+        
         [SerializeField] private ToggleButton _dungeonButton;
         [SerializeField] private ToggleButton _upgradeButton;
         [SerializeField] private ToggleButton _battleButton;
         [SerializeField] private ToggleButton _cardsButton;
         [SerializeField] private ToggleButton _shopButton;
 
+        [SerializeField] private float _highlightedBtnScale = 1.65f;
+        
         [SerializeField] private TutorialStep _upgradesTutorialStep;
 
         private ToggleButton _activeButton;
 
+        [SerializeField] private RectTransform[] _buttons;
 
         private ToggleButton ActiveButton
         {
@@ -60,9 +64,9 @@ namespace _Game.UI._MainMenu.Scripts
             }
         }
 
+        
         private IGameStateMachine _stateMachine;
         private IShopPopupProvider _shopPopupProvider;
-        private IWorldCameraService _cameraService;
         private IAudioService _audioService;
         private IStartBattleWindowProvider _startBattleWindowProvider;
         private IUpgradeAndEvolutionWindowProvider _upgradeAndEvolutionWindowProvider;
@@ -113,11 +117,6 @@ namespace _Game.UI._MainMenu.Scripts
             Unsubscribe();
             Subscribe();
 
-            if (IsUpgradesUnlocked)
-            {
-                _upgradesTutorialStep.ShowStep();
-            }
-
             _dungeonButton.Initialize(IsDungeonUnlocked, OnDungeonClick, PlayButtonSound);
             _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound,
                 _upgradesChecker.GetNotificationData(Window.UpgradesAndEvolution));
@@ -127,9 +126,21 @@ namespace _Game.UI._MainMenu.Scripts
 
 
             OnBattleButtonClick(_battleButton);
+
             Open?.Invoke();
+            
+            if (IsUpgradesUnlocked)
+            {
+                StartCoroutine(ShowUpgradesTutorialStepWithDelay());
+            }
         }
 
+        private IEnumerator ShowUpgradesTutorialStepWithDelay()
+        {
+            yield return new WaitForSeconds(TUTORIAL_POINTER_DELAY);
+            _upgradesTutorialStep.ShowStep();
+        }
+        
         private void Subscribe()
         {
             _upgradesChecker.Notify += OnUpgradesNotified;
@@ -238,18 +249,32 @@ namespace _Game.UI._MainMenu.Scripts
         }
 
         private void PlayButtonSound() => _audioService.PlayButtonSound();
-
-
-        private async void OnShopBtnClicked()
-        {
-            var shop = await _shopPopupProvider.Load();
-            var isExit = await shop.Value.AwaitForExit();
-            if (isExit) shop.Dispose();
-        }
-
+        
         private void RebuildLayout()
         {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_layoutTransform);
+            var with = _canvasRectTransform.rect.width;
+            float totalButtonWidth = with / (_buttons.Length - 1 + _highlightedBtnScale);
+
+            float buttonWidth = totalButtonWidth;
+            float activeButtonWidth = totalButtonWidth * _highlightedBtnScale;
+
+            float xPosition = - with / 2;
+
+            foreach (RectTransform button in _buttons)
+            {
+                if (button == _activeButton.RectTransform)
+                {
+                    button.sizeDelta = new Vector2(activeButtonWidth, button.sizeDelta.y);
+                    button.anchoredPosition = new Vector2(xPosition + activeButtonWidth / 2, button.anchoredPosition.y);
+                    xPosition += activeButtonWidth;
+                }
+                else
+                {
+                    button.sizeDelta = new Vector2(buttonWidth, button.sizeDelta.y);
+                    button.anchoredPosition = new Vector2(xPosition + buttonWidth / 2, button.anchoredPosition.y);
+                    xPosition += buttonWidth;
+                }
+            }
         }
     }
 }

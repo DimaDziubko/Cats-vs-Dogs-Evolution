@@ -12,10 +12,8 @@ namespace _Game.UI._Environment
 
         private BattleEnvironment _currentBattleEnvironment;
         
-        public EnvironmentController(IEnvironmentFactory factory)
-        {
+        public EnvironmentController(IEnvironmentFactory factory) => 
             _factory = factory;
-        }
 
         public void ShowEnvironment(EnvironmentData environmentData)
         {
