@@ -45,10 +45,8 @@ namespace _Game.Core.DataPresenters._RaceChanger
             gameInitializer.OnPostInitialization += Init;
         }
         
-        private void Init()
-        {
+        private void Init() => 
             RaceState.Changed += OnRaceChanged;
-        }
 
         void IDisposable.Dispose()
         {

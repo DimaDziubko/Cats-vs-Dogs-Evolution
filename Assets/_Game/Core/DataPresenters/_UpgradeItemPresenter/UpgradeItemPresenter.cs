@@ -7,6 +7,7 @@ using _Game.Core._UpgradesChecker;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Data.Age.Static._UpgradeItem;
+using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
@@ -38,7 +39,7 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly IGeneralDataPool _dataPool;
         private readonly IAgeNavigator _ageNavigator;
-
+        private readonly IRaceChanger _raceChanger;
 
         private readonly Dictionary<UpgradeItemType, UpgradeItemModel> _models = 
             new Dictionary<UpgradeItemType, UpgradeItemModel>(2);
@@ -53,7 +54,8 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             IUpgradesAvailabilityChecker upgradesChecker,
             IGeneralDataPool dataPool,
             IGameInitializer gameInitializer,
-            IAgeNavigator ageNavigator)
+            IAgeNavigator ageNavigator,
+            IRaceChanger raceChanger)
         {
             _userContainer = userContainer;
             _logger = logger;
@@ -61,6 +63,8 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             _dataPool = dataPool;
             _gameInitializer = gameInitializer;
             _ageNavigator = ageNavigator;
+            _raceChanger = raceChanger;
+            
             gameInitializer.OnMainInitialization += Init;
         }
 
@@ -75,17 +79,15 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             SubscribeToEvents();
         }
 
-        public void UpgradeItem(UpgradeItemType type, float price)
-        {
-            _logger.Log($"UpgradeItem {type}");
+        public void UpgradeItem(UpgradeItemType type, float price) => 
             _userContainer.UpgradeItem(type, price);
-        }
 
         private void SubscribeToEvents()
         {
             UpgradeItems.Changed += OnUpgradeItemChanged;
             Currency.CoinsChanged += OnCoinsChanged;
             _ageNavigator.AgeChanged += OnAgeChanged;
+            _raceChanger.RaceChanged += OnRaceChanged;
         }
 
         void IDisposable.Dispose()
@@ -95,6 +97,14 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             Currency.CoinsChanged -= OnCoinsChanged;
             _gameInitializer.OnMainInitialization -= Init;
             _ageNavigator.AgeChanged -= OnAgeChanged;
+            _raceChanger.RaceChanged -= OnRaceChanged;
+        }
+
+        private void OnRaceChanged()
+        {
+            Cleanup();
+            CreateUpgradeItems();
+            UpdateUpgradeItems();
         }
 
         private void OnAgeChanged()

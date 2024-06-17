@@ -75,10 +75,8 @@ namespace _Game.UI._RaceSelectionWindow.Scripts
 
         private void UpdatePointerVisibility(bool isVisible)
         {
-            foreach (var pointer in _decorPointers)
-            {
+            foreach (var pointer in _decorPointers) 
                 pointer.SetActive(isVisible);
-            }
         }
         
         private void HandleRaceSelection(Race selectedRace)

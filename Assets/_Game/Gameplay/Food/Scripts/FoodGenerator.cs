@@ -88,17 +88,16 @@ namespace _Game.Gameplay.Food.Scripts
             _pauseManager = pauseManager;
         }
 
-        public void Init()
-        {
+        public void Init() => 
             UpgradeItems.Changed += UpdateGeneratorData;
-            _panel.SetupIcon(_generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace));
-        }
 
         void IDisposable.Dispose() => 
             UpgradeItems.Changed -= UpdateGeneratorData;
 
         public void StartGenerator()
         {
+            _panel.SetupIcon(_generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace));
+            
             _systemUpdate.Register(this);
             _speedManager.Register(this);
             

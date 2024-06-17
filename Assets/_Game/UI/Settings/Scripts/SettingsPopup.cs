@@ -1,6 +1,8 @@
 ﻿using _Game.Core.Services.Audio;
 using _Game.Core.Services.PersistentData;
+using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,18 +16,22 @@ namespace _Game.UI.Settings.Scripts
         [SerializeField] private Button _closeButton;
 
         [SerializeField] private CustomToggle _sfxToggle, _ambienceToggle;
+        [SerializeField] private Button _changeRaceBtn;
 
         private UniTaskCompletionSource<bool> _taskCompletion;
         
         private IAudioService _audioService;
         private IUserContainer _persistentData;
+        private IRaceSelectionWindowProvider _raceSelectionWindowProvider;
 
         public void Construct(
             Camera uICamera,
-            IAudioService audioService)
+            IAudioService audioService,
+            IRaceSelectionWindowProvider raceSelectionWindowProvider)
         {
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
+            _raceSelectionWindowProvider = raceSelectionWindowProvider;
             
             _closeButton.onClick.AddListener(OnCloseBtnClick);
 
@@ -65,12 +71,22 @@ namespace _Game.UI.Settings.Scripts
         {
             _sfxToggle.ValueChanged += _audioService.SwitchSFX;
             _ambienceToggle.ValueChanged += _audioService.SwitchAmbience;
+            _changeRaceBtn.onClick.AddListener(OnChangeRaceBtnClicked);
         }
 
         private void Unsubscribe()
         {
             _sfxToggle.ValueChanged -= _audioService.SwitchSFX;
             _ambienceToggle.ValueChanged -= _audioService.SwitchAmbience;
+            _changeRaceBtn.onClick.RemoveAllListeners();
+        }
+
+        private async void OnChangeRaceBtnClicked()
+        {
+            Disposable<RaceSelectionWindow> factionSelectionWindow = await _raceSelectionWindowProvider.Load();
+            var result = await factionSelectionWindow.Value.AwaitForDecision();
+            if(result)
+                factionSelectionWindow.Dispose();
         }
     }
 }

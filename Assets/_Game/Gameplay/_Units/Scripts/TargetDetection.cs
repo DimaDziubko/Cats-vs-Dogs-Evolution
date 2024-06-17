@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units._Target;
@@ -58,7 +59,7 @@ namespace _Game.Gameplay._Units.Scripts
         
         //Debug
         [ShowInInspector, ReadOnly]
-        //public List<ITarget> Targets => _targetCollection.Targets;
+        public List<ITarget> Targets => _targetCollection.Targets;
 
         public void Construct(int layer)
         {

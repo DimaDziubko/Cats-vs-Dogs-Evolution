@@ -1,6 +1,7 @@
 ﻿using _Game.Core.AssetManagement;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
+using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
@@ -10,20 +11,24 @@ namespace _Game.UI.Settings.Scripts
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
+        private readonly IRaceSelectionWindowProvider _raceSelectionWindowProvider;
 
         public SettingsPopupProvider(
             IWorldCameraService cameraService,
-            IAudioService audioService)
+            IAudioService audioService,
+            IRaceSelectionWindowProvider raceSelectionWindowProvider)
         {
             _cameraService = cameraService;
             _audioService = audioService;
+            _raceSelectionWindowProvider = raceSelectionWindowProvider;
         }
         public async UniTask<Disposable<SettingsPopup>> Load()
         {
             var popup = await LoadDisposable<SettingsPopup>(AssetsConstants.SETTINGS);
             popup.Value.Construct(
                 _cameraService.UICameraOverlay,
-                _audioService);
+                _audioService,
+                _raceSelectionWindowProvider);
             return popup;
         }
     }

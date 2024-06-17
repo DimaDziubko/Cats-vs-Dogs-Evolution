@@ -18,7 +18,7 @@ using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using Zenject;
 
-namespace _Game.Core.Loading
+namespace _Game.Core.Installers.Core
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
