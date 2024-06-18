@@ -9,7 +9,6 @@ namespace _Game.Core._UpgradesChecker
         NotificationData GetNotificationData(Window window);
         void Register(IUpgradeAvailabilityProvider unitUpgradesPresenter);
         void UnRegister(IUpgradeAvailabilityProvider unitUpgradesPresenter);
-        void OnMenuOpen();
         void MarkAsReviewed(Window window);
     }
 }

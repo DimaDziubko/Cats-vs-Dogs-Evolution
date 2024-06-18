@@ -29,8 +29,6 @@ namespace _Game.UI._MainMenu.Scripts
     public class MainMenu : MonoBehaviour
     {
         private static float TUTORIAL_POINTER_DELAY = 2F;
-        
-        public event Action Open;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private RectTransform _canvasRectTransform;
@@ -127,8 +125,6 @@ namespace _Game.UI._MainMenu.Scripts
 
             OnBattleButtonClick(_battleButton);
 
-            Open?.Invoke();
-            
             if (IsUpgradesUnlocked)
             {
                 StartCoroutine(ShowUpgradesTutorialStepWithDelay());
@@ -144,7 +140,6 @@ namespace _Game.UI._MainMenu.Scripts
         private void Subscribe()
         {
             _upgradesChecker.Notify += OnUpgradesNotified;
-            Open += _upgradesChecker.OnMenuOpen;
         }
 
         private void OnUpgradesNotified(NotificationData data)
@@ -158,7 +153,6 @@ namespace _Game.UI._MainMenu.Scripts
         private void Unsubscribe()
         {
             _upgradesChecker.Notify -= OnUpgradesNotified;
-            Open -= _upgradesChecker.OnMenuOpen;
         }
 
         private void OnShopButtonClick(ToggleButton obj)

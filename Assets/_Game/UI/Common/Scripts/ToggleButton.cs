@@ -20,6 +20,7 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private Button _button;
         [SerializeField] private PinView _pin;
         [SerializeField] private RectTransform _buttonTransform;
+        [SerializeField] private RectTransform _iconTransform;
         
         [SerializeField] private ToggleButtonStateAnimator _animator;
         [SerializeField] private ToggleButtonView _view;
@@ -41,7 +42,9 @@ namespace _Game.UI.Common.Scripts
                 ButtonStateChanged?.Invoke(_state);
             }
             
-            _animator.Initialize(_buttonTransform);
+            _animator.Initialize(
+                _buttonTransform, 
+                _iconTransform);
             SetupButton(isUnlocked, callback, playSound);
         }
         

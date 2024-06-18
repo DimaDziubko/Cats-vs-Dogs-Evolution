@@ -18,11 +18,10 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         public override void Construct(
             WeaponConfig config,
             Faction faction,
-            IAudioService audioService,
             ISoundService soundService,
             Transform unitTransform)
         {
-            base.Construct(config, faction, audioService, soundService, unitTransform);
+            base.Construct(config, faction, soundService, unitTransform);
             
             _type = config.WeaponType;
             _faction = faction;

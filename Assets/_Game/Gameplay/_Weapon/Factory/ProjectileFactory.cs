@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
-using _Game.Core.Services.Audio;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Utils;
@@ -19,18 +18,19 @@ namespace _Game.Gameplay._Weapon.Factory
     [CreateAssetMenu(fileName = "Projectile Factory", menuName = "Factories/Projectile")]
     public class ProjectileFactory : GameObjectFactory, IProjectileFactory
     {
-        private IAudioService _audioService;
         private IWeaponDataPresenter _weaponDataPresenter;
+        private ISoundService _soundService;
+
 
         private readonly Dictionary<(Faction, WeaponType), Queue<Projectile>> _projectilesPools =
             new Dictionary<(Faction, WeaponType), Queue<Projectile>>();
 
         public void Initialize(
-            IAudioService audioService,
+            ISoundService soundService,
             IWeaponDataPresenter weaponDataPresenter)
         {
-            _audioService = audioService;
             _weaponDataPresenter = weaponDataPresenter;
+            _soundService = soundService;
         }
         
         public Projectile Get(Faction faction,  WeaponType type)
@@ -55,7 +55,7 @@ namespace _Game.Gameplay._Weapon.Factory
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_audioService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
             return instance;
         }
 

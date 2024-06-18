@@ -13,14 +13,14 @@ namespace _Game.Creatives.Factories
     [CreateAssetMenu(fileName = "CrProjectileFactory", menuName = "CrFactories/Projectile")]
     public class CrProjectileFactory : GameObjectFactory, IProjectileFactory
     {
-        private IAudioService _audioService;
-        
+        private ISoundService _soundService;
+
         private readonly Dictionary<(Faction, WeaponType), Queue<Projectile>> _projectilesPools =
             new Dictionary<(Faction, WeaponType), Queue<Projectile>>();
 
-        public void Initialize(IAudioService audioService)
+        public void Initialize(ISoundService soundService)
         {
-            _audioService = audioService;
+            _soundService = soundService;
         }
         
         public Projectile Get(Faction faction,  WeaponType type)
@@ -45,7 +45,7 @@ namespace _Game.Creatives.Factories
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_audioService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
             return instance;
         }
 

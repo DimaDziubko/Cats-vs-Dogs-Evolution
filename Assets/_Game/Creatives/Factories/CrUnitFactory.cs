@@ -15,7 +15,6 @@ namespace _Game.Creatives.Factories
     {
         private IWorldCameraService _cameraService;
         private IRandomService _random;
-        private IAudioService _audioService;
         private ISoundService _soundService;
 
         private readonly Dictionary<(Faction, UnitType), Queue<Unit>> _unitsPools = 
@@ -24,11 +23,11 @@ namespace _Game.Creatives.Factories
         public void Initialize(
             IWorldCameraService cameraService,
             IRandomService random,
-            IAudioService audioService)
+            ISoundService soundService)
         {
             _cameraService = cameraService;
             _random = random;
-            _audioService = audioService;
+            _soundService = soundService;
             //TODO add SoundService
         }
         
@@ -58,8 +57,7 @@ namespace _Game.Creatives.Factories
                     _cameraService, 
                     faction, 
                     type,
-                    _random, 
-                    _audioService,
+                    _random,
                     _soundService,
                     unitData.UnitLayer,
                     unitData.AggroLayer,

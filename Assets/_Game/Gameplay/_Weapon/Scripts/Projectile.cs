@@ -16,10 +16,9 @@ namespace _Game.Gameplay._Weapon.Scripts
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private ProjectileMove _move;
-
-        [SerializeField] private AudioClip _hitSFX;
+        [SerializeField] private SoundData _soundData;
         
-        private IAudioService _audioService;
+        private ISoundService _soundService;
         
         [ShowInInspector]
         private ITarget _target;
@@ -29,7 +28,8 @@ namespace _Game.Gameplay._Weapon.Scripts
         public IProjectileFactory OriginFactory { get; set; }
 
         private bool _isInitialized;
-        
+
+
         private Vector3 Position
         {
             get => _transform.position;
@@ -47,17 +47,18 @@ namespace _Game.Gameplay._Weapon.Scripts
 
         protected float _damage;
 
+
         [ShowInInspector]
         protected bool _isDead;
 
 
         public virtual void Construct(
-            IAudioService audioService,
+            ISoundService soundService,
             Faction faction,
             WeaponConfig config,
             int layer)
         {
-            _audioService = audioService;
+            _soundService = soundService;
             
             Faction = faction;
             
@@ -143,9 +144,13 @@ namespace _Game.Gameplay._Weapon.Scripts
         
         protected void PlaySound()
         {
-            if (_audioService != null && _hitSFX != null)
+            if (_soundService != null && _soundData != null)
             {
-                _audioService.PlayOneShot(_hitSFX);
+                _soundService.CreateSound()
+                    .WithSoundData(_soundData)
+                    .WithRandomPitch()
+                    .WithPosition(Vector3.zero)
+                    .Play();
             }
         }
 

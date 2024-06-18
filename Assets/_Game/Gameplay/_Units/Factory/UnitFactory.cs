@@ -15,7 +15,6 @@ namespace _Game.Gameplay._Units.Factory
     {
         private IWorldCameraService _cameraService;
         private IRandomService _random;
-        private IAudioService _audioService;
         private IUnitDataPresenter _unitDataPresenter;
         private ISoundService _soundService;
 
@@ -26,13 +25,11 @@ namespace _Game.Gameplay._Units.Factory
         public void Initialize(
             IWorldCameraService cameraService,
             IRandomService random,
-            IAudioService audioService,
             ISoundService soundService,
             IUnitDataPresenter unitDataPresenter)
         {
             _cameraService = cameraService;
             _random = random;
-            _audioService = audioService;
             _unitDataPresenter = unitDataPresenter;
             _soundService = soundService;
         }
@@ -65,8 +62,7 @@ namespace _Game.Gameplay._Units.Factory
                     _cameraService, 
                     faction, 
                     type,
-                    _random, 
-                    _audioService,
+                    _random,
                     _soundService,
                     unitData.UnitLayer,
                     unitData.AggroLayer,

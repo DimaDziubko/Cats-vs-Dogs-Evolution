@@ -16,8 +16,7 @@ namespace _Game.Gameplay._Units.Scripts
         protected ITarget _target;
         protected IShootProxy _shootProxy;
         protected IVFXProxy _vFXProxy;
-
-        private IAudioService _audioService;
+        
         private ISoundService _soundService;
 
         private Transform _unitTransform;
@@ -47,18 +46,19 @@ namespace _Game.Gameplay._Units.Scripts
         public virtual void Construct(
             WeaponConfig config,
             Faction faction,
-            IAudioService audioService,
             ISoundService soundService,
             Transform unitTransform)
         {
-            _audioService = audioService;
             _unitTransform = unitTransform;
             _soundService = soundService;
             _isActive = true;
         }
 
-        public void Disable() => 
-            StartCoroutine(DisableAttackAfterDelay());
+        public void Disable()
+        {
+            if(gameObject.activeInHierarchy)
+                StartCoroutine(DisableAttackAfterDelay());
+        }
 
         IEnumerator DisableAttackAfterDelay()
         {

@@ -4,22 +4,28 @@ using System.Linq;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Debugger;
+using _Game.Core.Services.PersistentData;
+using _Game.Core.UserState;
 using _Game.UI._MainMenu.Scripts;
 namespace _Game.Core._UpgradesChecker
 {
     public class UpgradesAvailabilityChecker : IUpgradesAvailabilityChecker, IDisposable
     {
         public event Action<NotificationData> Notify;
-        
+
         private readonly IMyLogger _logger;
         private readonly IGameInitializer _gameInitializer;
+        private readonly IUserContainer _userContainer;
+
+        private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
+        
         private IEnumerable<Window> RelevantWindows { get; } = new List<Window>()
         {
             Window.Upgrades,
             Window.Evolution,
             Window.UpgradesAndEvolution
         };
-        
+
         private readonly List<IUpgradeAvailabilityProvider> _upgradeProviders 
             = new List<IUpgradeAvailabilityProvider>();
 
@@ -39,10 +45,12 @@ namespace _Game.Core._UpgradesChecker
         public UpgradesAvailabilityChecker(
             IMyLogger logger,
             IGameInitializer gameInitializer,
-            IMyDebugger debugger)
+            IMyDebugger debugger,
+            IUserContainer userContainer)
         {
             _logger = logger;
             _gameInitializer = gameInitializer;
+            _userContainer = userContainer;
             gameInitializer.OnPostInitialization += Init;
             debugger.NotificationData = _data;
         }
@@ -103,14 +111,21 @@ namespace _Game.Core._UpgradesChecker
             }
         }
 
-        private void Init() => UpdateData();
-
-        void IUpgradesAvailabilityChecker.OnMenuOpen()
+        private void Init()
         {
-            ResetReviewed();
+            Currencies.CoinsChanged += OnCoinsChanged;
             UpdateData();
         }
 
+        private void OnCoinsChanged(bool isPositive)
+        {
+            if (isPositive)
+            {
+                ResetReviewed();
+                UpdateData();
+            }
+        }
+        
         void IDisposable.Dispose() => 
             _gameInitializer.OnPostInitialization -= Init;
 

@@ -32,8 +32,8 @@ public class SoundBuilder
             
         SoundEmitter soundEmitter = _soundService.Get();
         soundEmitter.Initialize(_soundData);
-        soundEmitter.transform.position = _position;
-        soundEmitter.transform.parent = _soundService.Transform;
+        soundEmitter.Transform.position = _position;
+        soundEmitter.Transform.parent = _soundService.Transform;
 
         if (_randomPitch) {
             soundEmitter.WithRandomPitch();

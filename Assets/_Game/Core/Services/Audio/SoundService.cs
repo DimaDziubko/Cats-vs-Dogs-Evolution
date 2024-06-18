@@ -1,18 +1,22 @@
 ﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class SoundService : MonoBehaviour, ISoundService 
 {
-    private IObjectPool<SoundEmitter> soundEmitterPool;
-    private readonly List<SoundEmitter> activeSoundEmitters = new List<SoundEmitter>();
+    [ShowInInspector]
+    private IObjectPool<SoundEmitter> _soundEmitterPool;
+    [ShowInInspector]
+    private readonly List<SoundEmitter> _activeSoundEmitters = new List<SoundEmitter>();
+    [ShowInInspector]
     private readonly Queue<SoundEmitter> _frequentSoundEmitters = new Queue<SoundEmitter>();
 
-    [SerializeField] SoundEmitter soundEmitterPrefab;
-    [SerializeField] bool collectionCheck = true;
-    [SerializeField] int defaultCapacity = 10;
-    [SerializeField] int maxPoolSize = 100;
-    [SerializeField] int maxSoundInstances = 30;
+    [SerializeField] SoundEmitter _soundEmitterPrefab;
+    [SerializeField] bool _collectionCheck = true;
+    [SerializeField] int _defaultCapacity = 10;
+    [SerializeField] int _maxPoolSize = 100;
+    [SerializeField] int _maxSoundInstances = 30;
     [SerializeField] private Transform _transform;
 
     public Queue<SoundEmitter> FrequentSoundEmitters => _frequentSoundEmitters;
@@ -27,10 +31,12 @@ public class SoundService : MonoBehaviour, ISoundService
 
     public SoundBuilder CreateSound() => new SoundBuilder(this);
     
-    public bool CanPlaySound(SoundData data) {
+    public bool CanPlaySound(SoundData data)
+    {
         if (!data.FrequentSound) return true;
 
-        if (_frequentSoundEmitters.Count >= maxSoundInstances && _frequentSoundEmitters.TryDequeue(out var soundEmitter)) {
+        if (_frequentSoundEmitters.Count >= _maxSoundInstances && _frequentSoundEmitters.TryDequeue(out var soundEmitter)) 
+        {
             try {
                 soundEmitter.Stop();
                 return true;
@@ -42,16 +48,14 @@ public class SoundService : MonoBehaviour, ISoundService
         return true;
     }
 
-    public SoundEmitter Get() {
-        return soundEmitterPool.Get();
-    }
+    public SoundEmitter Get() => _soundEmitterPool.Get();
 
     public void ReturnToPool(SoundEmitter soundEmitter) {
-        soundEmitterPool.Release(soundEmitter);
+        _soundEmitterPool.Release(soundEmitter);
     }
 
     public void StopAll() {
-        foreach (var soundEmitter in activeSoundEmitters) {
+        foreach (var soundEmitter in _activeSoundEmitters) {
             soundEmitter.Stop();
         }
 
@@ -59,18 +63,18 @@ public class SoundService : MonoBehaviour, ISoundService
     }
 
     void InitializePool() {
-        soundEmitterPool = new ObjectPool<SoundEmitter>(
+        _soundEmitterPool = new ObjectPool<SoundEmitter>(
             CreateSoundEmitter,
             OnTakeFromPool,
             OnReturnedToPool,
             OnDestroyPoolObject,
-            collectionCheck,
-            defaultCapacity,
-            maxPoolSize);
+            _collectionCheck,
+            _defaultCapacity,
+            _maxPoolSize);
     }
 
     SoundEmitter CreateSoundEmitter() {
-        var soundEmitter = Instantiate(soundEmitterPrefab);
+        var soundEmitter = Instantiate(_soundEmitterPrefab);
         soundEmitter.Construct(this);
         soundEmitter.gameObject.SetActive(false);
         return soundEmitter;
@@ -78,12 +82,12 @@ public class SoundService : MonoBehaviour, ISoundService
 
     void OnTakeFromPool(SoundEmitter soundEmitter) {
         soundEmitter.gameObject.SetActive(true);
-        activeSoundEmitters.Add(soundEmitter);
+        _activeSoundEmitters.Add(soundEmitter);
     }
 
     void OnReturnedToPool(SoundEmitter soundEmitter) {
         soundEmitter.gameObject.SetActive(false);
-        activeSoundEmitters.Remove(soundEmitter);
+        _activeSoundEmitters.Remove(soundEmitter);
     }
 
     void OnDestroyPoolObject(SoundEmitter soundEmitter) {

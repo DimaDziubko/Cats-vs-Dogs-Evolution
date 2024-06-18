@@ -18,11 +18,9 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private TMP_Text unlockedText;
         [SerializeField] private bool hideLockIcon;
         
-        public void Highlight() => 
-            _changableImage.sprite = _activeSprite;
+        public void Highlight() => _changableImage.sprite = _activeSprite;
 
-        public void UnHighlight() => 
-            _changableImage.sprite = _inactiveSprite;
+        public void UnHighlight() => _changableImage.sprite = _inactiveSprite;
 
         public void SetIcon(bool isLocked)
         {

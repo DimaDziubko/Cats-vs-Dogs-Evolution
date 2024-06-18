@@ -1,6 +1,5 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Utils;
 using UnityEngine;
@@ -15,9 +14,9 @@ namespace _Game.Gameplay._Weapon.Scripts
 
         private int _collisionMask;
         
-        public override void Construct(IAudioService audioService, Faction faction, WeaponConfig config, int layer)
+        public override void Construct(ISoundService soundService, Faction faction, WeaponConfig config, int layer)
         {
-            base.Construct(audioService, faction, config, layer);
+            base.Construct(soundService, faction, config, layer);
             _splashRadius = config.SplashRadius;
 
             if (layer == Constants.Layer.PLAYER_PROJECTILE)

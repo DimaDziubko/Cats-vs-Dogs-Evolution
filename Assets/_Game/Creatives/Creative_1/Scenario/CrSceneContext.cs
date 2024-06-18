@@ -83,6 +83,7 @@ namespace _Game.Creatives.Creative_1.Scenario
         private readonly UnityRandomService _random = new UnityRandomService();
         private CrFoodGenerator _foodGenerator;
         private CrUnitBuilderViewController _builder;
+        private ISoundService _soundService;
         public int InitialFood => _initialFoodAmount;
         public CrHud Hud => _hud;
         public IBattleSpeedManager BattleSpeedManager => _battleSpeedManager;
@@ -107,8 +108,8 @@ namespace _Game.Creatives.Creative_1.Scenario
             _audioService = new AudioService(_mixer, _holder, _musicSource, _soundsHolder);
             _factories = new FactoriesHolder(_unitFactory, _coinFactory, _vfxFactory, baseFactory, _projectileFactory);
             _hud.Construct(_cameraService, _pauseManager, _audioService);
-            _unitFactory.Initialize(_cameraService, _random, _audioService);
-            _projectileFactory.Initialize(_audioService);
+            _unitFactory.Initialize(_cameraService, _random, _soundService);
+            _projectileFactory.Initialize(_soundService);
             _battleSpeedManager.SetSpeedFactor(_speedFactor);
             _foodGenerator = new CrFoodGenerator(_gameplayUI, _systemUpdate, _pauseManager, _battleSpeedManager);
             

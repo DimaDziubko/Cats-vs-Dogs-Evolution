@@ -42,8 +42,8 @@ namespace _Game.Core.Installers.BattleMode
             var audioService = Container.Resolve<IAudioService>();
             var soundService = Container.Resolve<ISoundService>();
 
-            BindProjectileFactory(audioService, weaponDataPresenter);
-            BindUnitFactory(cameraService, random, audioService, soundService, unitDataPresenter);
+            BindProjectileFactory(soundService, weaponDataPresenter);
+            BindUnitFactory(cameraService, random, soundService, unitDataPresenter);
             BindTowerFactory(towerDataPresenter, cameraService);
             BindCoinFactory(audioService);
             BindVfxFactory(weaponDataPresenter);
@@ -51,21 +51,20 @@ namespace _Game.Core.Installers.BattleMode
         }
 
         private void BindProjectileFactory(
-            IAudioService audioService,
+            ISoundService soundService,
             IWeaponDataPresenter weaponDataPresenter)
         {
-            _projectileFactory.Initialize(audioService, weaponDataPresenter);
+            _projectileFactory.Initialize(soundService, weaponDataPresenter);
             Container.Bind<IProjectileFactory>().To<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
         }
 
         private void BindUnitFactory(
             IWorldCameraService cameraService,
             IRandomService random,
-            IAudioService audioService,
             ISoundService soundService,
             IUnitDataPresenter unitDataPresenter)
         {
-            _unitFactory.Initialize(cameraService, random, audioService, soundService, unitDataPresenter);
+            _unitFactory.Initialize(cameraService, random, soundService, unitDataPresenter);
             Container.Bind<IUnitFactory>().To<UnitFactory>().FromInstance(_unitFactory).AsSingle();
         }
 

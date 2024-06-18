@@ -11,7 +11,9 @@ public class SoundEmitter : MonoBehaviour
     private AudioSource _audioSource;
     private Coroutine _playingCoroutine;
 
-    public Transform transform;
+    [SerializeField] private Transform _transform;
+
+    public Transform Transform => _transform;
 
     private void Awake() => _audioSource = gameObject.GetOrAdd<AudioSource>();
 
@@ -48,34 +50,12 @@ public class SoundEmitter : MonoBehaviour
         _audioSource.rolloffMode = data.RolloffMode;
         
     }
-
-    public void WithRandomPitch()
+    
+    IEnumerator WaitForSoundToEnd() 
     {
-        if (_playingCoroutine != null) {
-            StopCoroutine(_playingCoroutine);
-        }
-            
-        _audioSource.Play();
-        _playingCoroutine = StartCoroutine(WaitForSoundToEnd());
-    }
-
-    IEnumerator WaitForSoundToEnd() {
         yield return new WaitWhile(() => _audioSource.isPlaying);
         Stop();
     }
-
-    public void Stop() {
-        if (_playingCoroutine != null) {
-            StopCoroutine(_playingCoroutine);
-            _playingCoroutine = null;
-        }
-            
-        _audioSource.Stop();
-        _soundService.ReturnToPool(this);
-    }
-
-    public void WithRandomPitch(float min = -0.05f, float max = 0.05f) => 
-        _audioSource.pitch += Random.Range(min, max);
 
     public void Play() {
         if (_playingCoroutine != null) {
@@ -85,4 +65,20 @@ public class SoundEmitter : MonoBehaviour
         _audioSource.Play();
         _playingCoroutine = StartCoroutine(WaitForSoundToEnd());
     }
+
+    public void Stop() 
+    {
+        if (_playingCoroutine != null) {
+            StopCoroutine(_playingCoroutine);
+            _playingCoroutine = null;
+        }
+        
+        _audioSource.Stop();
+        _soundService.ReturnToPool(this);
+        
+        Debug.Log("Stop emitter");
+    }
+
+    public void WithRandomPitch(float min = -0.05f, float max = 0.05f) => 
+        _audioSource.pitch += Random.Range(min, max);
 }

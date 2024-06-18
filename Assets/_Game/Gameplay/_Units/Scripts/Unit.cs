@@ -2,7 +2,6 @@
 using System.Collections;
 using _Game.Common;
 using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._BattleField.Scripts;
@@ -114,7 +113,6 @@ namespace _Game.Gameplay._Units.Scripts
             Faction faction,
             UnitType type,
             IRandomService random,
-            IAudioService audioService,
             ISoundService soundService,
             int unitLayer,
             int aggroLayer,
@@ -139,7 +137,6 @@ namespace _Game.Gameplay._Units.Scripts
             _attack.Construct(
                 config.WeaponConfig,
                 faction,
-                audioService,
                 soundService,
                 _transform);
 
