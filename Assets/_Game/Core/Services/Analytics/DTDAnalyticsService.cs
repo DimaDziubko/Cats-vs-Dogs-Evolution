@@ -4,7 +4,7 @@ using _Game.Core.Ads;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 using _Game.Gameplay.Battle.Scripts;
-using DevToDev.Analytics;
+//using DevToDev.Analytics;
 
 namespace _Game.Core.Services.Analytics
 {
@@ -32,52 +32,52 @@ namespace _Game.Core.Services.Analytics
         {
             TimelineState.NextBattleOpened += OnNextBattleOpened;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
-            _adsService.RewardedAdImpression += TrackRewardedVideoAdImpression;
-            TutorialState.StepsCompletedChanged += OnStepCompleted;
+           // _adsService.RewardedAdImpression += TrackRewardedVideoAdImpression;
+           // TutorialState.StepsCompletedChanged += OnStepCompleted;
         }
 
         public void Dispose()
         {
             TimelineState.NextBattleOpened -= OnNextBattleOpened;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
-            _adsService.RewardedAdImpression -= TrackRewardedVideoAdImpression;
-            TutorialState.StepsCompletedChanged -= OnStepCompleted;
+           // _adsService.RewardedAdImpression -= TrackRewardedVideoAdImpression;
+           // TutorialState.StepsCompletedChanged -= OnStepCompleted;
             _gameInitializer.OnPostInitialization -= Init;
         }
 
-        private void OnStepCompleted(int step) => 
-            DTDAnalytics.Tutorial(step);
+        //private void OnStepCompleted(int step) => 
+        //    DTDAnalytics.Tutorial(step);
 
-        private void TrackRewardedVideoAdImpression(AdImpressionDto dto) => 
-            DTDAnalytics.AdImpression(dto.Network, dto.Revenue, dto.Placement.ToString(), dto.UnitId);
+        //private void TrackRewardedVideoAdImpression(AdImpressionDto dto) => 
+        //    DTDAnalytics.AdImpression(dto.Network, dto.Revenue, dto.Placement.ToString(), dto.UnitId);
 
         private void OnNextAgeOpened()
         {
-            var parameters = new DTDCustomEventParameters();
-            parameters.Add("timeline№", TimelineState.TimelineId + 1);
-            parameters.Add("age№", TimelineState.AgeId + 1);
+            //var parameters = new DTDCustomEventParameters();
+            //parameters.Add("timeline№", TimelineState.TimelineId + 1);
+            //parameters.Add("age№", TimelineState.AgeId + 1);
 
-            DTDAnalytics.CustomEvent("evolution_completed", parameters);
+           // DTDAnalytics.CustomEvent("evolution_completed", parameters);
         }
 
         private void OnNextBattleOpened()
         {
-            var parameters = new DTDCustomEventParameters();
-            parameters.Add("timeline№", TimelineState.TimelineId + 1);
-            parameters.Add("age№", TimelineState.AgeId + 1);
-            parameters.Add("battle№", TimelineState.MaxBattle);
+            //var parameters = new DTDCustomEventParameters();
+            //parameters.Add("timeline№", TimelineState.TimelineId + 1);
+            //parameters.Add("age№", TimelineState.AgeId + 1);
+            //parameters.Add("battle№", TimelineState.MaxBattle);
 
-            DTDAnalytics.CustomEvent("battle_completed", parameters);
+            //DTDAnalytics.CustomEvent("battle_completed", parameters);
         }
 
         public void OnBattleStarted(BattleAnalyticsData battleAnalyticsData)
         {
-            var parameters = new DTDCustomEventParameters();
-            parameters.Add("timeline№", battleAnalyticsData.TimelineNumber);
-            parameters.Add("age№", battleAnalyticsData.AgeNumber);
-            parameters.Add("battle№", battleAnalyticsData.BattleNumber);
+            //var parameters = new DTDCustomEventParameters();
+            //parameters.Add("timeline№", battleAnalyticsData.TimelineNumber);
+            //parameters.Add("age№", battleAnalyticsData.AgeNumber);
+            //parameters.Add("battle№", battleAnalyticsData.BattleNumber);
 
-            DTDAnalytics.CustomEvent("battle_started", parameters);
+            //DTDAnalytics.CustomEvent("battle_started", parameters);
         }
     }
 }
