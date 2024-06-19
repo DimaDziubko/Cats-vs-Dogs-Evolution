@@ -1,10 +1,11 @@
+using _Game.Core.Services.Audio;
 using UnityEngine;
 
 public class SoundBuilder
 {
     private readonly ISoundService _soundService;
     private SoundData _soundData;
-    Vector3 _position = Vector3.zero;
+    private Vector3 _position = Vector3.zero;
     private bool _randomPitch;
 
     public SoundBuilder(ISoundService audioService) => 
@@ -22,7 +23,8 @@ public class SoundBuilder
         return this;
     }
     
-    public SoundBuilder WithRandomPitch() {
+    public SoundBuilder WithRandomPitch()
+    {
         _randomPitch = true;
         return this;
     }

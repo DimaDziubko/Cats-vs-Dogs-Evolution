@@ -61,7 +61,8 @@ namespace _Game.Gameplay._Units.Scripts
         [ShowInInspector, ReadOnly]
         public List<ITarget> Targets => _targetCollection.Targets;
 
-        public void Construct(int layer)
+        public void Construct(
+            int layer)
         {
             if (_triggerObserver != null)
             {
@@ -71,6 +72,11 @@ namespace _Game.Gameplay._Units.Scripts
             }
         }
 
+        public void Construct(int layer, float radius)
+        {
+            Construct(layer);
+            _triggerObserver.SetSize(radius);
+        }
         public void Enable()
         {
             if (_triggerObserver)

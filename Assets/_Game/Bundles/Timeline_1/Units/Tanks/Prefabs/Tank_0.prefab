@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9021e9edd0a102645a058928e80b7092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 7496649389464453038}
 --- !u!58 &7496649389464453038
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -190,7 +191,7 @@ MonoBehaviour:
   _aMove: {fileID: 5139411320517938633}
   _aggroDetection: {fileID: 3112122452185169024}
   _attackDetection: {fileID: 9073645176878596570}
-  _attack: {fileID: 8007065347937447905}
+  _attack: {fileID: 6362761198789029171}
   _bodyCollider: {fileID: 1596542147222597285}
   _targetPoint: {fileID: 8031092648994783693}
   _damageFlash: {fileID: 2161342644035243358}
@@ -514,6 +515,37 @@ Transform:
   m_Father: {fileID: 5562371957400219988}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &8101544115920615162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2984669985584464226}
+  m_Layer: 0
+  m_Name: ProjectileGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2984669985584464226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8101544115920615162}
+  m_LocalRotation: {x: -0, y: -0, z: -0.00000064680347, w: -1}
+  m_LocalPosition: {x: 0.952, y: -0.005, z: 0.07509436}
+  m_LocalScale: {x: 3.3333333, y: 3.3333333, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4999198385354047612}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1275852136711455189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -839,7 +871,7 @@ MonoBehaviour:
   _weaponAimBone: {fileID: 4069745709560163542}
   _minAngle: -60
   _maxAngle: 60
---- !u!114 &8007065347937447905
+--- !u!114 &6362761198789029171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -848,7 +880,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5159553954528395404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e48b581918a42af9a47ab77eef59906, type: 3}
+  m_Script: {fileID: 11500000, guid: 163e3ce9ed284e7ca3a9895100394ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _soundData:
@@ -874,7 +906,7 @@ MonoBehaviour:
     IgnoreListenerVolume: 0
     IgnoreListenerPause: 0
     RolloffMode: 0
-  _attackSFX: {fileID: 8300000, guid: 699db0476f3f93041ac5132aeb1bbd73, type: 3}
+  _projectileGenerator: {fileID: 2984669985584464226}
   _muzzleTransform: {fileID: 5117904361427397389}
 --- !u!4 &6292218248912689391 stripped
 Transform:

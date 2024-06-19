@@ -302,6 +302,7 @@ namespace _Game.Utils.Extensions
                         PlayerHealthMultiplier = (float)warriorToken[Constants.ConfigKeys.PLAYER_HEALTH_MULTIPLIER],
                         EnemyHealthMultiplier = (float)warriorToken[Constants.ConfigKeys.ENEMY_HEALTH_MULTIPLIER],
                         AttackPerSecond = (float)warriorToken[Constants.ConfigKeys.ATTACK_PER_SECOND],
+                        AttackDistance = (float)warriorToken[Constants.ConfigKeys.ATTACK_DISTANCE],
                     };
                     
                     warriors.Add(warriorConfig);

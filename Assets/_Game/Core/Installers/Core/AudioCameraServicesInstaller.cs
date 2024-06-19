@@ -58,7 +58,8 @@ namespace _Game.Core.Installers.Core
             Container
                 .Bind<ISoundService>()
                 .FromInstance(_soundService)
-                .AsSingle(); 
+                .AsSingle()
+                .NonLazy(); 
         }
     }
 }

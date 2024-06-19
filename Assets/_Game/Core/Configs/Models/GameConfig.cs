@@ -132,6 +132,7 @@ namespace _Game.Core.Configs.Models
         public float PlayerHealthMultiplier;
         public float EnemyHealthMultiplier;
         public float AttackPerSecond;
+        public float AttackDistance;
     }
 
     [Serializable]

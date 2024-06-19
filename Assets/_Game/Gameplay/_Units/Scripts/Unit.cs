@@ -2,6 +2,7 @@
 using System.Collections;
 using _Game.Common;
 using _Game.Core.Configs.Models;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._BattleField.Scripts;
@@ -12,6 +13,7 @@ using _Game.Gameplay._Units.Scripts.Attack;
 using _Game.Gameplay._Units.Scripts.Movement;
 using _Game.Gameplay._Units.Scripts.Utils;
 using _Game.Gameplay._Weapon.Scripts;
+using _Game.Scenes.Tests;
 using _Game.Utils;
 using _Game.Utils.Extensions;
 using Pathfinding.RVO;
@@ -132,7 +134,9 @@ namespace _Game.Gameplay._Units.Scripts
 
 
             _aggroDetection.Construct(aggroLayer);
-            _attackDetection.Construct(attackLayer);
+            _attackDetection.Construct(
+                attackLayer,
+                config.AttackDistance);
             
             _attack.Construct(
                 config.WeaponConfig,

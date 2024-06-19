@@ -167,6 +167,7 @@ namespace _Game.Utils
             public const string PLAYER_HEALTH_MULTIPLIER = "PlayerHealthMultiplier";
             public const string ENEMY_HEALTH_MULTIPLIER = "EnemyHealthMultiplier";
             public const string ATTACK_PER_SECOND = "AttackPerSecond";
+            public const string ATTACK_DISTANCE = "AttackDistance";
 
             //Weapon
             public const string WEAPON = "Weapon";

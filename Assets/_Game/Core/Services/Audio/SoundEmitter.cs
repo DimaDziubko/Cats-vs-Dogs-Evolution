@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using _Game.Utils.Extensions;
+using _Game.Core.Services.Audio;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -7,16 +7,13 @@ public class SoundEmitter : MonoBehaviour
 {
     private ISoundService _soundService;
     public SoundData Data { get; private set; }
-    
-    private AudioSource _audioSource;
+
     private Coroutine _playingCoroutine;
 
     [SerializeField] private Transform _transform;
+    [SerializeField] private AudioSource _audioSource;
 
     public Transform Transform => _transform;
-
-    private void Awake() => _audioSource = gameObject.GetOrAdd<AudioSource>();
-
     public void Construct(ISoundService soundService) => _soundService = soundService;
 
     public void Initialize(SoundData data)
@@ -50,12 +47,6 @@ public class SoundEmitter : MonoBehaviour
         _audioSource.rolloffMode = data.RolloffMode;
         
     }
-    
-    IEnumerator WaitForSoundToEnd() 
-    {
-        yield return new WaitWhile(() => _audioSource.isPlaying);
-        Stop();
-    }
 
     public void Play() {
         if (_playingCoroutine != null) {
@@ -64,6 +55,12 @@ public class SoundEmitter : MonoBehaviour
             
         _audioSource.Play();
         _playingCoroutine = StartCoroutine(WaitForSoundToEnd());
+    }
+
+    IEnumerator WaitForSoundToEnd() 
+    {
+        yield return new WaitWhile(() => _audioSource.isPlaying);
+        Stop();
     }
 
     public void Stop() 
