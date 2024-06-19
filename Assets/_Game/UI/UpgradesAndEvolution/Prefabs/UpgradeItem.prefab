@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 4867967673002100039}
   - component: {fileID: 4867967673002100036}
   - component: {fileID: 1300893884340542780}
+  - component: {fileID: 3803504344957381151}
   m_Layer: 5
   m_Name: UpgradeItem
   m_TagString: Untagged
@@ -101,7 +102,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4867967673002100038}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -142,6 +143,25 @@ MonoBehaviour:
   _itemNameLabel: {fileID: 4867967673806604411}
   _amountLabel: {fileID: 4867967673303640246}
   _transactionButton: {fileID: 5047592212444002077}
+--- !u!114 &3803504344957381151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867967673002100038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c01f693c8f46a3a080227ec3d92609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _step: 3
+  _requiredPointerSize: {x: 100, y: 100}
+  _offset: {x: 0, y: -125}
+  _rootCanvasTransform: {fileID: 0}
+  _tutorialObjectRectTransform: {fileID: 6337883383732373803}
+  _isUnderneath: 0
+  _needAppearanceAnimation: 0
 --- !u!1 &4867967673303640248
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,8 +230,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0.9/s
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 53e42e547991a3e49a367db7447097b2, type: 2}
-  m_sharedMaterial: {fileID: -488540152738550469, guid: 53e42e547991a3e49a367db7447097b2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4cf7476a10d28bd45bade1570b07f15b, type: 2}
+  m_sharedMaterial: {fileID: 5215304330408209174, guid: 4cf7476a10d28bd45bade1570b07f15b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -345,8 +365,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Food Production
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 53e42e547991a3e49a367db7447097b2, type: 2}
-  m_sharedMaterial: {fileID: -488540152738550469, guid: 53e42e547991a3e49a367db7447097b2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4cf7476a10d28bd45bade1570b07f15b, type: 2}
+  m_sharedMaterial: {fileID: 5215304330408209174, guid: 4cf7476a10d28bd45bade1570b07f15b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -573,6 +593,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3454184508613951650, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5215304330408209174, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
     - target: {fileID: 4256352704178367350, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}
       propertyPath: m_SizeDelta.y
       value: 50

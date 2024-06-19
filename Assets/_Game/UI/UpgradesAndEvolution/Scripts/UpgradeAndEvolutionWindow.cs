@@ -118,8 +118,6 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         private void OnUpgradeNotified(NotificationData data)
         {
-            //TODO Delete
-            _logger.Log($"Notification data \n Window {data.Window} \n IsAvailable {data.IsAvailable} \n IsReviewed {data.IsReviewed}");
             
             switch (data.Window)
             {

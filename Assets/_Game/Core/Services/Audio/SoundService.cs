@@ -44,7 +44,7 @@ namespace _Game.Core.Services.Audio
                     soundEmitter.Stop();
                     return true;
                 } catch {
-                    Debug.Log("SoundEmitter is already released");
+                    //Debug.Log("SoundEmitter is already released");
                 }
                 return false;
             }

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using _Game.Core._GameSaver;
 using _Game.Core.Loading;
-using _Game.Core.Navigation;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services.Audio;
@@ -43,6 +41,7 @@ namespace _Game.Gameplay.Battle.Scripts
         private readonly IAudioService _audioService;
         private readonly IGameSaver _gameSaver;
         private readonly IBattleNavigator _battleNavigator;
+        private readonly ISoundService _soundService;
 
         public bool BattleInProcess => _battle.BattleInProcess;
 
@@ -57,7 +56,8 @@ namespace _Game.Gameplay.Battle.Scripts
             GameResultHandler gameResultHandler,
             IUserContainer userContainer,
             IAudioService audioService,
-            IBattleNavigator battleNavigator)
+            IBattleNavigator battleNavigator,
+            ISoundService soundService)
         {
             _battleMode = battleMode;
             _battle = battle;
@@ -69,7 +69,7 @@ namespace _Game.Gameplay.Battle.Scripts
             _gameResultHandler = gameResultHandler;
             _audioService = audioService;
             _battleNavigator = battleNavigator;
-            
+            _soundService = soundService;
             _userContainer = userContainer;
 
             _battleMode.SetMediator(this);
@@ -120,7 +120,9 @@ namespace _Game.Gameplay.Battle.Scripts
         private void GoToMainMenu()
         {
             Queue <ILoadingOperation> loadingOperations = new Queue<ILoadingOperation>();
-            loadingOperations.Enqueue(new ClearGameOperation(_battleMode));
+            loadingOperations.Enqueue(new ClearGameOperation(
+                _battleMode,
+                _soundService));
             _battleUIController.HideCoinCounter();
             _battleUIController.ShowRewardCoinsAfterLoading();
             _battleStateHandler.GoToMainMenu(loadingOperations);

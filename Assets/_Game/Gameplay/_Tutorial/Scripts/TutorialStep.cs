@@ -17,8 +17,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
         [SerializeField] private RectTransform _tutorialObjectRectTransform;
         [SerializeField] private bool _isUnderneath;
         [SerializeField] private bool _needAppearanceAnimation;
-
-        [ShowInInspector]
+        
         private TutorialStepData _data;
 
         public void ShowStep() => Show?.Invoke(this);
@@ -34,8 +33,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
             _data.RequiredPointerRotation = CalculateRequiredRotation();
             return _data;
         }
-
-        [Button]
+        
         private void SetupData()
         {
             _data = new TutorialStepData()

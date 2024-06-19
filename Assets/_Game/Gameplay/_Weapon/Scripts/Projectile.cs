@@ -80,7 +80,6 @@ namespace _Game.Gameplay._Weapon.Scripts
         {
             if (!_move.IsMoving)
             {
-                Debug.Log("Handle not moving because of not moving");
                 HandleNotMoving();
             }
             

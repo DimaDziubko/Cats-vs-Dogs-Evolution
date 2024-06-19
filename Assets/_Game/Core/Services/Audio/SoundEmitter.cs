@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using _Game.Core.Services.Audio;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundEmitter : MonoBehaviour
@@ -15,7 +16,7 @@ public class SoundEmitter : MonoBehaviour
 
     public Transform Transform => _transform;
     public void Construct(ISoundService soundService) => _soundService = soundService;
-
+    
     public void Initialize(SoundData data)
     {
         Data = data;
@@ -72,8 +73,6 @@ public class SoundEmitter : MonoBehaviour
         
         _audioSource.Stop();
         _soundService.ReturnToPool(this);
-        
-        Debug.Log("Stop emitter");
     }
 
     public void WithRandomPitch(float min = -0.05f, float max = 0.05f) => 

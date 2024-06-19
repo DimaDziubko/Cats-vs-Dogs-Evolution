@@ -8,8 +8,8 @@ public class SoundBuilder
     private Vector3 _position = Vector3.zero;
     private bool _randomPitch;
 
-    public SoundBuilder(ISoundService audioService) => 
-        _soundService = audioService;
+    public SoundBuilder(ISoundService soundService) => 
+        _soundService = soundService;
 
     public SoundBuilder WithSoundData(SoundData soundData)
     {

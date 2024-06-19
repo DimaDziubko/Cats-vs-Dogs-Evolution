@@ -11,5 +11,6 @@ namespace _Game.Core.Services.Audio
         Queue<SoundEmitter> FrequentSoundEmitters { get;}
         SoundEmitter Get();
         SoundBuilder CreateSound();
+        void StopAll();
     }
 }
