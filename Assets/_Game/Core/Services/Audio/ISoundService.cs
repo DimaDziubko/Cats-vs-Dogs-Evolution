@@ -12,5 +12,6 @@ namespace _Game.Core.Services.Audio
         SoundEmitter Get();
         SoundBuilder CreateSound();
         void StopAll();
+        void Cleanup();
     }
 }

@@ -24,7 +24,7 @@ namespace _Game.Core.Loading
         {
             onProgress?.Invoke(0.2f);
             _gameCleanUp.Cleanup();
-            _soundService.StopAll();
+            _soundService.Cleanup();
             
             foreach (var factory in _gameCleanUp.Factories)
             {

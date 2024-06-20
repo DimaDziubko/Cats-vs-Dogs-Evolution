@@ -57,10 +57,17 @@ namespace _Game.Core.Services.Audio
             _soundEmitterPool.Release(soundEmitter);
         }
 
-        public void StopAll() {
+        public void StopAll() 
+        {
             foreach (var soundEmitter in _activeSoundEmitters) {
                 soundEmitter.Stop();
             }
+            
+            _frequentSoundEmitters.Clear();
+        }
+
+        public void Cleanup()
+        {
             _frequentSoundEmitters.Clear();
         }
 

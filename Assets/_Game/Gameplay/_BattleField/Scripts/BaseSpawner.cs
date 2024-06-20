@@ -52,11 +52,22 @@ namespace _Game.Gameplay._BattleField.Scripts
             UpdatePlayerBase();
 
             _basePresenter.PlayerBaseDataUpdated += UpdateData;
-            _basePresenter.PlayerBaseUpdated += UpdatePlayerBase;
+            _basePresenter.BaseUpdated += UpdaterBase;
+        }
 
-            //_ageState.BaseDataUpdated += UpdateData;
-            //_ageState.AgeUpdated += UpdatePlayerBase;
-            //_ageState.RaceChangingBegun += RemoveBases;
+        private void UpdaterBase(Faction faction)
+        {
+            switch (faction)
+            {
+                case Faction.Player:
+                    RemoveBase(faction);
+                    UpdatePlayerBase();
+                    break;
+                case Faction.Enemy:
+                    RemoveBase(faction);
+                    UpdateEnemyBase();
+                    break;
+            }
         }
 
         public void UpdatePlayerBase()
@@ -87,10 +98,19 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _baseDestructionManager);
         }
 
-        private void RemoveBases()
+        private void RemoveBase(Faction faction)
         {
-            _playerBase.Recycle();
-            _enemyBase.Recycle();
+            switch (faction)
+            {
+                case Faction.Player:
+                    _playerBase.Recycle();
+                    _playerBase = null;
+                    break;
+                case Faction.Enemy:
+                    _enemyBase.Recycle();
+                    _enemyBase = null;
+                    break;
+            }
         }
         
         private void UpdateData(BaseModel model) => _playerBase.UpdateData(model);
