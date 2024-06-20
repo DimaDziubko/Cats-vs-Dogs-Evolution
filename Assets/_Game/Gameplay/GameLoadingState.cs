@@ -30,8 +30,14 @@ namespace _Game.Core.GameState
                 new GameLoadingOperation(
                     _sceneLoader, 
                     _cameraService));
-
-            _stateMachine.Enter<MenuState, Queue<ILoadingOperation>>(loadingOperations);
+            
+            var data = new LoadingData()
+            {
+                Type = LoadingScreenType.Simple,
+                Operations = loadingOperations,
+            };
+            
+            _stateMachine.Enter<MenuState, LoadingData>(data);
         }
 
         public void Exit()

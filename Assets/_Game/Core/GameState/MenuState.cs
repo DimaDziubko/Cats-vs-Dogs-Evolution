@@ -1,40 +1,45 @@
-using System.Collections.Generic;
 using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
+using _Game.Core.Services.Analytics;
 using _Game.UI._MainMenu.Scripts;
 using _Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.Core.GameState
 {
-    public class MenuState : IState, IPayloadedState<Queue<ILoadingOperation>>
+    public class MenuState : IPayloadedState<LoadingData>
     {
+        private const string ANALYTICS_EVENT_NAME = "main_menu";
+        
         private readonly IMainMenuProvider _mainMenuProvider;
         private readonly ILoadingScreenProvider _loadingProvider;
         private readonly IGameStateMachine _stateMachine;
+        private readonly IDTDAnalyticsService _dtdAnalyticsService;
+        private readonly IAnalyticsService _analyticsService;
 
         private Disposable<MainMenu> _mainMenu;
 
         public MenuState(
             IMainMenuProvider mainMenuProvider,
             ILoadingScreenProvider loadingProvider,
-            IGameStateMachine stateMachine)
+            IGameStateMachine stateMachine,
+            IDTDAnalyticsService dtdAnalyticsService,
+            IAnalyticsService analyticsService)
         {
             _mainMenuProvider = mainMenuProvider;
             _loadingProvider = loadingProvider;
             _stateMachine = stateMachine;
-        }
-
-        public void Enter()
-        {
-            _loadingProvider.LoadAndDestroy(new MainMenuLoadingOperation(_mainMenuProvider), LoadingScreenType.DarkFade);
+            _dtdAnalyticsService = dtdAnalyticsService;
+            _analyticsService = analyticsService;
         }
         
-        public void Enter(Queue<ILoadingOperation> loadingOperations)
+        public void Enter(LoadingData data)
         {
-            loadingOperations.Enqueue(
-                new MainMenuLoadingOperation(_mainMenuProvider));
-            _loadingProvider.LoadAndDestroy(loadingOperations, LoadingScreenType.Simple).Forget();
+            data.Operations.Enqueue(new MainMenuLoadingOperation(_mainMenuProvider));
+            _loadingProvider.LoadAndDestroy(data.Operations, data.Type).Forget();
+            
+            _dtdAnalyticsService.SendEvent(ANALYTICS_EVENT_NAME);
+            _analyticsService.SendEvent(ANALYTICS_EVENT_NAME);
         }
         
         public void Exit()

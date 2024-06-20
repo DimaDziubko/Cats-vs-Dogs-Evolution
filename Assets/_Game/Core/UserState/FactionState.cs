@@ -7,14 +7,17 @@ namespace _Game.Core.UserState
     public class RaceState : IRaceStateReadonly
     {
         public Race CurrentRace;
-
+        public int Counter;
+        
         public event Action Changed;
         
         Race IRaceStateReadonly.CurrentRace => CurrentRace;
+        int IRaceStateReadonly.Counter => Counter;
 
         public void Change(Race race)
         {
             CurrentRace = race;
+            Counter++;
             Changed?.Invoke();
         }
     }
@@ -23,5 +26,6 @@ namespace _Game.Core.UserState
     {
         event Action Changed;
         Race CurrentRace { get; }
+        int Counter { get; }
     }
 }

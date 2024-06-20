@@ -6,5 +6,6 @@ namespace _Game.Core.Services.Analytics
     public interface IDTDAnalyticsService
     {
         void OnBattleStarted(BattleAnalyticsData battleAnalyticsData);
+        void SendEvent(string mainMenu);
     }
 }

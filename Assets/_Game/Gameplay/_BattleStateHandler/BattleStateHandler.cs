@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.GameState;
 using _Game.Core.Loading;
+using _Game.Core.LoadingScreen;
 using _Game.Gameplay.Battle.Scripts;
 
 namespace _Game.Gameplay._BattleStateHandler
@@ -28,7 +29,12 @@ namespace _Game.Gameplay._BattleStateHandler
 
         public void GoToMainMenu(Queue<ILoadingOperation> operations)
         {
-            _stateMachine.Enter<MenuState, Queue<ILoadingOperation>>(operations);
+            LoadingData data = new LoadingData()
+            {
+                Type = LoadingScreenType.DarkFade,
+                Operations = operations,
+            };
+            _stateMachine.Enter<MenuState, LoadingData>(data);
         }
     }
 }

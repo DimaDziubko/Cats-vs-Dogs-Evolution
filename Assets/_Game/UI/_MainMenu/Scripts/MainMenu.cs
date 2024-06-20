@@ -137,10 +137,8 @@ namespace _Game.UI._MainMenu.Scripts
             _upgradesTutorialStep.ShowStep();
         }
         
-        private void Subscribe()
-        {
+        private void Subscribe() => 
             _upgradesChecker.Notify += OnUpgradesNotified;
-        }
 
         private void OnUpgradesNotified(NotificationData data)
         {

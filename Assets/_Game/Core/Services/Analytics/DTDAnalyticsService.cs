@@ -1,8 +1,10 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
+using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Battle.Scripts;
 using DevToDev.Analytics;
 
@@ -10,21 +12,26 @@ namespace _Game.Core.Services.Analytics
 {
     public class DTDAnalyticsService : IDTDAnalyticsService, IDisposable
     {
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IAdsService _adsService;
         private readonly IGameInitializer _gameInitializer;
+        private readonly IMyLogger _logger;
 
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
-
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private ITutorialStateReadonly TutorialState => _userContainer.State.TutorialState;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
+        private IBattleStatisticsReadonly BattleStatistics => _userContainer.State.BattleStatistics;
+        
         public DTDAnalyticsService(
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             IAdsService adsService,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            IMyLogger logger)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _adsService = adsService;
             _gameInitializer = gameInitializer;
+            _logger = logger;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -32,16 +39,23 @@ namespace _Game.Core.Services.Analytics
         {
             TimelineState.NextBattleOpened += OnNextBattleOpened;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
+            TimelineState.OpenedUnit += OnUnitOpened;
             _adsService.RewardedAdImpression += TrackRewardedVideoAdImpression;
             TutorialState.StepsCompletedChanged += OnStepCompleted;
+            RaceState.Changed += OnRaceChanged;
+            BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
         }
 
         public void Dispose()
         {
             TimelineState.NextBattleOpened -= OnNextBattleOpened;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
+            TimelineState.OpenedUnit -= OnUnitOpened;
             _adsService.RewardedAdImpression -= TrackRewardedVideoAdImpression;
             TutorialState.StepsCompletedChanged -= OnStepCompleted;
+            RaceState.Changed -= OnRaceChanged;
+            BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
+            
             _gameInitializer.OnPostInitialization -= Init;
         }
 
@@ -78,6 +92,54 @@ namespace _Game.Core.Services.Analytics
             parameters.Add("battle№", battleAnalyticsData.BattleNumber);
 
             DTDAnalytics.CustomEvent("battle_started", parameters);
+        }
+
+        public void SendEvent(string eventName)
+        {
+            DTDAnalytics.CustomEvent(eventName);
+        }
+
+        private void OnUnitOpened(UnitType type)
+        {
+            var parameters = new DTDCustomEventParameters();
+            parameters.Add("timeline№", TimelineState.TimelineId + 1);
+            parameters.Add("age№", TimelineState.AgeId + 1);
+            parameters.Add("unit", (int)type);
+
+            DTDAnalytics.CustomEvent("unit_opened", parameters);
+        }
+
+        private void OnRaceChanged()
+        {
+            var parameters = new DTDCustomEventParameters();
+            
+            if (RaceState.Counter == 1)
+            {
+                DTDAnalytics.CustomEvent($"race_selected {RaceState.CurrentRace.ToString()}");
+                _logger.Log("race_selected");
+                return;
+            }
+
+            parameters.Add("timeline№", TimelineState.TimelineId + 1);
+            parameters.Add("age№", TimelineState.AgeId + 1);
+            parameters.Add("race", RaceState.CurrentRace.ToString());
+            DTDAnalytics.CustomEvent("race_changed", parameters);
+            _logger.Log("race_changed");
+        }
+
+        private void OnCompletedBattleChanged()
+        {
+            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 1)
+            {
+                DTDAnalytics.CustomEvent("first_build_success");
+                _logger.Log("first_build_success");
+            }
+            
+            else if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 0)
+            {
+                DTDAnalytics.CustomEvent("first_build_failed");
+                _logger.Log("first_build_failed");
+            }
         }
     }
 }

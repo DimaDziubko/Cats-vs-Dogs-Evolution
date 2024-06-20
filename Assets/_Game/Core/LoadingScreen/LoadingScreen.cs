@@ -88,11 +88,9 @@ namespace _Game.Core.LoadingScreen
             
             ResetFade(0);
             
-            var fadeTask = PlayFadeAnimation(0, 1, 2);
-            var loadTask = LoadOperations(loadingOperations);
-
-            await UniTask.WhenAll(fadeTask, loadTask);
-            await PlayFadeAnimation(1, 0, 2);
+            await PlayFadeAnimation(0, 1, 1);
+            await LoadOperations(loadingOperations);
+            await PlayFadeAnimation(1, 0, 1);
         }
 
 
