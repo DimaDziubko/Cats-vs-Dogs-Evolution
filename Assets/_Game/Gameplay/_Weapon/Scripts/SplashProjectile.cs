@@ -10,7 +10,9 @@ namespace _Game.Gameplay._Weapon.Scripts
     [RequireComponent(typeof(CircleCollider2D))]
     public class SplashProjectile : Projectile
     {
-        private readonly Collider2D[] _hitBuffer = new Collider2D[5];
+        [SerializeField] private float _splashDamageRatio = 0.2f;
+        
+        private readonly Collider2D[] _hitBuffer = new Collider2D[3];
         private float _splashRadius;
 
         private int _collisionMask;
@@ -49,6 +51,42 @@ namespace _Game.Gameplay._Weapon.Scripts
             ApplyDamageAndEffects();
         }
         
+        // private void ApplyDamageAndEffects()
+        // {
+        //     int count = Physics2D.OverlapCircleNonAlloc(transform.position, _splashRadius, _hitBuffer, _collisionMask);
+        //
+        //     if (count == 0) 
+        //     {
+        //         _isDead = true;
+        //         SpawnVfx();
+        //         PlaySound();
+        //         return;
+        //     }
+        //
+        //     float[] distances = new float[count];
+        //     for (int i = 0; i < count; i++)
+        //     {
+        //         distances[i] = Vector2.Distance(transform.position, _hitBuffer[i].transform.position);
+        //     }
+        //
+        //     Array.Sort(distances, _hitBuffer, 0, count);
+        //
+        //     float damageToDeal = _damage;
+        //     for (int i = 0; i < count; i++)
+        //     {
+        //         var target = _interactionCache.Get(_hitBuffer[i]);
+        //         if (target?.Damageable != null)
+        //         {
+        //             target.Damageable.GetDamage(damageToDeal);
+        //             damageToDeal /= 2; 
+        //         }
+        //     }
+        //
+        //     SpawnVfx();
+        //     PlaySound();
+        //     _isDead = true;
+        // }
+        
         private void ApplyDamageAndEffects()
         {
             int count = Physics2D.OverlapCircleNonAlloc(transform.position, _splashRadius, _hitBuffer, _collisionMask);
@@ -62,6 +100,7 @@ namespace _Game.Gameplay._Weapon.Scripts
             }
 
             float[] distances = new float[count];
+            
             for (int i = 0; i < count; i++)
             {
                 distances[i] = Vector2.Distance(transform.position, _hitBuffer[i].transform.position);
@@ -70,13 +109,14 @@ namespace _Game.Gameplay._Weapon.Scripts
             Array.Sort(distances, _hitBuffer, 0, count);
 
             float damageToDeal = _damage;
+            
             for (int i = 0; i < count; i++)
             {
                 var target = _interactionCache.Get(_hitBuffer[i]);
                 if (target?.Damageable != null)
                 {
                     target.Damageable.GetDamage(damageToDeal);
-                    damageToDeal /= 2; 
+                    damageToDeal = _splashDamageRatio * _damage; 
                 }
             }
 
