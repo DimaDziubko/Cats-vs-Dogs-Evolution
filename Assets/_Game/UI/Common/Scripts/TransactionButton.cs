@@ -65,7 +65,7 @@ namespace _Game.UI.Common.Scripts
             }
             if (_infoText != null)
             {
-                _infoText.color = canAfford ? _affordableColor : _expensiveColor;
+                //_infoText.color = canAfford ? _affordableColor : _expensiveColor;
             }
         }
 
