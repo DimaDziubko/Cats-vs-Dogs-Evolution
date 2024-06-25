@@ -275,7 +275,6 @@
               <e p="BootstrapState.cs" t="Include" />
               <e p="ConfigurationState.cs" t="Include" />
               <e p="DataLoadingState.cs" t="Include" />
-              <e p="GameLoadingState.cs" t="Include" />
               <e p="GameLoopState.cs" t="Include" />
               <e p="GameStateMachine.cs" t="Include" />
               <e p="IGameStateMachine.cs" t="Include" />
@@ -312,6 +311,7 @@
               <e p="GameLoadingOperation.cs" t="Include" />
               <e p="ILoadingOperation.cs" t="Include" />
               <e p="InitializationOperation.cs" t="Include" />
+              <e p="LoadingData.cs" t="Include" />
               <e p="MainMenuLoadingOperation.cs" t="Include" />
             </e>
             <e p="LoadingScreen" t="Include">
@@ -628,6 +628,7 @@
                 <e p="FoodPanel.cs" t="Include" />
               </e>
             </e>
+            <e p="GameLoadingState.cs" t="Include" />
             <e p="GameResult" t="Include">
               <e p="Scripts" t="Include">
                 <e p="DoubleCoinsBtn.cs" t="Include" />
@@ -851,6 +852,9 @@
             </e>
           </e>
         </e>
+        <e p="AddressableAssetsData" t="Include">
+          <e p="link.xml" t="Include" />
+        </e>
         <e p="CleverAdsSolutions" t="Include">
           <e p="Editor" t="Include">
             <e p="CASAndroidOptimalAdsDependencies.xml" t="Include" />
@@ -880,7 +884,7 @@
         </e>
         <e p="ExternalDependencyManager" t="Include">
           <e p="Editor" t="Include">
-            <e p="external-dependency-manager_version-1.2.177_manifest.txt" t="Include" />
+            <e p="external-dependency-manager_version-1.2.180_manifest.txt" t="Include" />
           </e>
         </e>
         <e p="Firebase" t="Include">

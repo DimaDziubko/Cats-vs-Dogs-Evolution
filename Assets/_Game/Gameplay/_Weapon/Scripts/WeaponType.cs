@@ -10,6 +10,7 @@
         Bomb,
         Ak,
         Tank,
-        Laser
+        Laser_1,
+        Laser_2
     }
 }

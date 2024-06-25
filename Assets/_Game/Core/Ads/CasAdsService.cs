@@ -68,7 +68,7 @@ namespace _Game.Core.Ads
                 _logger.LogWarning("Attempted to show rewarded video before it was ready.");
                 return;
             }
-
+            
             _pauseManager.SetPaused(true);
             _manager.ShowAd(AdType.Rewarded);
             _onVideoCompleted = onVideoCompleted;
@@ -100,8 +100,8 @@ namespace _Game.Core.Ads
             _onVideoCompleted = null;
             _manager.LoadAd(AdType.Rewarded);
         }
-
-
+        
+        
         private void OnRewardedAdImpression(AdMetaData meta)
         {
             AdImpressionDto adImpressionDto = new AdImpressionDto()
@@ -114,7 +114,7 @@ namespace _Game.Core.Ads
             
             RewardedAdImpression?.Invoke(adImpressionDto);
         }
-
+        
         private void OnRewardedAdClosed()
         {
             _logger.LogWarning($"CAS OnRewardedVideoClosed");

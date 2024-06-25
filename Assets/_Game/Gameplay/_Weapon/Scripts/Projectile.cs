@@ -42,9 +42,11 @@ namespace _Game.Gameplay._Weapon.Scripts
             set => _transform.rotation = value;
         }
 
+        [ShowInInspector]
         public WeaponType Type { get; private set; }
         public Faction Faction { get; private set; }
 
+        [ShowInInspector]
         protected float _damage;
 
 

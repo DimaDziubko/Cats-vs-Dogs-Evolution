@@ -40,14 +40,14 @@ namespace _Game.Gameplay._Weapon.Scripts
         {
             if (collider != null)
             {
-                ApplyDamageAndEffects();
-                Debug.Log($"Handle collision triggered with collider inside _isDead {_isDead}");
+                ApplyDamageAndEffects(); 
+                //Debug.Log($"Handle collision triggered with collider inside _isDead {_isDead}");
             }
         }
         
         protected override void HandleNotMoving()
         {
-            Debug.Log("Handle not moving because projectile stopped.");
+            //Debug.Log("Handle not moving because projectile stopped.");
             ApplyDamageAndEffects();
         }
         
