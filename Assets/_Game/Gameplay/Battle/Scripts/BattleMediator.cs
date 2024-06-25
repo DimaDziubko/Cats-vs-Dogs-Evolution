@@ -110,6 +110,7 @@ namespace _Game.Gameplay.Battle.Scripts
             if (!wasExit) _userContainer.AddCompletedBattle();
             
             var isConfirmed = await _gameResultHandler.ShowGameResultAndWaitForDecision(result, wasExit);
+            
             if (isConfirmed)
             {
                 if(result == GameResultType.Victory) _battleNavigator.OpenNextBattle();

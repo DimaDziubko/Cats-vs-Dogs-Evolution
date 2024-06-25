@@ -61,10 +61,7 @@ namespace _Game.GameModes._BattleMode.Scripts
                 case Faction.Enemy:
                     _battleMediator.EndBattle( GameResultType.Victory);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
             }
-            
         }
 
         public void SetMediator(IBattleMediator battleMediator) => 
