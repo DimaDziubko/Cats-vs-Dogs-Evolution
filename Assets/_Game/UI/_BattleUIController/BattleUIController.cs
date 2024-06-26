@@ -1,6 +1,5 @@
 ﻿using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
@@ -14,7 +13,6 @@ using _Game.Gameplay.GameResult.Scripts;
 using _Game.UI._Hud;
 using _Game.UI.Common.Header.Scripts;
 using _Game.Utils.Popups;
-using Cysharp.Threading.Tasks;
 
 namespace _Game.UI._BattleUIController
 {
@@ -80,7 +78,7 @@ namespace _Game.UI._BattleUIController
             _hud.HideFoodBoostBtn();
             Unsubscribe();
         }
-
+        
         public void SetMediator(IBattleMediator battleMediator)
         {
             _battleMediator = battleMediator;
@@ -88,6 +86,7 @@ namespace _Game.UI._BattleUIController
 
         public void HideCoinCounter()
         {
+            _coinCounter.Changed -= _hud.OnCoinsChanged;
             _hud.HideCoinCounter();
         }
 
@@ -124,7 +123,6 @@ namespace _Game.UI._BattleUIController
         private void Unsubscribe()
         {
             _hud.QuitBattle -= OnBattleQuit;
-            _coinCounter.Changed -= _hud.OnCoinsChanged;
         }
 
         private void OnBattleQuit()
