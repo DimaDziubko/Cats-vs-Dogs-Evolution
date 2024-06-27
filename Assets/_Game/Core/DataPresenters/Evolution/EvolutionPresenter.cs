@@ -138,13 +138,19 @@ namespace _Game.Core.DataPresenters.Evolution
         private bool IsNextAge() => 
             TimelineState.AgeId < _timelineConfigRepository.LastAge();
 
-        private bool IsNextAgeAffordable() =>
-            _ageConfigRepository
+        private bool IsNextAgeAffordable()
+        {
+            if (TimelineState.MaxBattle > TimelineState.AgeId) return true;
+            return _ageConfigRepository
                 .GetAgePrice(TimelineState.AgeId) <= Currency.Coins;
+        }
 
-        private float GetEvolutionPrice() =>
-            _ageConfigRepository
+        private float GetEvolutionPrice()
+        {
+            if (TimelineState.MaxBattle > TimelineState.AgeId) return -1;
+            return _ageConfigRepository
                 .GetAgePrice(TimelineState.AgeId);
+        }
     }
     
 }
