@@ -8,12 +8,14 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
     public class FeatureUnlockSystem : IFeatureUnlockSystem, IDisposable
     {
+        private const int BATTLE_SPEED_AGE_TRESHOLD = 1;
         public event Action<Feature> FeatureUnlocked;
 
         private readonly IUserContainer _persistentData;
         private readonly IGameInitializer _gameInitializer;
 
         private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
+        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IBattleStatisticsReadonly BattleStatisticsState => _persistentData.State.BattleStatistics;
 
         public FeatureUnlockSystem(
@@ -100,8 +102,7 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         
 
         private bool GetTresholdForBattleSpeed() =>
-            TutorialState.StepsCompleted > Constants.TutorialStepTreshold.EVOLUTION_WINDOW &&
-            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.BATTLE_SPEED;
+            TimelineState.AgeId  >= BATTLE_SPEED_AGE_TRESHOLD;
 
         private bool GetTresholdForEvolutionWindow() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_WINDOW &&

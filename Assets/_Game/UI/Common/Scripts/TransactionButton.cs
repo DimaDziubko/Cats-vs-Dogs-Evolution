@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Game.UI.Common.Scripts
@@ -19,7 +18,8 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private RectTransform _buttonRectTransform;
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private TMP_Text _infoText;
-
+        [SerializeField] private GameObject _moneyPanel; 
+        
         [SerializeField] private bool _isHoldable;
 
         private Button _button;
@@ -65,7 +65,12 @@ namespace _Game.UI.Common.Scripts
             }
             if (_infoText != null)
             {
-                //_infoText.color = canAfford ? _affordableColor : _expensiveColor;
+                _infoText.color = canAfford ? _affordableColor : _expensiveColor;
+            }
+
+            if (_moneyPanel != null)
+            {
+                _moneyPanel.SetActive(price > 0);
             }
         }
 

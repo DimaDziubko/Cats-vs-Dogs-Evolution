@@ -52,11 +52,12 @@ namespace _Game.Creatives.Creative_1.Scenario
         [SerializeField] private SoundsHolder _soundsHolder;
         [SerializeField] private AudioMixer _mixer;
         [SerializeField] private AudioSource _musicSource;
-
+        [SerializeField] private SoundService _soundService;
+        
         //UnitsConfig
         [SerializeField] private LocalUnitConfig[] _playerUnits;
         [SerializeField] private LocalUnitConfig[] _enemyUnits;
-
+        
         [ShowInInspector]
         private readonly Dictionary<WeaponType, WeaponData> _playerWeaponsData = new Dictionary<WeaponType, WeaponData>();
         [ShowInInspector]
@@ -83,7 +84,8 @@ namespace _Game.Creatives.Creative_1.Scenario
         private readonly UnityRandomService _random = new UnityRandomService();
         private CrFoodGenerator _foodGenerator;
         private CrUnitBuilderViewController _builder;
-        private ISoundService _soundService;
+
+        private ISoundService SoundService => _soundService;
         public int InitialFood => _initialFoodAmount;
         public CrHud Hud => _hud;
         public IBattleSpeedManager BattleSpeedManager => _battleSpeedManager;
@@ -108,10 +110,11 @@ namespace _Game.Creatives.Creative_1.Scenario
             _audioService = new AudioService(_mixer, _holder, _musicSource, _soundsHolder);
             _factories = new FactoriesHolder(_unitFactory, _coinFactory, _vfxFactory, baseFactory, _projectileFactory);
             _hud.Construct(_cameraService, _pauseManager, _audioService);
-            _unitFactory.Initialize(_cameraService, _random, _soundService);
-            _projectileFactory.Initialize(_soundService);
+            _unitFactory.Initialize(_cameraService, _random, SoundService);
+            _projectileFactory.Initialize(SoundService);
             _battleSpeedManager.SetSpeedFactor(_speedFactor);
             _foodGenerator = new CrFoodGenerator(_gameplayUI, _systemUpdate, _pauseManager, _battleSpeedManager);
+            _soundService.Init();
             
             _coinCounter.Changed -= _hud.OnCoinsChanged;
             _coinCounter.Changed += _hud.OnCoinsChanged;
@@ -173,6 +176,7 @@ namespace _Game.Creatives.Creative_1.Scenario
                     DynamicData = new UnitBuilderBtnDynamicData()
                     {
                         FoodIcon = _foodSprite,
+                        IsUnlocked = true,
                     }
 
                 };
@@ -212,14 +216,10 @@ namespace _Game.Creatives.Creative_1.Scenario
             _playerBasePoint = new Vector3(-_cameraService.CameraWidth, 0, 0);
         }
 
-        public WeaponData ForPlayerWeapon(WeaponType type)
-        {
-            return _playerWeaponsData[type];
-        }
+        public WeaponData ForPlayerWeapon(WeaponType type) => 
+            _playerWeaponsData[type];
 
-        public WeaponData ForEnemyWeapon(WeaponType type)
-        {
-            return _enemiesWeaponsData[type];
-        }
+        public WeaponData ForEnemyWeapon(WeaponType type) => 
+            _enemiesWeaponsData[type];
     }
 }
