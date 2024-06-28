@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Battle.Scripts;
@@ -28,6 +28,8 @@ namespace _Game.Core.Services.Analytics
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         private IBattleStatisticsReadonly BattleStatistics => _userContainer.State.BattleStatistics;
         private ITutorialStateReadonly TutorialState => _userContainer.State.TutorialState;
+        private IAdsStatisticsReadonly AdsStatistics => _userContainer.State.AdsStatistics;
+        private IRetentionStateReadonly RetentionStateReadonly => _userContainer.State.RetentionState;
         
         public AnalyticsService(
             IMyLogger logger, 
@@ -61,6 +63,9 @@ namespace _Game.Core.Services.Analytics
             TimelineState.OpenedUnit += OnUnitOpened;
             RaceState.Changed += OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
+            AdsStatistics.AdsReviewedChanged += OnAdsStatisticsChanged;
+            RetentionStateReadonly.FirstDayRetentionEventSentChanged += SendFirstDayRetentionEvent;
+            RetentionStateReadonly.SecondDayRetentionEventSentChanged += SendSecondDayRetentionEvent;
         }
 
         void IDisposable.Dispose()
@@ -70,17 +75,26 @@ namespace _Game.Core.Services.Analytics
             TimelineState.OpenedUnit -= OnUnitOpened;
             RaceState.Changed -= OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged -= OnCompletedBattleChanged;
+            AdsStatistics.AdsReviewedChanged -= OnAdsStatisticsChanged;
             _app?.Dispose();
         }
 
+        private void SendFirstDayRetentionEvent()
+        {
+            if (IsComponentsReady()) return;
+            SendEvent($"retention_1d");
+        }
+
+        private void SendSecondDayRetentionEvent()
+        {
+            if (IsComponentsReady()) return;
+            SendEvent($"second_open");
+        }
+        
         private void OnCompletedBattleChanged()
         {
-            if (!IsComponentsReady())
-            {
-                _logger.Log("Firebase is not initialized or persistent data is null.");
-                return;
-            }
-            
+            if (!IsComponentsReady()) return;
+
             if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 1)
             {
                 SendEvent("first_build_success");
@@ -96,12 +110,8 @@ namespace _Game.Core.Services.Analytics
 
         private void OnRaceChanged()
         {
-            if (!IsComponentsReady())
-            {
-                _logger.Log("Firebase is not initialized or persistent data is null.");
-                return;
-            }
-            
+            if (!IsComponentsReady()) return;
+
             if (RaceState.Counter == 1)
             {
                 SendEvent($"race_selected_{RaceState.CurrentRace.ToString()}");
@@ -113,12 +123,7 @@ namespace _Game.Core.Services.Analytics
 
         public void OnBattleStarted(BattleAnalyticsData battleAnalyticsData)
         {
-            if (!IsComponentsReady())
-            {
-                _logger.Log("Firebase is not initialized or persistent data is null.");
-                return;
-            }
-            
+            if (!IsComponentsReady()) return;
             SendEvent($"battle_started_{battleAnalyticsData.BattleNumber}");
         }
 
@@ -127,24 +132,16 @@ namespace _Game.Core.Services.Analytics
 
         private void OnUnitOpened(UnitType type)
         {
-            if (!IsComponentsReady())
-            {
-                _logger.Log("Firebase is not initialized or persistent data is null.");
-                return;
-            }
-            
+            if (!IsComponentsReady()) return;
             SendEvent($"unit_opened_{type}");
         }
 
         private void OnNextBattleOpened()
         {
-            if (!IsComponentsReady())
-            {
-                _logger.Log("Firebase is not initialized or persistent data is null.");
-                return;
-            }
-            
+            if (!IsComponentsReady()) return;
+
             SendEvent($"battle_completed_{TimelineState.MaxBattle}");
+            
             // SendEvent("battle_completed", new Dictionary<string, object>
             // {
             //     {"TimelineNumber", TimelineState.TimelineId + 1},
@@ -155,13 +152,14 @@ namespace _Game.Core.Services.Analytics
 
         private void OnNextAgeOpened()
         {
-            if (!IsComponentsReady())
-            {
-                _logger.Log("Firebase is not initialized or persistent data is null.");
-                return;
-            }
-            
+            if (!IsComponentsReady()) return;
             SendEvent($"evolution_completed_{TimelineState.AgeId}_timeline_{TimelineState.TimelineId + 1}");
+        }
+
+        private void OnAdsStatisticsChanged()
+        {
+            if (!IsComponentsReady()) return;
+            SendEvent($"ad_impression_{AdsStatistics.AdsReviewed}");
         }
 
         private async UniTask FetchUniqueIDAsync()

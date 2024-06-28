@@ -5,7 +5,7 @@ using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Navigation.Age;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Pin.Scripts;

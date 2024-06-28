@@ -1,6 +1,6 @@
 using System;
 using _Game.Core._GameInitializer;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 
 namespace _Game.Gameplay._Tutorial.Scripts

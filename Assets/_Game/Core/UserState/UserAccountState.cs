@@ -19,6 +19,8 @@ namespace _Game.Core.UserState
         public BattleStatistics BattleStatistics;
         public TutorialState TutorialState;
         public BattleSpeedState BattleSpeedState;
+        public AdsStatistics AdsStatistics;
+        public RetentionState RetentionState;
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -73,8 +75,19 @@ namespace _Game.Core.UserState
                     IsNormalSpeedActive = true,
                     PermanentSpeedId = 0,
                     DurationLeft = 0.0f
-                }
+                },
                 
+                AdsStatistics = new AdsStatistics()
+                {
+                    AdsReviewed = 0
+                },
+                
+                RetentionState = new RetentionState()
+                {
+                    FirstOpenTime = DateTime.UtcNow,
+                    FirstDayRetentionEventSent = false,
+                    SecondDayRetentionEventSent = false,
+                }
             };
         }
 

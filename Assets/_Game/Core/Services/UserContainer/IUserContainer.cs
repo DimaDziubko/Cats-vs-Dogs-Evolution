@@ -4,7 +4,7 @@ using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.Services.PersistentData
+namespace _Game.Core.Services.UserContainer
 {
     public interface IUserContainer 
     {
@@ -24,5 +24,8 @@ namespace _Game.Core.Services.PersistentData
         void CompleteTutorialStep(int tutorialDataStep);
         void ChangeNormalSpeed(bool isNormal);
         void ChangeBattleTimerDurationLeft(float timerTimeLeft);
+        void AddAdsReviewed();
+        void FirstDayRetentionSent();
+        void SecondDayRetentionSent();
     }
 }

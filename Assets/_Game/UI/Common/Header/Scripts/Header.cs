@@ -1,5 +1,4 @@
 using _Game.Core.Services.Camera;
-using _Game.Core.Services.PersistentData;
 using _Game.Core.UserState;
 using _Game.UI.Common.Scripts;
 using TMPro;

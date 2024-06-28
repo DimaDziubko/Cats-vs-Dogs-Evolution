@@ -3,7 +3,7 @@ using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Data;
 using _Game.Core.DataProviders.Facade;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Units.Scripts;
 using Cysharp.Threading.Tasks;
 

@@ -2,8 +2,8 @@
 using _Game.Core.Communication;
 using _Game.Core.Loading;
 using _Game.Core.Login;
-using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
+using _Game.Core.Services.UserContainer;
 
 namespace _Game.Core.GameState
 {

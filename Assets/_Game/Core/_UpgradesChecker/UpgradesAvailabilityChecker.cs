@@ -4,7 +4,7 @@ using System.Linq;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Debugger;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._MainMenu.Scripts;
 namespace _Game.Core._UpgradesChecker

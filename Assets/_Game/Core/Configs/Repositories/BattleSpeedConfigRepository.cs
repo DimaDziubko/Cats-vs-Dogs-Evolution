@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Configs.Models;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 
 namespace _Game.Core.Configs.Repositories
 {

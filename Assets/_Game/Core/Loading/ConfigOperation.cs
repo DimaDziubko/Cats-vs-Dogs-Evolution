@@ -2,7 +2,7 @@
 using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Providers;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Utils._LocalConfigSaver;
 using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;

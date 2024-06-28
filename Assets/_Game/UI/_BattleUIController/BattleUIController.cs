@@ -6,7 +6,7 @@ using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay.Battle.Scripts;
 using _Game.Gameplay.GameResult.Scripts;

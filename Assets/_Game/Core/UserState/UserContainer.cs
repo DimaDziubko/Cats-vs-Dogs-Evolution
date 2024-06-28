@@ -1,6 +1,6 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -10,8 +10,15 @@ namespace _Game.Core.UserState
     public class UserContainer : IUserContainer
     {
         public UserAccountState State { get; set; }
-        
         public GameConfig GameConfig { get; set; }
+
+        public void AddAdsReviewed() => 
+            State.AdsStatistics.AddAdsReviewed();
+
+        public void FirstDayRetentionSent() => 
+            State.RetentionState.ChangeFirstDayRetentionEventSent(true);
+        public void SecondDayRetentionSent() => 
+            State.RetentionState.ChangeSecondDayRetentionEventSent(true);
 
         public void AddCompletedBattle() => 
             State.BattleStatistics.AddCompletedBattle();

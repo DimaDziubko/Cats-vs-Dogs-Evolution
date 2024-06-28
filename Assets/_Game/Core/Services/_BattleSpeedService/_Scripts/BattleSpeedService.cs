@@ -6,7 +6,7 @@ using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Services.Analytics;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Timer.Scripts;

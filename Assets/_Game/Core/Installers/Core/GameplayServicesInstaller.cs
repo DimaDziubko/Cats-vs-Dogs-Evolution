@@ -1,4 +1,5 @@
-﻿using _Game.Core._UpgradesChecker;
+﻿using _Game.Core._RetentionChecker;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.Ads;
 using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
@@ -40,7 +41,11 @@ namespace _Game.Core.Installers.Core
             BindBattleNavigator();
             BindAgeNavigator();
             BindRaceChanger();
+            BindRetentionChecker();
         }
+
+        private void BindRetentionChecker() => 
+            Container.BindInterfacesAndSelfTo<RetentionChecker>().AsSingle();
 
         private void BindRaceChanger() => 
             Container.BindInterfacesAndSelfTo<RaceChanger>().AsSingle();

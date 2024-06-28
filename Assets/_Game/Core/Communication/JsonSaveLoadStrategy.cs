@@ -8,6 +8,8 @@ namespace _Game.Core.Communication
 {
     public class JsonSaveLoadStrategy : ISaveLoadStrategy
     {
+        private readonly StateMigrationManager _migrationManager = new StateMigrationManager();
+        
         public async UniTask<bool> SaveUserState(UserAccountState state, string path)
         {
             string json = JsonConvert.SerializeObject(state);
@@ -32,15 +34,10 @@ namespace _Game.Core.Communication
 
             if (state != null && state.Version != Application.version)
             {
-                MigrateState(ref state);
+                _migrationManager.Migrate(ref state);
             }
             
             return state;
-        }
-
-        private void MigrateState(ref UserAccountState state)
-        {
-
         }
     }
 }

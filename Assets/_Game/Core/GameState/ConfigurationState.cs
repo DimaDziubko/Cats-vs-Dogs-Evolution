@@ -2,7 +2,7 @@
 using _Game.Core._Logger;
 using _Game.Core.Configs.Providers;
 using _Game.Core.Loading;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 
 namespace _Game.Core.GameState
 {

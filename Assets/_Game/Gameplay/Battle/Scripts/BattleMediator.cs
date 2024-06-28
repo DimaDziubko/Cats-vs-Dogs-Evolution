@@ -4,7 +4,7 @@ using _Game.Core.Loading;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services.Audio;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.GameModes._BattleMode.Scripts;
 using _Game.Gameplay._BattleStateHandler;
 using _Game.Gameplay._Race;

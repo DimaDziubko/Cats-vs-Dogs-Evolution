@@ -2,7 +2,7 @@
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Battle.Scripts;

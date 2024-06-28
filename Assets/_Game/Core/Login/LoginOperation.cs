@@ -1,8 +1,8 @@
 ﻿using System;
 using _Game.Core.Communication;
 using _Game.Core.Loading;
-using _Game.Core.Services.PersistentData;
 using _Game.Core.Services.Random;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using Cysharp.Threading.Tasks;
 

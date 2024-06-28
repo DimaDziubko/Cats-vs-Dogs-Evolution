@@ -4,7 +4,7 @@ using _Game.Core.Navigation;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
-using _Game.Core.Services.PersistentData;
+using _Game.Core.Services.UserContainer;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI.Common.Header.Scripts;
 using _Game.UI.Settings.Scripts;
