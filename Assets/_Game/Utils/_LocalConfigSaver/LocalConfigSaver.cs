@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
-namespace _Game.Utils._LocalConfigSaver
+namespace Assets._Game.Utils._LocalConfigSaver
 {
     public static class LocalConfigSaver
     {

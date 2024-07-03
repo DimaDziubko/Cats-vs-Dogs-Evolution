@@ -1,14 +1,14 @@
-﻿using _Game.Common;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Factory;
-using _Game.Utils.Extensions;
+﻿using Assets._Game.Common;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Factory;
+using Assets._Game.Utils.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Gameplay._Weapon.Scripts
+namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     //TODO Fix bug
     [RequireComponent(typeof(CircleCollider2D))]

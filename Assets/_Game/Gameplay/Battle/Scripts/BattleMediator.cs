@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._GameSaver;
-using _Game.Core.Loading;
-using _Game.Core.Navigation.Battle;
-using _Game.Core.Services._BattleSpeedService._Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.UserContainer;
-using _Game.GameModes._BattleMode.Scripts;
-using _Game.Gameplay._BattleStateHandler;
-using _Game.Gameplay._Race;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay.Food.Scripts;
-using _Game.Gameplay.GameResult.Scripts;
-using _Game.UI._BattleUIController;
+using Assets._Game.Core._GameSaver;
+using Assets._Game.Core.Loading;
+using Assets._Game.Core.Navigation.Battle;
+using Assets._Game.Core.Services._BattleSpeedService._Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.GameModes._BattleMode.Scripts;
+using Assets._Game.Gameplay._BattleStateHandler;
+using Assets._Game.Gameplay._Race;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
+using Assets._Game.Gameplay.GameResult.Scripts;
+using Assets._Game.UI._BattleUIController;
 using Zenject;
 
-namespace _Game.Gameplay.Battle.Scripts
+namespace Assets._Game.Gameplay.Battle.Scripts
 {
     public interface IBattleMediator
     {

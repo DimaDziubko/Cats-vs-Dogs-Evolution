@@ -1,9 +1,9 @@
-﻿using _Game.Core._SystemUpdate;
-using _Game.Gameplay._Race;
+﻿using Assets._Game.Core._SystemUpdate;
+using Assets._Game.Gameplay._Race;
 using UnityEngine;
 using Zenject;
 
-namespace _Game.Core.Installers.BattleMode
+namespace Assets._Game.Core.Installers.BattleMode
 {
     public class LocalCoreSystemInstaller : MonoInstaller
     {

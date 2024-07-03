@@ -1,7 +1,7 @@
-﻿using _Game.UI._Environment.Factory;
+﻿using Assets._Game.UI._Environment.Factory;
 using UnityEngine;
 
-namespace _Game.Gameplay.Battle.Scripts
+namespace Assets._Game.Gameplay.Battle.Scripts
 {
     public class BattleEnvironment : MonoBehaviour
     {

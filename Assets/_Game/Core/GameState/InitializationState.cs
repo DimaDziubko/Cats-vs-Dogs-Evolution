@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._GameInitializer;
-using _Game.Core.Loading;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core.Loading;
 
-namespace _Game.Core.GameState
+namespace Assets._Game.Core.GameState
 {
     public class InitializationState : IPayloadedState<Queue<ILoadingOperation>>
     {

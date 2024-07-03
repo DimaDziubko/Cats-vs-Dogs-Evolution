@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace _Game.Core._Logger
+﻿namespace Assets._Game.Core._Logger
 {
     public class MyLogger : IMyLogger
     {

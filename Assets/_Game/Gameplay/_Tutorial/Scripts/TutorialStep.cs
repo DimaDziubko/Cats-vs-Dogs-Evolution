@@ -1,8 +1,7 @@
 ﻿using System;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Gameplay._Tutorial.Scripts
+namespace Assets._Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialStep : MonoBehaviour, ITutorialStep
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
 
-namespace _Game.Core.Configs.Repositories
+namespace Assets._Game.Core.Configs.Repositories
 {
     public interface ITimelineConfigRepository
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(RectTransform))]
     public class ToggleButtonStateAnimator : MonoBehaviour

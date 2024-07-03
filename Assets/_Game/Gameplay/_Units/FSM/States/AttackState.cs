@@ -1,7 +1,6 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using UnityEngine;
+﻿using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Gameplay._Units.FSM.States
+namespace Assets._Game.Gameplay._Units.FSM.States
 {
     public class AttackState : IUnitFsmState
     {

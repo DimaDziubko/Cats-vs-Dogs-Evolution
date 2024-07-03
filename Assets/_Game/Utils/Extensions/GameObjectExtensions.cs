@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Utils.Extensions
+namespace Assets._Game.Utils.Extensions
 {
     public static class GameObjectExtensions {
         public static T GetOrAdd<T>(this GameObject gameObject) where T : Component {

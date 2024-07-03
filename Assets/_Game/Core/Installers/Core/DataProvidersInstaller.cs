@@ -1,18 +1,18 @@
-﻿using _Game.Core.DataProviders.AgeDataProvider;
-using _Game.Core.DataProviders.Ambience;
-using _Game.Core.DataProviders.BaseDataProvider;
-using _Game.Core.DataProviders.BattleDataProvider;
-using _Game.Core.DataProviders.Common;
-using _Game.Core.DataProviders.EnvironmentDataProvider;
-using _Game.Core.DataProviders.Facade;
-using _Game.Core.DataProviders.Timeline;
-using _Game.Core.DataProviders.UnitBuilderDataProvider;
-using _Game.Core.DataProviders.UnitDataProviders;
-using _Game.Core.DataProviders.UnitUpgradeDataProvider;
-using _Game.Core.DataProviders.WeaponDataProviders;
+﻿using Assets._Game.Core.DataProviders.AgeDataProvider;
+using Assets._Game.Core.DataProviders.Ambience;
+using Assets._Game.Core.DataProviders.BaseDataProvider;
+using Assets._Game.Core.DataProviders.BattleDataProvider;
+using Assets._Game.Core.DataProviders.Common;
+using Assets._Game.Core.DataProviders.EnvironmentDataProvider;
+using Assets._Game.Core.DataProviders.Facade;
+using Assets._Game.Core.DataProviders.Timeline;
+using Assets._Game.Core.DataProviders.UnitBuilderDataProvider;
+using Assets._Game.Core.DataProviders.UnitDataProviders;
+using Assets._Game.Core.DataProviders.UnitUpgradeDataProvider;
+using Assets._Game.Core.DataProviders.WeaponDataProviders;
 using Zenject;
 
-namespace _Game.Core.Installers.Core
+namespace Assets._Game.Core.Installers.Core
 {
     public class DataProvidersInstaller : MonoInstaller
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace _Game.Core.Services.Audio
+namespace Assets._Game.Core.Services.Audio
 {
     [Serializable]
     public class SoundData

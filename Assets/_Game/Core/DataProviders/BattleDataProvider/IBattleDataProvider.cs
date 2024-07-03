@@ -1,8 +1,7 @@
-﻿using _Game.Core.Data;
-using _Game.Core.Data.Battle;
+﻿using Assets._Game.Core.Data.Battle;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.DataProviders.BattleDataProvider
+namespace Assets._Game.Core.DataProviders.BattleDataProvider
 {
     public interface IBattleDataProvider
     {

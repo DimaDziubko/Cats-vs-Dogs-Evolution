@@ -1,4 +1,4 @@
-﻿namespace _Game.Core.Services.Analytics
+﻿namespace Assets._Game.Core.Services.Analytics
 {
     public enum RewardType
     {

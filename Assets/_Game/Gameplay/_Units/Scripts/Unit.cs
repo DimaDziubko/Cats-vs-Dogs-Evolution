@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections;
-using _Game.Common;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.Random;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Units.Factory;
-using _Game.Gameplay._Units.FSM;
-using _Game.Gameplay._Units.FSM.States;
-using _Game.Gameplay._Units.Scripts.Attack;
-using _Game.Gameplay._Units.Scripts.Movement;
-using _Game.Gameplay._Units.Scripts.Utils;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Scenes.Tests;
-using _Game.Utils;
-using _Game.Utils.Extensions;
+using Assets._Game.Common;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.Services.Random;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Units.Factory;
+using Assets._Game.Gameplay._Units.FSM;
+using Assets._Game.Gameplay._Units.FSM.States;
+using Assets._Game.Gameplay._Units.Scripts.Attack;
+using Assets._Game.Gameplay._Units.Scripts.Movement;
+using Assets._Game.Gameplay._Units.Scripts.Utils;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Utils;
+using Assets._Game.Utils.Extensions;
 using Pathfinding.RVO;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     public class Unit : GameBehaviour
     {

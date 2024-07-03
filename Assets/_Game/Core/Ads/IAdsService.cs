@@ -1,7 +1,7 @@
 ﻿using System;
-using _Game.Core.Services.Analytics;
+using Assets._Game.Core.Services.Analytics;
 
-namespace _Game.Core.Ads
+namespace Assets._Game.Core.Ads
 {
     public interface IAdsService
     {

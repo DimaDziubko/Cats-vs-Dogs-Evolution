@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Data;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Configs.Repositories;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
 
-namespace _Game.Core.DataPresenters._TimelineInfoPresenter
+namespace Assets._Game.Core.DataPresenters._TimelineInfoPresenter
 {
     public class TimelineInfoPresenter : ITimelineInfoPresenter, IDisposable
     {

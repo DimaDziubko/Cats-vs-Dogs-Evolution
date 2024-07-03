@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Gameplay._UnitBuilder.Scripts
+namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 {
     public class UnitBuilderBtnDynamicData
     {

@@ -1,10 +1,10 @@
 ﻿using System;
-using _Game.Utils.Extensions;
+using Assets._Game.Utils.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI._SpeedBoostBtn.Scripts
+namespace Assets._Game.UI._SpeedBoostBtn.Scripts
 {
     public enum BattleSpeedBtnState
     {

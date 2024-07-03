@@ -1,14 +1,14 @@
 ﻿using System;
-using _Game.Core._Logger;
-using _Game.Core.Configs.Models;
-using _Game.Core.Configs.Providers;
-using _Game.Core.Services.UserContainer;
-using _Game.Utils._LocalConfigSaver;
-using _Game.Utils.Extensions;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Configs.Providers;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Utils._LocalConfigSaver;
+using Assets._Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public sealed class ConfigOperation : ILoadingOperation
     {

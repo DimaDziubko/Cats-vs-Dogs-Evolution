@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _Game.Gameplay._CoinCounter.Scripts
+namespace Assets._Game.Gameplay._CoinCounter.Scripts
 {
     public class CoinCounter : ICoinCounter
     {

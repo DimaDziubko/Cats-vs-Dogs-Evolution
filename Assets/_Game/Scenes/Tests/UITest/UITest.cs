@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Scenes.Tests.UITest
+namespace Assets._Game.Scenes.Tests.UITest
 {
     public class UITest : MonoBehaviour
     {

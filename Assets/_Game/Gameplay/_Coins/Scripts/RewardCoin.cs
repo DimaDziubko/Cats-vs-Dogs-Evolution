@@ -1,9 +1,9 @@
-﻿using _Game.Core.Services.Audio;
-using _Game.Core.Services.UserContainer;
+﻿using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.UserContainer;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Game.Gameplay._Coins.Scripts
+namespace Assets._Game.Gameplay._Coins.Scripts
 {
     public class RewardCoin : Coin
     {

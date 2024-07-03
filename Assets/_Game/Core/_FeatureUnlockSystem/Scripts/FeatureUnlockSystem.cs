@@ -1,14 +1,15 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.Utils;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Utils;
 
-namespace _Game.Core._FeatureUnlockSystem.Scripts
+namespace Assets._Game.Core._FeatureUnlockSystem.Scripts
 {
     public class FeatureUnlockSystem : IFeatureUnlockSystem, IDisposable
     {
         private const int BATTLE_SPEED_AGE_TRESHOLD = 1;
+        private const int PAUSE_AGE_TRESHOLD = 1;
         public event Action<Feature> FeatureUnlocked;
 
         private readonly IUserContainer _persistentData;
@@ -102,7 +103,7 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         
 
         private bool GetTresholdForBattleSpeed() =>
-            TimelineState.AgeId  >= BATTLE_SPEED_AGE_TRESHOLD;
+            TimelineState.AgeId >= BATTLE_SPEED_AGE_TRESHOLD;
 
         private bool GetTresholdForEvolutionWindow() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_WINDOW &&
@@ -113,8 +114,7 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.FOOD_BOOST;
 
         private bool GetTresholdForPause() =>
-            TutorialState.StepsCompleted > Constants.TutorialStepTreshold.UNIT_BUILDER_BUTTON &&
-            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.PAUSE;
+            TimelineState.AgeId >= PAUSE_AGE_TRESHOLD;
 
         private bool GetTresholdForUpgradesWindow() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.UPGRADES_WINDOW &&

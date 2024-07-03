@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Utils.Fps
+namespace Assets._Game.Utils.Fps
 {
     public class FpsCounter : MonoBehaviour
     {

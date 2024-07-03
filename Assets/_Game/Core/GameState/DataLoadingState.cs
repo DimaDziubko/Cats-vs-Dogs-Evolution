@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._Logger;
-using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
-using _Game.Core.DataProviders.BattleDataProvider;
-using _Game.Core.DataProviders.Timeline;
-using _Game.Core.Loading;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.DataProviders.AgeDataProvider;
+using Assets._Game.Core.DataProviders.BattleDataProvider;
+using Assets._Game.Core.DataProviders.Timeline;
+using Assets._Game.Core.Loading;
 
-namespace _Game.Core.GameState
+namespace Assets._Game.Core.GameState
 {
     public class DataLoadingState : IPayloadedState<Queue<ILoadingOperation>>
     {

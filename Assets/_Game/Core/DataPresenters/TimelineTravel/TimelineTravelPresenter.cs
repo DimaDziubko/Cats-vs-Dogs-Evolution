@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Navigation.Age;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.Pin.Scripts;
-using _Game.UI.TimelineInfoWindow.Scripts;
-using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.Configs.Repositories;
+using Assets._Game.Core.Navigation.Age;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI._MainMenu.Scripts;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
-namespace _Game.Core.DataPresenters.TimelineTravel
+namespace Assets._Game.Core.DataPresenters.TimelineTravel
 {
     public class TimelineTravelPresenter : ITimelineTravelPresenter, IUpgradeAvailabilityProvider, IDisposable
     {

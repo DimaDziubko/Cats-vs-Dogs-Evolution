@@ -1,12 +1,12 @@
 ﻿using System;
-using _Game.Core.AssetManagement;
-using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
-using _Game.Core.DataProviders.BattleDataProvider;
-using _Game.Utils;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.DataProviders.AgeDataProvider;
+using Assets._Game.Core.DataProviders.BattleDataProvider;
+using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public class ChangingRaceOperation : ILoadingOperation
     {

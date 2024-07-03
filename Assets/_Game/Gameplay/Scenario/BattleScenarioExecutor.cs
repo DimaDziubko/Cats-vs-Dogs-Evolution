@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Configs.Models;
-using _Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay.Scenario
+namespace Assets._Game.Gameplay.Scenario
 {
     public class BattleScenarioExecutor 
     {

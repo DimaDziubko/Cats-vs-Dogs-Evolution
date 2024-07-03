@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Gameplay._Units._Target
+namespace Assets._Game.Gameplay._Units._Target
 {
     public class TargetCollection
     {

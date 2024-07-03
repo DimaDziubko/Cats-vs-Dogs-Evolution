@@ -1,13 +1,13 @@
 ﻿using System;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI.Common.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI.Common.Scripts;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.Gameplay._UnitBuilder.Scripts
+namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 {
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class UnitBuildButton : MonoBehaviour

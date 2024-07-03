@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Data;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Core.DataPresenters.UnitBuilderDataPresenter
+namespace Assets._Game.Core.DataPresenters.UnitBuilderDataPresenter
 {
     public class UnitBuilderDataPresenter : IUnitBuilderDataPresenter
     {

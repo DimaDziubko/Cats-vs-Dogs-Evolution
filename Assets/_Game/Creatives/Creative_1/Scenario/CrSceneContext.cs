@@ -1,33 +1,33 @@
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Audio.Scripts;
-using _Game.Core._SystemUpdate;
-using _Game.Core.Factory;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Prefabs;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.Random;
-using _Game.Creatives.Factories;
-using _Game.Creatives.LocalUnitConfigs.Scr;
-using _Game.Creatives.Scripts;
-using _Game.Gameplay._Bases.Factory;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Gameplay._Coins.Factory;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Food.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
-using _Game.Utils;
+using Assets._Game.Audio.Scripts;
+using Assets._Game.Core._SystemUpdate;
+using Assets._Game.Core.Factory;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Prefabs;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.Services.Random;
+using Assets._Game.Creatives.Factories;
+using Assets._Game.Creatives.LocalUnitConfigs.Scr;
+using Assets._Game.Creatives.Scripts;
+using Assets._Game.Gameplay._Bases.Factory;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._BattleSpeed.Scripts;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
+using Assets._Game.Gameplay._Coins.Factory;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
+using Assets._Game.UI.UnitBuilderBtn.Scripts;
+using Assets._Game.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Serialization;
 
-namespace _Game.Creatives.Creative_1.Scenario
+namespace Assets._Game.Creatives.Creative_1.Scenario
 {
     public class CrSceneContext : MonoBehaviour
     {
@@ -114,7 +114,7 @@ namespace _Game.Creatives.Creative_1.Scenario
             _projectileFactory.Initialize(SoundService);
             _battleSpeedManager.SetSpeedFactor(_speedFactor);
             _foodGenerator = new CrFoodGenerator(_gameplayUI, _systemUpdate, _pauseManager, _battleSpeedManager);
-            _soundService.Init();
+            //_soundService.Init();
             
             _coinCounter.Changed -= _hud.OnCoinsChanged;
             _coinCounter.Changed += _hud.OnCoinsChanged;

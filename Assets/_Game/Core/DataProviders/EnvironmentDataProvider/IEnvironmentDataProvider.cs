@@ -1,7 +1,7 @@
-﻿using _Game.UI._Environment;
+﻿using Assets._Game.UI._Environment;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.DataProviders.EnvironmentDataProvider
+namespace Assets._Game.Core.DataProviders.EnvironmentDataProvider
 {
     public interface IEnvironmentDataProvider
     {

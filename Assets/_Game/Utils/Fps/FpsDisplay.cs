@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace _Game.Utils.Fps
+namespace Assets._Game.Utils.Fps
 {
     [RequireComponent(typeof(FpsCounter))]
     public class FpsDisplay : MonoBehaviour

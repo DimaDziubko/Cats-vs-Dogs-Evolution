@@ -1,11 +1,11 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.UI._StartBattleWindow.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core.Configs.Repositories;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI._StartBattleWindow.Scripts;
 
-namespace _Game.Core.Navigation.Battle
+namespace Assets._Game.Core.Navigation.Battle
 {
     public class BattleNavigator : IBattleNavigator, IDisposable
     {

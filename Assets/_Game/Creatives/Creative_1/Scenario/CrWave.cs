@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _Game.Creatives.Creative_1.Scenario
+namespace Assets._Game.Creatives.Creative_1.Scenario
 {
     
     [CreateAssetMenu(fileName = "EnemyWave", menuName = "Core/Enemy Wave")]

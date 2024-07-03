@@ -1,11 +1,11 @@
-﻿using _Game.Core.Services.Camera;
-using _Game.Core.UserState;
-using _Game.Utils.Extensions;
+﻿using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.UserState;
+using Assets._Game.Utils.Extensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     public class CurrenciesUI : MonoBehaviour
     {

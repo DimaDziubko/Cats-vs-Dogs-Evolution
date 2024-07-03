@@ -1,10 +1,10 @@
-﻿using _Game.Core.AssetManagement;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.UI._Environment;
+﻿using Assets._Game.Core.AssetManagement;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.UI._Environment;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _Game.Core.DataProviders.EnvironmentDataProvider
+namespace Assets._Game.Core.DataProviders.EnvironmentDataProvider
 {
     public class EnvironmentDataProvider : IEnvironmentDataProvider
     {

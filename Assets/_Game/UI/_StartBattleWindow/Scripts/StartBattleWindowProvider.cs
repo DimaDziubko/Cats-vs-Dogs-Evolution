@@ -1,17 +1,16 @@
-using _Game.Core._Logger;
-using _Game.Core.AssetManagement;
-using _Game.Core.Navigation;
-using _Game.Core.Navigation.Battle;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.UserContainer;
-using _Game.Gameplay.BattleLauncher;
-using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Settings.Scripts;
-using _Game.Utils.Disposable;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Navigation.Battle;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Gameplay.BattleLauncher;
+using Assets._Game.UI.Common.Header.Scripts;
+using Assets._Game.UI.Settings.Scripts;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI._StartBattleWindow.Scripts
+namespace Assets._Game.UI._StartBattleWindow.Scripts
 {
     public  class StartBattleWindowProvider : LocalAssetLoader, IStartBattleWindowProvider
     {

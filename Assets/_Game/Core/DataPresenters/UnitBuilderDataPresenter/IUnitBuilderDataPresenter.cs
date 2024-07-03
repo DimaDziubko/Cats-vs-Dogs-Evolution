@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Core.DataPresenters.UnitBuilderDataPresenter
+namespace Assets._Game.Core.DataPresenters.UnitBuilderDataPresenter
 {
     public interface IUnitBuilderDataPresenter
     {

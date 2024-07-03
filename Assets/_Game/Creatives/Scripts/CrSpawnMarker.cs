@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.Creatives.Scripts
+namespace Assets._Game.Creatives.Scripts
 {
     public class CrSpawnMarker : MonoBehaviour
     {

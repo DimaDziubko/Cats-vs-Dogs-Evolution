@@ -1,4 +1,4 @@
-﻿namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
+﻿namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionBtnData
     {

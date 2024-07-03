@@ -1,10 +1,10 @@
 using System;
-using _Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Audio;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Toggle))]
     public class CustomToggle : MonoBehaviour

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace _Game.Core.Data
+namespace Assets._Game.Core.Data
 {
     public class DataPool<TType, TData>
     {

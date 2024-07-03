@@ -1,13 +1,13 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Analytics;
-using _Game.Core.Services.UserContainer;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services.Analytics;
+using Assets._Game.Core.Services.UserContainer;
 using CAS;
 using UnityEngine;
 
-namespace _Game.Core.Ads
+namespace Assets._Game.Core.Ads
 {
     public class CasAdsService : IAdsService, IDisposable
     {

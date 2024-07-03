@@ -1,14 +1,14 @@
 using System;
-using _Game.Core._SystemUpdate;
-using _Game.Core.Pause.Scripts;
-using _Game.Creatives.Creative_1.Scenario;
-using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.Gameplay.Food.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
+using Assets._Game.Core._SystemUpdate;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Creatives.Creative_1.Scenario;
+using Assets._Game.Gameplay._BattleSpeed.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
+using Assets._Game.UI.UnitBuilderBtn.Scripts;
 using UnityEngine;
 
-namespace _Game.Creatives.Scripts
+namespace Assets._Game.Creatives.Scripts
 {
     public class CrFoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler
     {

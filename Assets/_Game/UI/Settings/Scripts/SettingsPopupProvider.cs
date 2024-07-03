@@ -1,11 +1,11 @@
-﻿using _Game.Core.AssetManagement;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.UI._RaceSelectionWindow.Scripts;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.UI._RaceSelectionWindow.Scripts;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI.Settings.Scripts
+namespace Assets._Game.UI.Settings.Scripts
 {
     public class SettingsPopupProvider : LocalAssetLoader, ISettingsPopupProvider
     {

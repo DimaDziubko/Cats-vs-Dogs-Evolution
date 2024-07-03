@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Debugger;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.UI._MainMenu.Scripts;
-namespace _Game.Core._UpgradesChecker
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Debugger;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI._MainMenu.Scripts;
+
+namespace Assets._Game.Core._UpgradesChecker
 {
     public class UpgradesAvailabilityChecker : IUpgradesAvailabilityChecker, IDisposable
     {

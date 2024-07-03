@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay._Tutorial.Scripts
+﻿namespace Assets._Game.Gameplay._Tutorial.Scripts
 {
     public interface ITutorialManager
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     [RequireComponent(typeof(Collider2D))]
     public class TriggerObserver : MonoBehaviour

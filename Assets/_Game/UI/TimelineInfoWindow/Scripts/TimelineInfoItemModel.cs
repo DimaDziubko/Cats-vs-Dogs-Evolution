@@ -1,6 +1,6 @@
-﻿using _Game.Core.Data.Timeline.Static;
+﻿using Assets._Game.Core.Data.Timeline.Static;
 
-namespace _Game.UI.TimelineInfoWindow.Scripts
+namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoItemModel
     {

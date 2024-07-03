@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.Gameplay.Food.Scripts
+namespace Assets._Game.Gameplay.Food.Scripts
 {
     public class FoodPanel : MonoBehaviour
     {

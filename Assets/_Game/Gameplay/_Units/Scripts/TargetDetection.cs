@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Units._Target;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Units._Target;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     public class TargetDetection : MonoBehaviour
     {

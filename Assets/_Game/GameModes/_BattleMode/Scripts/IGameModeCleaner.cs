@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.Factory;
+using Assets._Game.Core.Factory;
 
-namespace _Game.GameModes._BattleMode.Scripts
+namespace Assets._Game.GameModes._BattleMode.Scripts
 {
     public interface IGameModeCleaner
     {

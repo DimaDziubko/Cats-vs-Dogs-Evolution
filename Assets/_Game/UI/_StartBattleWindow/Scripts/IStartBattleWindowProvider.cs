@@ -1,7 +1,7 @@
-﻿using _Game.Utils.Disposable;
+﻿using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI._StartBattleWindow.Scripts
+namespace Assets._Game.UI._StartBattleWindow.Scripts
 {
     public interface IStartBattleWindowProvider
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using _Game.UI._StartBattleWindow.Scripts;
+using Assets._Game.UI._StartBattleWindow.Scripts;
 
-namespace _Game.Core.Navigation.Battle
+namespace Assets._Game.Core.Navigation.Battle
 {
     public interface IBattleNavigator
     {

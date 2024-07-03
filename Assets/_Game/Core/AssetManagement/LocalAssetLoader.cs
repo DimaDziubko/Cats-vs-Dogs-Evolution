@@ -1,10 +1,10 @@
 using System;
-using _Game.Utils.Disposable;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace _Game.Core.AssetManagement
+namespace Assets._Game.Core.AssetManagement
 {
     public class LocalAssetLoader
     {

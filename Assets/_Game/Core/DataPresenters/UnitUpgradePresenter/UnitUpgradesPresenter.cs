@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.Data;
-using _Game.Core.DataPresenters._RaceChanger;
-using _Game.Core.Navigation.Age;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.DataPresenters._RaceChanger;
+using Assets._Game.Core.Navigation.Age;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI._MainMenu.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace _Game.Core.DataPresenters.UnitUpgradePresenter
+namespace Assets._Game.Core.DataPresenters.UnitUpgradePresenter
 {
     public class UnitUpgradesPresenter : IUnitUpgradesPresenter, IUpgradeAvailabilityProvider, IDisposable 
     {

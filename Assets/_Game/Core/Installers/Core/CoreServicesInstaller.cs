@@ -1,23 +1,23 @@
-﻿using _Game._AssetProvider;
-using _Game.Common;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._GameInitializer;
-using _Game.Core._GameSaver;
-using _Game.Core._Logger;
-using _Game.Core._SceneLoader;
-using _Game.Core._StateFactory;
-using _Game.Core.AssetManagement;
-using _Game.Core.Communication;
-using _Game.Core.Data;
-using _Game.Core.Debugger;
-using _Game.Core.Services.AssetProvider;
-using _Game.Core.Services.Random;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
+﻿using Assets._Game._AssetProvider;
+using Assets._Game.Common;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._GameSaver;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._SceneLoader;
+using Assets._Game.Core._StateFactory;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Communication;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Debugger;
+using Assets._Game.Core.Services.AssetProvider;
+using Assets._Game.Core.Services.Random;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
 using UnityEngine;
 using Zenject;
 
-namespace _Game.Core.Installers.Core
+namespace Assets._Game.Core.Installers.Core
 {
     public class CoreServicesInstaller : MonoInstaller
     {

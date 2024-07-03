@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Utils;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Utils;
 using UnityEngine;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     public abstract class UnitAttack : MonoBehaviour
     {

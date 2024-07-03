@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.Data;
-using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.Data.Age.Static._UpgradeItem;
-using _Game.Core.DataPresenters._RaceChanger;
-using _Game.Core.Navigation.Age;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using _Game.Utils.Extensions;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
+using Assets._Game.Core.Data.Age.Static._UpgradeItem;
+using Assets._Game.Core.DataPresenters._RaceChanger;
+using Assets._Game.Core.Navigation.Age;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI._MainMenu.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Utils.Extensions;
 
-namespace _Game.Core.DataPresenters._UpgradeItemPresenter
+namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
 {
     public class UpgradeItemPresenter : IUpgradeItemPresenter, IUpgradeAvailabilityProvider, IDisposable
     {

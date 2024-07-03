@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Battle.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
 using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
@@ -13,7 +13,7 @@ using Firebase.Crashlytics;
 using Firebase.Installations;
 using UnityEngine.Device;
 
-namespace _Game.Core.Services.Analytics
+namespace Assets._Game.Core.Services.Analytics
 {
     public class AnalyticsService : IAnalyticsService, IDisposable
     {

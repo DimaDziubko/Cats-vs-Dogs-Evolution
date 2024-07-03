@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Common.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace _Game.Core.Data.Age.Static
+namespace Assets._Game.Core.Data.Age.Static
 {
     public class AgeStaticData
     {

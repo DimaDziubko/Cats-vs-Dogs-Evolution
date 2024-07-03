@@ -1,11 +1,11 @@
 ﻿using System;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Utils;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Utils;
 using UnityEngine;
 
-namespace _Game.Gameplay._Weapon.Scripts
+namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class SplashProjectile : Projectile

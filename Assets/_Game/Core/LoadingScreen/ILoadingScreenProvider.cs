@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Loading;
+using Assets._Game.Core.Loading;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.LoadingScreen
+namespace Assets._Game.Core.LoadingScreen
 {
     public interface ILoadingScreenProvider
     {

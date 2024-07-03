@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Button))]
     public class CustomButtonPressAnimator : MonoBehaviour, IPointerDownHandler, IPointerUpHandler

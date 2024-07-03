@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
-namespace _Game.Core.Configs.Models
+namespace Assets._Game.Core.Configs.Models
 {
     public class GameConfig
     {

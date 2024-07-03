@@ -1,14 +1,14 @@
 using System;
-using _Game.Core._Logger;
-using _Game.Core.DataPresenters._TimelineInfoPresenter;
-using _Game.Core.DataPresenters.Evolution;
-using _Game.Core.Services.Audio;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.DataPresenters._TimelineInfoPresenter;
+using Assets._Game.Core.DataPresenters.Evolution;
+using Assets._Game.Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.TimelineInfoWindow.Scripts
+namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoWindow : MonoBehaviour
     {

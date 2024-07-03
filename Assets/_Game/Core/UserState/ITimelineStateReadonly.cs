@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.UserState
+namespace Assets._Game.Core.UserState
 {
     public interface ITimelineStateReadonly
     {

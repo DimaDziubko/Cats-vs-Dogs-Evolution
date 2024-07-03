@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.Scenes.Tests
+namespace Assets._Game.Scenes.Tests
 {
     public class Bullet : MonoBehaviour
     {

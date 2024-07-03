@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay._Units.FSM.States
+﻿namespace Assets._Game.Gameplay._Units.FSM.States
 {
     public class DeathState : IUnitFsmState
     {

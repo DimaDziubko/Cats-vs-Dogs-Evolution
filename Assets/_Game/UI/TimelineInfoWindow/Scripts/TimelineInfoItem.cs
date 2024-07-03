@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.TimelineInfoWindow.Scripts
+namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoItem : MonoBehaviour
     {

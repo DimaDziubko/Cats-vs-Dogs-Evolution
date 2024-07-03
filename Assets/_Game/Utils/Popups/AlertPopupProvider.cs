@@ -1,11 +1,10 @@
-﻿using _Game.Core.AssetManagement;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
-using Zenject;
 
-namespace _Game.Utils.Popups
+namespace Assets._Game.Utils.Popups
 {
     public class AlertPopupProvider : LocalAssetLoader, IAlertPopupProvider
     {

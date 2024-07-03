@@ -1,22 +1,21 @@
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._Logger;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.DataPresenters._UpgradeItemPresenter;
-using _Game.Core.DataPresenters.Evolution;
-using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.Core.DataPresenters.UnitUpgradePresenter;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._Tutorial.Scripts;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.Pin.Scripts;
-using _Game.UI.TimelineInfoWindow.Scripts;
-using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
+using Assets._Game.Core.DataPresenters.Evolution;
+using Assets._Game.Core.DataPresenters.TimelineTravel;
+using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Tutorial.Scripts;
+using Assets._Game.UI._MainMenu.Scripts;
+using Assets._Game.UI.Common.Header.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace _Game.UI.UpgradesAndEvolution.Scripts
+namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
 {
     public class UpgradeAndEvolutionWindow : MonoBehaviour
     {

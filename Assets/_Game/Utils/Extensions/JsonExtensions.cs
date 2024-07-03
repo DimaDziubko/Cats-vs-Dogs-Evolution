@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Core.Configs.Models;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
 using Newtonsoft.Json.Linq;
 
-namespace _Game.Utils.Extensions
+namespace Assets._Game.Utils.Extensions
 {
     public static class JsonExtensions
     {

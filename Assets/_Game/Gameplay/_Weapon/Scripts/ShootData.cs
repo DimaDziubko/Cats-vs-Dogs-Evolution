@@ -1,8 +1,8 @@
-﻿using _Game.Gameplay._Units.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-namespace _Game.Gameplay._Weapon.Scripts
+namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     public class ShootData
     {

@@ -1,10 +1,10 @@
-﻿using _Game.Core.Configs.Models;
-using _Game.Core.UserState;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Common.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+﻿using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.Services.UserContainer
+namespace Assets._Game.Core.Services.UserContainer
 {
     public interface IUserContainer 
     {

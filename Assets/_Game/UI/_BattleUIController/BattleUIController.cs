@@ -1,20 +1,20 @@
-﻿using _Game.Common;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.LoadingScreen;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services._BattleSpeedService._Scripts;
-using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.UserContainer;
-using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.Gameplay.GameResult.Scripts;
-using _Game.UI._Hud;
-using _Game.UI.Common.Header.Scripts;
-using _Game.Utils.Popups;
+﻿using Assets._Game.Common;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core.LoadingScreen;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services._BattleSpeedService._Scripts;
+using Assets._Game.Core.Services._FoodBoostService.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.Gameplay.GameResult.Scripts;
+using Assets._Game.UI._Hud;
+using Assets._Game.UI.Common.Header.Scripts;
+using Assets._Game.Utils.Popups;
 
-namespace _Game.UI._BattleUIController
+namespace Assets._Game.UI._BattleUIController
 {
     public class BattleUIController
     {

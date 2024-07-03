@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
-namespace _Game.Core.Services.Camera
+namespace Assets._Game.Core.Services.Camera
 {
     public class WorldCameraService : IWorldCameraService
     {

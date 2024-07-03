@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace _Game.Utils.Popups
+namespace Assets._Game.Utils.Popups
 {
     public interface IAlertPopupProvider
     {

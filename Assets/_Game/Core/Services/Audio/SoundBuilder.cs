@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Game.Core.Services.Audio
+namespace Assets._Game.Core.Services.Audio
 {
     public class SoundBuilder
     {
@@ -29,24 +30,32 @@ namespace _Game.Core.Services.Audio
             _randomPitch = true;
             return this;
         }
-    
-        public void Play() {
+        public void Play()
+        {
             if (!_soundService.CanPlaySound(_soundData)) return;
-            
-            SoundEmitter soundEmitter = _soundService.Get();
+
+            SoundEmitter soundEmitter = _soundService.Get(_soundData.Clip);
             soundEmitter.Initialize(_soundData);
             soundEmitter.Transform.position = _position;
             soundEmitter.Transform.parent = _soundService.Transform;
 
-            if (_randomPitch) {
+            if (_randomPitch)
+            {
                 soundEmitter.WithRandomPitch();
             }
-            
-            if (_soundData.FrequentSound) {
-                _soundService.FrequentSoundEmitters.Enqueue(soundEmitter);
+
+            if (_soundData.FrequentSound)
+            {
+                if (!_soundService.FrequentSoundEmitters.ContainsKey(_soundData.Clip))
+                {
+                    _soundService.FrequentSoundEmitters[_soundData.Clip] = new Queue<SoundEmitter>();
+                }
+
+                _soundService.FrequentSoundEmitters[_soundData.Clip].Enqueue(soundEmitter);
             }
-            
+
             soundEmitter.Play();
         }
+
     }
 }

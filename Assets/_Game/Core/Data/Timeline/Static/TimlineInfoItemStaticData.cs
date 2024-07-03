@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Core.Data.Timeline.Static
+namespace Assets._Game.Core.Data.Timeline.Static
 {
     public class TimlineInfoItemStaticData
     { 

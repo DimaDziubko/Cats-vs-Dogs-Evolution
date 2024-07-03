@@ -1,6 +1,6 @@
-﻿using _Game.Gameplay.Battle.Scripts;
+﻿using Assets._Game.Gameplay.Battle.Scripts;
 
-namespace _Game.UI._Environment
+namespace Assets._Game.UI._Environment
 {
     public class EnvironmentData
     {

@@ -1,14 +1,14 @@
 using System;
-using _Game.Core.DataPresenters.Evolution;
-using _Game.Core.Services.Audio;
-using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.Core.DataPresenters.Evolution;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.UI.Common.Header.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionTab : MonoBehaviour
     {

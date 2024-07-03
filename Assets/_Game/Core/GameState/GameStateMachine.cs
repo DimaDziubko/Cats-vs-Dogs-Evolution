@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core._StateFactory;
+using Assets._Game.Core._StateFactory;
 using Zenject;
 
-namespace _Game.Core.GameState
+namespace Assets._Game.Core.GameState
 {
     public class GameStateMachine : IGameStateMachine, IInitializable
     {

@@ -284,6 +284,7 @@
               <e p="BootstrapState.cs" t="Include" />
               <e p="ConfigurationState.cs" t="Include" />
               <e p="DataLoadingState.cs" t="Include" />
+              <e p="GameLoadingState.cs" t="Include" />
               <e p="GameLoopState.cs" t="Include" />
               <e p="GameStateMachine.cs" t="Include" />
               <e p="IGameStateMachine.cs" t="Include" />
@@ -639,7 +640,6 @@
                 <e p="FoodPanel.cs" t="Include" />
               </e>
             </e>
-            <e p="GameLoadingState.cs" t="Include" />
             <e p="GameResult" t="Include">
               <e p="Scripts" t="Include">
                 <e p="DoubleCoinsBtn.cs" t="Include" />
@@ -662,11 +662,11 @@
                 <e p="VfxFactory.cs" t="Include" />
               </e>
               <e p="Scripts" t="Include">
+                <e p="BaseSmoke.cs" t="Include" />
                 <e p="MuzzleData.cs" t="Include" />
                 <e p="MuzzleFlash.cs" t="Include" />
                 <e p="ProjectileExplosion.cs" t="Include" />
                 <e p="RewardCoinVFX.cs" t="Include" />
-                <e p="TowerSmoke.cs" t="Include" />
                 <e p="UnitBlot.cs" t="Include" />
                 <e p="UnitExplosion.cs" t="Include" />
                 <e p="VfxEntity.cs" t="Include" />
@@ -887,6 +887,14 @@
               <e p="DTDVisualEditorStyles.cs" t="Include" />
               <e p="DTDVisualEditorWindow.cs" t="Include" />
               <e p="DTDWindowAssembly.asmdef" t="Include" />
+            </e>
+          </e>
+          <e p="Messaging" t="Include">
+            <e p="Editor" t="Include">
+              <e p="AppDependencies.xml" t="Include" />
+              <e p="DTDGoogleServicesConverter.cs" t="Include" />
+              <e p="DTDMessagingPostAssembly.asmdef" t="Include" />
+              <e p="DTDPostProcessMessaging.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -2066,6 +2074,7 @@
       <e p="DrawingPackageToolsEditor.csproj" t="IncludeRecursive" />
       <e p="DTDWindowAssembly.csproj" t="IncludeRecursive" />
       <e p="KinoBloom.Runtime.csproj" t="IncludeRecursive" />
+      <e p="MessagingPostAssembly.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive">
         <e p="com.arongranberg.astar" t="Include">

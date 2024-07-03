@@ -1,6 +1,6 @@
-﻿using _Game.Core.UserState;
+﻿using Assets._Game.Core.UserState;
 
-namespace _Game.Core.Communication
+namespace Assets._Game.Core.Communication
 {
     public interface IStateMigration
     {

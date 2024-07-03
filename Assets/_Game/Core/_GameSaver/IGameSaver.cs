@@ -1,4 +1,4 @@
-﻿namespace _Game.Core._GameSaver
+﻿namespace Assets._Game.Core._GameSaver
 {
     public interface IGameSaver
     {

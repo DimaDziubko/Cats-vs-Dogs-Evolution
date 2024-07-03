@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay._Units.FSM
+﻿namespace Assets._Game.Gameplay._Units.FSM
 {
     public interface IUnitFsmState : IUnitFsmExitableState
     { 

@@ -1,13 +1,13 @@
 ﻿using System;
-using _Game.Core._Logger;
-using _Game.Core.Data;
-using _Game.Core.Data.Age.Dynamic;
-using _Game.Core.DataProviders.AgeDataProvider;
-using _Game.Core.DataProviders.BattleDataProvider;
-using _Game.Core.DataProviders.Timeline;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Data.Age.Dynamic;
+using Assets._Game.Core.DataProviders.AgeDataProvider;
+using Assets._Game.Core.DataProviders.BattleDataProvider;
+using Assets._Game.Core.DataProviders.Timeline;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public class DataLoadingOperation : ILoadingOperation
     {

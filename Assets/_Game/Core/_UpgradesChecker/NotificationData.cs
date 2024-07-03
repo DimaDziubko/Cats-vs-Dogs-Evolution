@@ -1,6 +1,6 @@
-﻿using _Game.UI._MainMenu.Scripts;
+﻿using Assets._Game.UI._MainMenu.Scripts;
 
-namespace _Game.Core._UpgradesChecker
+namespace Assets._Game.Core._UpgradesChecker
 {
     public class NotificationData
     {

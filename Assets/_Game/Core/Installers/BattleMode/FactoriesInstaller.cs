@@ -1,21 +1,21 @@
-﻿using _Game.Core.DataPresenters._BaseDataPresenter;
-using _Game.Core.DataPresenters.UnitDataPresenter;
-using _Game.Core.DataPresenters.WeaponDataPresenter;
-using _Game.Core.Factory;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.Random;
-using _Game.Gameplay._Bases.Factory;
-using _Game.Gameplay._Coins.Factory;
-using _Game.Gameplay._Units.Factory;
-using _Game.Gameplay._Weapon.Factory;
-using _Game.Gameplay.Vfx.Factory;
-using _Game.UI._Environment.Factory;
+﻿using Assets._Game.Core.DataPresenters._BaseDataPresenter;
+using Assets._Game.Core.DataPresenters.UnitDataPresenter;
+using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
+using Assets._Game.Core.Factory;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.Services.Random;
+using Assets._Game.Gameplay._Bases.Factory;
+using Assets._Game.Gameplay._Coins.Factory;
+using Assets._Game.Gameplay._Units.Factory;
+using Assets._Game.Gameplay._Weapon.Factory;
+using Assets._Game.Gameplay.Vfx.Factory;
+using Assets._Game.UI._Environment.Factory;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
-namespace _Game.Core.Installers.BattleMode
+namespace Assets._Game.Core.Installers.BattleMode
 {
     public class FactoriesInstaller : MonoInstaller
     {

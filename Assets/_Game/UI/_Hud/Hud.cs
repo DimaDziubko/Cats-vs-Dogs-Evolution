@@ -1,17 +1,17 @@
 ﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services._BattleSpeedService._Scripts;
-using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Gameplay._Timer.Scripts;
-using _Game.UI._SpeedBoostBtn.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.Utils.Popups; 
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services._BattleSpeedService._Scripts;
+using Assets._Game.Core.Services._FoodBoostService.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Timer.Scripts;
+using Assets._Game.UI._SpeedBoostBtn.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.Utils.Popups;
 using UnityEngine;
 
-namespace _Game.UI._Hud
+namespace Assets._Game.UI._Hud
 {
     public class Hud : MonoBehaviour
     {

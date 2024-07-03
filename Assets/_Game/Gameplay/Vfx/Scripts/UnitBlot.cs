@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Gameplay.Vfx.Scripts
+namespace Assets._Game.Gameplay.Vfx.Scripts
 {
     public class UnitBlot : VfxEntity
     {

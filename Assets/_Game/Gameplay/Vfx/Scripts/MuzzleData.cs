@@ -1,8 +1,8 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay.Vfx.Scripts
+namespace Assets._Game.Gameplay.Vfx.Scripts
 {
     public class MuzzleData
     {

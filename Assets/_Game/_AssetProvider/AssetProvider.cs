@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Services.AssetProvider;
+using Assets._Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 
-namespace _Game._AssetProvider
+namespace Assets._Game._AssetProvider
 {
     public class AssetProvider : IAssetProvider, IDisposable, IInitializable
     {

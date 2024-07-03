@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.DataPresenters._UpgradeItemPresenter;
-using _Game.Core.DataPresenters.UnitUpgradePresenter;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._Tutorial.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.Pin.Scripts;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
+using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Tutorial.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI._MainMenu.Scripts;
+using Assets._Game.UI.Common.Header.Scripts;
+using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 
-namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
+namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradesWindow : MonoBehaviour, IUIWindow
     {

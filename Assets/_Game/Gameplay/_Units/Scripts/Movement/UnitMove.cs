@@ -1,9 +1,9 @@
-﻿using _Game.Utils;
+﻿using Assets._Game.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _Game.Gameplay._Units.Scripts.Movement
+namespace Assets._Game.Gameplay._Units.Scripts.Movement
 {
     public class UnitMove : MonoBehaviour, IMovable
     {

@@ -1,8 +1,8 @@
-﻿using _Game.Core.AssetManagement;
+﻿using Assets._Game.Core.AssetManagement;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _Game.Core.DataProviders.Ambience
+namespace Assets._Game.Core.DataProviders.Ambience
 {
     public class AmbienceDataProvider : IAmbienceDataProvider
     {

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using _Game.Core.Factory;
-using _Game.Core.Services.Audio;
-using _Game.Creatives.Creative_1.Scenario;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Factory;
-using _Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Core.Factory;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Creatives.Creative_1.Scenario;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Factory;
+using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
-namespace _Game.Creatives.Factories
+namespace Assets._Game.Creatives.Factories
 {
     [CreateAssetMenu(fileName = "CrProjectileFactory", menuName = "CrFactories/Projectile")]
     public class CrProjectileFactory : GameObjectFactory, IProjectileFactory

@@ -1,9 +1,9 @@
-using _Game.Utils;
+using Assets._Game.Utils;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Scenes.Tests
+namespace Assets._Game.Scenes.Tests
 {
     public class LootCoinTest : MonoBehaviour
     {

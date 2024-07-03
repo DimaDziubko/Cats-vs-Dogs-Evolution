@@ -1,11 +1,11 @@
 ﻿using System;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.UserContainer;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Common.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.UserState
+namespace Assets._Game.Core.UserState
 {
     public class UserContainer : IUserContainer
     {

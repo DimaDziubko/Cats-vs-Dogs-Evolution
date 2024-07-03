@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Core.Services.Camera
+namespace Assets._Game.Core.Services.Camera
 {
     public interface IWorldCameraService 
     {

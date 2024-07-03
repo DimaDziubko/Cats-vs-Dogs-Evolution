@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using _Game.Core.Factory;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.Gameplay.BattleLauncher;
-using _Game.Gameplay.GameResult.Scripts;
-using _Game.Utils;
+﻿using System.Collections.Generic;
+using Assets._Game.Core.Factory;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.Gameplay.BattleLauncher;
+using Assets._Game.Gameplay.GameResult.Scripts;
+using Assets._Game.Utils;
 
-namespace _Game.GameModes._BattleMode.Scripts
+namespace Assets._Game.GameModes._BattleMode.Scripts
 {
     public class BattleMode : IGameModeCleaner, IBattleLauncher, IBaseDestructionHandler
     {

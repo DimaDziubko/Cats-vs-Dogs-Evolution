@@ -1,9 +1,9 @@
 ﻿using System;
-using _Game.Core.Loading;
+using Assets._Game.Core.Loading;
 using Cysharp.Threading.Tasks;
 using UnityEngine.ResourceManagement.ResourceProviders;
 
-namespace _Game.Core.AssetManagement
+namespace Assets._Game.Core.AssetManagement
 {
     public interface IAddressableAssetProvider :  ILoadingOperation
     {

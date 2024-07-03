@@ -1,20 +1,19 @@
-using System;
 using System.Collections;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._Logger;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.GameState;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Gameplay._Tutorial.Scripts;
-using _Game.UI._StartBattleWindow.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.Shop.Scripts;
-using _Game.UI.UpgradesAndEvolution.Scripts;
-using _Game.Utils.Disposable;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.GameState;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Tutorial.Scripts;
+using Assets._Game.UI._StartBattleWindow.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.Shop.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Scripts;
+using Assets._Game.Utils.Disposable;
 using UnityEngine;
 
-namespace _Game.UI._MainMenu.Scripts
+namespace Assets._Game.UI._MainMenu.Scripts
 {
     public enum Window
     {

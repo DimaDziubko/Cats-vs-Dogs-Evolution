@@ -1,8 +1,8 @@
 ﻿using System;
-using _Game.UI._MainMenu.Scripts;
+using Assets._Game.UI._MainMenu.Scripts;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public class MainMenuLoadingOperation : ILoadingOperation
     {

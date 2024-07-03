@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _Game.Core.UserState
+namespace Assets._Game.Core.UserState
 {
     public class FoodBoostState : IFoodBoostStateReadonly
     {

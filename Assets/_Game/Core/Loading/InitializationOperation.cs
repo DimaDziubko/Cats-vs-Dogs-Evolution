@@ -1,8 +1,8 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
+using Assets._Game.Core._GameInitializer;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public class InitializationOperation : ILoadingOperation
     {

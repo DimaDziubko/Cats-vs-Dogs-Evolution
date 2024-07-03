@@ -1,7 +1,6 @@
-﻿using System.Threading;
-using _Game.Gameplay._Units.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Core.DataProviders.BaseDataProvider
+namespace Assets._Game.Core.DataProviders.BaseDataProvider
 {
     public class BaseLoadOptions
     {

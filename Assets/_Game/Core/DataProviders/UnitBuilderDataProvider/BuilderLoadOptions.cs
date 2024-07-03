@@ -1,8 +1,7 @@
-﻿using System.Threading;
-using _Game.Core.Configs.Models;
-using _Game.Gameplay.Common.Scripts;
+﻿using Assets._Game.Core.Configs.Models;
+using Assets._Game.Gameplay.Common.Scripts;
 
-namespace _Game.Core.DataProviders.UnitBuilderDataProvider
+namespace Assets._Game.Core.DataProviders.UnitBuilderDataProvider
 {
     public class BuilderLoadOptions
     {

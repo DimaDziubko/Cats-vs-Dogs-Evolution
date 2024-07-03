@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _Game.Audio.Scripts
+namespace Assets._Game.Audio.Scripts
 {
     public class SFXSourcesHolder : MonoBehaviour
     {

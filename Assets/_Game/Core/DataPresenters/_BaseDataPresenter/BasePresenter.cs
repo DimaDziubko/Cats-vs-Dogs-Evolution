@@ -1,17 +1,17 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Data;
-using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.DataPresenters._RaceChanger;
-using _Game.Core.Navigation.Age;
-using _Game.Core.Navigation.Battle;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using _Game.Utils;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
+using Assets._Game.Core.DataPresenters._RaceChanger;
+using Assets._Game.Core.Navigation.Age;
+using Assets._Game.Core.Navigation.Battle;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Utils;
 
-namespace _Game.Core.DataPresenters._BaseDataPresenter
+namespace Assets._Game.Core.DataPresenters._BaseDataPresenter
 {
     class BasePresenter : IBasePresenter, IDisposable
     {

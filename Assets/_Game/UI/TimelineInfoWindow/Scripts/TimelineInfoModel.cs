@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace _Game.UI.TimelineInfoWindow.Scripts
+namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoModel
     {
