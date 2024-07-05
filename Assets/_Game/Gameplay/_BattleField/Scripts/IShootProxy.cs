@@ -1,8 +1,6 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using UnityEngine;
+﻿using Assets._Game.Gameplay._Weapon.Scripts;
 
-namespace _Game.Gameplay._BattleField.Scripts
+namespace Assets._Game.Gameplay._BattleField.Scripts
 {
     public interface IShootProxy
     {

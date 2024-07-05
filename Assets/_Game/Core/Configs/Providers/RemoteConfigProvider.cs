@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using _Game.Core._GameMode;
-using _Game.Core._Logger;
-using _Game.Utils.Extensions;
+using Assets._Game.Core._GameMode;
+using Assets._Game.Core._Logger;
+using Assets._Game.Utils.Extensions;
 using Firebase.Extensions;
 using Firebase.RemoteConfig;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 
-
-namespace _Game.Core.Configs.Providers
+namespace Assets._Game.Core.Configs.Providers
 {
     public class RemoteConfigProvider : IRemoteConfigProvider
     {

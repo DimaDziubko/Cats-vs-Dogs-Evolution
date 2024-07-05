@@ -1,8 +1,8 @@
-using _Game.Core.Configs.Models;
+using Assets._Game.Core.Configs.Models;
 using Firebase.RemoteConfig;
 using UnityEngine;
 
-namespace _Game.Scenes.Tests
+namespace Assets._Game.Scenes.Tests
 {
     public class ConfigManager : MonoBehaviour
     {

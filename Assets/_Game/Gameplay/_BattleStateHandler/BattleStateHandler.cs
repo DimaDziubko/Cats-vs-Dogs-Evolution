@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.GameState;
-using _Game.Core.Loading;
-using _Game.Core.LoadingScreen;
-using _Game.Gameplay.Battle.Scripts;
+using Assets._Game.Core.GameState;
+using Assets._Game.Core.Loading;
+using Assets._Game.Core.LoadingScreen;
+using Assets._Game.Gameplay.Battle.Scripts;
 
-namespace _Game.Gameplay._BattleStateHandler
+namespace Assets._Game.Gameplay._BattleStateHandler
 {
     public class BattleStateHandler
     {

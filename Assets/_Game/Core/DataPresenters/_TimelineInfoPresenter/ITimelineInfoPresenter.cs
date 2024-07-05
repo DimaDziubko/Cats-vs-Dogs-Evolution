@@ -1,7 +1,7 @@
 ﻿using System;
-using _Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
 
-namespace _Game.Core.DataPresenters._TimelineInfoPresenter
+namespace Assets._Game.Core.DataPresenters._TimelineInfoPresenter
 {
     public interface ITimelineInfoPresenter
     {

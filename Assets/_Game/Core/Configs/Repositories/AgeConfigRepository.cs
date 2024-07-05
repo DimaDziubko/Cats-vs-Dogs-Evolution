@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using _Game.Core.Configs.Models;
+using Assets._Game.Core.Configs.Models;
 
-namespace _Game.Core.Configs.Repositories
+namespace Assets._Game.Core.Configs.Repositories
 {
     public interface IAgeConfigRepository
     {

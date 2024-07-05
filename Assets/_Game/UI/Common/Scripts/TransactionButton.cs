@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
-using _Game.Utils.Extensions;
+using Assets._Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class TransactionButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler

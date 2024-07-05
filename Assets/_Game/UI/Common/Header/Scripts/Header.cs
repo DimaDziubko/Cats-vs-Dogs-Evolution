@@ -1,11 +1,10 @@
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.UI.Common.Scripts;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI.Common.Scripts;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI.Common.Header.Scripts
+namespace Assets._Game.UI.Common.Header.Scripts
 {
     public class Header : MonoBehaviour, IHeader
     {

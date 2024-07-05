@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace _Game.Core.Services.AssetProvider
+namespace Assets._Game.Core.Services.AssetProvider
 {
     public interface IAssetProvider
     {

@@ -1,7 +1,7 @@
-﻿using _Game.Core.GameState;
+﻿using Assets._Game.Core.GameState;
 using Zenject;
 
-namespace _Game.Core._StateFactory
+namespace Assets._Game.Core._StateFactory
 {
     public class StateFactory 
     {

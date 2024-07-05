@@ -1,9 +1,4 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using _Game.Core.UserState;
-using Cysharp.Threading.Tasks;
-
-namespace _Game.Core.Communication
+﻿namespace Assets._Game.Core.Communication
 {
     // public class BinaryFormatterSaveLoadStrategy : ISaveLoadStrategy
     // {

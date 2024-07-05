@@ -1,13 +1,13 @@
 ﻿using System;
-using _Game.Core.DataPresenters._BaseDataPresenter;
-using _Game.Core.Factory;
-using _Game.Core.Services.Camera;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Utils;
+using Assets._Game.Core.DataPresenters._BaseDataPresenter;
+using Assets._Game.Core.Factory;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Utils;
 using UnityEngine;
 
-namespace _Game.Gameplay._Bases.Factory
+namespace Assets._Game.Gameplay._Bases.Factory
 {
     [CreateAssetMenu(fileName = "Base Factory", menuName = "Factories/Base")]
     public class BaseFactory : GameObjectFactory, IBaseFactory

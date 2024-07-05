@@ -1,7 +1,7 @@
-﻿using _Game.Core.UserState;
+﻿using Assets._Game.Core.UserState;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.Communication
+namespace Assets._Game.Core.Communication
 {
     public interface ISaveLoadStrategy
     {

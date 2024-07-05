@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.Services.AssetProvider;
+using Assets._Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.AssetManagement
+namespace Assets._Game.Core.AssetManagement
 {
     public class AssetRegistry : IAssetRegistry
     {

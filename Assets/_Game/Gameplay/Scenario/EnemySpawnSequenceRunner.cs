@@ -1,9 +1,9 @@
 ﻿using System;
-using _Game.Core.Configs.Models;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Gameplay.Scenario
+namespace Assets._Game.Gameplay.Scenario
 {
     public class EnemySpawnSequenceRunner
     {

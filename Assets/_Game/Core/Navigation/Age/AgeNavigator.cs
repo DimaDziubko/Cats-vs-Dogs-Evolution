@@ -1,14 +1,14 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core.AssetManagement;
-using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
-using _Game.Core.Loading;
-using _Game.Core.LoadingScreen;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.DataProviders.AgeDataProvider;
+using Assets._Game.Core.Loading;
+using Assets._Game.Core.LoadingScreen;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
 
-namespace _Game.Core.Navigation.Age
+namespace Assets._Game.Core.Navigation.Age
 {
     public class AgeNavigator : IAgeNavigator, IDisposable
     {

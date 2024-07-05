@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Scenes.Tests
+namespace Assets._Game.Scenes.Tests
 {
     [ExecuteAlways]
     public class TiggerTest : MonoBehaviour

@@ -3,7 +3,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Gameplay._Units.Scripts.Attack
+namespace Assets._Game.Gameplay._Units.Scripts.Attack
 {
     public class DamageFlashEffect : MonoBehaviour
     {

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core._Logger;
-using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._Tutorial.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Food.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.DataPresenters.UnitBuilderDataPresenter;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Tutorial.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.UnitBuilderBtn.Scripts;
 
-namespace _Game.Gameplay._UnitBuilder.Scripts
+namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 {
     public class UnitBuilderViewController : IUnitBuilder, IPauseHandler
     {

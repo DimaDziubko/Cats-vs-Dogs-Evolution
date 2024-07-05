@@ -1,7 +1,7 @@
-﻿using _Game.Gameplay._Coins.Scripts;
-using _Game.Gameplay.Vfx.Scripts;
+﻿using Assets._Game.Gameplay._Coins.Scripts;
+using Assets._Game.Gameplay.Vfx.Scripts;
 
-namespace _Game.Gameplay._Coins.Factory
+namespace Assets._Game.Gameplay._Coins.Factory
 {
     public interface ICoinFactory
     {

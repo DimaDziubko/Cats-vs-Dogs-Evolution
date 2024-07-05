@@ -1,9 +1,9 @@
 ﻿using System.Threading;
-using _Game.Core.Configs.Models;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Common.Scripts;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
 
-namespace _Game.Core.DataProviders.UnitDataProviders
+namespace Assets._Game.Core.DataProviders.UnitDataProviders
 {
     public class UnitLoadOptions
     {

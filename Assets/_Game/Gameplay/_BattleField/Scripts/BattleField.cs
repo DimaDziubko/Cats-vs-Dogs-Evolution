@@ -1,17 +1,17 @@
 using System;
-using _Game.Core.DataPresenters._BaseDataPresenter;
-using _Game.Core.Factory;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI._Hud;
+using Assets._Game.Core.DataPresenters._BaseDataPresenter;
+using Assets._Game.Core.Factory;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._BattleSpeed.Scripts;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI._Hud;
 using UnityEngine;
 
-namespace _Game.Gameplay._BattleField.Scripts
+namespace Assets._Game.Gameplay._BattleField.Scripts
 {
     public class BattleField : IBaseDestructionHandler
     {

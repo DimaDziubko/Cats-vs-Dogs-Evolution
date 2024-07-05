@@ -1,8 +1,7 @@
 ﻿using System;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Common.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
 
-namespace _Game.Core.UserState
+namespace Assets._Game.Core.UserState
 {
     public class RaceState : IRaceStateReadonly
     {

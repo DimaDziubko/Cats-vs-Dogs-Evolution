@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.LoadingScreen;
+using Assets._Game.Core.LoadingScreen;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public class LoadingData
     {

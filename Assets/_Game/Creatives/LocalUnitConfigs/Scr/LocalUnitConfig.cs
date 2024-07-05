@@ -1,9 +1,9 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Vfx.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace _Game.Creatives.LocalUnitConfigs.Scr
+namespace Assets._Game.Creatives.LocalUnitConfigs.Scr
 {
     [CreateAssetMenu(fileName = "LocalUnitConfig", menuName = "LocalConfigs/Units", order = 0)]
     public class LocalUnitConfig : ScriptableObject

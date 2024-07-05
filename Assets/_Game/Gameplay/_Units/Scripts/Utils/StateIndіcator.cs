@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.Gameplay._Units.Scripts.Utils
+namespace Assets._Game.Gameplay._Units.Scripts.Utils
 {
     public class StateIndіcator : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace _Game.Core.AssetManagement
+namespace Assets._Game.Core.AssetManagement
 {
     public class AddressableAssetProvider : IAddressableAssetProvider
     {

@@ -3,86 +3,132 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace _Game.Core.Services.Audio
+namespace Assets._Game.Core.Services.Audio
 {
     public class SoundService : MonoBehaviour, ISoundService
     {
         [ShowInInspector]
-        private IObjectPool<SoundEmitter> _soundEmitterPool;
+        private Dictionary<AudioClip, IObjectPool<SoundEmitter>> _soundEmitterPools =
+            new Dictionary<AudioClip, IObjectPool<SoundEmitter>>();
+
         [ShowInInspector]
-        private readonly List<SoundEmitter> _activeSoundEmitters = new List<SoundEmitter>();
+        private Dictionary<AudioClip, List<SoundEmitter>> _activeSoundEmitters =
+            new Dictionary<AudioClip, List<SoundEmitter>>();
+
         [ShowInInspector]
-        private readonly Queue<SoundEmitter> _frequentSoundEmitters = new Queue<SoundEmitter>();
+        private Dictionary<AudioClip, Queue<SoundEmitter>> _frequentSoundEmitters =
+            new Dictionary<AudioClip, Queue<SoundEmitter>>();
 
         [SerializeField] SoundEmitter _soundEmitterPrefab;
         [SerializeField] bool _collectionCheck = true;
         [SerializeField] int _defaultCapacity = 10;
         [SerializeField] int _maxPoolSize = 100;
         [SerializeField] int _maxSoundInstances = 30;
-    
-        [SerializeField] private Transform _transform;
 
-        public Queue<SoundEmitter> FrequentSoundEmitters => _frequentSoundEmitters;
+        [SerializeField] private Transform _transform;
+        
+        public Dictionary<AudioClip, Queue<SoundEmitter>> FrequentSoundEmitters => _frequentSoundEmitters;
 
         public Transform Transform
         {
             get => _transform;
             set => _transform = value;
         }
-    
-        public void Init() => InitializePool();
-
+        
         public SoundBuilder CreateSound() => new SoundBuilder(this);
 
         public bool CanPlaySound(SoundData data)
         {
             if (!data.FrequentSound) return true;
-
-            if (_frequentSoundEmitters.Count >= _maxSoundInstances && _frequentSoundEmitters.TryDequeue(out var soundEmitter)) 
+            
+            if (_frequentSoundEmitters.TryGetValue(data.Clip, out var queue) && queue.Count >= _maxSoundInstances)
             {
-                try {
-                    soundEmitter.Stop();
-                    return true;
-                } catch {
-                    //Debug.Log("SoundEmitter is already released");
+                if (queue.TryDequeue(out var soundEmitter))
+                {
+                    try
+                    {
+                        soundEmitter.Stop();
+                        return true;
+                    }
+                    catch
+                    {
+                        //Debug.LogWarning("SoundEmitter is already released");
+                    }
+
+                    return false;
                 }
-                return false;
             }
+
             return true;
         }
+        
 
-        public SoundEmitter Get() => _soundEmitterPool.Get();
+        public SoundEmitter Get(AudioClip clip)
+        {
+            if (!_soundEmitterPools.TryGetValue(clip, out var pool))
+            {
+                pool = InitializePool(clip);
+                _soundEmitterPools[clip] = pool;
+            }
 
-        public void ReturnToPool(SoundEmitter soundEmitter) {
-            _soundEmitterPool.Release(soundEmitter);
+            return pool.Get();
         }
 
-        public void StopAll() 
+        public void ReturnToPool(SoundEmitter soundEmitter)
         {
-            foreach (var soundEmitter in _activeSoundEmitters) {
-                soundEmitter.Stop();
+            if (_soundEmitterPools.TryGetValue(soundEmitter.Data.Clip, out var pool))
+            {
+                pool.Release(soundEmitter);
             }
-            
-            _frequentSoundEmitters.Clear();
+        }
+
+        public void StopAll()
+        {
+            foreach (var keyValuePair in _activeSoundEmitters)
+            {
+                foreach (var soundEmitter in keyValuePair.Value)
+                {
+                    soundEmitter.Stop();
+                }
+            }
+
+            foreach (var queue in _frequentSoundEmitters.Values)
+            {
+                queue.Clear();
+            }
         }
 
         public void Cleanup()
         {
+            foreach (var queue in _frequentSoundEmitters.Values)
+            {
+                queue.Clear();
+            }
+            
+            foreach (var keyValuePair in _soundEmitterPools)
+            {
+                var pool = keyValuePair.Value;
+                pool.Clear();
+            }
+            
+            _soundEmitterPools.Clear();
             _frequentSoundEmitters.Clear();
+            _activeSoundEmitters.Clear();
         }
 
-        void InitializePool() {
-            _soundEmitterPool = new ObjectPool<SoundEmitter>(
-                CreateSoundEmitter,
-                OnTakeFromPool,
-                OnReturnedToPool,
+        private IObjectPool<SoundEmitter> InitializePool(AudioClip clip)
+        {
+            return new ObjectPool<SoundEmitter>(
+                 CreateSoundEmitter,
+                soundEmitter => OnTakeFromPool(soundEmitter, clip),
+                soundEmitter => OnReturnedToPool(soundEmitter, clip),
                 OnDestroyPoolObject,
                 _collectionCheck,
                 _defaultCapacity,
                 _maxPoolSize);
         }
 
-        private SoundEmitter CreateSoundEmitter() 
+        private SoundEmitter CreateSoundEmitter()
         {
             var soundEmitter = Instantiate(_soundEmitterPrefab);
             soundEmitter.Construct(this);
@@ -90,19 +136,35 @@ namespace _Game.Core.Services.Audio
             return soundEmitter;
         }
 
-        private void OnTakeFromPool(SoundEmitter soundEmitter) 
+        private void OnTakeFromPool(SoundEmitter soundEmitter, AudioClip clip)
         {
             soundEmitter.gameObject.SetActive(true);
-            _activeSoundEmitters.Add(soundEmitter);
+
+            if (!_activeSoundEmitters.ContainsKey(clip))
+            {
+                _activeSoundEmitters[clip] = new List<SoundEmitter>();
+            }
+            _activeSoundEmitters[clip].Add(soundEmitter);
         }
 
-        private void OnReturnedToPool(SoundEmitter soundEmitter) 
+        private void OnReturnedToPool(SoundEmitter soundEmitter, AudioClip clip)
         {
             soundEmitter.gameObject.SetActive(false);
-            _activeSoundEmitters.Remove(soundEmitter);
+
+            if (_activeSoundEmitters.ContainsKey(clip))
+            {
+                _activeSoundEmitters[clip].Remove(soundEmitter);
+                
+                if (_activeSoundEmitters[clip].Count == 0)
+                {
+                    _activeSoundEmitters.Remove(clip);
+                }
+            }
         }
 
-        private void OnDestroyPoolObject(SoundEmitter soundEmitter) => 
+        private void OnDestroyPoolObject(SoundEmitter soundEmitter)
+        {
             Destroy(soundEmitter.gameObject);
+        }
     }
 }

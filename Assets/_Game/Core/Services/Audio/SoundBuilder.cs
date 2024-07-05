@@ -1,50 +1,61 @@
-using _Game.Core.Services.Audio;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundBuilder
+namespace Assets._Game.Core.Services.Audio
 {
-    private readonly ISoundService _soundService;
-    private SoundData _soundData;
-    private Vector3 _position = Vector3.zero;
-    private bool _randomPitch;
-
-    public SoundBuilder(ISoundService soundService) => 
-        _soundService = soundService;
-
-    public SoundBuilder WithSoundData(SoundData soundData)
+    public class SoundBuilder
     {
-        _soundData = soundData;
-        return this;
-    }
+        private readonly ISoundService _soundService;
+        private SoundData _soundData;
+        private Vector3 _position = Vector3.zero;
+        private bool _randomPitch;
 
-    public SoundBuilder WithPosition(Vector3 position)
-    {
-        _position = position;
-        return this;
-    }
-    
-    public SoundBuilder WithRandomPitch()
-    {
-        _randomPitch = true;
-        return this;
-    }
-    
-    public void Play() {
-        if (!_soundService.CanPlaySound(_soundData)) return;
-            
-        SoundEmitter soundEmitter = _soundService.Get();
-        soundEmitter.Initialize(_soundData);
-        soundEmitter.Transform.position = _position;
-        soundEmitter.Transform.parent = _soundService.Transform;
+        public SoundBuilder(ISoundService soundService) => 
+            _soundService = soundService;
 
-        if (_randomPitch) {
-            soundEmitter.WithRandomPitch();
+        public SoundBuilder WithSoundData(SoundData soundData)
+        {
+            _soundData = soundData;
+            return this;
         }
-            
-        if (_soundData.FrequentSound) {
-            _soundService.FrequentSoundEmitters.Enqueue(soundEmitter);
+
+        public SoundBuilder WithPosition(Vector3 position)
+        {
+            _position = position;
+            return this;
         }
-            
-        soundEmitter.Play();
+    
+        public SoundBuilder WithRandomPitch()
+        {
+            _randomPitch = true;
+            return this;
+        }
+        public void Play()
+        {
+            if (!_soundService.CanPlaySound(_soundData)) return;
+
+            SoundEmitter soundEmitter = _soundService.Get(_soundData.Clip);
+            soundEmitter.Initialize(_soundData);
+            soundEmitter.Transform.position = _position;
+            soundEmitter.Transform.parent = _soundService.Transform;
+
+            if (_randomPitch)
+            {
+                soundEmitter.WithRandomPitch();
+            }
+
+            if (_soundData.FrequentSound)
+            {
+                if (!_soundService.FrequentSoundEmitters.ContainsKey(_soundData.Clip))
+                {
+                    _soundService.FrequentSoundEmitters[_soundData.Clip] = new Queue<SoundEmitter>();
+                }
+
+                _soundService.FrequentSoundEmitters[_soundData.Clip].Enqueue(soundEmitter);
+            }
+
+            soundEmitter.Play();
+        }
+
     }
 }

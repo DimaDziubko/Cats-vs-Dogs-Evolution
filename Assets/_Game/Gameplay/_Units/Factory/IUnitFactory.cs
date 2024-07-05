@@ -1,6 +1,6 @@
-﻿using _Game.Gameplay._Units.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Gameplay._Units.Factory
+namespace Assets._Game.Gameplay._Units.Factory
 {
     public interface IUnitFactory
     {

@@ -1,8 +1,8 @@
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._Coins.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Coins.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay.Vfx.Scripts
+namespace Assets._Game.Gameplay.Vfx.Scripts
 {
     [RequireComponent(typeof(ParticleSystem))]
     public class RewardCoinVFX : Coin

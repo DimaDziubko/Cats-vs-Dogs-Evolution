@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _Game.Core.Factory
+namespace Assets._Game.Core.Factory
 {
     public abstract class GameObjectFactory : ScriptableObject
     {

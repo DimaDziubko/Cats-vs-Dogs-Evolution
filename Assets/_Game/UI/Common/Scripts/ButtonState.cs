@@ -1,4 +1,4 @@
-﻿namespace _Game.UI.Common.Scripts
+﻿namespace Assets._Game.UI.Common.Scripts
 {
     public enum ButtonState
     {

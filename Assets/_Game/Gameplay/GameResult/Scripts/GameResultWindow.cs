@@ -1,16 +1,15 @@
-﻿using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._Logger;
-using _Game.Core.Ads;
-using _Game.Core.Services.Analytics;
-using _Game.Core.Services.Audio;
-using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Utils.Extensions;
+﻿using Assets._Game.Core._Logger;
+using Assets._Game.Core.Ads;
+using Assets._Game.Core.Services.Analytics;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
+using Assets._Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.Gameplay.GameResult.Scripts
+namespace Assets._Game.Gameplay.GameResult.Scripts
 {
     [RequireComponent(typeof(Canvas))]
     public class GameResultWindow : MonoBehaviour

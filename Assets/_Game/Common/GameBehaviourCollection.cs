@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Gameplay._BattleField.Scripts;
-using UnityEngine;
 
-namespace _Game.Common
+namespace Assets._Game.Common
 {
     [Serializable]
     public class GameBehaviourCollection 

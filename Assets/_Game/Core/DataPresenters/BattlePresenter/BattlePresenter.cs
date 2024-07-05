@@ -1,10 +1,10 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core.Data;
-using _Game.Core.Navigation.Battle;
-using _Game.Gameplay.Battle.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Navigation.Battle;
+using Assets._Game.Gameplay.Battle.Scripts;
 
-namespace _Game.Core.DataPresenters.BattlePresenter
+namespace Assets._Game.Core.DataPresenters.BattlePresenter
 {
     public class BattlePresenter : IBattlePresenter, IDisposable
     {

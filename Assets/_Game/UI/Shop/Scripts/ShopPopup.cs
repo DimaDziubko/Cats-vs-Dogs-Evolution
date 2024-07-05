@@ -1,10 +1,9 @@
-﻿using _Game.Core.Communication;
-using _Game.Core.Services.Audio;
+﻿using Assets._Game.Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.Shop.Scripts
+namespace Assets._Game.UI.Shop.Scripts
 {
     [RequireComponent(typeof(Canvas))]
     public class ShopPopup : MonoBehaviour

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.DataPresenters.WeaponDataPresenter;
-using _Game.Core.Factory;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Vfx.Scripts;
-using _Game.Utils;
+using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
+using Assets._Game.Core.Factory;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Vfx.Scripts;
+using Assets._Game.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _Game.Gameplay.Vfx.Factory
+namespace Assets._Game.Gameplay.Vfx.Factory
 {
     public enum VfxType
     {
@@ -23,7 +23,7 @@ namespace _Game.Gameplay.Vfx.Factory
     {
         [SerializeField] private UnitBlot _blotPrefab;
         [SerializeField] private UnitExplosion _unitExplosionPrefab;
-        [FormerlySerializedAs("baseSmokePrefab")] [FormerlySerializedAs("_baseExplosionPrefab")] [SerializeField] private TowerSmoke towerSmokePrefab;
+        [SerializeField] private BaseSmoke _baseSmokePrefab;
         
         private IWeaponDataPresenter _weaponDataPresenter;
 
@@ -38,7 +38,7 @@ namespace _Game.Gameplay.Vfx.Factory
 
         public UnitBlot GetUnitBlot() => (UnitBlot)Get(VfxType.UnitBlot, _blotPrefab);
         public UnitExplosion GetUnitExplosion() => (UnitExplosion)Get(VfxType.UnitExplosion, _unitExplosionPrefab);
-        public TowerSmoke GetBaseSmoke() => (TowerSmoke)Get(VfxType.BaseExplosion, towerSmokePrefab);
+        public BaseSmoke GetBaseSmoke() => (BaseSmoke)Get(VfxType.BaseExplosion, _baseSmokePrefab);
         
         public void Initialize(
             IWeaponDataPresenter weaponDataPresenter)

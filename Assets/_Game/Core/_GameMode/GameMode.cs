@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.Core._GameMode
+namespace Assets._Game.Core._GameMode
 {
     public class GameMode : MonoBehaviour
     {

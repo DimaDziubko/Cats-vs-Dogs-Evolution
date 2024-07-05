@@ -1,6 +1,6 @@
-﻿using _Game.UI._MainMenu.Scripts;
+﻿using Assets._Game.UI._MainMenu.Scripts;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     public interface IUIWindow
     {

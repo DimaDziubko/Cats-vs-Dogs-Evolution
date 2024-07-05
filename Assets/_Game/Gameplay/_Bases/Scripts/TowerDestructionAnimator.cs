@@ -2,7 +2,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Game.Gameplay._Bases.Scripts
+namespace Assets._Game.Gameplay._Bases.Scripts
 {
     public class TowerDestructionAnimator : MonoBehaviour
     {

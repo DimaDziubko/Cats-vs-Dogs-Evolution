@@ -1,12 +1,12 @@
-﻿using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._BattleStateHandler;
-using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.Gameplay.Food.Scripts;
+﻿using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._BattleStateHandler;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
 using Zenject;
 
-namespace _Game.Core.Installers.BattleMode
+namespace Assets._Game.Core.Installers.BattleMode
 {
     public class BattleSystemInstaller : MonoInstaller
     {

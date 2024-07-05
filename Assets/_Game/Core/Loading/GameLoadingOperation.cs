@@ -1,11 +1,11 @@
 ﻿using System;
-using _Game.Core._SceneLoader;
-using _Game.Core.Services.Camera;
-using _Game.Utils;
+using Assets._Game.Core._SceneLoader;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-namespace _Game.Core.Loading
+namespace Assets._Game.Core.Loading
 {
     public sealed class GameLoadingOperation : ILoadingOperation
     {

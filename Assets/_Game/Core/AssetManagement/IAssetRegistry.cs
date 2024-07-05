@@ -1,6 +1,6 @@
 ﻿    using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.AssetManagement
+    namespace Assets._Game.Core.AssetManagement
 {
     public interface IAssetRegistry
     {

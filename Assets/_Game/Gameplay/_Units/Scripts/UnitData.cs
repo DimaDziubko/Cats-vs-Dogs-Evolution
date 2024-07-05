@@ -1,7 +1,7 @@
 ﻿using System;
-using _Game.Core.Configs.Models;
+using Assets._Game.Core.Configs.Models;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     [Serializable]
     public class UnitData

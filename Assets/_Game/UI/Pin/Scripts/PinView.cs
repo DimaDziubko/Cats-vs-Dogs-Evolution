@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.UI.Pin.Scripts
+namespace Assets._Game.UI.Pin.Scripts
 {
     public class PinView : MonoBehaviour
     {

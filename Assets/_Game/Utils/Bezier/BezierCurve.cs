@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Utils.Bezier
+namespace Assets._Game.Utils.Bezier
 {
     public class BezierCurve : MonoBehaviour
     {

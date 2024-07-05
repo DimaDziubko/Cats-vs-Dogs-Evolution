@@ -1,20 +1,20 @@
-﻿using System; 
-using _Game.Core._Logger;
-using _Game.Core._SystemUpdate;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Data;
-using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+﻿using System;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core._SystemUpdate;
+using Assets._Game.Core.Configs.Repositories;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services._FoodBoostService.Scripts;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._BattleSpeed.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.UI.UnitBuilderBtn.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay.Food.Scripts
+namespace Assets._Game.Gameplay.Food.Scripts
 {
     public interface IFoodGenerator
     {

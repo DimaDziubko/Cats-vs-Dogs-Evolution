@@ -1,9 +1,9 @@
-﻿using _Game.Utils;
+﻿using Assets._Game.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     public class DynamicSortingOrder : MonoBehaviour
     {

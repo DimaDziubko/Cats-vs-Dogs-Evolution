@@ -1,10 +1,10 @@
-﻿using _Game.Core.AssetManagement;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI.Shop.Scripts
+namespace Assets._Game.UI.Shop.Scripts
 {
     public class ShopPopupProvider : LocalAssetLoader, IShopPopupProvider
     {

@@ -1,13 +1,12 @@
-﻿using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._Logger;
-using _Game.Core.Ads;
-using _Game.Core.AssetManagement;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core._Logger;
+using Assets._Game.Core.Ads;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Gameplay.GameResult.Scripts
+namespace Assets._Game.Gameplay.GameResult.Scripts
 {
     public class GameResultWindowProvider : LocalAssetLoader, IGameResultWindowProvider
     {

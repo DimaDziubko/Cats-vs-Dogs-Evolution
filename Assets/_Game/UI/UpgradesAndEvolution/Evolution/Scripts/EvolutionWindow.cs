@@ -1,17 +1,16 @@
 ﻿using System;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.DataPresenters.Evolution;
-using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.Core.Services.Audio;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.Common.Header.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.Pin.Scripts;
-using _Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.DataPresenters.Evolution;
+using Assets._Game.Core.DataPresenters.TimelineTravel;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.UI._MainMenu.Scripts;
+using Assets._Game.UI.Common.Header.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionWindow : MonoBehaviour, IUIWindow
     {

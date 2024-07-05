@@ -1,8 +1,8 @@
-﻿using _Game.Core.Configs.Models;
-using _Game.UI._Environment;
+﻿using Assets._Game.Core.Configs.Models;
+using Assets._Game.UI._Environment;
 using UnityEngine;
 
-namespace _Game.Gameplay.Battle.Scripts
+namespace Assets._Game.Gameplay.Battle.Scripts
 {
     public class BattleData
     {

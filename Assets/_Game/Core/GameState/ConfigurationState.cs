@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._Logger;
-using _Game.Core.Configs.Providers;
-using _Game.Core.Loading;
-using _Game.Core.Services.PersistentData;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Configs.Providers;
+using Assets._Game.Core.Loading;
+using Assets._Game.Core.Services.UserContainer;
 
-namespace _Game.Core.GameState
+namespace Assets._Game.Core.GameState
 {
     public class ConfigurationState : IState
     {

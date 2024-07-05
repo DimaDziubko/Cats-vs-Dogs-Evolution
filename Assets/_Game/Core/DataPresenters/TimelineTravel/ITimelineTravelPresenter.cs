@@ -1,7 +1,7 @@
 ﻿using System;
-using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
-namespace _Game.Core.DataPresenters.TimelineTravel
+namespace Assets._Game.Core.DataPresenters.TimelineTravel
 {
     public interface ITimelineTravelPresenter
     {

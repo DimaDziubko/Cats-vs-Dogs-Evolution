@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay._Weapon.Scripts
+﻿namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     public enum WeaponType
     {

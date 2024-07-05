@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace _Game.Utils.Extensions
+namespace Assets._Game.Utils.Extensions
 {
     public static class FloatExtensions
     {

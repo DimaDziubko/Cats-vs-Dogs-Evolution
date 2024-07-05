@@ -1,11 +1,11 @@
-﻿using _Game.Core.DataPresenters._BaseDataPresenter;
-using _Game.Core.DataPresenters.BattlePresenter;
-using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
-using _Game.Core.DataPresenters.UnitDataPresenter;
-using _Game.Core.DataPresenters.WeaponDataPresenter;
+﻿using Assets._Game.Core.DataPresenters._BaseDataPresenter;
+using Assets._Game.Core.DataPresenters.BattlePresenter;
+using Assets._Game.Core.DataPresenters.UnitBuilderDataPresenter;
+using Assets._Game.Core.DataPresenters.UnitDataPresenter;
+using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Zenject;
 
-namespace _Game.Core.Installers.Core
+namespace Assets._Game.Core.Installers.Core
 {
     public class DataPresentersInstaller : MonoInstaller
     {

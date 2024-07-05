@@ -1,12 +1,12 @@
-﻿using _Game.Audio.Scripts;
-using _Game.Core.Prefabs;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
+﻿using Assets._Game.Audio.Scripts;
+using Assets._Game.Core.Prefabs;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
 using UnityEngine;
 using UnityEngine.Audio;
 using Zenject;
 
-namespace _Game.Core.Installers.Core
+namespace Assets._Game.Core.Installers.Core
 {
     public class AudioCameraServicesInstaller : MonoInstaller
     {
@@ -54,7 +54,7 @@ namespace _Game.Core.Installers.Core
 
         private void BindSoundService()
         {
-            _soundService.Init();
+            //_soundService.Init();
             Container
                 .Bind<ISoundService>()
                 .FromInstance(_soundService)

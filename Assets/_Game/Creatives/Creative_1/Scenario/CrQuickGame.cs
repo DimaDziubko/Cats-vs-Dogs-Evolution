@@ -1,9 +1,9 @@
-using _Game.Creatives.Scripts;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Creatives.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Creatives.Creative_1.Scenario
+namespace Assets._Game.Creatives.Creative_1.Scenario
 {
     public class CrQuickGame : MonoBehaviour
     {

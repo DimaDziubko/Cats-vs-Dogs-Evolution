@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.Creatives.Creative_1.Scenario
+namespace Assets._Game.Creatives.Creative_1.Scenario
 {
     [CreateAssetMenu(fileName = "GameScenario", menuName = "Core/Game Scenario")]
     public class CrScenario : ScriptableObject

@@ -1,11 +1,11 @@
-﻿using _Game.Core.AssetManagement;
-using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Utils;
+﻿using Assets._Game.Core.AssetManagement;
+using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _Game.Core.DataProviders.BaseDataProvider
+namespace Assets._Game.Core.DataProviders.BaseDataProvider
 {
     public class BaseStaticDataProvider : IBaseStaticDataProvider
     {

@@ -1,6 +1,6 @@
-﻿using _Game.Gameplay._Weapon.Scripts;
+﻿using Assets._Game.Gameplay._Weapon.Scripts;
 
-namespace _Game.Core.DataPresenters.WeaponDataPresenter
+namespace Assets._Game.Core.DataPresenters.WeaponDataPresenter
 {
     public interface IWeaponDataPresenter
     {

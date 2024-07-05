@@ -1,8 +1,7 @@
-﻿using _Game.Common;
-using _Game.Gameplay._Coins.Factory;
-using _Game.Gameplay.Vfx.Factory;
+﻿using Assets._Game.Common;
+using Assets._Game.Gameplay.Vfx.Factory;
 
-namespace _Game.Gameplay.Vfx.Scripts
+namespace Assets._Game.Gameplay.Vfx.Scripts
 {
     public abstract class VfxEntity : GameBehaviour
     {

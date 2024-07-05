@@ -1,10 +1,10 @@
-﻿using _Game.Core.Services.Audio;
+﻿using Assets._Game.Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.Utils.Popups
+namespace Assets._Game.Utils.Popups
 {
     [RequireComponent(typeof(Canvas))]
     public class AlertPopup : MonoBehaviour

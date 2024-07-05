@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay.Common.Scripts
+﻿namespace Assets._Game.Gameplay.Common.Scripts
 {
     public enum Race
     {

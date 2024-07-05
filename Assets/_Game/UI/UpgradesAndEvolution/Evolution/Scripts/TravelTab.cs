@@ -1,11 +1,11 @@
 using System;
-using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.Core.Services.Audio;
-using _Game.UI.Common.Scripts;
+using Assets._Game.Core.DataPresenters.TimelineTravel;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.UI.Common.Scripts;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class TravelTab : MonoBehaviour
     {

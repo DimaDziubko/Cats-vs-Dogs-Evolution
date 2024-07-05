@@ -1,7 +1,7 @@
-﻿using _Game.Gameplay._Units.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay._Weapon.Scripts
+namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     public abstract class ProjectileMove : MonoBehaviour
     {

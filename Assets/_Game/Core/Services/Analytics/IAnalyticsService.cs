@@ -1,7 +1,6 @@
-﻿using _Game.Gameplay.Battle.Scripts;
-using Cysharp.Threading.Tasks;
+﻿using Assets._Game.Gameplay.Battle.Scripts;
 
-namespace _Game.Core.Services.Analytics
+namespace Assets._Game.Core.Services.Analytics
 {
     public interface IAnalyticsService
     {

@@ -1,7 +1,7 @@
-﻿using _Game.Core.Data.Timeline.Static;
+﻿using Assets._Game.Core.Data.Timeline.Static;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core.DataProviders.Timeline
+namespace Assets._Game.Core.DataProviders.Timeline
 {
     public interface ITimelineDataProvider
     {

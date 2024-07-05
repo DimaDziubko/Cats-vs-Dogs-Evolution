@@ -1,10 +1,10 @@
 ﻿using System;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.Configs.Repositories
+namespace Assets._Game.Core.Configs.Repositories
 {
     public interface IEconomyConfigRepository
     {

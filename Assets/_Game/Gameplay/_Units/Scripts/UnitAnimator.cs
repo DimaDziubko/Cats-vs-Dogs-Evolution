@@ -1,11 +1,11 @@
 ﻿using System;
-using _Game.Common.Animation.Scripts;
+using Assets._Game.Common.Animation.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     public class UnitAnimator : MonoBehaviour, IAnimationStateReader
     {

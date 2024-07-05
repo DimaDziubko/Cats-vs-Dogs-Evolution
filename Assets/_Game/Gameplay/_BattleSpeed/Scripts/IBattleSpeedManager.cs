@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay._BattleSpeed.Scripts
+﻿namespace Assets._Game.Gameplay._BattleSpeed.Scripts
 {
     public interface IBattleSpeedManager
     {

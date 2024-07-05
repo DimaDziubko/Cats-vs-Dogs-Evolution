@@ -1,11 +1,11 @@
 using System.Collections;
-using _Game.Core.Services.Camera;
-using _Game.Utils.Extensions;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Utils.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.Gameplay._Units.Scripts
+namespace Assets._Game.Gameplay._Units.Scripts
 {
     public class HealthBar : MonoBehaviour
     {

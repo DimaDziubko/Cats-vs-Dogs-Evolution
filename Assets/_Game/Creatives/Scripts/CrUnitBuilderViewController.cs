@@ -1,14 +1,13 @@
-﻿using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Audio;
-using _Game.Creatives.Creative_1.Scenario;
-using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Food.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
+﻿using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Creatives.Creative_1.Scenario;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.UnitBuilderBtn.Scripts;
 
-namespace _Game.Creatives.Scripts
+namespace Assets._Game.Creatives.Scripts
 {
     public class CrUnitBuilderViewController : IUnitBuilder, IPauseHandler
     {

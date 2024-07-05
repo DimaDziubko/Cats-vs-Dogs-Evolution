@@ -1,19 +1,19 @@
 ﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Ads;
-using _Game.Core.Configs.Models;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Data;
-using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.Services.Analytics;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.UI._Hud;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Ads;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Configs.Repositories;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
+using Assets._Game.Core.Services.Analytics;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI._Hud;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.Services._FoodBoostService.Scripts
+namespace Assets._Game.Core.Services._FoodBoostService.Scripts
 {
     public class FoodBoostService : IFoodBoostService, IDisposable
     {

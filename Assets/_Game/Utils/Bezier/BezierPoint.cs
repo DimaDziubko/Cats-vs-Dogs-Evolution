@@ -4,7 +4,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 #endif
 
-namespace _Game.Utils.Bezier
+namespace Assets._Game.Utils.Bezier
 {
     [ExecuteAlways]
 public class BezierPoint : MonoBehaviour

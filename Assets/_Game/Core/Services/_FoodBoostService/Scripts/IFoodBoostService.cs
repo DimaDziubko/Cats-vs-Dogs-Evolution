@@ -1,8 +1,7 @@
 ﻿using System;
-using _Game.UI._Hud;
-using Cysharp.Threading.Tasks;
+using Assets._Game.UI._Hud;
 
-namespace _Game.Core.Services._FoodBoostService.Scripts
+namespace Assets._Game.Core.Services._FoodBoostService.Scripts
 {
     public interface IFoodBoostService
     {

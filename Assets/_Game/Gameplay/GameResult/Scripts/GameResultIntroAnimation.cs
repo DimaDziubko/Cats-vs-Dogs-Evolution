@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace _Game.Gameplay.GameResult.Scripts
+namespace Assets._Game.Gameplay.GameResult.Scripts
 {
     [RequireComponent(typeof(PlayableDirector))]
     public class GameResultIntroAnimation : MonoBehaviour

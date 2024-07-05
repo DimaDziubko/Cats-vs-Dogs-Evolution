@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using _Game.Gameplay.Battle.Scripts;
-using _Game.UI._Environment.Factory;
+using Assets._Game.Gameplay.Battle.Scripts;
+using Assets._Game.UI._Environment.Factory;
 
-namespace _Game.UI._Environment
+namespace Assets._Game.UI._Environment
 {
     public class EnvironmentController
     {

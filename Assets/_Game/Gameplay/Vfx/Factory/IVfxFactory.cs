@@ -1,14 +1,14 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Vfx.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Vfx.Scripts;
 
-namespace _Game.Gameplay.Vfx.Factory
+namespace Assets._Game.Gameplay.Vfx.Factory
 {
     public interface IVfxFactory
     {
         public UnitBlot GetUnitBlot();
         public UnitExplosion GetUnitExplosion();
-        public TowerSmoke GetBaseSmoke();
+        public BaseSmoke GetBaseSmoke();
         void Reclaim(VfxType type, VfxEntity entity);
         void Reclaim(WeaponType type, MuzzleFlash muzzleFlash);
         void Reclaim(WeaponType type, ProjectileExplosion projectileExplosion);

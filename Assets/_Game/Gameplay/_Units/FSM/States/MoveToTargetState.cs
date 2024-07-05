@@ -1,7 +1,7 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Units.Scripts.Movement;
+﻿using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Units.Scripts.Movement;
 
-namespace _Game.Gameplay._Units.FSM.States
+namespace Assets._Game.Gameplay._Units.FSM.States
 {
     public class MoveToTargetState : IUnitFsmState
     {

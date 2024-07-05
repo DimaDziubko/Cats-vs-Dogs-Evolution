@@ -1,10 +1,10 @@
-﻿using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.Navigation.Battle;
-using _Game.Gameplay._CoinCounter.Scripts;
-using _Game.Utils;
+﻿using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core.Navigation.Battle;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
+using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Gameplay.GameResult.Scripts
+namespace Assets._Game.Gameplay.GameResult.Scripts
 {
     public class GameResultHandler
     {

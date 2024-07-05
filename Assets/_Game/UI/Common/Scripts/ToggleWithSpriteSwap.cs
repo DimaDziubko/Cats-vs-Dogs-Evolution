@@ -1,9 +1,9 @@
 ﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Button))]
     public class ToggleWithSpriteSwap : MonoBehaviour, IFeature

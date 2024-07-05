@@ -1,4 +1,4 @@
-﻿namespace _Game.UI._StartBattleWindow.Scripts
+﻿namespace Assets._Game.UI._StartBattleWindow.Scripts
 {
     public struct BattleNavigationModel
     {

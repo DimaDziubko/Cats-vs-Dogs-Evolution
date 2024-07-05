@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.Configs.Models;
-using _Game.Core.Services.PersistentData;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Services.UserContainer;
 
-namespace _Game.Core.Configs.Repositories
+namespace Assets._Game.Core.Configs.Repositories
 {
     public interface IBattleSpeedConfigRepository
     {

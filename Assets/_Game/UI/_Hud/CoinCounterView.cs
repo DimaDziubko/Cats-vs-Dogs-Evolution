@@ -1,10 +1,9 @@
-﻿using _Game.Utils.Extensions;
+﻿using Assets._Game.Utils.Extensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _Game.UI._Hud
+namespace Assets._Game.UI._Hud
 {
     public class CoinCounterView : MonoBehaviour
     {

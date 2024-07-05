@@ -2,7 +2,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Game.Core.Communication
+namespace Assets._Game.Core.Communication
 {
     public class ClearGameSaveFile
     {

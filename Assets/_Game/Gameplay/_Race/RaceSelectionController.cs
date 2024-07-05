@@ -1,10 +1,10 @@
-﻿using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.Gameplay.Common.Scripts;
-using _Game.UI._RaceSelectionWindow.Scripts;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay.Common.Scripts;
+using Assets._Game.UI._RaceSelectionWindow.Scripts;
+using Assets._Game.Utils.Disposable;
 
-namespace _Game.Gameplay._Race
+namespace Assets._Game.Gameplay._Race
 {
     public class RaceSelectionController
     {

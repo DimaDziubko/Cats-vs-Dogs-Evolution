@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Gameplay._Weapon.Scripts
+namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class SimpleProjectile : Projectile

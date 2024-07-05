@@ -1,7 +1,7 @@
-﻿using _Game.Utils.Bezier;
+﻿using Assets._Game.Utils.Bezier;
 using UnityEngine;
 
-namespace _Game.Gameplay._Weapon.Scripts
+namespace Assets._Game.Gameplay._Weapon.Scripts
 {
     public class BezierHighArcMove : ProjectileMove
     {

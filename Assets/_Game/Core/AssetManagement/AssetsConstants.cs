@@ -1,4 +1,4 @@
-namespace _Game.Core.AssetManagement
+namespace Assets._Game.Core.AssetManagement
 {
     public static class AssetsConstants
     {

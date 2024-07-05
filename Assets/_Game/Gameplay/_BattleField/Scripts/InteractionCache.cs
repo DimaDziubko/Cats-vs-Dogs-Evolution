@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay._BattleField.Scripts
+namespace Assets._Game.Gameplay._BattleField.Scripts
 {
     public class InteractionCache : IInteractionCache
     {

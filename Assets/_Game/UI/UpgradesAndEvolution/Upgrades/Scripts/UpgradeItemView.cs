@@ -1,12 +1,12 @@
 ﻿using System;
-using _Game.Core.Services.Audio;
-using _Game.UI.Common.Scripts;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.UI.Common.Scripts;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
+namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradeItemView : MonoBehaviour
     {

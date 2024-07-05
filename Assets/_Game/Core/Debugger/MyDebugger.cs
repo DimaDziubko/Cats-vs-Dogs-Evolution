@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._UpgradesChecker;
-using _Game.Core.Data;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Common.Scripts;
-using _Game.UI._Environment;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.Pin.Scripts;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.Data;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
+using Assets._Game.UI._Environment;
+using Assets._Game.UI._MainMenu.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Core.Debugger
+namespace Assets._Game.Core.Debugger
 {
     public class MyDebugger : MonoBehaviour, IMyDebugger
     {

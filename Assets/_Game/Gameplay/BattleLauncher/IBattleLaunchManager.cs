@@ -1,4 +1,4 @@
-﻿namespace _Game.Gameplay.BattleLauncher
+﻿namespace Assets._Game.Gameplay.BattleLauncher
 {
     public interface IBattleLaunchManager
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Core._GameInitializer
+namespace Assets._Game.Core._GameInitializer
 {
     public class GameInitializer : IGameInitializer
     {

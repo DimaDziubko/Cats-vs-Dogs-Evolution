@@ -1,12 +1,13 @@
 ﻿using System;
-using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services.Analytics;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services.Analytics;
+using Assets._Game.Core.Services.UserContainer;
 using CAS;
 using UnityEngine;
 
-namespace _Game.Core.Ads
+namespace Assets._Game.Core.Ads
 {
     public class CasAdsService : IAdsService, IDisposable
     {
@@ -19,7 +20,8 @@ namespace _Game.Core.Ads
         private readonly IGameInitializer _gameInitializer;
         private readonly IPauseManager _pauseManager;
         private readonly IMyLogger _logger;
-        
+        private readonly IUserContainer _userContainer;
+
         private IMediationManager _manager;
 
         private Action _onVideoCompleted;
@@ -28,11 +30,13 @@ namespace _Game.Core.Ads
         public CasAdsService(
             IMyLogger logger,
             IPauseManager pauseManager,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            IUserContainer userContainer)
         {
             _logger = logger;
             _pauseManager = pauseManager;
             _gameInitializer = gameInitializer;
+            _userContainer = userContainer;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -99,6 +103,8 @@ namespace _Game.Core.Ads
             _onVideoCompleted?.Invoke();
             _onVideoCompleted = null;
             _manager.LoadAd(AdType.Rewarded);
+            
+            _userContainer.AddAdsReviewed();
         }
         
         

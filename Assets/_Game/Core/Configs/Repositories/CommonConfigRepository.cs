@@ -1,8 +1,8 @@
 ﻿using System;
-using _Game.Core.Services.PersistentData;
-using _Game.Gameplay.Common.Scripts;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Gameplay.Common.Scripts;
 
-namespace _Game.Core.Configs.Repositories
+namespace Assets._Game.Core.Configs.Repositories
 {
     public interface ICommonItemsConfigRepository
     {

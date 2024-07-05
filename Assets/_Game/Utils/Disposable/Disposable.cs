@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _Game.Utils.Disposable
+namespace Assets._Game.Utils.Disposable
 {
     public class Disposable<T> : IDisposable
     {

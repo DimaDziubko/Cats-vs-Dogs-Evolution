@@ -1,8 +1,8 @@
 ﻿using System;
-using _Game.Gameplay._Timer.Scripts;
-using _Game.UI._SpeedBoostBtn.Scripts;
+using Assets._Game.Gameplay._Timer.Scripts;
+using Assets._Game.UI._SpeedBoostBtn.Scripts;
 
-namespace _Game.Core.Services._BattleSpeedService._Scripts
+namespace Assets._Game.Core.Services._BattleSpeedService._Scripts
 {
     public interface IBattleSpeedService
     {

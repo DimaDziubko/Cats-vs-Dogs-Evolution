@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Game.Core.Prefabs
+namespace Assets._Game.Core.Prefabs
 {
     public class MusicSourceHolder : MonoBehaviour
     {

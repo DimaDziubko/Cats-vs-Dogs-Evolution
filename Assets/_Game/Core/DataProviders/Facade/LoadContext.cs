@@ -1,7 +1,7 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay.Common.Scripts;
+﻿using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
 
-namespace _Game.Core.DataProviders.Facade
+namespace Assets._Game.Core.DataProviders.Facade
 {
     public struct LoadContext
     {

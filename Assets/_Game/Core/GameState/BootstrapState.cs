@@ -1,9 +1,9 @@
-﻿using _Game.Core._SceneLoader;
-using _Game.Utils;
+﻿using Assets._Game.Core._SceneLoader;
+using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-namespace _Game.Core.GameState
+namespace Assets._Game.Core.GameState
 {
     public class BootstrapState : IState
     {

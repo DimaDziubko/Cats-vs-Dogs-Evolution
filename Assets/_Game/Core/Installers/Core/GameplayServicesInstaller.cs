@@ -1,24 +1,25 @@
-﻿using _Game.Core._UpgradesChecker;
-using _Game.Core.Ads;
-using _Game.Core.DataPresenters._RaceChanger;
-using _Game.Core.DataPresenters._TimelineInfoPresenter;
-using _Game.Core.DataPresenters._UpgradeItemPresenter;
-using _Game.Core.DataPresenters.Evolution;
-using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.Core.DataPresenters.UnitUpgradePresenter;
-using _Game.Core.Navigation.Age;
-using _Game.Core.Navigation.Battle;
-using _Game.Core.Pause.Scripts;
-using _Game.Core.Services._BattleSpeedService._Scripts;
-using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services.Analytics;
-using _Game.Core.Services.Upgrades;
-using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.Gameplay._Timer.Scripts;
-using _Game.Gameplay.BattleLauncher;
+﻿using Assets._Game.Core._RetentionChecker;
+using Assets._Game.Core._UpgradesChecker;
+using Assets._Game.Core.Ads;
+using Assets._Game.Core.DataPresenters._RaceChanger;
+using Assets._Game.Core.DataPresenters._TimelineInfoPresenter;
+using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
+using Assets._Game.Core.DataPresenters.Evolution;
+using Assets._Game.Core.DataPresenters.TimelineTravel;
+using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
+using Assets._Game.Core.Navigation.Age;
+using Assets._Game.Core.Navigation.Battle;
+using Assets._Game.Core.Pause.Scripts;
+using Assets._Game.Core.Services._BattleSpeedService._Scripts;
+using Assets._Game.Core.Services._FoodBoostService.Scripts;
+using Assets._Game.Core.Services.Analytics;
+using Assets._Game.Core.Services.Upgrades;
+using Assets._Game.Gameplay._BattleSpeed.Scripts;
+using Assets._Game.Gameplay._Timer.Scripts;
+using Assets._Game.Gameplay.BattleLauncher;
 using Zenject;
 
-namespace _Game.Core.Installers.Core
+namespace Assets._Game.Core.Installers.Core
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
@@ -40,7 +41,11 @@ namespace _Game.Core.Installers.Core
             BindBattleNavigator();
             BindAgeNavigator();
             BindRaceChanger();
+            BindRetentionChecker();
         }
+
+        private void BindRetentionChecker() => 
+            Container.BindInterfacesAndSelfTo<RetentionChecker>().AsSingle();
 
         private void BindRaceChanger() => 
             Container.BindInterfacesAndSelfTo<RaceChanger>().AsSingle();

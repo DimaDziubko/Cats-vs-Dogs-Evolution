@@ -1,4 +1,4 @@
-﻿namespace _Game.Core.Data.Age.Dynamic._UpgradeItem
+﻿namespace Assets._Game.Core.Data.Age.Dynamic._UpgradeItem
 {
     public struct UpgradeItemDynamicData
     {

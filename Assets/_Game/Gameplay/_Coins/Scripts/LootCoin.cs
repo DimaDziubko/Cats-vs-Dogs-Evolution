@@ -1,11 +1,11 @@
 ﻿using System;
-using _Game.Utils;
+using Assets._Game.Utils;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _Game.Gameplay._Coins.Scripts
+namespace Assets._Game.Gameplay._Coins.Scripts
 {
     public class LootCoin : Coin
     {

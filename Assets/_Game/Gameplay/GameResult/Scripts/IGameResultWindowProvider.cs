@@ -1,7 +1,7 @@
-﻿using _Game.Utils.Disposable;
+﻿using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.Gameplay.GameResult.Scripts
+namespace Assets._Game.Gameplay.GameResult.Scripts
 {
     public interface IGameResultWindowProvider
     {

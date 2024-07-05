@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _Game.Core.DataPresenters._RaceChanger
+namespace Assets._Game.Core.DataPresenters._RaceChanger
 {
     public interface IRaceChanger
     {

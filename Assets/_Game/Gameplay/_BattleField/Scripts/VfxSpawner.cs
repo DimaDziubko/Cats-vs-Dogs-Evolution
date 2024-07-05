@@ -1,11 +1,11 @@
-﻿using _Game.Common;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Vfx.Factory;
-using _Game.Gameplay.Vfx.Scripts;
+﻿using Assets._Game.Common;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Vfx.Factory;
+using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace _Game.Gameplay._BattleField.Scripts
+namespace Assets._Game.Gameplay._BattleField.Scripts
 {
     public class VfxSpawner : IVFXProxy
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace _Game.Creatives.Creative_1.Scenario
+namespace Assets._Game.Creatives.Creative_1.Scenario
 {
     [Serializable]
     public class CrSpawnSequence

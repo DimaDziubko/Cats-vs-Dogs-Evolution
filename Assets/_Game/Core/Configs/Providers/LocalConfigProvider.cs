@@ -1,6 +1,6 @@
-﻿using _Game.Utils._LocalConfigSaver;
+﻿using Assets._Game.Utils._LocalConfigSaver;
 
-namespace _Game.Core.Configs.Providers
+namespace Assets._Game.Core.Configs.Providers
 {
     public class LocalConfigProvider : ILocalConfigProvider
     {

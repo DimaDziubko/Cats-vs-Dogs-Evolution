@@ -1,14 +1,14 @@
 ﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core._GameInitializer;
-using _Game.Core.Communication;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.Gameplay._Units.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using Assets._Game.Core._GameInitializer;
+using Assets._Game.Core.Communication;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace _Game.Core._GameSaver
+namespace Assets._Game.Core._GameSaver
 {
     public class GameSaver : IGameSaver, IDisposable
     {

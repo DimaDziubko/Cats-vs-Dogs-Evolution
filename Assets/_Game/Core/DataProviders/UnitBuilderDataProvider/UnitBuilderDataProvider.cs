@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._Logger;
-using _Game.Core.AssetManagement;
-using _Game.Core.Configs.Models;
-using _Game.Core.Data;
-using _Game.Core.DataProviders.Facade;
-using _Game.Core.Services.PersistentData;
-using _Game.Core.UserState;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
-using _Game.Utils;
-using _Game.Utils.Extensions;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Configs.Models;
+using Assets._Game.Core.Data;
+using Assets._Game.Core.DataProviders.Facade;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
+using Assets._Game.Utils;
+using Assets._Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _Game.Core.DataProviders.UnitBuilderDataProvider
+namespace Assets._Game.Core.DataProviders.UnitBuilderDataProvider
 {
     public class UnitBuilderDataProvider : IUnitBuilderDataProvider
     {

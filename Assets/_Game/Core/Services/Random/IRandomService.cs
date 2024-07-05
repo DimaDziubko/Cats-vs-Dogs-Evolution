@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Core.Services.Random
+namespace Assets._Game.Core.Services.Random
 {
     public interface IRandomService 
     {

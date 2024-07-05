@@ -1,7 +1,7 @@
 ﻿using System;
-using _Game.Gameplay.Battle.Scripts;
+using Assets._Game.Gameplay.Battle.Scripts;
 
-namespace _Game.Core.DataPresenters.BattlePresenter
+namespace Assets._Game.Core.DataPresenters.BattlePresenter
 {
     public interface IBattlePresenter
     {

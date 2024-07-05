@@ -1,8 +1,8 @@
-﻿using _Game.Core.Configs.Providers;
-using _Game.Core.Configs.Repositories;
+﻿using Assets._Game.Core.Configs.Providers;
+using Assets._Game.Core.Configs.Repositories;
 using Zenject;
 
-namespace _Game.Core.Installers.Core
+namespace Assets._Game.Core.Installers.Core
 {
     public class ConfigServicesInstaller : MonoInstaller
     {

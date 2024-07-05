@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Gameplay._Units.FSM.States;
-using UnityEngine;
 
-namespace _Game.Gameplay._Units.FSM
+namespace Assets._Game.Gameplay._Units.FSM
 {
     public class UnitFsm
     {

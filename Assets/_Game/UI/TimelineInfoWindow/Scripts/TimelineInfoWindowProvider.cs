@@ -1,12 +1,12 @@
-﻿using _Game.Core._Logger;
-using _Game.Core.AssetManagement;
-using _Game.Core.DataPresenters._TimelineInfoPresenter;
-using _Game.Core.DataPresenters.Evolution;
-using _Game.Core.Services.Audio;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core._Logger;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.DataPresenters._TimelineInfoPresenter;
+using Assets._Game.Core.DataPresenters.Evolution;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI.TimelineInfoWindow.Scripts
+namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoWindowProvider : LocalAssetLoader, ITimelineInfoWindowProvider
     {

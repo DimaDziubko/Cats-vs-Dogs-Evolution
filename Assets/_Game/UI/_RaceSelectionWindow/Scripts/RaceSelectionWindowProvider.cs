@@ -1,12 +1,12 @@
-using _Game.Core.AssetManagement;
-using _Game.Core.Services.Audio;
-using _Game.Core.Services.Camera;
-using _Game.Core.Services.PersistentData;
-using _Game.Gameplay._Tutorial.Scripts;
-using _Game.Utils.Disposable;
+using Assets._Game.Core.AssetManagement;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.Gameplay._Tutorial.Scripts;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI._RaceSelectionWindow.Scripts
+namespace Assets._Game.UI._RaceSelectionWindow.Scripts
 {
     public class RaceSelectionWindowProvider : LocalAssetLoader, IRaceSelectionWindowProvider
     {

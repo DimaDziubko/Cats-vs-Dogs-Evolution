@@ -1,13 +1,13 @@
-﻿using _Game.Core.Services.Audio;
-using _Game.Core.Services.PersistentData;
-using _Game.UI._RaceSelectionWindow.Scripts;
-using _Game.UI.Common.Scripts;
-using _Game.Utils.Disposable;
+﻿using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.UserContainer;
+using Assets._Game.UI._RaceSelectionWindow.Scripts;
+using Assets._Game.UI.Common.Scripts;
+using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI.Settings.Scripts
+namespace Assets._Game.UI.Settings.Scripts
 {
     [RequireComponent(typeof(Canvas))]
     public class SettingsPopup : MonoBehaviour
@@ -21,7 +21,7 @@ namespace _Game.UI.Settings.Scripts
         private UniTaskCompletionSource<bool> _taskCompletion;
         
         private IAudioService _audioService;
-        private IUserContainer _persistentData;
+        private IUserContainer _userContainer;
         private IRaceSelectionWindowProvider _raceSelectionWindowProvider;
 
         public void Construct(

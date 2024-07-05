@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _Game.Core._SceneLoader
+namespace Assets._Game.Core._SceneLoader
 {
     public class SceneLoader
     {

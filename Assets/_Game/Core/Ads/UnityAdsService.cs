@@ -1,10 +1,4 @@
-using System;
-using _Game.Core._Logger;
-using _Game.Core.Pause.Scripts;
-using UnityEngine;
-using UnityEngine.Advertisements;
-
-namespace _Game.Core.Ads
+namespace Assets._Game.Core.Ads
 {
     // public class UnityAdsService : IAdsService, IUnityAdsLoadListener, IUnityAdsShowListener, IUnityAdsInitializationListener
     // {

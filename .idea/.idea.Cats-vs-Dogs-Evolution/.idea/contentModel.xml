@@ -76,6 +76,9 @@
               <e p="IMyLogger.cs" t="Include" />
               <e p="MyLogger.cs" t="Include" />
             </e>
+            <e p="_RetentionChecker" t="Include">
+              <e p="RetentionChecker.cs" t="Include" />
+            </e>
             <e p="_SceneLoader" t="Include">
               <e p="SceneLoader.cs" t="Include" />
             </e>
@@ -108,9 +111,15 @@
               <e p="BinaryFormatterSaveLoadStrategy.cs" t="Include" />
               <e p="ClearGameSaveFile.cs" t="Include" />
               <e p="ISaveLoadStrategy.cs" t="Include" />
+              <e p="IStateMigration.cs" t="Include" />
               <e p="IUserStateCommunicator.cs" t="Include" />
               <e p="JsonSaveLoadStrategy.cs" t="Include" />
               <e p="LocalUserStateCommunicator.cs" t="Include" />
+              <e p="Migrations" t="Include">
+                <e p="MigrationTo104.cs" t="Include" />
+              </e>
+              <e p="StateMigrationBase.cs" t="Include" />
+              <e p="StateMigrationManager.cs" t="Include" />
             </e>
             <e p="Configs" t="Include">
               <e p="Models" t="Include">
@@ -275,6 +284,7 @@
               <e p="BootstrapState.cs" t="Include" />
               <e p="ConfigurationState.cs" t="Include" />
               <e p="DataLoadingState.cs" t="Include" />
+              <e p="GameLoadingState.cs" t="Include" />
               <e p="GameLoopState.cs" t="Include" />
               <e p="GameStateMachine.cs" t="Include" />
               <e p="IGameStateMachine.cs" t="Include" />
@@ -381,9 +391,6 @@
                 <e p="IWorldCameraService.cs" t="Include" />
                 <e p="WorldCameraService.cs" t="Include" />
               </e>
-              <e p="PersistentData" t="Include">
-                <e p="IUserContainer.cs" t="Include" />
-              </e>
               <e p="Random" t="Include">
                 <e p="IRandomService.cs" t="Include" />
                 <e p="UnityRandomService.cs" t="Include" />
@@ -392,8 +399,12 @@
                 <e p="IUpgradeCalculator.cs" t="Include" />
                 <e p="UpgradeCalculator.cs" t="Include" />
               </e>
+              <e p="UserContainer" t="Include">
+                <e p="IUserContainer.cs" t="Include" />
+              </e>
             </e>
             <e p="UserState" t="Include">
+              <e p="AdsStatistics.cs" t="Include" />
               <e p="BattleSpeedState.cs" t="Include" />
               <e p="BattleStatistics.cs" t="Include" />
               <e p="FactionState.cs" t="Include" />
@@ -401,6 +412,7 @@
               <e p="IBattleSpeedStateReadonly.cs" t="Include" />
               <e p="ITimelineStateReadonly.cs" t="Include" />
               <e p="IUserCurrenciesStateReadonly.cs" t="Include" />
+              <e p="RetentionState.cs" t="Include" />
               <e p="TimelineState.cs" t="Include" />
               <e p="TutorialState.cs" t="Include" />
               <e p="UserAccountState.cs" t="Include" />
@@ -628,7 +640,6 @@
                 <e p="FoodPanel.cs" t="Include" />
               </e>
             </e>
-            <e p="GameLoadingState.cs" t="Include" />
             <e p="GameResult" t="Include">
               <e p="Scripts" t="Include">
                 <e p="DoubleCoinsBtn.cs" t="Include" />
@@ -651,11 +662,11 @@
                 <e p="VfxFactory.cs" t="Include" />
               </e>
               <e p="Scripts" t="Include">
+                <e p="BaseSmoke.cs" t="Include" />
                 <e p="MuzzleData.cs" t="Include" />
                 <e p="MuzzleFlash.cs" t="Include" />
                 <e p="ProjectileExplosion.cs" t="Include" />
                 <e p="RewardCoinVFX.cs" t="Include" />
-                <e p="TowerSmoke.cs" t="Include" />
                 <e p="UnitBlot.cs" t="Include" />
                 <e p="UnitExplosion.cs" t="Include" />
                 <e p="VfxEntity.cs" t="Include" />
@@ -876,6 +887,14 @@
               <e p="DTDVisualEditorStyles.cs" t="Include" />
               <e p="DTDVisualEditorWindow.cs" t="Include" />
               <e p="DTDWindowAssembly.asmdef" t="Include" />
+            </e>
+          </e>
+          <e p="Messaging" t="Include">
+            <e p="Editor" t="Include">
+              <e p="AppDependencies.xml" t="Include" />
+              <e p="DTDGoogleServicesConverter.cs" t="Include" />
+              <e p="DTDMessagingPostAssembly.asmdef" t="Include" />
+              <e p="DTDPostProcessMessaging.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -2055,6 +2074,7 @@
       <e p="DrawingPackageToolsEditor.csproj" t="IncludeRecursive" />
       <e p="DTDWindowAssembly.csproj" t="IncludeRecursive" />
       <e p="KinoBloom.Runtime.csproj" t="IncludeRecursive" />
+      <e p="MessagingPostAssembly.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive">
         <e p="com.arongranberg.astar" t="Include">

@@ -1,7 +1,7 @@
-﻿using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+﻿using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace _Game.Core.Data.Age.Static._UpgradeItem
+namespace Assets._Game.Core.Data.Age.Static._UpgradeItem
 {
     public class UpgradeItemStaticData
     {

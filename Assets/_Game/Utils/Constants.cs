@@ -1,6 +1,6 @@
 ﻿using Pathfinding.RVO;
 
-namespace _Game.Utils
+namespace Assets._Game.Utils
 {
     public sealed class Constants
     {

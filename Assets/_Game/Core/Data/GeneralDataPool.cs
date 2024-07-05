@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using _Game.Core._Logger;
-using _Game.Core.Data.Age.Dynamic;
-using _Game.Core.Data.Age.Static;
-using _Game.Core.Data.Battle;
-using _Game.Core.Data.Timeline.Static;
-using _Game.Core.Debugger;
-using _Game.Gameplay._UnitBuilder.Scripts;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Data.Age.Dynamic;
+using Assets._Game.Core.Data.Age.Static;
+using Assets._Game.Core.Data.Battle;
+using Assets._Game.Core.Data.Timeline.Static;
+using Assets._Game.Core.Debugger;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 
-namespace _Game.Core.Data
+namespace Assets._Game.Core.Data
 {
     public class GeneralDataPool : IGeneralDataPool
     {

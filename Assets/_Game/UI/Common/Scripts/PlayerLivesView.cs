@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI.Common.Scripts
+namespace Assets._Game.UI.Common.Scripts
 {
     public class PlayerLivesView : MonoBehaviour
     {
