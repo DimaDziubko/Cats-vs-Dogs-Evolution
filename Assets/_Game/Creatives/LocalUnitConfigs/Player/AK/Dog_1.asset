@@ -17,12 +17,12 @@ MonoBehaviour:
     Config:
       Id: 0
       Type: 0
-      Health: 6
-      Speed: 0.25
+      Health: 999
+      Speed: 0.3
       WeaponConfig:
         Id: 0
-        WeaponType: 0
-        Damage: 2
+        WeaponType: 6
+        Damage: 150
         ProjectileSpeed: 0
         ProjectileKey: 
         TrajectoryWarpFactor: 0
@@ -37,17 +37,17 @@ MonoBehaviour:
       EnemyKey: 
       Price: 0
       PlayerKey: 
-      FoodPrice: 3
+      FoodPrice: 6
       CoinsPerKill: 12
       PlayerHealthMultiplier: 1
       EnemyHealthMultiplier: 1
-      AttackPerSecond: 0.8
-      AttackDistance: 0.14
-    Prefab: {fileID: 8729913836773136920, guid: f08e5ef1d74f1b54fbd05ff07c803747, type: 3}
-    UnitLayer: 9
-    AggroLayer: 11
-    AttackLayer: 13
-  Icon: {fileID: -117576486, guid: 8dbf9c9469e15534ebc363d7f751200e, type: 3}
-  MuzzlePrefab: {fileID: 0}
+      AttackPerSecond: 2
+      AttackDistance: 1.5
+    Prefab: {fileID: 8892563088873225301, guid: 8b43cb035d753d54488ffcd62fbb38a1, type: 3}
+    UnitLayer: 8
+    AggroLayer: 10
+    AttackLayer: 12
+  Icon: {fileID: 188538138, guid: aee0d0da52b799644b914229b9044592, type: 3}
+  MuzzlePrefab: {fileID: 3363035391553935353, guid: 649422cb866241e46897327d55f01ca7, type: 3}
   ProjectilePrefab: {fileID: 0}
   ProjectileExplosionPrefab: {fileID: 0}
