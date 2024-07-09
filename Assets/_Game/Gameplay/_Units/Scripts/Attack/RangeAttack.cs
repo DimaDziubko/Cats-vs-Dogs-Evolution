@@ -1,17 +1,18 @@
-﻿using Assets._Game.Core.Configs.Models;
+﻿using _Game.Core.Configs.Models;
+using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts.Attack
+namespace _Game.Gameplay._Units.Scripts.Attack
 {
     public class RangeAttack : UnitAttack
     {
         [SerializeField] private Transform _projectileGenerator;
         [SerializeField] private Transform _muzzleTransform;
          
-        private WeaponType _type;
+        private int _weaponId;
         private Faction _faction;
 
         public override void Construct(
@@ -21,7 +22,7 @@ namespace Assets._Game.Gameplay._Units.Scripts.Attack
             Transform unitTransform)
         {
             base.Construct(config, faction, soundService, unitTransform);
-            _type = config.WeaponType;
+            _weaponId = config.Id;
             _faction = faction;
             DisableAttackDelay = 0;
         }
@@ -34,7 +35,7 @@ namespace Assets._Game.Gameplay._Units.Scripts.Attack
             {
                 Faction = _faction,
                 Target = _target,
-                WeaponType = _type,
+                WeaponId = _weaponId,
                 LaunchPosition = _projectileGenerator.position,
                 LaunchRotation = _projectileGenerator.rotation,
             };
@@ -44,7 +45,7 @@ namespace Assets._Game.Gameplay._Units.Scripts.Attack
                 var muzzleData = new MuzzleData()
                 {
                     Faction = _faction,
-                    WeaponType = _type,
+                    WeaponId = _weaponId,
                     Direction = _muzzleTransform.forward,
                     Position = _muzzleTransform.position
                 };

@@ -1,14 +1,15 @@
-﻿using Assets._Game.Common;
-using Assets._Game.Core.Configs.Models;
+﻿using _Game.Core.Configs.Models;
+using _Game.Gameplay._Weapon.Factory;
+using Assets._Game.Common;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Factory;
+using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Utils.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Weapon.Scripts
+namespace _Game.Gameplay._Weapon.Scripts
 {
     //TODO Fix bug
     [RequireComponent(typeof(CircleCollider2D))]
@@ -43,7 +44,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
         }
 
         [ShowInInspector]
-        public WeaponType Type { get; private set; }
+        public int WeaponId { get; private set; }
         public Faction Faction { get; private set; }
 
         [ShowInInspector]
@@ -64,7 +65,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
             
             Faction = faction;
             
-            Type = config.WeaponType;
+            WeaponId = config.Id;
             
             gameObject.layer = layer;
             
@@ -138,7 +139,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
             {
                 Faction = Faction,
                 Positon = Position,
-                Type = Type
+                WeaponId = WeaponId
             };
             _vfxProxy.SpawnProjectileExplosion(explosionData);
         }

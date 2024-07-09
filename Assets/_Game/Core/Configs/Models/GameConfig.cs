@@ -4,7 +4,7 @@ using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Core.Configs.Models
+namespace _Game.Core.Configs.Models
 {
     public class GameConfig
     {
@@ -65,7 +65,7 @@ namespace Assets._Game.Core.Configs.Models
         public BattleScenario Scenario;
         public List<WarriorConfig> Enemies;
         public string EnvironmentKey;
-        public float EnemyTowerHealth;
+        public float EnemyBaseHealth;
         public string AmbienceKey;
         public float CoinsPerBase;
         public float MaxCoinsPerBattle;
@@ -122,11 +122,11 @@ namespace Assets._Game.Core.Configs.Models
         public float Speed;
         public WeaponConfig WeaponConfig;
         public string Name;
-        public string PlayerIconKey;
-        public string EnemyIconKey;
-        public string EnemyKey;
+        public string CatIconKey;
+        public string DogIconKey;
+        public string DogKey;
         public float Price;
-        public string PlayerKey;
+        public string CatKey;
         public int FoodPrice;
         public int CoinsPerKill;
         public float PlayerHealthMultiplier;

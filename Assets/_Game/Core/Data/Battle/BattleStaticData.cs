@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using _Game.Gameplay._Battle.Scripts;
+using Assets._Game.Core.Data;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Battle.Scripts;
 using Assets._Game.UI._Environment;
 using UnityEngine;
 
-namespace Assets._Game.Core.Data.Battle
+namespace _Game.Core.Data.Battle
 {
     public class BattleStaticData
     {
         public Dictionary<int, DataPool<UnitType, UnitData>> UnitDataPools;
-        public Dictionary<int, DataPool<WeaponType, WeaponData>> WeaponDataPools;
+        public Dictionary<int, DataPool<int, WeaponData>> WeaponDataPools;
         public Dictionary<int, BattleScenarioData> BattleDataPools;
         public Dictionary<int, BaseStaticData> BasePool;
         public Dictionary<int, float> BaseHealthPool;
@@ -19,7 +20,7 @@ namespace Assets._Game.Core.Data.Battle
         public Dictionary<int, AudioClip> AmbiencePool;
         
         public UnitData ForUnit(int battle, UnitType type) => UnitDataPools[battle].ForType(type);
-        public WeaponData ForWeapon(int battle, WeaponType type) => WeaponDataPools[battle].ForType(type);
+        public WeaponData ForWeapon(int battle, int weaponId) => WeaponDataPools[battle].ForType(weaponId);
         public BaseStaticData ForBase(int battle) => BasePool[battle];
         public AudioClip ForAmbience(int battle) => AmbiencePool[battle];
         public EnvironmentData ForEnvironment(int battle) => EnvironmentPool[battle];

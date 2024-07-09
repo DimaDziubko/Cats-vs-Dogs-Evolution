@@ -4,11 +4,12 @@ using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionTab : MonoBehaviour
     {
@@ -97,7 +98,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
             PlayButtonSound();
             
             var window = await _timelineInfoProvider.Load();
-            var isExited = await window.Value.AwaitForDecision(true);
+            var isExited = await window.Value.ShowScreenWithTransitionAnimation();
             
             if(isExited) window.Dispose();
             _disposable = window;

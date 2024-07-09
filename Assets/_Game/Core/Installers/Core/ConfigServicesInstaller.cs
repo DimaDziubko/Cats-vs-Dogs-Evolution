@@ -1,4 +1,5 @@
-﻿using Assets._Game.Core.Configs.Providers;
+﻿using _Game.Core.Configs.Providers;
+using Assets._Game.Core.Configs.Providers;
 using Assets._Game.Core.Configs.Repositories;
 using Zenject;
 

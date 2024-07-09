@@ -1,9 +1,10 @@
 ﻿using Assets._Game.Core._SceneLoader;
+using Assets._Game.Core.GameState;
 using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
     public class BootstrapState : IState
     {
@@ -32,7 +33,7 @@ namespace Assets._Game.Core.GameState
 
         private void EnterLoadProgressState()
         {
-            _stateMachine.Enter<ConfigurationState>();
+            _stateMachine.Enter<LoginState>();
         }
 
         public void Exit()

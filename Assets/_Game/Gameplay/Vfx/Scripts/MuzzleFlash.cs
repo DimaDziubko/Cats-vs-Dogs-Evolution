@@ -1,14 +1,15 @@
 ﻿using Assets._Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay.Vfx.Scripts
+namespace _Game.Gameplay.Vfx.Scripts
 {
     public class MuzzleFlash : VfxEntity
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private float _duration = 0.2f;
 
-        public WeaponType WeaponType { get; private set; }
+        public int WeaponId { get; private set; }
 
         private Vector3 Position
         {
@@ -24,9 +25,9 @@ namespace Assets._Game.Gameplay.Vfx.Scripts
         
         private float _age;
 
-        public void Construct(WeaponType weaponType)
+        public void Construct(int weaponId)
         {
-            WeaponType = weaponType;
+            WeaponId = weaponId;
         }
         
         public void Initialize(Vector3 position, Vector3 direction)
@@ -41,7 +42,7 @@ namespace Assets._Game.Gameplay.Vfx.Scripts
             _age += Time.deltaTime;
             if (_age >= _duration)
             {
-                OriginFactory.Reclaim(WeaponType, this);
+                OriginFactory.Reclaim(WeaponId, this);
                 return false;
             }
             

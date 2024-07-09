@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Gameplay.Vfx.Factory;
+using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Assets._Game.Core.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -30,11 +33,11 @@ namespace Assets._Game.Gameplay.Vfx.Factory
         private readonly Dictionary<VfxType, Queue<VfxEntity>> _sharedPools = new Dictionary<VfxType, Queue<VfxEntity>>();
 
 
-        private readonly Dictionary<WeaponType, Queue<MuzzleFlash>> _muzzlesPools =
-            new Dictionary<WeaponType, Queue<MuzzleFlash>>(6);
+        private readonly Dictionary<int, Queue<MuzzleFlash>> _muzzlesPools =
+            new Dictionary<int, Queue<MuzzleFlash>>(6);
 
-        private readonly Dictionary<WeaponType, Queue<ProjectileExplosion>> _projectileExplosionPools =
-            new Dictionary<WeaponType, Queue<ProjectileExplosion>>(6);
+        private readonly Dictionary<int, Queue<ProjectileExplosion>> _projectileExplosionPools =
+            new Dictionary<int, Queue<ProjectileExplosion>>(6);
 
         public UnitBlot GetUnitBlot() => (UnitBlot)Get(VfxType.UnitBlot, _blotPrefab);
         public UnitExplosion GetUnitExplosion() => (UnitExplosion)Get(VfxType.UnitExplosion, _unitExplosionPrefab);
@@ -46,16 +49,16 @@ namespace Assets._Game.Gameplay.Vfx.Factory
             _weaponDataPresenter = weaponDataPresenter;
         }
         
-        private WeaponData GetWeaponData(Faction faction, WeaponType type)
+        private WeaponData GetWeaponData(Faction faction, int weaponId)
         {
             WeaponData weaponData;
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.AGE);
+                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.BATTLE);
+                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
@@ -64,14 +67,14 @@ namespace Assets._Game.Gameplay.Vfx.Factory
             return weaponData;
         }
         
-        public ProjectileExplosion GetProjectileExplosion(Faction faction, WeaponType type)
+        public ProjectileExplosion GetProjectileExplosion(Faction faction, int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, type);
+            WeaponData weaponData = GetWeaponData(faction, weaponId);
             
-            if (!_projectileExplosionPools.TryGetValue(type, out Queue<ProjectileExplosion> pool))
+            if (!_projectileExplosionPools.TryGetValue(weaponId, out Queue<ProjectileExplosion> pool))
             {
                 pool = new Queue<ProjectileExplosion>();
-                _projectileExplosionPools[type] = pool;
+                _projectileExplosionPools[weaponId] = pool;
             }
             
             ProjectileExplosion instance;
@@ -83,7 +86,7 @@ namespace Assets._Game.Gameplay.Vfx.Factory
             else
             {
                 instance = CreateGameObjectInstance(weaponData.ProjectileExplosionPrefab);
-                instance.Construct(type);
+                instance.Construct(weaponId);
                 instance.OriginFactory = this;
             }
             
@@ -91,14 +94,14 @@ namespace Assets._Game.Gameplay.Vfx.Factory
         }
 
 
-        public MuzzleFlash GetMuzzleFlash(Faction faction, WeaponType type)
+        public MuzzleFlash GetMuzzleFlash(Faction faction, int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, type);
+            WeaponData weaponData = GetWeaponData(faction, weaponId);
             
-            if (!_muzzlesPools.TryGetValue(type, out Queue<MuzzleFlash> pool))
+            if (!_muzzlesPools.TryGetValue(weaponId, out Queue<MuzzleFlash> pool))
             {
                 pool = new Queue<MuzzleFlash>();
-                _muzzlesPools[type] = pool;
+                _muzzlesPools[weaponId] = pool;
             }
             
             MuzzleFlash instance;
@@ -110,7 +113,7 @@ namespace Assets._Game.Gameplay.Vfx.Factory
             else
             {
                 instance = CreateGameObjectInstance(weaponData.MuzzlePrefab);
-                instance.Construct(type);
+                instance.Construct(weaponId);
                 instance.OriginFactory = this;
             }
             
@@ -153,24 +156,24 @@ namespace Assets._Game.Gameplay.Vfx.Factory
             pool.Enqueue(entity);
         }
         
-        public void Reclaim(WeaponType type, MuzzleFlash muzzleFlash)
+        public void Reclaim(int weaponId, MuzzleFlash muzzleFlash)
         {
             muzzleFlash.gameObject.SetActive(false);
-            if (!_muzzlesPools.TryGetValue(type, out Queue<MuzzleFlash> pool))
+            if (!_muzzlesPools.TryGetValue(weaponId, out Queue<MuzzleFlash> pool))
             {
                 pool = new Queue<MuzzleFlash>();
-                _muzzlesPools[type] = pool;
+                _muzzlesPools[weaponId] = pool;
             }
             pool.Enqueue(muzzleFlash);
         }
         
-        public void Reclaim(WeaponType type, ProjectileExplosion projectileExplosion)
+        public void Reclaim(int weaponId, ProjectileExplosion projectileExplosion)
         {
             projectileExplosion.gameObject.SetActive(false);
-            if (!_projectileExplosionPools.TryGetValue(type, out Queue<ProjectileExplosion> pool))
+            if (!_projectileExplosionPools.TryGetValue(weaponId, out Queue<ProjectileExplosion> pool))
             {
                 pool = new Queue<ProjectileExplosion>();
-                _projectileExplosionPools[type] = pool;
+                _projectileExplosionPools[weaponId] = pool;
             }
             pool.Enqueue(projectileExplosion);
         }

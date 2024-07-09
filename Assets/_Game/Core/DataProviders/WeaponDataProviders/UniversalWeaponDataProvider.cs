@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Configs.Models;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Configs.Models;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.Facade;
+using Assets._Game.Core.DataProviders.WeaponDataProviders;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core.DataProviders.WeaponDataProviders
+namespace _Game.Core.DataProviders.WeaponDataProviders
 {
     public class UniversalWeaponDataProvider : IUniversalWeaponDataProvider
     {
@@ -22,9 +23,9 @@ namespace Assets._Game.Core.DataProviders.WeaponDataProviders
         }
         
         
-        public async UniTask<DataPool<WeaponType, WeaponData>> Load(IEnumerable<WarriorConfig> configs, LoadContext context)
+        public async UniTask<DataPool<int, WeaponData>> Load(IEnumerable<WarriorConfig> configs, LoadContext context)
         {
-            DataPool<WeaponType, WeaponData> pool = new DataPool<WeaponType, WeaponData>();
+            DataPool<int, WeaponData> pool = new DataPool<int, WeaponData>();
             
             foreach (var config in configs)
             {
@@ -40,7 +41,7 @@ namespace Assets._Game.Core.DataProviders.WeaponDataProviders
                 WeaponData data =
                     await _weaponDataProvider.LoadWeapon(weaponLoadOptions);
                 
-                pool.Add(config.WeaponConfig.WeaponType,  data);
+                pool.Add(config.WeaponConfig.Id,  data);
             }
 
             return pool;

@@ -1,3 +1,4 @@
+using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
@@ -6,16 +7,16 @@ using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.DataPresenters.TimelineTravel;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Scripts
 {
     public class UpgradeAndEvolutionWindow : MonoBehaviour
     {
@@ -49,7 +50,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
         private IUpgradesAvailabilityChecker _upgradesChecker;
 
         public void Construct(
-            Camera uICamera,
+            IWorldCameraService cameraService,
             IAudioService audioService,
             IHeader header,
             IUpgradeItemPresenter upgradeItemPresenter,
@@ -67,12 +68,19 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
             _tutorialManager = tutorialManager;
             _featureUnlockSystem = featureUnlockSystem;
             
-            _canvas.worldCamera = uICamera;
+            _canvas.worldCamera = cameraService.UICameraOverlay;
             _audioService = audioService;
             _upgradesChecker = upgradesChecker;
             
             _upgradesWindow.Construct(header, upgradeItemPresenter, unitUpgradesPresenter, audioService, tutorialManager, upgradesChecker);
-            _evolutionWindow.Construct(header, evolutionPresenter, audioService, timelineInfoWindowProvider, timelineTravelPresenter, upgradesChecker);
+            _evolutionWindow.Construct
+                (header,
+                evolutionPresenter,
+                audioService, 
+                timelineInfoWindowProvider, 
+                timelineTravelPresenter, 
+                upgradesChecker,
+                cameraService);
             
         }
 

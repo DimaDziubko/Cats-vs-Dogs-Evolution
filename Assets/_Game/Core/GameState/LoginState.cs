@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Assets._Game.Core.Communication;
+using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.Login;
 using Assets._Game.Core.Services.Random;
 using Assets._Game.Core.Services.UserContainer;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
-    public class LoginState : IPayloadedState<Queue<ILoadingOperation>>
+    public class LoginState : IState
     {
         private readonly IUserContainer _userContainer;
         private readonly IUserStateCommunicator _communicator;
@@ -26,14 +27,16 @@ namespace Assets._Game.Core.GameState
             _random = random;
         }
         
-        public void Enter(Queue<ILoadingOperation> loadingOperations)
+        public void Enter()
         {
+            var loadingOperations = new Queue<ILoadingOperation>();
+            
             loadingOperations.Enqueue(new LoginOperation(
                 _userContainer,
                 _communicator,
                 _random));
             
-            _stateMachine.Enter<DataLoadingState, Queue<ILoadingOperation>>(loadingOperations);
+            _stateMachine.Enter<ConfigurationState, Queue<ILoadingOperation>>(loadingOperations);
         }
 
         public void Exit()

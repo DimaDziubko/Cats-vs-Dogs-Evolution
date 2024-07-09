@@ -5,7 +5,7 @@ using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 
-namespace Assets._Game.Core.Navigation.Battle
+namespace _Game.Core.Navigation.Battle
 {
     public class BattleNavigator : IBattleNavigator, IDisposable
     {

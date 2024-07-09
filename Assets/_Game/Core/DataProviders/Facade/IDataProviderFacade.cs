@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.BaseDataProvider;
+using Assets._Game.Core.DataProviders.Facade;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -13,12 +14,12 @@ using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.Facade
+namespace _Game.Core.DataProviders.Facade
 {
     public interface IDataProviderFacade
     {
         UniTask<DataPool<UnitType, UnitData>> LoadUnits(IEnumerable<WarriorConfig> configs, LoadContext context);
-        UniTask<DataPool<WeaponType, WeaponData>> LoadWeapons(IEnumerable<WarriorConfig> configs, LoadContext context);
+        UniTask<DataPool<int, WeaponData>> LoadWeapons(IEnumerable<WarriorConfig> configs, LoadContext context);
         UniTask<DataPool<UnitType, UnitBuilderBtnStaticData>> LoadUnitBuilderData(IEnumerable<WarriorConfig> configs, LoadContext context);
         UniTask<BaseStaticData> LoadBase(BaseLoadOptions options);
         UniTask<EnvironmentData> LoadEnvironment(string key, int cacheContext);

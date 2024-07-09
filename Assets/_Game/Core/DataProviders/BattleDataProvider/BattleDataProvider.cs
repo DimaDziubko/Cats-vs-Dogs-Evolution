@@ -1,42 +1,44 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Configs.Models;
+using _Game.Core.Data.Battle;
+using _Game.Core.DataProviders.Facade;
+using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Configs.Models;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.Data.Battle;
 using Assets._Game.Core.DataProviders.BaseDataProvider;
+using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.DataProviders.Facade;
 using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Battle.Scripts;
 using Assets._Game.UI._Environment;
 using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.BattleDataProvider
+namespace _Game.Core.DataProviders.BattleDataProvider
 {
     public class BattleDataProvider : IBattleDataProvider
     {
         private readonly ITimelineConfigRepository _timelineConfigRepository;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IMyLogger _logger;
         private readonly IDataProviderFacade _dataProvider;
-        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         public BattleDataProvider(
             ITimelineConfigRepository timelineConfigRepository,
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             IDataProviderFacade dataProvider,
             IMyLogger logger)
         {
             _logger = logger;
             _timelineConfigRepository = timelineConfigRepository;
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _dataProvider = dataProvider;
         }
         
@@ -50,7 +52,7 @@ namespace Assets._Game.Core.DataProviders.BattleDataProvider
             var environmentTask = LoadEnvironments(battleConfigs);
             var ambienceTask = LoadAmbience(battleConfigs);
             var battleData = LoadBattleScenarioData(battleConfigs);
-            var towerHealth = LoadTowerHealth(battleConfigs);
+            var baseHealth = LoadBaseHealth(battleConfigs);
             
             var result = await UniTask.WhenAll(unitTask, weaponTask, baseTask, environmentTask, ambienceTask);
             
@@ -62,19 +64,19 @@ namespace Assets._Game.Core.DataProviders.BattleDataProvider
                 EnvironmentPool = result.Item4,
                 BattleDataPools = battleData,
                 AmbiencePool = result.Item5,
-                BaseHealthPool = towerHealth
+                BaseHealthPool = baseHealth
             };
 
             return ageStaticData;
         }
 
-        private Dictionary<int, float> LoadTowerHealth(IEnumerable<BattleConfig> configs)
+        private Dictionary<int, float> LoadBaseHealth(IEnumerable<BattleConfig> configs)
         {
             Dictionary<int, float> data = new Dictionary<int, float>();
             int battleIndex = 0;
             foreach (var config in configs)
             {
-                data.Add(battleIndex,  config.EnemyTowerHealth);
+                data.Add(battleIndex,  config.EnemyBaseHealth);
                 battleIndex++;
             }
             
@@ -162,14 +164,14 @@ namespace Assets._Game.Core.DataProviders.BattleDataProvider
             return basePool;
         }
 
-        private async UniTask<Dictionary<int, DataPool<WeaponType, WeaponData>>> LoadWeapons(IEnumerable<BattleConfig> configs)
+        private async UniTask<Dictionary<int, DataPool<int, WeaponData>>> LoadWeapons(IEnumerable<BattleConfig> configs)
         {
-            Dictionary<int, DataPool<WeaponType, WeaponData>> weaponDataPools = new Dictionary<int, DataPool<WeaponType, WeaponData>>();
+            Dictionary<int, DataPool<int, WeaponData>> weaponDataPools = new Dictionary<int, DataPool<int, WeaponData>>();
             
             int battleIndex = 0;
             foreach (var config in configs)
             {
-                DataPool<WeaponType, WeaponData> dataPool = 
+                DataPool<int, WeaponData> dataPool = 
                     await _dataProvider
                         .LoadWeapons(
                             config.Enemies, 

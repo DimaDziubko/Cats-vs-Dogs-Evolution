@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
@@ -26,11 +26,11 @@ namespace Assets._Game.Utils.Extensions
             switch (race)
             {
                 case Race.None:
-                    return config.PlayerKey;
+                    return config.CatKey;
                 case Race.Cat:
-                    return config.PlayerKey;
+                    return config.CatKey;
                 case Race.Dog:
-                    return config.EnemyKey;
+                    return config.DogKey;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(race), race, null);
             }
@@ -41,11 +41,11 @@ namespace Assets._Game.Utils.Extensions
             switch (race)
             {
                 case Race.None:
-                    return config.PlayerIconKey;
+                    return config.CatIconKey;
                 case Race.Cat:
-                    return config.PlayerIconKey;
+                    return config.CatIconKey;
                 case Race.Dog:
-                    return config.EnemyIconKey;
+                    return config.DogIconKey;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(race), race, null);
             }
@@ -56,11 +56,11 @@ namespace Assets._Game.Utils.Extensions
             switch (race)
             {
                 case Race.None:
-                    return config.EnemyKey;
+                    return config.DogKey;
                 case Race.Cat:
-                    return config.EnemyKey;
+                    return config.DogKey;
                 case Race.Dog:
-                    return config.PlayerKey;
+                    return config.CatKey;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(race), race, null);
             }

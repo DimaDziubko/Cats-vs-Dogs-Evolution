@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 
 namespace Assets._Game.Core.Configs.Repositories
 {

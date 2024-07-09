@@ -1,7 +1,7 @@
-﻿using Assets._Game.Gameplay._Weapon.Scripts;
+﻿using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay.Vfx.Scripts
+namespace _Game.Gameplay.Vfx.Scripts
 {
     public class ProjectileExplosion : VfxEntity
     {
@@ -16,11 +16,11 @@ namespace Assets._Game.Gameplay.Vfx.Scripts
 
         private float _age;
 
-        private WeaponType _weaponType;
+        private int _weaponId;
 
-        public void Construct(WeaponType type)
+        public void Construct(int weaponId)
         {
-            _weaponType = type;
+            _weaponId = weaponId;
         }
 
         public void Initialize(Vector3 position)
@@ -34,7 +34,7 @@ namespace Assets._Game.Gameplay.Vfx.Scripts
             _age += Time.deltaTime;
             if (_age >= _duration)
             {
-                OriginFactory.Reclaim(_weaponType, this);
+                OriginFactory.Reclaim(_weaponId, this);
                 return false;
             }
             

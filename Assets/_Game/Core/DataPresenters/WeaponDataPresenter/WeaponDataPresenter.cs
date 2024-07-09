@@ -1,6 +1,7 @@
-﻿using Assets._Game.Core._Logger;
+﻿using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Core.Navigation.Battle;
+using Assets._Game.Core._Logger;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.Navigation.Battle;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Utils;
 
@@ -23,15 +24,15 @@ namespace Assets._Game.Core.DataPresenters.WeaponDataPresenter
             _logger = logger;
         }
         
-        public WeaponData GetWeaponData(WeaponType type, int context)
+        public WeaponData GetWeaponData(int weaponId, int context)
         {
             if (context == Constants.CacheContext.AGE)
             {
-                return _dataPool.AgeStaticData.ForWeapon(type);
+                return _dataPool.AgeStaticData.ForWeapon(weaponId);
             }
             else if(context == Constants.CacheContext.BATTLE)
             {
-                return _dataPool.BattleStaticData.ForWeapon(_navigator.CurrentBattle, type);
+                return _dataPool.BattleStaticData.ForWeapon(_navigator.CurrentBattle, weaponId);
             }
             else
             {

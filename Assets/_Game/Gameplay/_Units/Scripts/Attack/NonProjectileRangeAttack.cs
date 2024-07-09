@@ -1,16 +1,16 @@
-﻿using Assets._Game.Core.Configs.Models;
+﻿using _Game.Core.Configs.Models;
+using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Vfx.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts.Attack
+namespace _Game.Gameplay._Units.Scripts.Attack
 {
     public class NonProjectileRangeAttack : UnitAttack
     {
         [SerializeField] private Transform _muzzleTransform;
         
-        private WeaponType _type;
+        private int _weaponId;
         private Faction _faction;
         
         private WeaponConfig _config;
@@ -23,7 +23,7 @@ namespace Assets._Game.Gameplay._Units.Scripts.Attack
         {
             base.Construct(config, faction, soundService, unitTransform);
             
-            _type = config.WeaponType;
+            _weaponId = config.Id;
             _faction = faction;
             _config = config;
         }
@@ -35,7 +35,7 @@ namespace Assets._Game.Gameplay._Units.Scripts.Attack
             var muzzleData = new MuzzleData()
             {
                 Faction = _faction,
-                WeaponType = _type,
+                WeaponId = _weaponId,
                 Direction = _muzzleTransform.forward,
                 Position = _muzzleTransform.position
             };

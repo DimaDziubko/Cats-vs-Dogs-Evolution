@@ -1,4 +1,5 @@
-﻿using Assets._Game.Common;
+﻿using _Game.UI._Environment;
+using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._BattleUIController;

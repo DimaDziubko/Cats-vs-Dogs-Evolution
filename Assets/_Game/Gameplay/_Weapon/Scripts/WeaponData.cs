@@ -1,4 +1,6 @@
-﻿using Assets._Game.Core.Configs.Models;
+﻿using _Game.Core.Configs.Models;
+using _Game.Gameplay._Weapon.Scripts;
+using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
 
 namespace Assets._Game.Gameplay._Weapon.Scripts

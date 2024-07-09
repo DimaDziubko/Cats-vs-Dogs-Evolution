@@ -1,15 +1,17 @@
-﻿using Assets._Game.Core.DataPresenters._BaseDataPresenter;
+﻿using _Game.Core.DataPresenters._BaseDataPresenter;
+using _Game.Gameplay._Bases.Scripts;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
     public class BaseSpawner : IBaseSpawner
     {
-        private readonly IWorldCameraService _cameraService;
+    private readonly IWorldCameraService _cameraService;
         private readonly IBaseFactory _baseFactory;
         private readonly ICoinSpawner _coinSpawner;
         private readonly IBaseDestructionManager _baseDestructionManager;
@@ -41,6 +43,8 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         {
             _enemyBase.InteractionCache = _interactionCache;
             _playerBase.InteractionCache = _interactionCache;
+            _playerBase.UpdateHealth(_basePresenter.GetBaseHealth(Faction.Player));
+            _enemyBase.UpdateHealth(_basePresenter.GetBaseHealth(Faction.Enemy));
             _enemyBase.ShowHealth();
             _playerBase.ShowHealth();
             
@@ -50,8 +54,7 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         {
             CalculateBasePoints();
             UpdatePlayerBase();
-
-            _basePresenter.PlayerBaseDataUpdated += UpdateData;
+            
             _basePresenter.BaseUpdated += UpdaterBase;
         }
 
@@ -112,8 +115,6 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
                     break;
             }
         }
-        
-        private void UpdateData(BaseModel model) => _playerBase.UpdateData(model);
 
         private void CalculateBasePoints()
         {

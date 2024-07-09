@@ -1,4 +1,4 @@
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Firebase.RemoteConfig;
 using UnityEngine;
 

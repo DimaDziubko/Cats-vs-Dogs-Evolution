@@ -2,12 +2,11 @@
 using System.Threading.Tasks;
 using Assets._Game.Core._GameMode;
 using Assets._Game.Core._Logger;
-using Assets._Game.Utils.Extensions;
 using Firebase.Extensions;
 using Firebase.RemoteConfig;
 using Newtonsoft.Json.Linq;
 
-namespace Assets._Game.Core.Configs.Providers
+namespace _Game.Core.Configs.Providers
 {
     public class RemoteConfigProvider : IRemoteConfigProvider
     {
@@ -86,8 +85,6 @@ namespace Assets._Game.Core.Configs.Providers
                 configString = remoteConfig.GetValue("GameConfig").StringValue;
                 _logger.Log($"PROD CONFIGS loaded");
             }
-            
-            configString = configString.FixJsonArrays();
             
             JObject configJsonData = JObject.Parse(configString);
             

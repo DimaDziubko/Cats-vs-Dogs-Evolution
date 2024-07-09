@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
+using _Game.Core.DataProviders.Facade;
+using _Game.Core.DataProviders.WeaponDataProviders;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.Ambience;
@@ -58,7 +60,7 @@ namespace Assets._Game.Core.DataProviders.Facade
             LoadContext context) => 
             await _unitDataProvider.Load(configs, context);
 
-        public async UniTask<DataPool<WeaponType, WeaponData>> LoadWeapons(
+        public async UniTask<DataPool<int, WeaponData>> LoadWeapons(
             IEnumerable<WarriorConfig> configs, 
             LoadContext context) => 
             await _weaponDataProvider.Load(configs, context);

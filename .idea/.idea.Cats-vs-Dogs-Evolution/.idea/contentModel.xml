@@ -317,7 +317,6 @@
               <e p="ChangingRaceOperation.cs" t="Include" />
               <e p="ClearGameOperation.cs" t="Include" />
               <e p="ConfigOperation.cs" t="Include" />
-              <e p="DataLoadingOperation.cs" t="Include" />
               <e p="GameLoadingOperation.cs" t="Include" />
               <e p="ILoadingOperation.cs" t="Include" />
               <e p="InitializationOperation.cs" t="Include" />
@@ -340,6 +339,10 @@
               <e p="Battle" t="Include">
                 <e p="BattleNavigator.cs" t="Include" />
                 <e p="IBattleNavigator.cs" t="Include" />
+              </e>
+              <e p="Timeline" t="Include">
+                <e p="ITimelineNavigator.cs" t="Include" />
+                <e p="TimelineNavigator.cs" t="Include" />
               </e>
             </e>
             <e p="Pause" t="Include">
@@ -469,6 +472,14 @@
                 <e p="BaseStaticData.cs" t="Include" />
                 <e p="TowerDestructionAnimator.cs" t="Include" />
                 <e p="TowerHealth.cs" t="Include" />
+              </e>
+            </e>
+            <e p="_Battle" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Battle.cs" t="Include" />
+                <e p="BattleEnvironment.cs" t="Include" />
+                <e p="BattleMediator.cs" t="Include" />
+                <e p="BattleScenarioData.cs" t="Include" />
               </e>
             </e>
             <e p="_BattleField" t="Include">
@@ -614,14 +625,6 @@
                 <e p="SplashProjectile.cs" t="Include" />
                 <e p="WeaponData.cs" t="Include" />
                 <e p="WeaponType.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Battle" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="Battle.cs" t="Include" />
-                <e p="BattleEnvironment.cs" t="Include" />
-                <e p="BattleMediator.cs" t="Include" />
-                <e p="BattleScenarioData.cs" t="Include" />
               </e>
             </e>
             <e p="BattleLauncher" t="Include">
@@ -805,6 +808,8 @@
                   <e p="EvolutionTab.cs" t="Include" />
                   <e p="EvolutionTabModel.cs" t="Include" />
                   <e p="EvolutionWindow.cs" t="Include" />
+                  <e p="TravelAnimationScreen.cs" t="Include" />
+                  <e p="TravelAnimationScreenProvider.cs" t="Include" />
                   <e p="TravelTab.cs" t="Include" />
                   <e p="TravelTabModel.cs" t="Include" />
                 </e>
@@ -860,6 +865,15 @@
               <e p="AlertPopup.cs" t="Include" />
               <e p="AlertPopupProvider.cs" t="Include" />
               <e p="IAlertPopupProvider.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Assets" t="Include">
+          <e p="_Game" t="Include">
+            <e p="Core" t="Include">
+              <e p="Loading" t="Include">
+                <e p="DataLoadingOperation.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
@@ -1980,6 +1994,11 @@
             </e>
             <e p="Version.txt" t="Include" />
             <e p="zenject.asmdef" t="Include" />
+          </e>
+        </e>
+        <e p="Resources" t="Include">
+          <e p="DevToDev" t="Include">
+            <e p="DevToDev.xml" t="Include" />
           </e>
         </e>
         <e p="StreamingAssets" t="Include">

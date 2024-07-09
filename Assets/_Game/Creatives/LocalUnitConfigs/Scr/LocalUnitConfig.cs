@@ -1,4 +1,6 @@
-﻿using Assets._Game.Gameplay._Units.Scripts;
+﻿using _Game.Gameplay._Weapon.Scripts;
+using _Game.Gameplay.Vfx.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;

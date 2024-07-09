@@ -1,33 +1,40 @@
 using System;
+using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Core.DataPresenters.TimelineTravel;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
 using UnityEngine;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class TravelTab : MonoBehaviour
     {
-        public event Action TravelTabOpened;
+   public event Action TravelTabOpened;
     
         [SerializeField] private Canvas _canvas;
-    
         [SerializeField] private TMP_Text _travelInfo;
-    
         [SerializeField] private TransactionButton _travelButton;
-        
         [SerializeField] private TMP_Text _travelConditionHint;
 
         private ITimelineTravelPresenter _timelineTravelPresenter;
         private IAudioService _audioService;
-        
+        private ITimelineInfoWindowProvider _timelineInfoWindowProvider;
+        private IWorldCameraService _cameraService;
+
         public void Construct(
             ITimelineTravelPresenter timelineTravelPresenter,
-            IAudioService audioService)
+            IAudioService audioService,
+            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            IWorldCameraService cameraService)
         {
             _audioService = audioService;
             _timelineTravelPresenter = timelineTravelPresenter;
+            _timelineInfoWindowProvider = timelineInfoWindowProvider;
+            _cameraService = cameraService;
         }
         
         public void Show()
@@ -46,7 +53,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
         {
             _travelButton.Click += OnTravelButtonClick;
             TravelTabOpened += _timelineTravelPresenter.OnTravelTabOpened;
-            _timelineTravelPresenter.TravelViewModelUpdated += OnTravelViewModelUpdated;
+            _timelineTravelPresenter.TravelTabModelUpdated += OnTravelTabModelUpdated;
         }
 
         public void Hide()
@@ -61,11 +68,11 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void Unsubscribe()
         {
             TravelTabOpened -= _timelineTravelPresenter.OnTravelTabOpened;
-            _timelineTravelPresenter.TravelViewModelUpdated -= OnTravelViewModelUpdated;
+            _timelineTravelPresenter.TravelTabModelUpdated -= OnTravelTabModelUpdated;
             _travelButton.Click -= OnTravelButtonClick;
         }
 
-        private void OnTravelViewModelUpdated(TravelTabModel tabModel)
+        private void OnTravelTabModelUpdated(TravelTabModel tabModel)
         {
             UpdateTravelConditionHint(tabModel.CanTravel);
             UpdateTravelInfoText(tabModel.NextTimelineNumber);
@@ -78,10 +85,26 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void UpdateTravelInfoText(int nextTimelineNumber) => 
             _travelInfo.text = $"Travel to timeline {nextTimelineNumber}";
 
-        private void OnTravelButtonClick()
+        private async void OnTravelButtonClick()
         {
             PlayButtonSound();
             _timelineTravelPresenter.OpenNextTimeline();
+            
+            var travelAnimationScreenProvider = new TravelAnimationScreenProvider(_cameraService.UICameraOverlay);
+            var window = await _timelineInfoWindowProvider.Load();
+            var screen = await travelAnimationScreenProvider.Load();
+
+            bool isAnimationCompleted = await screen.Value.Play();
+            
+            if (isAnimationCompleted)
+            {
+                screen.Dispose();
+                var isExit = await window.Value.ShowScreenWithFistAgeAnimation();
+                if (isExit)
+                {
+                    window.Dispose();
+                }
+            }
         }
 
         private void PlayButtonSound() => 

@@ -1,4 +1,5 @@
-﻿using Assets._Game.Common;
+﻿using _Game.Gameplay._Battle.Scripts;
+using Assets._Game.Common;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Core.Pause.Scripts;
@@ -8,7 +9,6 @@ using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
-using Assets._Game.Gameplay.Battle.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._Hud;
 using Assets._Game.UI.Common.Header.Scripts;

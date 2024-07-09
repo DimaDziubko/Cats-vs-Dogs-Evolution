@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using _Game.Core.Configs.Models;
 using Assets._Game.Common;
-using Assets._Game.Core.Configs.Models;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Core.Services.Random;

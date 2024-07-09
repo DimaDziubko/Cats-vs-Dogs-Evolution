@@ -1,4 +1,5 @@
-﻿using Assets._Game.Core.GameState;
+﻿using _Game.Core.GameState;
+using Assets._Game.Core.GameState;
 using Zenject;
 
 namespace Assets._Game.Core.Installers.Core

@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core.Navigation.Timeline;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Data;
@@ -8,11 +9,11 @@ using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 
-namespace Assets._Game.Core.Navigation.Age
+namespace _Game.Core.Navigation.Age
 {
     public class AgeNavigator : IAgeNavigator, IDisposable
     {
-        public event Action AgeChanged;
+    public event Action AgeChanged;
         
         private readonly IUserContainer _useContainer;
         private readonly IGeneralDataPool _generalDataPool;
@@ -20,6 +21,7 @@ namespace Assets._Game.Core.Navigation.Age
         private readonly IAssetRegistry _assetRegistry;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IGameInitializer _gameInitializer;
+        private readonly ITimelineNavigator _timelineNavigator;
         private ITimelineStateReadonly TimelineState => _useContainer.State.TimelineState;
         
         public AgeNavigator(
@@ -29,7 +31,8 @@ namespace Assets._Game.Core.Navigation.Age
             IGeneralDataPool generalDataPool,
             IAgeDataProvider ageDataProvider,
             IAssetRegistry assetRegistry,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            ITimelineNavigator timelineNavigator)
         {
             _useContainer = userContainer;
             _loadingScreenProvider = loadingScreenProvider;
@@ -38,17 +41,22 @@ namespace Assets._Game.Core.Navigation.Age
             _generalDataPool = generalDataPool;
             _ageDataProvider = ageDataProvider;
             _assetRegistry = assetRegistry;
+            _timelineNavigator = timelineNavigator;
             gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
         {
             TimelineState.NextAgeOpened += MoveToNextAge;
+            _timelineNavigator.TimelineChanged += OnTimelineChanged;
         }
+
+        private void OnTimelineChanged() => AgeChanged?.Invoke();
 
         void IDisposable.Dispose()
         {
             TimelineState.NextAgeOpened -= MoveToNextAge;
+            _timelineNavigator.TimelineChanged -= OnTimelineChanged;
             _gameInitializer.OnPostInitialization -= Init;
         }
 

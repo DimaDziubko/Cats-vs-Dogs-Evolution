@@ -8,7 +8,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
     {
         public Faction Faction;
         public ITarget Target;
-        public WeaponType WeaponType;
+        public int WeaponId;
         public Vector3 LaunchPosition;
         public Quaternion LaunchRotation;
     }

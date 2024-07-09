@@ -1,4 +1,4 @@
-﻿using Assets._Game.Core.Configs.Models;
+﻿using _Game.Core.Configs.Models;
 using Newtonsoft.Json;
 
 namespace Assets._Game.Utils.Extensions

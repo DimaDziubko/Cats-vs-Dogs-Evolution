@@ -1,4 +1,8 @@
-﻿using Assets._Game.Core._RetentionChecker;
+﻿using _Game.Core.DataPresenters.TimelineTravel;
+using _Game.Core.Navigation.Age;
+using _Game.Core.Navigation.Battle;
+using _Game.Core.Navigation.Timeline;
+using Assets._Game.Core._RetentionChecker;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Ads;
 using Assets._Game.Core.DataPresenters._RaceChanger;
@@ -7,8 +11,6 @@ using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.DataPresenters.TimelineTravel;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
-using Assets._Game.Core.Navigation.Age;
-using Assets._Game.Core.Navigation.Battle;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._BattleSpeedService._Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
@@ -19,7 +21,7 @@ using Assets._Game.Gameplay._Timer.Scripts;
 using Assets._Game.Gameplay.BattleLauncher;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
@@ -38,8 +40,9 @@ namespace Assets._Game.Core.Installers.Core
             BindBattleSpeedService();
             BindAnalyticsService();
             BindDTDAnalyticsService();
-            BindBattleNavigator();
+            BindTimelineNavigator();
             BindAgeNavigator();
+            BindBattleNavigator();
             BindRaceChanger();
             BindRetentionChecker();
         }
@@ -136,6 +139,11 @@ namespace Assets._Game.Core.Installers.Core
         private void BindAgeNavigator() =>
             Container
                 .BindInterfacesAndSelfTo<AgeNavigator>()
+                .AsSingle();
+        
+        private void BindTimelineNavigator() =>
+            Container
+                .BindInterfacesAndSelfTo<TimelineNavigator>()
                 .AsSingle();
     }
 }

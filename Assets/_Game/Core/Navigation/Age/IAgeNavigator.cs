@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets._Game.Core.Navigation.Age
+namespace _Game.Core.Navigation.Age
 {
     public interface IAgeNavigator
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Configs.Repositories;
@@ -9,7 +10,6 @@ using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
-using Assets._Game.Gameplay.Battle.Scripts;
 using Assets._Game.UI.UnitBuilderBtn.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;

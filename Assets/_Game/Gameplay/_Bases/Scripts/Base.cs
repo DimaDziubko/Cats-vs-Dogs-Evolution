@@ -1,13 +1,14 @@
 ﻿using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Bases.Factory;
+using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts.Attack;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Bases.Scripts
+namespace _Game.Gameplay._Bases.Scripts
 {
     [RequireComponent(typeof(TargetPoint))]
     public class Base : GameBehaviour
@@ -106,7 +107,7 @@ namespace Assets._Game.Gameplay._Bases.Scripts
             Position = position;
         }
 
-        public void UpdateData(BaseModel model) => _health.UpdateData(model.Health);
+        public void UpdateHealth(float health) => _health.UpdateData(health);
 
         public void ShowHealth() => _health.ShowHealth();
 
