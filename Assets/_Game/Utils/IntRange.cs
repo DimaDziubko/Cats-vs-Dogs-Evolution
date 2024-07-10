@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Assets._Game.Utils
+namespace _Game.Utils
 {
     [Serializable]
     public struct IntRange

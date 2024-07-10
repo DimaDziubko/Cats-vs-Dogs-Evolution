@@ -1,4 +1,4 @@
-﻿using Assets._Game.Gameplay.Battle.Scripts;
+﻿using _Game.Gameplay._Battle.Scripts;
 
 namespace Assets._Game.Core.Services.Analytics
 {

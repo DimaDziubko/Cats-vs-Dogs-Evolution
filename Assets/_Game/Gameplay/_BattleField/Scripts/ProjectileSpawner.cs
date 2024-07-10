@@ -1,7 +1,8 @@
-﻿using Assets._Game.Common;
+﻿using _Game.Gameplay._Weapon.Factory;
+using _Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Common;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
-using Assets._Game.Gameplay._Weapon.Factory;
 using Assets._Game.Gameplay._Weapon.Scripts;
 
 namespace Assets._Game.Gameplay._BattleField.Scripts
@@ -48,7 +49,7 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
 
         void IShootProxy.Shoot(ShootData data)
         {
-            Projectile projectile = _projectileFactory.Get(data.Faction, data.WeaponType);
+            Projectile projectile = _projectileFactory.Get(data.Faction, data.WeaponId);
 
             projectile.PrepareIntro(
                 _vfxProxy,

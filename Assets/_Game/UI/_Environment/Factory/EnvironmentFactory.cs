@@ -1,6 +1,6 @@
-﻿using Assets._Game.Core.Factory;
+﻿using _Game.Gameplay._Battle.Scripts;
+using Assets._Game.Core.Factory;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Gameplay.Battle.Scripts;
 using UnityEngine;
 
 namespace Assets._Game.UI._Environment.Factory

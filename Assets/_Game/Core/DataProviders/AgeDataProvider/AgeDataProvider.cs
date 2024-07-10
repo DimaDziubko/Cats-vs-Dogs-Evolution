@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Configs.Models;
+using _Game.Core.Data.Age.Static;
+using _Game.Core.DataProviders.Facade;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Configs.Models;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.Data.Age.Static;
+using Assets._Game.Core.DataProviders.AgeDataProvider;
 using Assets._Game.Core.DataProviders.BaseDataProvider;
 using Assets._Game.Core.DataProviders.Facade;
 using Assets._Game.Core.Services.UserContainer;
@@ -18,7 +21,7 @@ using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.AgeDataProvider
+namespace _Game.Core.DataProviders.AgeDataProvider
 {
     public class AgeDataProvider : IAgeDataProvider
     {
@@ -117,7 +120,7 @@ namespace Assets._Game.Core.DataProviders.AgeDataProvider
                         CacheContext = Constants.CacheContext.AGE
                     });
 
-        private async UniTask<DataPool<WeaponType, WeaponData>> LoadWeapons(IEnumerable<WarriorConfig> configs) => 
+        private async UniTask<DataPool<int, WeaponData>> LoadWeapons(IEnumerable<WarriorConfig> configs) => 
             await _dataProvider.LoadWeapons(configs,  new LoadContext() { Faction = Faction.Player, CacheContext = Constants.CacheContext.AGE});
 
         private async UniTask<DataPool<UnitType, UnitData>> LoadUnits(IEnumerable<WarriorConfig> configs) => 

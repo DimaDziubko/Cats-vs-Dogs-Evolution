@@ -3,16 +3,18 @@ using Assets._Game.Core._Logger;
 using Assets._Game.Core.DataPresenters._TimelineInfoPresenter;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.TimelineInfoWindow.Scripts
+namespace _Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoWindow : MonoBehaviour
     {
-        public event Action Opened;
+    public event Action Opened;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ScrollRect _scrollRect;
@@ -41,30 +43,76 @@ namespace Assets._Game.UI.TimelineInfoWindow.Scripts
             IAudioService audioService, 
             ITimelineInfoPresenter evolutionService,
             IEvolutionPresenter evolutionPresenter, 
-            IMyLogger logger)
+            IMyLogger logger,
+            IWorldCameraService cameraService)
         {
             _audioService = audioService;
             _timelineInfoPresenter = evolutionService;
             _evolutionPresenter = evolutionPresenter;
             _logger = logger;
+            _canvas.worldCamera = cameraService.UICameraOverlay;
+            Show();
+            _exitBtn.interactable = false;
         }
 
-        public async UniTask<bool> AwaitForDecision(bool needAnimation)
+        
+        public async UniTask<bool> ShowScreen()
         {
             _canvas.enabled = true;
             _taskCompletion = new UniTaskCompletionSource<bool>();
             Show();
-            
-            if(needAnimation) PlayEvolveAnimation();
-            
+            var result = await _taskCompletion.Task;
+            _canvas.enabled = false;
+            return result;
+        }
+        
+        public async UniTask<bool> ShowScreenWithTransitionAnimation()
+        {
+            _canvas.enabled = true;
+            _taskCompletion = new UniTaskCompletionSource<bool>();
+            Show();
+            PlayEvolveAnimation();
+            var result = await _taskCompletion.Task;
+            _canvas.enabled = false;
+            return result;
+        }
+        
+        public async UniTask<bool> ShowScreenWithFistAgeAnimation()
+        {
+            _canvas.enabled = true;
+            _taskCompletion = new UniTaskCompletionSource<bool>();
+            Show();
+            PlayFirstAgeAnimation();
             var result = await _taskCompletion.Task;
             _canvas.enabled = false;
             return result;
         }
 
+        private void PlayFirstAgeAnimation()
+        {
+            _exitBtn.interactable = false;
+            Sequence preAnimationSequence = DOTween.Sequence().AppendInterval(_animationDelay);
+            preAnimationSequence.OnComplete(() =>
+            {
+                Sequence sequence = DOTween.Sequence();
+
+                int age = 0;
+                sequence.AppendCallback(() =>
+                {
+                    _items[age].PlayRippleAnimation(_rippleAnimationDuration);
+                    _progressBar.PlayMarkerRippleAnimation(age, _rippleAnimationDuration);
+                });
+
+                sequence.OnComplete(() =>
+                {
+                    _exitBtn.interactable = true;
+                });
+            });
+        }
+
         private void PlayEvolveAnimation()
         {
-            _exitBtn.gameObject.SetActive(false);
+            _exitBtn.interactable = false;
             
             PlayEvolveSound();
             
@@ -89,7 +137,7 @@ namespace Assets._Game.UI.TimelineInfoWindow.Scripts
                 sequence.OnComplete(() =>
                 {
                     _evolutionPresenter.OpenNextAge();
-                    _exitBtn.gameObject.SetActive(true);
+                    _exitBtn.interactable = true;
                 });
             });
         }
@@ -104,7 +152,6 @@ namespace Assets._Game.UI.TimelineInfoWindow.Scripts
         {
             Unsubscribe();
             Subscribe();
-            
             Opened?.Invoke();
         }
 
@@ -140,10 +187,8 @@ namespace Assets._Game.UI.TimelineInfoWindow.Scripts
             AdjustScrollPosition(model.CurrentAge, model.Models.Count);
         }
 
-        private void UpdateSlider(int currentAge, int ages)
-        {
+        private void UpdateSlider(int currentAge, int ages) => 
             _progressBar.UpdateValue(currentAge, ages);
-        }
 
         private void UpdateItems(TimelineInfoModel model)
         {

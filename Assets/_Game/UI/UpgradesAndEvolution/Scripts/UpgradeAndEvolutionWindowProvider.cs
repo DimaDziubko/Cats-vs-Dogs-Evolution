@@ -1,3 +1,5 @@
+using _Game.Core.AssetManagement;
+using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
@@ -66,7 +68,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
             var popup = await LoadDisposable<UpgradeAndEvolutionWindow>(AssetsConstants.UPGRADE_AND_EVOLUTION_WINDOW);
             
             popup.Value.Construct(
-                _cameraService.UICameraOverlay,
+                _cameraService,
                 _audioService,
                 _header,
                 _upgradeItemPresenter,

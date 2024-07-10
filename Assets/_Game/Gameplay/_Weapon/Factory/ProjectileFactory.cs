@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Services.Audio;
@@ -8,11 +10,11 @@ using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Utils;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Weapon.Factory
+namespace _Game.Gameplay._Weapon.Factory
 {
     public interface IProjectileFactory
     {
-        Projectile Get(Faction faction, WeaponType type);
+        Projectile Get(Faction faction, int weaponId);
         public void Reclaim(Projectile proj);
     }
 
@@ -23,8 +25,8 @@ namespace Assets._Game.Gameplay._Weapon.Factory
         private ISoundService _soundService;
 
 
-        private readonly Dictionary<(Faction, WeaponType), Queue<Projectile>> _projectilesPools =
-            new Dictionary<(Faction, WeaponType), Queue<Projectile>>();
+        private readonly Dictionary<(Faction, int), Queue<Projectile>> _projectilesPools =
+            new Dictionary<(Faction, int), Queue<Projectile>>();
 
         public void Initialize(
             ISoundService soundService,
@@ -34,14 +36,14 @@ namespace Assets._Game.Gameplay._Weapon.Factory
             _soundService = soundService;
         }
         
-        public Projectile Get(Faction faction,  WeaponType type)
+        public Projectile Get(Faction faction,  int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, type);
+            WeaponData weaponData = GetWeaponData(faction, weaponId);
             
-            if (!_projectilesPools.TryGetValue((faction, type), out Queue<Projectile> pool))
+            if (!_projectilesPools.TryGetValue((faction, weaponId), out Queue<Projectile> pool))
             {
                 pool = new Queue<Projectile>();
-                _projectilesPools[(faction, type)] = pool;
+                _projectilesPools[(faction, weaponId)] = pool;
             }
             
             Projectile instance;
@@ -60,16 +62,16 @@ namespace Assets._Game.Gameplay._Weapon.Factory
             return instance;
         }
 
-        private WeaponData GetWeaponData(Faction faction, WeaponType type)
+        private WeaponData GetWeaponData(Faction faction, int weaponId)
         {
             WeaponData weaponData;
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.AGE);
+                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _weaponDataPresenter.GetWeaponData(type, Constants.CacheContext.BATTLE);
+                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
@@ -80,10 +82,10 @@ namespace Assets._Game.Gameplay._Weapon.Factory
 
         public void Reclaim(Projectile proj)
         { 
-            if (!_projectilesPools.TryGetValue((proj.Faction, proj.Type), out Queue<Projectile> pool))
+            if (!_projectilesPools.TryGetValue((proj.Faction, proj.WeaponId), out Queue<Projectile> pool))
             {
                 pool = new Queue<Projectile>();
-                _projectilesPools[(proj.Faction, proj.Type)] = pool;
+                _projectilesPools[(proj.Faction, proj.WeaponId)] = pool;
             }
 
             proj.gameObject.SetActive(false);

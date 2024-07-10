@@ -1,4 +1,4 @@
-﻿using Assets._Game.Core.Configs.Models;
+﻿using _Game.Core.Configs.Models;
 using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 

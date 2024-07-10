@@ -1,4 +1,4 @@
-namespace Assets._Game.Core.AssetManagement
+namespace _Game.Core.AssetManagement
 {
     public static class AssetsConstants
     {
@@ -12,5 +12,6 @@ namespace Assets._Game.Core.AssetManagement
         public const string ALERT_POPUP = "AlertPopup";
         public const string SHOP = "Shop";
         public const string SETTINGS = "Settings";
+        public const string TRAVEL_ANIMATION_SCREEN = "TravelAnimationScreen";
     }
 }

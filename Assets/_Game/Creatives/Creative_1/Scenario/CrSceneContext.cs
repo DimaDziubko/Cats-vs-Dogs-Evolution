@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Creatives.Factories;
+using _Game.Gameplay._Bases.Factory;
+using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Audio.Scripts;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Factory;
@@ -11,8 +15,6 @@ using Assets._Game.Core.Services.Random;
 using Assets._Game.Creatives.Factories;
 using Assets._Game.Creatives.LocalUnitConfigs.Scr;
 using Assets._Game.Creatives.Scripts;
-using Assets._Game.Gameplay._Bases.Factory;
-using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Coins.Factory;
@@ -27,7 +29,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Serialization;
 
-namespace Assets._Game.Creatives.Creative_1.Scenario
+namespace _Game.Creatives.Creative_1.Scenario
 {
     public class CrSceneContext : MonoBehaviour
     {
@@ -59,9 +61,9 @@ namespace Assets._Game.Creatives.Creative_1.Scenario
         [SerializeField] private LocalUnitConfig[] _enemyUnits;
         
         [ShowInInspector]
-        private readonly Dictionary<WeaponType, WeaponData> _playerWeaponsData = new Dictionary<WeaponType, WeaponData>();
+        private readonly Dictionary<int, WeaponData> _playerWeaponsData = new Dictionary<int, WeaponData>();
         [ShowInInspector]
-        private readonly Dictionary<WeaponType, WeaponData> _enemiesWeaponsData = new Dictionary<WeaponType, WeaponData>();
+        private readonly Dictionary<int, WeaponData> _enemiesWeaponsData = new Dictionary<int, WeaponData>();
 
         [SerializeField] private int _initialFoodAmount = 0;
         [SerializeField] private float _foodProductionSpeed = 1;
@@ -139,7 +141,7 @@ namespace Assets._Game.Creatives.Creative_1.Scenario
                     ProjectilePrefab = unit.ProjectilePrefab,
                     ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
                 };
-                _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.WeaponType, data);
+                _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
             }
             
             foreach (var unit in _enemyUnits)
@@ -153,7 +155,7 @@ namespace Assets._Game.Creatives.Creative_1.Scenario
                     ProjectilePrefab = unit.ProjectilePrefab,
                     ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
                 };
-                _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.WeaponType, data);
+                _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
             }
         }
 
@@ -216,10 +218,10 @@ namespace Assets._Game.Creatives.Creative_1.Scenario
             _playerBasePoint = new Vector3(-_cameraService.CameraWidth, 0, 0);
         }
 
-        public WeaponData ForPlayerWeapon(WeaponType type) => 
-            _playerWeaponsData[type];
+        public WeaponData ForPlayerWeapon(int weaponId) => 
+            _playerWeaponsData[weaponId];
 
-        public WeaponData ForEnemyWeapon(WeaponType type) => 
-            _enemiesWeaponsData[type];
+        public WeaponData ForEnemyWeapon(int weaponId) => 
+            _enemiesWeaponsData[weaponId];
     }
 }

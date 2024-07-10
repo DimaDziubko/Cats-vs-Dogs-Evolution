@@ -1,9 +1,10 @@
 using System;
+using _Game.Creatives.Creative_1.Scenario;
+using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Creatives.Creative_1.Scenario;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
-using Assets._Game.Gameplay.Battle.Scripts;
 using Assets._Game.Gameplay.Food.Scripts;
 using Assets._Game.UI.UnitBuilderBtn.Scripts;
 using UnityEngine;

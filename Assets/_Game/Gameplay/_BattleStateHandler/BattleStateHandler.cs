@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.LoadingScreen;
-using Assets._Game.Gameplay.Battle.Scripts;
 
 namespace Assets._Game.Gameplay._BattleStateHandler
 {

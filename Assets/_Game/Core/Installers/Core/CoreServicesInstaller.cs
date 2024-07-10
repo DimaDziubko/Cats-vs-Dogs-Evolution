@@ -1,4 +1,5 @@
-﻿using Assets._Game._AssetProvider;
+﻿using _Game.Core._Logger;
+using Assets._Game._AssetProvider;
 using Assets._Game.Common;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._GameInitializer;

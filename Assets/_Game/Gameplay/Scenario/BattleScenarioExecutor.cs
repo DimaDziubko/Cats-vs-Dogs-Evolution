@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using UnityEngine;
 

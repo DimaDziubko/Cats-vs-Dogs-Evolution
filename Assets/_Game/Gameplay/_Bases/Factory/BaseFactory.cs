@@ -1,13 +1,15 @@
 ﻿using System;
-using Assets._Game.Core.DataPresenters._BaseDataPresenter;
+using _Game.Core.DataPresenters._BaseDataPresenter;
+using _Game.Gameplay._Bases.Scripts;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Bases.Factory
+namespace _Game.Gameplay._Bases.Factory
 {
     [CreateAssetMenu(fileName = "Base Factory", menuName = "Factories/Base")]
     public class BaseFactory : GameObjectFactory, IBaseFactory
@@ -30,10 +32,10 @@ namespace Assets._Game.Gameplay._Bases.Factory
             switch (faction)
             {
                 case Faction.Player:
-                    baseModel = _basePresenter.GetTowerData(Constants.CacheContext.AGE);
+                    baseModel = _basePresenter.GetBaseModel(Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    baseModel = _basePresenter.GetTowerData(Constants.CacheContext.BATTLE);
+                    baseModel = _basePresenter.GetBaseModel(Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, "Base data is null");

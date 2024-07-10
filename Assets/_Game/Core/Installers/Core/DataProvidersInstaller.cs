@@ -1,4 +1,7 @@
-﻿using Assets._Game.Core.DataProviders.AgeDataProvider;
+﻿using _Game.Core.DataProviders.AgeDataProvider;
+using _Game.Core.DataProviders.BattleDataProvider;
+using _Game.Core.DataProviders.WeaponDataProviders;
+using Assets._Game.Core.DataProviders.AgeDataProvider;
 using Assets._Game.Core.DataProviders.Ambience;
 using Assets._Game.Core.DataProviders.BaseDataProvider;
 using Assets._Game.Core.DataProviders.BattleDataProvider;

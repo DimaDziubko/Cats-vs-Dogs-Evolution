@@ -1,43 +1,45 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Configs.Providers;
+using _Game.Core.Loading;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Configs.Providers;
+using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.Services.UserContainer;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
-    public class ConfigurationState : IState
+    public class ConfigurationState : IPayloadedState<Queue<ILoadingOperation>>
     {
         private readonly IGameStateMachine _stateMachine;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IRemoteConfigProvider _remoteConfigProvider;
-        private readonly ILocalConfigProvider _localConfigProvider;
         private readonly IMyLogger _logger;
+        private readonly ILocalConfigProvider _localConfigProvider;
 
-        public ConfigurationState(IGameStateMachine stateMachine,
-            IUserContainer persistentData,
+        public ConfigurationState(
+            IGameStateMachine stateMachine,
+            IUserContainer userContainer,
             IRemoteConfigProvider remoteConfigProvider,
             ILocalConfigProvider localConfigProvider,
             IMyLogger logger)
         {
             _stateMachine = stateMachine;
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _remoteConfigProvider = remoteConfigProvider;
             _localConfigProvider = localConfigProvider;
             _logger = logger;
         }
 
-        public void Enter()
+        public void Enter(Queue<ILoadingOperation> loadingOperations)
         {
-            var loadingOperations = new Queue<ILoadingOperation>();
-            
             loadingOperations.Enqueue(new ConfigOperation(
-                _persistentData,
+                _userContainer,
                 _remoteConfigProvider,
                 _localConfigProvider,
                 _logger));
             
-            _stateMachine.Enter<LoginState, Queue<ILoadingOperation>>(loadingOperations);
+            _stateMachine.Enter<DataLoadingState, Queue<ILoadingOperation>>(loadingOperations);
         }
 
         public void Exit()

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.Facade;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;

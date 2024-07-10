@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Utils;
@@ -9,7 +9,7 @@ namespace Assets._Game.Gameplay._Units.Scripts
 {
     public abstract class UnitAttack : MonoBehaviour
     {
-        protected float DisableAttackDelay { get; set; } = 0.1f;
+        protected float DisableAttackDelay { get; set; } = 0.01f;
 
         [SerializeField] private SoundData _soundData;
 

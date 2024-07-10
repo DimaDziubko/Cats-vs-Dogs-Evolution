@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Gameplay._Units.Scripts;
 
 namespace Assets._Game.Core.DataProviders.WeaponDataProviders

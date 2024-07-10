@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets._Game.Core.Configs.Models;
+using _Game.Core.Configs.Models;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 

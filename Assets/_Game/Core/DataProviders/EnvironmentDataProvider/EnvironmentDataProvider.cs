@@ -1,5 +1,5 @@
-﻿using Assets._Game.Core.AssetManagement;
-using Assets._Game.Gameplay.Battle.Scripts;
+﻿using _Game.Gameplay._Battle.Scripts;
+using Assets._Game.Core.AssetManagement;
 using Assets._Game.UI._Environment;
 using Cysharp.Threading.Tasks;
 using UnityEngine;

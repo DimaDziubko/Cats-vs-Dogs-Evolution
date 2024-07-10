@@ -3,14 +3,16 @@ using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.DataPresenters.TimelineTravel;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionWindow : MonoBehaviour, IUIWindow
     {
@@ -37,7 +39,8 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
             IAudioService audioService,
             ITimelineInfoWindowProvider timelineInfoWindowProvider,
             ITimelineTravelPresenter timelineTravelPresenter,
-            IUpgradesAvailabilityChecker upgradesChecker)
+            IUpgradesAvailabilityChecker upgradesChecker,
+            IWorldCameraService cameraService)
         {
             _evolutionPresenter = evolutionPresenter;
             _timelineInfoProvider = timelineInfoWindowProvider;
@@ -46,7 +49,11 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _header = header;
             _upgradesChecker = upgradesChecker;
             _evolutionTab.Construct(evolutionPresenter, audioService, timelineInfoWindowProvider);
-            _travelTab.Construct(timelineTravelPresenter, audioService);
+            _travelTab.Construct(
+                timelineTravelPresenter,
+                audioService,
+                timelineInfoWindowProvider,
+                cameraService);
         }
 
 
@@ -109,7 +116,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _audioService.PlayButtonSound();
             
             var window = await _timelineInfoProvider.Load();
-            var isExited = await window.Value.AwaitForDecision(false);
+            var isExited = await window.Value.ShowScreen();
             if(isExited) window.Dispose();
             _disposable = window;
         }

@@ -1,6 +1,6 @@
-﻿using Assets._Game.Core._Logger;
+﻿using _Game.Core.Navigation.Battle;
+using Assets._Game.Core._Logger;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.Navigation.Battle;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
 
