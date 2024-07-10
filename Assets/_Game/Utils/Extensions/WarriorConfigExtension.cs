@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
+using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;

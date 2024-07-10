@@ -17,8 +17,9 @@ namespace _Game.Gameplay._Weapon.Scripts
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private ProjectileMove _move;
+        [SerializeField] private Rotator _rotator;
         [SerializeField] private SoundData _soundData;
-        
+
         private ISoundService _soundService;
         
         [ShowInInspector]
@@ -96,6 +97,8 @@ namespace _Game.Gameplay._Weapon.Scripts
             {
                 _move.Move();
             }
+            
+            if(_rotator) _rotator.Rotate();
             
             return true;
         }

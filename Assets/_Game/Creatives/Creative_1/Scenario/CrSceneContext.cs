@@ -3,6 +3,7 @@ using System.Linq;
 using _Game.Creatives.Factories;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Audio.Scripts;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Factory;
