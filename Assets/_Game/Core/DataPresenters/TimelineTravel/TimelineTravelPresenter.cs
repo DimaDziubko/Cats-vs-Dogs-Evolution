@@ -6,7 +6,6 @@ using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Configs.Repositories;
-using Assets._Game.Core.DataPresenters.TimelineTravel;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
@@ -29,27 +28,27 @@ namespace _Game.Core.DataPresenters.TimelineTravel
         bool IUpgradeAvailabilityProvider.IsAvailable =>
             TimelineState.AllBattlesWon;
         
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly ITimelineConfigRepository _timelineConfigRepository;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly IGameInitializer _gameInitializer;
         private readonly IAgeNavigator _ageNavigator;
         private readonly IMyLogger _logger;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         private EvolutionTabModel _evolutionTabModel;
         private TimelineInfoModel _timelineInfoModel;
 
 
         public TimelineTravelPresenter(
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             ITimelineConfigRepository timelineConfigRepository,
             IMyLogger logger,
             IUpgradesAvailabilityChecker upgradesChecker,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _timelineConfigRepository = timelineConfigRepository;
             _logger = logger;
             _upgradesChecker = upgradesChecker;
@@ -63,14 +62,14 @@ namespace _Game.Core.DataPresenters.TimelineTravel
             _upgradesChecker.Register(this);
             UpdateTravelData();
             _ageNavigator.AgeChanged += OnAgeChanged;
-            //TimelineState.NextTimelineOpened += OnNextTimelineOpened;
+            TimelineState.NextTimelineOpened += OnNextTimelineOpened;
         }
 
         void IDisposable.Dispose()
         {
             _upgradesChecker.UnRegister(this);
             _ageNavigator.AgeChanged -= OnAgeChanged;
-            //TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
+            TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
             _gameInitializer.OnMainInitialization-= Init;
         }
 
@@ -79,10 +78,8 @@ namespace _Game.Core.DataPresenters.TimelineTravel
         private void OnAgeChanged() => UpdateTravelData();
 
 
-        public void OpenNextTimeline()
-        {
-            //TODO Implement later
-        }
+        public void OpenNextTimeline() => 
+            _userContainer.OpenNextTimeline();
 
         bool ITimelineTravelPresenter.IsTimeToTravel() => !IsNextAge();
 

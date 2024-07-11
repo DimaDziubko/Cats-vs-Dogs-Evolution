@@ -59,6 +59,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         public async UniTask<bool> ShowScreen()
         {
             _canvas.enabled = true;
+            _exitBtn.interactable = true;
             _taskCompletion = new UniTaskCompletionSource<bool>();
             Show();
             var result = await _taskCompletion.Task;

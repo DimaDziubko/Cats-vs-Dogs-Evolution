@@ -11,7 +11,6 @@ using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.DataPresenters._TimelineInfoPresenter;
 using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.Evolution;
-using Assets._Game.Core.DataPresenters.TimelineTravel;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._BattleSpeedService._Scripts;

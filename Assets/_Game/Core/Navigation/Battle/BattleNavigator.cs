@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.Configs.Repositories;
@@ -10,11 +11,12 @@ namespace _Game.Core.Navigation.Battle
     public class BattleNavigator : IBattleNavigator, IDisposable
     {
         public event Action BattleChanged;
-
         public event Action<BattleNavigationModel> NavigationUpdated;
+        
         private readonly ITimelineConfigRepository _timelineConfig;
         private readonly IUserContainer _userContainer;
         private readonly IGameInitializer _gameInitializer;
+        private readonly IAgeNavigator _ageNavigator;
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         private int _currentBattle;
@@ -42,27 +44,29 @@ namespace _Game.Core.Navigation.Battle
         public BattleNavigator(
             ITimelineConfigRepository timelineConfig,
             IUserContainer userContainer,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            IAgeNavigator ageNavigator)
         {
             _timelineConfig = timelineConfig;
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
+            _ageNavigator = ageNavigator;
             gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
         {
-            TimelineState.NextAgeOpened += OnNextAgeOpened;
+            _ageNavigator.AgeChanged += OnAgeChanged;
             CurrentBattle = TimelineState.MaxBattle;
         }
 
         void IDisposable.Dispose()
         {
-            TimelineState.NextAgeOpened -= OnNextAgeOpened;
+            _ageNavigator.AgeChanged -= OnAgeChanged;
             _gameInitializer.OnPostInitialization -= Init;
         }
-
-        private void OnNextAgeOpened() => CurrentBattle = TimelineState.MaxBattle;
+        
+        private void OnAgeChanged() => CurrentBattle = TimelineState.MaxBattle;
 
         public void MoveToNextBattle()
         {
