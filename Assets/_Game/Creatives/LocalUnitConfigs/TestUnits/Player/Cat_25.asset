@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d482ecf4fb481081b21eebc203645f, type: 3}
-  m_Name: Cat_24
+  m_Name: Cat_25
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 2
   Data:
     Config:
       Id: 0
@@ -20,9 +20,9 @@ MonoBehaviour:
       Health: 20
       Speed: 0.3
       WeaponConfig:
-        Id: 26
+        Id: 27
         WeaponType: 1
-        Damage: 150
+        Damage: 20
         ProjectileSpeed: 4
         ProjectileKey: 
         TrajectoryWarpFactor: 0
@@ -41,13 +41,13 @@ MonoBehaviour:
       CoinsPerKill: 12
       PlayerHealthMultiplier: 1
       EnemyHealthMultiplier: 1
-      AttackPerSecond: 1
+      AttackPerSecond: 0.5
       AttackDistance: 1.5
-    Prefab: {fileID: 5562371957400220010, guid: 112696f3174257148abd647004026d38, type: 3}
+    Prefab: {fileID: 5562371957400220010, guid: 30ff7e6fad561874f8be9c8d45c3626c, type: 3}
     UnitLayer: 8
     AggroLayer: 10
     AttackLayer: 12
-  Icon: {fileID: 1384982993, guid: 152037ed370354848a89c9abc1b6aefc, type: 3}
+  Icon: {fileID: 1258745993, guid: e13ace0d664e5b742ad504991969063c, type: 3}
   MuzzlePrefab: {fileID: 3363035391553935353, guid: 649422cb866241e46897327d55f01ca7, type: 3}
-  ProjectilePrefab: {fileID: 8547408254515040243, guid: 34d6eb90169c2f14892b37ae34256c74, type: 3}
+  ProjectilePrefab: {fileID: 1614450496103959447, guid: 52d46fb4dbf5a62458186f0b0f118462, type: 3}
   ProjectileExplosionPrefab: {fileID: 0}
