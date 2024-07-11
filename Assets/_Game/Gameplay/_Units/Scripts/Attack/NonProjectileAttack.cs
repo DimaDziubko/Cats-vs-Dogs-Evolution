@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Configs.Models;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace _Game.Gameplay._Units.Scripts.Attack
 {
-    public class NonProjectileRangeAttack : UnitAttack
+    public class NonProjectileAttack : UnitAttack
     {
         [SerializeField] private Transform _muzzleTransform;
         

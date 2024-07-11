@@ -3,12 +3,13 @@ using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Ads;
+using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using DevToDev.Analytics;
 
-namespace Assets._Game.Core.Services.Analytics
+namespace _Game.Core.Services.Analytics
 {
     public class DTDAnalyticsService : IDTDAnalyticsService, IDisposable
     {
@@ -44,6 +45,13 @@ namespace Assets._Game.Core.Services.Analytics
             TutorialState.StepsCompletedChanged += OnStepCompleted;
             RaceState.Changed += OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
+            
+            int zeroTutorialStepNumber = -1;
+            if (TutorialState.StepsCompleted == zeroTutorialStepNumber)
+            {
+                int tutorialStartedKey = -1;
+                DTDAnalytics.Tutorial(tutorialStartedKey);
+            }
         }
 
         public void Dispose()
@@ -59,9 +67,19 @@ namespace Assets._Game.Core.Services.Analytics
             _gameInitializer.OnPostInitialization -= Init;
         }
 
-        private void OnStepCompleted(int step) => 
-            DTDAnalytics.Tutorial(step);
-        
+        private void OnStepCompleted(int step)
+        {
+            var trueStepNumber = step + 1;
+            int lastStep = 5;
+            if (trueStepNumber == lastStep)
+            {
+                int tutorialCompleteKey = -2;
+                DTDAnalytics.Tutorial( tutorialCompleteKey);
+                return;
+            }
+            DTDAnalytics.Tutorial(trueStepNumber);
+        }
+
         private void TrackRewardedVideoAdImpression(AdImpressionDto dto) => 
             DTDAnalytics.AdImpression(dto.Network, dto.Revenue, dto.Placement.ToString(), dto.UnitId);
         

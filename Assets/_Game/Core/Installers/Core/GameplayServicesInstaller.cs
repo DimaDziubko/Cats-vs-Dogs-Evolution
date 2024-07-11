@@ -2,6 +2,7 @@
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
+using _Game.Core.Services.Analytics;
 using Assets._Game.Core._RetentionChecker;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Ads;

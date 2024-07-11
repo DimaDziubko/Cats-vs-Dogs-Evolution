@@ -1,4 +1,5 @@
-﻿using Assets._Game.Core.AssetManagement;
+﻿using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils.Extensions;

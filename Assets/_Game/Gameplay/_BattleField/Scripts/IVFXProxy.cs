@@ -1,8 +1,8 @@
 ﻿using _Game.Gameplay.Vfx.Scripts;
-using Assets._Game.Gameplay.Vfx.Scripts;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
     public interface IVFXProxy
     {

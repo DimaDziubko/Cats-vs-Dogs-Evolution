@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Linq;
+using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts.Attack
+namespace _Game.Gameplay._Units.Scripts.Attack
 {
     public class DamageFlashEffect : MonoBehaviour
     {
