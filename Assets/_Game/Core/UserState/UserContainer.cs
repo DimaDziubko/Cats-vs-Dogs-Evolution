@@ -1,17 +1,23 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
-using Assets._Game.Core.Services.UserContainer;
+using _Game.Core.Debugger;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState
 {
     public class UserContainer : IUserContainer
     {
         public UserAccountState State { get; set; }
         public GameConfig GameConfig { get; set; }
 
+        public UserContainer(IMyDebugger debugger)
+        {
+            debugger.UserContainer = this;
+        }
+        
         public void AddAdsReviewed() => 
             State.AdsStatistics.AddAdsReviewed();
 
@@ -53,11 +59,11 @@ namespace Assets._Game.Core.UserState
         public void OpenNextTimeline() => 
             State.TimelineState.OpenNextTimeline();
 
-        public void RecoverFoodBoost(int dailyFoodBoostCount) => 
-            State.FoodBoost.SetFoodBoostCount(dailyFoodBoostCount);
+        public void RecoverFoodBoost(int amount, DateTime lastDailyFoodBoost) => 
+            ChangeFoodBoost(amount, true, lastDailyFoodBoost);
 
-        public void SpendFoodBoost() => 
-            SpendFoodBoostAfterBoost(1, false);
+        public void SpendFoodBoost(DateTime lastDailyFoodBoost) => 
+            ChangeFoodBoost(1, false, lastDailyFoodBoost);
 
         public void ChooseRace(Race race) => 
             State.RaceState.Change(race);
@@ -88,10 +94,10 @@ namespace Assets._Game.Core.UserState
             }
         }
 
-        private void SpendFoodBoostAfterBoost(int delta, bool isPositive)
+        private void ChangeFoodBoost(int delta, bool isPositive, DateTime lastDailyFoodBoost)
         {
             delta = isPositive ? delta : (delta * -1);
-            State.FoodBoost.ChangeFoodBoostCount(delta);
+            State.FoodBoost.ChangeFoodBoostCount(delta, lastDailyFoodBoost);
         }
 
         private void ChangeAfterPurchase(float price, bool isPositive)

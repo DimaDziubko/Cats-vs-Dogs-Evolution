@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._SystemUpdate;
@@ -7,7 +8,6 @@ using Assets._Game.Core.Data;
 using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
-using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.UI.UnitBuilderBtn.Scripts;

@@ -1,12 +1,12 @@
 ﻿using System;
 using _Game.Core.Navigation.Timeline;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.AgeDataProvider;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.LoadingScreen;
-using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 
 namespace _Game.Core.Navigation.Age

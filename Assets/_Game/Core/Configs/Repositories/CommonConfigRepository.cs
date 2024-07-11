@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets._Game.Core.Services.UserContainer;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Gameplay.Common.Scripts;
 
 namespace Assets._Game.Core.Configs.Repositories

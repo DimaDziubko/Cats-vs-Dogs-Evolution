@@ -1,8 +1,8 @@
 using System;
 using _Game.Core.Navigation.Battle;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Gameplay.BattleLauncher;
 using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;

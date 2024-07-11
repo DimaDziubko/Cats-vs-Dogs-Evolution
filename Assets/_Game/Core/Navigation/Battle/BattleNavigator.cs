@@ -1,7 +1,7 @@
 ﻿using System;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.Configs.Repositories;
-using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 

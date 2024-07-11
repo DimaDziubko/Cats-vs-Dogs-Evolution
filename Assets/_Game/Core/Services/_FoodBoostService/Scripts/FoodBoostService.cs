@@ -1,5 +1,7 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
+using _Game.Core.Services.UserContainer;
+using _Game.Core.UserState;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core._Logger;
@@ -7,13 +9,14 @@ using Assets._Game.Core.Ads;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
+using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Analytics;
-using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI._Hud;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using UnityEngine;
 
-namespace Assets._Game.Core.Services._FoodBoostService.Scripts
+namespace _Game.Core.Services._FoodBoostService.Scripts
 {
     public class FoodBoostService : IFoodBoostService, IDisposable
     {
@@ -89,18 +92,36 @@ namespace Assets._Game.Core.Services._FoodBoostService.Scripts
             var foodBoostConfig = _configRepository.GetFoodBoostConfig();
 
             DateTime now = DateTime.UtcNow;
-            TimeSpan recoverTimeSpan = TimeSpan.FromMinutes(foodBoostConfig.RecoverTimeMinutes);
 
-            if (now - FoodBoostState.LastDailyFoodBoost >= recoverTimeSpan)
+            TimeSpan timeSinceLastBoost = now - FoodBoostState.LastDailyFoodBoost;
+            int recoverableBoosts = (int)(timeSinceLastBoost.TotalMinutes / foodBoostConfig.RecoverTimeMinutes);
+
+            if (recoverableBoosts > 0)
             {
-                _userContainer.RecoverFoodBoost(foodBoostConfig.DailyFoodBoostCount);
+                int lackingBoosts = foodBoostConfig.DailyFoodBoostCount - FoodBoostState.DailyFoodBoostCount;
+                int boostsToAdd = Mathf.Min(recoverableBoosts, lackingBoosts);
+                
+                DateTime newLastDailyFoodBoost = FoodBoostState.LastDailyFoodBoost.AddMinutes(boostsToAdd * foodBoostConfig.RecoverTimeMinutes);
+                _userContainer.RecoverFoodBoost(
+                    boostsToAdd,
+                    newLastDailyFoodBoost);
+                
                 UpdateFoodBoostBtnModel();
             }
         }
         
         private void OnFoodBoostRewardedVideoComplete()
         {
-            _userContainer.SpendFoodBoost();
+            var foodBoostConfig = _configRepository.GetFoodBoostConfig();
+            if (FoodBoostState.DailyFoodBoostCount == foodBoostConfig.DailyFoodBoostCount)
+            {
+                _userContainer.SpendFoodBoost(DateTime.UtcNow);
+            }
+            else
+            {
+                _userContainer.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
+            }
+            
             FoodBoost?.Invoke(_foodBoostBtnModel.FoodAmount);
         }
         

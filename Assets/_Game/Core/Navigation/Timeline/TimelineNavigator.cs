@@ -2,6 +2,7 @@
 using System.Collections.Generic;
  using _Game.Core.Configs.Providers;
  using _Game.Core.Loading;
+ using _Game.Core.Services.UserContainer;
  using Assets._Game.Core._GameInitializer;
  using Assets._Game.Core._Logger;
  using Assets._Game.Core.Configs.Providers;
@@ -11,7 +12,6 @@ using System.Collections.Generic;
  using Assets._Game.Core.DataProviders.Timeline;
  using Assets._Game.Core.Loading;
  using Assets._Game.Core.LoadingScreen;
- using Assets._Game.Core.Services.UserContainer;
  using Assets._Game.Core.UserState;
 
  namespace _Game.Core.Navigation.Timeline

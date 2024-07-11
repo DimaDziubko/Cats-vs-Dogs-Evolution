@@ -1,5 +1,5 @@
-﻿using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.UserContainer;
+﻿using _Game.Core.Services.UserContainer;
+using Assets._Game.Core.Services.Audio;
 using DG.Tweening;
 using UnityEngine;
 

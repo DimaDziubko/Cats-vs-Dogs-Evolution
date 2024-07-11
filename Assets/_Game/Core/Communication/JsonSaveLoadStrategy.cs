@@ -1,10 +1,11 @@
 ﻿using System.IO;
-using Assets._Game.Core.UserState;
+using _Game.Core.UserState;
+using Assets._Game.Core.Communication;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Assets._Game.Core.Communication
+namespace _Game.Core.Communication
 {
     public class JsonSaveLoadStrategy : ISaveLoadStrategy
     {
@@ -12,6 +13,7 @@ namespace Assets._Game.Core.Communication
         
         public async UniTask<bool> SaveUserState(UserAccountState state, string path)
         {
+            state.Version = Application.version;
             string json = JsonConvert.SerializeObject(state);
             await File.WriteAllTextAsync(path, json);
             return true;

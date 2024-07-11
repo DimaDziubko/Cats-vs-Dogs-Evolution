@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState
 {
     public class FoodBoostState : IFoodBoostStateReadonly
     {
@@ -12,16 +12,11 @@ namespace Assets._Game.Core.UserState
         int IFoodBoostStateReadonly.DailyFoodBoostCount => DailyFoodBoostCount;
         DateTime IFoodBoostStateReadonly.LastDailyFoodBoost => LastDailyFoodBoost;
 
-        public void ChangeFoodBoostCount(int delta)
+        public void ChangeFoodBoostCount(int delta, DateTime lastDailyFoodBoost)
         {
             DailyFoodBoostCount += delta;
-            LastDailyFoodBoost = DateTime.UtcNow;
-            FoodBoostChanged?.Invoke();
-        }
-
-        public void SetFoodBoostCount(int newCount)
-        {
-            DailyFoodBoostCount = newCount;
+            LastDailyFoodBoost = lastDailyFoodBoost;
+            
             FoodBoostChanged?.Invoke();
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using _Game.Core.UserState;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Data;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
@@ -10,7 +12,7 @@ using Assets._Game.UI._MainMenu.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Core.Debugger
+namespace _Game.Core.Debugger
 {
     public class MyDebugger : MonoBehaviour, IMyDebugger
     {
@@ -64,9 +66,19 @@ namespace Assets._Game.Core.Debugger
         [ShowInInspector, ReadOnly]
         public Dictionary<Window, NotificationData> NotificationData { get; set; }
 
+        public UserContainer UserContainer { get; set; }
+
         [ShowInInspector, ReadOnly]
         public Dictionary<int, EnvironmentData> EnvironmentData =>
             GeneralDataPool.BattleStaticData.EnvironmentPool;
+
+        [ShowInInspector, ReadOnly]
+        public int DailyFoodBoost =>
+            UserContainer.State.FoodBoost.DailyFoodBoostCount;
+        
+        [ShowInInspector, ReadOnly]
+        public DateTime LastDailyFoodBoost =>
+            UserContainer.State.FoodBoost.LastDailyFoodBoost;
     }
     
 
@@ -74,5 +86,6 @@ namespace Assets._Game.Core.Debugger
     {
         GeneralDataPool GeneralDataPool { get; set; }
         Dictionary<Window, NotificationData> NotificationData { get; set; }
+        UserContainer UserContainer { get; set; }
     }
 }

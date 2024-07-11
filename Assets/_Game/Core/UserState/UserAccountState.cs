@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets._Game.Core.Services.Random;
+using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState
 {
     public class UserAccountState
     {

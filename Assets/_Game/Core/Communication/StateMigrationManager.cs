@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core.UserState;
 using Assets._Game.Core.Communication.Migrations;
 using Assets._Game.Core.UserState;
 

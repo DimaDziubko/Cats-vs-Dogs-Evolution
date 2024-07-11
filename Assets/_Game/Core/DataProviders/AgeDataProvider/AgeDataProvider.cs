@@ -2,6 +2,7 @@
 using _Game.Core.Configs.Models;
 using _Game.Core.Data.Age.Static;
 using _Game.Core.DataProviders.Facade;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
@@ -9,7 +10,6 @@ using Assets._Game.Core.Data.Age.Static;
 using Assets._Game.Core.DataProviders.AgeDataProvider;
 using Assets._Game.Core.DataProviders.BaseDataProvider;
 using Assets._Game.Core.DataProviders.Facade;
-using Assets._Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;

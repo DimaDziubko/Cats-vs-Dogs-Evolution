@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Configs.Models;
-using Assets._Game.Core.Services.UserContainer;
+using _Game.Core.Services.UserContainer;
 
 namespace Assets._Game.Core.Configs.Repositories
 {
