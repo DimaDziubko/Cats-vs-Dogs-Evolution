@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Assets._Game.Core.Services.Audio
+namespace _Game.Core.Services.Audio
 {
     public class SoundService : MonoBehaviour, ISoundService
     {
@@ -162,9 +162,7 @@ namespace Assets._Game.Core.Services.Audio
             }
         }
 
-        private void OnDestroyPoolObject(SoundEmitter soundEmitter)
-        {
+        private void OnDestroyPoolObject(SoundEmitter soundEmitter) => 
             Destroy(soundEmitter.gameObject);
-        }
     }
 }

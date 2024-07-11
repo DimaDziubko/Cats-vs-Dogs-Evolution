@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 
-namespace Assets._Game.Core.Services.Audio
+namespace _Game.Core.Services.Audio
 {
     public interface ISoundService
     {

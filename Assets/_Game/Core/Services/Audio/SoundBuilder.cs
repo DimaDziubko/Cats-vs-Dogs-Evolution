@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets._Game.Core.Services.Audio
+namespace _Game.Core.Services.Audio
 {
     public class SoundBuilder
     {
@@ -30,9 +30,9 @@ namespace Assets._Game.Core.Services.Audio
             _randomPitch = true;
             return this;
         }
-        public void Play()
+        public SoundEmitter Play()
         {
-            if (!_soundService.CanPlaySound(_soundData)) return;
+            if (!_soundService.CanPlaySound(_soundData)) return null;
 
             SoundEmitter soundEmitter = _soundService.Get(_soundData.Clip);
             soundEmitter.Initialize(_soundData);
@@ -55,6 +55,7 @@ namespace Assets._Game.Core.Services.Audio
             }
 
             soundEmitter.Play();
+            return soundEmitter;
         }
 
     }

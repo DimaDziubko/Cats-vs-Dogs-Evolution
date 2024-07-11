@@ -1,28 +1,32 @@
 ﻿using System.Collections;
 using _Game.Core.Configs.Models;
-using Assets._Game.Core.Services.Audio;
+using _Game.Core.Services.Audio;
+using _Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts
+namespace _Game.Gameplay._Units.Scripts
 {
     public abstract class UnitAttack : MonoBehaviour
     {
         protected float DisableAttackDelay { get; set; } = 0.01f;
 
-        [SerializeField] private SoundData _soundData;
+        [SerializeField] protected SoundData _soundData;
 
         protected ITarget _target;
         protected IShootProxy _shootProxy;
         protected IVFXProxy _vFXProxy;
         
-        private ISoundService _soundService;
+        protected ISoundService _soundService;
 
         private Transform _unitTransform;
 
         protected bool _isActive;
 
+        public IInteractionCache InteractionCache { get; set; }
+        
         private Vector3 Position
         {
             get => _unitTransform.position;
@@ -83,8 +87,8 @@ namespace Assets._Game.Gameplay._Units.Scripts
                     .Play();
             }
         }
-
-        private void RotateToTarget(Vector3 destination)
+        
+        protected void RotateToTarget(Vector3 destination)
         {
             if (destination.x < Position.x - Constants.ComparisonThreshold.UNIT_ROTATION_EPSILON)
             {

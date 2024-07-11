@@ -1,12 +1,12 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
-using _Game.Gameplay._Weapon.Scripts;
+using _Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Weapon.Scripts
+namespace _Game.Gameplay._Weapon.Scripts
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class SplashProjectile : Projectile
@@ -25,11 +25,15 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
 
             if (layer == Constants.Layer.PLAYER_PROJECTILE)
             {
-                _collisionMask = (1 << Constants.Layer.MELEE_ENEMY) | (1 << Constants.Layer.ENEMY_BASE) | (1 << Constants.Layer.RANGE_ENEMY);
+                _collisionMask = (1 << Constants.Layer.MELEE_ENEMY) 
+                                 | (1 << Constants.Layer.ENEMY_BASE) 
+                                 | (1 << Constants.Layer.RANGE_ENEMY);
             }
             else if (layer == Constants.Layer.ENEMY_PROJECTILE)
             {
-                _collisionMask = (1 << Constants.Layer.MELEE_PLAYER) | (1 << Constants.Layer.PLAYER_BASE) | (1 << Constants.Layer.RANGE_PLAYER);
+                _collisionMask = (1 << Constants.Layer.MELEE_PLAYER)
+                                 | (1 << Constants.Layer.PLAYER_BASE) |
+                                 (1 << Constants.Layer.RANGE_PLAYER);
             }
             else
             {

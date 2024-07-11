@@ -1,8 +1,10 @@
 ﻿using _Game.Core.Configs.Models;
+using _Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts.Attack
+namespace _Game.Gameplay._Units.Scripts.Attack
 {
     public class MeleeAttack : UnitAttack
     {

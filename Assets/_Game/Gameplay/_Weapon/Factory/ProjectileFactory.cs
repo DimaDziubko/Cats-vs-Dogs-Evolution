@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Assets._Game.Core.Factory;

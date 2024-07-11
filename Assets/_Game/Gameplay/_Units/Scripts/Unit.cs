@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using _Game.Core.Configs.Models;
+using _Game.Core.Services.Audio;
+using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Units.Scripts.Attack;
 using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Common;
 using Assets._Game.Core.Services.Audio;
@@ -10,10 +13,9 @@ using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.FSM;
 using Assets._Game.Gameplay._Units.FSM.States;
-using Assets._Game.Gameplay._Units.Scripts.Attack;
+using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts.Movement;
 using Assets._Game.Gameplay._Units.Scripts.Utils;
-using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Utils;
 using Assets._Game.Utils.Extensions;
 using Pathfinding.RVO;
@@ -21,7 +23,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Assets._Game.Gameplay._Units.Scripts
+namespace _Game.Gameplay._Units.Scripts
 {
     public class Unit : GameBehaviour
     {
@@ -103,6 +105,7 @@ namespace Assets._Game.Gameplay._Units.Scripts
                 _interactionCache = value;
                 _aggroDetection.InteractionCache = value;
                 _attackDetection.InteractionCache = value;
+                _attack.InteractionCache = value;
                 RegisterSelf();
             }
         }

@@ -581,10 +581,11 @@
               <e p="Scripts" t="Include">
                 <e p="AnimatorState.cs" t="Include" />
                 <e p="Attack" t="Include">
+                  <e p="ContinuousSplashAttack.cs" t="Include" />
                   <e p="DamageFlashEffect.cs" t="Include" />
                   <e p="MeleeAttack.cs" t="Include" />
-                  <e p="NonProjectileRangeAttack.cs" t="Include" />
-                  <e p="RangeAttack.cs" t="Include" />
+                  <e p="NonProjectileAttack.cs" t="Include" />
+                  <e p="ProjectileAttack.cs" t="Include" />
                 </e>
                 <e p="DynamicSortingOrder.cs" t="Include" />
                 <e p="Faction.cs" t="Include" />
@@ -669,6 +670,7 @@
                 <e p="BaseSmoke.cs" t="Include" />
                 <e p="MuzzleData.cs" t="Include" />
                 <e p="MuzzleFlash.cs" t="Include" />
+                <e p="PersistentVfx.cs" t="Include" />
                 <e p="ProjectileExplosion.cs" t="Include" />
                 <e p="RewardCoinVFX.cs" t="Include" />
                 <e p="UnitBlot.cs" t="Include" />
