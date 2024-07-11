@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d482ecf4fb481081b21eebc203645f, type: 3}
-  m_Name: DogNoob_1
+  m_Name: Cat_18
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 1
   Data:
     Config:
       Id: 0
       Type: 0
-      Health: 100
-      Speed: 0.2
+      Health: 20
+      Speed: 0.3
       WeaponConfig:
-        Id: 0
-        WeaponType: 0
-        Damage: 5
-        ProjectileSpeed: 0
+        Id: 20
+        WeaponType: 1
+        Damage: 20
+        ProjectileSpeed: 4
         ProjectileKey: 
         TrajectoryWarpFactor: 0
         MuzzleKey: 
@@ -31,7 +31,7 @@ MonoBehaviour:
         SplashRadius: 0
         PlayerDamageMultiplier: 1
         EnemyDamageMultiplier: 1
-      Name: Caveman
+      Name: Cat18
       CatIconKey: 
       DogIconKey: 
       DogKey: 
@@ -41,13 +41,13 @@ MonoBehaviour:
       CoinsPerKill: 12
       PlayerHealthMultiplier: 1
       EnemyHealthMultiplier: 1
-      AttackPerSecond: 0.8
-      AttackDistance: 0.14
-    Prefab: {fileID: 2302376884857268368, guid: 3a620305bfdec95428fbb64dbb4d9bbe, type: 3}
-    UnitLayer: 9
-    AggroLayer: 11
-    AttackLayer: 13
-  Icon: {fileID: -117576486, guid: 8dbf9c9469e15534ebc363d7f751200e, type: 3}
-  MuzzlePrefab: {fileID: 0}
-  ProjectilePrefab: {fileID: 0}
+      AttackPerSecond: 1
+      AttackDistance: 1.5
+    Prefab: {fileID: 5562371957400220010, guid: f5676786d3cb5754484c16cd1d7da4e9, type: 3}
+    UnitLayer: 8
+    AggroLayer: 10
+    AttackLayer: 12
+  Icon: {fileID: 1385080013, guid: c9da8c41d4a37dc44846c4cb73b96591, type: 3}
+  MuzzlePrefab: {fileID: 3363035391553935353, guid: 649422cb866241e46897327d55f01ca7, type: 3}
+  ProjectilePrefab: {fileID: 1614450496103959447, guid: e95da15b734d9ac4ca06e93770c656c4, type: 3}
   ProjectileExplosionPrefab: {fileID: 0}
