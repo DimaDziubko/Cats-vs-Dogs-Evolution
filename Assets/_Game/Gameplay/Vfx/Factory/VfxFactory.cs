@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
-using _Game.Gameplay.Vfx.Factory;
 using _Game.Gameplay.Vfx.Scripts;
-using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Assets._Game.Core.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Assets._Game.Gameplay.Vfx.Factory
+namespace _Game.Gameplay.Vfx.Factory
 {
     public enum VfxType
     {
@@ -70,6 +67,8 @@ namespace Assets._Game.Gameplay.Vfx.Factory
         public ProjectileExplosion GetProjectileExplosion(Faction faction, int weaponId)
         {
             WeaponData weaponData = GetWeaponData(faction, weaponId);
+            if (weaponData == null) return null;
+            if (weaponData.ProjectileExplosionPrefab == null) return null;
             
             if (!_projectileExplosionPools.TryGetValue(weaponId, out Queue<ProjectileExplosion> pool))
             {
@@ -97,6 +96,8 @@ namespace Assets._Game.Gameplay.Vfx.Factory
         public MuzzleFlash GetMuzzleFlash(Faction faction, int weaponId)
         {
             WeaponData weaponData = GetWeaponData(faction, weaponId);
+            if (weaponData == null ) return null;
+            if (weaponData.MuzzlePrefab == null) return null;
             
             if (!_muzzlesPools.TryGetValue(weaponId, out Queue<MuzzleFlash> pool))
             {

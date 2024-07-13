@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.DataPresenters.BattlePresenter;
+using _Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Core._GameSaver;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Pause.Scripts;
@@ -111,6 +112,7 @@ namespace _Game.Gameplay._Battle.Scripts
 
         private void OnBattleStarted()
         {
+            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
             _battleSpeed.OnBattleStarted();
             _analytics.OnBattleStarted(_battleAnalyticsData);
             _dtdAnalytics.OnBattleStarted(_battleAnalyticsData);
@@ -120,7 +122,6 @@ namespace _Game.Gameplay._Battle.Scripts
         {
             UpdateBattle(_battlePresenter.BattleData, false);
             _battleField.ResetSelf();
-            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
         }
         
         void IGameUpdate.GameUpdate()
@@ -142,7 +143,6 @@ namespace _Game.Gameplay._Battle.Scripts
         {
             StopAmbience();
             BattleInProcess = false;
-            _pauseManager.SetPaused(true);
             BattleStopped?.Invoke();
         }
         

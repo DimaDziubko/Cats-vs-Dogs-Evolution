@@ -1,15 +1,16 @@
 ﻿﻿using System;
 using System.Collections.Generic;
+ using _Game.Core.AssetManagement;
  using _Game.Core.Configs.Providers;
+ using _Game.Core.DataProviders.AgeDataProvider;
+ using _Game.Core.DataProviders.Timeline;
  using _Game.Core.Loading;
  using _Game.Core.Services.UserContainer;
  using Assets._Game.Core._GameInitializer;
  using Assets._Game.Core._Logger;
  using Assets._Game.Core.Configs.Providers;
  using Assets._Game.Core.Data;
- using Assets._Game.Core.DataProviders.AgeDataProvider;
  using Assets._Game.Core.DataProviders.BattleDataProvider;
- using Assets._Game.Core.DataProviders.Timeline;
  using Assets._Game.Core.Loading;
  using Assets._Game.Core.LoadingScreen;
  using Assets._Game.Core.UserState;
@@ -30,6 +31,7 @@ using System.Collections.Generic;
         private readonly IBattleDataProvider _battleDataProvider;
         private readonly ITimelineDataProvider _timelineDataProvider;
         private readonly ILocalConfigProvider _localConfigProvider;
+        private readonly IAssetRegistry _assetRegistry;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         
@@ -43,6 +45,7 @@ using System.Collections.Generic;
             ILocalConfigProvider localConfigProvider,
             IBattleDataProvider battleDataProvider,
             ITimelineDataProvider timelineDataProvider,
+            IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
             _userContainer = userContainer;
@@ -56,6 +59,7 @@ using System.Collections.Generic;
             _timelineDataProvider = timelineDataProvider;
             _localConfigProvider = localConfigProvider;
             _logger = logger;
+            _assetRegistry = assetRegistry;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -83,7 +87,9 @@ using System.Collections.Generic;
                 _generalDataPool,
                 _ageDataProvider, 
                 _battleDataProvider, 
-                _timelineDataProvider, 
+                _timelineDataProvider,
+                _assetRegistry,
+                _userContainer,
                 _logger));
 
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;

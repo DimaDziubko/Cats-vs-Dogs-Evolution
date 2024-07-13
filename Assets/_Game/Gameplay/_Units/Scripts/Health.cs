@@ -1,9 +1,10 @@
 ﻿using System;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts
+namespace _Game.Gameplay._Units.Scripts
 {
     public class Health : MonoBehaviour, IDamageable
     {

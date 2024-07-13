@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core.AssetManagement;
-using Assets._Game.Core.Configs.Repositories;
+using _Game.Core.AssetManagement;
+using _Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data.Timeline.Static;
 using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.Timeline
+namespace _Game.Core.DataProviders.Timeline
 {
     public class TimelineDataProvider :  ITimelineDataProvider
     {
@@ -21,9 +21,9 @@ namespace Assets._Game.Core.DataProviders.Timeline
             _assetRegistry = assetRegistry;
         }
         
-        public async UniTask<TimelineStaticData> Load()
+        public async UniTask<TimelineStaticData> Load(int timelineId)
         {
-            var infoItemTask = LoadTimelineInfoItems();
+            var infoItemTask = LoadTimelineInfoItems(timelineId);
             
             var results = await UniTask.WhenAll(
                 infoItemTask);
@@ -36,7 +36,7 @@ namespace Assets._Game.Core.DataProviders.Timeline
             return data;
         }
 
-        private async UniTask<Dictionary<int, TimlineInfoItemStaticData>> LoadTimelineInfoItems()
+        private async UniTask<Dictionary<int, TimlineInfoItemStaticData>> LoadTimelineInfoItems(int timelineId)
         {
             Dictionary<int, TimlineInfoItemStaticData> data = new Dictionary<int, TimlineInfoItemStaticData>();
             
@@ -46,7 +46,10 @@ namespace Assets._Game.Core.DataProviders.Timeline
 
             foreach (var config in ageConfigs)
             {
-                var icon = await _assetRegistry.LoadAsset<Sprite>(config.AgeIconKey, Constants.CacheContext.TIMELINE);
+                var icon = await _assetRegistry.LoadAsset<Sprite>(
+                    config.AgeIconKey,
+                    timelineId,
+                    Constants.CacheContext.TIMELINE);
                 
                 var model = new TimlineInfoItemStaticData
                 {

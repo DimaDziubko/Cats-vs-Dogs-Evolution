@@ -71,7 +71,7 @@ namespace _Game.Core.DataPresenters._BaseDataPresenter
             PlayerBaseDataUpdated?.Invoke(GetBaseModel(Constants.CacheContext.AGE));
         }
 
-        private void OnUpgradeItemChanged(UpgradeItemType type, UpgradeItemDynamicData obj)
+        private void OnUpgradeItemChanged(UpgradeItemType type, UpgradeItemDynamicData data)
         {
             if(type == UpgradeItemType.BaseHealth)
                 PlayerBaseDataUpdated?.Invoke(GetBaseModel(Constants.CacheContext.AGE));

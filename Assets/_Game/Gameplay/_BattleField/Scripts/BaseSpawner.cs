@@ -54,10 +54,10 @@ namespace _Game.Gameplay._BattleField.Scripts
             CalculateBasePoints();
             UpdatePlayerBase();
             
-            _basePresenter.BaseUpdated += UpdaterBase;
+            _basePresenter.BaseUpdated += UpdateBase;
         }
 
-        private void UpdaterBase(Faction faction)
+        private void UpdateBase(Faction faction)
         {
             switch (faction)
             {

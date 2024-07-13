@@ -4,7 +4,6 @@ using _Game.Gameplay.Vfx.Factory;
 using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._Units.Factory;
-using Assets._Game.Gameplay.Vfx.Factory;
 
 namespace Assets._Game.Core.Factory
 {

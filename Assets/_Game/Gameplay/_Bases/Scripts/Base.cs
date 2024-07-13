@@ -1,4 +1,7 @@
-﻿using _Game.Gameplay._Units.Scripts.Attack;
+﻿using _Game.Common;
+using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Units.Scripts.Attack;
 using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Bases.Factory;

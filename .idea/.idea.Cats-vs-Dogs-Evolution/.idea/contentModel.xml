@@ -47,7 +47,6 @@
               <e p="SerializeInterfaceAttribute.cs" t="Include" />
             </e>
             <e p="GameBehaviour.cs" t="Include" />
-            <e p="GameBehaviourCollection.cs" t="Include" />
             <e p="ICoroutineRunner.cs" t="Include" />
             <e p="IRewardAnimator.cs" t="Include" />
             <e p="RewardAnimator.cs" t="Include" />
@@ -229,7 +228,6 @@
               </e>
               <e p="BattleDataProvider" t="Include">
                 <e p="BattleDataProvider.cs" t="Include" />
-                <e p="IBattleDataProvider.cs" t="Include" />
               </e>
               <e p="Common" t="Include">
                 <e p="CommonItemsDataProvider.cs" t="Include" />
@@ -256,12 +254,12 @@
               <e p="UnitDataProviders" t="Include">
                 <e p="IUnitDataProvider.cs" t="Include" />
                 <e p="IUniversalUnitDataProvider.cs" t="Include" />
-                <e p="UnitDataProvider.cs" t="Include" />
                 <e p="UnitLoadOptions.cs" t="Include" />
                 <e p="UniversalUnitDataProvider.cs" t="Include" />
               </e>
               <e p="UnitUpgradeDataProvider" t="Include">
                 <e p="IUnitUpgradeDataProvider.cs" t="Include" />
+                <e p="UnitDataProvider.cs" t="Include" />
                 <e p="UnitUpgradeDataProvider.cs" t="Include" />
               </e>
               <e p="WeaponDataProviders" t="Include">
@@ -865,7 +863,6 @@
             </e>
             <e p="IntRange.cs" t="Include" />
             <e p="Popups" t="Include">
-              <e p="AlertPopup.cs" t="Include" />
               <e p="AlertPopupProvider.cs" t="Include" />
               <e p="IAlertPopupProvider.cs" t="Include" />
             </e>
@@ -873,9 +870,22 @@
         </e>
         <e p="Assets" t="Include">
           <e p="_Game" t="Include">
+            <e p="Common" t="Include">
+              <e p="GameBehaviourCollection.cs" t="Include" />
+            </e>
             <e p="Core" t="Include">
+              <e p="DataProviders" t="Include">
+                <e p="BattleDataProvider" t="Include">
+                  <e p="IBattleDataProvider.cs" t="Include" />
+                </e>
+              </e>
               <e p="Loading" t="Include">
                 <e p="DataLoadingOperation.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Utils" t="Include">
+              <e p="Popups" t="Include">
+                <e p="AlertPopup.cs" t="Include" />
               </e>
             </e>
           </e>

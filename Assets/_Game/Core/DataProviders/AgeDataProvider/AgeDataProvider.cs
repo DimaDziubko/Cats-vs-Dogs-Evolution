@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
 using _Game.Core.Data.Age.Static;
+using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.Data.Age.Static;
-using Assets._Game.Core.DataProviders.AgeDataProvider;
-using Assets._Game.Core.DataProviders.BaseDataProvider;
-using Assets._Game.Core.DataProviders.Facade;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
@@ -30,6 +28,7 @@ namespace _Game.Core.DataProviders.AgeDataProvider
         private readonly IDataProviderFacade _dataProvider;
         private readonly ICommonItemsConfigRepository _commonItemsConfigRepository;
         private readonly IMyLogger _logger;
+        private readonly IAssetRegistry _assetRegistry;
         private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
 
@@ -38,6 +37,7 @@ namespace _Game.Core.DataProviders.AgeDataProvider
             ICommonItemsConfigRepository commonItemsConfigRepository,
             IUserContainer persistentData,
             IDataProviderFacade dataProvider,
+            IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
             _logger = logger;
@@ -45,19 +45,20 @@ namespace _Game.Core.DataProviders.AgeDataProvider
             _persistentData = persistentData;
             _dataProvider = dataProvider;
             _commonItemsConfigRepository = commonItemsConfigRepository;
+            _assetRegistry = assetRegistry;
         }
         
-        public async UniTask<AgeStaticData> Load()
+        public async UniTask<AgeStaticData> Load(int timelineId)
         {
             AgeConfig config = _ageConfigRepository.GetAgeConfig(TimelineState.AgeId);
             
-            var unitTask = LoadUnits(config.Warriors);
-            var weaponTask = LoadWeapons(config.Warriors);
-            var builderTask = LoadUnitBuilderData(config.Warriors);
-            var baseTask = LoadBase(config);
-            var unitUpgradeItemTask = LoadUnitUpgradeItems(config.Warriors);
-            var foodIconTask = LoadFoodIcons(_commonItemsConfigRepository);
-            var towerIconTask = LoadTowerIcon(_commonItemsConfigRepository);
+            var unitTask = LoadUnits(config.Warriors, timelineId);
+            var weaponTask = LoadWeapons(config.Warriors, timelineId);
+            var builderTask = LoadUnitBuilderData(config.Warriors, timelineId);
+            var baseTask = LoadBase(config, timelineId);
+            var unitUpgradeItemTask = LoadUnitUpgradeItems(config.Warriors, timelineId);
+            var foodIconTask = LoadFoodIcons(_commonItemsConfigRepository, timelineId);
+            var towerIconTask = LoadBaseIcon(_commonItemsConfigRepository, timelineId);
     
             var results = await UniTask.WhenAll(
                 unitTask, weaponTask, builderTask, baseTask, unitUpgradeItemTask, foodIconTask, towerIconTask);
@@ -72,29 +73,41 @@ namespace _Game.Core.DataProviders.AgeDataProvider
                 FoodIcons = results.Item6,
                 TowerHealthIcon = results.Item7,
             };
-
+            
+            var previousTimeline = TimelineState.TimelineId - 1;
+            _assetRegistry.ClearContext(previousTimeline, Constants.CacheContext.AGE);
             return ageStaticData;
         }
 
-        private async UniTask<Sprite> LoadTowerIcon(ICommonItemsConfigRepository itemsConfigRepository) => 
-            await _dataProvider.LoadTowerIcon(itemsConfigRepository, Constants.CacheContext.AGE);
-
-        private async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(ICommonItemsConfigRepository itemsConfigRepository) => 
-            await _dataProvider.LoadFoodIcons(itemsConfigRepository, Constants.CacheContext.AGE);
-
-        private async UniTask<DataPool<UnitType, UnitUpgradeItemStaticData>> LoadUnitUpgradeItems(IEnumerable<WarriorConfig> configs)
+    private async UniTask<Sprite> LoadBaseIcon(ICommonItemsConfigRepository itemsConfigRepository, int timelineId)
         {
+            _logger.Log("Base icon loading");
+            return await _dataProvider.LoadBaseIcon(itemsConfigRepository,
+                new LoadContext(){CacheContext = Constants.CacheContext.BATTLE, Timeline = timelineId});
+        }
+
+        private async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(ICommonItemsConfigRepository itemsConfigRepository, int timelineId)
+        {
+            _logger.Log("Food icon loading");
+            return await _dataProvider.LoadFoodIcons(itemsConfigRepository,
+                new LoadContext(){CacheContext = Constants.CacheContext.BATTLE, Timeline = timelineId});
+        }
+
+        private async UniTask<DataPool<UnitType, UnitUpgradeItemStaticData>> LoadUnitUpgradeItems(IEnumerable<WarriorConfig> configs, int timelineId)
+        {
+            _logger.Log("Upgrade items loading");
             return await _dataProvider
                 .LoadUnitUpgradeItems(configs,
                     new LoadContext()
                     {
                         Faction = Faction.Player,
                         Race = RaceState.CurrentRace,
+                        Timeline = timelineId,
                         CacheContext = Constants.CacheContext.AGE
                     });
         }
 
-        private async UniTask<BaseStaticData> LoadBase(AgeConfig config)
+        private async UniTask<BaseStaticData> LoadBase(AgeConfig config, int timelineId)
         {
             string key = config.BaseKey;
             
@@ -103,27 +116,49 @@ namespace _Game.Core.DataProviders.AgeDataProvider
                 Faction = Faction.Player,
                 CacheContext = Constants.CacheContext.AGE,
                 PrefabKey = key,
+                Timeline = timelineId,
                 CoinsAmount = 0,
             };
+            
+            _logger.Log("Bases loading");
             
             return await _dataProvider.LoadBase(baseLoadOptions);
         }
 
-        private async UniTask<DataPool<UnitType, UnitBuilderBtnStaticData>> LoadUnitBuilderData(IEnumerable<WarriorConfig> configs) =>
-            await _dataProvider
+        private async UniTask<DataPool<UnitType, UnitBuilderBtnStaticData>> LoadUnitBuilderData(
+            IEnumerable<WarriorConfig> configs,
+            int timelineId)
+        {
+            _logger.Log("Units builder data loading");
+            
+            return await _dataProvider
                 .LoadUnitBuilderData(
-                    configs, 
+                    configs,
                     new LoadContext()
                     {
                         Faction = Faction.Player,
                         Race = RaceState.CurrentRace,
+                        Timeline = timelineId,
                         CacheContext = Constants.CacheContext.AGE
                     });
+        }
 
-        private async UniTask<DataPool<int, WeaponData>> LoadWeapons(IEnumerable<WarriorConfig> configs) => 
-            await _dataProvider.LoadWeapons(configs,  new LoadContext() { Faction = Faction.Player, CacheContext = Constants.CacheContext.AGE});
+        private async UniTask<DataPool<int, WeaponData>> LoadWeapons(
+            IEnumerable<WarriorConfig> configs,
+            int timelineId)
+        {
+            _logger.Log("Weapons loading");
+            return await _dataProvider.LoadWeapons(configs,
+                new LoadContext() {Faction = Faction.Player, Timeline = timelineId, CacheContext = Constants.CacheContext.AGE});
+        }
 
-        private async UniTask<DataPool<UnitType, UnitData>> LoadUnits(IEnumerable<WarriorConfig> configs) => 
-            await  _dataProvider.LoadUnits(configs,  new LoadContext() { Faction = Faction.Player, CacheContext = Constants.CacheContext.AGE});
+        private async UniTask<DataPool<UnitType, UnitData>> LoadUnits(
+            IEnumerable<WarriorConfig> configs,
+            int timelineId)
+        {
+            _logger.Log("Units loading");
+            return await _dataProvider.LoadUnits(configs,
+                new LoadContext() {Faction = Faction.Player, Timeline = timelineId, CacheContext = Constants.CacheContext.AGE});
+        }
     }
 }

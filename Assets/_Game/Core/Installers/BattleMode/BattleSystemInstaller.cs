@@ -1,4 +1,5 @@
 ﻿using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleStateHandler;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
@@ -45,7 +46,7 @@ namespace Assets._Game.Core.Installers.BattleMode
             Container.Bind<BattleStateHandler>().AsSingle();
 
         private void BindBattleMode() =>
-            Container.BindInterfacesAndSelfTo<GameModes._BattleMode.Scripts.BattleMode>().AsSingle();
+            Container.BindInterfacesAndSelfTo<global::_Game.GameModes._BattleMode.Scripts.BattleMode>().AsSingle();
 
         private void BindBattleMediator() => 
             Container.BindInterfacesAndSelfTo<BattleMediator>().AsSingle().NonLazy();

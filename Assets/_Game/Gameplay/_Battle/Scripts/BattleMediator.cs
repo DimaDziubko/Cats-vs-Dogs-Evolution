@@ -2,19 +2,18 @@
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
+using _Game.GameModes._BattleMode.Scripts;
 using _Game.UI._Environment;
 using Assets._Game.Core._GameSaver;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.Services._BattleSpeedService._Scripts;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.GameModes._BattleMode.Scripts;
 using Assets._Game.Gameplay._BattleStateHandler;
 using Assets._Game.Gameplay._Race;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay.Food.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._BattleUIController;
-using Assets._Game.UI._Environment;
 using Zenject;
 
 namespace _Game.Gameplay._Battle.Scripts

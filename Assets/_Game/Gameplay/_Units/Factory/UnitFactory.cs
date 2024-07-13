@@ -53,7 +53,7 @@ namespace Assets._Game.Gameplay._Units.Factory
             {
                 instance = pool.Dequeue();
                 instance.gameObject.SetActive(true);
-                instance.ResetUnit();
+                instance.Reset();
             }
             else
             {

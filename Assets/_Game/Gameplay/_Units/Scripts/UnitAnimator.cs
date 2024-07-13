@@ -1,11 +1,12 @@
 ﻿using System;
 using Assets._Game.Common.Animation.Scripts;
+using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
-namespace Assets._Game.Gameplay._Units.Scripts
+namespace _Game.Gameplay._Units.Scripts
 {
     public class UnitAnimator : MonoBehaviour, IAnimationStateReader
     {
@@ -28,21 +29,25 @@ namespace Assets._Game.Gameplay._Units.Scripts
 
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
+        
+        [ShowInInspector, ReadOnly]
         public AnimatorState State { get; private set; }
 
+        [ShowInInspector, ReadOnly] 
         private Transform _target;
 
         private LookAtJob _lookAtJob;
         private AnimationScriptPlayable _lookAtPlayable;
         
-        [ShowInInspector] 
+        [ShowInInspector, ReadOnly] 
         private bool IsIkActive => _lookAtJob.isActive;
 
         private bool _isLookAtJobInitialized;
         private bool _lookAtPlayableConnected;
 
         private float _attackPerSecond;
-        
+
+        [ShowInInspector, ReadOnly] 
         public bool IsAttacking => State == AnimatorState.Attack;
         
         public void PlayAttack()
@@ -94,8 +99,8 @@ namespace Assets._Game.Gameplay._Units.Scripts
 
         public void SetTarget(Transform targetTransform)
         {
-            if(!_weaponAimBone) return;
             _target = targetTransform;
+            if(!_weaponAimBone) return;
             UpdateLookAtJobTarget();
         }
         

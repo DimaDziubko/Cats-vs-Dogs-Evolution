@@ -1,5 +1,6 @@
 ﻿using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.UI._Hud;
 using Assets._Game.Common;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core.LoadingScreen;

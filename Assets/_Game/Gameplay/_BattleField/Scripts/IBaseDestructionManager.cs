@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using _Game.Gameplay._Bases.Scripts;
-using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
     public interface IBaseDestructionManager
     {

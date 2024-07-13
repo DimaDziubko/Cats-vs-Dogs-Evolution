@@ -4,7 +4,6 @@ using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Common;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Vfx.Factory;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
@@ -25,6 +24,7 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         void IVFXProxy.SpawnMuzzleFlash(MuzzleData data)
         {
             MuzzleFlash muzzle = _vfxFactory.GetMuzzleFlash(data.Faction, data.WeaponId);
+            if(muzzle == null) return;
             muzzle.Initialize(data.Position, data.Direction);
             _vfxEntities.Add(muzzle);
         }
@@ -32,6 +32,7 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         void IVFXProxy.SpawnProjectileExplosion(ExplosionData explosionData)
         {
             ProjectileExplosion explosion = _vfxFactory.GetProjectileExplosion(explosionData.Faction, explosionData.WeaponId);
+            if(explosion == null) return;
             explosion.Initialize(explosionData.Positon);
             _vfxEntities.Add(explosion);
         }

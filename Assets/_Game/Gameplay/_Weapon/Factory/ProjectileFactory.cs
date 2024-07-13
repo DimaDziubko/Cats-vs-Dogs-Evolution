@@ -40,7 +40,9 @@ namespace _Game.Gameplay._Weapon.Factory
         public Projectile Get(Faction faction,  int weaponId)
         {
             WeaponData weaponData = GetWeaponData(faction, weaponId);
-            
+            if (weaponData == null) return null;
+            if (weaponData.ProjectilePrefab == null) return null;
+
             if (!_projectilesPools.TryGetValue((faction, weaponId), out Queue<Projectile> pool))
             {
                 pool = new Queue<Projectile>();

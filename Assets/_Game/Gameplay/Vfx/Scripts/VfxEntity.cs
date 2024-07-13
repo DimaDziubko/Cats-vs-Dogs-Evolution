@@ -1,6 +1,6 @@
-﻿using _Game.Gameplay.Vfx.Factory;
+﻿using _Game.Common;
+using _Game.Gameplay.Vfx.Factory;
 using Assets._Game.Common;
-using Assets._Game.Gameplay.Vfx.Factory;
 
 namespace Assets._Game.Gameplay.Vfx.Scripts
 {

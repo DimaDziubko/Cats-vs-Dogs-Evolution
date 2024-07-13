@@ -1,7 +1,10 @@
 ﻿using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay._Units.FSM;
+using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
+using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.FSM.States
+namespace _Game.Gameplay._Units.FSM.States
 {
     public class AttackState : IUnitFsmState
     {
@@ -37,6 +40,7 @@ namespace Assets._Game.Gameplay._Units.FSM.States
 
         public void Enter()
         {
+            Debug.Log($"Unit {_animator.gameObject.name} ENTER ATTACK STATE");
             _animator.PlayAttack();
         }
 
@@ -44,7 +48,7 @@ namespace Assets._Game.Gameplay._Units.FSM.States
         public void GameUpdate()
         {
             UpdateDetectors();
-            
+
             if (_attackDetection.HasTarget)
             {
                 return;
@@ -72,6 +76,7 @@ namespace Assets._Game.Gameplay._Units.FSM.States
 
         public void Exit()
         {
+            Debug.Log($"Unit {_animator.gameObject.name} EXIT ATTACK STATE");
             _animator.StopAttack();
         }
     }

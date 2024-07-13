@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Configs.Models;
-using _Game.Core.DataProviders.Facade;
+using _Game.Core.DataProviders.Ambience;
+using _Game.Core.DataProviders.BaseDataProvider;
+using _Game.Core.DataProviders.Common;
+using _Game.Core.DataProviders.EnvironmentDataProvider;
+using _Game.Core.DataProviders.UnitBuilderDataProvider;
+using _Game.Core.DataProviders.UnitDataProviders;
+using _Game.Core.DataProviders.UnitUpgradeDataProvider;
 using _Game.Core.DataProviders.WeaponDataProviders;
 using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.DataProviders.Ambience;
-using Assets._Game.Core.DataProviders.BaseDataProvider;
-using Assets._Game.Core.DataProviders.Common;
-using Assets._Game.Core.DataProviders.EnvironmentDataProvider;
-using Assets._Game.Core.DataProviders.UnitBuilderDataProvider;
-using Assets._Game.Core.DataProviders.UnitDataProviders;
-using Assets._Game.Core.DataProviders.UnitUpgradeDataProvider;
-using Assets._Game.Core.DataProviders.WeaponDataProviders;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -22,7 +20,7 @@ using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.Facade
+namespace _Game.Core.DataProviders.Facade
 {
     public class DataProviderFacade : IDataProviderFacade
     {
@@ -73,21 +71,21 @@ namespace Assets._Game.Core.DataProviders.Facade
         public async UniTask<BaseStaticData> LoadBase(BaseLoadOptions options) => 
             await _baseStaticDataProvider.Load(options);
         
-        public async UniTask<EnvironmentData> LoadEnvironment(string key, int cacheContext) => 
-            await _environmentDataProvider.Load(key, cacheContext);
+        public async UniTask<EnvironmentData> LoadEnvironment(string key, LoadContext context) => 
+            await _environmentDataProvider.Load(key, context);
 
         public async UniTask<DataPool<UnitType, UnitUpgradeItemStaticData>> LoadUnitUpgradeItems(
             IEnumerable<WarriorConfig> configs, 
             LoadContext cacheContext) => 
             await _unitUpgradeDataProvider.Load(configs, cacheContext);
 
-        public async UniTask<AudioClip> LoadAmbience(string key, int cacheContext) => 
-            await _ambienceDataProvider.Load(key, cacheContext);
+        public async UniTask<AudioClip> LoadAmbience(string key, LoadContext context) => 
+            await _ambienceDataProvider.Load(key, context);
 
-        public async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(ICommonItemsConfigRepository itemsConfigRepository, int context) => 
+        public async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(ICommonItemsConfigRepository itemsConfigRepository, LoadContext context) => 
             await _commonItemDataProvider.LoadFoodIcons(itemsConfigRepository, context);
         
-        public async UniTask<Sprite> LoadTowerIcon(ICommonItemsConfigRepository itemsConfigRepository, int context) => 
-            await _commonItemDataProvider.LoadTowerIcon(itemsConfigRepository, context);
+        public async UniTask<Sprite> LoadBaseIcon(ICommonItemsConfigRepository itemsConfigRepository, LoadContext context) => 
+            await _commonItemDataProvider.LoadBaseIcon(itemsConfigRepository, context);
     }
 }

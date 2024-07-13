@@ -6,12 +6,13 @@ using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Timer.Scripts;
+using Assets._Game.UI._Hud;
 using Assets._Game.UI._SpeedBoostBtn.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.Utils.Popups;
 using UnityEngine;
 
-namespace Assets._Game.UI._Hud
+namespace _Game.UI._Hud
 {
     public class Hud : MonoBehaviour
     {
@@ -194,12 +195,15 @@ namespace Assets._Game.UI._Hud
             var popup = await _alertPopupProvider.Load();
             var isConfirmed = await popup.Value.AwaitForDecision("End battle?");
             
-            _pauseManager.SetPaused(false);
             _pauseToggle.UpdateToggleStateManually(false);
             
             if (isConfirmed)
             {
                 QuitBattle?.Invoke();
+            }
+            else
+            {
+                _pauseManager.SetPaused(false);
             }
             
             popup.Dispose();

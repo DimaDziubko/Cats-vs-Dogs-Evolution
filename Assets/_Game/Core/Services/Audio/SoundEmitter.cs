@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Core.Services.Audio
@@ -8,12 +9,16 @@ namespace _Game.Core.Services.Audio
     {
         private ISoundService _soundService;
         public SoundData Data { get; private set; }
-
+        
+        [ShowInInspector, ReadOnly]
         private Coroutine _playingCoroutine;
+        private bool _isPaused;
 
         [SerializeField] private Transform _transform;
         [SerializeField] private AudioSource _audioSource;
 
+        public bool IsPlaying => _audioSource.isPlaying;
+        public bool IsPaused => _isPaused;
         public Transform Transform => _transform;
         public void Construct(ISoundService soundService) => _soundService = soundService;
     
@@ -49,7 +54,7 @@ namespace _Game.Core.Services.Audio
         
         }
 
-        public void Play() {
+        public void PlayOneShot() {
             if (_playingCoroutine != null) {
                 StopCoroutine(_playingCoroutine);
             }
@@ -58,19 +63,39 @@ namespace _Game.Core.Services.Audio
             _playingCoroutine = StartCoroutine(WaitForSoundToEnd());
         }
 
+        public void Play()
+        {
+            _audioSource.Play();
+        }
+
+        public void SetPaused(bool isPaused)
+        {
+            if (isPaused)
+            {
+                _isPaused = true;
+                _audioSource.Pause();
+            }
+            else
+            {
+                _isPaused = false;
+                _audioSource.UnPause();
+            }
+        }
+        
         IEnumerator WaitForSoundToEnd() 
         {
-            yield return new WaitWhile(() => _audioSource.isPlaying);
+            yield return new WaitWhile(() => IsPlaying);
             Stop();
         }
 
         public void Stop() 
         {
-            if (_playingCoroutine != null) {
+            if (_playingCoroutine != null)
+            {
                 StopCoroutine(_playingCoroutine);
                 _playingCoroutine = null;
             }
-        
+
             _audioSource.Stop();
             _soundService.ReturnToPool(this);
         }

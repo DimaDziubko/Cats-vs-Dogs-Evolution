@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Common;
 
 namespace Assets._Game.Common
 {
@@ -45,7 +46,15 @@ namespace Assets._Game.Common
                 t.SetPaused(isPaused);
             }
         }
-        
+
+        public void Reset()
+        {
+            foreach (var t in _behaviors)
+            {
+                t.Reset();
+            }
+        }
+
         public void SetBattleSpeedFactor(float speedFactor)
         {
             for (var i = 0; i < _behaviors.Count; i++)
@@ -53,7 +62,7 @@ namespace Assets._Game.Common
                 _behaviors[i].SetSpeedFactor(speedFactor);
             }
         }
-        
+
         public void Clear()
         {
             foreach (var t in _behaviors)

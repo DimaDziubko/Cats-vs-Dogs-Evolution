@@ -54,7 +54,15 @@ namespace _Game.Core.Services.Audio
                 _soundService.FrequentSoundEmitters[_soundData.Clip].Enqueue(soundEmitter);
             }
 
-            soundEmitter.Play();
+            if (_soundData.Loop)
+            {
+                soundEmitter.Play();
+            }
+            else
+            {
+                soundEmitter.PlayOneShot();
+            }
+            
             return soundEmitter;
         }
 

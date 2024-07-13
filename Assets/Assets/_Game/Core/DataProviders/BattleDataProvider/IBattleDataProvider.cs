@@ -5,6 +5,6 @@ namespace Assets._Game.Core.DataProviders.BattleDataProvider
 {
     public interface IBattleDataProvider
     {
-        UniTask<BattleStaticData> Load();
+        UniTask<BattleStaticData> Load(int timelineId);
     }
 }

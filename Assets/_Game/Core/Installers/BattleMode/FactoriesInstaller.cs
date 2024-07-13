@@ -13,7 +13,6 @@ using Assets._Game.Core.Services.Random;
 using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._Units.Factory;
-using Assets._Game.Gameplay.Vfx.Factory;
 using Assets._Game.UI._Environment.Factory;
 using UnityEngine;
 using UnityEngine.Serialization;

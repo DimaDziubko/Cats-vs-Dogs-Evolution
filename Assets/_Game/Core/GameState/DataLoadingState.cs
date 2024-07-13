@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.AssetManagement;
+using _Game.Core.DataProviders.AgeDataProvider;
+using _Game.Core.DataProviders.Timeline;
+using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.DataProviders.AgeDataProvider;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
-using Assets._Game.Core.DataProviders.Timeline;
+using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
     public class DataLoadingState : IPayloadedState<Queue<ILoadingOperation>>
     {
@@ -16,6 +19,8 @@ namespace Assets._Game.Core.GameState
         private readonly IMyLogger _logger;
         private readonly IGameStateMachine _stateMachine;
         private readonly ITimelineDataProvider _timelineDataProvider;
+        private readonly IAssetRegistry _assetRegistry;
+        private readonly IUserContainer _userContainer;
 
         public DataLoadingState(
             IGeneralDataPool generalDataPool,
@@ -23,7 +28,9 @@ namespace Assets._Game.Core.GameState
             IBattleDataProvider battleDataProvider,
             ITimelineDataProvider timelineDataProvider,
             IMyLogger logger,
-            IGameStateMachine stateMachine)
+            IGameStateMachine stateMachine,
+            IAssetRegistry assetRegistry,
+            IUserContainer userContainer)
         {
             _generalDataPool = generalDataPool;
             _ageDataProvider = ageDataProvider;
@@ -31,6 +38,8 @@ namespace Assets._Game.Core.GameState
             _timelineDataProvider = timelineDataProvider;
             _logger = logger;
             _stateMachine = stateMachine;
+            _assetRegistry = assetRegistry;
+            _userContainer = userContainer;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
@@ -40,6 +49,8 @@ namespace Assets._Game.Core.GameState
                 _ageDataProvider,
                 _battleDataProvider,
                 _timelineDataProvider,
+                _assetRegistry,
+                _userContainer,
                 _logger));
 
             _stateMachine.Enter<InitializationState, Queue<ILoadingOperation>>(loadingOperations);

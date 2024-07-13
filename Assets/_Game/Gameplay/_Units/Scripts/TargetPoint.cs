@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets._Game.Gameplay._Units.Scripts;
+using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts
+namespace _Game.Gameplay._Units.Scripts
 {
     public class TargetPoint : MonoBehaviour, ITarget
     {

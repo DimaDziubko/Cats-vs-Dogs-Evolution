@@ -1,19 +1,19 @@
 using System;
 using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._BattleField.Scripts;
+using _Game.UI._Hud;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Gameplay._Bases.Scripts;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI._Hud;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
     public class BattleField : IBaseDestructionHandler
     {
@@ -28,6 +28,7 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
+        private readonly IPauseManager _pauseManager;
 
         private readonly CoinSpawner _coinSpawner;
         private readonly VfxSpawner _vfxSpawner;
@@ -52,6 +53,7 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         {
             _cameraService = cameraService;
             _audioService = audioService;
+            _pauseManager = pauseManager;
             
             _coinSpawner = new CoinSpawner(
                 factoriesHolder.CoinFactory, 
@@ -143,10 +145,14 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         {
             _vfxSpawner.SpawnBasesSmoke(@base.Position);
             _audioService.PlayBaseDestructionSFX();
+            _unitSpawner.ResetUnits();
             _unitSpawner.KillUnits(faction);
         }
 
-        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base) {}
+        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base)
+        {
+            _pauseManager.SetPaused(true);
+        }
 
         private void CalculateBasePoints()
         {

@@ -1,7 +1,7 @@
 ﻿using Assets._Game.Gameplay._Weapon.Scripts;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core.DataProviders.WeaponDataProviders
+namespace _Game.Core.DataProviders.WeaponDataProviders
 {
     public interface IWeaponDataProvider
     {

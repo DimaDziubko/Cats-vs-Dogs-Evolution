@@ -1,60 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core.Configs.Repositories;
+using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
+using _Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 
-namespace Assets._Game.Core.DataPresenters._TimelineInfoPresenter
+namespace _Game.Core.DataPresenters._TimelineInfoPresenter
 {
     public class TimelineInfoPresenter : ITimelineInfoPresenter, IDisposable
     {
         public event Action<TimelineInfoModel> TimelineInfoDataUpdated;
 
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly ITimelineConfigRepository _timelineConfigRepository;
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IGameInitializer _gameInitializer;
+        private readonly ITimelineNavigator _timelineNavigator;
         private readonly IMyLogger _logger;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+
         private TimelineInfoModel _timelineInfoModel;
 
         public TimelineInfoPresenter(
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             ITimelineConfigRepository timelineConfigRepository,
             IMyLogger logger,
             IGeneralDataPool generalDataPool,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            ITimelineNavigator timelineNavigator)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _timelineConfigRepository = timelineConfigRepository;
             _logger = logger;
             _generalDataPool = generalDataPool;
             _gameInitializer = gameInitializer;
+            _timelineNavigator = timelineNavigator;
             gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
         {
             PrepareTimelineInfoData();
-            TimelineState.NextTimelineOpened += OnNextTimelineOpened;
+            _timelineNavigator.TimelineChanged += OnTimelineChanged;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
         }
 
         void IDisposable.Dispose()
         {
-            TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
+            _timelineNavigator.TimelineChanged -= OnTimelineChanged;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
             _gameInitializer.OnPostInitialization -= Init;
         }
 
         private void OnNextAgeOpened() => UpdateTimelineInfoData();
-        private void OnNextTimelineOpened() => UpdateTimelineInfoData();
+        private void OnTimelineChanged()
+        {
+            PrepareTimelineInfoData();
+            UpdateTimelineInfoData();
+        }
 
         private void  PrepareTimelineInfoData()
         {

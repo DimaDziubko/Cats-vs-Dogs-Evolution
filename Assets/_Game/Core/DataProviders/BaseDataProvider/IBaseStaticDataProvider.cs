@@ -1,7 +1,7 @@
 ﻿using Assets._Game.Gameplay._Bases.Scripts;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core.DataProviders.BaseDataProvider
+namespace _Game.Core.DataProviders.BaseDataProvider
 {
     public interface IBaseStaticDataProvider
     {

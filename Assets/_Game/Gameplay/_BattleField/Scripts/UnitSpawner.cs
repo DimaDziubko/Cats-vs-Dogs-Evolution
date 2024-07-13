@@ -133,6 +133,12 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
             }
         }
 
+        public void ResetUnits()
+        {
+            _playerUnits.Reset();
+            _enemyUnits.Reset();
+        }
+
         private void CalculateUnitSpawnPoints()
         {
             float correction = 0.025f;

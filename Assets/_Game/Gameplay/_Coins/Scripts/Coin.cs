@@ -1,4 +1,5 @@
-﻿using Assets._Game.Common;
+﻿using _Game.Common;
+using Assets._Game.Common;
 using Assets._Game.Gameplay._Coins.Factory;
 using UnityEngine;
 

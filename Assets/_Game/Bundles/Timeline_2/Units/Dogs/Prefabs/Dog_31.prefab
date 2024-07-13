@@ -166,6 +166,8 @@ MonoBehaviour:
   _damageFlash: {fileID: 9146284845258189680}
   _dynamicSortingOrder: {fileID: 4130501895967632848}
   _rVOController: {fileID: -1496783176766863812}
+  _vfxes:
+  - {fileID: 8544458566173719718}
   "_stateInd\u0456cator": {fileID: 0}
 --- !u!114 &5457728362176403305
 MonoBehaviour:
@@ -636,6 +638,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1271303420002989648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870048376236849400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6526888169385973387}
+  _weaponAimBone: {fileID: 6236004245172131202}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!114 &3314628980841861044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +671,7 @@ MonoBehaviour:
     MixerGroup: {fileID: 1224378660055227196, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}
     Loop: 1
     PlayOnAwake: 0
-    FrequentSound: 1
+    FrequentSound: 0
     Mute: 0
     BypassEffects: 0
     BypassListenerEffects: 0
@@ -685,22 +703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleSystem: {fileID: 3765154720211328486}
---- !u!114 &1271303420002989648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870048376236849400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 6526888169385973387}
-  _weaponAimBone: {fileID: 6236004245172131202}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!4 &2079275133449265307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: a4474c63a4d25c74fafd065562500d97, type: 3}

@@ -1,4 +1,5 @@
 ﻿using _Game.UI._Environment;
+using _Game.UI._Hud;
 using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay.GameResult.Scripts;

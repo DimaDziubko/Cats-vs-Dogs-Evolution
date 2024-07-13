@@ -1,6 +1,6 @@
 using System;
+using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.DataPresenters._TimelineInfoPresenter;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
@@ -14,7 +14,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 {
     public class TimelineInfoWindow : MonoBehaviour
     {
-    public event Action Opened;
+        public event Action Opened;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ScrollRect _scrollRect;

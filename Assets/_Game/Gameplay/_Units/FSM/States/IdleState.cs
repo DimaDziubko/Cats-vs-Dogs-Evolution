@@ -1,4 +1,6 @@
-﻿namespace Assets._Game.Gameplay._Units.FSM.States
+﻿using _Game.Gameplay._Units.FSM;
+
+namespace Assets._Game.Gameplay._Units.FSM.States
 {
     public class IdleState : IUnitFsmState
     {

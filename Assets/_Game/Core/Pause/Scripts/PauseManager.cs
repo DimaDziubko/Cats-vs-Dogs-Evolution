@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using Assets._Game.Core.Pause.Scripts;
 
-namespace Assets._Game.Core.Pause.Scripts
+namespace _Game.Core.Pause.Scripts
 {
-    public sealed class PauseManager : IPauseHandler, IPauseManager
+    public sealed class 
+        PauseManager : IPauseHandler, IPauseManager
     {
         private readonly List<IPauseHandler> _handlers = new List<IPauseHandler>();
 

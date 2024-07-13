@@ -7,7 +7,6 @@ using Assets._Game.Core.Factory;
 using Assets._Game.Creatives.Creative_1.Scenario;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Vfx.Factory;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;

@@ -52,7 +52,7 @@ namespace _Game.Core.Services.Audio
                     }
                     catch
                     {
-                        //Debug.LogWarning("SoundEmitter is already released");
+                        Debug.LogWarning("SoundEmitter is already released");
                     }
 
                     return false;

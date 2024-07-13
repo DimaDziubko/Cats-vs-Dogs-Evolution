@@ -1,24 +1,25 @@
-﻿using _Game.Gameplay._Units.Scripts;
-using Assets._Game.Core.AssetManagement;
-using Assets._Game.Core.Configs.Repositories;
+﻿using _Game.Core.AssetManagement;
+using _Game.Core.DataProviders.UnitDataProviders;
+using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Core._Logger;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.UnitDataProviders
+namespace _Game.Core.DataProviders.UnitUpgradeDataProvider
 {
     public class UnitDataProvider : IUnitDataProvider
     {
         private readonly IAssetRegistry _assetRegistry;
-        private readonly IEconomyConfigRepository _economyConfigRepository;
+        private readonly IMyLogger _logger;
 
         public UnitDataProvider(
             IAssetRegistry assetRegistry,
-            IEconomyConfigRepository economyConfigRepository)
+            IMyLogger logger)
         {
             _assetRegistry = assetRegistry;
-            _economyConfigRepository = economyConfigRepository;
+            _logger = logger;
         }
 
         public async UniTask<UnitData> LoadUnitData(UnitLoadOptions options)
@@ -38,8 +39,10 @@ namespace Assets._Game.Core.DataProviders.UnitDataProviders
                     break;
             }
 
-            var go = await _assetRegistry.LoadAsset<GameObject>(unitKey, options.CacheContext);
+            var go = await _assetRegistry.LoadAsset<GameObject>(unitKey, options.Timeline, options.CacheContext);
 
+            _logger.Log($"Unit with id {options.Config.Id} load successfully");
+            
             return new UnitData
             {
                 Config = options.Config,

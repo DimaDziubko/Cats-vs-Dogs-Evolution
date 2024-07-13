@@ -5,6 +5,7 @@ using _Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Gameplay._Units.Scripts
@@ -15,6 +16,7 @@ namespace _Game.Gameplay._Units.Scripts
 
         [SerializeField] protected SoundData _soundData;
 
+        [ShowInInspector, ReadOnly]
         protected ITarget _target;
         protected IShootProxy _shootProxy;
         protected IVFXProxy _vFXProxy;
@@ -76,6 +78,7 @@ namespace _Game.Gameplay._Units.Scripts
         //Animation event
         protected virtual void OnAttack()
         {
+            if(_target == null) return;
             RotateToTarget(_target.Transform.position);
             
             if (_soundService != null && _soundData != null)
@@ -99,5 +102,7 @@ namespace _Game.Gameplay._Units.Scripts
                 Rotation = Quaternion.Euler(0, 0, 0);
             }
         }
+
+        public virtual void SetPaused(in bool isPaused) { }
     }
 }

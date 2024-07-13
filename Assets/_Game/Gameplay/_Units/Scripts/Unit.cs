@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections;
+using _Game.Common;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Units.FSM;
+using _Game.Gameplay._Units.FSM.States;
 using _Game.Gameplay._Units.Scripts.Attack;
 using _Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Common;
-using Assets._Game.Core.Services.Audio;
+using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Core.Services.Random;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Factory;
-using Assets._Game.Gameplay._Units.FSM;
 using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts.Movement;
@@ -45,7 +46,8 @@ namespace _Game.Gameplay._Units.Scripts
         [SerializeField] private DamageFlashEffect _damageFlash;
         [SerializeField] private DynamicSortingOrder _dynamicSortingOrder;
         [SerializeField] private RVOController _rVOController;
-
+        [SerializeField] private PersistentVfx[] _vfxes;
+        
         //Utils
         [SerializeField] private StateIndіcator _stateIndіcator;
 
@@ -208,7 +210,7 @@ namespace _Game.Gameplay._Units.Scripts
             SetSpeedFactor(speedFactor);
         }
 
-        public void ResetUnit()
+        public override void Reset()
         {
             _isDead = false;
             _health.ResetHealth();
@@ -224,8 +226,8 @@ namespace _Game.Gameplay._Units.Scripts
         {
             RotateHeathBarToCamera();
             
-            //if(_stateIndіcator != null)
-                //_stateIndіcator.SetColor(_fsm.StateIndicator());
+            // if(_stateIndіcator != null)
+            //     _stateIndіcator.SetColor(_fsm.StateIndicator());
             
             if (_isDead)
             {
@@ -327,6 +329,11 @@ namespace _Game.Gameplay._Units.Scripts
             }
             _animator.SetSpeed(isPaused ? 0 : _tempAnimatorSpeedFactor);
             _aMove.SetSpeed(isPaused ? 0 : _tempMoveSpeedFactor);
+            _attack.SetPaused(isPaused);
+            foreach (var vfx in _vfxes)
+            {
+                vfx.SetPaused(isPaused);
+            }
         }
 
         public override void SetSpeedFactor(float speedFactor)
@@ -356,6 +363,7 @@ namespace _Game.Gameplay._Units.Scripts
             _targetPoint = GetComponent<TargetPoint>();
             _aggroDetection = GetComponents<TargetDetection>()[0];
             _attackDetection = GetComponents<TargetDetection>()[1];
+            _vfxes = GetComponentsInChildren<PersistentVfx>();
         }
         
         [Button]

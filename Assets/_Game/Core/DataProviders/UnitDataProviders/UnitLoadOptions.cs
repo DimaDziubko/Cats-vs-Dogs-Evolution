@@ -3,7 +3,7 @@ using _Game.Core.Configs.Models;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 
-namespace Assets._Game.Core.DataProviders.UnitDataProviders
+namespace _Game.Core.DataProviders.UnitDataProviders
 {
     public class UnitLoadOptions
     {
@@ -12,5 +12,6 @@ namespace Assets._Game.Core.DataProviders.UnitDataProviders
         public int CacheContext;
         public Race CurrentRace;
         public CancellationToken CancellationToken;
+        public int Timeline;
     }
 }

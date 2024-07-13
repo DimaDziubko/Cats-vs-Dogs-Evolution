@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-namespace Assets._Game.Common
+namespace _Game.Common
 {
     public abstract class GameBehaviour : MonoBehaviour
     {
@@ -8,5 +9,6 @@ namespace Assets._Game.Common
         public abstract void Recycle();
         public virtual void SetPaused(in bool isPaused) {}
         public virtual void SetSpeedFactor(float speedFactor) { }
+        public virtual void Reset() { }
     }
 }

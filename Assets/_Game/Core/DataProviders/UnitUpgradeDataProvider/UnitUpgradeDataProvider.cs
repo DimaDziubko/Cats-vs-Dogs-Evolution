@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
+using _Game.Core.DataProviders.Facade;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.DataProviders.Facade;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.DataProviders.UnitUpgradeDataProvider
+namespace _Game.Core.DataProviders.UnitUpgradeDataProvider
 {
     public class UnitUpgradeDataProvider : IUnitUpgradeDataProvider
     {
@@ -33,7 +33,7 @@ namespace Assets._Game.Core.DataProviders.UnitUpgradeDataProvider
             {
                 string iconKey = config.GetUnitIconKeyForRace(context.Race);
                 
-                Sprite icon = await _assetRegistry.LoadAsset<Sprite>(iconKey, context.CacheContext);
+                Sprite icon = await _assetRegistry.LoadAsset<Sprite>(iconKey, context.Timeline, context.CacheContext);
 
                 var item = new UnitUpgradeItemStaticData
                 {
@@ -42,6 +42,8 @@ namespace Assets._Game.Core.DataProviders.UnitUpgradeDataProvider
                     Name = config.Name,
                     Price = config.Price,
                 };
+                
+                _logger.Log($"Unit upgrade item with type {config.Type} loaded successfully");
                 
                 pool.Add(config.Type, item);
             }

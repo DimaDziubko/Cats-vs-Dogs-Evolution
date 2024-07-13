@@ -3,6 +3,7 @@ using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Gameplay._Units.Scripts.Attack
@@ -16,10 +17,13 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         private float _damage;
         private int _collisionMask;
 
+        [ShowInInspector, ReadOnly]
         private bool _isAttacking;
 
         private SoundEmitter _currentSoundEmitter;
-        
+
+        [ShowInInspector, ReadOnly] 
+        private string _hash;
         public override void Construct(            
             WeaponConfig config,
             Faction faction,
@@ -49,6 +53,12 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         
         protected override void OnAttack()
         {
+            if (_target == null || !_isActive)
+            {
+                BreakAttack();
+                return;
+            }
+            
             if (!_isAttacking)
             {
                 RotateToTarget(_target.Transform.position);
@@ -60,7 +70,10 @@ namespace _Game.Gameplay._Units.Scripts.Attack
                         .WithRandomPitch()
                         .WithPosition(Vector3.zero)
                         .Play();
+
+                    _hash = _currentSoundEmitter.GetHashCode().ToString();
                 }
+                
                 _isAttacking = true;
             }
             
@@ -94,9 +107,16 @@ namespace _Game.Gameplay._Units.Scripts.Attack
             }
         }
 
-        private void StopAttack()
+        public override void SetPaused(in bool isPaused)
         {
-            if (_currentSoundEmitter != null)
+            if(_currentSoundEmitter != null)
+                _currentSoundEmitter.SetPaused(isPaused);
+        }
+
+        public void BreakAttack()
+        {
+            if (_currentSoundEmitter != null && 
+                _currentSoundEmitter.IsPlaying)
             {
                 _currentSoundEmitter.Stop();
                 _currentSoundEmitter = null;

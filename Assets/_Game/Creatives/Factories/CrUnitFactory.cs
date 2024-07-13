@@ -49,7 +49,7 @@ namespace Assets._Game.Creatives.Factories
             {
                 instance = pool.Dequeue();
                 instance.gameObject.SetActive(true);
-                instance.ResetUnit();
+                instance.Reset();
             }
             else
             {
