@@ -74,13 +74,16 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void OnTravelTabModelUpdated(TravelTabModel tabModel)
         {
-            UpdateTravelConditionHint(tabModel.CanTravel);
+            UpdateTravelConditionHint(tabModel.CanTravel, tabModel.Hint);
             UpdateTravelInfoText(tabModel.NextTimelineNumber);
             UpdateTravelButton(tabModel.CanTravel);
         }
 
-        private void UpdateTravelConditionHint(in bool viewModelCanTravel) => 
-            _travelConditionHint.enabled = !viewModelCanTravel;
+        private void UpdateTravelConditionHint(in bool modelCanTravel, string hint)
+        {
+            _travelConditionHint.text = hint;
+            _travelConditionHint.enabled = !modelCanTravel;
+        }
 
         private void UpdateTravelInfoText(int nextTimelineNumber) => 
             _travelInfo.text = $"Travel to timeline {nextTimelineNumber}";

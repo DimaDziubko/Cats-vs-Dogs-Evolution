@@ -9,7 +9,8 @@ namespace _Game.Core.Configs.Models
 {
     public class GameConfig
     {
-        public TimelineConfig Timeline;
+        public int TimelinesCount;
+        public TimelineConfig CurrentTimeline;
         public CommonConfig CommonConfig;
         public FoodBoostConfig FoodBoostConfig;
         public List<BattleSpeedConfig> BattleSpeedConfigs;

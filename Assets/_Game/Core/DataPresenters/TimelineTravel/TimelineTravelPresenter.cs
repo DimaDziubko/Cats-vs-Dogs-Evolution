@@ -4,6 +4,7 @@ using _Game.Core.Configs.Repositories;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.UI.TimelineInfoWindow.Scripts;
+using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
@@ -91,16 +92,26 @@ namespace _Game.Core.DataPresenters.TimelineTravel
         private void UpdateTravelData()
         {
             int timelineNumberOffset = 2;
+
+            string hint = "Win battle 6 first";
+            
+            if (TimelineState.AllBattlesWon && !IsNextTimeline)
+            {
+                hint = "Coming soon...";    
+            }
             
             var travelViewModel = new TravelTabModel()
             {
                 NextTimelineNumber = TimelineState.TimelineId + timelineNumberOffset,
-                CanTravel = TimelineState.AllBattlesWon,
+                CanTravel = TimelineState.AllBattlesWon && IsNextTimeline,
+                Hint = hint,
             };
             
             TravelTabModelUpdated?.Invoke(travelViewModel);
         }
 
+        private bool IsNextTimeline => TimelineState.TimelineId < _timelineConfigRepository.LastTimeline();
+        
         private bool IsNextAge() => 
             TimelineState.AgeId < _timelineConfigRepository.LastAge();
     }

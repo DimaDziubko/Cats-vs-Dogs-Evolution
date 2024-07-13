@@ -65,7 +65,7 @@ namespace _Game.Core.Loading
             onProgress?.Invoke(0.0f);
             var config = _localConfigProvider.GetConfig();
             JObject jObject = JObject.Parse(config);
-            _userContainer.GameConfig.Timeline = jObject.ForTimeline(TimelineState.TimelineId);
+            _userContainer.GameConfig.CurrentTimeline = jObject.ForTimeline(TimelineState.TimelineId);
             onProgress?.Invoke(1.0f);
         }
 

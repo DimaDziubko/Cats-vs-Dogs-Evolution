@@ -15,10 +15,11 @@ namespace _Game.Utils.Extensions
         {
             var config = new GameConfig()
             {
-                Timeline = ExtractTimeline(jsonData, timelineId),
+                CurrentTimeline = ExtractTimeline(jsonData, timelineId),
                 BattleSpeedConfigs = ExtractBattleSpeedConfig(jsonData),
                 CommonConfig = ExtractCommonConfig(jsonData),
                 FoodBoostConfig = ExtractFoodBoostConfig(jsonData),
+                TimelinesCount = ExtractTimelinesCount(jsonData),
             };
             
             //TODO Delete later
@@ -26,7 +27,7 @@ namespace _Game.Utils.Extensions
     
             return config;
         }
-
+        
         private static FoodBoostConfig ExtractFoodBoostConfig(JObject jsonData)
         {
             var foodBoostToken = jsonData[Constants.ConfigKeys.FOOD_BOOST_CONFIG];
@@ -74,5 +75,15 @@ namespace _Game.Utils.Extensions
             return timelineToken.ToObject<TimelineConfig>();
         }
         
+        private static int ExtractTimelinesCount(JObject jsonData)
+        {
+            var timelinesToken = jsonData[Constants.ConfigKeys.TIMELINES];
+            if (timelinesToken == null)
+            {
+                Debug.LogError("Timelines array is null");
+                return 0;
+            }
+            return timelinesToken.Count();
+        }
     }
 }
