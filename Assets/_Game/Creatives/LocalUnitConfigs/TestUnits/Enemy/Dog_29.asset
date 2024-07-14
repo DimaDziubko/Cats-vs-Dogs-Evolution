@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d482ecf4fb481081b21eebc203645f, type: 3}
+  m_Name: Dog_29
+  m_EditorClassIdentifier: 
+  Type: 0
+  Data:
+    Config:
+      Id: 0
+      Type: 0
+      Health: 40
+      Speed: 0.3
+      WeaponConfig:
+        Id: 29
+        WeaponType: 1
+        Damage: 20
+        ProjectileSpeed: 4
+        ProjectileKey: 
+        TrajectoryWarpFactor: 0
+        MuzzleKey: 
+        ProjectileExplosionKey: 
+        SplashRadius: 0
+        PlayerDamageMultiplier: 1
+        EnemyDamageMultiplier: 1
+      Name: Cat24
+      CatIconKey: 
+      DogIconKey: 
+      DogKey: 
+      Price: 0
+      CatKey: 
+      FoodPrice: 3
+      CoinsPerKill: 12
+      PlayerHealthMultiplier: 1
+      EnemyHealthMultiplier: 1
+      AttackPerSecond: 0.8
+      AttackDistance: 1.5
+    Prefab: {fileID: 5562371957400220010, guid: 1cac02ce85fc6a34e89e2bf0cb304244, type: 3}
+    UnitLayer: 9
+    AggroLayer: 11
+    AttackLayer: 13
+  Icon: {fileID: 1781188371, guid: b0d29207e32d4dd4ba441889b452de75, type: 3}
+  MuzzlePrefab: {fileID: 3363035391553935353, guid: 0e3cbb6f42b979c4080859ec945cb181, type: 3}
+  ProjectilePrefab: {fileID: 0}
+  ProjectileExplosionPrefab: {fileID: 479435258176956833, guid: a19d8c4d7615b3b41aa90101f074547b, type: 3}

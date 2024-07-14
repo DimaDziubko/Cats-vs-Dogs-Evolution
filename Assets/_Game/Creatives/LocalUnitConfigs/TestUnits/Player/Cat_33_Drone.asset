@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d482ecf4fb481081b21eebc203645f, type: 3}
+  m_Name: Cat_33_Drone
+  m_EditorClassIdentifier: 
+  Type: 1
+  Data:
+    Config:
+      Id: 31
+      Type: 1
+      Health: 90
+      Speed: 0.25
+      WeaponConfig:
+        Id: 35
+        WeaponType: 1
+        Damage: 5
+        ProjectileSpeed: 6
+        ProjectileKey: 
+        TrajectoryWarpFactor: 0
+        MuzzleKey: 
+        ProjectileExplosionKey: 
+        SplashRadius: 0
+        PlayerDamageMultiplier: 1
+        EnemyDamageMultiplier: 1
+      Name: Flame thrower
+      CatIconKey: 
+      DogIconKey: 
+      DogKey: 
+      Price: 0
+      CatKey: 
+      FoodPrice: 3
+      CoinsPerKill: 12
+      PlayerHealthMultiplier: 1
+      EnemyHealthMultiplier: 1
+      AttackPerSecond: 5
+      AttackDistance: 1.5
+    Prefab: {fileID: 5562371957400220010, guid: babc153a580b7b04ea558b067a7f18dc, type: 3}
+    UnitLayer: 8
+    AggroLayer: 10
+    AttackLayer: 12
+  Icon: {fileID: -1971087651, guid: 35da3bf6492695744b8f7f8e000a4f04, type: 3}
+  MuzzlePrefab: {fileID: 0}
+  ProjectilePrefab: {fileID: 1614450496103959447, guid: 2c05ccfdb3797b5469f4837bb776ea9b, type: 3}
+  ProjectileExplosionPrefab: {fileID: 0}
