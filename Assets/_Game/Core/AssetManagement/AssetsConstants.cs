@@ -13,5 +13,7 @@ namespace _Game.Core.AssetManagement
         public const string SHOP = "Shop";
         public const string SETTINGS = "Settings";
         public const string TRAVEL_ANIMATION_SCREEN = "TravelAnimationScreen";
+        public const string RATE_GAME_WINDOW = "RateGameWindow";
+
     }
 }
