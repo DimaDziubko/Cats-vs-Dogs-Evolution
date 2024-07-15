@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
-#if UNITY_IOS
+﻿#if UNITY_IOS
 using UnityEngine.iOS;
 #elif UNITY_ANDROID
 using Google.Play.Review;
 #endif
+using System;
+using System.Collections;
+using Assets._Game.Core._Logger;
+using Assets._Game.Core.Services.Audio;
+using Assets._Game.Core.Services.Camera;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace Assets._Game.UI.RateGame.Scripts
+namespace _Game.UI.RateGame.Scripts
 {
-    public class RateGameWindow : MonoBehaviour
+    public class RateGameScreen : MonoBehaviour
     {
-
         private const string PP_RATE_GAME_CLICKED = "isrategameclicked_save";
 
         public event Action OnClose;
@@ -35,25 +35,8 @@ namespace Assets._Game.UI.RateGame.Scripts
         private IAudioService _audioService;
         private IMyLogger _logger;
 
-
-        private void OnEnable()
-        {
-            OnClose += Hide;
-            OnRateGame += RateGame;
-
-            _noCloseButton.onClick.AddListener(() =>
-            {
-                OnClose?.Invoke();
-                PlayButtonSound();
-            });
-
-            _rateGameButton.onClick.AddListener(() =>
-            {
-                OnRateGame?.Invoke();
-                PlayButtonSound();
-            });
-        }
-
+        private UniTaskCompletionSource<bool> _taskCompletion;
+        
         private void Start()
         {
 #if UNITY_ANDROID
@@ -80,37 +63,58 @@ namespace Assets._Game.UI.RateGame.Scripts
         public void Construct(IWorldCameraService cameraService, IAudioService audioService, IMyLogger logger)
         {
             _logger = logger;
-
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _audioService = audioService;
-        }
-
-        public void Show()
-        {
             Unsubscribe();
             Subscribe();
-
+        }
+        
+        public async UniTask<bool> AwaitForDecision()
+        {
+            _canvas.enabled = true;
+            _taskCompletion = new UniTaskCompletionSource<bool>();
+            var result = await _taskCompletion.Task;
+            _canvas.enabled = false;
+            return result;
+        }
+        
+        public void Show()
+        {
             if (PlayerPrefs.HasKey(PP_RATE_GAME_CLICKED))
                 return;
 
             _canvas.enabled = true;
         }
 
+        
         private void Subscribe()
         {
+            OnClose += Close;
+            OnRateGame += RateGame;
 
+            _noCloseButton.onClick.AddListener(() =>
+            {
+                OnClose?.Invoke();
+                PlayButtonSound();
+            });
+
+            _rateGameButton.onClick.AddListener(() =>
+            {
+                OnRateGame?.Invoke();
+                PlayButtonSound();
+            });
         }
 
         private void Unsubscribe()
         {
+            OnClose -= Close;
+            OnRateGame -= RateGame;
 
+            _noCloseButton.onClick.RemoveAllListeners();
+            _rateGameButton.onClick.RemoveAllListeners();
         }
 
-        public void Hide()
-        {
-            Unsubscribe();
-            _canvas.enabled = false;
-        }
+        private void Close() => _taskCompletion.TrySetResult(true);
 
 
         private void PlayButtonSound() =>
@@ -124,7 +128,7 @@ namespace Assets._Game.UI.RateGame.Scripts
 #elif UNITY_ANDROID
             StartCoroutine(LaunchReview());
 #endif
-            Invoke(nameof(Hide), 1f);
+            //Invoke(nameof(Close), 1f);
 
             PlayerPrefs.SetInt(PP_RATE_GAME_CLICKED, 1);
         }
@@ -147,19 +151,11 @@ namespace Assets._Game.UI.RateGame.Scripts
                 DirectlyOpen();
                 yield break;
             }
+            
+            _taskCompletion.TrySetResult(true);
         }
 #endif
         private void DirectlyOpen() { Application.OpenURL($"https://play.google.com/store/apps/details?id={Application.identifier}"); }
-
-
-        private void OnDisable()
-        {
-            OnClose -= Hide;
-            OnRateGame -= RateGame;
-
-            _noCloseButton.onClick.RemoveAllListeners();
-
-            _rateGameButton.onClick.RemoveAllListeners();
-        }
+        
     }
 }

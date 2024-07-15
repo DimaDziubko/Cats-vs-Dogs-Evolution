@@ -4,13 +4,11 @@ using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._BattleUIController;
-using Assets._Game.UI._Environment;
-using Assets._Game.UI._Hud;
 using Assets._Game.UI.UnitBuilderBtn.Scripts;
 using UnityEngine;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.BattleMode
+namespace _Game.Core.Installers.BattleMode
 {
     public class UIInstaller : MonoInstaller
     {

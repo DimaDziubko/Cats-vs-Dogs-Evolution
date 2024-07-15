@@ -6,17 +6,16 @@ using Assets._Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.UI.RateGame.Scripts
+namespace _Game.UI.RateGame.Scripts
 {
-    public class RateGameController : LocalAssetLoader
+    public class RateGameScreenProvider : LocalAssetLoader, IRateGameProvider
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-
         private readonly IMyLogger _logger;
 
 
-        public RateGameController(
+        public RateGameScreenProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
             IMyLogger logger)
@@ -28,9 +27,9 @@ namespace Assets._Game.UI.RateGame.Scripts
 
         }
 
-        public async UniTask<Disposable<RateGameWindow>> Load()
+        public async UniTask<Disposable<RateGameScreen>> Load()
         {
-            var popup = await LoadDisposable<RateGameWindow>(AssetsConstants.RATE_GAME_WINDOW);
+            var popup = await LoadDisposable<RateGameScreen>(AssetsConstants.RATE_GAME_WINDOW);
 
             popup.Value.Construct(
                 _cameraService,
@@ -39,5 +38,10 @@ namespace Assets._Game.UI.RateGame.Scripts
                 );
             return popup;
         }
+    }
+
+    public interface IRateGameProvider
+    {
+        UniTask<Disposable<RateGameScreen>> Load();
     }
 }

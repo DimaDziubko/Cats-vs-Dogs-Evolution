@@ -1,4 +1,5 @@
-﻿using Assets._Game.Core.LoadingScreen;
+﻿using _Game.UI.RateGame.Scripts;
+using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._MainMenu.Scripts;
@@ -35,7 +36,10 @@ namespace Assets._Game.Core.Installers.Core
             BindGameResultWindowProvider();
             BindTimelineInfoWindowProvider();
             BindFactionSelectionWindowProvider();
+            BindGameRateScreenProvider();
         }
+
+        private void BindGameRateScreenProvider() => Container.BindInterfacesTo<RateGameScreenProvider>();
 
         private void BindHeader() =>
             Container

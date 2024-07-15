@@ -1,9 +1,10 @@
-﻿using Assets._Game.Core._SystemUpdate;
+﻿using _Game.UI.RateGame.Scripts;
+using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Gameplay._Race;
 using UnityEngine;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.BattleMode
+namespace _Game.Core.Installers.BattleMode
 {
     public class LocalCoreSystemInstaller : MonoInstaller
     {
@@ -13,16 +14,16 @@ namespace Assets._Game.Core.Installers.BattleMode
         {
             BindSystemUpdate();
             BindRaceSelectionController();
+            BindRateGameChecker();
         }
 
-        private void BindRaceSelectionController()
-        {
+        private void BindRateGameChecker() => 
+            Container.Bind<RateGameChecker>().AsSingle();
+
+        private void BindRaceSelectionController() => 
             Container.Bind<RaceSelectionController>().AsSingle();
-        }
 
-        private void BindSystemUpdate()
-        {
+        private void BindSystemUpdate() => 
             Container.Bind<ISystemUpdate>().To<SystemUpdate>().FromInstance(_systemUpdate).AsSingle();
-        }
     }
 }
