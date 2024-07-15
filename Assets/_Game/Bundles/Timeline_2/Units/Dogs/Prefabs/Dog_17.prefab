@@ -106,6 +106,7 @@ MonoBehaviour:
   _damageFlash: {fileID: 337922808462736668}
   _dynamicSortingOrder: {fileID: 7773907392927249726}
   _rVOController: {fileID: 4788171088394745149}
+  _vfxes: []
   "_stateInd\u0456cator": {fileID: 0}
 --- !u!114 &8787181096896849274
 MonoBehaviour:
@@ -853,22 +854,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8879930469374955752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5230852747628358007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 1593324262395706371}
-  _weaponAimBone: {fileID: 0}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!114 &1410118928585022509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,7 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundData:
-    Clip: {fileID: 8300000, guid: 30900215ba16e03428a74be627f5f242, type: 3}
+    Clip: {fileID: 8300000, guid: 697d337ff39d13446bb333cab737563d, type: 3}
     MixerGroup: {fileID: 1224378660055227196, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}
     Loop: 0
     PlayOnAwake: 0
@@ -904,6 +889,22 @@ MonoBehaviour:
     IgnoreListenerVolume: 0
     IgnoreListenerPause: 0
     RolloffMode: 0
+--- !u!114 &8879930469374955752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230852747628358007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1593324262395706371}
+  _weaponAimBone: {fileID: 0}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!4 &6367985457116541204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 7e17b602deec1314f8b9cb079f1d7a9f, type: 3}

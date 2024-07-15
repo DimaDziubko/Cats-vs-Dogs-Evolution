@@ -229,6 +229,7 @@ MonoBehaviour:
   _damageFlash: {fileID: 1281634084169381575}
   _dynamicSortingOrder: {fileID: 405946085012542362}
   _rVOController: {fileID: 1626427347798413012}
+  _vfxes: []
   "_stateInd\u0456cator": {fileID: 0}
 --- !u!114 &3112122452185169024
 MonoBehaviour:
@@ -873,22 +874,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4914931796869217392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7373064194119880380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 7826980154201774183}
-  _weaponAimBone: {fileID: 0}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!114 &4815922840366872641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,7 +887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundData:
-    Clip: {fileID: 8300000, guid: e21c4abccae925a4693f3dd5c6ad3b55, type: 3}
+    Clip: {fileID: 8300000, guid: 2286d54f5a680494b97ccad2d3465826, type: 3}
     MixerGroup: {fileID: 1224378660055227196, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}
     Loop: 0
     PlayOnAwake: 0
@@ -924,6 +909,22 @@ MonoBehaviour:
     IgnoreListenerVolume: 0
     IgnoreListenerPause: 0
     RolloffMode: 0
+--- !u!114 &4914931796869217392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7373064194119880380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 7826980154201774183}
+  _weaponAimBone: {fileID: 0}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!212 &7646859218007737766 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 840683276609890983, guid: 6522fac3016d7c44d80a84e5a25d18eb, type: 3}

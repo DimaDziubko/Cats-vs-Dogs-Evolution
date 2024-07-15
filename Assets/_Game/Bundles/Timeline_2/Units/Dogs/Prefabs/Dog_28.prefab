@@ -166,6 +166,7 @@ MonoBehaviour:
   _damageFlash: {fileID: 3989997081288150206}
   _dynamicSortingOrder: {fileID: 2663380978646735542}
   _rVOController: {fileID: 7071288954930050605}
+  _vfxes: []
   "_stateInd\u0456cator": {fileID: 0}
 --- !u!114 &3112122452185169024
 MonoBehaviour:
@@ -721,6 +722,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &93568374847504228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4124458449945131848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2085981362614134488}
+  _weaponAimBone: {fileID: 7180059053253908018}
+  _minAngle: -15
+  _maxAngle: 15
 --- !u!114 &5982793080347372131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,22 +775,6 @@ MonoBehaviour:
     RolloffMode: 0
   _projectileGenerator: {fileID: 3739827130328226667}
   _muzzleTransform: {fileID: 4953163971117136348}
---- !u!114 &93568374847504228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4124458449945131848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 2085981362614134488}
-  _weaponAimBone: {fileID: 7180059053253908018}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!4 &7180059053253908018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6736957807164001479, guid: 5fdd2d89a50a0934c97cc970cb262022, type: 3}
