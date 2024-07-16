@@ -47,7 +47,8 @@ namespace _Game.Core.Services.Audio
                 {
                     try
                     {
-                        soundEmitter.Stop();
+                        if(soundEmitter.gameObject.activeInHierarchy)
+                            soundEmitter.Stop();
                         return true;
                     }
                     catch

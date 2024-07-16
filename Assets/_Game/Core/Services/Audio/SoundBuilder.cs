@@ -35,6 +35,7 @@ namespace _Game.Core.Services.Audio
             if (!_soundService.CanPlaySound(_soundData)) return null;
 
             SoundEmitter soundEmitter = _soundService.Get(_soundData.Clip);
+            if (soundEmitter == null) return null;
             soundEmitter.Initialize(_soundData);
             soundEmitter.Transform.position = _position;
             soundEmitter.Transform.parent = _soundService.Transform;
