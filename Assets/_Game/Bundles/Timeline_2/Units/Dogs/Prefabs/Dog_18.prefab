@@ -135,6 +135,7 @@ MonoBehaviour:
   _damageFlash: {fileID: 902288213728197301}
   _dynamicSortingOrder: {fileID: 2548311801812024707}
   _rVOController: {fileID: 1058438432490444289}
+  _vfxes: []
   "_stateInd\u0456cator": {fileID: 0}
 --- !u!114 &5457728362176403305
 MonoBehaviour:
@@ -477,14 +478,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6268709906662628770}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.70710677}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3442755179539683351}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!1 &7746082651196073493
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,6 +845,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7417788493596309582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4626128651805423363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1176150091065311455}
+  _weaponAimBone: {fileID: 1921625057106254457}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!114 &8301629531690789417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,22 +898,6 @@ MonoBehaviour:
     RolloffMode: 0
   _projectileGenerator: {fileID: 900691293889460072}
   _muzzleTransform: {fileID: 0}
---- !u!114 &7417788493596309582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4626128651805423363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 1176150091065311455}
-  _weaponAimBone: {fileID: 1921625057106254457}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!212 &5511900563898465305 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 840683276609890983, guid: 211f2c3ccd8959749998e55d34d49762, type: 3}

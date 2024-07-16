@@ -3,8 +3,6 @@ using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Weapon.Factory;
-using Assets._Game.Common;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
@@ -24,7 +22,7 @@ namespace _Game.Gameplay._Weapon.Scripts
         [SerializeField] private SoundData _soundData;
 
         private ISoundService _soundService;
-        
+
         [ShowInInspector]
         private ITarget _target;
 
@@ -66,20 +64,20 @@ namespace _Game.Gameplay._Weapon.Scripts
             int layer)
         {
             _soundService = soundService;
-            
+
             Faction = faction;
-            
+
             WeaponId = config.Id;
-            
+
             gameObject.layer = layer;
-            
+
             _damage = config.GetProjectileDamageForFaction(faction);
-            
+
             _move.Construct(
-                _transform, 
+                _transform,
                 config.ProjectileSpeed,
                 config.TrajectoryWarpFactor);
-            
+
             _isDead = false;
         }
 
@@ -89,7 +87,7 @@ namespace _Game.Gameplay._Weapon.Scripts
             {
                 HandleNotMoving();
             }
-            
+
             if (_isDead)
             {
                 Recycle();
@@ -100,17 +98,17 @@ namespace _Game.Gameplay._Weapon.Scripts
             {
                 _move.Move();
             }
-            
-            if(_rotator) _rotator.Rotate();
-            
+
+            if (_rotator) _rotator.Rotate();
+
             return true;
         }
 
         public void PrepareIntro(
             IVFXProxy vfxProxy,
-            Vector3 launchPosition, 
-            ITarget target, 
-            IInteractionCache cache, 
+            Vector3 launchPosition,
+            ITarget target,
+            IInteractionCache cache,
             Quaternion rotation,
             float speedFactor)
         {
@@ -119,10 +117,10 @@ namespace _Game.Gameplay._Weapon.Scripts
             Rotation = rotation;
             _target = target;
             _interactionCache = cache;
-            
+
             _move.PrepareIntro(target, launchPosition);
             _move.Reset();
-            
+
             SetSpeedFactor(speedFactor);
             _isInitialized = true;
         }
@@ -132,7 +130,7 @@ namespace _Game.Gameplay._Weapon.Scripts
             OriginFactory.Reclaim(this);
         }
 
-        private void OnTriggerEnter2D(Collider2D targetCollider) => 
+        private void OnTriggerEnter2D(Collider2D targetCollider) =>
             HandleCollision(targetCollider);
 
         protected abstract void HandleCollision(Collider2D targetCollider);
@@ -149,7 +147,7 @@ namespace _Game.Gameplay._Weapon.Scripts
             };
             _vfxProxy.SpawnProjectileExplosion(explosionData);
         }
-        
+
         protected void PlaySound()
         {
             if (_soundService != null && _soundData != null)

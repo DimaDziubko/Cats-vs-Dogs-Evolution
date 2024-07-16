@@ -39,7 +39,7 @@ namespace Assets._Game.Core.Installers.Core
             BindGameRateScreenProvider();
         }
 
-        private void BindGameRateScreenProvider() => Container.BindInterfacesTo<RateGameScreenProvider>();
+        private void BindGameRateScreenProvider() => Container.BindInterfacesTo<RateGameScreenProvider>().AsSingle();
 
         private void BindHeader() =>
             Container

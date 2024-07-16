@@ -13,14 +13,14 @@ namespace _Game.UI.RateGame.Scripts
     public class RateGameChecker : IRateGameChecker, IDisposable
     {
         private const string PP_RATE_GAME_CLICKED = "isrategameclicked_save";
-        
+
         private readonly IUserContainer _userContainer;
         private readonly IGameInitializer _gameInitializer;
         private readonly IRateGameProvider _rateGameProvider;
 
 
         private ITimelineStateReadonly TimelineStateReadonly => _userContainer.State.TimelineState;
-        
+
         public RateGameChecker(
             IUserContainer userContainer,
             IGameInitializer gameInitializer,
@@ -61,8 +61,17 @@ namespace _Game.UI.RateGame.Scripts
         private async void ShowScreen()
         {
             var screen = await _rateGameProvider.Load();
+            //Check if work that subscription
+            screen.Value.OnClose += SetPPValue;
+            screen.Value.OnRateGame += SetPPValue;
+
             var isDecision = await screen.Value.AwaitForDecision();
-            if(isDecision) screen.Dispose();
+            if (isDecision) screen.Dispose();
+        }
+
+        private void SetPPValue()
+        {
+            PlayerPrefs.SetString(PP_RATE_GAME_CLICKED, "true");
         }
     }
 }

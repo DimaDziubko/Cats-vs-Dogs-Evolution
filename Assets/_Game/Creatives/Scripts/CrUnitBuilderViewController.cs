@@ -2,6 +2,7 @@
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Creatives.Creative_1.Scenario;
+using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Food.Scripts;
@@ -14,6 +15,7 @@ namespace Assets._Game.Creatives.Scripts
     {
         private readonly GameplayUI _gameplayUI;
         private readonly IFoodGenerator _foodGenerator;
+        private readonly CoinCounter _coinCounter;
         private readonly IAudioService _audioService;
         private readonly IPauseManager _pauseManager;
 
@@ -23,27 +25,36 @@ namespace Assets._Game.Creatives.Scripts
         public CrUnitBuilderViewController(
             GameplayUI gameplayUI,
             IFoodGenerator foodGenerator,
+            CoinCounter coinCounter,
             IAudioService audioService,
             IPauseManager pauseManager)
         {
             _gameplayUI = gameplayUI;
             _foodGenerator = foodGenerator;
+            _coinCounter = coinCounter;
             _audioService = audioService;
             _pauseManager = pauseManager;
         }
-        
+
         public void StartBuilder()
         {
             Unsubscribe();
             Subscribe();
-            
+
             _pauseManager.Register(this);
             _gameplayUI.Show();
 
-            UpdateButtonsData(CrSceneContext.I.UnitBuilderButtonsData);
+            if (CrSceneContext.I.IsCoinsLogic)
+            {
+                InitButtonsData();
+            }
+            else
+            {
+                UpdateButtonsData(CrSceneContext.I.UnitBuilderButtonsData);
+            }
             OnFoodChanged(_foodGenerator.FoodAmount);
         }
-        
+
         public void StopBuilder()
         {
             _gameplayUI.Hide();
@@ -62,18 +73,29 @@ namespace Assets._Game.Creatives.Scripts
 
         public void Build(UnitType type, int foodPrice)
         {
-            if(IsPaused) return;
-            
-            if(foodPrice > _foodGenerator.FoodAmount) return;
+            if (IsPaused) return;
+
+            if (foodPrice > _foodGenerator.FoodAmount) return;
             CrQuickGame.I.SpawnPlayerUnit(type);
             _foodGenerator.SpendFood(foodPrice);
 
             PlayButtonSound();
         }
 
+        public void Build(UnitType type, float coinPrice)
+        {
+            if (IsPaused) return;
+
+            if (coinPrice > _coinCounter.Coins) return;
+            CrQuickGame.I.SpawnPlayerUnit(type);
+            _coinCounter.AddCoins(coinPrice * -1);
+
+            PlayButtonSound();
+        }
+
         public void OnButtonChangeState(ButtonState state)
         {
-            
+
         }
 
         void IPauseHandler.SetPaused(bool isPaused)
@@ -83,7 +105,7 @@ namespace Assets._Game.Creatives.Scripts
                 button.SetPaused(isPaused);
             }
         }
-        
+
         private void Unsubscribe()
         {
             _foodGenerator.FoodChanged -= OnFoodChanged;
@@ -94,20 +116,20 @@ namespace Assets._Game.Creatives.Scripts
         {
             _foodGenerator.FoodChanged += OnFoodChanged;
         }
-        
+
         private void UpdateButtonsData(UnitBuilderBtnModel[] builderData)
         {
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 button.Hide();
             }
-            
+
             int dataIndex = 0;
-            
+
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 var data = builderData[dataIndex];
-                
+
                 if (data != null)
                 {
                     button.Initialize(this, data);
@@ -116,20 +138,30 @@ namespace Assets._Game.Creatives.Scripts
                 dataIndex++;
             }
         }
-        
+        private void InitButtonsData()
+        {
+            CrSceneContext.I.InitUnitButtons(this);
+        }
+
         private void OnFoodChanged(int amount)
         {
+            if (CrSceneContext.I.IsCoinsLogic)
+                return;
+
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 button.UpdateButtonState(amount);
             }
         }
-        
-        private void PlayButtonSound() => 
+
+        private void PlayButtonSound() =>
             _audioService.PlayButtonSound();
-        
+
         private void DisableButtons()
         {
+            if (CrSceneContext.I.IsCoinsLogic)
+                return;
+
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 button.Disable();

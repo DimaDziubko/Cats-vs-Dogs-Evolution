@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core.Pause.Scripts;
@@ -36,17 +37,22 @@ namespace _Game.Creatives.Creative_1.Scenario
     public class CrSceneContext : MonoBehaviour
     {
         [SerializeField] private Sprite _foodSprite;
-        
-        [SerializeField] private CrHud _hud;
-        
-        [SerializeField] private SystemUpdate _systemUpdate;
-        [SerializeField] private GameplayUI _gameplayUI;
 
+        [SerializeField] private CrHud _hud;
+
+        [SerializeField] private SystemUpdate _systemUpdate;
+
+        [SerializeField] private GameplayUI _gameplayUI;
+        [Space]
+        [SerializeField] private bool _isCoinsLogic;
+        [SerializeField] private int _startGold;
+        [SerializeField] private CrGameplayUI _crGameplayUI;
+        [Space]
         [SerializeField] private CoinFactory _coinFactory;
         [SerializeField] private CrVfxFactory _vfxFactory;
         [SerializeField] private CrUnitFactory _unitFactory;
         [SerializeField] private CrProjectileFactory _projectileFactory;
-        [FormerlySerializedAs("towerFactory")] [FormerlySerializedAs("_baseFactory")] [SerializeField] private BaseFactory baseFactory;
+        [FormerlySerializedAs("towerFactory")][FormerlySerializedAs("_baseFactory")][SerializeField] private BaseFactory baseFactory;
 
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private Camera _overlayCamera;
@@ -57,11 +63,11 @@ namespace _Game.Creatives.Creative_1.Scenario
         [SerializeField] private AudioMixer _mixer;
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private SoundService _soundService;
-        
+
         //UnitsConfig
         [SerializeField] private LocalUnitConfig[] _playerUnits;
         [SerializeField] private LocalUnitConfig[] _enemyUnits;
-        
+
         [ShowInInspector]
         private readonly Dictionary<int, WeaponData> _playerWeaponsData = new Dictionary<int, WeaponData>();
         [ShowInInspector]
@@ -73,8 +79,8 @@ namespace _Game.Creatives.Creative_1.Scenario
         [SerializeField] private float _speedFactor = 1;
 
 
-        [FormerlySerializedAs("playerTower")] [FormerlySerializedAs("_playerBase")] [SerializeField] private Base playerBase;
-        [FormerlySerializedAs("enemyTower")] [FormerlySerializedAs("_enemyBase")] [SerializeField] private Base enemyBase;
+        [FormerlySerializedAs("playerTower")][FormerlySerializedAs("_playerBase")][SerializeField] private Base playerBase;
+        [FormerlySerializedAs("enemyTower")][FormerlySerializedAs("_enemyBase")][SerializeField] private Base enemyBase;
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
 
@@ -107,6 +113,8 @@ namespace _Game.Creatives.Creative_1.Scenario
         public float FoodProductionSpeed => _foodProductionSpeed;
         public UnitBuilderBtnModel[] UnitBuilderButtonsData { get; private set; }
 
+        public bool IsCoinsLogic => _isCoinsLogic;
+
         private void Awake()
         {
             I = this;
@@ -117,15 +125,32 @@ namespace _Game.Creatives.Creative_1.Scenario
             _unitFactory.Initialize(_cameraService, _random, SoundService);
             _projectileFactory.Initialize(SoundService);
             _battleSpeedManager.SetSpeedFactor(_speedFactor);
+            //if (!_isCoinsLogic)
             _foodGenerator = new CrFoodGenerator(_gameplayUI, _systemUpdate, _pauseManager, _battleSpeedManager);
             //_soundService.Init();
-            
+
             _coinCounter.Changed -= _hud.OnCoinsChanged;
             _coinCounter.Changed += _hud.OnCoinsChanged;
+            if (_isCoinsLogic)
+            {
+                _coinCounter.AddCoins(_startGold);
 
-            SetupUnitBuilderBtnData();
+                foreach (CrUnitBuilButton button in _crGameplayUI.CrUnitBuilButtons)
+                {
+                    _coinCounter.Changed += button.OnCoinsChanged;
+                }
+            }
+
+
+            if (!_isCoinsLogic)
+                SetupUnitBuilderBtnData();
+            else
+                SetupUnitBuilderCoinsBtnData();
+
+
+
             SetupWeaponData();
-            
+
             SetupBasePosition();
             AstarPath.active.Scan();
         }
@@ -134,7 +159,7 @@ namespace _Game.Creatives.Creative_1.Scenario
         {
             foreach (var unit in _playerUnits)
             {
-                if(unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
+                if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
                 WeaponData data = new WeaponData()
                 {
                     Config = unit.Data.Config.WeaponConfig,
@@ -145,10 +170,10 @@ namespace _Game.Creatives.Creative_1.Scenario
                 };
                 _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
             }
-            
+
             foreach (var unit in _enemyUnits)
             {
-                if(unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
+                if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
                 WeaponData data = new WeaponData()
                 {
                     Config = unit.Data.Config.WeaponConfig,
@@ -160,7 +185,24 @@ namespace _Game.Creatives.Creative_1.Scenario
                 _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
             }
         }
+        private void SetupUnitBuilderCoinsBtnData()
+        {
+            int index = 0;
+            foreach (var unit in _playerUnits)
+            {
+                _crGameplayUI.CrUnitBuilButtons[index].InitButtonData(unit.name, unit.Icon, unit.Data.Config.FoodPrice);
+            }
 
+            _builder = new CrUnitBuilderViewController(_gameplayUI, _foodGenerator, _coinCounter, _audioService, _pauseManager);
+        }
+        internal void InitUnitButtons(CrUnitBuilderViewController crUnitBuilderViewController)
+        {
+            for (int i = 0; i < _crGameplayUI.CrUnitBuilButtons.Length; i++)
+            {
+                _crGameplayUI.CrUnitBuilButtons[i].Initialize(crUnitBuilderViewController);
+            }
+
+        }
         private void SetupUnitBuilderBtnData()
         {
             UnitBuilderButtonsData = new UnitBuilderBtnModel[3];
@@ -176,7 +218,7 @@ namespace _Game.Creatives.Creative_1.Scenario
                         Type = unit.Type,
                         UnitIcon = unit.Icon
                     },
-                    
+
                     DynamicData = new UnitBuilderBtnDynamicData()
                     {
                         FoodIcon = _foodSprite,
@@ -189,7 +231,7 @@ namespace _Game.Creatives.Creative_1.Scenario
                 index++;
             }
 
-            _builder = new CrUnitBuilderViewController(_gameplayUI, _foodGenerator, _audioService, _pauseManager);
+            _builder = new CrUnitBuilderViewController(_gameplayUI, _foodGenerator, _coinCounter, _audioService, _pauseManager);
         }
 
         public UnitData ForPlayerUnit(UnitType type)
@@ -197,7 +239,7 @@ namespace _Game.Creatives.Creative_1.Scenario
             LocalUnitConfig playerConfig = _playerUnits.First(x => x.Type == type);
             return playerConfig.Data;
         }
-    
+
         public UnitData GetEnemy(UnitType type)
         {
             LocalUnitConfig playerConfig = _enemyUnits.First(x => x.Type == type);
@@ -207,23 +249,24 @@ namespace _Game.Creatives.Creative_1.Scenario
         private void SetupBasePosition()
         {
             CalculateBasePoints();
-            
-            if(playerBase != null)
+
+            if (playerBase != null)
                 playerBase.Position = _playerBasePoint;
-            if(enemyBase != null)
+            if (enemyBase != null)
                 enemyBase.Position = _enemyBasePoint;
         }
-        
+
         private void CalculateBasePoints()
         {
             _enemyBasePoint = new Vector3(_cameraService.CameraWidth, 0, 0);
             _playerBasePoint = new Vector3(-_cameraService.CameraWidth, 0, 0);
         }
 
-        public WeaponData ForPlayerWeapon(int weaponId) => 
+        public WeaponData ForPlayerWeapon(int weaponId) =>
             _playerWeaponsData[weaponId];
 
-        public WeaponData ForEnemyWeapon(int weaponId) => 
+        public WeaponData ForEnemyWeapon(int weaponId) =>
             _enemiesWeaponsData[weaponId];
+
     }
 }

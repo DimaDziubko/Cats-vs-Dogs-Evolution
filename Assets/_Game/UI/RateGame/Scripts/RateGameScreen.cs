@@ -19,7 +19,7 @@ namespace _Game.UI.RateGame.Scripts
         private const string PP_RATE_GAME_CLICKED = "isrategameclicked_save";
 
         public event Action OnClose;
-        private event Action OnRateGame;
+        public event Action OnRateGame;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private Button _rateGameButton;
@@ -43,6 +43,7 @@ namespace _Game.UI.RateGame.Scripts
             _coroutineInit = StartCoroutine(InitReview());
 #endif
         }
+
 #if UNITY_ANDROID
         private IEnumerator InitReview(bool force = false)
         {
@@ -77,15 +78,6 @@ namespace _Game.UI.RateGame.Scripts
             _canvas.enabled = false;
             return result;
         }
-        
-        public void Show()
-        {
-            if (PlayerPrefs.HasKey(PP_RATE_GAME_CLICKED))
-                return;
-
-            _canvas.enabled = true;
-        }
-
         
         private void Subscribe()
         {
@@ -128,7 +120,7 @@ namespace _Game.UI.RateGame.Scripts
 #elif UNITY_ANDROID
             StartCoroutine(LaunchReview());
 #endif
-            //Invoke(nameof(Close), 1f);
+            Invoke(nameof(Close), 1f);
 
             PlayerPrefs.SetInt(PP_RATE_GAME_CLICKED, 1);
         }
