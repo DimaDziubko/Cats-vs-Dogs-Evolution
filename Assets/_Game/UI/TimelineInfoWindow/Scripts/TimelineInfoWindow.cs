@@ -18,7 +18,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ScrollRect _scrollRect;
-        
+
         [SerializeField] private TimelineInfoItem[] _items;
         [SerializeField] private TimelineProgressBar _progressBar;
         [SerializeField] private Button _exitBtn;
@@ -40,9 +40,9 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         private int _ages;
 
         public void Construct(
-            IAudioService audioService, 
+            IAudioService audioService,
             ITimelineInfoPresenter evolutionService,
-            IEvolutionPresenter evolutionPresenter, 
+            IEvolutionPresenter evolutionPresenter,
             IMyLogger logger,
             IWorldCameraService cameraService)
         {
@@ -55,7 +55,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _exitBtn.interactable = false;
         }
 
-        
+
         public async UniTask<bool> ShowScreen()
         {
             _canvas.enabled = true;
@@ -66,7 +66,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _canvas.enabled = false;
             return result;
         }
-        
+
         public async UniTask<bool> ShowScreenWithTransitionAnimation()
         {
             _canvas.enabled = true;
@@ -77,7 +77,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _canvas.enabled = false;
             return result;
         }
-        
+
         public async UniTask<bool> ShowScreenWithFistAgeAnimation()
         {
             _canvas.enabled = true;
@@ -114,21 +114,21 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         private void PlayEvolveAnimation()
         {
             _exitBtn.interactable = false;
-            
+
             PlayEvolveSound();
-            
+
             Sequence preAnimationSequence = DOTween.Sequence().AppendInterval(_animationDelay);
-            
+
             preAnimationSequence.OnComplete(() =>
             {
                 Sequence sequence = DOTween.Sequence();
 
                 int nextAge = _currentAge + 1;
                 float nextViewportAndBarValue = (float)nextAge / (_ages - 1);
-                
+
                 sequence.Append(_scrollRect.DOHorizontalNormalizedPos(nextViewportAndBarValue, _scrollAnimationDuration));
                 sequence.Join(_progressBar.PlayValueAnimation(nextViewportAndBarValue, _scrollAnimationDuration));
-        
+
                 sequence.AppendCallback(() =>
                 {
                     _items[nextAge].PlayRippleAnimation(_rippleAnimationDuration);
@@ -153,7 +153,10 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         {
             Unsubscribe();
             Subscribe();
-            Opened?.Invoke();
+            Debug.Log("OnShow");
+            Opened?.Invoke(); // pohyu
+
+            _timelineInfoPresenter.OnTimelineInfoWindowOpened(); // pohyu  0 Otvet
         }
 
 
@@ -180,15 +183,17 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         private void UpdateUIElements(TimelineInfoModel model)
         {
+            Debug.Log("UpdateUIElements");
+
             _currentAge = model.CurrentAge;
             _ages = model.Models.Count;
-            
+
             UpdateItems(model);
             UpdateSlider(model.CurrentAge, model.Models.Count);
             AdjustScrollPosition(model.CurrentAge, model.Models.Count);
         }
 
-        private void UpdateSlider(int currentAge, int ages) => 
+        private void UpdateSlider(int currentAge, int ages) =>
             _progressBar.UpdateValue(currentAge, ages);
 
         private void UpdateItems(TimelineInfoModel model)

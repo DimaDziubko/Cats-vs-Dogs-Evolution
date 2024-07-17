@@ -34,17 +34,17 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         private Vector2 _evolutionBtnStartSize;
         private Vector2 _evolutionBtnStartPos;
-        private float _expansionAmount = 50f;
+        private float _expansionAmount = 25f;
 
         private ToggleButton ActiveButton
         {
             get => _activeButton;
             set
             {
-                if (_activeButton != null)
-                {
-                    _activeButton.UnHighlightBtn();
-                }
+                //if (_activeButton != null)
+                //{
+                //    _activeButton.UnHighlightBtn();
+                //}
                 _activeButton = value;
                 _activeButton.HighlightBtn();
             }
@@ -90,16 +90,18 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 cameraService);
 
         }
-
-        public void Show()
+        private void Awake()
         {
-            _tutorialManager.Register(_evolutionStep);
-
             _upgradeBtnStartSize = _upgradesButton.RectTransform.sizeDelta;
             _upgradeBtnStartPos = _upgradesButton.RectTransform.anchoredPosition;
 
             _evolutionBtnStartSize = _evolutionButton.RectTransform.sizeDelta;
             _evolutionBtnStartPos = _evolutionButton.RectTransform.anchoredPosition;
+        }
+
+        public void Show()
+        {
+            _tutorialManager.Register(_evolutionStep);
 
             Unsubscribe();
             Subscribe();
@@ -151,25 +153,44 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             }
         }
 
+
         private void UpdateButtonsView(Window window)
         {
+            if (_activeButton != null)
+            {
+                _activeButton.UnHighlightBtn();
+            }
+
             _upgradesButton.RectTransform.sizeDelta = _upgradeBtnStartSize;
             _upgradesButton.RectTransform.anchoredPosition = _upgradeBtnStartPos;
 
             _evolutionButton.RectTransform.sizeDelta = _evolutionBtnStartSize;
             _evolutionButton.RectTransform.anchoredPosition = _evolutionBtnStartPos;
 
+
             switch (window)
             {
                 case Window.Upgrades:
                     ExpandLeftSide(_evolutionButton.RectTransform, _expansionAmount);
+                    MoveUpInHierarchy(_upgradesButton.RectTransform);
                     break;
                 case Window.Evolution:
                     ExpandRightSide(_upgradesButton.RectTransform, _expansionAmount);
+                    MoveUpInHierarchy(_evolutionButton.RectTransform);
                     break;
             }
         }
 
+        private void MoveUpInHierarchy(RectTransform rectTransform)
+        {
+            int siblingIndex = rectTransform.GetSiblingIndex();
+            int siblingCount = rectTransform.parent.childCount;
+
+            if (siblingIndex < siblingCount - 1)
+            {
+                rectTransform.SetSiblingIndex(siblingIndex + 1);
+            }
+        }
         private void ExpandRightSide(RectTransform rectTransform, float amount)
         {
             rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + amount, rectTransform.sizeDelta.y);
