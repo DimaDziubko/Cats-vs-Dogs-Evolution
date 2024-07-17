@@ -15,7 +15,7 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
         public event Action<ButtonState> ChangeState;
 
         public UnitType UnitType;
-        
+
         [SerializeField] private GameObject _container;
 
         [SerializeField] private TMP_Text _priceText;
@@ -23,9 +23,9 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
         [SerializeField] private Image _unitIconHolder;
 
         private Button _button;
-        
+
         private ButtonState _state = ButtonState.Inactive;
-        
+
         private readonly Color _affordableColor = new Color(1f, 1f, 1f);
         private readonly Color _expensiveColor = new Color(1f, 0.3f, 0f);
 
@@ -39,11 +39,14 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 
         //Scale animation
         [SerializeField] private RectTransform _transform;
+        [Space]
+        [SerializeField] private bool _isAnimationShow;
         [SerializeField] private float _animationDuration = 1f;
         [SerializeField] private float _targetScale = 1.2f;
         [SerializeField] private float _initialScale = 1;
+
         public RectTransform RectTransform => _transform;
-        
+
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -62,17 +65,17 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
                 Hide();
                 return;
             }
-            
+
             Show();
-            
+
             UnitType = model.StaticData.Type;
 
             _foodPrice = model.StaticData.FoodPrice;
             _priceText.text = _foodPrice.ToString();
-            
+
             _foodIconHolder.sprite = model.DynamicData.FoodIcon;
             _unitIconHolder.sprite = model.StaticData.UnitIcon;
-            
+
             ChangeState -= unitBuilder.OnButtonChangeState;
             ChangeState += unitBuilder.OnButtonChangeState;
             _button.onClick.AddListener(() => unitBuilder.Build(UnitType, _foodPrice));
@@ -90,9 +93,10 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 
             if (canAfford && !_button.interactable)
             {
-                DoScaleAnimation();
+                if (_isAnimationShow)
+                    DoScaleAnimation();
             }
-            
+
             _button.interactable = _tempButtonState = canAfford;
 
             _priceText.color = canAfford ? _affordableColor : _expensiveColor;
@@ -120,12 +124,12 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
             Cleanup();
         }
 
-        private void Cleanup() => 
+        private void Cleanup() =>
             _button.onClick.RemoveAllListeners();
 
         public void SetPaused(in bool isPaused)
         {
-            if(_tempButtonState == false) return;
+            if (_tempButtonState == false) return;
             _button.interactable = !isPaused;
         }
     }

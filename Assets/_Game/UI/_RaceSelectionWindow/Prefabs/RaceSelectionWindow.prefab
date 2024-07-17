@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -340}
-  m_SizeDelta: {x: 700, y: 250}
+  m_SizeDelta: {x: 620.5, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4483055362463544973
 CanvasRenderer:
@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4285758588
-  m_fontColor: {r: 0.48627454, g: 0.48627454, b: 0.45098042, a: 1}
+    rgba: 4285822068
+  m_fontColor: {r: 0.45490196, g: 0.45490196, b: 0.45490196, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.32
-  m_fontSizeBase: 50.32
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -670,7 +670,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -650}
-  m_SizeDelta: {x: 350, y: 180}
+  m_SizeDelta: {x: 350, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3600988187154337519
 CanvasRenderer:
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 0.8
 --- !u!114 &4724839882827427644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,6 +1047,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4690993738808838055}
     m_Modifications:
+    - target: {fileID: 2334535784053079155, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3477444380137511465, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
       propertyPath: m_Name
       value: RaceSelectionBtn
@@ -1150,6 +1154,18 @@ PrefabInstance:
     - target: {fileID: 6572326893504152530, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7673514721488366859, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7673514721488366859, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -737130800, guid: 5de807814f6f1ad4cb7b05640e43b50a, type: 3}
+    - target: {fileID: 7673514721488366859, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe36fdebc64708f4d86fd61e3b702b05, type: 3}
