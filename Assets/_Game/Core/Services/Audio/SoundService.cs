@@ -47,7 +47,8 @@ namespace _Game.Core.Services.Audio
                 {
                     try
                     {
-                        soundEmitter.Stop();
+                        if(soundEmitter.gameObject.activeInHierarchy)
+                            soundEmitter.Stop();
                         return true;
                     }
                     catch
@@ -140,13 +141,13 @@ namespace _Game.Core.Services.Audio
         {
             if (soundEmitter == null)
             {
-                Debug.LogError("SoundEmitter is null in OnTakeFromPool");
+                //Debug.LogError("SoundEmitter is null in OnTakeFromPool");
                 return;
             }
 
             if (clip == null)
             {
-                Debug.LogError("AudioClip is null in OnTakeFromPool");
+                //Debug.LogError("AudioClip is null in OnTakeFromPool");
                 return;
             }
 
@@ -163,13 +164,13 @@ namespace _Game.Core.Services.Audio
         {
             if (soundEmitter == null)
             {
-                Debug.LogError("SoundEmitter is null in OnReturnedToPool");
+                //Debug.LogError("SoundEmitter is null in OnReturnedToPool");
                 return;
             }
 
             if (clip == null)
             {
-                Debug.LogError("AudioClip is null in OnReturnedToPool");
+                //Debug.LogError("AudioClip is null in OnReturnedToPool");
                 return;
             }
 

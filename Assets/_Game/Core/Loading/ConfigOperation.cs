@@ -4,7 +4,6 @@ using _Game.Core.Configs.Providers;
 using _Game.Core.Services.UserContainer;
 using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Configs.Providers;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.UserState;
 using Assets._Game.Utils._LocalConfigSaver;
@@ -99,7 +98,18 @@ namespace _Game.Core.Loading
             }
             catch (Exception e)
             {
-                _logger.Log("Remote config are not available.");
+                try
+                {
+                    string configString = _localConfigProvider.GetConfig();
+                    JObject configData = JObject.Parse(configString);
+                    _userContainer.GameConfig = configData.ToGameConfig(TimelineState.TimelineId);
+
+                    _logger.Log("Remote config is not available, using local.");
+                }
+                catch (Exception parseException)
+                {
+                    _logger.LogError("Failed to parse local config");
+                }
             }
 
             onProgress?.Invoke(1.0f);

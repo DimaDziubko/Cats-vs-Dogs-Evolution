@@ -1,7 +1,8 @@
 ﻿using System;
+using Assets._Game.Core.UserState;
 using Assets._Game.Utils;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState
 {
     public class UserCurrenciesState : IUserCurrenciesStateReadonly
     {

@@ -56,8 +56,11 @@ namespace _Game.Core.UserState
             State.TimelineState.OpenNextAge();
         }
 
-        public void OpenNextTimeline() => 
+        public void OpenNextTimeline()
+        {
+            State.Currencies.RemoveAllCoins();
             State.TimelineState.OpenNextTimeline();
+        }
 
         public void RecoverFoodBoost(int amount, DateTime lastDailyFoodBoost) => 
             ChangeFoodBoost(amount, true, lastDailyFoodBoost);
