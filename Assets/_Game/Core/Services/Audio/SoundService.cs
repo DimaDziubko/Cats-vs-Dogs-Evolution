@@ -26,7 +26,7 @@ namespace _Game.Core.Services.Audio
         [SerializeField] int _maxSoundInstances = 30;
 
         [SerializeField] private Transform _transform;
-        
+
         public Dictionary<AudioClip, Queue<SoundEmitter>> FrequentSoundEmitters => _frequentSoundEmitters;
 
         public Transform Transform
@@ -34,21 +34,20 @@ namespace _Game.Core.Services.Audio
             get => _transform;
             set => _transform = value;
         }
-        
+
         public SoundBuilder CreateSound() => new SoundBuilder(this);
 
         public bool CanPlaySound(SoundData data)
         {
             if (!data.FrequentSound) return true;
-            
+
             if (_frequentSoundEmitters.TryGetValue(data.Clip, out var queue) && queue.Count >= _maxSoundInstances)
             {
                 if (queue.TryDequeue(out var soundEmitter))
                 {
                     try
                     {
-                        if(soundEmitter.gameObject.activeInHierarchy)
-                            soundEmitter.Stop();
+                        soundEmitter.Stop();
                         return true;
                     }
                     catch
@@ -62,7 +61,7 @@ namespace _Game.Core.Services.Audio
 
             return true;
         }
-        
+
 
         public SoundEmitter Get(AudioClip clip)
         {
@@ -105,13 +104,13 @@ namespace _Game.Core.Services.Audio
             {
                 queue.Clear();
             }
-            
+
             foreach (var keyValuePair in _soundEmitterPools)
             {
                 var pool = keyValuePair.Value;
                 pool.Clear();
             }
-            
+
             _soundEmitterPools.Clear();
             _frequentSoundEmitters.Clear();
             _activeSoundEmitters.Clear();
@@ -120,7 +119,7 @@ namespace _Game.Core.Services.Audio
         private IObjectPool<SoundEmitter> InitializePool(AudioClip clip)
         {
             return new ObjectPool<SoundEmitter>(
-                 CreateSoundEmitter,
+                CreateSoundEmitter,
                 soundEmitter => OnTakeFromPool(soundEmitter, clip),
                 soundEmitter => OnReturnedToPool(soundEmitter, clip),
                 OnDestroyPoolObject,
@@ -139,6 +138,18 @@ namespace _Game.Core.Services.Audio
 
         private void OnTakeFromPool(SoundEmitter soundEmitter, AudioClip clip)
         {
+            if (soundEmitter == null)
+            {
+                Debug.LogError("SoundEmitter is null in OnTakeFromPool");
+                return;
+            }
+
+            if (clip == null)
+            {
+                Debug.LogError("AudioClip is null in OnTakeFromPool");
+                return;
+            }
+
             soundEmitter.gameObject.SetActive(true);
 
             if (!_activeSoundEmitters.ContainsKey(clip))
@@ -150,12 +161,24 @@ namespace _Game.Core.Services.Audio
 
         private void OnReturnedToPool(SoundEmitter soundEmitter, AudioClip clip)
         {
+            if (soundEmitter == null)
+            {
+                Debug.LogError("SoundEmitter is null in OnReturnedToPool");
+                return;
+            }
+
+            if (clip == null)
+            {
+                Debug.LogError("AudioClip is null in OnReturnedToPool");
+                return;
+            }
+
             soundEmitter.gameObject.SetActive(false);
 
             if (_activeSoundEmitters.ContainsKey(clip))
             {
                 _activeSoundEmitters[clip].Remove(soundEmitter);
-                
+
                 if (_activeSoundEmitters[clip].Count == 0)
                 {
                     _activeSoundEmitters.Remove(clip);
@@ -163,7 +186,7 @@ namespace _Game.Core.Services.Audio
             }
         }
 
-        private void OnDestroyPoolObject(SoundEmitter soundEmitter) => 
+        private void OnDestroyPoolObject(SoundEmitter soundEmitter) =>
             Destroy(soundEmitter.gameObject);
     }
 }

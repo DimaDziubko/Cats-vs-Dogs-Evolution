@@ -26,13 +26,20 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         [SerializeField] private ToggleButton _upgradesButton;
         [SerializeField] private ToggleButton _evolutionButton;
         [SerializeField] private TutorialStep _evolutionStep;
-        
+
         private ToggleButton _activeButton;
-        
+
+        private Vector2 _upgradeBtnStartSize;
+        private Vector2 _upgradeBtnStartPos;
+
+        private Vector2 _evolutionBtnStartSize;
+        private Vector2 _evolutionBtnStartPos;
+        private float _expansionAmount = 50f;
+
         private ToggleButton ActiveButton
         {
             get => _activeButton;
-            set 
+            set
             {
                 if (_activeButton != null)
                 {
@@ -42,7 +49,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 _activeButton.HighlightBtn();
             }
         }
-        
+
         private IAudioService _audioService;
         private IMyLogger _logger;
         private ITutorialManager _tutorialManager;
@@ -67,34 +74,40 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
             _tutorialManager = tutorialManager;
             _featureUnlockSystem = featureUnlockSystem;
-            
+
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _audioService = audioService;
             _upgradesChecker = upgradesChecker;
-            
+
             _upgradesWindow.Construct(header, upgradeItemPresenter, unitUpgradesPresenter, audioService, tutorialManager, upgradesChecker);
             _evolutionWindow.Construct
                 (header,
                 evolutionPresenter,
-                audioService, 
-                timelineInfoWindowProvider, 
-                timelineTravelPresenter, 
+                audioService,
+                timelineInfoWindowProvider,
+                timelineTravelPresenter,
                 upgradesChecker,
                 cameraService);
-            
+
         }
 
         public void Show()
         {
             _tutorialManager.Register(_evolutionStep);
 
+            _upgradeBtnStartSize = _upgradesButton.RectTransform.sizeDelta;
+            _upgradeBtnStartPos = _upgradesButton.RectTransform.anchoredPosition;
+
+            _evolutionBtnStartSize = _evolutionButton.RectTransform.sizeDelta;
+            _evolutionBtnStartPos = _evolutionButton.RectTransform.anchoredPosition;
+
             Unsubscribe();
             Subscribe();
 
-            if (_featureUnlockSystem.IsFeatureUnlocked(_evolutionButton)) 
+            if (_featureUnlockSystem.IsFeatureUnlocked(_evolutionButton))
                 _evolutionStep.ShowStep();
 
-            if(_upgradesChecker.GetNotificationData(Window.Evolution).IsAvailable) 
+            if (_upgradesChecker.GetNotificationData(Window.Evolution).IsAvailable)
                 OnEvolutionButtonClick(_evolutionButton);
             else OnUpgradesButtonClick(_upgradesButton);
         }
@@ -104,14 +117,14 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
             _upgradesChecker.Notify += OnUpgradeNotified;
             _upgradesButton.Initialize(
-                true, 
+                true,
                 OnUpgradesButtonClick,
-                PlayButtonSound, 
+                PlayButtonSound,
                 _upgradesChecker.GetNotificationData(Window.Upgrades));
             _evolutionButton.Initialize(
-                _featureUnlockSystem.IsFeatureUnlocked(_evolutionButton), 
-                OnEvolutionButtonClick, 
-                PlayButtonSound, 
+                _featureUnlockSystem.IsFeatureUnlocked(_evolutionButton),
+                OnEvolutionButtonClick,
+                PlayButtonSound,
                 _upgradesChecker.GetNotificationData(Window.Evolution));
         }
 
@@ -123,9 +136,10 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _evolutionButton.Cleanup();
         }
 
+        //ExpandRightSide(_upgradesButton.RectTransform, 50f);
+
         private void OnUpgradeNotified(NotificationData data)
         {
-            
             switch (data.Window)
             {
                 case Window.Upgrades:
@@ -137,13 +151,46 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             }
         }
 
+        private void UpdateButtonsView(Window window)
+        {
+            _upgradesButton.RectTransform.sizeDelta = _upgradeBtnStartSize;
+            _upgradesButton.RectTransform.anchoredPosition = _upgradeBtnStartPos;
+
+            _evolutionButton.RectTransform.sizeDelta = _evolutionBtnStartSize;
+            _evolutionButton.RectTransform.anchoredPosition = _evolutionBtnStartPos;
+
+            switch (window)
+            {
+                case Window.Upgrades:
+                    ExpandLeftSide(_evolutionButton.RectTransform, _expansionAmount);
+                    break;
+                case Window.Evolution:
+                    ExpandRightSide(_upgradesButton.RectTransform, _expansionAmount);
+                    break;
+            }
+        }
+
+        private void ExpandRightSide(RectTransform rectTransform, float amount)
+        {
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + amount, rectTransform.sizeDelta.y);
+
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x + amount / 2, rectTransform.anchoredPosition.y);
+        }
+        private void ExpandLeftSide(RectTransform rectTransform, float amount)
+        {
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + amount, rectTransform.sizeDelta.y);
+
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x - amount / 2, rectTransform.anchoredPosition.y);
+        }
+
+
         private void OnFeatureUnlocked(Feature feature)
         {
             if (feature == Feature.EvolutionWindow)
             {
                 _evolutionButton.Cleanup();
-                _evolutionButton.Initialize(_featureUnlockSystem.IsFeatureUnlocked(_evolutionButton), 
-                    OnEvolutionButtonClick, 
+                _evolutionButton.Initialize(_featureUnlockSystem.IsFeatureUnlocked(_evolutionButton),
+                    OnEvolutionButtonClick,
                     PlayButtonSound);
                 _evolutionStep.ShowStep();
             }
@@ -151,16 +198,18 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         private void OnUpgradesButtonClick(ToggleButton button)
         {
-            ActiveButton = button;
             _evolutionWindow.Hide();
+            UpdateButtonsView(Window.Upgrades);
+            ActiveButton = button;
             _upgradesWindow.Show();
         }
 
         private void OnEvolutionButtonClick(ToggleButton button)
         {
             _evolutionStep.CompleteStep();
-            ActiveButton = button;
             _evolutionWindow.Show();
+            UpdateButtonsView(Window.Evolution);
+            ActiveButton = button;
             _upgradesWindow.Hide();
         }
 
@@ -170,14 +219,14 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _tutorialManager.UnRegister(_evolutionStep);
 
             Unsubscribe();
-            
+
             _evolutionWindow.Hide();
             _upgradesWindow.Hide();
         }
 
 
-        private void PlayButtonSound() => 
+        private void PlayButtonSound() =>
             _audioService.PlayButtonSound();
-        
+
     }
 }
