@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 1507628172963828259}
   - component: {fileID: 4782881472514779018}
   - component: {fileID: 5527438879446429561}
+  - component: {fileID: 1870064080608863469}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 1097833219250537064}
   _move: {fileID: 4782881472514779018}
-  _rotator: {fileID: 0}
+  _rotator: {fileID: 1870064080608863469}
   _soundData:
     Clip: {fileID: 8300000, guid: b6bd8d058b15ecf40b3aefee19b178fb, type: 3}
     MixerGroup: {fileID: 1224378660055227196, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}
@@ -240,3 +241,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1870064080608863469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605424467867271132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2becb31d74a124bb2be95172c22300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 9142597233651023905}
+  _rotationSpeed: 720
+  _rotationAxis: {x: 0, y: 0, z: 1}
+  _clockwise: 1
