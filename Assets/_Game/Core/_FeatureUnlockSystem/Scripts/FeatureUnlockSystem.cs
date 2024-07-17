@@ -91,7 +91,7 @@ namespace Assets._Game.Core._FeatureUnlockSystem.Scripts
                 case Feature.BattleSpeed:
                     return GetTresholdForBattleSpeed();
                 case Feature.X2:
-                    return GetTresholdForX2();
+                    return GetTresholdForFoodBoost();
                 default:
                     return false;
             }

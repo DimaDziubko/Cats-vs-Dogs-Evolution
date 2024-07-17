@@ -153,10 +153,8 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         {
             Unsubscribe();
             Subscribe();
-            Debug.Log("OnShow");
-            Opened?.Invoke(); // pohyu
 
-            _timelineInfoPresenter.OnTimelineInfoWindowOpened(); // pohyu  0 Otvet
+            Opened?.Invoke();
         }
 
 
@@ -169,14 +167,18 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         private void Subscribe()
         {
+            Opened += _timelineInfoPresenter.OnPrepareTimelineInfoDataForShow;
             Opened += _timelineInfoPresenter.OnTimelineInfoWindowOpened;
+
             _timelineInfoPresenter.TimelineInfoDataUpdated += UpdateUIElements;
             _exitBtn.onClick.AddListener(OnExit);
         }
 
         private void Unsubscribe()
         {
+            Opened -= _timelineInfoPresenter.OnPrepareTimelineInfoDataForShow;
             Opened -= _timelineInfoPresenter.OnTimelineInfoWindowOpened;
+
             _timelineInfoPresenter.TimelineInfoDataUpdated -= UpdateUIElements;
             _exitBtn.onClick.RemoveAllListeners();
         }
