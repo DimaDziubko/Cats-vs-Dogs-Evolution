@@ -24,7 +24,7 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
     [RequireComponent(typeof(Button))]
     public class BattleSpeedBtn : MonoBehaviour
     {
-        [SerializeField] private GameObject _panel; 
+        [SerializeField] private GameObject _panel;
         [SerializeField] private Image _changeableImage;
         [SerializeField] private Image _adsIcon;
         [SerializeField] private Sprite _activeSprite;
@@ -33,9 +33,9 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
         [SerializeField] private TMP_Text _infoText;
         [SerializeField] private TMP_Text _timerText;
         [SerializeField] private TMP_Text _loadingText;
-        
+
         [SerializeField] private Button _button;
-        
+
         [SerializeField] private RectTransform _buttonTransform;
         [SerializeField] private float _normalSizeX = 250f;
         [SerializeField] private float _normalSizeY = 60f;
@@ -43,8 +43,8 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
         [SerializeField] private float _activatedSizeY = 120f;
         [SerializeField] private float _timerColorTreshold = 5f;
 
-
         private BattleSpeedBtnState State { get; set; }
+
 
         public void Initialize(Action<BattleSpeedBtnState> callback)
         {
@@ -71,7 +71,7 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
                     HandleActivatedState(model);
                     break;
             }
-            
+
             gameObject.SetActive(model.IsUnlocked);
         }
 
@@ -119,11 +119,11 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
         private void SetColor(float timeLeft)
         {
             Color colorToSet = Color.green;
-            
-            if (timeLeft < _timerColorTreshold) 
+
+            if (timeLeft < _timerColorTreshold)
                 colorToSet = Color.red;
 
-            if (_timerText.color != colorToSet) 
+            if (_timerText.color != colorToSet)
                 _timerText.color = colorToSet;
         }
     }

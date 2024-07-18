@@ -165,7 +165,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5562371957400219988}
   - component: {fileID: 5562371957400220010}
-  - component: {fileID: 3112122452185169024}
   - component: {fileID: 9073645176878596570}
   - component: {fileID: 6716712692595760017}
   - component: {fileID: 8108510420343140750}
@@ -221,7 +220,7 @@ MonoBehaviour:
   _animator: {fileID: 5484934819439033302}
   _health: {fileID: 6282559413788598372}
   _aMove: {fileID: -6102469820768202687}
-  _aggroDetection: {fileID: 3112122452185169024}
+  _aggroDetection: {fileID: 9073645176878596570}
   _attackDetection: {fileID: 9073645176878596570}
   _attack: {fileID: 6165041281896854420}
   _bodyCollider: {fileID: 6716712692595760017}
@@ -231,19 +230,6 @@ MonoBehaviour:
   _rVOController: {fileID: 1626427347798413012}
   _vfxes: []
   "_stateInd\u0456cator": {fileID: 0}
---- !u!114 &3112122452185169024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5562371957400219991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbac623b1299ba34fb46595fe1329970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _triggerObserver: {fileID: 6236388285995946322}
 --- !u!114 &9073645176878596570
 MonoBehaviour:
   m_ObjectHideFlags: 0
