@@ -1,6 +1,7 @@
 ﻿using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
 using _Game.UI._Hud;
+using _Game.UI.UnitBuilderBtn.Scripts;
 using Assets._Game.Common;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core.LoadingScreen;
@@ -11,25 +12,26 @@ using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
-using Assets._Game.UI._Hud;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.Utils.Popups;
 
-namespace Assets._Game.UI._BattleUIController
+namespace _Game.UI._BattleUIController
 {
     public class BattleUIController
     {
         private readonly Hud _hud;
+        private readonly GameplayUI _gameplayUI;
         private readonly ICoinCounter _coinCounter;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IHeader _header;
         private readonly IRewardAnimator _rewardAnimator;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
 
         private IBattleMediator _battleMediator;
 
         public BattleUIController(
             Hud hud,
+            GameplayUI gameplayUI,
             ICoinCounter coinCounter,
             IWorldCameraService cameraService,
             IAudioService audioService,
@@ -37,17 +39,18 @@ namespace Assets._Game.UI._BattleUIController
             IAlertPopupProvider alertPopupProvider,
             IFoodBoostService foodBoostService,
             IHeader header,
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             ILoadingScreenProvider loadingScreenProvider,
             IRewardAnimator rewardAnimator,
             IFeatureUnlockSystem featureUnlockSystem,
             IBattleSpeedService battleSpeedService)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _hud = hud;
             _coinCounter = coinCounter;
             _loadingScreenProvider = loadingScreenProvider;
             _rewardAnimator = rewardAnimator;
+            _gameplayUI = gameplayUI;
 
             _hud.Construct(
                 cameraService,
@@ -58,7 +61,7 @@ namespace Assets._Game.UI._BattleUIController
                 featureUnlockSystem,
                 battleSpeedService);
             
-            header.Construct(persistentData.State.Currencies, cameraService);
+            header.Construct(userContainer.State.Currencies, cameraService);
             _header = header;
         }
         
@@ -101,7 +104,7 @@ namespace Assets._Game.UI._BattleUIController
             if (_coinCounter.Coins > 0)
             {
                 PlayCoinAnimation();
-                _persistentData.AddCoins(_coinCounter.Coins);
+                _userContainer.AddCoins(_coinCounter.Coins);
                 _coinCounter.Cleanup();
             }
             
@@ -131,5 +134,8 @@ namespace Assets._Game.UI._BattleUIController
             _battleMediator.StopBattle();
             _battleMediator.EndBattle(GameResultType.Defeat, true);
         }
+
+        public void UpdateWave(int currentWave) => 
+            _gameplayUI.WaveInfoPopup.ShowWave(currentWave);
     }
 }

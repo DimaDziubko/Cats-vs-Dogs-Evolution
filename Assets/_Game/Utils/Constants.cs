@@ -74,7 +74,7 @@ namespace Assets._Game.Utils
             public const int PAUSE = 1;
             public const int UPGRADES_WINDOW = 1;
             public const int EVOLUTION_WINDOW = 3;
-            public const int X2 = 2;
+            public const int X2 = 3;
         }
 
         public sealed class ConfigKeys

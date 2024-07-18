@@ -645,17 +645,6 @@
                 <e p="FoodPanel.cs" t="Include" />
               </e>
             </e>
-            <e p="GameResult" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="DoubleCoinsBtn.cs" t="Include" />
-                <e p="GameResultHandler.cs" t="Include" />
-                <e p="GameResultIntroAnimation.cs" t="Include" />
-                <e p="GameResultType.cs" t="Include" />
-                <e p="GameResultWindow.cs" t="Include" />
-                <e p="GameResultWindowProvider.cs" t="Include" />
-                <e p="IGameResultWindowProvider.cs" t="Include" />
-              </e>
-            </e>
             <e p="Scenario" t="Include">
               <e p="BattleScenarioExecutor.cs" t="Include" />
               <e p="EnemySpawnSequenceRunner.cs" t="Include" />
@@ -717,6 +706,8 @@
               <e p="FoodBoostBtn.cs" t="Include" />
               <e p="FoodBoostBtnModel.cs" t="Include" />
               <e p="Hud.cs" t="Include" />
+              <e p="WaveInfoPopup.cs" t="Include" />
+              <e p="WaveInfoPopupAnimation.cs" t="Include" />
             </e>
             <e p="_MainMenu" t="Include">
               <e p="Scripts" t="Include">
@@ -761,6 +752,7 @@
                 <e p="IUIWindow.cs" t="Include" />
                 <e p="LivesUI.cs" t="Include" />
                 <e p="PlayerLivesView.cs" t="Include" />
+                <e p="SliderHelper.cs" t="Include" />
                 <e p="ToggleButton.cs" t="Include" />
                 <e p="ToggleButtonStateAnimator.cs" t="Include" />
                 <e p="ToggleButtonView.cs" t="Include" />
@@ -768,10 +760,25 @@
                 <e p="TransactionButton.cs" t="Include" />
               </e>
             </e>
+            <e p="GameResult" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="DoubleCoinsBtn.cs" t="Include" />
+                <e p="GameResultHandler.cs" t="Include" />
+                <e p="GameResultIntroAnimation.cs" t="Include" />
+                <e p="GameResultType.cs" t="Include" />
+                <e p="GameResultWindow.cs" t="Include" />
+                <e p="GameResultWindowProvider.cs" t="Include" />
+                <e p="IGameResultWindowProvider.cs" t="Include" />
+              </e>
+            </e>
             <e p="Pin" t="Include">
               <e p="Scripts" t="Include">
                 <e p="PinView.cs" t="Include" />
               </e>
+            </e>
+            <e p="Popups" t="Include">
+              <e p="AlertPopupProvider.cs" t="Include" />
+              <e p="IAlertPopupProvider.cs" t="Include" />
             </e>
             <e p="RateGame" t="Include">
               <e p="Scripts" t="Include">
@@ -871,10 +878,6 @@
               <e p="FpsDisplay.cs" t="Include" />
             </e>
             <e p="IntRange.cs" t="Include" />
-            <e p="Popups" t="Include">
-              <e p="AlertPopupProvider.cs" t="Include" />
-              <e p="IAlertPopupProvider.cs" t="Include" />
-            </e>
           </e>
         </e>
         <e p="Assets" t="Include">

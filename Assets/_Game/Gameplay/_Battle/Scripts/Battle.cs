@@ -1,17 +1,16 @@
 ﻿using System;
 using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay.Scenario;
 using Assets._Game.Core._GameSaver;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._BattleSpeedService._Scripts;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay.Scenario;
 using UnityEngine;
 
 namespace _Game.Gameplay._Battle.Scripts
@@ -26,7 +25,8 @@ namespace _Game.Gameplay._Battle.Scripts
 
         private BattleScenarioExecutor _scenarioExecutor;
         private BattleScenarioExecutor.State _activeScenario;
-
+        private int _currentWave;
+        
         private AudioClip _bGM;
         
         private readonly IPauseManager _pauseManager;
@@ -39,6 +39,7 @@ namespace _Game.Gameplay._Battle.Scripts
         private readonly IAnalyticsService _analytics;
         private readonly IDTDAnalyticsService _dtdAnalytics;
         private readonly IBattlePresenter _battlePresenter;
+        private IBattleMediator _battleMediator;
 
         private BattleAnalyticsData _battleAnalyticsData;
         public bool BattleInProcess { get; private set; }
@@ -129,15 +130,19 @@ namespace _Game.Gameplay._Battle.Scripts
             if(IsPaused) return;
             if (BattleInProcess)
             {
+                var waves = _activeScenario.GetWaves();
+                int currentWave = waves.currentWave;
+                if (_currentWave != currentWave)
+                {
+                    _battleMediator.OnWaveChanged(currentWave);
+                    _currentWave = currentWave;
+                }
                 _activeScenario.Progress(_speedManager.CurrentSpeedFactor);
                 _battleField.GameUpdate();
             }
         }
 
-        public void Cleanup()
-        {
-            _battleField.Cleanup();
-        }
+        public void Cleanup() => _battleField.Cleanup();
 
         public void StopBattle()
         {
@@ -181,6 +186,9 @@ namespace _Game.Gameplay._Battle.Scripts
         void IPauseHandler.SetPaused(bool isPaused) => 
             BattlePaused?.Invoke(isPaused);
 
-        public void SetMediator(IBattleMediator battleMediator){}
+        public void SetMediator(IBattleMediator battleMediator)
+        {
+            _battleMediator = battleMediator;
+        }
     }
 }

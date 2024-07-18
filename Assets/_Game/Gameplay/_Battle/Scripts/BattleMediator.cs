@@ -3,6 +3,7 @@ using _Game.Core.Navigation.Battle;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.GameModes._BattleMode.Scripts;
+using _Game.UI._BattleUIController;
 using _Game.UI._Environment;
 using Assets._Game.Core._GameSaver;
 using Assets._Game.Core.Loading;
@@ -13,7 +14,6 @@ using Assets._Game.Gameplay._Race;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay.Food.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
-using Assets._Game.UI._BattleUIController;
 using Zenject;
 
 namespace _Game.Gameplay._Battle.Scripts
@@ -23,6 +23,7 @@ namespace _Game.Gameplay._Battle.Scripts
         bool BattleInProcess { get; }
         void StartBattle();
         void StopBattle();
+        void OnWaveChanged(int currentWave);
         void EndBattle(GameResultType result, bool wasExit = false);
         void Reset();
         void Cleanup();
@@ -101,6 +102,11 @@ namespace _Game.Gameplay._Battle.Scripts
             _foodGenerator.StartGenerator();
             _battleStateHandler.HandleStart();
             _audioService.PlayStartBattleSound();
+        }
+
+        public void OnWaveChanged(int currentWave)
+        {
+            _battleUIController.UpdateWave(currentWave);
         }
 
         public void StopBattle()
