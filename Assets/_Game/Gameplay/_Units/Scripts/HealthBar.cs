@@ -47,8 +47,10 @@ namespace Assets._Game.Gameplay._Units.Scripts
             if (_canvas.enabled) return;
             _canvas.enabled = true;
 
-            _healthBarHelper.FixSliderFillRect();
-            _effectBarHelper.FixSliderFillRect();
+            if (_healthBarHelper)
+                _healthBarHelper.FixSliderFillRect();
+            if (_effectBarHelper)
+                _effectBarHelper.FixSliderFillRect();
         }
 
         public void Hide()
