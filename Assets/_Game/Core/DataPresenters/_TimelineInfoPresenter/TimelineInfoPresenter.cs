@@ -59,13 +59,14 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
         }
 
         private void OnNextAgeOpened() => UpdateTimelineInfoData();
+
         private void OnTimelineChanged()
         {
             PrepareTimelineInfoData();
             UpdateTimelineInfoData();
         }
 
-        private void  PrepareTimelineInfoData()
+        private void PrepareTimelineInfoData()
         {
             _timelineInfoModel = new TimelineInfoModel()
             {
@@ -83,7 +84,7 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
                     StaticData = _generalDataPool.TimelineStaticData.ForInfoItem(ageIndex),
                     IsUnlocked = nextAgeIndex >= ageIndex
                 };
-                    
+
                 _timelineInfoModel.Models.Add(model);
                 ageIndex++;
             }
@@ -95,17 +96,21 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
 
             int ageIndex = 0;
             int nextAgeIndex = TimelineState.AgeId + 1;
-            
+
             foreach (var model in _timelineInfoModel.Models)
             {
                 model.IsUnlocked = nextAgeIndex >= ageIndex;
+                UnityEngine.Debug.Log("nextAgeIndex " + nextAgeIndex + "__ ageIndex " + ageIndex);
                 ageIndex++;
             }
         }
-        
 
-        void ITimelineInfoPresenter.OnTimelineInfoWindowOpened() => 
-            TimelineInfoDataUpdated?.Invoke(_timelineInfoModel);
+        void ITimelineInfoPresenter.OnTimelineInfoWindowOpened() =>
+                TimelineInfoDataUpdated?.Invoke(_timelineInfoModel);
 
+        void ITimelineInfoPresenter.OnPrepareTimelineInfoData()
+        {
+            PrepareTimelineInfoData();
+        }
     }
 }

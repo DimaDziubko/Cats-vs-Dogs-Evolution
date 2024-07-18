@@ -10,12 +10,12 @@ namespace _Game.Gameplay._Units.Scripts
     {
         [SerializeField] private HealthBar _healthBar;
         [SerializeField] private Collider2D _bodyCollider;
-        
+
         public event Action Death;
         public event Action<float, float> Hit;
-        
+
         private float _maxHealth;
-        
+
         [ShowInInspector]
         private float _currentHealth;
 
@@ -24,10 +24,10 @@ namespace _Game.Gameplay._Units.Scripts
             IWorldCameraService cameraService)
         {
             _healthBar.Construct(cameraService);
-            
+
             UpdateData(health);
         }
-        
+
         public void ResetHealth()
         {
             UpdateData(_maxHealth);
@@ -55,20 +55,22 @@ namespace _Game.Gameplay._Units.Scripts
         {
             _healthBar.Show();
         }
-        
+
         public void GetDamage(float damage)
         {
-            if(IsDead) return;
-            
+            if (IsDead) return;
+
             ShowHealth();
 
             _currentHealth -= damage;
+
+            //Debug.Log("Damage_ " + damage);
 
             if (IsDead)
             {
                 _currentHealth = 0;
                 Death?.Invoke();
-                
+
                 if (_bodyCollider != null)
                 {
                     _bodyCollider.enabled = false;
@@ -76,11 +78,11 @@ namespace _Game.Gameplay._Units.Scripts
             }
 
             Hit?.Invoke(damage, _maxHealth);
-            
+
             _healthBar.UpdateHealthView(_currentHealth, _maxHealth);
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         //Helper
         [Button]
         private void ManualInit()
@@ -88,6 +90,6 @@ namespace _Game.Gameplay._Units.Scripts
             _healthBar = GetComponentInChildren<HealthBar>();
             _bodyCollider = GetComponent<Collider2D>();
         }
-        #endif
+#endif
     }
 }
