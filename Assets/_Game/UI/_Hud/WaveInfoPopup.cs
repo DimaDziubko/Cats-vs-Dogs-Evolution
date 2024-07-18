@@ -10,10 +10,10 @@ namespace _Game.UI._Hud
 
         public void ShowWave(int wave)
         {
-            if(_label == null) return;
-            _label.text = $"Wave {wave}";
-            if(_animation == null) return;
-            _animation.PlayAnimation();
+            //if(_label == null) return;
+            //_label.text = $"Wave {wave}";
+            //if(_animation == null) return;
+            //_animation.PlayAnimation();
         }
     }
 }
