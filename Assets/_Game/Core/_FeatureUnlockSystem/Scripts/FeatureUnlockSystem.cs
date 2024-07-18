@@ -1,10 +1,11 @@
 ﻿using System;
 using _Game.Core.Services.UserContainer;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Utils;
 
-namespace Assets._Game.Core._FeatureUnlockSystem.Scripts
+namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
     public class FeatureUnlockSystem : IFeatureUnlockSystem, IDisposable
     {
