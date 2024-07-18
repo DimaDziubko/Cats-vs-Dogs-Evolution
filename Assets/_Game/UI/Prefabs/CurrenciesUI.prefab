@@ -66,10 +66,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 300000
+  m_text: 300
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
-  m_sharedMaterial: {fileID: 5215304330408209174, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
+  m_sharedMaterial: {fileID: -6188652404990471670, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64
-  m_fontSizeBase: 64
+  m_fontSize: 72.6
+  m_fontSizeBase: 72.6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 23.422348, y: 28.904785, z: 6.404175, w: 24.183594}
+  m_margin: {x: 23.422348, y: 1.3905334, z: 0.28989425, w: 0.49084476}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 397996310949630512}
   - component: {fileID: 397996310949630526}
   - component: {fileID: 397996310949630527}
+  - component: {fileID: 2196650406088302637}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -211,6 +212,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2196650406088302637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397996310949630513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 55
+  m_PreferredHeight: 55
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &397996311058151630
 GameObject:
   m_ObjectHideFlags: 0

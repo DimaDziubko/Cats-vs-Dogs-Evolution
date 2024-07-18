@@ -7,6 +7,6 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
     {
         event Action<TimelineInfoModel> TimelineInfoDataUpdated;
         void OnTimelineInfoWindowOpened();
-        void OnPrepareTimelineInfoDataForShow();
+        void OnPrepareTimelineInfoData();
     }
 }

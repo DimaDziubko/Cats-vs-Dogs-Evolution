@@ -7,6 +7,7 @@ using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Pathfinding.ECS.RVO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         [SerializeField] private float _animationDelay = 1.0f;
         [SerializeField] private float _scrollAnimationDuration = 3f;
         [SerializeField] private float _rippleAnimationDuration = 0.2f;
+        [SerializeField] private int _countToShow = 0; //0 - 1 -2 -3 -4 -5 How Much to show
 
         private UniTaskCompletionSource<bool> _taskCompletion;
 
@@ -38,6 +40,9 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         //Animation data
         private int _currentAge;
         private int _ages;
+
+
+        private bool _isShowForInfo;
 
         public void Construct(
             IAudioService audioService,
@@ -51,7 +56,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _evolutionPresenter = evolutionPresenter;
             _logger = logger;
             _canvas.worldCamera = cameraService.UICameraOverlay;
-            Show();
+            //Show();
             _exitBtn.interactable = false;
         }
 
@@ -61,7 +66,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _canvas.enabled = true;
             _exitBtn.interactable = true;
             _taskCompletion = new UniTaskCompletionSource<bool>();
-            Show();
+            ShowInfoModels();
             var result = await _taskCompletion.Task;
             _canvas.enabled = false;
             return result;
@@ -156,7 +161,15 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
             Opened?.Invoke();
         }
+        private void ShowInfoModels()
+        {
+            Unsubscribe();
+            Subscribe();
 
+            _isShowForInfo = true;
+
+            Opened?.Invoke();
+        }
 
         private void OnExit()
         {
@@ -167,7 +180,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         private void Subscribe()
         {
-            Opened += _timelineInfoPresenter.OnPrepareTimelineInfoDataForShow;
+            Opened += _timelineInfoPresenter.OnPrepareTimelineInfoData;
             Opened += _timelineInfoPresenter.OnTimelineInfoWindowOpened;
 
             _timelineInfoPresenter.TimelineInfoDataUpdated += UpdateUIElements;
@@ -176,16 +189,29 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
 
         private void Unsubscribe()
         {
-            Opened -= _timelineInfoPresenter.OnPrepareTimelineInfoDataForShow;
+            Opened -= _timelineInfoPresenter.OnPrepareTimelineInfoData;
             Opened -= _timelineInfoPresenter.OnTimelineInfoWindowOpened;
 
             _timelineInfoPresenter.TimelineInfoDataUpdated -= UpdateUIElements;
             _exitBtn.onClick.RemoveAllListeners();
+
+            _isShowForInfo = false;
         }
 
         private void UpdateUIElements(TimelineInfoModel model)
         {
-            Debug.Log("UpdateUIElements");
+            //Debug.Log("UpdateUIElements");
+
+            if (_isShowForInfo)
+            {
+                var ageNow = model.CurrentAge + _countToShow;
+
+                for (int i = 0; i < model.Models.Count; i++)
+                {
+                    int ageIndex = i;
+                    model.Models[i].IsUnlocked = ageNow >= ageIndex;
+                }
+            }
 
             _currentAge = model.CurrentAge;
             _ages = model.Models.Count;

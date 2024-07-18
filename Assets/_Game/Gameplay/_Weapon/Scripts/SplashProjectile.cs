@@ -12,12 +12,12 @@ namespace _Game.Gameplay._Weapon.Scripts
     public class SplashProjectile : Projectile
     {
         [SerializeField] private float _splashDamageRatio = 0.2f;
-        
+
         private readonly Collider2D[] _hitBuffer = new Collider2D[3];
         private float _splashRadius;
 
         private int _collisionMask;
-        
+
         public override void Construct(ISoundService soundService, Faction faction, WeaponConfig config, int layer)
         {
             base.Construct(soundService, faction, config, layer);
@@ -25,8 +25,8 @@ namespace _Game.Gameplay._Weapon.Scripts
 
             if (layer == Constants.Layer.PLAYER_PROJECTILE)
             {
-                _collisionMask = (1 << Constants.Layer.MELEE_ENEMY) 
-                                 | (1 << Constants.Layer.ENEMY_BASE) 
+                _collisionMask = (1 << Constants.Layer.MELEE_ENEMY)
+                                 | (1 << Constants.Layer.ENEMY_BASE)
                                  | (1 << Constants.Layer.RANGE_ENEMY);
             }
             else if (layer == Constants.Layer.ENEMY_PROJECTILE)
@@ -45,17 +45,17 @@ namespace _Game.Gameplay._Weapon.Scripts
         {
             if (collider != null)
             {
-                ApplyDamageAndEffects(); 
+                ApplyDamageAndEffects();
                 //Debug.Log($"Handle collision triggered with collider inside _isDead {_isDead}");
             }
         }
-        
+
         protected override void HandleNotMoving()
         {
             //Debug.Log("Handle not moving because projectile stopped.");
             ApplyDamageAndEffects();
         }
-        
+
         // private void ApplyDamageAndEffects()
         // {
         //     int count = Physics2D.OverlapCircleNonAlloc(transform.position, _splashRadius, _hitBuffer, _collisionMask);
@@ -91,12 +91,12 @@ namespace _Game.Gameplay._Weapon.Scripts
         //     PlaySound();
         //     _isDead = true;
         // }
-        
+
         private void ApplyDamageAndEffects()
         {
             int count = Physics2D.OverlapCircleNonAlloc(transform.position, _splashRadius, _hitBuffer, _collisionMask);
-    
-            if (count == 0) 
+
+            if (count == 0)
             {
                 _isDead = true;
                 SpawnVfx();
@@ -105,7 +105,7 @@ namespace _Game.Gameplay._Weapon.Scripts
             }
 
             float[] distances = new float[count];
-            
+
             for (int i = 0; i < count; i++)
             {
                 distances[i] = Vector2.Distance(transform.position, _hitBuffer[i].transform.position);
@@ -114,14 +114,16 @@ namespace _Game.Gameplay._Weapon.Scripts
             Array.Sort(distances, _hitBuffer, 0, count);
 
             float damageToDeal = _damage;
-            
+
             for (int i = 0; i < count; i++)
             {
                 var target = _interactionCache.Get(_hitBuffer[i]);
                 if (target?.Damageable != null)
                 {
+                    damageToDeal = _splashDamageRatio * _damage;
+                    if (i == 0)
+                        damageToDeal += _damage;
                     target.Damageable.GetDamage(damageToDeal);
-                    damageToDeal = _splashDamageRatio * _damage; 
                 }
             }
 

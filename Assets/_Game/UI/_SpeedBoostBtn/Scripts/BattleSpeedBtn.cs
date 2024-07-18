@@ -99,6 +99,7 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
 
         private void HandleActivatedState(BattleSpeedBtnModel model)
         {
+
             _changeableImage.sprite = _activatedSprite;
             _panel.SetActive(true);
             _adsIcon.gameObject.SetActive(false);
@@ -106,7 +107,7 @@ namespace Assets._Game.UI._SpeedBoostBtn.Scripts
             _timerText.enabled = true;
             UpdateTimer(model.TimerTime);
             _loadingText.enabled = false;
-            _button.interactable = true;
+            _button.interactable = false;
             _buttonTransform.sizeDelta = new Vector2(_activatedSizeX, _activatedSizeY);
         }
 

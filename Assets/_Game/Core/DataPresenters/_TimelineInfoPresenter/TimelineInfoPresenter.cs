@@ -26,7 +26,6 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         private TimelineInfoModel _timelineInfoModel;
-        private TimelineInfoModel _timelineInfoModelForShow;
 
         public TimelineInfoPresenter(
             IUserContainer userContainer,
@@ -105,36 +104,13 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
                 ageIndex++;
             }
         }
-        private void PrepareTimelineInfoDataForShow() //ZAGLYSHKA
+
+        void ITimelineInfoPresenter.OnTimelineInfoWindowOpened() =>
+                TimelineInfoDataUpdated?.Invoke(_timelineInfoModel);
+
+        void ITimelineInfoPresenter.OnPrepareTimelineInfoData()
         {
-            //    _timelineInfoModelForShow = new TimelineInfoModel()
-            //    {
-            //        CurrentAge = TimelineState.AgeId,
-            //        Models = new List<TimelineInfoItemModel>(6)
-            //    };
-
-            //    int ageIndex = 0;
-            //    int nextAgeIndex = TimelineState.AgeId;// + 1;
-
-            //    for (int i = 0; i < _timelineConfigRepository.GetAgeConfigs().Count(); i++)
-            //    {
-            //        var model = new TimelineInfoItemModel
-            //        {
-            //            StaticData = _generalDataPool.TimelineStaticData.ForInfoItem(ageIndex),
-            //            IsUnlocked = nextAgeIndex >= ageIndex
-            //        };
-
-            //        UnityEngine.Debug.Log("nextAgeIndex " + nextAgeIndex + "__ ageIndex " + ageIndex);
-
-            //        _timelineInfoModelForShow.Models.Add(model);
-            //        ageIndex++;
-            //    }
+            PrepareTimelineInfoData();
         }
-
-    void ITimelineInfoPresenter.OnTimelineInfoWindowOpened() =>
-            TimelineInfoDataUpdated?.Invoke(_timelineInfoModel);
-
-        void ITimelineInfoPresenter.OnPrepareTimelineInfoDataForShow() =>
-                    PrepareTimelineInfoDataForShow();
     }
 }
