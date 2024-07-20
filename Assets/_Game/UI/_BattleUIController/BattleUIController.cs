@@ -135,7 +135,7 @@ namespace _Game.UI._BattleUIController
             _battleMediator.EndBattle(GameResultType.Defeat, true);
         }
 
-        public void UpdateWave(int currentWave) => 
-            _gameplayUI.WaveInfoPopup.ShowWave(currentWave);
+        public void UpdateWave(int currentWave, int wavesCount) => 
+            _gameplayUI.WaveInfoPopup.ShowWave(currentWave, wavesCount);
     }
 }

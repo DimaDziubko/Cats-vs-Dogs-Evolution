@@ -25,7 +25,7 @@ namespace _Game.Gameplay._Battle.Scripts
 
         private BattleScenarioExecutor _scenarioExecutor;
         private BattleScenarioExecutor.State _activeScenario;
-        private int _currentWave;
+        private int _currentCachedWave;
         
         private AudioClip _bGM;
         
@@ -132,10 +132,10 @@ namespace _Game.Gameplay._Battle.Scripts
             {
                 var waves = _activeScenario.GetWaves();
                 int currentWave = waves.currentWave;
-                if (_currentWave != currentWave)
+                if (_currentCachedWave != currentWave)
                 {
-                    _battleMediator.OnWaveChanged(currentWave);
-                    _currentWave = currentWave;
+                    _battleMediator.OnWaveChanged(currentWave, waves.wavesCount);
+                    _currentCachedWave = currentWave;
                 }
                 _activeScenario.Progress(_speedManager.CurrentSpeedFactor);
                 _battleField.GameUpdate();

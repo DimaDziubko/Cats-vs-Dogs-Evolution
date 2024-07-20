@@ -23,7 +23,7 @@ namespace _Game.Gameplay._Battle.Scripts
         bool BattleInProcess { get; }
         void StartBattle();
         void StopBattle();
-        void OnWaveChanged(int currentWave);
+        void OnWaveChanged(int currentWave, int wavesCount);
         void EndBattle(GameResultType result, bool wasExit = false);
         void Reset();
         void Cleanup();
@@ -104,9 +104,9 @@ namespace _Game.Gameplay._Battle.Scripts
             _audioService.PlayStartBattleSound();
         }
 
-        public void OnWaveChanged(int currentWave)
+        public void OnWaveChanged(int currentWave, int wavesCount)
         {
-            _battleUIController.UpdateWave(currentWave);
+            _battleUIController.UpdateWave(currentWave, wavesCount);
         }
 
         public void StopBattle()

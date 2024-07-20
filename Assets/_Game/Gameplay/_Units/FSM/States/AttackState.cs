@@ -40,7 +40,6 @@ namespace _Game.Gameplay._Units.FSM.States
 
         public void Enter()
         {
-            Debug.Log($"Unit {_animator.gameObject.name} ENTER ATTACK STATE");
             _animator.PlayAttack();
         }
 
@@ -76,7 +75,6 @@ namespace _Game.Gameplay._Units.FSM.States
 
         public void Exit()
         {
-            Debug.Log($"Unit {_animator.gameObject.name} EXIT ATTACK STATE");
             _animator.StopAttack();
         }
     }
