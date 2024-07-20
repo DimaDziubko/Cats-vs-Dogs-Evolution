@@ -12,7 +12,7 @@ namespace _Game.UI.RateGame.Scripts
 
     public class RateGameChecker : IRateGameChecker, IDisposable
     {
-        private const string PP_RATE_GAME_CLICKED = "isrategameclicked_save";
+        private const string PP_RATE_GAME_CLICKED = "is_rate_game_clicked_save";
 
         private readonly IUserContainer _userContainer;
         private readonly IGameInitializer _gameInitializer;
@@ -29,15 +29,22 @@ namespace _Game.UI.RateGame.Scripts
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
             _rateGameProvider = rateGameProvider;
-            gameInitializer.OnPostInitialization += Init;
+
+            //TODO OnPostInitialization run Faster than subscribe on event
+            //gameInitializer.OnPostInitialization += Init;
+
+            Init();
+            Debug.Log("RateGame INIT");
         }
 
-        private void Init() => TimelineStateReadonly.NextBattleOpened += OnNextBattleOpen;
-
+        private void Init()
+        {
+            TimelineStateReadonly.NextBattleOpened += OnNextBattleOpen;
+        }
 
         public void Dispose()
         {
-            _gameInitializer.OnPostInitialization -= Init;
+            //_gameInitializer.OnPostInitialization -= Init;
             TimelineStateReadonly.NextBattleOpened -= OnNextBattleOpen;
         }
 
@@ -62,11 +69,14 @@ namespace _Game.UI.RateGame.Scripts
         {
             var screen = await _rateGameProvider.Load();
             //Check if work that subscription
-            screen.Value.OnClose += SetPPValue;
-            screen.Value.OnRateGame += SetPPValue;
+            screen.Value.OnSetPP += SetPPValue;
 
             var isDecision = await screen.Value.AwaitForDecision();
-            if (isDecision) screen.Dispose();
+            if (isDecision)
+            {
+                screen.Value.OnSetPP -= SetPPValue;
+                screen.Dispose();
+            }
         }
 
         private void SetPPValue()

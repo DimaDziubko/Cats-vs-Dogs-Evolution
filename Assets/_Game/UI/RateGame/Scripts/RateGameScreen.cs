@@ -20,6 +20,7 @@ namespace _Game.UI.RateGame.Scripts
 
         public event Action OnClose;
         public event Action OnRateGame;
+        public event Action OnSetPP;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private Button _rateGameButton;
@@ -36,7 +37,8 @@ namespace _Game.UI.RateGame.Scripts
         private IMyLogger _logger;
 
         private UniTaskCompletionSource<bool> _taskCompletion;
-        
+
+
         private void Start()
         {
 #if UNITY_ANDROID
@@ -69,7 +71,7 @@ namespace _Game.UI.RateGame.Scripts
             Unsubscribe();
             Subscribe();
         }
-        
+
         public async UniTask<bool> AwaitForDecision()
         {
             _canvas.enabled = true;
@@ -78,7 +80,7 @@ namespace _Game.UI.RateGame.Scripts
             _canvas.enabled = false;
             return result;
         }
-        
+
         private void Subscribe()
         {
             OnClose += Close;
@@ -86,12 +88,14 @@ namespace _Game.UI.RateGame.Scripts
 
             _noCloseButton.onClick.AddListener(() =>
             {
+                OnSetPP?.Invoke();
                 OnClose?.Invoke();
                 PlayButtonSound();
             });
 
             _rateGameButton.onClick.AddListener(() =>
             {
+                OnSetPP?.Invoke();
                 OnRateGame?.Invoke();
                 PlayButtonSound();
             });
@@ -143,11 +147,11 @@ namespace _Game.UI.RateGame.Scripts
                 DirectlyOpen();
                 yield break;
             }
-            
+
             _taskCompletion.TrySetResult(true);
         }
 #endif
         private void DirectlyOpen() { Application.OpenURL($"https://play.google.com/store/apps/details?id={Application.identifier}"); }
-        
+
     }
 }

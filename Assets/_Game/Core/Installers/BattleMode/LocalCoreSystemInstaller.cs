@@ -15,15 +15,19 @@ namespace _Game.Core.Installers.BattleMode
             BindSystemUpdate();
             BindRaceSelectionController();
             BindRateGameChecker();
+
+            Debug.Log("RateGame BINDS");
         }
 
-        private void BindRateGameChecker() => 
-            Container.Bind<RateGameChecker>().AsSingle();
+        private void BindRateGameChecker() =>
+            Container.Bind<IRateGameChecker>().To<RateGameChecker>()
+            .AsSingle()
+            .NonLazy();
 
-        private void BindRaceSelectionController() => 
+        private void BindRaceSelectionController() =>
             Container.Bind<RaceSelectionController>().AsSingle();
 
-        private void BindSystemUpdate() => 
+        private void BindSystemUpdate() =>
             Container.Bind<ISystemUpdate>().To<SystemUpdate>().FromInstance(_systemUpdate).AsSingle();
     }
 }
