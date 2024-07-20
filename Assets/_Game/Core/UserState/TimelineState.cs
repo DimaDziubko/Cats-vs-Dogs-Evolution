@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using UnityEngine;
 
 namespace Assets._Game.Core.UserState
 {
