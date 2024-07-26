@@ -1,8 +1,9 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
+using _Game.Core.Data;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
 using _Game.Gameplay._Battle.Scripts;
-using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.Data;
 
 namespace _Game.Core.DataPresenters.BattlePresenter

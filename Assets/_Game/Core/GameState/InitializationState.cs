@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core._GameInitializer;
+using _Game.Core._GameInitializer;
+using _Game.Core.GameState;
+using _Game.Core.Loading;
 using Assets._Game.Core.Loading;
 
 namespace Assets._Game.Core.GameState

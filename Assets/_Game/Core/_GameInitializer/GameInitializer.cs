@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core._GameInitializer
+namespace _Game.Core._GameInitializer
 {
     public class GameInitializer : IGameInitializer
     {
@@ -26,9 +26,7 @@ namespace Assets._Game.Core._GameInitializer
             OnPostInitialization?.Invoke();
         }
 
-        public void RegisterAsyncInitialization(Func<UniTask> initMethod)
-        {
+        public void RegisterAsyncInitialization(Func<UniTask> initMethod) => 
             _initializationTasks.Add(initMethod);
-        }
     }
 }

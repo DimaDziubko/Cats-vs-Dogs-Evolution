@@ -1,6 +1,6 @@
 ﻿using _Game.Gameplay._Battle.Scripts;
 
-namespace Assets._Game.UI._Environment
+namespace _Game.UI._Environment
 {
     public class EnvironmentData
     {

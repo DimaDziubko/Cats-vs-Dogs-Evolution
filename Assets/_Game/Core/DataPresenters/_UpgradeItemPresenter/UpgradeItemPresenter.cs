@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._GameInitializer;
+using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
+using _Game.Core.Data.Age.Static._UpgradeItem;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._GameInitializer;
+using _Game.Core.UserState;
+using _Game.UI._MainMenu.Scripts;
+using _Game.UI.Currencies;
+using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
-using Assets._Game.Core.Data.Age.Static._UpgradeItem;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Utils.Extensions;
 
@@ -21,12 +25,12 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
     {
         public event Action<UpgradeItemModel> UpgradeItemUpdated;
 
-        IEnumerable<Window> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
         {
             get
             {
-                yield return Window.Upgrades;
-                yield return Window.UpgradesAndEvolution;
+                yield return Screen.Upgrades;
+                yield return Screen.UpgradesAndEvolution;
             }
         }
 
@@ -85,7 +89,7 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
         private void SubscribeToEvents()
         {
             UpgradeItems.Changed += OnUpgradeItemChanged;
-            Currency.CoinsChanged += OnCoinsChanged;
+            Currency.CurrenciesChanged += OnCurrenciesChanged;
             _ageNavigator.AgeChanged += OnAgeChanged;
             _raceChanger.RaceChanged += OnRaceChanged;
         }
@@ -94,7 +98,7 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
         {
             _upgradesChecker.UnRegister(this);
             UpgradeItems.Changed -= OnUpgradeItemChanged;
-            Currency.CoinsChanged -= OnCoinsChanged;
+            Currency.CurrenciesChanged -= OnCurrenciesChanged;
             _gameInitializer.OnMainInitialization -= Init;
             _ageNavigator.AgeChanged -= OnAgeChanged;
             _raceChanger.RaceChanged -= OnRaceChanged;
@@ -170,7 +174,7 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
             UpgradeItemUpdated?.Invoke(model);
         }
         
-        private void OnCoinsChanged(bool isPositive) => 
+        private void OnCurrenciesChanged(Currencies currencies, bool isPositive) => 
             UpdateUpgradeItems();
 
         private void Cleanup() => _models.Clear();

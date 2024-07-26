@@ -1,6 +1,7 @@
 ﻿using _Game.Core.AssetManagement;
 using _Game.Core.DataProviders.Facade;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.UI._Environment;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.UI._Environment;

@@ -1,12 +1,14 @@
 ﻿﻿using System;
 using System.Collections.Generic;
+ using _Game.Core._GameInitializer;
  using _Game.Core.AssetManagement;
  using _Game.Core.Configs.Providers;
+ using _Game.Core.Data;
  using _Game.Core.DataProviders.AgeDataProvider;
+ using _Game.Core.DataProviders.ShopDataProvider;
  using _Game.Core.DataProviders.Timeline;
  using _Game.Core.Loading;
  using _Game.Core.Services.UserContainer;
- using Assets._Game.Core._GameInitializer;
  using Assets._Game.Core._Logger;
  using Assets._Game.Core.Data;
  using Assets._Game.Core.DataProviders.BattleDataProvider;
@@ -31,6 +33,7 @@ using System.Collections.Generic;
         private readonly ITimelineDataProvider _timelineDataProvider;
         private readonly ILocalConfigProvider _localConfigProvider;
         private readonly IAssetRegistry _assetRegistry;
+        private readonly IShopDataProvider _shopDataProvider;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         
@@ -44,6 +47,7 @@ using System.Collections.Generic;
             ILocalConfigProvider localConfigProvider,
             IBattleDataProvider battleDataProvider,
             ITimelineDataProvider timelineDataProvider,
+            IShopDataProvider shopDataProvider,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
@@ -59,6 +63,7 @@ using System.Collections.Generic;
             _localConfigProvider = localConfigProvider;
             _logger = logger;
             _assetRegistry = assetRegistry;
+            _shopDataProvider = shopDataProvider;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -87,6 +92,7 @@ using System.Collections.Generic;
                 _ageDataProvider, 
                 _battleDataProvider, 
                 _timelineDataProvider,
+                _shopDataProvider,
                 _assetRegistry,
                 _userContainer,
                 _logger));

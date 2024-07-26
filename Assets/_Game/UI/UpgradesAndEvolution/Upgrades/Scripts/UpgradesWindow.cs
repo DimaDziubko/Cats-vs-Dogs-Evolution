@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.UI._MainMenu.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
+using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
-    public class UpgradesWindow : MonoBehaviour, IUIWindow
+    public class UpgradesWindow : MonoBehaviour, IUIScreen
     {
         public event Action Opened;
-        public Window Window => Window.Upgrades;
+        public Screen Screen => Screen.Upgrades;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private UpgradeUnitItemView[] _unitItems;
@@ -53,7 +55,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         public void Show()
         {
             _canvas.enabled = true;
-            _header.ShowWindowName(Window.ToString());
+            _header.ShowWindowName(Screen.ToString());
 
             Unsubscribe();
             Subscribe();
@@ -64,8 +66,8 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         
             Opened?.Invoke();
 
-            _upgradesChecker.MarkAsReviewed(Window);
-            _upgradesChecker.MarkAsReviewed(Window.UpgradesAndEvolution);
+            _upgradesChecker.MarkAsReviewed(Screen);
+            _upgradesChecker.MarkAsReviewed(Screen.UpgradesAndEvolution);
         }
 
         private void Subscribe()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets._Game.Core.Services.Random;
+using _Game.Core.Services.IAP;
+using _Game.Core.Services.Random;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
@@ -22,6 +23,7 @@ namespace _Game.Core.UserState
         public BattleSpeedState BattleSpeedState;
         public AdsStatistics AdsStatistics;
         public RetentionState RetentionState;
+        public PurchaseDataState PurchaseDataState;
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -88,6 +90,11 @@ namespace _Game.Core.UserState
                     FirstOpenTime = DateTime.UtcNow,
                     FirstDayRetentionEventSent = false,
                     SecondDayRetentionEventSent = false,
+                },
+                
+                PurchaseDataState = new PurchaseDataState()
+                {
+                    BoudhtIAPs = new List<BoughtIAP>()
                 }
             };
         }

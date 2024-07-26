@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core.Data;
+using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.UI._Environment;
+using _Game.UI._MainMenu.Scripts;
+using _Game.UI._Shop.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Data;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
@@ -9,9 +13,9 @@ using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using Assets._Game.UI._Environment;
-using Assets._Game.UI._MainMenu.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.Core.Debugger
 {
@@ -56,6 +60,9 @@ namespace _Game.Core.Debugger
         [ShowInInspector] 
         public Dictionary<Race, Sprite> FoodIcon => GeneralDataPool.AgeStaticData.FoodIcons.GetData();
         
+        [ShowInInspector] 
+        public Dictionary<int, ShopItemStaticData> ShopItemStaticData => GeneralDataPool.ShopItemStaticDataPool.GetData();
+        
         [ShowInInspector]
         public float PlayerTowerHealth => GeneralDataPool.AgeDynamicData.UpgradeItems.BaseHealth.Amount;
         
@@ -65,7 +72,7 @@ namespace _Game.Core.Debugger
         public GeneralDataPool GeneralDataPool { get; set; }
         
         [ShowInInspector, ReadOnly]
-        public Dictionary<Window, NotificationData> NotificationData { get; set; }
+        public Dictionary<Screen, NotificationData> NotificationData { get; set; }
 
         public UserContainer UserContainer { get; set; }
 
@@ -86,7 +93,7 @@ namespace _Game.Core.Debugger
     public interface IMyDebugger
     {
         GeneralDataPool GeneralDataPool { get; set; }
-        Dictionary<Window, NotificationData> NotificationData { get; set; }
+        Dictionary<Screen, NotificationData> NotificationData { get; set; }
         UserContainer UserContainer { get; set; }
     }
 }

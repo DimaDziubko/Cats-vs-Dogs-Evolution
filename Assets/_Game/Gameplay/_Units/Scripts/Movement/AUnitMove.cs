@@ -1,3 +1,4 @@
+using _Game.Utils;
 using Assets._Game.Utils;
 using Pathfinding;
 using Sirenix.OdinInspector;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Factory;
 using Assets._Game.Core.Factory;
 
 namespace Assets._Game.GameModes._BattleMode.Scripts

@@ -1,7 +1,7 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
-using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Ads;
 using Assets._Game.Core.Services.Analytics;

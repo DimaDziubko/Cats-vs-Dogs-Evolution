@@ -1,4 +1,6 @@
-﻿namespace Assets._Game.Core.GameState
+﻿using Assets._Game.Core.GameState;
+
+namespace _Game.Core.GameState
 {
     public interface IGameStateMachine 
     {

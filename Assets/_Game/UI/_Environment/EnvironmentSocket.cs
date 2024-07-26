@@ -1,7 +1,7 @@
 using Assets._Game.UI._Environment.Factory;
 using UnityEngine;
 
-namespace Assets._Game.UI._Environment
+namespace _Game.UI._Environment
 {
     public class EnvironmentSocket : MonoBehaviour
     {

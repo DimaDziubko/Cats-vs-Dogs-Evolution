@@ -1,7 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core._GameInitializer
+namespace _Game.Core._GameInitializer
 {
     public interface IGameInitializer
     {

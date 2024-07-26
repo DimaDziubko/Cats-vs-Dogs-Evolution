@@ -2,7 +2,6 @@
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Units.Scripts.Attack;
-using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._Bases.Scripts;
@@ -18,14 +17,12 @@ namespace _Game.Gameplay._Bases.Scripts
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private Health _health;
-
         [SerializeField] private Collider2D _bodyCollider;
         [SerializeField] private TargetPoint _targetPoint;
-
         [SerializeField] private TowerDestructionAnimator _animator;
-
         [SerializeField] private DamageFlashEffect _damageFlash;
-
+        [SerializeField] private AreaEffector2D _effector;
+        
         private IBaseDestructionManager _baseDestructionManager;
         private ICoinSpawner _coinSpawner;
         private IInteractionCache _interactionCache;
@@ -56,7 +53,14 @@ namespace _Game.Gameplay._Bases.Scripts
         private Quaternion Rotation
         {
             get => _transform.rotation;
-            set => _transform.rotation = _health.HealthBarRotation = value;
+            set
+            {
+                _transform.rotation = _health.HealthBarRotation = value;
+                if (_effector != null)
+                {
+                    _effector.forceAngle = value.eulerAngles.y;
+                }
+            }
         }
 
         public IBaseFactory OriginFactory { get; set; }
@@ -184,7 +188,9 @@ namespace _Game.Gameplay._Bases.Scripts
             _damageFlash = GetComponent<DamageFlashEffect>();
             _health = GetComponentInChildren<Health>();
             _bodyCollider = GetComponentInChildren<Collider2D>();
+            _effector = GetComponentInChildren<AreaEffector2D>();
             _targetPoint = GetComponent<TargetPoint>();
+            
         }
 #endif
     }

@@ -14,6 +14,7 @@ namespace _Game.UI._Hud
         [SerializeField] private Vector3 _startPosition;
         [SerializeField] private Vector3 _mainPosition;
 
+        [SerializeField] private float _initialDelay = 5f;
         [SerializeField] private float _moveToMainTimeSec = 2;
         [SerializeField] private float _mainPositionDelay = 3;
         [SerializeField] private float _fadeTime = 2;
@@ -36,6 +37,8 @@ namespace _Game.UI._Hud
             _transform.localPosition = _startPosition;
             
             Sequence sequence = DOTween.Sequence();
+            
+            sequence.PrependInterval(_initialDelay);
             
             sequence.Append(_transform.DOLocalMove(_mainPosition, _moveToMainTimeSec).SetEase(Ease.OutQuad));
             

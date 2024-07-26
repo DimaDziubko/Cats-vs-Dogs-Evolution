@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Assets._Game.Core.Data.Timeline.Static;
 
-namespace Assets._Game.Core.Data.Timeline.Static
+namespace _Game.Core.Data.Timeline.Static
 {
     public class TimelineStaticData
     {

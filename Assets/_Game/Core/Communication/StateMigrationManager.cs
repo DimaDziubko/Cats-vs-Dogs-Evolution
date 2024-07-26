@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core.Communication.Migrations;
 using _Game.Core.UserState;
-using Assets._Game.Core.Communication.Migrations;
-using Assets._Game.Core.UserState;
+using Assets._Game.Core.Communication;
 
-namespace Assets._Game.Core.Communication
+namespace _Game.Core.Communication
 {
     public class StateMigrationManager
     {
@@ -14,6 +14,7 @@ namespace Assets._Game.Core.Communication
         public StateMigrationManager()
         {
             _migrations.Add(new MigrationTo104());
+            _migrations.Add(new MigrationTo110());
         }
 
         public void Migrate(ref UserAccountState state)

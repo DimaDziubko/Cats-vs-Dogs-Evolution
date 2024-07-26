@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories.Age;
+using _Game.Core.Data;
 using _Game.Core.Data.Age.Static;
 using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
+using _Game.Utils;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Configs.Repositories;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
@@ -24,27 +25,24 @@ namespace _Game.Core.DataProviders.AgeDataProvider
     public class AgeDataProvider : IAgeDataProvider
     {
         private readonly IAgeConfigRepository _ageConfigRepository;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IDataProviderFacade _dataProvider;
-        private readonly ICommonItemsConfigRepository _commonItemsConfigRepository;
         private readonly IMyLogger _logger;
         private readonly IAssetRegistry _assetRegistry;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
 
         public AgeDataProvider(
             IAgeConfigRepository ageConfigRepository,
-            ICommonItemsConfigRepository commonItemsConfigRepository,
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             IDataProviderFacade dataProvider,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
             _logger = logger;
             _ageConfigRepository = ageConfigRepository;
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _dataProvider = dataProvider;
-            _commonItemsConfigRepository = commonItemsConfigRepository;
             _assetRegistry = assetRegistry;
         }
         
@@ -57,8 +55,8 @@ namespace _Game.Core.DataProviders.AgeDataProvider
             var builderTask = LoadUnitBuilderData(config.Warriors, timelineId);
             var baseTask = LoadBase(config, timelineId);
             var unitUpgradeItemTask = LoadUnitUpgradeItems(config.Warriors, timelineId);
-            var foodIconTask = LoadFoodIcons(_commonItemsConfigRepository, timelineId);
-            var towerIconTask = LoadBaseIcon(_commonItemsConfigRepository, timelineId);
+            var foodIconTask = LoadFoodIcons(timelineId);
+            var towerIconTask = LoadBaseIcon(timelineId);
     
             var results = await UniTask.WhenAll(
                 unitTask, weaponTask, builderTask, baseTask, unitUpgradeItemTask, foodIconTask, towerIconTask);
@@ -79,17 +77,17 @@ namespace _Game.Core.DataProviders.AgeDataProvider
             return ageStaticData;
         }
 
-    private async UniTask<Sprite> LoadBaseIcon(ICommonItemsConfigRepository itemsConfigRepository, int timelineId)
+    private async UniTask<Sprite> LoadBaseIcon(int timelineId)
         {
             _logger.Log("Base icon loading");
-            return await _dataProvider.LoadBaseIcon(itemsConfigRepository,
+            return await _dataProvider.LoadBaseIcon(
                 new LoadContext(){CacheContext = Constants.CacheContext.BATTLE, Timeline = timelineId});
         }
 
-        private async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(ICommonItemsConfigRepository itemsConfigRepository, int timelineId)
+        private async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(int timelineId)
         {
             _logger.Log("Food icon loading");
-            return await _dataProvider.LoadFoodIcons(itemsConfigRepository,
+            return await _dataProvider.LoadFoodIcons(
                 new LoadContext(){CacheContext = Constants.CacheContext.BATTLE, Timeline = timelineId});
         }
 

@@ -1,16 +1,16 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories.Economy;
+using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._GameInitializer;
-using Assets._Game.Core.Configs.Repositories;
-using Assets._Game.Core.Data;
-using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Core.Services.Upgrades
+namespace _Game.Core.Services.Upgrades
 {
     public class UpgradeCalculator : IUpgradeCalculator, IDisposable
     {

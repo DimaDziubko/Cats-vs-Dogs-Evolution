@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Configs.Models;
+using _Game.Core.Data;
 using _Game.Core.DataProviders.Facade;
 using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Core._Logger;

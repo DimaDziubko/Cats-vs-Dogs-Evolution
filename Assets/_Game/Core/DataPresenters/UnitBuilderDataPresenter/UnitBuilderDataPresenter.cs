@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.Data;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.UserState;

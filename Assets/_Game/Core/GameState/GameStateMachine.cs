@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.GameState;
 using Assets._Game.Core._StateFactory;
+using Assets._Game.Core.GameState;
 using Zenject;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
     public class GameStateMachine : IGameStateMachine, IInitializable
     {

@@ -1,4 +1,6 @@
 ﻿using System;
+using _Game.UI.Common.Scripts;
+using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.Common.Scripts;
@@ -73,7 +75,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             
             _backgroundHolder.sprite = _lockedItemImage;
             _unitNameLabel.enabled = false;
-            _transactionButton.UpdateButtonState(model.CanAfford, model.StaticData.Price);
+            _transactionButton.UpdateButtonState(model.CanAfford, model.StaticData.Price.FormatMoney());
         }
 
         public void Cleanup()

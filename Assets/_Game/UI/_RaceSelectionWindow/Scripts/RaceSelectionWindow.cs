@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI._RaceSelectionWindow.Scripts
+namespace _Game.UI._RaceSelectionWindow.Scripts
 {
     public class RaceSelectionWindow : MonoBehaviour
     {

@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._GameInitializer;
+using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._GameInitializer;
+using _Game.Core.UserState;
+using _Game.UI.Currencies;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.DataPresenters._RaceChanger;
+using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
+using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
-namespace Assets._Game.Core.DataPresenters.UnitUpgradePresenter
+namespace _Game.Core.DataPresenters.UnitUpgradePresenter
 {
     public class UnitUpgradesPresenter : IUnitUpgradesPresenter, IUpgradeAvailabilityProvider, IDisposable 
     {
         public event Action<Dictionary<UnitType, UnitUpgradeItemModel>> UpgradeUnitItemsUpdated;
-        IEnumerable<Window> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
         {
             get
             {
-                yield return Window.Upgrades;
-                yield return Window.UpgradesAndEvolution;
+                yield return Screen.Upgrades;
+                yield return Screen.UpgradesAndEvolution;
             }
         }
         bool IUpgradeAvailabilityProvider.IsAvailable =>  
@@ -67,7 +70,7 @@ namespace Assets._Game.Core.DataPresenters.UnitUpgradePresenter
             PrepareUnitUpgradeItemModels();
             _upgradesChecker.Register(this);
             TimelineState.OpenedUnit += OnUnitOpened;
-            Currency.CoinsChanged += OnCoinsChanged;
+            Currency.CurrenciesChanged += OnCurrenciesChanged;
             _ageNavigator.AgeChanged += OnAgeChanged;
             _raceChanger.RaceChanged += OnRaceChanged;
         }
@@ -101,7 +104,7 @@ namespace Assets._Game.Core.DataPresenters.UnitUpgradePresenter
         {
             _upgradesChecker.UnRegister(this);
             TimelineState.OpenedUnit -= OnUnitOpened;
-            Currency.CoinsChanged -= OnCoinsChanged;
+            Currency.CurrenciesChanged -= OnCurrenciesChanged;
             _ageNavigator.AgeChanged += OnAgeChanged;
             _gameInitializer.OnMainInitialization -= Init;
             _raceChanger.RaceChanged -= OnRaceChanged;
@@ -133,7 +136,7 @@ namespace Assets._Game.Core.DataPresenters.UnitUpgradePresenter
             model.IsBought = TimelineState.OpenUnits.Contains(type);
         }
 
-        private void OnCoinsChanged(bool isPositive) => UpdateUnitItems();
+        private void OnCurrenciesChanged(Currencies currencies, bool isPositive) => UpdateUnitItems();
 
 
         private void UpdateUnitItems()

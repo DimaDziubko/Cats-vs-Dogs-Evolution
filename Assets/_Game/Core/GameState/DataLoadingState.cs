@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.AssetManagement;
+using _Game.Core.Data;
 using _Game.Core.DataProviders.AgeDataProvider;
+using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
@@ -21,6 +22,7 @@ namespace _Game.Core.GameState
         private readonly ITimelineDataProvider _timelineDataProvider;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
+        private readonly IShopDataProvider _shopDataProvider;
 
         public DataLoadingState(
             IGeneralDataPool generalDataPool,
@@ -30,7 +32,8 @@ namespace _Game.Core.GameState
             IMyLogger logger,
             IGameStateMachine stateMachine,
             IAssetRegistry assetRegistry,
-            IUserContainer userContainer)
+            IUserContainer userContainer, 
+            IShopDataProvider shopDataProvider)
         {
             _generalDataPool = generalDataPool;
             _ageDataProvider = ageDataProvider;
@@ -40,6 +43,7 @@ namespace _Game.Core.GameState
             _stateMachine = stateMachine;
             _assetRegistry = assetRegistry;
             _userContainer = userContainer;
+            _shopDataProvider = shopDataProvider;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
@@ -49,9 +53,11 @@ namespace _Game.Core.GameState
                 _ageDataProvider,
                 _battleDataProvider,
                 _timelineDataProvider,
+                _shopDataProvider,
                 _assetRegistry,
                 _userContainer,
-                _logger));
+                _logger
+                ));
 
             _stateMachine.Enter<InitializationState, Queue<ILoadingOperation>>(loadingOperations);
         }

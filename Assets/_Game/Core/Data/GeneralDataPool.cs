@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using _Game.Core.Data.Age.Static;
+﻿using _Game.Core.Data.Age.Static;
 using _Game.Core.Data.Battle;
+using _Game.Core.Data.Timeline.Static;
 using _Game.Core.Debugger;
+using _Game.UI._Shop.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.Data.Age.Dynamic;
-using Assets._Game.Core.Data.Timeline.Static;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 
@@ -17,9 +16,9 @@ namespace _Game.Core.Data
         public AgeStaticData AgeStaticData { get; set; }
         public AgeDynamicData AgeDynamicData { get; set; }
         public BattleStaticData BattleStaticData { get; set; }
-        
-        
-        public Dictionary<UnitType, UnitBuilderBtnStaticData> GetBuilderButtonsData() => AgeStaticData.GetBuilderButtonsData();
+
+        public DataPool<int, ShopItemStaticData> ShopItemStaticDataPool { get; set; }
+
         public UnitBuilderBtnStaticData GetBuilderButtonData(UnitType type) => AgeStaticData.GetBuilderButtonData(type);
 
         public GeneralDataPool(
@@ -28,9 +27,5 @@ namespace _Game.Core.Data
         {
             debugger.GeneralDataPool = this;
         }
-
-        public UnitData GetUnitForAge(UnitType type) => AgeStaticData.ForUnit(type);
-
-        public UnitData GetUnitForBattle(int battle, UnitType type) => BattleStaticData.ForUnit(battle, type);
     }
 }

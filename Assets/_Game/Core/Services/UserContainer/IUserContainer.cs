@@ -1,7 +1,6 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
 using _Game.Core.UserState;
-using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -29,5 +28,6 @@ namespace _Game.Core.Services.UserContainer
         void AddAdsReviewed();
         void FirstDayRetentionSent();
         void SecondDayRetentionSent();
+        void AddPurchase(string id);
     }
 }

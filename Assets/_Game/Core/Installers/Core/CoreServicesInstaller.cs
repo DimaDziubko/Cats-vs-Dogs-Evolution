@@ -1,29 +1,25 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._GameInitializer;
+using _Game.Core._GameSaver;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
 using _Game.Core.Data;
 using _Game.Core.Debugger;
+using _Game.Core.Services.AssetProvider;
+using _Game.Core.Services.IAP;
+using _Game.Core.Services.IGPService;
+using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
 using Assets._Game._AssetProvider;
 using Assets._Game.Common;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._GameInitializer;
-using Assets._Game.Core._GameSaver;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._SceneLoader;
 using Assets._Game.Core._StateFactory;
 using Assets._Game.Core.AssetManagement;
-using Assets._Game.Core.Communication;
-using Assets._Game.Core.Data;
-using Assets._Game.Core.Services.AssetProvider;
-using Assets._Game.Core.Services.Random;
-using Assets._Game.Core.UserState;
 using UnityEngine;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class CoreServicesInstaller : MonoInstaller
     {
@@ -47,8 +43,11 @@ namespace Assets._Game.Core.Installers.Core
             BindFeatureUnlockSystem();
             BindGameSaver();
             BindDataPool();
+            BindIAPProvider();
+            BindIAPService();
+            BindIGPService();
         }
-        
+
         private void BindInitializer() =>
             Container
                 .BindInterfacesAndSelfTo<GameInitializer>()
@@ -132,6 +131,21 @@ namespace Assets._Game.Core.Installers.Core
         private void BindDataPool() =>
             Container
                 .BindInterfacesAndSelfTo<GeneralDataPool>()
+                .AsSingle();
+
+        private void BindIAPProvider() =>
+            Container
+                .Bind<IAPProvider>()
+                .AsSingle();
+
+        private void BindIAPService() =>
+            Container
+                .BindInterfacesAndSelfTo<IAPService>()
+                .AsSingle();
+
+        private void BindIGPService() =>
+            Container
+                .BindInterfacesAndSelfTo<IGPService>()
                 .AsSingle();
     }
 }

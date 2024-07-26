@@ -1,11 +1,12 @@
 ﻿using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Core.DataPresenters.BattlePresenter;
+using _Game.UI._Shop.Scripts;
 using Assets._Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using Assets._Game.Core.DataPresenters.UnitDataPresenter;
 using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class DataPresentersInstaller : MonoInstaller
     {
@@ -16,6 +17,7 @@ namespace Assets._Game.Core.Installers.Core
             BindWeaponDataPresenter();
             BindTowerDataPresenter();
             BindBattlePresenter();
+            BindShopPresenter();
         }
 
         private void BindUnitBuilderDataPresenter() => 
@@ -41,6 +43,11 @@ namespace Assets._Game.Core.Installers.Core
         private void BindBattlePresenter() =>
             Container
                 .BindInterfacesAndSelfTo<BattlePresenter>()
+                .AsSingle();
+
+        private void BindShopPresenter() =>
+            Container
+                .BindInterfacesAndSelfTo<ShopPresenter>()
                 .AsSingle();
     }
 }

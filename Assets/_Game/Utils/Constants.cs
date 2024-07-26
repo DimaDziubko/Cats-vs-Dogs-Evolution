@@ -1,6 +1,6 @@
 ﻿using Pathfinding.RVO;
 
-namespace Assets._Game.Utils
+namespace _Game.Utils
 {
     public sealed class Constants
     {
@@ -94,6 +94,9 @@ namespace Assets._Game.Utils
             
             //Timeline
             public const string TIMELINES = "Timelines";
+            
+            //Shop
+            public const string SHOP_CONFIG = "ShopConfig";
         }
     }
 }

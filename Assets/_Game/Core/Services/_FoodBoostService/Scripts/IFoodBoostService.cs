@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets._Game.UI._Hud;
+using _Game.UI._Hud;
 
 namespace Assets._Game.Core.Services._FoodBoostService.Scripts
 {

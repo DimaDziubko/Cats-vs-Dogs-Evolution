@@ -1,9 +1,10 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.AssetManagement;
+using _Game.Core.Data;
 using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.Loading;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.DataProviders.BattleDataProvider;

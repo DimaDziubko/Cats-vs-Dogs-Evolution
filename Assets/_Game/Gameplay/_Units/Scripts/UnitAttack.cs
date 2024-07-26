@@ -2,6 +2,7 @@
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Utils;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;

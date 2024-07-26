@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Game.Core.Configs.Models;
-using Assets._Game.Utils;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -9,7 +8,8 @@ namespace _Game.Utils.Extensions
 {
     public static class JsonExtensions
     {
-      public static TimelineConfig ForTimeline(this JObject jsonData, int timelineId = 0) => ExtractTimeline(jsonData, timelineId);
+        public static TimelineConfig ForTimeline(this JObject jsonData, int timelineId = 0) => 
+            ExtractTimeline(jsonData, timelineId);
 
         public static GameConfig ToGameConfig(this JObject jsonData, int timelineId = 0)
         {
@@ -20,6 +20,7 @@ namespace _Game.Utils.Extensions
                 CommonConfig = ExtractCommonConfig(jsonData),
                 FoodBoostConfig = ExtractFoodBoostConfig(jsonData),
                 TimelinesCount = ExtractTimelinesCount(jsonData),
+                ShopConfig = ExtractShopConfig(jsonData),
             };
             
             //TODO Delete later
@@ -27,7 +28,18 @@ namespace _Game.Utils.Extensions
     
             return config;
         }
-        
+
+        private static ShopConfig ExtractShopConfig(JObject jsonData)
+        {
+            var shopToken = jsonData[Constants.ConfigKeys.SHOP_CONFIG];
+            if (shopToken == null)
+            {
+                Debug.LogError("ShopConfig is null");
+                return null;
+            }
+            return shopToken.ToObject<ShopConfig>();
+        }
+
         private static FoodBoostConfig ExtractFoodBoostConfig(JObject jsonData)
         {
             var foodBoostToken = jsonData[Constants.ConfigKeys.FOOD_BOOST_CONFIG];

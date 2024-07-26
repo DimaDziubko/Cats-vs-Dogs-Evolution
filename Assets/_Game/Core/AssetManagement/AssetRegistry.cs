@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Services.AssetProvider;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.Core.AssetManagement
@@ -42,7 +42,8 @@ namespace _Game.Core.AssetManagement
 
         public void ClearContext(int timeline, int context)
         {
-            if (_timelineContextKeys.TryGetValue(timeline, out var contextKeys) && contextKeys.TryGetValue(context, out var keys))
+            if (_timelineContextKeys.TryGetValue(timeline, out var contextKeys)
+                && contextKeys.TryGetValue(context, out var keys))
             {
                 _logger.Log($"Clearing cache for timeline {timeline}. context {context}");
                 

@@ -1,34 +1,34 @@
 ﻿using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.Random;
 using _Game.Gameplay._Bases.Factory;
+using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Vfx.Factory;
+using _Game.UI.Factory;
 using Assets._Game.Core.DataPresenters.UnitDataPresenter;
-using Assets._Game.Core.DataPresenters.WeaponDataPresenter;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Core.Services.Random;
 using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.UI._Environment.Factory;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.BattleMode
+namespace _Game.Core.Installers.BattleMode
 {
     public class FactoriesInstaller : MonoInstaller
     {
         [SerializeField] private UnitFactory _unitFactory;
-        [FormerlySerializedAs("towerFactory")] [FormerlySerializedAs("_baseFactory")] [SerializeField] private BaseFactory baseFactory;
+        [SerializeField] private BaseFactory baseFactory;
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private CoinFactory _coinFactory;
         [SerializeField] private VfxFactory _vfxFactory;
         [SerializeField] private EnvironmentFactory _environmentFactory;
-        
+
         public override void InstallBindings()
         {
             BindFactories();

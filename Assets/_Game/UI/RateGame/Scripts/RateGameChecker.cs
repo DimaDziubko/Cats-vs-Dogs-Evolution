@@ -1,6 +1,6 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._GameInitializer;
 using Assets._Game.Core.UserState;
 using UnityEngine;
 
@@ -29,12 +29,8 @@ namespace _Game.UI.RateGame.Scripts
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
             _rateGameProvider = rateGameProvider;
-
-            //TODO OnPostInitialization run Faster than subscribe on event
-            //gameInitializer.OnPostInitialization += Init;
-
-            Init();
-            Debug.Log("RateGame INIT");
+            
+            gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
@@ -44,7 +40,7 @@ namespace _Game.UI.RateGame.Scripts
 
         public void Dispose()
         {
-            //_gameInitializer.OnPostInitialization -= Init;
+            _gameInitializer.OnPostInitialization -= Init;
             TimelineStateReadonly.NextBattleOpened -= OnNextBattleOpen;
         }
 

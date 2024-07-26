@@ -1,12 +1,15 @@
 ﻿using System;
+using _Game.UI.Common.Scripts;
+using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradeItemView : MonoBehaviour
     {
@@ -64,7 +67,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _amountLabel.text = model.AmountText;
             _itemNameLabel.text = model.StaticData.Name;
             
-            _transactionButton.UpdateButtonState(model.CanAfford, model.DynamicData.Price);
+            _transactionButton.UpdateButtonState(model.CanAfford, model.DynamicData.Price.FormatMoney());
         }
 
         public void Cleanup()

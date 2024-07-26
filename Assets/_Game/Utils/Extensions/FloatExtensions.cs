@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Unity.VisualScripting;
 
-namespace Assets._Game.Utils.Extensions
+namespace _Game.Utils.Extensions
 {
     public static class FloatExtensions
     {
@@ -46,7 +45,7 @@ namespace Assets._Game.Utils.Extensions
 
         public static string ToInvariantString(this float number)
         {
-            return number.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            return number.ToString(CultureInfo.InvariantCulture);
         }
         public static string FormatTime(this float value)
         {

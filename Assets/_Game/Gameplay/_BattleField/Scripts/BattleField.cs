@@ -10,7 +10,6 @@ using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI._Hud;
 using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts

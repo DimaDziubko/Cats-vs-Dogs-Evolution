@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Configs.Repositories;
+using _Game.Core._GameInitializer;
+using _Game.Core.Configs.Repositories.Age;
+using _Game.Core.Configs.Repositories.Timeline;
+using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._GameInitializer;
+using _Game.Core.UserState;
+using _Game.UI._MainMenu.Scripts;
+using _Game.UI.Currencies;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.Configs.Repositories;
-using Assets._Game.Core.Data;
+using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
-namespace Assets._Game.Core.DataPresenters.Evolution
+namespace _Game.Core.DataPresenters.Evolution
 {
     public class EvolutionPresenter : IEvolutionPresenter, IUpgradeAvailabilityProvider, IDisposable
     {
         public event Action<EvolutionTabModel> EvolutionModelUpdated;
         public event Action LastAgeOpened;
         
-        IEnumerable<Window> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
         {
             get
             {
-                yield return Window.Evolution;
-                yield return Window.UpgradesAndEvolution;
+                yield return Screen.Evolution;
+                yield return Screen.UpgradesAndEvolution;
             }
         }
 
@@ -70,7 +73,7 @@ namespace Assets._Game.Core.DataPresenters.Evolution
             UpdateEvolutionData();
             _ageNavigator.AgeChanged += OnAgeChanged;
             //TimelineState.NextTimelineOpened += OnNextTimelineOpened;
-            Currency.CoinsChanged += OnCoinsChanged;
+            Currency.CurrenciesChanged += OnCurrenciesChanged;
         }
 
         void IDisposable.Dispose()
@@ -78,7 +81,7 @@ namespace Assets._Game.Core.DataPresenters.Evolution
             _upgradesChecker.Register(this);
             TimelineState.NextAgeOpened -= OnAgeChanged;
             //TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
-            Currency.CoinsChanged -= OnCoinsChanged;
+            Currency.CurrenciesChanged -= OnCurrenciesChanged;
             _gameInitializer.OnMainInitialization -= Init;
         }
 
@@ -94,7 +97,7 @@ namespace Assets._Game.Core.DataPresenters.Evolution
             }
         }
 
-        private void OnCoinsChanged(bool _) => UpdateEvolutionData();
+        private void OnCurrenciesChanged(Currencies currencies, bool _) => UpdateEvolutionData();
 
         private void OnNextTimelineOpened() => UpdateEvolutionData();
 

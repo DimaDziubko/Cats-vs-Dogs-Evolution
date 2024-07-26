@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Configs.Models;
+using _Game.Core.Data;
 using _Game.Core.DataProviders.Ambience;
 using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Common;
 using _Game.Core.DataProviders.EnvironmentDataProvider;
+using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.UnitBuilderDataProvider;
 using _Game.Core.DataProviders.UnitDataProviders;
 using _Game.Core.DataProviders.UnitUpgradeDataProvider;
 using _Game.Core.DataProviders.WeaponDataProviders;
-using Assets._Game.Core.Configs.Repositories;
-using Assets._Game.Core.Data;
+using _Game.UI._Environment;
+using _Game.UI._Shop.Scripts;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
-using Assets._Game.UI._Environment;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -32,6 +33,7 @@ namespace _Game.Core.DataProviders.Facade
         private readonly IAmbienceDataProvider _ambienceDataProvider;
         private readonly IUnitUpgradeDataProvider _unitUpgradeDataProvider;
         private readonly ICommonItemsDataProvider _commonItemDataProvider;
+        private readonly IShopDataProvider _shopDataProvider;
 
         public DataProviderFacade(
             IUniversalUnitDataProvider unitDataProvider,
@@ -41,7 +43,8 @@ namespace _Game.Core.DataProviders.Facade
             IEnvironmentDataProvider environmentDataProvider,
             IAmbienceDataProvider ambienceDataProvider,
             IUnitUpgradeDataProvider unitUpgradeDataProvider,
-            ICommonItemsDataProvider commonItemDataProvider)
+            ICommonItemsDataProvider commonItemDataProvider,
+            IShopDataProvider shopDataProvider)
         {
             _unitDataProvider = unitDataProvider;
             _weaponDataProvider = weaponDataProvider;
@@ -51,6 +54,7 @@ namespace _Game.Core.DataProviders.Facade
             _ambienceDataProvider = ambienceDataProvider;
             _unitUpgradeDataProvider = unitUpgradeDataProvider;
             _commonItemDataProvider = commonItemDataProvider;
+            _shopDataProvider = shopDataProvider;
         }
         
         public async UniTask<DataPool<UnitType, UnitData>> LoadUnits(
@@ -82,10 +86,13 @@ namespace _Game.Core.DataProviders.Facade
         public async UniTask<AudioClip> LoadAmbience(string key, LoadContext context) => 
             await _ambienceDataProvider.Load(key, context);
 
-        public async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(ICommonItemsConfigRepository itemsConfigRepository, LoadContext context) => 
-            await _commonItemDataProvider.LoadFoodIcons(itemsConfigRepository, context);
+        public async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(LoadContext context) => 
+            await _commonItemDataProvider.LoadFoodIcons(context);
         
-        public async UniTask<Sprite> LoadBaseIcon(ICommonItemsConfigRepository itemsConfigRepository, LoadContext context) => 
-            await _commonItemDataProvider.LoadBaseIcon(itemsConfigRepository, context);
+        public async UniTask<Sprite> LoadBaseIcon(LoadContext context) => 
+            await _commonItemDataProvider.LoadBaseIcon(context);
+        
+        public async UniTask<DataPool<int, ShopItemStaticData>> LoadShopData() => 
+            await _shopDataProvider.LoadShopData();
     }
 }

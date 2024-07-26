@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Assets._Game.Core._SceneLoader;
+using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Core.Services.Camera;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
     public class GameLoadingState : IPayloadedState<Queue<ILoadingOperation>>
     {

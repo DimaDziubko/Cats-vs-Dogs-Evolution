@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Communication;
+using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core.Communication;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.Login;
-using Assets._Game.Core.Services.Random;
 
 namespace _Game.Core.GameState
 {

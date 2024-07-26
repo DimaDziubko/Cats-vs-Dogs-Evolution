@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.Services.IAP;
 using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
 namespace _Game.Core.Configs.Models
@@ -14,8 +14,14 @@ namespace _Game.Core.Configs.Models
         public CommonConfig CommonConfig;
         public FoodBoostConfig FoodBoostConfig;
         public List<BattleSpeedConfig> BattleSpeedConfigs;
+        public ShopConfig ShopConfig;
     }
 
+    public class ShopConfig
+    {
+        public List<ProductConfig> Products;
+    }
+    
     public class FoodBoostConfig
     {
         public int Id;

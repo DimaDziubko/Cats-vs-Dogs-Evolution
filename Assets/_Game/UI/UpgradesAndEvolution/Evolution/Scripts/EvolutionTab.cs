@@ -1,4 +1,6 @@
 using System;
+using _Game.UI.Common.Scripts;
+using _Game.Utils.Extensions;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Header.Scripts;
@@ -91,7 +93,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         }
 
         private void UpdateButtonData(EvolutionBtnData data) => 
-            _evolveButton.UpdateButtonState(data.CanAfford, data.Price);
+            _evolveButton.UpdateButtonState(data.CanAfford, data.Price.FormatMoney(), data.Price > 0);
 
         private async void OnEvolveButtonClick()
         {

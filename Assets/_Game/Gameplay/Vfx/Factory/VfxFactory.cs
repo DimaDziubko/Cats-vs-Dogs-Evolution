@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Core.Factory;
 using _Game.Gameplay.Vfx.Scripts;
+using _Game.Utils;
 using Assets._Game.Core.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
@@ -27,7 +29,8 @@ namespace _Game.Gameplay.Vfx.Factory
         
         private IWeaponDataPresenter _weaponDataPresenter;
 
-        private readonly Dictionary<VfxType, Queue<VfxEntity>> _sharedPools = new Dictionary<VfxType, Queue<VfxEntity>>();
+        private readonly Dictionary<VfxType, Queue<VfxEntity>> _sharedPools = 
+            new Dictionary<VfxType, Queue<VfxEntity>>();
 
 
         private readonly Dictionary<int, Queue<MuzzleFlash>> _muzzlesPools =
@@ -40,12 +43,9 @@ namespace _Game.Gameplay.Vfx.Factory
         public UnitExplosion GetUnitExplosion() => (UnitExplosion)Get(VfxType.UnitExplosion, _unitExplosionPrefab);
         public BaseSmoke GetBaseSmoke() => (BaseSmoke)Get(VfxType.BaseExplosion, _baseSmokePrefab);
         
-        public void Initialize(
-            IWeaponDataPresenter weaponDataPresenter)
-        {
+        public void Initialize(IWeaponDataPresenter weaponDataPresenter) => 
             _weaponDataPresenter = weaponDataPresenter;
-        }
-        
+
         private WeaponData GetWeaponData(Faction faction, int weaponId)
         {
             WeaponData weaponData;

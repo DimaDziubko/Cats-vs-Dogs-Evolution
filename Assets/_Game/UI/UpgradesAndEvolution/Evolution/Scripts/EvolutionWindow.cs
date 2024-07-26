@@ -1,20 +1,21 @@
 ﻿using System;
 using _Game.Core.DataPresenters.TimelineTravel;
+using _Game.UI._MainMenu.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
+using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
-    public class EvolutionWindow : MonoBehaviour, IUIWindow
+    public class EvolutionWindow : MonoBehaviour, IUIScreen
     {
         [SerializeField] private Canvas _canvas;
 
@@ -30,7 +31,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private IAudioService _audioService;
         private IHeader _header;
         private IUpgradesAvailabilityChecker _upgradesChecker;
-        public Window Window => Window.Evolution;
+        public Screen Screen => Screen.Evolution;
 
 
         public void Construct(
@@ -59,7 +60,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         public void Show()
         {
-            _header.ShowWindowName(Window.ToString());
+            _header.ShowWindowName(Screen.ToString());
             
             _canvas.enabled = true;
 
@@ -75,8 +76,8 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             Unsubscribe();
             Subscribe();
 
-            _upgradesChecker.MarkAsReviewed(Window);
-            _upgradesChecker.MarkAsReviewed(Window.UpgradesAndEvolution);
+            _upgradesChecker.MarkAsReviewed(Screen);
+            _upgradesChecker.MarkAsReviewed(Screen.UpgradesAndEvolution);
         }
 
         public void Hide()

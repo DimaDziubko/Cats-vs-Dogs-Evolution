@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
-using Assets._Game.Utils.Extensions;
+using Assets._Game.UI.Common.Scripts;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.Common.Scripts
+namespace _Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class TransactionButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
@@ -18,9 +18,10 @@ namespace Assets._Game.UI.Common.Scripts
         [SerializeField] private RectTransform _buttonRectTransform;
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private TMP_Text _infoText;
-        [SerializeField] private GameObject _moneyPanel; 
+        [SerializeField] private GameObject _moneyPanel;
+        [SerializeField] private Image _currencyIconHolder;
         
-        [SerializeField] private bool _isHoldable;
+        [SerializeField] private bool _isHoldable = false;
 
         private Button _button;
 
@@ -37,6 +38,18 @@ namespace Assets._Game.UI.Common.Scripts
         private CancellationTokenSource _cancellationTokenSource;
         public RectTransform ButtonRectTransform => _buttonRectTransform;
 
+        public void Construct(Sprite currencyIcon)
+        {
+            _currencyIconHolder.gameObject.SetActive(true);
+            
+            if (_currencyIconHolder != null && currencyIcon != null)
+            {
+                _currencyIconHolder.sprite = currencyIcon;
+                return;
+            }
+            _currencyIconHolder.gameObject.SetActive(false);
+        }
+        
         public void Init()
         {
             _button = GetComponent<Button>();
@@ -45,7 +58,10 @@ namespace Assets._Game.UI.Common.Scripts
             Subscribe();
         }
 
-        public void UpdateButtonState(bool canAfford, float price)
+        public void UpdateButtonState(
+            bool canAfford, 
+            string price, 
+            bool showMoneyPanel = true)
         {
             _button.interactable = canAfford;
 
@@ -60,7 +76,7 @@ namespace Assets._Game.UI.Common.Scripts
             
             if (_priceText != null)
             {
-                _priceText.text = price.FormatMoney();
+                _priceText.text = price;
                 _priceText.color = canAfford ? _affordableColor : _expensiveColor;
             }
             if (_infoText != null)
@@ -70,7 +86,7 @@ namespace Assets._Game.UI.Common.Scripts
 
             if (_moneyPanel != null)
             {
-                _moneyPanel.SetActive(price > 0);
+                _moneyPanel.SetActive(showMoneyPanel);
             }
         }
 

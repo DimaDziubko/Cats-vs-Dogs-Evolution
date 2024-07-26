@@ -1,25 +1,28 @@
-﻿using _Game.UI.RateGame.Scripts;
+﻿using _Game.UI._MainMenu.Scripts;
+using _Game.UI._RaceSelectionWindow.Scripts;
+using _Game.UI._Shop.Scripts;
+using _Game.UI.Factory;
+using _Game.UI.Header.Scripts;
+using _Game.UI.RateGame.Scripts;
 using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
-using Assets._Game.UI._MainMenu.Scripts;
-using Assets._Game.UI._RaceSelectionWindow.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Settings.Scripts;
-using Assets._Game.UI.Shop.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Utils.Popups;
 using UnityEngine;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class UIServicesInstaller : MonoInstaller
     {
         [SerializeField] private Header _header;
         [SerializeField] private TutorialPointerView _tutorialPointerView;
+        [SerializeField] private UIFactory _uiFactory;
         
         public override void InstallBindings()
         {
@@ -37,9 +40,12 @@ namespace Assets._Game.Core.Installers.Core
             BindTimelineInfoWindowProvider();
             BindFactionSelectionWindowProvider();
             BindGameRateScreenProvider();
+            BindRateGameChecker();
+            BindUIFactory();
         }
 
-        private void BindGameRateScreenProvider() => Container.BindInterfacesTo<RateGameScreenProvider>().AsSingle();
+        private void BindGameRateScreenProvider() =>
+            Container.BindInterfacesTo<RateGameScreenProvider>().AsSingle();
 
         private void BindHeader() =>
             Container
@@ -57,7 +63,7 @@ namespace Assets._Game.Core.Installers.Core
 
         private void BindTutorialController() => 
             Container.BindInterfacesAndSelfTo<TutorialManager>().AsSingle();
-        
+
 
         private void BindAlertPopupProvider() =>
             Container.Bind<IAlertPopupProvider>()
@@ -65,8 +71,8 @@ namespace Assets._Game.Core.Installers.Core
                 .AsSingle();
 
         private void BindShopPopupProvider() =>
-            Container.Bind<IShopPopupProvider>()
-                .To<ShopPopupProvider>()
+            Container.Bind<IShopProvider>()
+                .To<ShopProvider>()
                 .AsSingle();
 
         private void BindLoadingScreenProvider() =>
@@ -86,12 +92,12 @@ namespace Assets._Game.Core.Installers.Core
 
         private void BindStartBattleWindowProvider() =>
             Container
-                .BindInterfacesAndSelfTo<UpgradeAndEvolutionWindowProvider>()
+                .BindInterfacesAndSelfTo<UpgradeAndEvolutionScreenProvider>()
                 .AsSingle();
 
         private void BindUpgradeAndEvolutionWindowProvider() =>
             Container
-                .BindInterfacesAndSelfTo<StartBattleWindowProvider>()
+                .BindInterfacesAndSelfTo<StartBattleScreenProvider>()
                 .AsSingle();
 
         private void BindGameResultWindowProvider() => 
@@ -108,5 +114,12 @@ namespace Assets._Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<RaceSelectionWindowProvider>()
                 .AsSingle();
+
+        private void BindRateGameChecker() =>
+            Container.Bind<IRateGameChecker>().To<RateGameChecker>()
+                .AsSingle();
+
+        private void BindUIFactory() => 
+            Container.Bind<IUIFactory>().To<UIFactory>().FromInstance(_uiFactory).AsSingle();
     }
 }

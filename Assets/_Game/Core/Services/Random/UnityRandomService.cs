@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets._Game.Core.Services.Random
+namespace _Game.Core.Services.Random
 {
     public class UnityRandomService : IRandomService
     {

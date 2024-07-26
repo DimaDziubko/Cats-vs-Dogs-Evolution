@@ -2,14 +2,17 @@
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Timeline;
+using _Game.Core.Data;
 using _Game.Core.Data.Battle;
 using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.UI._Environment;
+using _Game.Utils;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.AssetManagement;
-using Assets._Game.Core.Configs.Repositories;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.UserState;
@@ -27,9 +30,9 @@ namespace _Game.Core.DataProviders.BattleDataProvider
     {
         private readonly ITimelineConfigRepository _timelineConfigRepository;
         private readonly IUserContainer _userContainer;
-        private readonly IMyLogger _logger;
         private readonly IDataProviderFacade _dataProvider;
         private readonly IAssetRegistry _assetRegistry;
+        private readonly IMyLogger _logger;
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         public BattleDataProvider(

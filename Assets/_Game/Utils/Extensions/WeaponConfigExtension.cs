@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
+using _Game.Utils;
 using Assets._Game.Gameplay._Units.Scripts;
 
 namespace Assets._Game.Utils.Extensions

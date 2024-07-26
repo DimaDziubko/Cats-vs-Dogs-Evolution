@@ -1,10 +1,11 @@
 ﻿using System;
 using _Game.Core.AssetManagement;
+using _Game.Core.Data;
 using _Game.Core.DataProviders.AgeDataProvider;
+using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.Data.Age.Dynamic;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.UserState;
@@ -23,6 +24,7 @@ namespace Assets._Game.Core.Loading
         private readonly IMyLogger _logger;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
+        private readonly IShopDataProvider _shopDataProvider;
         private ITimelineStateReadonly TimelineStateReadonly => _userContainer.State.TimelineState;
         
         public DataLoadingOperation(
@@ -30,6 +32,7 @@ namespace Assets._Game.Core.Loading
             IAgeDataProvider ageDataProvider,
             IBattleDataProvider baseDataProvider,
             ITimelineDataProvider timelineDataProvider,
+            IShopDataProvider shopDataProvider,
             IAssetRegistry assetRegistry,
             IUserContainer userContainer,
             IMyLogger logger)
@@ -41,6 +44,7 @@ namespace Assets._Game.Core.Loading
             _assetRegistry = assetRegistry; 
             _logger = logger;
             _userContainer = userContainer;
+            _shopDataProvider = shopDataProvider;
         }
         
         public async UniTask Load(Action<float> onProgress)
@@ -49,7 +53,8 @@ namespace Assets._Game.Core.Loading
             UniTask timelineTask = LoadTimelineData();
             UniTask ageTask = LoadAgeData();
             UniTask battleTask = LoadBattleData();
-            await UniTask.WhenAll(ageTask, battleTask, timelineTask);
+            UniTask shopTask = LoadShopData();
+            await UniTask.WhenAll(ageTask, battleTask, timelineTask, shopTask);
             _assetRegistry.ClearTimeline(TimelineStateReadonly.TimelineId - 1);
             onProgress.Invoke(1);
         }
@@ -72,5 +77,8 @@ namespace Assets._Game.Core.Loading
             _generalDataPool.AgeDynamicData = new AgeDynamicData();
             _logger.Log("AgeData load successfully");
         }
+
+        private async UniTask LoadShopData() => 
+            _generalDataPool.ShopItemStaticDataPool = await _shopDataProvider.LoadShopData();
     }
 }

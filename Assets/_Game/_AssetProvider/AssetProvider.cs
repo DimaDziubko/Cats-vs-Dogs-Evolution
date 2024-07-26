@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets._Game.Core.Services.AssetProvider;
+using _Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

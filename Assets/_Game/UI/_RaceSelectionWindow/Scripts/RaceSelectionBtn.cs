@@ -3,7 +3,7 @@ using Assets._Game.Gameplay.Common.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI._RaceSelectionWindow.Scripts
+namespace _Game.UI._RaceSelectionWindow.Scripts
 {
     [RequireComponent(typeof(Button))]
     public class RaceSelectionBtn : MonoBehaviour

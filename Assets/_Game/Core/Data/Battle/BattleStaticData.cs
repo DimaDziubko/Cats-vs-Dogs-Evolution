@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using _Game.Gameplay._Battle.Scripts;
-using Assets._Game.Core.Data;
+using _Game.UI._Environment;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.UI._Environment;
 using UnityEngine;
 
 namespace _Game.Core.Data.Battle

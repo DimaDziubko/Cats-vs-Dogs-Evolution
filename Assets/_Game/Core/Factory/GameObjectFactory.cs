@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets._Game.Core.Factory
+namespace _Game.Core.Factory
 {
     public abstract class GameObjectFactory : ScriptableObject
     {

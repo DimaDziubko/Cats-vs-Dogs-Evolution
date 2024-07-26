@@ -1,10 +1,10 @@
-﻿using Assets._Game.UI._MainMenu.Scripts;
+﻿using _Game.UI._MainMenu.Scripts;
 
 namespace Assets._Game.Core._UpgradesChecker
 {
     public class NotificationData
     {
-        public Window Window;
+        public Screen Screen;
         public bool IsAvailable;
         public bool IsReviewed;
     }

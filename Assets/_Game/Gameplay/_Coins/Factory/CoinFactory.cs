@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core.Factory;
+using _Game.Core.Factory;
 using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._Coins.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Coins.Factory
+namespace _Game.Gameplay._Coins.Factory
 {
     [CreateAssetMenu(fileName = "Coin Factory", menuName = "Factories/Coins")]
     public class CoinFactory : GameObjectFactory, ICoinFactory

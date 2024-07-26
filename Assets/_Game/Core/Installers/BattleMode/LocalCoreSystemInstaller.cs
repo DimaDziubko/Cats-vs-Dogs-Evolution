@@ -1,5 +1,4 @@
-﻿using _Game.UI.RateGame.Scripts;
-using Assets._Game.Core._SystemUpdate;
+﻿using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Gameplay._Race;
 using UnityEngine;
 using Zenject;
@@ -14,15 +13,7 @@ namespace _Game.Core.Installers.BattleMode
         {
             BindSystemUpdate();
             BindRaceSelectionController();
-            BindRateGameChecker();
-
-            Debug.Log("RateGame BINDS");
         }
-
-        private void BindRateGameChecker() =>
-            Container.Bind<IRateGameChecker>().To<RateGameChecker>()
-            .AsSingle()
-            .NonLazy();
 
         private void BindRaceSelectionController() =>
             Container.Bind<RaceSelectionController>().AsSingle();

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets._Game.UI._Hud
+namespace _Game.UI._Hud
 {
     public class FoodBoostBtnModel
     {

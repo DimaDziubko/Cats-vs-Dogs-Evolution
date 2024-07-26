@@ -116,6 +116,7 @@
               <e p="LocalUserStateCommunicator.cs" t="Include" />
               <e p="Migrations" t="Include">
                 <e p="MigrationTo104.cs" t="Include" />
+                <e p="MigrationTo110.cs" t="Include" />
               </e>
               <e p="StateMigrationBase.cs" t="Include" />
               <e p="StateMigrationManager.cs" t="Include" />
@@ -129,11 +130,30 @@
                 <e p="RemoteConfigProvider.cs" t="Include" />
               </e>
               <e p="Repositories" t="Include">
-                <e p="AgeConfigRepository.cs" t="Include" />
-                <e p="BattleSpeedConfigRepository.cs" t="Include" />
-                <e p="CommonConfigRepository.cs" t="Include" />
-                <e p="EconomyConfigRepository.cs" t="Include" />
-                <e p="TimelineConfigRepository.cs" t="Include" />
+                <e p="Age" t="Include">
+                  <e p="AgeConfigRepository.cs" t="Include" />
+                  <e p="IAgeConfigRepository.cs" t="Include" />
+                </e>
+                <e p="BattleSpeed" t="Include">
+                  <e p="BattleSpeedConfigRepository.cs" t="Include" />
+                  <e p="IBattleSpeedConfigRepository.cs" t="Include" />
+                </e>
+                <e p="Common" t="Include">
+                  <e p="CommonConfigRepository.cs" t="Include" />
+                  <e p="ICommonItemsConfigRepository.cs" t="Include" />
+                </e>
+                <e p="Economy" t="Include">
+                  <e p="EconomyConfigRepository.cs" t="Include" />
+                  <e p="IEconomyConfigRepository.cs" t="Include" />
+                </e>
+                <e p="Shop" t="Include">
+                  <e p="IShopConfigRepository.cs" t="Include" />
+                  <e p="ShopConfigRepository.cs" t="Include" />
+                </e>
+                <e p="Timeline" t="Include">
+                  <e p="ITimelineConfigRepository.cs" t="Include" />
+                  <e p="TimelineConfigRepository.cs" t="Include" />
+                </e>
               </e>
             </e>
             <e p="Data" t="Include">
@@ -241,6 +261,10 @@
                 <e p="DataProvider.cs" t="Include" />
                 <e p="IDataProviderFacade.cs" t="Include" />
                 <e p="LoadContext.cs" t="Include" />
+              </e>
+              <e p="ShopDataProvider" t="Include">
+                <e p="IShopDataProvider.cs" t="Include" />
+                <e p="ShopDataProvider.cs" t="Include" />
               </e>
               <e p="Timeline" t="Include">
                 <e p="ITimelineDataProvider.cs" t="Include" />
@@ -392,6 +416,19 @@
                 <e p="IWorldCameraService.cs" t="Include" />
                 <e p="WorldCameraService.cs" t="Include" />
               </e>
+              <e p="IAP" t="Include">
+                <e p="BoughtIAP.cs" t="Include" />
+                <e p="IAPProvider.cs" t="Include" />
+                <e p="IAPService.cs" t="Include" />
+                <e p="IIAPService.cs" t="Include" />
+                <e p="ItemType.cs" t="Include" />
+                <e p="ProductConfig.cs" t="Include" />
+                <e p="ProductDescription.cs" t="Include" />
+              </e>
+              <e p="IGPService" t="Include">
+                <e p="IGPService.cs" t="Include" />
+                <e p="IIGPService.cs" t="Include" />
+              </e>
               <e p="Random" t="Include">
                 <e p="IRandomService.cs" t="Include" />
                 <e p="UnityRandomService.cs" t="Include" />
@@ -402,6 +439,7 @@
               </e>
               <e p="UserContainer" t="Include">
                 <e p="IUserContainer.cs" t="Include" />
+                <e p="UserContainer.cs" t="Include" />
               </e>
             </e>
             <e p="UserState" t="Include">
@@ -411,13 +449,14 @@
               <e p="FactionState.cs" t="Include" />
               <e p="FoodBoostState.cs" t="Include" />
               <e p="IBattleSpeedStateReadonly.cs" t="Include" />
+              <e p="IPurchaseDataStateReadonly.cs" t="Include" />
               <e p="ITimelineStateReadonly.cs" t="Include" />
               <e p="IUserCurrenciesStateReadonly.cs" t="Include" />
+              <e p="PurchaseDataState.cs" t="Include" />
               <e p="RetentionState.cs" t="Include" />
               <e p="TimelineState.cs" t="Include" />
               <e p="TutorialState.cs" t="Include" />
               <e p="UserAccountState.cs" t="Include" />
-              <e p="UserContainer.cs" t="Include" />
               <e p="UserCurrenciesState.cs" t="Include" />
             </e>
           </e>
@@ -711,9 +750,17 @@
             </e>
             <e p="_MainMenu" t="Include">
               <e p="Scripts" t="Include">
-                <e p="IMainMenuProvider.cs" t="Include" />
                 <e p="MainMenu.cs" t="Include" />
                 <e p="MainMenuProvider.cs" t="Include" />
+              </e>
+              <e p="State" t="Include">
+                <e p="BattleState.cs" t="Include" />
+                <e p="IMenuExitableState.cs" t="Include" />
+                <e p="IMenuPayloadedState.cs" t="Include" />
+                <e p="IMenuState.cs" t="Include" />
+                <e p="MenuStateMachine.cs" t="Include" />
+                <e p="ShopState.cs" t="Include" />
+                <e p="UpgradesState.cs" t="Include" />
               </e>
             </e>
             <e p="_RaceSelectionWindow" t="Include">
@@ -724,6 +771,23 @@
                 <e p="RaceSelectionWindowProvider.cs" t="Include" />
               </e>
             </e>
+            <e p="_Shop" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Delimiter.cs" t="Include" />
+                <e p="DynamicGridLayout.cs" t="Include" />
+                <e p="IShopPresenter.cs" t="Include" />
+                <e p="IShopProvider.cs" t="Include" />
+                <e p="ItemType.cs" t="Include" />
+                <e p="Plug.cs" t="Include" />
+                <e p="Shop.cs" t="Include" />
+                <e p="ShopItem.cs" t="Include" />
+                <e p="ShopItemModel.cs" t="Include" />
+                <e p="ShopItemsContainer.cs" t="Include" />
+                <e p="ShopItemStaticData.cs" t="Include" />
+                <e p="ShopPresenter.cs" t="Include" />
+                <e p="ShopProvider.cs" t="Include" />
+              </e>
+            </e>
             <e p="_SpeedBoostBtn" t="Include">
               <e p="Scripts" t="Include">
                 <e p="BattleSpeedBtn.cs" t="Include" />
@@ -732,24 +796,17 @@
             <e p="_StartBattleWindow" t="Include">
               <e p="Scripts" t="Include">
                 <e p="BattleNavigationModel.cs" t="Include" />
-                <e p="IStartBattleWindowProvider.cs" t="Include" />
-                <e p="StartBattleWindow.cs" t="Include" />
-                <e p="StartBattleWindowProvider.cs" t="Include" />
+                <e p="IStartBattleScreenProvider.cs" t="Include" />
+                <e p="StartBattleScreen.cs" t="Include" />
+                <e p="StartBattleScreenProvider.cs" t="Include" />
               </e>
             </e>
             <e p="Common" t="Include">
-              <e p="Header" t="Include">
-                <e p="Scripts" t="Include">
-                  <e p="Header.cs" t="Include" />
-                  <e p="IHeader.cs" t="Include" />
-                </e>
-              </e>
               <e p="Scripts" t="Include">
                 <e p="ButtonState.cs" t="Include" />
-                <e p="CurrenciesUI.cs" t="Include" />
                 <e p="CustomButtonPressAnimator.cs" t="Include" />
                 <e p="CustomToggle.cs" t="Include" />
-                <e p="IUIWindow.cs" t="Include" />
+                <e p="IUIScreen.cs" t="Include" />
                 <e p="LivesUI.cs" t="Include" />
                 <e p="PlayerLivesView.cs" t="Include" />
                 <e p="SliderHelper.cs" t="Include" />
@@ -760,6 +817,13 @@
                 <e p="TransactionButton.cs" t="Include" />
               </e>
             </e>
+            <e p="Currencies" t="Include">
+              <e p="CurrenciesUI.cs" t="Include" />
+              <e p="TextScaleAnimator.cs" t="Include" />
+            </e>
+            <e p="Factory" t="Include">
+              <e p="UIFactory.cs" t="Include" />
+            </e>
             <e p="GameResult" t="Include">
               <e p="Scripts" t="Include">
                 <e p="DoubleCoinsBtn.cs" t="Include" />
@@ -769,6 +833,12 @@
                 <e p="GameResultWindow.cs" t="Include" />
                 <e p="GameResultWindowProvider.cs" t="Include" />
                 <e p="IGameResultWindowProvider.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Header" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Header.cs" t="Include" />
+                <e p="IHeader.cs" t="Include" />
               </e>
             </e>
             <e p="Pin" t="Include">
@@ -792,13 +862,6 @@
                 <e p="ISettingsPopupProvider.cs" t="Include" />
                 <e p="SettingsPopup.cs" t="Include" />
                 <e p="SettingsPopupProvider.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Shop" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="IShopPopupProvider.cs" t="Include" />
-                <e p="ShopPopup.cs" t="Include" />
-                <e p="ShopPopupProvider.cs" t="Include" />
               </e>
             </e>
             <e p="TimelineInfoWindow" t="Include">
@@ -832,9 +895,9 @@
                 </e>
               </e>
               <e p="Scripts" t="Include">
-                <e p="IUpgradeAndEvolutionWindowProvider.cs" t="Include" />
-                <e p="UpgradeAndEvolutionWindow.cs" t="Include" />
-                <e p="UpgradeAndEvolutionWindowProvider.cs" t="Include" />
+                <e p="IUpgradeAndEvolutionScreenProvider.cs" t="Include" />
+                <e p="UpgradeAndEvolutionScreen.cs" t="Include" />
+                <e p="UpgradeAndEvolutionScreenProvider.cs" t="Include" />
               </e>
               <e p="Upgrades" t="Include">
                 <e p="Scripts" t="Include">
@@ -895,6 +958,13 @@
                 <e p="DataLoadingOperation.cs" t="Include" />
               </e>
             </e>
+            <e p="UI" t="Include">
+              <e p="_MainMenu" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="IMainMenuProvider.cs" t="Include" />
+                </e>
+              </e>
+            </e>
             <e p="Utils" t="Include">
               <e p="Popups" t="Include">
                 <e p="AlertPopup.cs" t="Include" />
@@ -905,6 +975,15 @@
         <e p="CleverAdsSolutions" t="Include">
           <e p="Editor" t="Include">
             <e p="CASAndroidOptimalAdsDependencies.xml" t="Include" />
+          </e>
+        </e>
+        <e p="CodeBase" t="Include">
+          <e p="Infrastructure" t="Include">
+            <e p="Services" t="Include">
+              <e p="IAP" t="Include">
+                <e p="ProductConfigWrapper.cs" t="Include" />
+              </e>
+            </e>
           </e>
         </e>
         <e p="DevToDev" t="Include">
@@ -2017,9 +2096,11 @@
           </e>
         </e>
         <e p="Resources" t="Include">
+          <e p="BillingMode.json" t="Include" />
           <e p="DevToDev" t="Include">
             <e p="DevToDev.xml" t="Include" />
           </e>
+          <e p="IAPProductCatalog.json" t="Include" />
         </e>
         <e p="StompyRobot" t="Include">
           <e p="SRDebugger" t="Include">

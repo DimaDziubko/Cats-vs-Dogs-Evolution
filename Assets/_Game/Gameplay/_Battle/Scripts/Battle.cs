@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.DataPresenters.BattlePresenter;
+using _Game.Core.Services.Analytics;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay.Scenario;
 using Assets._Game.Core._GameSaver;
@@ -132,9 +133,11 @@ namespace _Game.Gameplay._Battle.Scripts
             {
                 var waves = _activeScenario.GetWaves();
                 int currentWave = waves.currentWave;
-                if (_currentCachedWave != currentWave)
+                if (_currentCachedWave != currentWave && currentWave <= waves.wavesCount)
                 {
                     _battleMediator.OnWaveChanged(currentWave, waves.wavesCount);
+                    _dtdAnalytics.SendEvent($"Wave {currentWave}");
+                    _analytics.SendEvent($"Wave {currentWave}");
                     _currentCachedWave = currentWave;
                 }
                 _activeScenario.Progress(_speedManager.CurrentSpeedFactor);

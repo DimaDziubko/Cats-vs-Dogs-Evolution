@@ -1,10 +1,9 @@
 ﻿using System.IO;
 using _Game.Core.UserState;
-using Assets._Game.Core.UserState;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Core.Communication
+namespace _Game.Core.Communication
 {
     public class LocalUserStateCommunicator : IUserStateCommunicator
     {

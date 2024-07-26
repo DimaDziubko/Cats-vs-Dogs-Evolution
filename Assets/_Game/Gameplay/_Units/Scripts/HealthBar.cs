@@ -1,4 +1,5 @@
 using System.Collections;
+using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.Utils.Extensions;

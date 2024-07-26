@@ -1,20 +1,27 @@
 ﻿using _Game.Core.Configs.Providers;
 using _Game.Core.Configs.Repositories;
-using Assets._Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Age;
+using _Game.Core.Configs.Repositories.BattleSpeed;
+using _Game.Core.Configs.Repositories.Common;
+using _Game.Core.Configs.Repositories.Economy;
+using _Game.Core.Configs.Repositories.Shop;
+using _Game.Core.Configs.Repositories.Timeline;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class ConfigServicesInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             BindConfigProviders();
+            
             BindCommonConfigRepository();
             BindTimelineConfigRepository();
             BindAgeConfigRepository();
             BindBattleConfigRepository();
             BindEconomyConfigRepository();
+            BindShopConfigRepository();
         }
 
         private void BindConfigProviders()
@@ -32,7 +39,7 @@ namespace Assets._Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<CommonItemsConfigRepository>()
                 .AsSingle();
 
-        
+
         private void BindEconomyConfigRepository() =>
             Container
                 .BindInterfacesAndSelfTo<EconomyConfigRepository>()
@@ -52,5 +59,12 @@ namespace Assets._Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<BattleSpeedConfigRepository>()
                 .AsSingle();
+
+        private void BindShopConfigRepository()
+        {
+            Container
+                .BindInterfacesAndSelfTo<ShopConfigRepository>()
+                .AsSingle();
+        }
     }
 }

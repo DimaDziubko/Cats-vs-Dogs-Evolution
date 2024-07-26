@@ -2,7 +2,6 @@
 using Assets._Game.Gameplay._Units.FSM;
 using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
-using UnityEngine;
 
 namespace _Game.Gameplay._Units.FSM.States
 {

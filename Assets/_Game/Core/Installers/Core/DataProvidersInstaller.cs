@@ -5,6 +5,7 @@ using _Game.Core.DataProviders.BattleDataProvider;
 using _Game.Core.DataProviders.Common;
 using _Game.Core.DataProviders.EnvironmentDataProvider;
 using _Game.Core.DataProviders.Facade;
+using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.DataProviders.UnitBuilderDataProvider;
 using _Game.Core.DataProviders.UnitDataProviders;
@@ -12,7 +13,7 @@ using _Game.Core.DataProviders.UnitUpgradeDataProvider;
 using _Game.Core.DataProviders.WeaponDataProviders;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class DataProvidersInstaller : MonoInstaller
     {
@@ -30,6 +31,7 @@ namespace Assets._Game.Core.Installers.Core
             BindUnitUpgradeDataProvider();
             BindCommonItemsDataProvider();
             BindTimelineDataProvider();
+            BindShopDataProvider();
             
             BindDataProviderFacade();
 
@@ -91,6 +93,10 @@ namespace Assets._Game.Core.Installers.Core
 
         private void BindBattleDataProvider() =>
             Container.BindInterfacesAndSelfTo<BattleDataProvider>()
+                .AsSingle();
+
+        private void BindShopDataProvider() =>
+            Container.BindInterfacesAndSelfTo<ShopDataProvider>()
                 .AsSingle();
     }
 }

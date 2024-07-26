@@ -7,7 +7,7 @@ using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.UI._RaceSelectionWindow.Scripts
+namespace _Game.UI._RaceSelectionWindow.Scripts
 {
     public class RaceSelectionWindowProvider : LocalAssetLoader, IRaceSelectionWindowProvider
     {

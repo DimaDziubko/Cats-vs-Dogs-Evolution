@@ -1,7 +1,7 @@
-﻿using Assets._Game.Core.Pause.Scripts;
+﻿using _Game.UI._Hud;
+using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.UI._Hud;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 

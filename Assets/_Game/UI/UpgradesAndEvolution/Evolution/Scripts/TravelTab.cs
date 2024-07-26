@@ -1,5 +1,6 @@
 using System;
 using _Game.Core.DataPresenters.TimelineTravel;
+using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
@@ -114,7 +115,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _audioService.PlayButtonSound();
 
         private void UpdateTravelButton(in bool canTravel) => 
-            _travelButton.UpdateButtonState(canTravel, 0);
+            _travelButton.UpdateButtonState(canTravel, "0", false);
         
     }
 }

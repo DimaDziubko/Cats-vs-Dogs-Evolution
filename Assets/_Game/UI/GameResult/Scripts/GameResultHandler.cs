@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Navigation.Battle;
+using _Game.Utils;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Utils;

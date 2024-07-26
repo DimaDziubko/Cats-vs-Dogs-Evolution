@@ -1,4 +1,4 @@
-﻿namespace Assets._Game.Gameplay._Units.FSM
+﻿namespace _Game.Gameplay._Units.FSM
 {
     public interface IUnitFsmState : IUnitFsmExitableState
     { 
@@ -15,6 +15,6 @@
     
     public interface IUnitFsmPayloadedState<TPayload> : IUnitFsmExitableState 
     {
-        void Enter(TPayload destination);
+        void Enter(TPayload payload);
     }
 }

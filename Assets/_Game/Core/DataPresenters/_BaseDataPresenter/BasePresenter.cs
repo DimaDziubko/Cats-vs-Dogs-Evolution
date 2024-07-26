@@ -1,10 +1,12 @@
 ﻿using System;
+using _Game.Core._GameInitializer;
+using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
-using Assets._Game.Core._GameInitializer;
+using _Game.Utils;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Data;
-using Assets._Game.Core.Data.Age.Dynamic._UpgradeItem;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -16,6 +18,8 @@ namespace _Game.Core.DataPresenters._BaseDataPresenter
  class BasePresenter : IBasePresenter, IDisposable
     {
         public event Action<Faction> BaseUpdated;
+        
+        //TODO Check later
         public event Action<BaseModel> PlayerBaseDataUpdated;
 
         private readonly IGeneralDataPool _dataPool;

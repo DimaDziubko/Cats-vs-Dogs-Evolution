@@ -1,4 +1,5 @@
 ﻿using _Game.Gameplay._BattleField.Scripts;
+using _Game.UI._Hud;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
@@ -6,7 +7,6 @@ using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
-using Assets._Game.UI._Hud;
 using UnityEngine;
 
 namespace Assets._Game.Creatives.Scripts
