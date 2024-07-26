@@ -4,7 +4,7 @@ using Assets._Game.Core.Services.Camera;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI.Currencies
+namespace _Game.UI._Currencies
 {
     public enum Currencies
     {

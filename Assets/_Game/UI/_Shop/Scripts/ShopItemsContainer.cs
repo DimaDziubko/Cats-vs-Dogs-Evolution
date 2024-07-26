@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.UI.Factory;
+using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 
 namespace _Game.UI._Shop.Scripts
@@ -19,8 +20,13 @@ namespace _Game.UI._Shop.Scripts
         private Dictionary<ShopItemViewType, Transform> _parents;
         
         private IUIFactory _uiFactory;
+        private IShopPresenter _shopPresenter;
+        private IAudioService _audioService;
 
-        public void Construct(IUIFactory uiFactory)
+        public void Construct(
+            IShopPresenter shopPresenter, 
+            IUIFactory uiFactory,
+            IAudioService audioService)
         {
             _parents = new Dictionary<ShopItemViewType, Transform>
             {
@@ -29,6 +35,26 @@ namespace _Game.UI._Shop.Scripts
                 {ShopItemViewType.Type3, _type3Parent}
             };
             _uiFactory = uiFactory;
+            _shopPresenter = shopPresenter;
+            _audioService = audioService;
+        }
+
+        public void Init()
+        {
+            foreach (var item in _itemsType1)
+            {
+                item.Init();
+            }
+            
+            foreach (var item in _itemsType2)
+            {
+                item.Init();
+            }
+            
+            foreach (var item in _itemsType3)
+            {
+                item.Init();
+            }
         }
 
         public void UpdateShopItems(List<ShopItemModel> models)
@@ -39,7 +65,7 @@ namespace _Game.UI._Shop.Scripts
             {
                 var viewType = model.Description.Config.ItemViewType;
                 ShopItem instance = _uiFactory.Get(viewType, _parents[viewType]);
-                instance.Construct(model);
+                instance.Construct(_shopPresenter, model, _audioService);
                 
                 switch (viewType)
                 {
@@ -62,6 +88,7 @@ namespace _Game.UI._Shop.Scripts
             if (_itemsType2.Count > 0) _delimiters[1].Show();
             
             Debug.Log("Shop items updated");
+            Init();
         }
 
         private void AddPlugsIfNeeded(List<ShopItem> items, Transform parent)

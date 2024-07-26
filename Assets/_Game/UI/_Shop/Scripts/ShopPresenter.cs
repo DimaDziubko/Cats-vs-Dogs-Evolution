@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._GameInitializer;
 using _Game.Core.Data;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
-using Assets._Game.Core.UserState;
+using _Game.UI._Currencies;
+using _Game.Utils;
 
 namespace _Game.UI._Shop.Scripts
 {
-    public class ShopPresenter : IShopPresenter
+    public class ShopPresenter : IShopPresenter, IDisposable
     {
         public event Action<List<ShopItemModel>> ShopItemsUpdated;
         
@@ -17,6 +19,7 @@ namespace _Game.UI._Shop.Scripts
         private readonly IIAPService _iapService;
         private readonly IIGPService _igpService;
         private readonly IUserContainer _userContainer;
+        private readonly IGameInitializer _gameInitializer;
 
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
 
@@ -24,17 +27,43 @@ namespace _Game.UI._Shop.Scripts
             IGeneralDataPool generalDataPool,
             IIAPService iapService,
             IIGPService igpService,
-            IUserContainer userContainer)
+            IUserContainer userContainer,
+            IGameInitializer gameInitializer)
         {
             _generalDataPool = generalDataPool;
             _iapService = iapService;
             _igpService = igpService;
             _userContainer = userContainer;
+            gameInitializer.OnPostInitialization += Init;
+            _gameInitializer = gameInitializer;
         }
-        
-        public void OnShopOpened()
-        {
+
+        private void Init() => 
+            Currencies.CurrenciesChanged += OnCurrenciesChanged;
+
+        private void OnCurrenciesChanged(Currencies _, bool __) => 
             UpdateItems();
+
+
+        public void Dispose()
+        {
+            Currencies.CurrenciesChanged -= OnCurrenciesChanged;
+            _gameInitializer.OnPostInitialization -= Init;
+        }
+
+        public void OnShopOpened() => 
+            UpdateItems();
+
+        public void TryToBuy(ProductDescription productDescription)
+        {
+            if (productDescription.Id != Constants.ConfigKeys.MISSING_KEY)
+            {
+                _iapService.StartPurchase(productDescription.Id);
+            }
+            else
+            {
+                _igpService.StartPurchase(productDescription.Config);
+            }
         }
 
         private void UpdateItems()

@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI.Currencies
+namespace _Game.UI._Currencies
 {
     public class TextScaleAnimator : MonoBehaviour
     {

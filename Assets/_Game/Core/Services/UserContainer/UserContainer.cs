@@ -45,7 +45,7 @@ namespace _Game.Core.Services.UserContainer
         {
             if (State.Currencies.Coins >= price)
             {
-                ChangeAfterPurchase(price, false);
+                State.Currencies.ChangeCoins(price, false);
                 State.TimelineState.OpenUnit(type);
             }
         }
@@ -60,6 +60,12 @@ namespace _Game.Core.Services.UserContainer
         {
             State.Currencies.RemoveAllCoins();
             State.TimelineState.OpenNextTimeline();
+        }
+
+        public void PurchaseCoinsWithGems(int quantity, int price)
+        {
+            State.Currencies.ChangeCoins(quantity, true);
+            State.Currencies.ChangeGems(price, false);
         }
 
         public void RecoverFoodBoost(int amount, DateTime lastDailyFoodBoost) => 
@@ -81,7 +87,7 @@ namespace _Game.Core.Services.UserContainer
         {
             if (State.Currencies.Coins >= price)
             {
-                ChangeAfterPurchase(price, false);
+                State.Currencies.ChangeCoins(price, false);
                 
                 switch (type)
                 {
@@ -104,12 +110,6 @@ namespace _Game.Core.Services.UserContainer
         {
             delta = isPositive ? delta : (delta * -1);
             State.FoodBoost.ChangeFoodBoostCount(delta, lastDailyFoodBoost);
-        }
-
-        private void ChangeAfterPurchase(float price, bool isPositive)
-        {
-            price = isPositive ? price : (price * -1);
-            State.Currencies.ChangeCoins(price, isPositive);
         }
     }
 }

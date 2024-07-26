@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.UI.Currencies;
+using _Game.UI._Currencies;
 
 namespace _Game.Core.UserState
 {

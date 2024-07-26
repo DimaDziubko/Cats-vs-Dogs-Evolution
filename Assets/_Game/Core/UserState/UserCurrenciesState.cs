@@ -1,8 +1,6 @@
 ﻿using System;
-using _Game.UI.Currencies;
+using _Game.UI._Currencies;
 using _Game.Utils;
-using Assets._Game.Core.UserState;
-using Assets._Game.Utils;
 
 namespace _Game.Core.UserState
 {
@@ -16,8 +14,10 @@ namespace _Game.Core.UserState
         float IUserCurrenciesStateReadonly.Coins => Coins + Constants.ComparisonThreshold.MONEY_EPSILON;
         float IUserCurrenciesStateReadonly.Gems => Gems + Constants.ComparisonThreshold.MONEY_EPSILON;
 
-        public void ChangeCoins(in float delta, bool isPositive)
+        public void ChangeCoins(float delta, bool isPositive)
         {
+            delta = isPositive ? delta : (delta * -1);
+            
             Coins += delta;
             
             if (Coins < 0) Coins = 0;
@@ -25,8 +25,10 @@ namespace _Game.Core.UserState
             CurrenciesChanged?.Invoke(Currencies.Coins, isPositive);
         }
         
-        public void ChangeGems(in float delta, bool isPositive)
+        public void ChangeGems(float delta, bool isPositive)
         {
+            delta = isPositive ? delta : (delta * -1);
+            
             Gems += delta;
             
             if (Gems < 0) Coins = 0;

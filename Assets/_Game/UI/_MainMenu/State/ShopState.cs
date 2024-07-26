@@ -30,6 +30,7 @@ namespace _Game.UI._MainMenu.State
             _mainMenu.RebuildLayout();
             _shop = await _provider.Load();
             _shop.Value.Show();
+            //_shop.Value.Init();
         }
 
         public void Exit()
