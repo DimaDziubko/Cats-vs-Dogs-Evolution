@@ -6,5 +6,6 @@ namespace _Game.Core.Services.IGPService
     public interface IIGPService
     {
         List<ProductDescription> Products();
+        void StartPurchase(ProductConfig productDescriptionConfig);
     }
 }

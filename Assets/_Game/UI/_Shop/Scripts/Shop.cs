@@ -16,8 +16,7 @@ namespace _Game.UI._Shop.Scripts
         
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ShopItemsContainer _container;
-
-        private IAudioService _audioService;
+        
         private IHeader _header;
         private IShopPresenter _shopPresenter;
 
@@ -30,10 +29,9 @@ namespace _Game.UI._Shop.Scripts
             IShopPresenter shopPresenter)
         {
             _canvas.worldCamera = uICamera;
-            _audioService = audioService;
             _header = header;
             _shopPresenter = shopPresenter;
-            _container.Construct(uiFactory);
+            _container.Construct(shopPresenter, uiFactory, audioService);
         }
 
         public void Show()
@@ -46,6 +44,11 @@ namespace _Game.UI._Shop.Scripts
             _canvas.enabled = true;
             
             Opened?.Invoke();
+        }
+
+        public void Init()
+        {
+            _container.Init();
         }
 
         private void Subscribe()

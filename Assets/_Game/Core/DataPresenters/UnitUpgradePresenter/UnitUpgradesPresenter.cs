@@ -6,7 +6,7 @@ using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
-using _Game.UI.Currencies;
+using _Game.UI._Currencies;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;

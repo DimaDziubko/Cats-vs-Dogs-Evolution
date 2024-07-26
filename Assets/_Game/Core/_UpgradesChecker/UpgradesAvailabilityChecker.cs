@@ -5,8 +5,8 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Debugger;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
-using _Game.UI.Currencies;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 

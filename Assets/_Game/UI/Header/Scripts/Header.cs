@@ -1,5 +1,5 @@
 using _Game.Core.UserState;
-using _Game.UI.Currencies;
+using _Game.UI._Currencies;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Header.Scripts;
 using TMPro;

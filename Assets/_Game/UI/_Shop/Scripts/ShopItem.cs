@@ -1,6 +1,8 @@
-﻿using _Game.UI.Common.Scripts;
+﻿using _Game.Core.Services.IAP;
+using _Game.UI.Common.Scripts;
 using _Game.UI.Factory;
 using _Game.Utils;
+using Assets._Game.Core.Services.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,13 +19,19 @@ namespace _Game.UI._Shop.Scripts
         [SerializeField] private TransactionButton _button;
         public IUIFactory OriginFactory { get; set; }
 
-        public void Release()
-        {
-            OriginFactory.Reclaim(this);
-        }
+        private ProductDescription _productDescription;
+        private IShopPresenter _shopPresenter;
+        private IAudioService _audioService;
 
-        public void Construct(ShopItemModel model)
+        public void Construct(
+            IShopPresenter shopPresenter, 
+            ShopItemModel model, 
+            IAudioService audioService)
         {
+            _shopPresenter = shopPresenter;
+            _productDescription = model.Description;
+            _audioService = audioService;
+            
             if(_majorProductIconHolder != null)
                 _majorProductIconHolder.sprite = model.ItemStaticData.MajorProductIcon;
             if (_minorProductIconHolder != null)
@@ -46,6 +54,25 @@ namespace _Game.UI._Shop.Scripts
                 _button.Init();
                 _button.UpdateButtonState(model.CanAfford, price);
             }
+        }
+
+        public void Init()
+        {
+            _button.Init();
+            _button.Click += OnTransactionButtonClicked;
+        }
+
+        public void Release()
+        {
+            _button.Click -= OnTransactionButtonClicked;
+            _button.Cleanup();
+            OriginFactory.Reclaim(this);
+        }
+
+        private void OnTransactionButtonClicked()
+        {
+            _shopPresenter.TryToBuy(_productDescription);
+            _audioService.PlayButtonSound();
         }
     }
 }

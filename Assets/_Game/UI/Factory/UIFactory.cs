@@ -47,15 +47,11 @@ namespace _Game.UI.Factory
             return instance;
         }
 
-        public void Reclaim(ShopItem item)
-        {
+        public void Reclaim(ShopItem item) => 
             Destroy(item.gameObject);
-        }
-        
-        public void Reclaim(Plug item)
-        {
+
+        public void Reclaim(Plug item) => 
             Destroy(item.gameObject);
-        }
     }
 
     public interface IUIFactory
