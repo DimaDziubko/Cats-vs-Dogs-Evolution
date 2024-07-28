@@ -1,11 +1,12 @@
 ﻿using System;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core.Communication;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.UI._Currencies;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._GameSaver;
-using Assets._Game.Core.Communication;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -15,28 +16,29 @@ namespace _Game.Core._GameSaver
 {
     public class GameSaver : IGameSaver, IDisposable
     {
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IUserStateCommunicator _communicator;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
         private readonly IGameInitializer _gameInitializer;
 
-        private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        private IFoodBoostStateReadonly FoodBoostState => _persistentData.State.FoodBoost;
-        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
-        private IBattleSpeedStateReadonly BattleSpeed => _persistentData.State.BattleSpeedState;
-        private IUserCurrenciesStateReadonly Currencies => _persistentData.State.Currencies;
+        private ITutorialStateReadonly TutorialState => _userContainer.State.TutorialState;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private IFoodBoostStateReadonly FoodBoostState => _userContainer.State.FoodBoost;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
+        private IBattleSpeedStateReadonly BattleSpeed => _userContainer.State.BattleSpeedState;
+        private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
+        private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
 
         private readonly float _debounceTime = 2.0f;
         private float _lastSaveTime;
 
         public GameSaver(
-            IUserContainer persistentData, 
+            IUserContainer userContainer, 
             IUserStateCommunicator communicator,
             IFeatureUnlockSystem featureUnlockSystem,
             IGameInitializer gameInitializer)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _communicator = communicator;
             _featureUnlockSystem = featureUnlockSystem;
             _gameInitializer = gameInitializer;
@@ -55,6 +57,9 @@ namespace _Game.Core._GameSaver
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             RaceState.Changed += OnRaceChanged;
             BattleSpeed.IsNormalSpeedActiveChanged += OnBattleSpeedChanged;
+            BattleSpeed.PermanentSpeedChanged += OnPermanentBattleSpeedChanged;
+            Currencies.CurrenciesChanged += OnCurrenciesChanged;
+            Purchases.Changed += OnPurchasesChanged;
         }
 
         public void Dispose()
@@ -69,8 +74,30 @@ namespace _Game.Core._GameSaver
             FoodBoostState.FoodBoostChanged -= OnFoodBoostChanged;
             RaceState.Changed -= OnRaceChanged;
             BattleSpeed.IsNormalSpeedActiveChanged -= OnBattleSpeedChanged;
+            BattleSpeed.PermanentSpeedChanged -= OnPermanentBattleSpeedChanged;
+            Currencies.CurrenciesChanged -= OnCurrenciesChanged;
+            Purchases.Changed -= OnPurchasesChanged;
             _gameInitializer.OnPreInitialization -= Init;
         }
+
+        private void OnCurrenciesChanged(Currencies currencies, bool isPositive)
+        {
+            switch (currencies)
+            {
+                case UI._Currencies.Currencies.Coins:
+                    if(isPositive) SaveGame();
+                    break;
+                case UI._Currencies.Currencies.Gems:
+                    SaveGame();
+                    break;
+            }
+        }
+
+        private void OnPurchasesChanged() => 
+            SaveGame();
+
+        private void OnPermanentBattleSpeedChanged(int id) => 
+            SaveGame();
 
         private void OnBattleSpeedChanged(bool _) => 
             SaveGame();
@@ -115,6 +142,6 @@ namespace _Game.Core._GameSaver
         }
         
         private void SaveGame() => 
-            _communicator.SaveUserState(_persistentData.State);
+            _communicator.SaveUserState(_userContainer.State);
     }
 }

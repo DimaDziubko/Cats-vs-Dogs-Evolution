@@ -1,15 +1,15 @@
 ﻿using System;
 using _Game.Core.DataPresenters.BattlePresenter;
+using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services.Analytics;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay.Scenario;
 using Assets._Game.Core._GameSaver;
 using Assets._Game.Core._SystemUpdate;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services._BattleSpeedService._Scripts;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;

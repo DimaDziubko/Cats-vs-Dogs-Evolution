@@ -3,6 +3,7 @@
   <component name="ContentModelStore">
     <e p="C:\Users\dimam\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
     <e p="C:\Users\dimam\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Cats-vs-Dogs-Evolution.-1951554600.00" t="ExcludeRecursive" />
+    <e p="C:\Users\dimam\AppData\Roaming\JetBrains\Rider2020.2\scratches" t="IncludeRecursive" />
     <e p="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution" t="IncludeRecursive">
       <e p="AnalyticsPostAssembly.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
@@ -391,6 +392,12 @@
                   <e p="IFoodBoostService.cs" t="Include" />
                 </e>
               </e>
+              <e p="_SpeedBoostService" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="ISpeedBoostService.cs" t="Include" />
+                  <e p="SpeedBoostService.cs" t="Include" />
+                </e>
+              </e>
               <e p="Analytics" t="Include">
                 <e p="AdImpressionDTO.cs" t="Include" />
                 <e p="AnalyticsEvent.cs" t="Include" />
@@ -732,6 +739,10 @@
             <e p="_BattleUIController" t="Include">
               <e p="BattleUIController.cs" t="Include" />
             </e>
+            <e p="_Currencies" t="Include">
+              <e p="CurrenciesUI.cs" t="Include" />
+              <e p="TextScaleAnimator.cs" t="Include" />
+            </e>
             <e p="_Environment" t="Include">
               <e p="EnvironmentController.cs" t="Include" />
               <e p="EnvironmentData.cs" t="Include" />
@@ -741,9 +752,27 @@
               </e>
             </e>
             <e p="_Hud" t="Include">
-              <e p="CoinCounterView.cs" t="Include" />
-              <e p="FoodBoostBtn.cs" t="Include" />
-              <e p="FoodBoostBtnModel.cs" t="Include" />
+              <e p="_BattleSpeedView" t="Include">
+                <e p="BattleSpeedBtn.cs" t="Include" />
+                <e p="BattleSpeedView.cs" t="Include" />
+              </e>
+              <e p="_CoinCounterView" t="Include">
+                <e p="CoinCounterView.cs" t="Include" />
+              </e>
+              <e p="_FoodBoostView" t="Include">
+                <e p="FoodBoostBtn.cs" t="Include" />
+                <e p="FoodBoostBtnModel.cs" t="Include" />
+                <e p="FoodBoostView.cs" t="Include" />
+              </e>
+              <e p="_PauseView" t="Include">
+                <e p="PauseView.cs" t="Include" />
+              </e>
+              <e p="_SpeedBoostView" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="SpeedBoostBtn.cs" t="Include" />
+                  <e p="SpeedBoostView.cs" t="Include" />
+                </e>
+              </e>
               <e p="Hud.cs" t="Include" />
               <e p="WaveInfoPopup.cs" t="Include" />
               <e p="WaveInfoPopupAnimation.cs" t="Include" />
@@ -788,11 +817,6 @@
                 <e p="ShopProvider.cs" t="Include" />
               </e>
             </e>
-            <e p="_SpeedBoostBtn" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="BattleSpeedBtn.cs" t="Include" />
-              </e>
-            </e>
             <e p="_StartBattleWindow" t="Include">
               <e p="Scripts" t="Include">
                 <e p="BattleNavigationModel.cs" t="Include" />
@@ -816,10 +840,6 @@
                 <e p="ToggleWithSpriteSwap.cs" t="Include" />
                 <e p="TransactionButton.cs" t="Include" />
               </e>
-            </e>
-            <e p="Currencies" t="Include">
-              <e p="CurrenciesUI.cs" t="Include" />
-              <e p="TextScaleAnimator.cs" t="Include" />
             </e>
             <e p="Factory" t="Include">
               <e p="UIFactory.cs" t="Include" />

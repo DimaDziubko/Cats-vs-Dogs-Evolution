@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets._Game.Gameplay._BattleSpeed.Scripts
+namespace _Game.Gameplay._BattleSpeed.Scripts
 {
     public class BattleSpeedManager : IBattleSpeedManager
     {

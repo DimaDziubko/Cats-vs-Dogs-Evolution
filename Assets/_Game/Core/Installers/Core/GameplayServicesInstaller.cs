@@ -1,4 +1,5 @@
-﻿using _Game.Core.DataPresenters._RaceChanger;
+﻿using _Game.Core.Ads;
+using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
@@ -7,9 +8,13 @@ using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
 using _Game.Core.Pause.Scripts;
+using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
+using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Upgrades;
+using _Game.Gameplay._BattleSpeed.Scripts;
+using _Game.Gameplay._Timer.Scripts;
 using Assets._Game.Core._RetentionChecker;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Ads;
@@ -18,10 +23,8 @@ using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services._BattleSpeedService._Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Analytics;
-using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._Timer.Scripts;
 using Assets._Game.Gameplay.BattleLauncher;
 using Zenject;
@@ -42,6 +45,7 @@ namespace _Game.Core.Installers.Core
             BindAdsService();
             BindFoodBoostService();
             BindTimerService();
+            BindSpeedBoostService();
             BindBattleSpeedService();
             BindAnalyticsService();
             BindDTDAnalyticsService();
@@ -129,6 +133,11 @@ namespace _Game.Core.Installers.Core
         private void BindTimerService() =>
             Container
                 .BindInterfacesAndSelfTo<TimerService>()
+                .AsSingle();
+
+        private void BindSpeedBoostService() =>
+            Container
+                .BindInterfacesAndSelfTo<SpeedBoostService>()
                 .AsSingle();
 
         private void BindBattleSpeedService() =>

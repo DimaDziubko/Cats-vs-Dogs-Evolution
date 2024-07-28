@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets._Game.Common;
+using Assets._Game.Gameplay._Timer.Scripts;
 
-namespace Assets._Game.Gameplay._Timer.Scripts
+namespace _Game.Gameplay._Timer.Scripts
 {
     public interface ITimerService
     {

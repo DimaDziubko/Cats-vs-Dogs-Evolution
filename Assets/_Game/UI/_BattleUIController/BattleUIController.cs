@@ -1,4 +1,7 @@
-﻿using _Game.Core.Services.UserContainer;
+﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core.Services._BattleSpeedService._Scripts;
+using _Game.Core.Services._SpeedBoostService.Scripts;
+using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
 using _Game.UI._Hud;
 using _Game.UI.UnitBuilderBtn.Scripts;
@@ -6,7 +9,6 @@ using Assets._Game.Common;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services._BattleSpeedService._Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
@@ -43,7 +45,8 @@ namespace _Game.UI._BattleUIController
             ILoadingScreenProvider loadingScreenProvider,
             IRewardAnimator rewardAnimator,
             IFeatureUnlockSystem featureUnlockSystem,
-            IBattleSpeedService battleSpeedService)
+            IBattleSpeedService battleSpeedService,
+            ISpeedBoostService speedBoost)
         {
             _userContainer = userContainer;
             _hud = hud;
@@ -59,7 +62,8 @@ namespace _Game.UI._BattleUIController
                 audioService,
                 foodBoostService,
                 featureUnlockSystem,
-                battleSpeedService);
+                battleSpeedService,
+                speedBoost);
             
             header.Construct(userContainer.State.Currencies, cameraService);
             _header = header;

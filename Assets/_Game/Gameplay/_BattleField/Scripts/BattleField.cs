@@ -1,13 +1,14 @@
 using System;
 using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.UI._Hud;
+using _Game.UI._Hud._CoinCounterView;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._BattleField.Scripts;
-using Assets._Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;

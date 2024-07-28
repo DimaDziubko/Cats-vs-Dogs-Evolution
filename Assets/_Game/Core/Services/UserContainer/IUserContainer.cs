@@ -30,5 +30,7 @@ namespace _Game.Core.Services.UserContainer
         void SecondDayRetentionSent();
         void AddPurchase(string id);
         void PurchaseCoinsWithGems(int quantity, int price);
+        void ChangePermanentSpeedId(int newId);
+        void AddGems(int quantity);
     }
 }

@@ -15,6 +15,7 @@ namespace _Game.UI._Shop.Scripts
         [SerializeField] private Image _minorProductIconHolder;
         [SerializeField] private TMP_Text _quantity;
         [SerializeField] private TMP_Text _description;
+        [SerializeField] private TMP_Text _valueLabel;
 
         [SerializeField] private TransactionButton _button;
         public IUIFactory OriginFactory { get; set; }
@@ -31,6 +32,23 @@ namespace _Game.UI._Shop.Scripts
             _shopPresenter = shopPresenter;
             _productDescription = model.Description;
             _audioService = audioService;
+
+            if (_valueLabel != null)
+            {
+                switch (model.Description.Config.ItemType)
+                {
+                    case Core.Services.IAP.ItemType.x1_5:
+                        _valueLabel.text = "x1.5";
+                        break;
+                    case Core.Services.IAP.ItemType.x2:
+                        _valueLabel.text = "x2";
+                        break;
+                    case Core.Services.IAP.ItemType.Gems:
+                        break;
+                    case Core.Services.IAP.ItemType.Coins:
+                        break;
+                }
+            }
             
             if(_majorProductIconHolder != null)
                 _majorProductIconHolder.sprite = model.ItemStaticData.MajorProductIcon;

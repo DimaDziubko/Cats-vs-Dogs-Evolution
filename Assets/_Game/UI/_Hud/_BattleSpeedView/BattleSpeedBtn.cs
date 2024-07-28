@@ -1,57 +1,46 @@
 ﻿using System;
 using _Game.Utils.Extensions;
-using Assets._Game.Utils.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI._SpeedBoostBtn.Scripts
+namespace _Game.UI._Hud._BattleSpeedView
 {
-    public enum BattleSpeedBtnState
+    public enum BtnState
     {
         Active,
         Inactive,
-        Activated
+        Activated,
+        Locked
     }
 
     public class BattleSpeedBtnModel
     {
-        public BattleSpeedBtnState State;
+        public BtnState State;
         public string InfoText;
         public float TimerTime;
-        public bool IsUnlocked;
     }
 
     [RequireComponent(typeof(Button))]
     public class BattleSpeedBtn : MonoBehaviour
     {
-        [SerializeField] private GameObject _panel;
-        [SerializeField] private Image _changeableImage;
-        [SerializeField] private Image _adsIcon;
-        [SerializeField] private Sprite _activeSprite;
-        [SerializeField] private Sprite _inactiveSprite;
-        [SerializeField] private Sprite _activatedSprite;
         [SerializeField] private TMP_Text _infoText;
         [SerializeField] private TMP_Text _timerText;
-        [SerializeField] private TMP_Text _loadingText;
 
         [SerializeField] private Button _button;
 
         [SerializeField] private RectTransform _buttonTransform;
-        [SerializeField] private float _normalSizeX = 250f;
+        [SerializeField] private float _normalSizeX = 155f;
         [SerializeField] private float _normalSizeY = 60f;
-        [SerializeField] private float _activatedSizeX = 170f;
-        [SerializeField] private float _activatedSizeY = 120f;
+        [SerializeField] private float _activatedSizeX = 155f;
+        [SerializeField] private float _activatedSizeY = 90f;
         [SerializeField] private float _timerColorTreshold = 5f;
 
-        private BattleSpeedBtnState State { get; set; }
-
-
-        public void Initialize(Action<BattleSpeedBtnState> callback)
+        public void Initialize(Action callback)
         {
             _button.onClick.AddListener(() =>
             {
-                callback?.Invoke(State);
+                callback?.Invoke();
             });
         }
 
@@ -59,56 +48,45 @@ namespace _Game.UI._SpeedBoostBtn.Scripts
         {
             switch (model.State)
             {
-                case BattleSpeedBtnState.Active:
-                    State = BattleSpeedBtnState.Active;
+                case BtnState.Locked:
+                    HandleLockedState(model);
+                    break;
+                case BtnState.Active:
                     HandleActiveState(model);
                     break;
-                case BattleSpeedBtnState.Inactive:
-                    State = BattleSpeedBtnState.Inactive;
+                case BtnState.Inactive:
                     HandleInactiveState(model);
                     break;
-                case BattleSpeedBtnState.Activated:
-                    State = BattleSpeedBtnState.Activated;
+                case BtnState.Activated:
                     HandleActivatedState(model);
                     break;
             }
-
-            gameObject.SetActive(model.IsUnlocked);
         }
+
+        private void HandleLockedState(BattleSpeedBtnModel model) => 
+            gameObject.SetActive(false);
+
+        private void HandleInactiveState(BattleSpeedBtnModel model) => 
+            gameObject.SetActive(false);
+
 
         private void HandleActiveState(BattleSpeedBtnModel model)
         {
-            _changeableImage.sprite = _activeSprite;
-            _panel.SetActive(true);
-            _adsIcon.gameObject.SetActive(true);
+            gameObject.SetActive(true);
             _infoText.text = model.InfoText;
             _timerText.enabled = false;
-            _loadingText.enabled = false;
             _button.interactable = true;
             _buttonTransform.sizeDelta = new Vector2(_normalSizeX, _normalSizeY);
         }
-
-        private void HandleInactiveState(BattleSpeedBtnModel model)
-        {
-            _changeableImage.sprite = _inactiveSprite;
-            _panel.SetActive(false);
-            _timerText.enabled = false;
-            _loadingText.enabled = true;
-            _button.interactable = false;
-            _buttonTransform.sizeDelta = new Vector2(_normalSizeX, _normalSizeY);
-        }
-
+        
+        
         private void HandleActivatedState(BattleSpeedBtnModel model)
         {
-
-            _changeableImage.sprite = _activatedSprite;
-            _panel.SetActive(true);
-            _adsIcon.gameObject.SetActive(false);
+            gameObject.SetActive(true);
             _infoText.text = model.InfoText;
             _timerText.enabled = true;
             UpdateTimer(model.TimerTime);
-            _loadingText.enabled = false;
-            _button.interactable = false;
+            _button.interactable = true;
             _buttonTransform.sizeDelta = new Vector2(_activatedSizeX, _activatedSizeY);
         }
 

@@ -39,7 +39,7 @@ namespace _Game.UI._Shop.Scripts
             _audioService = audioService;
         }
 
-        public void Init()
+        private void Init()
         {
             foreach (var item in _itemsType1)
             {

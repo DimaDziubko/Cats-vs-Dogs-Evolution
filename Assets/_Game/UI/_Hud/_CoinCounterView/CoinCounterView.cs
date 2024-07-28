@@ -1,10 +1,9 @@
 ﻿using _Game.Utils.Extensions;
-using Assets._Game.Utils.Extensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.UI._Hud
+namespace _Game.UI._Hud._CoinCounterView
 {
     public class CoinCounterView : MonoBehaviour
     {
@@ -14,6 +13,9 @@ namespace _Game.UI._Hud
         [SerializeField] private float _defaultScale = 1f;
 
         [SerializeField] private RectTransform _coinTargetTransform;
+
+        private bool _isAnimating;
+
         public Vector3 CoinIconHolderPosition
         {
             get
@@ -23,7 +25,8 @@ namespace _Game.UI._Hud
             }
         }
 
-        private bool _isAnimating;
+        public void Construct() => 
+            Hide();
 
         public void UpdateCoins(float newAmount)
         {
@@ -35,19 +38,13 @@ namespace _Game.UI._Hud
                 .OnComplete(() => _coinLabel.text = newAmount.FormatMoney());
         }
 
-        public void Clear()
-        {
+        public void Clear() => 
             _coinLabel.text = "0";
-        }
 
-        public void Show()
-        {
+        public void Show() => 
             gameObject.SetActive(true);
-        }
-        
-        public void Hide()
-        {
+
+        public void Hide() => 
             gameObject.SetActive(false);
-        }
     }
 }

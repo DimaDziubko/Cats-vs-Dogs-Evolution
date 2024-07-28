@@ -5,7 +5,7 @@ using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.LoadingScreen;
 
-namespace Assets._Game.Gameplay._BattleStateHandler
+namespace _Game.Gameplay._BattleStateHandler
 {
     public class BattleStateHandler
     {

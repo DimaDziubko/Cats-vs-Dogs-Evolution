@@ -104,7 +104,7 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
                 BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.X2;
         
 
-        private bool GetTresholdForBattleSpeed() =>
+        private bool GetTresholdForBattleSpeed() => TimelineState.TimelineId > 0 ||
             TimelineState.AgeId >= BATTLE_SPEED_AGE_TRESHOLD;
 
         private bool GetTresholdForEvolutionWindow() =>

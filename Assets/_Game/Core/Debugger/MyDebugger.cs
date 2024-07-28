@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core.Data;
+using _Game.Core.Services._BattleSpeedService._Scripts;
+using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Environment;
+using _Game.UI._Hud._BattleSpeedView;
+using _Game.UI._Hud._SpeedBoostView.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop.Scripts;
 using Assets._Game.Core._UpgradesChecker;
@@ -75,6 +79,8 @@ namespace _Game.Core.Debugger
         public Dictionary<Screen, NotificationData> NotificationData { get; set; }
 
         public UserContainer UserContainer { get; set; }
+        public BattleSpeedService BattleSpeedService { get; set; }
+        public SpeedBoostService SpeedBoostService { get; set; }
 
         [ShowInInspector, ReadOnly]
         public Dictionary<int, EnvironmentData> EnvironmentData =>
@@ -87,6 +93,13 @@ namespace _Game.Core.Debugger
         [ShowInInspector, ReadOnly]
         public DateTime LastDailyFoodBoost =>
             UserContainer.State.FoodBoost.LastDailyFoodBoost;
+
+
+        [ShowInInspector, ReadOnly]
+        public SpeedBoostBtnModel SpeedBoostBtnModel => SpeedBoostService.SpeedBoostBtnModel;
+        
+        [ShowInInspector, ReadOnly]
+        public BattleSpeedBtnModel BattleSpeedBtnModel => BattleSpeedService.BattleSpeedBtnModel;
     }
     
 
@@ -95,5 +108,7 @@ namespace _Game.Core.Debugger
         GeneralDataPool GeneralDataPool { get; set; }
         Dictionary<Screen, NotificationData> NotificationData { get; set; }
         UserContainer UserContainer { get; set; }
+        BattleSpeedService BattleSpeedService { get; set; }
+        SpeedBoostService SpeedBoostService { get; set; }
     }
 }

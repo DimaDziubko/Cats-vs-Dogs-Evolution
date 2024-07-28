@@ -8,6 +8,7 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
 using _Game.Utils;
+using Assets._Game.Core.UserState;
 
 namespace _Game.UI._Shop.Scripts
 {
@@ -22,7 +23,8 @@ namespace _Game.UI._Shop.Scripts
         private readonly IGameInitializer _gameInitializer;
 
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
-
+        private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
+        
         public ShopPresenter(
             IGeneralDataPool generalDataPool,
             IIAPService iapService,
@@ -38,18 +40,27 @@ namespace _Game.UI._Shop.Scripts
             _gameInitializer = gameInitializer;
         }
 
-        private void Init() => 
+        private void Init()
+        {
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
-
-        private void OnCurrenciesChanged(Currencies _, bool __) => 
-            UpdateItems();
+            _iapService.Initialized += UpdateItems;
+            Purchases.Changed += OnPurchasesChanged;
+        }
 
 
         public void Dispose()
         {
+            _iapService.Initialized -= UpdateItems;
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
+            Purchases.Changed -= OnPurchasesChanged;
             _gameInitializer.OnPostInitialization -= Init;
         }
+
+        private void OnPurchasesChanged() => 
+            UpdateItems();
+
+        private void OnCurrenciesChanged(Currencies _, bool __) => 
+            UpdateItems();
 
         public void OnShopOpened() => 
             UpdateItems();

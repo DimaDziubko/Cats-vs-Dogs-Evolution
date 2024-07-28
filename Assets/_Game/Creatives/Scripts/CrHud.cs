@@ -1,4 +1,5 @@
 ﻿using _Game.UI._Hud;
+using _Game.UI._Hud._CoinCounterView;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;

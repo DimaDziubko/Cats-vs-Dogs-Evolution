@@ -46,10 +46,10 @@ namespace _Game.UI._Shop.Scripts
             Opened?.Invoke();
         }
 
-        public void Init()
-        {
-            _container.Init();
-        }
+        // public void Init()
+        // {
+        //     _container.Init();
+        // }
 
         private void Subscribe()
         {

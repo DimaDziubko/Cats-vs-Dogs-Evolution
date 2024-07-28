@@ -1,6 +1,7 @@
 ﻿using System;
+using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 
-namespace Assets._Game.Core._FeatureUnlockSystem.Scripts
+namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
     public interface IFeatureUnlockSystem
     {

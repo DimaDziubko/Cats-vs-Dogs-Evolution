@@ -1,6 +1,7 @@
 ﻿using System;
+using Assets._Game.Core.UserState;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState
 {
     public class BattleSpeedState : IBattleSpeedStateReadonly
     {

@@ -111,5 +111,11 @@ namespace _Game.Core.Services.UserContainer
             delta = isPositive ? delta : (delta * -1);
             State.FoodBoost.ChangeFoodBoostCount(delta, lastDailyFoodBoost);
         }
+
+        public void ChangePermanentSpeedId(int newId) => 
+            State.BattleSpeedState.ChangePermanentSpeed(newId);
+
+        public void AddGems(int quantity) => 
+            State.Currencies.ChangeGems(quantity, true);
     }
 }

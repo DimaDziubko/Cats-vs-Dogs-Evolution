@@ -1,22 +1,21 @@
 ﻿using System;
-using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.UI.UnitBuilderBtn.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._SystemUpdate;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.Gameplay._BattleSpeed.Scripts;
+using Assets._Game.Gameplay.Food.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay.Food.Scripts
+namespace _Game.Gameplay.Food.Scripts
 {
     public interface IFoodGenerator
     {
@@ -32,6 +31,8 @@ namespace Assets._Game.Gameplay.Food.Scripts
 
     public class FoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler, IDisposable
     {
+        private const float LERP_SPEED_MULTIPLIER = 10f;
+        
         public event Action<int> FoodChanged;
         
         private readonly IMyLogger _logger;
@@ -53,7 +54,8 @@ namespace Assets._Game.Gameplay.Food.Scripts
 
         private float _productionSpeed;
         private int _foodAmount;
-        private float _accumulatedTime;
+        private float _accumulatedFood;
+        private float _smoothProgress;
 
         private readonly FoodPanel _panel;
 
@@ -117,7 +119,7 @@ namespace Assets._Game.Gameplay.Food.Scripts
 
         public void StopGenerator()
         {
-            _accumulatedTime = 0;
+            _accumulatedFood = 0;
             FoodChanged -= _panel.OnFoodChanged;
             _foodBoostService.FoodBoost -= AddFood;
             _systemUpdate.Unregister(this);
@@ -138,16 +140,21 @@ namespace Assets._Game.Gameplay.Food.Scripts
         {
             if(IsPaused || !_battleMediator.BattleInProcess) return;
 
-            _accumulatedTime += Time.deltaTime;
-            float foodProgress = _accumulatedTime * _productionSpeed;
-
-            if (foodProgress >= 1f) 
+            _accumulatedFood += Time.deltaTime * _productionSpeed;
+            
+            if (_accumulatedFood >= 1f) 
             {
-                FoodAmount += (int)foodProgress; 
-                _accumulatedTime = 0f; 
+                FoodAmount += (int)_accumulatedFood;
+                _accumulatedFood = 0f;
+                _smoothProgress = 0f;
             }
-        
-            _panel.UpdateFillAmount(foodProgress % 1);
+            else
+            {
+                _smoothProgress = Mathf.Lerp(_smoothProgress, _accumulatedFood % 1, 
+                    Time.deltaTime * LERP_SPEED_MULTIPLIER);
+            }
+
+            _panel.UpdateFillAmount(_smoothProgress);
         }
 
         public void AddFood(int delta) => FoodAmount += delta;
