@@ -45,50 +45,12 @@ namespace _Game.Core.Services._FreeGemsPackService
 
         private void Init()
         {
-            UpgradeFreeGemsPack();
+            UpdateFreeGemsPack();
             _adsService.RewardedVideoLoaded += OnRewardVideoLoaded;
 
         }
 
-        void IDisposable.Dispose()
-        {
-            _adsService.RewardedVideoLoaded -= OnRewardVideoLoaded;
-            _gameInitializer.OnPostInitialization -= Init;
-        }
-
-        private void OnRewardVideoLoaded()
-        {
-            NotifyUpdateFreeGemsPack();
-        }
-
-        private void NotifyUpdateFreeGemsPack()
-        {
-            FreeGemsPackUpdated?.Invoke();
-        }
-
-
-        public void OnFreeGemsPackBtnClicked() => 
-            _adsService.ShowRewardedVideo(OnRewardedVideoComplete, RewardType.FreeGemsPack);
-        
-        private ProductDescription MakeProductDefinition()
-        {
-            UpgradeFreeGemsPack();
-            
-            var freeGemsPackDayConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
-            var productConfig = _shopConfigRepository.GetPlacementConfig();
-            var productDescription = new ProductDescription()
-            {
-                Id = productConfig.IAP_ID,
-                AvailablePurchasesLeft = FreeGemsPackState.FreeGemPackCount,
-                MaxPurchasesCount = freeGemsPackDayConfig.DailyGemsPackCount,
-                Config = productConfig,
-                IsReady = _adsService.IsRewardedVideoReady,
-            };
-
-            return productDescription;
-        }
-
-        private void UpgradeFreeGemsPack()
+        public void UpdateFreeGemsPack()
         {
             var freeGemsPackDayConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
             
@@ -109,7 +71,44 @@ namespace _Game.Core.Services._FreeGemsPackService
                     newLastDailyFreePackSpent);
             }
         }
-        
+
+        void IDisposable.Dispose()
+        {
+            _adsService.RewardedVideoLoaded -= OnRewardVideoLoaded;
+            _gameInitializer.OnPostInitialization -= Init;
+        }
+
+        private void OnRewardVideoLoaded()
+        {
+            UpdateFreeGemsPack();
+            NotifyUpdateFreeGemsPack();
+        }
+
+        private void NotifyUpdateFreeGemsPack()
+        {
+            FreeGemsPackUpdated?.Invoke();
+        }
+
+
+        void IFreeGemsPackService.OnFreeGemsPackBtnClicked() => 
+            _adsService.ShowRewardedVideo(OnRewardedVideoComplete, RewardType.FreeGemsPack);
+
+        private ProductDescription MakeProductDefinition()
+        {
+            var freeGemsPackDayConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
+            var productConfig = _shopConfigRepository.GetPlacementConfig();
+            var productDescription = new ProductDescription()
+            {
+                Id = productConfig.IAP_ID,
+                AvailablePurchasesLeft = FreeGemsPackState.FreeGemPackCount,
+                MaxPurchasesCount = freeGemsPackDayConfig.DailyGemsPackCount,
+                Config = productConfig,
+                IsReady = _adsService.IsRewardedVideoReady,
+            };
+
+            return productDescription;
+        }
+
         private void OnRewardedVideoComplete()
         {
             var freeGemsPackConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();

@@ -94,8 +94,11 @@ namespace _Game.UI._Shop.Scripts
         private void OnCurrenciesChanged(Currencies _, bool __) => 
             UpdateItems();
 
-        public void OnShopOpened() => 
+        public void OnShopOpened()
+        {
+            _freeGemsPackService.UpdateFreeGemsPack();
             UpdateItems();
+        }
 
         public void TryToBuy(ProductDescription productDescription)
         {

@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 
-namespace Assets._Game._AssetProvider
+namespace _Game._AssetProvider
 {
     public class AssetProvider : IAssetProvider, IDisposable, IInitializable
     {

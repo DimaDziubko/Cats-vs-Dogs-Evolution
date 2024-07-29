@@ -1,4 +1,5 @@
-﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+﻿using _Game._AssetProvider;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core._GameSaver;
 using _Game.Core._Logger;
@@ -12,7 +13,6 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
-using Assets._Game._AssetProvider;
 using Assets._Game.Common;
 using Assets._Game.Core._SceneLoader;
 using Assets._Game.Core._StateFactory;

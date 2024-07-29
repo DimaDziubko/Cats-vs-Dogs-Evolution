@@ -8,5 +8,6 @@ namespace _Game.Core.Services._FreeGemsPackService
         event Action FreeGemsPackUpdated;
         ProductDescription FreeGemsPack { get; }
         void OnFreeGemsPackBtnClicked();
+        void UpdateFreeGemsPack();
     }
 }
