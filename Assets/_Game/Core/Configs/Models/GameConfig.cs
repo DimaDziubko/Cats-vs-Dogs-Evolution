@@ -15,6 +15,7 @@ namespace _Game.Core.Configs.Models
         public FoodBoostConfig FoodBoostConfig;
         public List<BattleSpeedConfig> BattleSpeedConfigs;
         public ShopConfig ShopConfig;
+        public FreeGemsPackDayConfig FreeGemsPackDayConfig;
     }
 
     public class ShopConfig
@@ -30,6 +31,13 @@ namespace _Game.Core.Configs.Models
         public int RecoverTimeMinutes;
     }
 
+    public class FreeGemsPackDayConfig
+    {
+        public int Id;
+        public int DailyGemsPackCount;
+        public int RecoverTimeMinutes;
+    }
+    
     public class CommonConfig
     {
         public int Id;

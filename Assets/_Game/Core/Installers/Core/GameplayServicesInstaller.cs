@@ -1,6 +1,8 @@
-﻿using _Game.Core.Ads;
+﻿using _Game.Core._UpgradesChecker;
+using _Game.Core.Ads;
 using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
+using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
@@ -10,6 +12,7 @@ using _Game.Core.Navigation.Timeline;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
+using _Game.Core.Services._FreeGemsPackService;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Upgrades;

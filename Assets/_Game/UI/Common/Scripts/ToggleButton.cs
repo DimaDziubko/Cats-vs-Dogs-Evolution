@@ -1,11 +1,12 @@
 using System;
+using _Game.UI.Pin.Scripts;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.UI.Pin.Scripts;
+using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.Common.Scripts
+namespace _Game.UI.Common.Scripts
 {
     [RequireComponent(
         typeof(Button),
@@ -30,7 +31,10 @@ namespace Assets._Game.UI.Common.Scripts
 
         private ButtonState _state;
         
-        public void Initialize(bool isUnlocked, Action<ToggleButton> callback, Action playSound, NotificationData data = null)
+        public void Initialize(bool isUnlocked, 
+            Action<ToggleButton> callback,
+            Action playSound, 
+            NotificationData data = null)
         {
             HidePin();
             if(isUnlocked && data != null) SetupPin(data);

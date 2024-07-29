@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core.Services.Analytics;
 using Assets._Game.Core.Services.Analytics;
 
 namespace Assets._Game.Core.Ads

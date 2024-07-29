@@ -9,7 +9,7 @@ namespace _Game.Core.Services.IGPService
 {
     public class IGPService : IIGPService
     {
-        private IUserContainer _userContainer;
+        private readonly IUserContainer _userContainer;
         private readonly IShopConfigRepository _shopConfigRepository;
 
         public IGPService(
@@ -34,7 +34,8 @@ namespace _Game.Core.Services.IGPService
                 case ItemType.Gems:
                     break;
                 case ItemType.Coins:
-                    _userContainer.PurchaseCoinsWithGems(productDescriptionConfig.Quantity, productDescriptionConfig.Price);
+                    _userContainer.PurchaseStateHandler
+                        .PurchaseCoinsWithGems(productDescriptionConfig.Quantity, productDescriptionConfig.Price);
                     break;
             }
         }
@@ -50,7 +51,7 @@ namespace _Game.Core.Services.IGPService
                     Id = Constants.ConfigKeys.MISSING_KEY,
                     Config = config,
                     Product = null,
-                    AvailablePurchasesLeft = -1,
+                    AvailablePurchasesLeft = config.MaxPurchaseCount,
                 
                 };
             }

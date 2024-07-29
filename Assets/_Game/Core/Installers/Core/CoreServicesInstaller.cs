@@ -6,6 +6,7 @@ using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
 using _Game.Core.Data;
 using _Game.Core.Debugger;
+using _Game.Core.Services._FreeGemsPackService;
 using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
@@ -46,6 +47,7 @@ namespace _Game.Core.Installers.Core
             BindIAPProvider();
             BindIAPService();
             BindIGPService();
+            BindFreeGemsPackService();
         }
 
         private void BindInitializer() =>
@@ -146,6 +148,10 @@ namespace _Game.Core.Installers.Core
         private void BindIGPService() =>
             Container
                 .BindInterfacesAndSelfTo<IGPService>()
+                .AsSingle();
+        private void BindFreeGemsPackService() => 
+            Container
+                .BindInterfacesAndSelfTo<FreeGemsPackService>()
                 .AsSingle();
     }
 }

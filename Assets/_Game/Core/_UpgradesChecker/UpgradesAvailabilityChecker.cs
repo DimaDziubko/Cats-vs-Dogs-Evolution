@@ -8,9 +8,9 @@ using _Game.Core.UserState;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.UserState;
+using Assets._Game.Core._UpgradesChecker;
 
-namespace Assets._Game.Core._UpgradesChecker
+namespace _Game.Core._UpgradesChecker
 {
     public class UpgradesAvailabilityChecker : IUpgradesAvailabilityChecker, IDisposable
     {
@@ -26,7 +26,8 @@ namespace Assets._Game.Core._UpgradesChecker
         {
             Screen.Upgrades,
             Screen.Evolution,
-            Screen.UpgradesAndEvolution
+            Screen.UpgradesAndEvolution,
+            Screen.Shop,
         };
 
         private readonly List<IUpgradeAvailabilityProvider> _upgradeProviders 
@@ -66,12 +67,12 @@ namespace Assets._Game.Core._UpgradesChecker
 
         private void UpdateData()
         {
-            ResetWindowAvailability();
+            ResetScreenAvailability();
             AggregateAvailabilityStates();
             NotifyUpdatedStates();
         }
 
-        private void ResetWindowAvailability()
+        private void ResetScreenAvailability()
         {
             foreach (var window in RelevantWindows)
             {
@@ -96,7 +97,7 @@ namespace Assets._Game.Core._UpgradesChecker
             foreach (var provider in _upgradeProviders)
             {
                 bool isAvailable = provider.IsAvailable;
-                foreach (var window in provider.AffectedWindows)
+                foreach (var window in provider.AffectedScreens)
                 {
                     if (RelevantWindows.Contains(window))
                     {

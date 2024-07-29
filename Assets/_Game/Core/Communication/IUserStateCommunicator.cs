@@ -1,4 +1,5 @@
 ﻿using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.Core.Communication

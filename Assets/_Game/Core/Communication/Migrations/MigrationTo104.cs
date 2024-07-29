@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using Assets._Game.Core.Communication;
 using Assets._Game.Core.UserState;
 

@@ -1,17 +1,13 @@
 using UnityEngine;
 
-namespace Assets._Game.UI.Pin.Scripts
+namespace _Game.UI.Pin.Scripts
 {
     public class PinView : MonoBehaviour
     {
-        public void Show()
-        {
+        public void Show() => 
             gameObject.SetActive(true);
-        }
 
-        public void Hide()
-        {
+        public void Hide() => 
             gameObject.SetActive(false);
-        }
     }
 }

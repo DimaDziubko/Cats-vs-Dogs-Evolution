@@ -3,6 +3,7 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Debugger;
+using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
@@ -142,7 +143,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
             BattleSpeed.PermanentSpeedId == _battleSpeedConfigRepository.GetBattleSpeedConfigs().Count - 1;
 
         private void OnSpeedBoostRewardedVideoComplete() => 
-            _userContainer.ChangeNormalSpeed(false);
+            _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(false);
 
         private void OnRewardVideoLoaded() => 
             UpdateSpeedBoostBtnModel();

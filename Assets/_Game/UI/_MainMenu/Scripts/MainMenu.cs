@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.GameState;
 using _Game.UI._MainMenu.State;
 using _Game.UI._Shop.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
+using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
@@ -110,7 +113,8 @@ namespace _Game.UI._MainMenu.Scripts
                 _upgradesChecker.GetNotificationData(Screen.UpgradesAndEvolution));
             _battleButton.Initialize(IsBattleUnlocked, OnBattleButtonClick, PlayButtonSound);
             _cardsButton.Initialize(IsCardsUnlocked, OnCardsButtonClick, PlayButtonSound);
-            _shopButton.Initialize(IsShopUnlocked, OnShopButtonClick, PlayButtonSound);
+            _shopButton.Initialize(IsShopUnlocked, OnShopButtonClick, PlayButtonSound,
+                _upgradesChecker.GetNotificationData(Screen.Shop));
 
 
             OnBattleButtonClick(_battleButton);
@@ -135,9 +139,22 @@ namespace _Game.UI._MainMenu.Scripts
 
         private void OnUpgradesNotified(NotificationData data)
         {
-            if (data.Screen == Screen.UpgradesAndEvolution)
+            switch (data.Screen)
             {
-                _upgradeButton.SetupPin(data);
+                case Screen.None:
+                    break;
+                case Screen.Battle:
+                    break;
+                case Screen.Upgrades:
+                    break;
+                case Screen.Evolution:
+                    break;
+                case Screen.UpgradesAndEvolution:
+                    _upgradeButton.SetupPin(data);
+                    break;
+                case Screen.Shop:
+                    _shopButton.SetupPin(data);
+                    break;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using _Game.Core.AssetManagement;
+﻿using _Game.Core._UpgradesChecker;
+using _Game.Core.AssetManagement;
 using _Game.UI.Factory;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
@@ -16,19 +17,22 @@ namespace _Game.UI._Shop.Scripts
         private readonly IHeader _header;
         private readonly IUIFactory _uiFactory;
         private readonly IShopPresenter _shopPresenter;
+        private readonly IUpgradesAvailabilityChecker _checker;
 
         public ShopProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
             IHeader header,
             IUIFactory uiFactory,
-            IShopPresenter shopPresenter)
+            IShopPresenter shopPresenter,
+            IUpgradesAvailabilityChecker checker)
         {
             _cameraService = cameraService;
             _audioService = audioService;
             _header = header;
             _uiFactory = uiFactory;
             _shopPresenter = shopPresenter;
+            _checker = checker;
         }
         public async UniTask<Disposable<Shop>> Load()
         {
@@ -38,7 +42,8 @@ namespace _Game.UI._Shop.Scripts
                 _audioService,
                 _header,
                 _uiFactory,
-                _shopPresenter);
+                _shopPresenter,
+                _checker);
             return popup;
         }
     }

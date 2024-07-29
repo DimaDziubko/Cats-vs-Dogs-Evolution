@@ -3,12 +3,12 @@ using _Game.UI.Common.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradeUnitItemView : MonoBehaviour
     {
@@ -75,7 +75,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             
             _backgroundHolder.sprite = _lockedItemImage;
             _unitNameLabel.enabled = false;
-            _transactionButton.UpdateButtonState(model.CanAfford, model.StaticData.Price.FormatMoney());
+            _transactionButton.UpdateButtonState(model.ButtonState, model.StaticData.Price.FormatMoney());
         }
 
         public void Cleanup()

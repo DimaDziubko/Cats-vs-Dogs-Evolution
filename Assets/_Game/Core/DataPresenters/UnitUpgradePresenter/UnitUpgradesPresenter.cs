@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._GameInitializer;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
+using _Game.UI.Common.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
@@ -22,7 +25,7 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
     public class UnitUpgradesPresenter : IUnitUpgradesPresenter, IUpgradeAvailabilityProvider, IDisposable 
     {
         public event Action<Dictionary<UnitType, UnitUpgradeItemModel>> UpgradeUnitItemsUpdated;
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
@@ -31,7 +34,7 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
             }
         }
         bool IUpgradeAvailabilityProvider.IsAvailable =>  
-            _models.Values.Any(model => model.CanAfford && !model.IsBought);
+            _models.Values.Any(model => model.ButtonState == ButtonState.Active && !model.IsBought);
 
         private readonly IGameInitializer _gameInitializer;
         private readonly IUserContainer _persistentData;
@@ -79,7 +82,7 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
         {
             if (Currency.Coins >= price)
             {
-                _persistentData.PurchaseUnit(type, price);
+                _persistentData.PurchaseStateHandler.PurchaseUnit(type, price);
             }
             else
             {
@@ -118,7 +121,9 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
                 {
                     StaticData = unitItem.Value,
                     IsBought = TimelineState.OpenUnits.Contains(unitItem.Key),
-                    CanAfford = Currency.Coins > unitItem.Value.Price
+                    ButtonState = Currency.Coins > unitItem.Value.Price 
+                        ? ButtonState.Active 
+                        : ButtonState.Inactive
                 };
             }
         }
@@ -132,7 +137,9 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
         private void UpdateUnitItem(UnitType type)
         {
             var model = _models[type];
-            model.CanAfford = Currency.Coins > model.StaticData.Price;
+            model.ButtonState = Currency.Coins > model.StaticData.Price 
+                ? ButtonState.Active 
+                : ButtonState.Inactive;
             model.IsBought = TimelineState.OpenUnits.Contains(type);
         }
 

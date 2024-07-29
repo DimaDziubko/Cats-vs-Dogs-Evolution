@@ -93,11 +93,11 @@ namespace _Game.Core.Navigation.Battle
                 return;
             }
 
-            if (IsLastBattle()) _userContainer.SetAllBattlesWon(true);
+            if (IsLastBattle()) _userContainer.TimelineStateHandler.SetAllBattlesWon(true);
 
             if (!IsLastBattle() && !CanMoveToNextBattle())
             {
-                _userContainer.OpenNextBattle(CurrentBattle + 1);
+                _userContainer.TimelineStateHandler.OpenNextBattle(CurrentBattle + 1);
                 MoveToNextBattle();
             }
         }

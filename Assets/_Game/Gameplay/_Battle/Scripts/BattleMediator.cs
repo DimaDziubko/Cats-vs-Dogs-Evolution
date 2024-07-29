@@ -120,7 +120,7 @@ namespace _Game.Gameplay._Battle.Scripts
 
         public async void EndBattle(GameResultType result, bool wasExit = false)
         {
-            if (!wasExit) _userContainer.AddCompletedBattle();
+            if (!wasExit) _userContainer.AnalyticsStateHandler.AddCompletedBattle();
             
             var isConfirmed = await _gameResultHandler.ShowGameResultAndWaitForDecision(result, wasExit);
             

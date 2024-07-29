@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.UI._MainMenu.Scripts;
-using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using _Game.Core._UpgradesChecker;
+using _Game.UI.Common.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
@@ -10,10 +10,11 @@ using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradesWindow : MonoBehaviour, IUIScreen
     {
@@ -155,7 +156,7 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private void OnUpgradesWindowOpened()
         {
             _unitUpgradesPresenter.OnUpgradesWindowOpened();
-            _upgradeItemPresenter.OnUpgradesWindowOpened();
+            _upgradeItemPresenter.OnUpgradesScreenOpened();
         }
 
         private void InitItems()

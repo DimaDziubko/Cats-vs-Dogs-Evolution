@@ -67,7 +67,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _amountLabel.text = model.AmountText;
             _itemNameLabel.text = model.StaticData.Name;
             
-            _transactionButton.UpdateButtonState(model.CanAfford, model.DynamicData.Price.FormatMoney());
+            _transactionButton.UpdateButtonState(model.ButtonState, model.DynamicData.Price.FormatMoney());
         }
 
         public void Cleanup()

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Game.Core.Services.IAP;
 
 namespace _Game.Core.Configs.Repositories.Shop
@@ -8,6 +7,7 @@ namespace _Game.Core.Configs.Repositories.Shop
     {
         List<ProductConfig> GetIAPConfig();
         List<ProductConfig> GetIGPConfig();
+        ProductConfig GetPlacementConfig();
         IEnumerable<ProductConfig> GetConfigs();
     }
 }

@@ -108,7 +108,7 @@ namespace _Game.UI._BattleUIController
             if (_coinCounter.Coins > 0)
             {
                 PlayCoinAnimation();
-                _userContainer.AddCoins(_coinCounter.Coins);
+                _userContainer.CurrenciesHandler.AddCoins(_coinCounter.Coins);
                 _coinCounter.Cleanup();
             }
             

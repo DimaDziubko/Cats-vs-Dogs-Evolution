@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using Assets._Game.Core.Communication;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;

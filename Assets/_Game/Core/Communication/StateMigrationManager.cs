@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Core.Communication.Migrations;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using Assets._Game.Core.Communication;
 
 namespace _Game.Core.Communication

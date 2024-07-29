@@ -16,15 +16,23 @@ namespace _Game.Core.Configs.Repositories.Shop
         public List<ProductConfig> GetIAPConfig()
         {
             return _userContainer.GameConfig.ShopConfig.Products
-                .Where(x => x.IAP_ID != Constants.ConfigKeys.MISSING_KEY)
+                .Where(x => x.IAP_ID != Constants.ConfigKeys.MISSING_KEY && 
+                            x.IAP_ID != Constants.ConfigKeys.PLACEMENT)
                 .ToList();
         }
         
         public List<ProductConfig> GetIGPConfig()
         {
             return _userContainer.GameConfig.ShopConfig.Products
-                .Where(x => x.IAP_ID == Constants.ConfigKeys.MISSING_KEY)
+                .Where(x => x.IAP_ID == Constants.ConfigKeys.MISSING_KEY &&
+                 x.IAP_ID != Constants.ConfigKeys.PLACEMENT) 
                 .ToList();
+        }
+        
+        public ProductConfig GetPlacementConfig()
+        {
+            return _userContainer.GameConfig.ShopConfig.Products
+                .Find(x => x.IAP_ID == Constants.ConfigKeys.PLACEMENT);
         }
 
         public IEnumerable<ProductConfig> GetConfigs() => 

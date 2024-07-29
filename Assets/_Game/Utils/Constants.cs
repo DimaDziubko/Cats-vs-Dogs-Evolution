@@ -79,9 +79,12 @@ namespace _Game.Utils
 
         public sealed class ConfigKeys
         {
+            //FreeGemsPackDayConfig
+            public const string FREE_GEMS_PACK_DAY_CONFIG = "FreeGemsPackDayConfig";
+
             //BattleSpeed
             public const string BATTLE_SPEEDS_CONFIGS = "BattleSpeedConfigs";
-            
+
             //FoodBoost
             public const string FOOD_BOOST_CONFIG = "FoodBoostConfig";
 
@@ -91,12 +94,13 @@ namespace _Game.Utils
 
             //Timeline common
             public const string ID = "Id";
-            
+
             //Timeline
             public const string TIMELINES = "Timelines";
-            
+
             //Shop
             public const string SHOP_CONFIG = "ShopConfig";
+            public const string PLACEMENT = "adPlacement";
         }
     }
 }

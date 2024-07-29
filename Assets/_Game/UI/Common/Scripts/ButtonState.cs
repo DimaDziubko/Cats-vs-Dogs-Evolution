@@ -1,8 +1,9 @@
-﻿namespace Assets._Game.UI.Common.Scripts
+﻿namespace _Game.UI.Common.Scripts
 {
     public enum ButtonState
     {
         Active,
-        Inactive
+        Inactive,
+        Loading
     }
 }

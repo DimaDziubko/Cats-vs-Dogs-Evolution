@@ -119,7 +119,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void OnCheatBtnClicked()
         {
             PlayButtonSound();
-            _persistentData.AddCoins(10_000_000);
+            _persistentData.CurrenciesHandler.AddCoins(10_000_000);
         }
 
         private void OnQuitBtnClick()

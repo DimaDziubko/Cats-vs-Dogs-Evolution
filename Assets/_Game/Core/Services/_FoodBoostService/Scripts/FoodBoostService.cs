@@ -6,6 +6,7 @@ using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
+using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Hud;
@@ -105,7 +106,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
                 int boostsToAdd = Mathf.Min(recoverableBoosts, lackingBoosts);
                 
                 DateTime newLastDailyFoodBoost = FoodBoostState.LastDailyFoodBoost.AddMinutes(boostsToAdd * foodBoostConfig.RecoverTimeMinutes);
-                _userContainer.RecoverFoodBoost(
+                _userContainer.FoodBoostStateHandler.RecoverFoodBoost(
                     boostsToAdd,
                     newLastDailyFoodBoost);
                 
@@ -118,11 +119,11 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             var foodBoostConfig = _configRepository.GetFoodBoostConfig();
             if (FoodBoostState.DailyFoodBoostCount == foodBoostConfig.DailyFoodBoostCount)
             {
-                _userContainer.SpendFoodBoost(DateTime.UtcNow);
+                _userContainer.FoodBoostStateHandler.SpendFoodBoost(DateTime.UtcNow);
             }
             else
             {
-                _userContainer.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
+                _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
             }
             
             FoodBoost?.Invoke(_foodBoostBtnModel.FoodAmount);

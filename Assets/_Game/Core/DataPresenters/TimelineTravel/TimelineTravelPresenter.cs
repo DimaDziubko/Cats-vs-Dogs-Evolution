@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
@@ -19,7 +20,7 @@ namespace _Game.Core.DataPresenters.TimelineTravel
     public class TimelineTravelPresenter : ITimelineTravelPresenter, IUpgradeAvailabilityProvider, IDisposable
     {
         public event Action<TravelTabModel> TravelTabModelUpdated;
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
@@ -82,7 +83,7 @@ namespace _Game.Core.DataPresenters.TimelineTravel
 
 
         public void OpenNextTimeline() => 
-            _userContainer.OpenNextTimeline();
+            _userContainer.TimelineStateHandler.OpenNextTimeline();
 
         bool ITimelineTravelPresenter.IsTimeToTravel() => !IsNextAge();
 

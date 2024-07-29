@@ -3,6 +3,7 @@ using _Game.Core.Communication;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using Assets._Game.Core.Communication;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.UserState;

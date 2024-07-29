@@ -4,7 +4,7 @@ using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public class TimelineState : ITimelineStateReadonly
     {

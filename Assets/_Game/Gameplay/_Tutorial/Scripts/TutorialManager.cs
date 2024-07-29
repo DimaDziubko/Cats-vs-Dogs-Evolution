@@ -71,7 +71,7 @@ namespace Assets._Game.Gameplay._Tutorial.Scripts
         {
             UnRegister(tutorialStep);
             var tutorialData = tutorialStep.GetTutorialStepData();
-            _persistentData.CompleteTutorialStep(tutorialData.Step);
+            _persistentData.TutorialStateHandler.CompleteTutorialStep(tutorialData.Step);
         }
 
         private void OnStepCompleted(int step) => Break();

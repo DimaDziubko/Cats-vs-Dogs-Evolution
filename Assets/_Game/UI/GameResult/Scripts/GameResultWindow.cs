@@ -1,4 +1,5 @@
-﻿using _Game.Utils.Extensions;
+﻿using _Game.Core.Services.Analytics;
+using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Ads;
 using Assets._Game.Core.Services.Analytics;

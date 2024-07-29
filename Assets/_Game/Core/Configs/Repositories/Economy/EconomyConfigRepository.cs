@@ -9,22 +9,25 @@ namespace _Game.Core.Configs.Repositories.Economy
 {
     public class EconomyConfigRepository : IEconomyConfigRepository
     {
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IAgeConfigRepository _ageConfigRepository;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         public EconomyConfigRepository(
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             IAgeConfigRepository ageConfigRepository)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _ageConfigRepository = ageConfigRepository;
         }
         
         public FoodBoostConfig GetFoodBoostConfig() => 
-            _persistentData
+            _userContainer
                 .GameConfig
                 .FoodBoostConfig;
+
+        public FreeGemsPackDayConfig GetFreeGemsPackDayConfig() => 
+            _userContainer.GameConfig.FreeGemsPackDayConfig;
 
         public float GetMinimalCoinsForBattle() => 
             _ageConfigRepository

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._GameInitializer;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Data.Age.Static._UpgradeItem;
@@ -10,22 +11,23 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
+using _Game.UI.Common.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.DataPresenters._RaceChanger;
+using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using Assets._Game.Utils.Extensions;
 
-namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
+namespace _Game.Core.DataPresenters._UpgradeItemPresenter
 {
     public class UpgradeItemPresenter : IUpgradeItemPresenter, IUpgradeAvailabilityProvider, IDisposable
     {
         public event Action<UpgradeItemModel> UpgradeItemUpdated;
 
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
@@ -35,7 +37,7 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
         }
 
         bool IUpgradeAvailabilityProvider.IsAvailable => 
-            _models.Any(x => x.Value.CanAfford);
+            _models.Any(x => x.Value.ButtonState == ButtonState.Active);
         
         private readonly IGameInitializer _gameInitializer;
         private readonly IUserContainer _userContainer;
@@ -72,7 +74,7 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
             gameInitializer.OnMainInitialization += Init;
         }
 
-        void IUpgradeItemPresenter.OnUpgradesWindowOpened() 
+        void IUpgradeItemPresenter.OnUpgradesScreenOpened() 
             => UpdateUpgradeItems();
 
         private void Init()
@@ -84,7 +86,7 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
         }
 
         public void UpgradeItem(UpgradeItemType type, float price) => 
-            _userContainer.UpgradeItem(type, price);
+            _userContainer.UpgradeStateHandler.UpgradeItem(type, price);
 
         private void SubscribeToEvents()
         {
@@ -150,7 +152,10 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
                 AmountText =  type == UpgradeItemType.FoodProduction
                     ? dynamicData.Amount.ToSpeedFormat() 
                     : dynamicData.Amount.FormatMoney(),
-                CanAfford = Currency.Coins >= dynamicData.Price,
+                
+                ButtonState = Currency.Coins >= dynamicData.Price 
+                    ? ButtonState.Active 
+                    : ButtonState.Inactive,
             };
         }
         
@@ -170,7 +175,9 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
             model.AmountText = type == UpgradeItemType.FoodProduction
                 ? dynamicData.Amount.ToSpeedFormat()
                 : dynamicData.Amount.FormatMoney();
-            model.CanAfford = Currency.Coins >= dynamicData.Price;
+            model.ButtonState = Currency.Coins >= dynamicData.Price 
+                ? ButtonState.Active
+                : ButtonState.Inactive;
             UpgradeItemUpdated?.Invoke(model);
         }
         

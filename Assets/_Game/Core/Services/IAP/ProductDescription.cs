@@ -8,5 +8,7 @@ namespace _Game.Core.Services.IAP
         public Product Product;
         public ProductConfig Config;
         public int AvailablePurchasesLeft;
+        public int MaxPurchasesCount;
+        public bool IsReady;
     }
 }

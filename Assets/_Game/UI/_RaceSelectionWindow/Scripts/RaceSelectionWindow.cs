@@ -22,10 +22,10 @@ namespace _Game.UI._RaceSelectionWindow.Scripts
         [SerializeField] private TutorialStep _tutorialStep;
 
         private ITutorialManager _tutorialManager;
-        private IUserContainer _persistentData;
+        private IUserContainer _userContainer;
         private IAudioService _audioService;
 
-        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
 
 
         private UniTaskCompletionSource<bool> _taskCompletion;
@@ -37,7 +37,7 @@ namespace _Game.UI._RaceSelectionWindow.Scripts
             ITutorialManager tutorialManager)
         {
             _canvas.worldCamera = worldCameraService.UICameraOverlay;
-            _persistentData = persistentData;
+            _userContainer = persistentData;
             _audioService = audioService;
             _tutorialManager = tutorialManager;
             _tutorialManager.Register(_tutorialStep);
@@ -92,7 +92,7 @@ namespace _Game.UI._RaceSelectionWindow.Scripts
         {
             _tutorialStep.CompleteStep();
             _audioService.PlayButtonSound();
-            _persistentData.ChooseRace(_catSelectionBtn.IsOn ? Race.Cat : Race.Dog);
+            _userContainer.TimelineStateHandler.ChooseRace(_catSelectionBtn.IsOn ? Race.Cat : Race.Dog);
             _taskCompletion.TrySetResult(true);
         }
     }

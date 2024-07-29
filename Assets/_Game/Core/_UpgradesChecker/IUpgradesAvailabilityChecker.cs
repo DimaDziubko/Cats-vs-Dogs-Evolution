@@ -1,7 +1,8 @@
 ﻿using System;
 using _Game.UI._MainMenu.Scripts;
+using Assets._Game.Core._UpgradesChecker;
 
-namespace Assets._Game.Core._UpgradesChecker
+namespace _Game.Core._UpgradesChecker
 {
     public interface IUpgradesAvailabilityChecker
     {

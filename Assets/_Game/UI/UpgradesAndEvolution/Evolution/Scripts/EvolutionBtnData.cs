@@ -1,8 +1,10 @@
-﻿namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
+﻿using _Game.UI.Common.Scripts;
+
+namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionBtnData
     {
-        public bool CanAfford;
+        public ButtonState ButtonState;
         public float Price;
     }
 }

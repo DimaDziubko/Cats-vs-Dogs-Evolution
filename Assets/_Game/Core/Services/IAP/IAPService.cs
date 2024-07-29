@@ -6,7 +6,6 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core.UserState;
 using UnityEngine.Purchasing;
 
 namespace _Game.Core.Services.IAP
@@ -23,8 +22,7 @@ namespace _Game.Core.Services.IAP
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
 
         private IPurchaseDataStateReadonly PurchaseData => _userContainer.State.PurchaseDataState;
-        private IBattleSpeedStateReadonly BattleSpeedStateReadonly => _userContainer.State.BattleSpeedState;
-        
+
         public bool IsInitialized => _iapProvider.IsInitialized;
 
         
@@ -146,20 +144,20 @@ namespace _Game.Core.Services.IAP
                 case ItemType.x1_5:
                     //TODO Check later
                     int speedIdFor1_5 = 1; 
-                    _userContainer.ChangePermanentSpeedId(speedIdFor1_5);
-                    _userContainer.AddPurchase(purchasedProduct.definition.id);
+                    _userContainer.BattleSpeedStateHandler.ChangePermanentSpeedId(speedIdFor1_5);
+                    _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
                     break;
                 case ItemType.x2:
                     //TODO Check later
                     int speedIdFor2 = 2; 
-                    _userContainer.ChangePermanentSpeedId(speedIdFor2);
-                    _userContainer.AddPurchase(purchasedProduct.definition.id);
+                    _userContainer.BattleSpeedStateHandler.ChangePermanentSpeedId(speedIdFor2);
+                    _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
                     break;
                 case ItemType.Coins:
                     break;
                 case ItemType.Gems:
-                    _userContainer.AddGems(productConfig.Quantity);
-                    _userContainer.AddPurchase(purchasedProduct.definition.id);
+                    _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity);
+                    _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
                     break;
             }
 

@@ -1,5 +1,6 @@
 ﻿using _Game.UI._MainMenu.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
+using _Game.UI.Common.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.Utils.Disposable;

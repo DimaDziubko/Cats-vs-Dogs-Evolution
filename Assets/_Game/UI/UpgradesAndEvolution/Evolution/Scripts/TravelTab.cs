@@ -114,8 +114,10 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
 
-        private void UpdateTravelButton(in bool canTravel) => 
-            _travelButton.UpdateButtonState(canTravel, "0", false);
-        
+        private void UpdateTravelButton(in bool canTravel)
+        {
+            var state = canTravel ? ButtonState.Active : ButtonState.Inactive;
+            _travelButton.UpdateButtonState(state, "0", false);
+        }
     }
 }

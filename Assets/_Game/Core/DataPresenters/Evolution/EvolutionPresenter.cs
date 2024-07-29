@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Data;
@@ -9,6 +10,8 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
+using _Game.UI.Common.Scripts;
+using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters.Evolution;
@@ -22,7 +25,7 @@ namespace _Game.Core.DataPresenters.Evolution
         public event Action<EvolutionTabModel> EvolutionModelUpdated;
         public event Action LastAgeOpened;
         
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedWindows
+        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
@@ -34,20 +37,20 @@ namespace _Game.Core.DataPresenters.Evolution
         bool IUpgradeAvailabilityProvider.IsAvailable => IsNextAgeAffordable();
 
         private readonly IGameInitializer _gameInitializer;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly ITimelineConfigRepository _timelineConfigRepository;
         private readonly IAgeConfigRepository _ageConfigRepository;
         private readonly IMyLogger _logger;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IAgeNavigator _ageNavigator;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        private IUserCurrenciesStateReadonly Currency => _persistentData.State.Currencies;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private IUserCurrenciesStateReadonly Currency => _userContainer.State.Currencies;
 
         private EvolutionTabModel _evolutionTabModel;
 
         public EvolutionPresenter(
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             ITimelineConfigRepository timelineConfigRepository,
             IAgeConfigRepository ageConfigRepository,
             IMyLogger logger,
@@ -56,7 +59,7 @@ namespace _Game.Core.DataPresenters.Evolution
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _timelineConfigRepository = timelineConfigRepository;
             _ageConfigRepository = ageConfigRepository;
             _logger = logger;
@@ -89,11 +92,11 @@ namespace _Game.Core.DataPresenters.Evolution
         {
             if (IsNextAge())
             {
-                _persistentData.OnOpenNextAge();
+                _userContainer.TimelineStateHandler.OpenNextAge();
             }
             else
             {
-                _persistentData.OpenNextTimeline();
+                _userContainer.TimelineStateHandler.OpenNextTimeline();
             }
         }
 
@@ -116,7 +119,7 @@ namespace _Game.Core.DataPresenters.Evolution
             
             EvolutionBtnData evolutionButtonData = new EvolutionBtnData()
             {
-                CanAfford = IsNextAgeAffordable(),
+                ButtonState = IsNextAgeAffordable() ? ButtonState.Active : ButtonState.Inactive,
                 Price = GetEvolutionPrice()
             };
 

@@ -47,7 +47,7 @@ namespace Assets._Game.Gameplay._Coins.Scripts
                     _transform.DOMove(targetPoint, _moveToWalletDuration).SetEase(Ease.InQuad).OnComplete(() =>
                     {
                         _audioService.PlayFillingWalletSFX();
-                        _userContainer.AddCoins(_coinsValue);
+                        _userContainer.CurrenciesHandler.AddCoins(_coinsValue);
                         Recycle();
                     });
                 });

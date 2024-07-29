@@ -20,6 +20,7 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private TMP_Text _infoText;
         [SerializeField] private GameObject _moneyPanel;
         [SerializeField] private Image _currencyIconHolder;
+        [SerializeField] private TMP_Text _loadingText;
         
         [SerializeField] private bool _isHoldable = false;
 
@@ -59,41 +60,89 @@ namespace _Game.UI.Common.Scripts
         }
 
         public void UpdateButtonState(
-            bool canAfford, 
+            ButtonState state, 
             string price, 
             bool showMoneyPanel = true)
         {
-            _button.interactable = canAfford;
+            switch (state)
+            {
+                case ButtonState.Active:
+                    HandleActiveState(price, showMoneyPanel);
+                    break;
+                case ButtonState.Inactive:
+                    HandleInactiveState(price, showMoneyPanel);
+                    break;
+                case ButtonState.Loading:
+                    HandleLoadingState();
+                    break;
+            }
+        }
 
-             var newState = canAfford ? ButtonState.Active : ButtonState.Inactive;
-             if (_state != newState)
-             {
-                 _state = newState;
-                 ButtonStateChanged?.Invoke(_state);
-             }
-            
-            if (!canAfford) _isPointerDown = false;
+        private void HandleActiveState(string price, bool showMoneyPanel = true)
+        {
+            _button.interactable = true;
+            _loadingText.enabled = false;
+            if (_moneyPanel != null) 
+                _moneyPanel.SetActive(showMoneyPanel);
+            if (_state != ButtonState.Active)
+            {
+                _state = ButtonState.Active;
+                ButtonStateChanged?.Invoke(_state);
+            }
             
             if (_priceText != null)
             {
                 _priceText.text = price;
-                _priceText.color = canAfford ? _affordableColor : _expensiveColor;
+                _priceText.color = _affordableColor;
             }
             if (_infoText != null)
             {
-                _infoText.color = canAfford ? _affordableColor : _expensiveColor;
+                _infoText.color = _affordableColor;
             }
-
-            if (_moneyPanel != null)
-            {
-                _moneyPanel.SetActive(showMoneyPanel);
-            }
+            
         }
 
-        public void Show()
+        private void HandleInactiveState(string price, bool showMoneyPanel = true)
         {
-            gameObject.SetActive(true);
+            _button.interactable = false;
+            _loadingText.enabled = false;
+            if (_moneyPanel != null) 
+                _moneyPanel.SetActive(showMoneyPanel);
+            _isPointerDown = false;
+            if (_state != ButtonState.Inactive)
+            {
+                _state = ButtonState.Inactive;
+                ButtonStateChanged?.Invoke(_state);
+            }
+            
+            if (_priceText != null)
+            {
+                _priceText.text = price;
+                _priceText.color = _expensiveColor;
+            }
+            if (_infoText != null)
+            {
+                _infoText.color = _expensiveColor;
+            }
+            
         }
+
+        private void HandleLoadingState()
+        {
+            _button.interactable = false;
+            _loadingText.enabled = true;
+            if (_moneyPanel != null) 
+                _moneyPanel.SetActive(false);
+            _isPointerDown = false;
+            if (_state != ButtonState.Loading)
+            {
+                _state = ButtonState.Loading;
+                ButtonStateChanged?.Invoke(_state);
+            }
+        }
+        
+        public void Show() => 
+            gameObject.SetActive(true);
 
         public void Hide()
         {

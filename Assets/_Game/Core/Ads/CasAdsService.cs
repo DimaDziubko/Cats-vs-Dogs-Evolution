@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
+using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Ads;
@@ -105,7 +106,7 @@ namespace _Game.Core.Ads
             _onVideoCompleted = null;
             _manager.LoadAd(AdType.Rewarded);
             
-            _userContainer.AddAdsReviewed();
+            _userContainer.AnalyticsStateHandler.AddAdsReviewed();
         }
         
         

@@ -392,6 +392,10 @@
                   <e p="IFoodBoostService.cs" t="Include" />
                 </e>
               </e>
+              <e p="_FreeGemsPackService" t="Include">
+                <e p="FreeGemsPackService.cs" t="Include" />
+                <e p="IFreeGemsPackService.cs" t="Include" />
+              </e>
               <e p="_SpeedBoostService" t="Include">
                 <e p="Scripts" t="Include">
                   <e p="ISpeedBoostService.cs" t="Include" />
@@ -450,21 +454,63 @@
               </e>
             </e>
             <e p="UserState" t="Include">
-              <e p="AdsStatistics.cs" t="Include" />
-              <e p="BattleSpeedState.cs" t="Include" />
-              <e p="BattleStatistics.cs" t="Include" />
-              <e p="FactionState.cs" t="Include" />
-              <e p="FoodBoostState.cs" t="Include" />
-              <e p="IBattleSpeedStateReadonly.cs" t="Include" />
-              <e p="IPurchaseDataStateReadonly.cs" t="Include" />
-              <e p="ITimelineStateReadonly.cs" t="Include" />
-              <e p="IUserCurrenciesStateReadonly.cs" t="Include" />
-              <e p="PurchaseDataState.cs" t="Include" />
-              <e p="RetentionState.cs" t="Include" />
-              <e p="TimelineState.cs" t="Include" />
-              <e p="TutorialState.cs" t="Include" />
-              <e p="UserAccountState.cs" t="Include" />
-              <e p="UserCurrenciesState.cs" t="Include" />
+              <e p="_Handler" t="Include">
+                <e p="_Analytics" t="Include">
+                  <e p="AnalyticsStateHandler.cs" t="Include" />
+                  <e p="IAnalyticsStateHandler.cs" t="Include" />
+                </e>
+                <e p="_BattleSpeed" t="Include">
+                  <e p="BattleSpeedStateHandler.cs" t="Include" />
+                  <e p="IBattleSpeedStateHandler.cs" t="Include" />
+                </e>
+                <e p="_FoodBoost" t="Include">
+                  <e p="FoodBoostStateHandler.cs" t="Include" />
+                  <e p="IFoodBoostStateHandler.cs" t="Include" />
+                </e>
+                <e p="_Purchase" t="Include">
+                  <e p="IPurchaseStateHandler.cs" t="Include" />
+                  <e p="PurchaseStateHandler.cs" t="Include" />
+                </e>
+                <e p="_Timeline" t="Include">
+                  <e p="ITimelineStateHandler.cs" t="Include" />
+                  <e p="TimelineStateHandler.cs" t="Include" />
+                </e>
+                <e p="_Tutorial" t="Include">
+                  <e p="ITutorialStateHandler.cs" t="Include" />
+                  <e p="TutorialStateHandler.cs" t="Include" />
+                </e>
+                <e p="_Upgrade" t="Include">
+                  <e p="IUpgradeStateHandler.cs" t="Include" />
+                  <e p="UpgradeStateHandler.cs" t="Include" />
+                </e>
+                <e p="Currencies" t="Include">
+                  <e p="CurrenciesHandler.cs" t="Include" />
+                  <e p="ICurrenciesHandler.cs" t="Include" />
+                </e>
+                <e p="FreeGemsPack" t="Include">
+                  <e p="FreeGemsPackStateHandler.cs" t="Include" />
+                  <e p="IFreeGemsPackStateHandler.cs" t="Include" />
+                </e>
+              </e>
+              <e p="_State" t="Include">
+                <e p="AdsStatistics.cs" t="Include" />
+                <e p="BattleSpeedState.cs" t="Include" />
+                <e p="BattleStatistics.cs" t="Include" />
+                <e p="FactionState.cs" t="Include" />
+                <e p="FoodBoostState.cs" t="Include" />
+                <e p="FreeGemsPackState.cs" t="Include" />
+                <e p="IBattleSpeedStateReadonly.cs" t="Include" />
+                <e p="IFreeGemsPackStateReadonly.cs" t="Include" />
+                <e p="IPurchaseDataStateReadonly.cs" t="Include" />
+                <e p="ITimelineStateReadonly.cs" t="Include" />
+                <e p="IUserCurrenciesStateReadonly.cs" t="Include" />
+                <e p="PurchaseDataState.cs" t="Include" />
+                <e p="RetentionState.cs" t="Include" />
+                <e p="TimelineState.cs" t="Include" />
+                <e p="TutorialState.cs" t="Include" />
+                <e p="UserAccountState.cs" t="Include" />
+                <e p="UserCurrenciesState.cs" t="Include" />
+              </e>
             </e>
           </e>
           <e p="Creatives" t="Include">

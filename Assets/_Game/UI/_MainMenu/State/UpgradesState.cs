@@ -1,4 +1,5 @@
 ﻿using _Game.UI._MainMenu.Scripts;
+using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.Utils.Disposable;

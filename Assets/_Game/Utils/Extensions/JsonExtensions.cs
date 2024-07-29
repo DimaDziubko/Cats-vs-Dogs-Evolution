@@ -21,12 +21,24 @@ namespace _Game.Utils.Extensions
                 FoodBoostConfig = ExtractFoodBoostConfig(jsonData),
                 TimelinesCount = ExtractTimelinesCount(jsonData),
                 ShopConfig = ExtractShopConfig(jsonData),
+                FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
             };
             
             //TODO Delete later
             Debug.Log("GAME CONFIG PARSED SUCCESSFULLY");
     
             return config;
+        }
+
+        private static FreeGemsPackDayConfig ExtractFreeGemsPackDayConfig(JObject jsonData)
+        {
+            var freeGemsPackDayConfigToken = jsonData[Constants.ConfigKeys.FREE_GEMS_PACK_DAY_CONFIG];
+            if (freeGemsPackDayConfigToken == null)
+            {
+                Debug.LogError("FreeGemsPackDayConfig is null");
+                return null;
+            }
+            return freeGemsPackDayConfigToken.ToObject<FreeGemsPackDayConfig>();
         }
 
         private static ShopConfig ExtractShopConfig(JObject jsonData)

@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
@@ -7,6 +8,6 @@ namespace Assets._Game.Core.DataPresenters._UpgradeItemPresenter
     {
         event Action<UpgradeItemModel> UpgradeItemUpdated;
         void UpgradeItem(UpgradeItemType type, float price);
-        void OnUpgradesWindowOpened();
+        void OnUpgradesScreenOpened();
     }
 }

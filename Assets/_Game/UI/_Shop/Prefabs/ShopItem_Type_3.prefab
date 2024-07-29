@@ -171,10 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _majorProductIconHolder: {fileID: 5732888723157460808}
   _minorProductIconHolder: {fileID: 1361656087971423715}
-  _currencyIconHolder: {fileID: 0}
-  _price: {fileID: 0}
   _quantity: {fileID: 7936107558386739572}
   _description: {fileID: 0}
+  _valueLabel: {fileID: 0}
   _button: {fileID: 8707008734314610871}
 --- !u!1 &4922042613682127660
 GameObject:
@@ -485,7 +484,7 @@ PrefabInstance:
     - target: {fileID: 2254281274425450862, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}
       propertyPath: _moneyPanel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3216030913293201213}
     - target: {fileID: 2878070181847823192, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -544,6 +543,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}
+--- !u!1 &3216030913293201213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5421473843308809956, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}
+  m_PrefabInstance: {fileID: 7466214672865845721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7578866906266041985 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1058585485758766936, guid: 6b436a5aa74d1a644a3821fd39bacb51, type: 3}

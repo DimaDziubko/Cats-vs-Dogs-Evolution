@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core._UpgradesChecker;
 using _Game.UI.Factory;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Header.Scripts;
@@ -19,6 +20,7 @@ namespace _Game.UI._Shop.Scripts
         
         private IHeader _header;
         private IShopPresenter _shopPresenter;
+        private IUpgradesAvailabilityChecker _checker;
 
 
         public void Construct(
@@ -26,11 +28,13 @@ namespace _Game.UI._Shop.Scripts
             IAudioService audioService,
             IHeader header,
             IUIFactory uiFactory,
-            IShopPresenter shopPresenter)
+            IShopPresenter shopPresenter,
+            IUpgradesAvailabilityChecker checker)
         {
             _canvas.worldCamera = uICamera;
             _header = header;
             _shopPresenter = shopPresenter;
+            _checker = checker;
             _container.Construct(shopPresenter, uiFactory, audioService);
         }
 
@@ -44,13 +48,9 @@ namespace _Game.UI._Shop.Scripts
             _canvas.enabled = true;
             
             Opened?.Invoke();
+            _checker.MarkAsReviewed(Screen);
         }
-
-        // public void Init()
-        // {
-        //     _container.Init();
-        // }
-
+        
         private void Subscribe()
         {
             Opened += _shopPresenter.OnShopOpened;

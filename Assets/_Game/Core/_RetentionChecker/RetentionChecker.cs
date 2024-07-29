@@ -38,7 +38,7 @@ namespace Assets._Game.Core._RetentionChecker
         {
             if (RetentionState.FirstDayRetentionEventSent 
                 && !RetentionState.SecondDayRetentionEventSent)
-                _userContainer.SecondDayRetentionSent();
+                _userContainer.AnalyticsStateHandler.SecondDayRetentionSent();
         }
 
         private void CheckFirstDayRetention()
@@ -49,7 +49,7 @@ namespace Assets._Game.Core._RetentionChecker
                 if (deltaTime.TotalHours >= FIRST_DAY_RETENTION_MIN_HOURS && 
                     deltaTime.TotalHours < FIRST_DAY_RETENTION_MAX_HOURS)
                 {
-                    _userContainer.FirstDayRetentionSent();
+                    _userContainer.AnalyticsStateHandler.FirstDayRetentionSent();
                 }
             }
         }

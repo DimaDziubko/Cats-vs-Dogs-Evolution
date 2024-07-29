@@ -7,7 +7,7 @@ using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using UnityEngine;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public class UserAccountState
     {
@@ -24,6 +24,7 @@ namespace _Game.Core.UserState
         public AdsStatistics AdsStatistics;
         public RetentionState RetentionState;
         public PurchaseDataState PurchaseDataState;
+        public FreeGemsPackState FreeGemsPackState;
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -95,7 +96,13 @@ namespace _Game.Core.UserState
                 PurchaseDataState = new PurchaseDataState()
                 {
                     BoudhtIAPs = new List<BoughtIAP>()
-                }
+                },
+                
+                FreeGemsPackState = new FreeGemsPackState()
+                {
+                    FreeGemPackCount = 2,
+                    LastFreeGemPackDay = DateTime.UtcNow
+                },
             };
         }
 

@@ -65,12 +65,24 @@ namespace _Game.UI._Shop.Scripts
 
             if (_button != null)
             {
-                var price = model.Description.Id != Constants.ConfigKeys.MISSING_KEY 
-                    ? model.Description.Product.metadata.localizedPriceString 
-                    : model.Description.Config.Price.ToString();
+                string price;
+                if (model.Description.Id != Constants.ConfigKeys.MISSING_KEY &&
+                    model.Description.Id != Constants.ConfigKeys.PLACEMENT)
+                {
+                    price = model.Description.Product.metadata.localizedPriceString;
+                }
+                else if (model.Description.Id == Constants.ConfigKeys.PLACEMENT)
+                {
+                    price = $"{model.Description.AvailablePurchasesLeft}/{model.Description.MaxPurchasesCount}";
+                }
+                else
+                {
+                    price = model.Description.Config.Price.ToString();
+                }
+                
                 _button.Construct(model.ItemStaticData.CurrencyIcon);
                 _button.Init();
-                _button.UpdateButtonState(model.CanAfford, price);
+                _button.UpdateButtonState(model.ButtonState, price);
             }
         }
 

@@ -143,7 +143,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         {
             if (!BattleSpeed.IsNormalSpeedActive)
             {
-                _userContainer.ChangeNormalSpeed(true);
+                _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(true);
                 if (_timerService.GetTimer(TimerType.BattleSpeed) != null)
                 {
                     _timerService.RemoveTimer(TimerType.BattleSpeed);
@@ -258,7 +258,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         {
             TryNotifyAboutTimerActivity(false);
             CurrentBattleSpeedId = BattleSpeed.PermanentSpeedId;
-            _userContainer.ChangeNormalSpeed(true);
+            _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(true);
             UpdateBattleSpeedBtnModel();
         }
 
@@ -282,7 +282,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             GameTimer timer = _timerService.GetTimer(TimerType.BattleSpeed);
             if (timer != null)
             {
-                _userContainer.ChangeBattleTimerDurationLeft(timer.TimeLeft);
+                _userContainer.BattleSpeedStateHandler.ChangeBattleSpeedTimerDurationLeft(timer.TimeLeft);
             }
         }
     }

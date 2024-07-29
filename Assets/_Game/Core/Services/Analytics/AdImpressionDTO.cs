@@ -1,4 +1,6 @@
-﻿namespace Assets._Game.Core.Services.Analytics
+﻿using _Game.Core.Services.Analytics;
+
+namespace Assets._Game.Core.Services.Analytics
 {
     public class AdImpressionDto
     {

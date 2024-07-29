@@ -93,7 +93,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         }
 
         private void UpdateButtonData(EvolutionBtnData data) => 
-            _evolveButton.UpdateButtonState(data.CanAfford, data.Price.FormatMoney(), data.Price > 0);
+            _evolveButton.UpdateButtonState(data.ButtonState, data.Price.FormatMoney(), data.Price > 0);
 
         private async void OnEvolveButtonClick()
         {
