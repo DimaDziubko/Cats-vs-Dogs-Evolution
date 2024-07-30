@@ -3,7 +3,7 @@ using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Common
+namespace _Game.Common
 {
     public class RewardAnimator : IRewardAnimator
     {

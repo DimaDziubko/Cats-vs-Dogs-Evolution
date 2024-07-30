@@ -1,6 +1,7 @@
+using Assets._Game.Common;
 using UnityEngine;
 
-namespace Assets._Game.Common
+namespace _Game.Common
 {
     public class CoroutineRunner : MonoBehaviour, ICoroutineRunner
     {

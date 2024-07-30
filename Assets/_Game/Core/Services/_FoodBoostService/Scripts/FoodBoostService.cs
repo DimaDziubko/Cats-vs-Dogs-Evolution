@@ -1,6 +1,8 @@
 ﻿using System;
+using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
+using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
@@ -12,12 +14,12 @@ using _Game.Core.UserState;
 using _Game.UI._Hud;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Ads;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using CAS;
 using UnityEngine;
 
 namespace _Game.Core.Services._FoodBoostService.Scripts
@@ -65,19 +67,22 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             UpdateFoodBoost();
             
             FoodBoostState.FoodBoostChanged += OnFoodBoostChanged;
-            _adsService.RewardedVideoLoaded += OnRewardVideoLoaded;
+            _adsService.VideoLoaded += OnRewardVideoLoaded;
 
         }
 
         void IDisposable.Dispose()
         {
             FoodBoostState.FoodBoostChanged -= OnFoodBoostChanged;
-            _adsService.RewardedVideoLoaded -= OnRewardVideoLoaded;
+            _adsService.VideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
         }
 
-        private void OnRewardVideoLoaded() => 
-            UpdateFoodBoostBtnModel();
+        private void OnRewardVideoLoaded(AdType type)
+        {
+            if(type == AdType.Rewarded)
+                UpdateFoodBoostBtnModel();
+        }
 
         public void OnFoodBoostShown()
         {
@@ -86,7 +91,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         }
 
         public void OnFoodBoostBtnClicked() => 
-            _adsService.ShowRewardedVideo(OnFoodBoostRewardedVideoComplete, RewardType.Food);
+            _adsService.ShowRewardedVideo(OnFoodBoostRewardedVideoComplete, Placement.Food);
 
         private void OnFoodBoostChanged() => 
             UpdateFoodBoostBtnModel();
@@ -140,7 +145,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             _foodBoostBtnModel.IsAvailable = 
                 FoodBoostState.DailyFoodBoostCount > 0 && _featureUnlockSystem.IsFeatureUnlocked(Feature.FoodBoost);
             
-            _foodBoostBtnModel.IsInteractable = _adsService.IsRewardedVideoReady;
+            _foodBoostBtnModel.IsInteractable = _adsService.IsAdReady(AdType.Rewarded);
 
             FoodBoostBtnModelChanged?.Invoke(_foodBoostBtnModel);
         }

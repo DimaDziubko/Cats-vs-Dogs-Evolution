@@ -5,6 +5,6 @@
         Food,
         X2,
         Speed,
-        FreeGemsPack
+        FreeGemsPack,
     }
 }

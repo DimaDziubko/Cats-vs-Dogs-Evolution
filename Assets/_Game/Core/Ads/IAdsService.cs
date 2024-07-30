@@ -1,14 +1,16 @@
 ﻿using System;
+using _Game.Common;
 using _Game.Core.Services.Analytics;
-using Assets._Game.Core.Services.Analytics;
+using CAS;
 
-namespace Assets._Game.Core.Ads
+namespace _Game.Core.Ads
 {
     public interface IAdsService
     {
-        event Action RewardedVideoLoaded;
-        bool IsRewardedVideoReady { get; }
-        event Action<AdImpressionDto> RewardedAdImpression;
-        void ShowRewardedVideo(Action onVideoCompleted, RewardType placement);
+        event Action<AdType> VideoLoaded;
+        event Action<AdImpressionDto> AdImpression;
+        bool IsAdReady(AdType type);
+        void ShowRewardedVideo(Action onVideoCompleted, Placement placement);
+        void ShowInterstitialVideo(Placement placement);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using _Game.Common;
 using _Game.Core._GameInitializer;
+using _Game.Core.Ads;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Services.Analytics;
@@ -7,7 +9,7 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Ads;
+using CAS;
 using UnityEngine;
 
 namespace _Game.Core.Services._FreeGemsPackService
@@ -46,7 +48,7 @@ namespace _Game.Core.Services._FreeGemsPackService
         private void Init()
         {
             UpdateFreeGemsPack();
-            _adsService.RewardedVideoLoaded += OnRewardVideoLoaded;
+            _adsService.VideoLoaded += OnRewardVideoLoaded;
 
         }
 
@@ -74,24 +76,25 @@ namespace _Game.Core.Services._FreeGemsPackService
 
         void IDisposable.Dispose()
         {
-            _adsService.RewardedVideoLoaded -= OnRewardVideoLoaded;
+            _adsService.VideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
         }
 
-        private void OnRewardVideoLoaded()
+        private void OnRewardVideoLoaded(AdType type)
         {
-            UpdateFreeGemsPack();
-            NotifyUpdateFreeGemsPack();
+            if (type == AdType.Rewarded)
+            {
+                UpdateFreeGemsPack();
+                NotifyUpdateFreeGemsPack();
+            }
         }
 
-        private void NotifyUpdateFreeGemsPack()
-        {
+        private void NotifyUpdateFreeGemsPack() => 
             FreeGemsPackUpdated?.Invoke();
-        }
 
 
         void IFreeGemsPackService.OnFreeGemsPackBtnClicked() => 
-            _adsService.ShowRewardedVideo(OnRewardedVideoComplete, RewardType.FreeGemsPack);
+            _adsService.ShowRewardedVideo(OnRewardedVideoComplete, Placement.FreeGemsPack);
 
         private ProductDescription MakeProductDefinition()
         {
@@ -103,7 +106,7 @@ namespace _Game.Core.Services._FreeGemsPackService
                 AvailablePurchasesLeft = FreeGemsPackState.FreeGemPackCount,
                 MaxPurchasesCount = freeGemsPackDayConfig.DailyGemsPackCount,
                 Config = productConfig,
-                IsReady = _adsService.IsRewardedVideoReady,
+                IsReady = _adsService.IsAdReady(AdType.Rewarded),
             };
 
             return productDescription;

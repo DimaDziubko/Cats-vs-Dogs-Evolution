@@ -1,12 +1,14 @@
-﻿using _Game.Core.Services.Analytics;
+﻿using _Game.Common;
+using CAS;
 
-namespace Assets._Game.Core.Services.Analytics
+namespace _Game.Core.Services.Analytics
 {
     public class AdImpressionDto
     {
+        public AdType Type;
         public string Network;
         public double Revenue;
-        public RewardType Placement;
+        public Placement Placement;
         public string UnitId;
     }
 }

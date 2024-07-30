@@ -1,18 +1,17 @@
-﻿using _Game.Core.Services.Analytics;
+﻿using _Game.Common;
+using _Game.Core.Ads;
 using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Ads;
-using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
-using Assets._Game.Utils.Extensions;
+using CAS;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.Gameplay.GameResult.Scripts
+namespace _Game.UI.GameResult.Scripts
 {
     [RequireComponent(typeof(Canvas))]
     public class GameResultWindow : MonoBehaviour
@@ -63,9 +62,9 @@ namespace _Game.Gameplay.GameResult.Scripts
             _quitButton.onClick.AddListener(OnQuitClicked);
 
             _doubleCoinsBtn.Initialize(OnAdsBtnClicked);
-            _doubleCoinsBtn.SetInteractable(_adsService.IsRewardedVideoReady);
+            _doubleCoinsBtn.SetInteractable(_adsService.IsAdReady(AdType.Rewarded));
 
-            _adsService.RewardedVideoLoaded += OnRewardedVideoLoaded;
+            _adsService.VideoLoaded += OnVideoLoaded;
             
             _coinCounter = coinCounter;
             
@@ -80,14 +79,17 @@ namespace _Game.Gameplay.GameResult.Scripts
             await _introAnimation.Play(result);
 
             _quitButton.interactable = true;
-            _adsButton.interactable = _adsService.IsRewardedVideoReady;
+            _adsButton.interactable = _adsService.IsAdReady(AdType.Rewarded);
             
             var isExit = await _taskCompletion.Task;
             return isExit;
         }
 
-        private void OnRewardedVideoLoaded() => 
-            _doubleCoinsBtn.SetInteractable(_adsService.IsRewardedVideoReady);
+        private void OnVideoLoaded(AdType type)
+        {
+            if(type == AdType.Rewarded)
+                _doubleCoinsBtn.SetInteractable(_adsService.IsAdReady(AdType.Rewarded));
+        }
 
         private void OnQuitClicked()
         {
@@ -100,7 +102,7 @@ namespace _Game.Gameplay.GameResult.Scripts
         private void OnAdsBtnClicked()
         {
             _audioService.PlayButtonSound();
-            _adsService.ShowRewardedVideo(MultiplyRewardAndQuit, RewardType.X2);
+            _adsService.ShowRewardedVideo(MultiplyRewardAndQuit, Placement.X2);
         }
 
         private void MultiplyRewardAndQuit()
@@ -111,7 +113,7 @@ namespace _Game.Gameplay.GameResult.Scripts
 
         private void Cleanup()
         {
-            _adsService.RewardedVideoLoaded -= OnRewardedVideoLoaded;
+            _adsService.VideoLoaded -= OnVideoLoaded;
             _quitButton.onClick.RemoveAllListeners();
             _doubleCoinsBtn.Cleanup();
         }

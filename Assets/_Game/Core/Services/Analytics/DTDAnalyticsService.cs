@@ -1,9 +1,9 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
+using _Game.Core.Ads;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Ads;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -41,7 +41,7 @@ namespace _Game.Core.Services.Analytics
             TimelineState.NextBattleOpened += OnNextBattleOpened;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             TimelineState.OpenedUnit += OnUnitOpened;
-            _adsService.RewardedAdImpression += TrackRewardedVideoAdImpression;
+            _adsService.AdImpression += TrackRewardedVideoAdImpression;
             TutorialState.StepsCompletedChanged += OnStepCompleted;
             RaceState.Changed += OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
@@ -59,7 +59,7 @@ namespace _Game.Core.Services.Analytics
             TimelineState.NextBattleOpened -= OnNextBattleOpened;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
             TimelineState.OpenedUnit -= OnUnitOpened;
-            _adsService.RewardedAdImpression -= TrackRewardedVideoAdImpression;
+            _adsService.AdImpression -= TrackRewardedVideoAdImpression;
             TutorialState.StepsCompletedChanged -= OnStepCompleted;
             RaceState.Changed -= OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using _Game.Common;
 using Assets._Game.Common;
 using UnityEngine;
 

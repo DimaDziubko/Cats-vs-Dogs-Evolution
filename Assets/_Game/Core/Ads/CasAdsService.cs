@@ -1,11 +1,10 @@
 ﻿using System;
+using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Ads;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services.Analytics;
 using CAS;
 using UnityEngine;
 
@@ -13,32 +12,34 @@ namespace _Game.Core.Ads
 {
     public class CasAdsService : IAdsService, IDisposable
     {
-        public event Action<AdImpressionDto> RewardedAdImpression;
-        public event Action RewardedVideoLoaded;
-
-        private bool _isRewardedVideoReady;
-        public bool IsRewardedVideoReady => _isRewardedVideoReady && IsInternetConnected();
-
+        public event Action<AdImpressionDto> AdImpression;
+        public event Action<AdType> VideoLoaded;
+        
         private readonly IGameInitializer _gameInitializer;
-        private readonly IPauseManager _pauseManager;
         private readonly IMyLogger _logger;
-        private readonly IUserContainer _userContainer;
+
+        private readonly CasRewardAdService _rewardAdsService;
+        private readonly CasInterstitialAdService _interstitialAdsService;
 
         private IMediationManager _manager;
-
-        private Action _onVideoCompleted;
-        private RewardType _placement;
 
         public CasAdsService(
             IMyLogger logger,
             IPauseManager pauseManager,
-            IGameInitializer gameInitializer,
-            IUserContainer userContainer)
+            IUserContainer userContainer,
+            IGameInitializer gameInitializer
+            )
         {
-            _logger = logger;
-            _pauseManager = pauseManager;
+            _rewardAdsService = new CasRewardAdService(logger, pauseManager, userContainer);
+            _interstitialAdsService = new CasInterstitialAdService(logger, userContainer);
             _gameInitializer = gameInitializer;
-            _userContainer = userContainer;
+            _logger = logger;
+
+            _rewardAdsService.AdImpression += OnAdImpression;
+            _rewardAdsService.VideoLoaded += OnVideoLoaded;
+            _interstitialAdsService.AdImpression += OnAdImpression;
+            _interstitialAdsService.VideoLoaded += OnVideoLoaded;
+            
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -47,86 +48,64 @@ namespace _Game.Core.Ads
             _manager = MobileAds.BuildManager()
                 .WithInitListener((success, error) =>
                 {
-                    _manager.OnRewardedAdLoaded += OnRewardedAdLoaded;
-                    _manager.OnRewardedAdFailedToLoad += OnRewardedAdFailedToLoad;
-                    _manager.OnRewardedAdCompleted += OnRewardedAdCompleted;
-                    _manager.OnRewardedAdClosed += OnRewardedAdClosed;
-                    _manager.OnRewardedAdImpression += OnRewardedAdImpression;
-                    _manager.LoadAd(AdType.Rewarded);
-                    Debug.Log("success: " + success);
+                    _rewardAdsService.Register(_manager);
+                    _interstitialAdsService.Register(_manager);
+                    _logger.Log("success: " + success);
+
                 }).Initialize();
+            
         }
 
         public void Dispose()
         {
-            _manager.OnRewardedAdLoaded -= OnRewardedAdLoaded;
-            _manager.OnRewardedAdFailedToLoad -= OnRewardedAdFailedToLoad;
-            _manager.OnRewardedAdCompleted -= OnRewardedAdCompleted;
-            _manager.OnRewardedAdClosed -= OnRewardedAdClosed;
-            _manager.OnRewardedAdImpression -= OnRewardedAdImpression;
+            _rewardAdsService.UnRegister(_manager);
+            _interstitialAdsService.UnRegister(_manager);
+            
+            _rewardAdsService.AdImpression -= OnAdImpression;
+            _rewardAdsService.VideoLoaded -= OnVideoLoaded;
+            _interstitialAdsService.AdImpression -= OnAdImpression;
+            _interstitialAdsService.VideoLoaded -= OnVideoLoaded;
+            
             _gameInitializer.OnPostInitialization -= Init;
         }
 
-        public void ShowRewardedVideo(Action onVideoCompleted, RewardType placement)
+
+        public bool IsAdReady(AdType type)
         {
-            if (!IsRewardedVideoReady)
+            if (!IsInternetConnected()) return false;
+            
+            switch (type)
             {
-                _logger.LogWarning("Attempted to show rewarded video before it was ready.");
-                return;
+                case AdType.Banner:
+                    break;
+                case AdType.Interstitial:
+                    return _interstitialAdsService.IsVideoReady;
+                case AdType.Rewarded:
+                    return _rewardAdsService.IsRewardedVideoReady;
+                case AdType.AppOpen:
+                    break;
+                case AdType.Native:
+                    break;
+                case AdType.None:
+                    break;
             }
             
-            _pauseManager.SetPaused(true);
-            _manager.ShowAd(AdType.Rewarded);
-            _onVideoCompleted = onVideoCompleted;
-            _placement = placement;
+            return false;
         }
+
+        public void ShowRewardedVideo(Action onVideoCompleted, Placement placement) => 
+            _rewardAdsService.ShowRewardedVideo(onVideoCompleted, placement);
+
+        public void ShowInterstitialVideo(Placement placement) => 
+            _interstitialAdsService.ShowVideo(placement);
 
         private bool IsInternetConnected() => 
             Application.internetReachability != NetworkReachability.NotReachable;
 
-        private void OnRewardedAdLoaded()
-        {
-            _logger.Log($"CAS Ad loaded {_manager.IsReadyAd(AdType.Rewarded)}");
-            _isRewardedVideoReady = _manager.IsReadyAd(AdType.Rewarded);
-            RewardedVideoLoaded?.Invoke();
-        }
+        private void OnVideoLoaded(AdType type) => 
+            VideoLoaded?.Invoke(type);
 
-        private void OnRewardedAdFailedToLoad(AdError error)
-        {
-            _logger.LogError($"CAS OnRewardedAdFailedToLoad {error} ");
-            _isRewardedVideoReady = _manager.IsReadyAd(AdType.Rewarded);
-            RewardedVideoLoaded?.Invoke();
-            _manager.LoadAd(AdType.Rewarded);
-        }
-
-        private void OnRewardedAdCompleted()
-        {
-            if(_pauseManager.IsPaused) _pauseManager.SetPaused(false);
-            _onVideoCompleted?.Invoke();
-            _onVideoCompleted = null;
-            _manager.LoadAd(AdType.Rewarded);
-            
-            _userContainer.AnalyticsStateHandler.AddAdsReviewed();
-        }
-        
-        
-        private void OnRewardedAdImpression(AdMetaData meta)
-        {
-            AdImpressionDto adImpressionDto = new AdImpressionDto()
-            {
-                Network = meta.network.ToString(),
-                Placement = _placement,
-                Revenue = meta.revenue,
-                UnitId = meta.identifier
-            };
-            
-            RewardedAdImpression?.Invoke(adImpressionDto);
-        }
-        
-        private void OnRewardedAdClosed()
-        {
-            _logger.LogWarning($"CAS OnRewardedVideoClosed");
-            _manager.LoadAd(AdType.Rewarded);
-        }
+        private void OnAdImpression(AdImpressionDto dto) => 
+            AdImpression?.Invoke(dto);
     }
 }

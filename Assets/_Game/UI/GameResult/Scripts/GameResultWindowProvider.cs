@@ -1,7 +1,7 @@
-﻿using _Game.Core.AssetManagement;
-using _Game.Gameplay.GameResult.Scripts;
+﻿using _Game.Core.Ads;
+using _Game.Core.AssetManagement;
+using _Game.UI.GameResult.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Ads;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
