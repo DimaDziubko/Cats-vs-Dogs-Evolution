@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core.Ads;
 using _Game.Core.Data;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
@@ -81,6 +82,7 @@ namespace _Game.Core.Debugger
         public UserContainer UserContainer { get; set; }
         public BattleSpeedService BattleSpeedService { get; set; }
         public SpeedBoostService SpeedBoostService { get; set; }
+        public CasAdsService CasAdsService { get; set; }
 
         [ShowInInspector, ReadOnly]
         public Dictionary<int, EnvironmentData> EnvironmentData =>
@@ -100,6 +102,9 @@ namespace _Game.Core.Debugger
         
         [ShowInInspector, ReadOnly]
         public BattleSpeedBtnModel BattleSpeedBtnModel => BattleSpeedService.BattleSpeedBtnModel;
+
+        [ShowInInspector, ReadOnly] 
+        public bool IsTimeForInterstitial => CasAdsService.IsTimeForInterstitial;
     }
     
 
@@ -110,5 +115,6 @@ namespace _Game.Core.Debugger
         UserContainer UserContainer { get; set; }
         BattleSpeedService BattleSpeedService { get; set; }
         SpeedBoostService SpeedBoostService { get; set; }
+        CasAdsService CasAdsService { get; set; }
     }
 }

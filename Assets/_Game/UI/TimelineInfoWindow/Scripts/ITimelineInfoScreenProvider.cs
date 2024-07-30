@@ -5,6 +5,6 @@ namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
     public interface ITimelineInfoScreenProvider
     {
-        UniTask<Disposable<global::_Game.UI.TimelineInfoWindow.Scripts.TimelineInfoWindow>> Load();
+        UniTask<Disposable<global::_Game.UI.TimelineInfoWindow.Scripts.TimelineInfoScreen>> Load();
     }
 }

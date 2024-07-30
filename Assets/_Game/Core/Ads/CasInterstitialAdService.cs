@@ -91,11 +91,11 @@ namespace _Game.Core.Ads
         }
 
         private void OnInterstitialAdClicked() => 
-            _logger.LogError($"CAS OnInterstitialAdClicked");
+            _logger.Log($"CAS OnInterstitialAdClicked");
 
 
         private void OnInterstitialAdClosed() => 
-            _logger.LogError($"CAS OnInterstitialAdClosed");
+            _logger.Log($"CAS OnInterstitialAdClosed");
 
         public void ShowVideo(Placement placement)
         {

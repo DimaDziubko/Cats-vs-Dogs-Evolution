@@ -22,12 +22,24 @@ namespace _Game.Utils.Extensions
                 TimelinesCount = ExtractTimelinesCount(jsonData),
                 ShopConfig = ExtractShopConfig(jsonData),
                 FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
+                AdsConfig = ExtractAdsConfig(jsonData)
             };
             
             //TODO Delete later
             Debug.Log("GAME CONFIG PARSED SUCCESSFULLY");
     
             return config;
+        }
+
+        private static AdsConfig ExtractAdsConfig(JObject jsonData)
+        {
+            var adsConfigToken = jsonData[Constants.ConfigKeys.ADS_CONFIG];
+            if (adsConfigToken == null)
+            {
+                Debug.LogError("FreeGemsPackDayConfig is null");
+                return null;
+            }
+            return adsConfigToken.ToObject<AdsConfig>();
         }
 
         private static FreeGemsPackDayConfig ExtractFreeGemsPackDayConfig(JObject jsonData)

@@ -79,6 +79,9 @@ namespace _Game.Utils
 
         public sealed class ConfigKeys
         {
+            //Ads
+            public const string ADS_CONFIG = "AdsConfig";
+
             //FreeGemsPackDayConfig
             public const string FREE_GEMS_PACK_DAY_CONFIG = "FreeGemsPackDayConfig";
 

@@ -1,5 +1,6 @@
 ﻿using _Game.Core.Configs.Providers;
 using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Configs.Repositories.Common;
@@ -22,7 +23,13 @@ namespace _Game.Core.Installers.Core
             BindBattleConfigRepository();
             BindEconomyConfigRepository();
             BindShopConfigRepository();
+            BindAdsConfigRepository();
         }
+
+        private void BindAdsConfigRepository() => 
+            Container
+                .BindInterfacesAndSelfTo<AdsConfigRepository>()
+                .AsSingle();
 
         private void BindConfigProviders()
         {

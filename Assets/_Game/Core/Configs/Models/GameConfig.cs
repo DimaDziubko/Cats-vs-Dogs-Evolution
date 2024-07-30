@@ -16,8 +16,17 @@ namespace _Game.Core.Configs.Models
         public List<BattleSpeedConfig> BattleSpeedConfigs;
         public ShopConfig ShopConfig;
         public FreeGemsPackDayConfig FreeGemsPackDayConfig;
+        public AdsConfig AdsConfig;
     }
 
+    public class AdsConfig
+    {
+        public int Id;
+        public bool IsInterstitialActive;
+        public float InterstitialDelay;
+        public int InterstitialBattleTreshold;
+    }
+    
     public class ShopConfig
     {
         public List<ProductConfig> Products;

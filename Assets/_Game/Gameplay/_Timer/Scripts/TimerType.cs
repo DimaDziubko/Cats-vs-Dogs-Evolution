@@ -1,7 +1,8 @@
-﻿namespace Assets._Game.Gameplay._Timer.Scripts
+﻿namespace _Game.Gameplay._Timer.Scripts
 {
     public enum TimerType
     {
-        BattleSpeed
+        BattleSpeed,
+        InterstitialAdDelay
     }
 }

@@ -5,6 +5,7 @@ using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
 using _Game.UI.RateGame.Scripts;
+using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Gameplay._Tutorial.Scripts;

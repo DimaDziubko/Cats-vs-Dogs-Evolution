@@ -4,7 +4,7 @@ namespace _Game.Core.AssetManagement
     {
         public const string MINI_SHOP = "MiniShop";
         public const string RACE_SELECTION_WINDOW = "RaceSelectionWindow";
-        public const string TIMELINE_INFO_WINDOW = "TimelineInfoWindow";
+        public const string TIMELINE_INFO_SCREEN = "TimelineInfoWindow";
         public const string UPGRADE_AND_EVOLUTION_WINDOW = "UpgradeAndEvolutionWindow";
         public const string START_BATTLE_WINDOW = "StartBattleWindow";
         public const string MAIN_MENU = "MainMenu";

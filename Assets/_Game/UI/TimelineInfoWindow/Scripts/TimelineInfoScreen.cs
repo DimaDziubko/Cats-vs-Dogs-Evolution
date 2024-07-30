@@ -1,10 +1,13 @@
 using System;
+using _Game.Common;
+using _Game.Core.Ads;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
+using CAS;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Pathfinding.ECS.RVO;
@@ -13,7 +16,7 @@ using UnityEngine.UI;
 
 namespace _Game.UI.TimelineInfoWindow.Scripts
 {
-    public class TimelineInfoWindow : MonoBehaviour
+    public class TimelineInfoScreen : MonoBehaviour
     {
         public event Action Opened;
 
@@ -35,7 +38,9 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
         private IAudioService _audioService;
         private ITimelineInfoPresenter _timelineInfoPresenter;
         private IEvolutionPresenter _evolutionPresenter;
+        private IAdsService _adsService;
         private IMyLogger _logger;
+
 
         //Animation data
         private int _currentAge;
@@ -49,7 +54,8 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             ITimelineInfoPresenter evolutionService,
             IEvolutionPresenter evolutionPresenter,
             IMyLogger logger,
-            IWorldCameraService cameraService)
+            IWorldCameraService cameraService,
+            IAdsService adsService)
         {
             _audioService = audioService;
             _timelineInfoPresenter = evolutionService;
@@ -58,6 +64,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
             _canvas.worldCamera = cameraService.UICameraOverlay;
             //Show();
             _exitBtn.interactable = false;
+            _adsService = adsService;
         }
 
 
@@ -144,6 +151,7 @@ namespace _Game.UI.TimelineInfoWindow.Scripts
                 {
                     _evolutionPresenter.OpenNextAge();
                     _exitBtn.interactable = true;
+                    if(_adsService.IsAdReady(AdType.Interstitial)) _adsService.ShowInterstitialVideo(Placement.Evolution);
                 });
             });
         }

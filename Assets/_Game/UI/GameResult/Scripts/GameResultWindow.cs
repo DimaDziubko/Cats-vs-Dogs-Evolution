@@ -97,6 +97,7 @@ namespace _Game.UI.GameResult.Scripts
             _taskCompletion.TrySetResult(true);
             _canvas.enabled = false;
             Cleanup();
+            if(_adsService.IsAdReady(AdType.Interstitial)) _adsService.ShowInterstitialVideo(Placement.GameResult);
         }
 
         private void OnAdsBtnClicked()

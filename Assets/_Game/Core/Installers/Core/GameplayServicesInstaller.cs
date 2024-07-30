@@ -44,9 +44,9 @@ namespace _Game.Core.Installers.Core
             BindUpgradesCalculator();
             BindUpgradesServices();
             BindEvolutionService();
+            BindTimerService();
             BindAdsService();
             BindFoodBoostService();
-            BindTimerService();
             BindSpeedBoostService();
             BindBattleSpeedService();
             BindAnalyticsService();

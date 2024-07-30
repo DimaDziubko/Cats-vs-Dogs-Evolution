@@ -7,6 +7,8 @@
         Speed,
         FreeGemsPack,
         GameResult,
-        Shop
+        Evolution,
+        Shop,
+        BattleTreshold
     }
 }
