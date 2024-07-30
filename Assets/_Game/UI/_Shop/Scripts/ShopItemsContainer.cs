@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.UI.Factory;
+using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 
@@ -22,11 +23,13 @@ namespace _Game.UI._Shop.Scripts
         private IUIFactory _uiFactory;
         private IShopPresenter _shopPresenter;
         private IAudioService _audioService;
+        private IMyLogger _logger;
 
         public void Construct(
             IShopPresenter shopPresenter, 
             IUIFactory uiFactory,
-            IAudioService audioService)
+            IAudioService audioService,
+            IMyLogger logger)
         {
             _parents = new Dictionary<ShopItemViewType, Transform>
             {
@@ -37,6 +40,7 @@ namespace _Game.UI._Shop.Scripts
             _uiFactory = uiFactory;
             _shopPresenter = shopPresenter;
             _audioService = audioService;
+            _logger = logger;
         }
 
         private void Init()
@@ -86,8 +90,8 @@ namespace _Game.UI._Shop.Scripts
             
             if (_itemsType1.Count > 0) _delimiters[0].Show();
             if (_itemsType2.Count > 0) _delimiters[1].Show();
-            
-            Debug.Log("Shop items updated");
+
+            _logger.Log("Shop items updated");
             Init();
         }
 

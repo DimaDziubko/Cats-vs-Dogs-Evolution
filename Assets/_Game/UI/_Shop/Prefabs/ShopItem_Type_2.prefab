@@ -117,7 +117,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3955899150365875206
 CanvasRenderer:
@@ -171,10 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _majorProductIconHolder: {fileID: 4048259895162112697}
   _minorProductIconHolder: {fileID: 562673497257984187}
-  _currencyIconHolder: {fileID: 0}
-  _price: {fileID: 0}
   _quantity: {fileID: 4473953636255974141}
   _description: {fileID: 0}
+  _valueLabel: {fileID: 0}
   _button: {fileID: 6560337757632909071}
 --- !u!1 &8401927853302642452
 GameObject:

@@ -2,7 +2,6 @@
 using _Game.UI.Common.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -15,7 +14,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
     {
         public event Action<ButtonState> ButtonStateChanged;
         public event Action<UpgradeItemType, float> Upgrade;
-
+        public event Action TryUpgrade;
+        
         private IAudioService _audioService;
         
         [SerializeField] private Image _itemIconHolder;
@@ -39,6 +39,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private void Subscribe()
         {
             _transactionButton.Click += OnTransactionButtonClick;
+            _transactionButton.InactiveClick += OnInactiveButtonClick;
             _transactionButton.ButtonStateChanged += OnButtonStateChanged;
         }
 
@@ -50,6 +51,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private void Unsubscribe()
         {
             _transactionButton.Click -= OnTransactionButtonClick;
+            _transactionButton.InactiveClick -= OnInactiveButtonClick;
             _transactionButton.ButtonStateChanged += OnButtonStateChanged;
         }
 
@@ -81,6 +83,9 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             PlayButtonSound();
             Upgrade?.Invoke(_type, _price);
         }
+
+        private void OnInactiveButtonClick() => 
+            TryUpgrade?.Invoke();
 
         private void PlayButtonSound() => 
             _audioService.PlayButtonSound();

@@ -1,10 +1,10 @@
 using System;
+using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Header.Scripts;
-using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
@@ -34,16 +34,19 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private IEvolutionPresenter _evolutionPresenter;
         private IHeader _header;
         private IAudioService _audioService;
-        private ITimelineInfoWindowProvider _timelineInfoProvider;
+        private ITimelineInfoScreenProvider _timelineInfoProvider;
+        private IMiniShopProvider _miniShopProvider;
 
         public void Construct(
             IEvolutionPresenter evolutionPresenter,
             IAudioService audioService,
-            ITimelineInfoWindowProvider timelineInfoProvider)
+            ITimelineInfoScreenProvider timelineInfoProvider,
+            IMiniShopProvider miniShopProvider)
         {
             _audioService = audioService;
             _evolutionPresenter = evolutionPresenter;
             _timelineInfoProvider = timelineInfoProvider;
+            _miniShopProvider = miniShopProvider;
         }
     
         public void Show()
@@ -62,6 +65,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void Subscribe()
         {
             _evolveButton.Click += OnEvolveButtonClick;
+            _evolveButton.InactiveClick += OnInactiveButtonClick;
             EvolutionTabOpened += _evolutionPresenter.OnEvolutionTabOpened;
             _evolutionPresenter.EvolutionModelUpdated += OnEvolutionViewModelUpdated;
         }
@@ -69,8 +73,16 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void Unsubscribe()
         {
             _evolveButton.Click -= OnEvolveButtonClick;
+            _evolveButton.InactiveClick -= OnInactiveButtonClick;
             EvolutionTabOpened -= _evolutionPresenter.OnEvolutionTabOpened;
             _evolutionPresenter.EvolutionModelUpdated -= OnEvolutionViewModelUpdated;
+        }
+
+        private async void OnInactiveButtonClick()
+        {
+            var popup = await _miniShopProvider.Load();
+            bool isExit = await popup.Value.ShowAndAwaitForDecision();
+            if(isExit) popup.Dispose();
         }
 
         public void Hide()

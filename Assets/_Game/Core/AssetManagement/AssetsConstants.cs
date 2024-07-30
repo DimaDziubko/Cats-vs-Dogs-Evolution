@@ -2,6 +2,7 @@ namespace _Game.Core.AssetManagement
 {
     public static class AssetsConstants
     {
+        public const string MINI_SHOP = "MiniShop";
         public const string RACE_SELECTION_WINDOW = "RaceSelectionWindow";
         public const string TIMELINE_INFO_WINDOW = "TimelineInfoWindow";
         public const string UPGRADE_AND_EVOLUTION_WINDOW = "UpgradeAndEvolutionWindow";

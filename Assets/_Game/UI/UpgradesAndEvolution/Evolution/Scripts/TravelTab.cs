@@ -23,18 +23,18 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private ITimelineTravelPresenter _timelineTravelPresenter;
         private IAudioService _audioService;
-        private ITimelineInfoWindowProvider _timelineInfoWindowProvider;
+        private ITimelineInfoScreenProvider _timelineInfoScreenProvider;
         private IWorldCameraService _cameraService;
 
         public void Construct(
             ITimelineTravelPresenter timelineTravelPresenter,
             IAudioService audioService,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITimelineInfoScreenProvider timelineInfoScreenProvider,
             IWorldCameraService cameraService)
         {
             _audioService = audioService;
             _timelineTravelPresenter = timelineTravelPresenter;
-            _timelineInfoWindowProvider = timelineInfoWindowProvider;
+            _timelineInfoScreenProvider = timelineInfoScreenProvider;
             _cameraService = cameraService;
         }
         
@@ -95,7 +95,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             _timelineTravelPresenter.OpenNextTimeline();
             
             var travelAnimationScreenProvider = new TravelAnimationScreenProvider(_cameraService.UICameraOverlay);
-            var window = await _timelineInfoWindowProvider.Load();
+            var window = await _timelineInfoScreenProvider.Load();
             var screen = await travelAnimationScreenProvider.Load();
 
             bool isAnimationCompleted = await screen.Value.Play();

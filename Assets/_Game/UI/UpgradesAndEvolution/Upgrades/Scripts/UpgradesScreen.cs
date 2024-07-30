@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._UpgradesChecker;
+using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
-using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.Services.Audio;
@@ -16,7 +16,7 @@ using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
-    public class UpgradesWindow : MonoBehaviour, IUIScreen
+    public class UpgradesScreen : MonoBehaviour, IUIScreen
     {
         public event Action Opened;
         public Screen Screen => Screen.Upgrades;
@@ -35,6 +35,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private IAudioService _audioService;
         private ITutorialManager _tutorialManager;
         private IUpgradesAvailabilityChecker _upgradesChecker;
+        private IMiniShopProvider _miniShopProvider;
 
 
         public void Construct(
@@ -43,7 +44,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             IUnitUpgradesPresenter unitUpgradesPresenter,
             IAudioService audioService,
             ITutorialManager tutorialManager,
-            IUpgradesAvailabilityChecker upgradesChecker)
+            IUpgradesAvailabilityChecker upgradesChecker,
+            IMiniShopProvider miniShopProvider)
         {
             _upgradeItemPresenter = upgradeItemPresenter;
             _header = header;
@@ -51,6 +53,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _audioService = audioService;
             _tutorialManager = tutorialManager;
             _upgradesChecker = upgradesChecker;
+            _miniShopProvider = miniShopProvider;
         }
 
         public void Show()
@@ -76,16 +79,19 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             foreach (var unitItem in _unitItems)
             {
                 unitItem.Upgrade += OnUnitItemUpgrade;
+                unitItem.TryUpgrade += OnTryUpgrade;
             }
             
             _foodProduction.Upgrade += OnItemUpgrade;
-            _foodProduction.ButtonStateChanged += OnFoodProductionButtonStateChanged;
             _baseHealth.Upgrade += OnItemUpgrade;
-            
+            _foodProduction.TryUpgrade += OnTryUpgrade;
+            _baseHealth.TryUpgrade += OnTryUpgrade;
+            _foodProduction.ButtonStateChanged += OnFoodProductionButtonStateChanged;
+
             _unitUpgradesPresenter.UpgradeUnitItemsUpdated += UpdateUnitItems;
             _upgradeItemPresenter.UpgradeItemUpdated += UpdateUpgradeItemItem;
 
-            Opened += OnUpgradesWindowOpened;
+            Opened += OnUpgradesScreenOpened;
         }
 
         public void Hide()
@@ -109,14 +115,24 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             foreach (var item in _unitItems)
             {
                 item.Upgrade -= OnUnitItemUpgrade;
+                item.TryUpgrade -= OnTryUpgrade;
                 item.Cleanup();
             }
 
             _baseHealth.Upgrade -= OnItemUpgrade;
             _foodProduction.Upgrade -= OnItemUpgrade;
+            _foodProduction.TryUpgrade -= OnTryUpgrade;
+            _baseHealth.TryUpgrade -= OnTryUpgrade;
             _foodProduction.ButtonStateChanged -= OnFoodProductionButtonStateChanged;
 
-            Opened -= OnUpgradesWindowOpened;
+            Opened -= OnUpgradesScreenOpened;
+        }
+
+        private async void OnTryUpgrade()
+        {
+            var popup = await _miniShopProvider.Load();
+            var isExit =  await popup.Value.ShowAndAwaitForDecision();
+            if(isExit) popup.Dispose();
         }
 
         private void OnFoodProductionButtonStateChanged(ButtonState state)
@@ -153,7 +169,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             }
         }
 
-        private void OnUpgradesWindowOpened()
+        private void OnUpgradesScreenOpened()
         {
             _unitUpgradesPresenter.OnUpgradesWindowOpened();
             _upgradeItemPresenter.OnUpgradesScreenOpened();

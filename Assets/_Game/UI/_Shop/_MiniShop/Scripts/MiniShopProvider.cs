@@ -1,5 +1,7 @@
 ﻿using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
+using _Game.Core.Services.UserContainer;
+using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.AssetManagement;
@@ -9,9 +11,9 @@ using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace _Game.UI._Shop.Scripts
+namespace _Game.UI._Shop._MiniShop.Scripts
 {
-    public class ShopProvider : LocalAssetLoader, IShopProvider
+    public class MiniShopProvider : LocalAssetLoader, IMiniShopProvider
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
@@ -20,35 +22,33 @@ namespace _Game.UI._Shop.Scripts
         private readonly IShopPresenter _shopPresenter;
         private readonly IUpgradesAvailabilityChecker _checker;
         private readonly IMyLogger _logger;
+        private readonly IUserContainer _userContainer;
 
-        public ShopProvider(
+        public MiniShopProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
-            IHeader header,
             IUIFactory uiFactory,
             IShopPresenter shopPresenter,
-            IUpgradesAvailabilityChecker checker, 
-            IMyLogger logger)
+            IMyLogger logger, 
+            IUserContainer userContainer)
         {
             _cameraService = cameraService;
             _audioService = audioService;
-            _header = header;
             _uiFactory = uiFactory;
             _shopPresenter = shopPresenter;
-            _checker = checker;
             _logger = logger;
+            _userContainer = userContainer;
         }
-        public async UniTask<Disposable<Shop>> Load()
+        public async UniTask<Disposable<MiniShop>> Load()
         {
-            var popup = await LoadDisposable<Shop>(AssetsConstants.SHOP);
+            var popup = await LoadDisposable<MiniShop>(AssetsConstants.MINI_SHOP);
             popup.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
-                _header,
                 _uiFactory,
                 _shopPresenter,
-                _checker,
-                _logger);
+                _logger,
+                _userContainer);
             return popup;
         }
     }

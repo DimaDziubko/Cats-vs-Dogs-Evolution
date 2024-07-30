@@ -2,10 +2,8 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
 using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.UI._Shop._MiniShop.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.DataPresenters.Evolution;
@@ -18,7 +16,7 @@ using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Scripts
 {
     public class UpgradeAndEvolutionScreenProvider : LocalAssetLoader, IUpgradeAndEvolutionScreenProvider
     {
@@ -31,11 +29,12 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
         private readonly IEvolutionPresenter _evolutionPresenter;
         private readonly IUnitUpgradesPresenter _unitUpgradesPresenter;
         private readonly IMyLogger _logger;
-        private readonly ITimelineInfoWindowProvider _timelineInfoWindowProvider;
+        private readonly ITimelineInfoScreenProvider _timelineInfoScreenProvider;
         private readonly ITutorialManager _tutorialManager;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly ITimelineTravelPresenter _timelineTravelPresenter;
+        private readonly IMiniShopProvider _miniShopProvider;
 
         public UpgradeAndEvolutionScreenProvider(
             IWorldCameraService cameraService,
@@ -45,11 +44,12 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
             IEvolutionPresenter evolutionPresenter,
             IUnitUpgradesPresenter unitUpgradesPresenter,
             IMyLogger logger,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITimelineInfoScreenProvider timelineInfoScreenProvider,
             ITutorialManager tutorialManager,
             IFeatureUnlockSystem featureUnlockSystem,
             IUpgradesAvailabilityChecker upgradesChecker, 
-            ITimelineTravelPresenter timelineTravelPresenter)
+            ITimelineTravelPresenter timelineTravelPresenter,
+            IMiniShopProvider miniShopProvider)
         {
             _logger = logger;
             
@@ -59,11 +59,12 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
             _upgradeItemPresenter = upgradeItemPresenter;
             _evolutionPresenter = evolutionPresenter;
             _unitUpgradesPresenter = unitUpgradesPresenter;
-            _timelineInfoWindowProvider = timelineInfoWindowProvider;
+            _timelineInfoScreenProvider = timelineInfoScreenProvider;
             _tutorialManager = tutorialManager;
             _featureUnlockSystem = featureUnlockSystem;
             _upgradesChecker = upgradesChecker;
             _timelineTravelPresenter = timelineTravelPresenter;
+            _miniShopProvider = miniShopProvider;
         }
         public async UniTask<Disposable<UpgradeAndEvolutionScreen>> Load()
         {
@@ -78,10 +79,11 @@ namespace Assets._Game.UI.UpgradesAndEvolution.Scripts
                 _timelineTravelPresenter,
                 _unitUpgradesPresenter,
                 _logger,
-                _timelineInfoWindowProvider,
+                _timelineInfoScreenProvider,
                 _tutorialManager,
                 _featureUnlockSystem,
-                _upgradesChecker);
+                _upgradesChecker, 
+                _miniShopProvider);
             return popup;
         }
     }

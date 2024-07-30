@@ -10,7 +10,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
-    public class TimelineInfoWindowProvider : LocalAssetLoader, ITimelineInfoWindowProvider
+    public class TimelineInfoScreenProvider : LocalAssetLoader, ITimelineInfoScreenProvider
     {
         private readonly IAudioService _audioService;
         private readonly ITimelineInfoPresenter _timelineInfoPresenter;
@@ -18,7 +18,7 @@ namespace Assets._Game.UI.TimelineInfoWindow.Scripts
         private readonly IMyLogger _logger;
         private readonly IWorldCameraService _cameraService;
 
-        public TimelineInfoWindowProvider(
+        public TimelineInfoScreenProvider(
             IAudioService audioService,
             ITimelineInfoPresenter timelineInfoPresenter,
             IEvolutionPresenter evolutionPresenter, 

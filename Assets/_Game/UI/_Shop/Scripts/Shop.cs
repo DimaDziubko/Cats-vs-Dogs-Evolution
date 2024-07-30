@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core._UpgradesChecker;
 using _Game.UI.Factory;
+using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
@@ -29,13 +30,14 @@ namespace _Game.UI._Shop.Scripts
             IHeader header,
             IUIFactory uiFactory,
             IShopPresenter shopPresenter,
-            IUpgradesAvailabilityChecker checker)
+            IUpgradesAvailabilityChecker checker, 
+            IMyLogger logger)
         {
             _canvas.worldCamera = uICamera;
             _header = header;
             _shopPresenter = shopPresenter;
             _checker = checker;
-            _container.Construct(shopPresenter, uiFactory, audioService);
+            _container.Construct(shopPresenter, uiFactory, audioService, logger);
         }
 
         public void Show()

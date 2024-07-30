@@ -12,7 +12,6 @@ using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 

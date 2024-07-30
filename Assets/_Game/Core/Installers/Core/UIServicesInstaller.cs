@@ -1,9 +1,11 @@
 ﻿using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionWindow.Scripts;
+using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
 using _Game.UI.RateGame.Scripts;
+using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
@@ -11,7 +13,6 @@ using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Settings.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Utils.Popups;
 using UnityEngine;
 using Zenject;
@@ -30,7 +31,8 @@ namespace _Game.Core.Installers.Core
             BindAlertPopupProvider();
             BindTutorialPointerView();
             BindTutorialController();
-            BindShopPopupProvider();
+            BindShopProvider();
+            BindMiniShopProvider();
             BindLoadingScreenProvider();
             BindISettingsPopupProvider();
             BindMainMenuProvider();
@@ -70,10 +72,17 @@ namespace _Game.Core.Installers.Core
                 .To<AlertPopupProvider>()
                 .AsSingle();
 
-        private void BindShopPopupProvider() =>
+        private void BindShopProvider() =>
             Container.Bind<IShopProvider>()
                 .To<ShopProvider>()
                 .AsSingle();
+
+        private void BindMiniShopProvider()
+        {
+            Container.Bind<IMiniShopProvider>()
+                .To<MiniShopProvider>()
+                .AsSingle();
+        }
 
         private void BindLoadingScreenProvider() =>
             Container.Bind<ILoadingScreenProvider>()
@@ -107,7 +116,7 @@ namespace _Game.Core.Installers.Core
 
         private void BindTimelineInfoWindowProvider() => 
             Container
-                .BindInterfacesAndSelfTo<TimelineInfoWindowProvider>()
+                .BindInterfacesAndSelfTo<TimelineInfoScreenProvider>()
                 .AsSingle();
 
         private void BindFactionSelectionWindowProvider() =>

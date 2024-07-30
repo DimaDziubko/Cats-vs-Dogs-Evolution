@@ -3,7 +3,6 @@ using _Game.UI.Common.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +12,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
     public class UpgradeUnitItemView : MonoBehaviour
     {
         public event Action<UnitType, float> Upgrade;
+        public event Action TryUpgrade;
         
         [SerializeField] private Image _backgroundHolder;
         
@@ -41,11 +41,20 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _transactionButton.Init();
         }
 
-        private void Subscribe() => 
+        private void Subscribe()
+        {
             _transactionButton.Click += OnTransactionButtonClick;
+            _transactionButton.InactiveClick += OnInactiveButtonClick;
+        }
 
-        private void Unsubscribe() => 
+        private void Unsubscribe()
+        {
             _transactionButton.Click -= OnTransactionButtonClick;
+            _transactionButton.InactiveClick -= OnInactiveButtonClick;
+        }
+
+        private void OnInactiveButtonClick() => 
+            TryUpgrade?.Invoke();
 
         private void OnTransactionButtonClick()
         {

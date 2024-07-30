@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Assets._Game.UI.TimelineInfoWindow.Scripts
 {
-    public interface ITimelineInfoWindowProvider
+    public interface ITimelineInfoScreenProvider
     {
         UniTask<Disposable<global::_Game.UI.TimelineInfoWindow.Scripts.TimelineInfoWindow>> Load();
     }

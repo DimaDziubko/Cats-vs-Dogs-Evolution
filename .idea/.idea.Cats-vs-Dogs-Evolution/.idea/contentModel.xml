@@ -847,6 +847,14 @@
               </e>
             </e>
             <e p="_Shop" t="Include">
+              <e p="_MiniShop" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="IMiniShopProvider.cs" t="Include" />
+                  <e p="MiniItemShopContainer.cs" t="Include" />
+                  <e p="MiniShop.cs" t="Include" />
+                  <e p="MiniShopProvider.cs" t="Include" />
+                </e>
+              </e>
               <e p="Scripts" t="Include">
                 <e p="Delimiter.cs" t="Include" />
                 <e p="DynamicGridLayout.cs" t="Include" />
@@ -933,12 +941,12 @@
             <e p="TimelineInfoWindow" t="Include">
               <e p="Scripts" t="Include">
                 <e p="AgeMarker.cs" t="Include" />
-                <e p="ITimelineInfoWindowProvider.cs" t="Include" />
+                <e p="ITimelineInfoScreenProvider.cs" t="Include" />
                 <e p="TimelineInfoItem.cs" t="Include" />
                 <e p="TimelineInfoItemModel.cs" t="Include" />
                 <e p="TimelineInfoModel.cs" t="Include" />
+                <e p="TimelineInfoScreenProvider.cs" t="Include" />
                 <e p="TimelineInfoWindow.cs" t="Include" />
-                <e p="TimelineInfoWindowProvider.cs" t="Include" />
                 <e p="TimelineProgressBar.cs" t="Include" />
               </e>
             </e>
@@ -951,9 +959,9 @@
               <e p="Evolution" t="Include">
                 <e p="Scripts" t="Include">
                   <e p="EvolutionBtnData.cs" t="Include" />
+                  <e p="EvolutionScreen.cs" t="Include" />
                   <e p="EvolutionTab.cs" t="Include" />
                   <e p="EvolutionTabModel.cs" t="Include" />
-                  <e p="EvolutionWindow.cs" t="Include" />
                   <e p="TravelAnimationScreen.cs" t="Include" />
                   <e p="TravelAnimationScreenProvider.cs" t="Include" />
                   <e p="TravelTab.cs" t="Include" />
@@ -972,7 +980,7 @@
                   <e p="UpgradeItemModel.cs" t="Include" />
                   <e p="UpgradeItemType.cs" t="Include" />
                   <e p="UpgradeItemView.cs" t="Include" />
-                  <e p="UpgradesWindow.cs" t="Include" />
+                  <e p="UpgradesScreen.cs" t="Include" />
                   <e p="UpgradeUnitItemView.cs" t="Include" />
                 </e>
               </e>

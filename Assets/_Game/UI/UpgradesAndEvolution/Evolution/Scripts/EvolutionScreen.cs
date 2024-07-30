@@ -1,22 +1,20 @@
 ﻿using System;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.UI._MainMenu.Scripts;
-using Assets._Game.Core._UpgradesChecker;
+using _Game.UI._Shop._MiniShop.Scripts;
 using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
-    public class EvolutionWindow : MonoBehaviour, IUIScreen
+    public class EvolutionScreen : MonoBehaviour, IUIScreen
     {
         [SerializeField] private Canvas _canvas;
 
@@ -28,33 +26,37 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private IEvolutionPresenter _evolutionPresenter;
         private ITimelineTravelPresenter _timelineTravelPresenter;
-        private ITimelineInfoWindowProvider _timelineInfoProvider;
+        private ITimelineInfoScreenProvider _timelineInfoProvider;
         private IAudioService _audioService;
         private IHeader _header;
         private IUpgradesAvailabilityChecker _upgradesChecker;
         public Screen Screen => Screen.Evolution;
 
-
         public void Construct(
             IHeader header,
             IEvolutionPresenter evolutionPresenter,
             IAudioService audioService,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITimelineInfoScreenProvider timelineInfoScreenProvider,
             ITimelineTravelPresenter timelineTravelPresenter,
             IUpgradesAvailabilityChecker upgradesChecker,
-            IWorldCameraService cameraService)
+            IWorldCameraService cameraService,
+            IMiniShopProvider miniShopProvider)
         {
             _evolutionPresenter = evolutionPresenter;
-            _timelineInfoProvider = timelineInfoWindowProvider;
+            _timelineInfoProvider = timelineInfoScreenProvider;
             _timelineTravelPresenter = timelineTravelPresenter;
             _audioService = audioService;
             _header = header;
             _upgradesChecker = upgradesChecker;
-            _evolutionTab.Construct(evolutionPresenter, audioService, timelineInfoWindowProvider);
+            _evolutionTab.Construct(
+                evolutionPresenter, 
+                audioService, 
+                timelineInfoScreenProvider,
+                miniShopProvider);
             _travelTab.Construct(
                 timelineTravelPresenter,
                 audioService,
-                timelineInfoWindowProvider,
+                timelineInfoScreenProvider,
                 cameraService);
         }
 

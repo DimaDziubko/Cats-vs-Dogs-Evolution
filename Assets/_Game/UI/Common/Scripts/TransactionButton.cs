@@ -14,6 +14,7 @@ namespace _Game.UI.Common.Scripts
     {
         public event Action<ButtonState> ButtonStateChanged;
         public event Action Click;
+        public event Action InactiveClick;
 
         [SerializeField] private RectTransform _buttonRectTransform;
         [SerializeField] private TMP_Text _priceText;
@@ -198,6 +199,7 @@ namespace _Game.UI.Common.Scripts
         
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
+            if (!_button.interactable) InactiveClick?.Invoke();
             if (!_isHoldable || !_button.interactable) return;
 
             _isPointerDown = true;

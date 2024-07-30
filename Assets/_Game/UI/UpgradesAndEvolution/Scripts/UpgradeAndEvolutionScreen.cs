@@ -2,6 +2,7 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.UI._MainMenu.Scripts;
+using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -19,6 +20,7 @@ using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI.UpgradesAndEvolution.Scripts
@@ -26,8 +28,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
     public class UpgradeAndEvolutionScreen : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private UpgradesWindow _upgradesWindow;
-        [SerializeField] private EvolutionWindow _evolutionWindow;
+        [FormerlySerializedAs("_upgradesWindow")] [SerializeField] private UpgradesScreen upgradesScreen;
+        [FormerlySerializedAs("_evolutionWindow")] [SerializeField] private EvolutionScreen evolutionScreen;
         [SerializeField] private ToggleButton _upgradesButton;
         [SerializeField] private ToggleButton _evolutionButton;
         [SerializeField] private TutorialStep _evolutionStep;
@@ -70,10 +72,11 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             ITimelineTravelPresenter timelineTravelPresenter,
             IUnitUpgradesPresenter unitUpgradesPresenter,
             IMyLogger logger,
-            ITimelineInfoWindowProvider timelineInfoWindowProvider,
+            ITimelineInfoScreenProvider timelineInfoScreenProvider,
             ITutorialManager tutorialManager,
             IFeatureUnlockSystem featureUnlockSystem,
-            IUpgradesAvailabilityChecker upgradesChecker)
+            IUpgradesAvailabilityChecker upgradesChecker, 
+            IMiniShopProvider miniShopProvider)
         {
             _logger = logger;
 
@@ -84,15 +87,23 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _audioService = audioService;
             _upgradesChecker = upgradesChecker;
 
-            _upgradesWindow.Construct(header, upgradeItemPresenter, unitUpgradesPresenter, audioService, tutorialManager, upgradesChecker);
-            _evolutionWindow.Construct
+            upgradesScreen.Construct(
+                header, 
+                upgradeItemPresenter, 
+                unitUpgradesPresenter, 
+                audioService, 
+                tutorialManager, 
+                upgradesChecker,
+                miniShopProvider);
+            evolutionScreen.Construct
                 (header,
                 evolutionPresenter,
                 audioService,
-                timelineInfoWindowProvider,
+                timelineInfoScreenProvider,
                 timelineTravelPresenter,
                 upgradesChecker,
-                cameraService);
+                cameraService,
+                miniShopProvider);
 
         }
         private void Awake()
@@ -224,19 +235,19 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         private void OnUpgradesButtonClick(ToggleButton button)
         {
-            _evolutionWindow.Hide();
+            evolutionScreen.Hide();
             UpdateButtonsView(Screen.Upgrades);
             ActiveButton = button;
-            _upgradesWindow.Show();
+            upgradesScreen.Show();
         }
 
         private void OnEvolutionButtonClick(ToggleButton button)
         {
             _evolutionStep.CompleteStep();
-            _evolutionWindow.Show();
+            evolutionScreen.Show();
             UpdateButtonsView(Screen.Evolution);
             ActiveButton = button;
-            _upgradesWindow.Hide();
+            upgradesScreen.Hide();
         }
 
         public void Hide()
@@ -246,8 +257,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
             Unsubscribe();
 
-            _evolutionWindow.Hide();
-            _upgradesWindow.Hide();
+            evolutionScreen.Hide();
+            upgradesScreen.Hide();
         }
 
 
