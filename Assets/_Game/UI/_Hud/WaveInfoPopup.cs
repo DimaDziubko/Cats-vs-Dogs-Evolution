@@ -7,15 +7,19 @@ namespace _Game.UI._Hud
     {
         [SerializeField] private TMP_Text _label;
         [SerializeField] private WaveInfoPopupAnimation _animation;
-
+        
         public void ShowWave(int wave, int wavesCount)
         {
             if(_label == null) return;
-            if(wave < wavesCount - 1)
+            if (wave < wavesCount - 1)
+            {
                 _label.text = $"Wave {wave}";
+                _label.color = Color.white;
+            }
             else
             {
                 _label.text = $"Final wave";
+                _label.color = Color.red;
             }
             if(_animation == null) return;
             _animation.PlayAnimation();

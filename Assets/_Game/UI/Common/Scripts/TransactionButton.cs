@@ -82,7 +82,8 @@ namespace _Game.UI.Common.Scripts
         private void HandleActiveState(string price, bool showMoneyPanel = true)
         {
             _button.interactable = true;
-            _loadingText.enabled = false;
+            if(_loadingText != null)
+                _loadingText.enabled = false;
             if (_moneyPanel != null) 
                 _moneyPanel.SetActive(showMoneyPanel);
             if (_state != ButtonState.Active)
@@ -106,7 +107,8 @@ namespace _Game.UI.Common.Scripts
         private void HandleInactiveState(string price, bool showMoneyPanel = true)
         {
             _button.interactable = false;
-            _loadingText.enabled = false;
+            if(_loadingText != null)
+                _loadingText.enabled = false;
             if (_moneyPanel != null) 
                 _moneyPanel.SetActive(showMoneyPanel);
             _isPointerDown = false;
@@ -131,7 +133,8 @@ namespace _Game.UI.Common.Scripts
         private void HandleLoadingState()
         {
             _button.interactable = false;
-            _loadingText.enabled = true;
+            if(_loadingText != null)
+                _loadingText.enabled = true;
             if (_moneyPanel != null) 
                 _moneyPanel.SetActive(false);
             _isPointerDown = false;

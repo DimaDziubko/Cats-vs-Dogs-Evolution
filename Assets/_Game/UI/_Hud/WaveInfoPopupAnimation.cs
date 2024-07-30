@@ -47,7 +47,7 @@ namespace _Game.UI._Hud
             
             sequence.AppendInterval(_mainPositionDelay);
 
-            sequence.Join(_fadableImage.DOFade(_zeroAlpha, _fadeTime));
+            sequence.Append(_fadableImage.DOFade(_zeroAlpha, _fadeTime));
             sequence.Join(_fadableText.DOFade(_zeroAlpha, _fadeTime));
             
             sequence.OnComplete(() => gameObject.SetActive(false));
