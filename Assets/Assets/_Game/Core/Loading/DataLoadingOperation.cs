@@ -78,7 +78,10 @@ namespace Assets._Game.Core.Loading
             _logger.Log("AgeData load successfully");
         }
 
-        private async UniTask LoadShopData() => 
+        private async UniTask LoadShopData()
+        {
             _generalDataPool.ShopItemStaticDataPool = await _shopDataProvider.LoadShopData();
+            _logger.Log("Shop load successfully");
+        }
     }
 }

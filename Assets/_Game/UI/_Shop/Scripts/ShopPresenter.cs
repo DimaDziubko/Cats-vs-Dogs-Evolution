@@ -13,6 +13,7 @@ using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.Utils;
+using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 
 namespace _Game.UI._Shop.Scripts
@@ -39,11 +40,12 @@ namespace _Game.UI._Shop.Scripts
         private readonly IGameInitializer _gameInitializer;
         private readonly IFreeGemsPackService _freeGemsPackService;
         private readonly IUpgradesAvailabilityChecker _checker;
+        private readonly IMyLogger _logger;
 
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
         private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
         private IFreeGemsPackStateReadonly FreeGemsPackState => _userContainer.State.FreeGemsPackState;
-        
+
         private List<ShopItemModel> _models;
 
         public ShopPresenter(
@@ -53,7 +55,8 @@ namespace _Game.UI._Shop.Scripts
             IUserContainer userContainer,
             IGameInitializer gameInitializer,
             IFreeGemsPackService freeGemsPackService,
-            IUpgradesAvailabilityChecker checker)
+            IUpgradesAvailabilityChecker checker,
+            IMyLogger logger)
         {
             _generalDataPool = generalDataPool;
             _iapService = iapService;
@@ -61,6 +64,7 @@ namespace _Game.UI._Shop.Scripts
             _freeGemsPackService = freeGemsPackService;
             _userContainer = userContainer;
             _checker = checker;
+            _logger = logger;
             gameInitializer.OnMainInitialization += Init;
             _gameInitializer = gameInitializer;
         }
@@ -148,6 +152,8 @@ namespace _Game.UI._Shop.Scripts
             List<ProductDescription> products = _iapService.Products();
             foreach (var product in products)
             {
+                _logger.Log(product.Id);
+
                 ShopItemModel model = new ShopItemModel
                 {
                     Description = product,
