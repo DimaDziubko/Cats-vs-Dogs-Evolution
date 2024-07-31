@@ -5,6 +5,7 @@ using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Debugger;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
+using _Game.Core.UserState;
 using _Game.Gameplay._Timer.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Pause.Scripts;
@@ -26,6 +27,7 @@ namespace _Game.Core.Ads
         private readonly IAdsConfigRepository _adsConfigRepository;
         private readonly IUserContainer _userContainer;
         private IBattleStatisticsReadonly BattleStatistics => _userContainer.State.BattleStatistics;
+        private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
 
         private readonly CasRewardAdService _rewardAdsService;
         private readonly CasInterstitialAdService _interstitialAdsService;
@@ -33,7 +35,12 @@ namespace _Game.Core.Ads
         private IMediationManager _manager;
 
         private bool _isTimeForInterstitial;
-        public bool IsTimeForInterstitial => _isTimeForInterstitial;
+        public bool IsTimeForInterstitial => _isTimeForInterstitial; 
+
+        private bool CanShowInterstitial => 
+            _adsConfigRepository.GetConfig().IsInterstitialActive &&
+            (Purchases.BoughtIAPs?.Find(x => x.Count > 0) == null) &&
+            IsInternetConnected();
 
         public CasAdsService(
             IMyLogger logger,
@@ -135,10 +142,7 @@ namespace _Game.Core.Ads
 
         public void ShowInterstitialVideo(Placement placement)
         {
-            var config = _adsConfigRepository.GetConfig();
-            if(!config.IsInterstitialActive) return;
-
-            if (_isTimeForInterstitial)
+            if (_isTimeForInterstitial && CanShowInterstitial)
             {
                 _interstitialAdsService.ShowVideo(placement);
                 _isTimeForInterstitial = false;

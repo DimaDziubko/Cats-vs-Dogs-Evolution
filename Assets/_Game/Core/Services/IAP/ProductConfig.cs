@@ -15,6 +15,7 @@ namespace _Game.Core.Services.IAP
         public string CurrencyIconKey;
         public ProductType ProductType;
         public string IAP_ID;
+        public string IGP_ID;
         public int MaxPurchaseCount;
         public ShopItemViewType ItemViewType;
     }

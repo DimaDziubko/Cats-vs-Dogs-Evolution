@@ -8,6 +8,6 @@ namespace _Game.Core.Services.IGPService
     {
         event Action<IGPDto> Purchased;
         List<ProductDescription> Products();
-        void StartPurchase(ProductConfig productDescriptionConfig);
+        void StartPurchase(ProductConfig config);
     }
 }

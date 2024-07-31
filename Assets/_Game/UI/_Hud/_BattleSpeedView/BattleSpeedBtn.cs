@@ -11,7 +11,8 @@ namespace _Game.UI._Hud._BattleSpeedView
         Active,
         Inactive,
         Activated,
-        Locked
+        Locked,
+        Loading
     }
 
     public class BattleSpeedBtnModel

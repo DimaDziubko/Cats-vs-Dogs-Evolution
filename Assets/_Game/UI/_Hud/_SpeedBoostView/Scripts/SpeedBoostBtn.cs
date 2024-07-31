@@ -42,7 +42,7 @@ namespace _Game.UI._Hud._SpeedBoostView.Scripts
                     HandleActiveState(model);
                     break;
                 case BtnState.Inactive:
-                    HandleInactiveState(model);
+                    HandleInactiveState();
                     break;
                 case BtnState.Activated:
                     HandleActivatedState();
@@ -50,12 +50,16 @@ namespace _Game.UI._Hud._SpeedBoostView.Scripts
                 case BtnState.Locked:
                     HandleLockedState();
                     break;
+                case BtnState.Loading:
+                    HandleLoadingState(model);
+                    break;
             }
         }
 
         private void HandleLockedState() => gameObject.SetActive(false);
 
         private void HandleActivatedState() => gameObject.SetActive(false);
+        private void HandleInactiveState() => gameObject.SetActive(false);
 
         private void HandleActiveState(SpeedBoostBtnModel model)
         {
@@ -64,14 +68,15 @@ namespace _Game.UI._Hud._SpeedBoostView.Scripts
             _valueLabel.text = model.InfoText;
             _panel.gameObject.SetActive(true);
             _button.interactable = true;
+            _loadingText.enabled = false;
         }
 
-        private void HandleInactiveState(SpeedBoostBtnModel model)
+        private void HandleLoadingState(SpeedBoostBtnModel model)
         {
             gameObject.SetActive(true);
             _changeableImage.sprite = _inactiveSprite;
             _panel.gameObject.SetActive(false);
-            _loadingText.enabled = false;
+            _loadingText.enabled = true;
             _button.interactable = false;
         }
     }

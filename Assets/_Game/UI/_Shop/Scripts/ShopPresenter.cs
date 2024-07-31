@@ -117,6 +117,7 @@ namespace _Game.UI._Shop.Scripts
                 _iapService.StartPurchase(productDescription.Id);
                 return;
             }
+            
             _igpService.StartPurchase(productDescription.Config);
         }
 

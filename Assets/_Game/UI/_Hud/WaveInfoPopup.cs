@@ -24,5 +24,7 @@ namespace _Game.UI._Hud
             if(_animation == null) return;
             _animation.PlayAnimation();
         }
+
+        public void HideWave() => _animation.StopAnimation();
     }
 }

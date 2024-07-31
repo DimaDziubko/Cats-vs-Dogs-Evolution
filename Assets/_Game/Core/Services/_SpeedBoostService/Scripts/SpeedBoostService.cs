@@ -136,7 +136,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
             _speedBoostBtnModel.State = 
                 _adsService.IsAdReady(AdType.Rewarded) 
                     ? BtnState.Active 
-                    : BtnState.Inactive;
+                    : BtnState.Loading;
         }
 
         private bool SpeedConfigOut() => 

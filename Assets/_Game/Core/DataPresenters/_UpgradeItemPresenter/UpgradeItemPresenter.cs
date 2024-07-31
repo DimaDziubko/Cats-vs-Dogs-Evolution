@@ -18,7 +18,6 @@ using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
-using Assets._Game.Core.DataPresenters._UpgradeItemPresenter;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 

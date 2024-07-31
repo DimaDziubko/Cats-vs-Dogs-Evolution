@@ -6,7 +6,6 @@ using _Game.Core._UpgradesChecker;
 using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI.Common.Scripts;
@@ -14,10 +13,8 @@ using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
-using Assets._Game.Core.DataPresenters.UnitUpgradePresenter;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 using Screen = _Game.UI._MainMenu.Scripts.Screen;
 

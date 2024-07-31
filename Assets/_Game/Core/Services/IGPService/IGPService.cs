@@ -21,11 +21,6 @@ namespace _Game.Core.Services.IGPService
     
     public class IGPService : IIGPService
     {
-        private Dictionary<ItemType, string> _purchaseIds = new Dictionary<ItemType, string>()
-        {
-            {ItemType.Coins, "coins"}
-        };
-        
         public event Action<IGPDto> Purchased;
         
         private readonly IUserContainer _userContainer;
@@ -42,9 +37,9 @@ namespace _Game.Core.Services.IGPService
         public List<ProductDescription> Products() => 
             ProductDefinitions().ToList();
 
-        public void StartPurchase(ProductConfig productDescriptionConfig)
+        public void StartPurchase(ProductConfig config)
         {
-            switch (productDescriptionConfig.ItemType)
+            switch (config.ItemType)
             {
                 case ItemType.x1_5:
                     break;
@@ -54,12 +49,12 @@ namespace _Game.Core.Services.IGPService
                     break;
                 case ItemType.Coins:
                     _userContainer.PurchaseStateHandler
-                        .PurchaseCoinsWithGems(productDescriptionConfig.Quantity, productDescriptionConfig.Price, CurrenciesSource.Shop);
+                        .PurchaseCoinsWithGems(config.Quantity, config.Price, CurrenciesSource.Shop);
                     Notify(
-                        _purchaseIds[productDescriptionConfig.ItemType],
-                        productDescriptionConfig.ItemType.ToString(),
-                        productDescriptionConfig.Quantity,
-                        productDescriptionConfig.Price,
+                        config.IGP_ID,
+                        config.ItemType.ToString(),
+                        config.Quantity,
+                        config.Price,
                         Currencies.Gems.ToString());
                     break;
             }

@@ -84,6 +84,7 @@ namespace _Game.UI._BattleUIController
         
         public void OnStopBattle()
         {
+            _gameplayUI.WaveInfoPopup.HideWave();
             _hud.HidePauseToggle();
             _hud.HideFoodBoostBtn();
             Unsubscribe();
@@ -137,6 +138,7 @@ namespace _Game.UI._BattleUIController
 
         private void OnBattleQuit()
         {
+            _gameplayUI.WaveInfoPopup.HideWave();
             _battleMediator.StopBattle();
             _battleMediator.EndBattle(GameResultType.Defeat, true);
         }

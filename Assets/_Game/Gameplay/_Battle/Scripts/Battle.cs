@@ -140,6 +140,7 @@ namespace _Game.Gameplay._Battle.Scripts
                     _analytics.SendEvent($"Wave {currentWave}");
                     _currentCachedWave = currentWave;
                 }
+
                 _activeScenario.Progress(_speedManager.CurrentSpeedFactor);
                 _battleField.GameUpdate();
             }

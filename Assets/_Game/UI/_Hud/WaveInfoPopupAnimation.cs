@@ -22,10 +22,12 @@ namespace _Game.UI._Hud
         private float _normalAlpha = 1f;
         private float _zeroAlpha = 0f;
 
+        private Sequence _currentSequence;
+
         public void PlayAnimation()
         {
             gameObject.SetActive(true); 
-            
+        
             var imageColor = _fadableImage.color;
             imageColor.a = _zeroAlpha;
             _fadableImage.color = imageColor;
@@ -35,24 +37,38 @@ namespace _Game.UI._Hud
             _fadableText.color = textColor;
 
             _transform.localPosition = _startPosition;
-            
-            Sequence sequence = DOTween.Sequence();
-            
-            sequence.PrependInterval(_initialDelay);
-            
-            sequence.Append(_transform.DOLocalMove(_mainPosition, _moveToMainTimeSec).SetEase(Ease.OutQuad));
-            
-            sequence.Join(_fadableImage.DOFade(_normalAlpha, _moveToMainTimeSec));
-            sequence.Join(_fadableText.DOFade(_normalAlpha, _moveToMainTimeSec));
-            
-            sequence.AppendInterval(_mainPositionDelay);
+        
+            _currentSequence = DOTween.Sequence();
+        
+            _currentSequence.PrependInterval(_initialDelay);
+        
+            _currentSequence.Append(_transform.DOLocalMove(_mainPosition, _moveToMainTimeSec).SetEase(Ease.OutQuad));
+        
+            _currentSequence.Join(_fadableImage.DOFade(_normalAlpha, _moveToMainTimeSec));
+            _currentSequence.Join(_fadableText.DOFade(_normalAlpha, _moveToMainTimeSec));
+        
+            _currentSequence.AppendInterval(_mainPositionDelay);
 
-            sequence.Append(_fadableImage.DOFade(_zeroAlpha, _fadeTime));
-            sequence.Join(_fadableText.DOFade(_zeroAlpha, _fadeTime));
-            
-            sequence.OnComplete(() => gameObject.SetActive(false));
+            _currentSequence.Append(_fadableImage.DOFade(_zeroAlpha, _fadeTime));
+            _currentSequence.Join(_fadableText.DOFade(_zeroAlpha, _fadeTime));
+        
+            _currentSequence.OnComplete(() => gameObject.SetActive(false));
 
-            sequence.Play();
+            _currentSequence.Play();
+        }
+        
+        public void StopAnimation()
+        {
+            if (_currentSequence != null && _currentSequence.IsPlaying())
+            {
+                _currentSequence.Kill();
+            }
+
+            _transform.DOKill();
+            _fadableImage.DOKill();
+            _fadableText.DOKill();
+
+            gameObject.SetActive(false);
         }
     }
 }
