@@ -4,6 +4,7 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Communication;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._GameSaver;
@@ -80,18 +81,8 @@ namespace _Game.Core._GameSaver
             _gameInitializer.OnPreInitialization -= Init;
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, bool isPositive)
-        {
-            switch (currencies)
-            {
-                case UI._Currencies.Currencies.Coins:
-                    if(isPositive) SaveGame();
-                    break;
-                case UI._Currencies.Currencies.Gems:
-                    SaveGame();
-                    break;
-            }
-        }
+        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source) => 
+            SaveGame();
 
         private void OnPurchasesChanged() => 
             SaveGame();

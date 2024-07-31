@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
@@ -74,7 +75,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             Opened += _shopPresenter.OnShopOpened;
             _shopPresenter.ShopItemsUpdated += _container.UpdateShopItems;
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
-            OnCurrenciesChanged(_Currencies.Currencies.Coins, true);
+            OnCurrenciesChanged(_Currencies.Currencies.Coins, 0, CurrenciesSource.None);
             _exitButton.onClick.AddListener(OnCancelled);
         }
 
@@ -106,7 +107,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _taskCompletion.TrySetResult(true);
         }
 
-        private void OnCurrenciesChanged(Currencies type, bool isPositive)
+        private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
         {
             SetupCoinsLabelColor();
             _coinsLabel.text = Currencies.Coins.FormatMoney();

@@ -8,6 +8,7 @@ using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
@@ -100,7 +101,8 @@ namespace _Game.Core.DataPresenters.Evolution
             }
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, bool _) => UpdateEvolutionData();
+        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source) 
+            => UpdateEvolutionData();
 
         private void OnNextTimelineOpened() => UpdateEvolutionData();
 

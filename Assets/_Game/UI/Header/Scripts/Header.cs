@@ -1,4 +1,5 @@
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Header.Scripts;

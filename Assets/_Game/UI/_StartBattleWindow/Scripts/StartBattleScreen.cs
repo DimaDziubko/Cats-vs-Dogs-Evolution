@@ -1,6 +1,7 @@
 using System;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Services.UserContainer;
+using _Game.UI._Currencies;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay.BattleLauncher;
@@ -119,7 +120,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void OnCheatBtnClicked()
         {
             PlayButtonSound();
-            _persistentData.CurrenciesHandler.AddCoins(10_000_000);
+            _persistentData.CurrenciesHandler.AddCoins(10_000_000, CurrenciesSource.None);
         }
 
         private void OnQuitBtnClick()

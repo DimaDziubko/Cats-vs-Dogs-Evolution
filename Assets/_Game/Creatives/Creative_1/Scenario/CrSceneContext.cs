@@ -24,7 +24,6 @@ using Assets._Game.Creatives.Factories;
 using Assets._Game.Creatives.LocalUnitConfigs.Scr;
 using Assets._Game.Creatives.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
-using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;

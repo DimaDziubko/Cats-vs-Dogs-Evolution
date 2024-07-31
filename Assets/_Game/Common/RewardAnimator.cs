@@ -1,5 +1,5 @@
-﻿using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay._Coins.Factory;
+﻿using _Game.Gameplay._Coins.Factory;
+using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 

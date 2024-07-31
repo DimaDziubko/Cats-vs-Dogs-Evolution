@@ -1,5 +1,6 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.Navigation.Battle;
+using _Game.UI.GameResult.Scripts;
 using _Game.Utils;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
@@ -10,18 +11,18 @@ namespace Assets._Game.Gameplay.GameResult.Scripts
 {
     public class GameResultHandler
     {
-        private readonly IGameResultWindowProvider _gameResultWindowProvider;
+        private readonly IGameResultPopupProvider _gameResultPopupProvider;
         private readonly ICoinCounter _coinCounter;
         private readonly IFeatureUnlockSystem _featureUnlock;
         private readonly IBattleNavigator _battleNavigator;
 
         public GameResultHandler(
-            IGameResultWindowProvider gameResultWindowProvider,
+            IGameResultPopupProvider gameResultPopupProvider,
             ICoinCounter coinCounter,
             IFeatureUnlockSystem featureUnlock,
             IBattleNavigator battleNavigator)
         {
-            _gameResultWindowProvider = gameResultWindowProvider;
+            _gameResultPopupProvider = gameResultPopupProvider;
             _coinCounter = coinCounter;
             _featureUnlock = featureUnlock;
             _battleNavigator = battleNavigator;
@@ -33,7 +34,7 @@ namespace Assets._Game.Gameplay.GameResult.Scripts
             
             if (_coinCounter.Coins > 0 && _featureUnlock.IsFeatureUnlocked(Feature.X2))
             {
-                var popup = await _gameResultWindowProvider.Load();
+                var popup = await _gameResultPopupProvider.Load();
                 var isExitConfirmed = await popup.Value.ShowAndAwaitForExit(_coinCounter, result);
                 popup.Dispose();
                 return isExitConfirmed;

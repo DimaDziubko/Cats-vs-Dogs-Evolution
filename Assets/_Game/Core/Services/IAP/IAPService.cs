@@ -5,6 +5,7 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.UI._Currencies;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using UnityEngine.Purchasing;
 
@@ -15,6 +16,7 @@ namespace _Game.Core.Services.IAP
         private const int INFINITY_PURCHASES_TRIGGER = -1;
         
         public event Action Initialized;
+        public event Action<Product> Purchased;
 
         private readonly IUserContainer _userContainer;
         private readonly IGameInitializer _gameInitializer;
@@ -156,11 +158,12 @@ namespace _Game.Core.Services.IAP
                 case ItemType.Coins:
                     break;
                 case ItemType.Gems:
-                    _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity);
+                    _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity, CurrenciesSource.Shop);
                     _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
                     break;
             }
 
+            Purchased?.Invoke(purchasedProduct);
             return PurchaseProcessingResult.Complete;
         }
     }

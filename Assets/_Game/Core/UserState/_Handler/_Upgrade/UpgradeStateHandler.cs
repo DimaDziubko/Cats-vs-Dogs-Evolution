@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.Services.UserContainer;
+using _Game.UI._Currencies;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.UserState._Handler._Upgrade
@@ -17,7 +18,7 @@ namespace _Game.Core.UserState._Handler._Upgrade
         {
             if (_userContainer.State.Currencies.Coins >= price)
             {
-                _userContainer.State.Currencies.ChangeCoins(price, false);
+                _userContainer.State.Currencies.ChangeCoins(price, false, CurrenciesSource.Upgrade);
             
                 switch (type)
                 {

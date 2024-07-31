@@ -9,6 +9,7 @@ using _Game.Core.Data.Age.Static._UpgradeItem;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
@@ -181,7 +182,7 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             UpgradeItemUpdated?.Invoke(model);
         }
         
-        private void OnCurrenciesChanged(Currencies currencies, bool isPositive) => 
+        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source) => 
             UpdateUpgradeItems();
 
         private void Cleanup() => _models.Clear();

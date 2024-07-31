@@ -1,8 +1,11 @@
-﻿namespace _Game.Core.UserState._Handler.Currencies
+﻿using _Game.Common;
+using _Game.UI._Currencies;
+
+namespace _Game.Core.UserState._Handler.Currencies
 {
     public interface ICurrenciesHandler
     {
-        void AddCoins(in float quantity);
-        void AddGems(in int quantity);
+        void AddCoins(in float quantity, CurrenciesSource source);
+        void AddGems(in int quantity, CurrenciesSource source);
     }
 }

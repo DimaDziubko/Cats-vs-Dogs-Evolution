@@ -12,7 +12,6 @@ using Assets._Game.Core.Factory;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Bases.Factory;
-using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.UI._Environment.Factory;
 using UnityEngine;

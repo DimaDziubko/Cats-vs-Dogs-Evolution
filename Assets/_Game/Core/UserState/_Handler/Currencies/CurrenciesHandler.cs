@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services.UserContainer;
+using _Game.UI._Currencies;
 
 namespace _Game.Core.UserState._Handler.Currencies
 {
@@ -10,10 +11,10 @@ namespace _Game.Core.UserState._Handler.Currencies
             _userContainer = userContainer;
         }
         
-        public void AddCoins(in float quantity) => 
-            _userContainer.State.Currencies.ChangeCoins(quantity, true);
+        public void AddCoins(in float quantity, CurrenciesSource source) => 
+            _userContainer.State.Currencies.ChangeCoins(quantity, true, source);
 
-        public void AddGems(in int quantity) => 
-            _userContainer.State.Currencies.ChangeGems(quantity, true);
+        public void AddGems(in int quantity, CurrenciesSource source) =>
+            _userContainer.State.Currencies.ChangeGems(quantity, true, source);
     }
 }

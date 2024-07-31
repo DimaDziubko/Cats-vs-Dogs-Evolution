@@ -5,6 +5,7 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Debugger;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using Assets._Game.Core._Logger;
@@ -121,9 +122,9 @@ namespace _Game.Core._UpgradesChecker
             UpdateData();
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, bool isPositive)
+        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
         {
-            if (isPositive)
+            if (delta > 0)
             {
                 ResetReviewed();
                 UpdateData();

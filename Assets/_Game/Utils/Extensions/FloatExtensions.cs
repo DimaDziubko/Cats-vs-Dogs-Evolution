@@ -87,82 +87,25 @@ namespace _Game.Utils.Extensions
             }
 
             return string.Format("{0:0}", price);
-
-            #region Old
-            //CultureInfo ci = CultureInfo.InvariantCulture;
-
-            //if (price < 1_000)
-            //{
-            //    // Prices below 1,000 are displayed as whole numbers
-            //    return Math.Round(price).ToString("0", ci);
-            //}
-            //else if (price >= 1_000 && price < 1_000_000)
-            //{
-            //    // Handle formatting for thousands
-            //    float priceInThousands = price / 1_000;
-            //    int integerPart = (int)priceInThousands;
-            //    float decimalPart = priceInThousands - integerPart;
-
-            //    if (Math.Abs(decimalPart) < 0.01f)
-            //    {
-            //        return integerPart.ToString("0", ci) + "k";
-            //    }
-            //    else if (Math.Abs(decimalPart) < 0.1f)
-            //    {
-            //        // Round to no decimal places if the first decimal place is zero
-            //        return integerPart.ToString("0", ci) + "k";
-            //    }
-            //    else
-            //    {
-            //        // Use two decimal places only when necessary
-            //        return priceInThousands.ToString("0.##", ci) + "k";
-            //    }
-            //}
-            //else if (price >= 1_000_000 && price < 1_000_000_000)
-            //{
-            //    // Handle formatting for millions
-            //    float priceInMillions = price / 1_000_000;
-            //    int integerPart = (int)priceInMillions;
-            //    float decimalPart = priceInMillions - integerPart;
-
-            //    if (Math.Abs(decimalPart) < 0.01f)
-            //    {
-            //        return integerPart.ToString("0", ci) + "m";
-            //    }
-            //    else if (Math.Abs(decimalPart) < 0.1f)
-            //    {
-            //        // If the first decimal is zero, display without decimals
-            //        return integerPart.ToString("0", ci) + "m";
-            //    }
-            //    else
-            //    {
-            //        return priceInMillions.ToString("0.##", ci) + "m";
-            //    }
-            //}
-            //else if (price >= 1_000_000_000)
-            //{
-            //    // Handle formatting for billions
-            //    float priceInBillions = price / 1_000_000_000;
-            //    int integerPart = (int)priceInBillions;
-            //    float decimalPart = priceInBillions - integerPart;
-
-            //    if (Math.Abs(decimalPart) < 0.01f)
-            //    {
-            //        return integerPart.ToString("0", ci) + "b";
-            //    }
-            //    else if (Math.Abs(decimalPart) < 0.1f)
-            //    {
-            //        return integerPart.ToString("0", ci) + "b";
-            //    }
-            //    else
-            //    {
-            //        return priceInBillions.ToString("0.##", ci) + "b";
-            //    }
-            //}
-
-            //return price.ToString("0", ci);
-            #endregion
         }
+        
+        public static string FormatMoney(this double price)
+        {
+            var absValue = Math.Abs(price);
+
+            foreach (var (threshold, currency) in CurrencyThresholds)
+            {
+                if (absValue >= threshold)
+                {
+                    var newNum = price / threshold;
+                    return CurrencyString(newNum, currency);
+                }
+            }
+
+            return string.Format("{0:0}", price);
+        }
+
+        
         private static string CurrencyString(double newNum, string cur)
         {
             var str = "";
@@ -180,7 +123,8 @@ namespace _Game.Utils.Extensions
             //Debug.Log("MONEY_" + str);
             return str + cur;
         }
-        public static double RoundNumber(double num)
+
+        private static double RoundNumber(double num)
         {
             if (num >= 1000)
             {

@@ -1,14 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
+using _Game.UI._Currencies;
 using _Game.Utils;
 
 namespace _Game.Core.Services.IGPService
 {
+    public class IGPDto
+    {
+        public string PurchaseId;
+        public string PurchaseType;
+        public int PurchaseAmount;
+        public int PurchasePrice;
+        public string PurchaseCurrency;
+        public Dictionary<string, int> Resources;
+    }
+    
     public class IGPService : IIGPService
     {
+        private Dictionary<ItemType, string> _purchaseIds = new Dictionary<ItemType, string>()
+        {
+            {ItemType.Coins, "coins"}
+        };
+        
+        public event Action<IGPDto> Purchased;
+        
         private readonly IUserContainer _userContainer;
         private readonly IShopConfigRepository _shopConfigRepository;
 
@@ -35,10 +54,38 @@ namespace _Game.Core.Services.IGPService
                     break;
                 case ItemType.Coins:
                     _userContainer.PurchaseStateHandler
-                        .PurchaseCoinsWithGems(productDescriptionConfig.Quantity, productDescriptionConfig.Price);
+                        .PurchaseCoinsWithGems(productDescriptionConfig.Quantity, productDescriptionConfig.Price, CurrenciesSource.Shop);
+                    Notify(
+                        _purchaseIds[productDescriptionConfig.ItemType],
+                        productDescriptionConfig.ItemType.ToString(),
+                        productDescriptionConfig.Quantity,
+                        productDescriptionConfig.Price,
+                        Currencies.Gems.ToString());
                     break;
             }
         }
+
+        private void Notify(
+            string purchaseId,
+            string purchaseType,
+            int purchaseAmount,
+            int purchasePrice,
+            string purchaseCurrency,
+            Dictionary<string, int> resources = null
+            )
+        {
+            var dto = new IGPDto()
+            {
+                PurchaseId = purchaseId,
+                PurchaseType = purchaseType,
+                PurchaseAmount = purchaseAmount,
+                PurchasePrice = purchasePrice,
+                PurchaseCurrency = purchaseCurrency,
+                Resources = resources
+            };
+            Purchased?.Invoke(dto);
+        }
+
 
         private IEnumerable<ProductDescription> ProductDefinitions()
         {

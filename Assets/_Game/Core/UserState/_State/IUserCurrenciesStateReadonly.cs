@@ -1,12 +1,13 @@
 ﻿using System;
+using _Game.Common;
 using _Game.UI._Currencies;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public interface IUserCurrenciesStateReadonly
     {
-        float Coins { get; }
-        float Gems { get; }
-        event Action<Currencies, bool> CurrenciesChanged;
+        double Coins { get; }
+        double Gems { get; }
+        event Action<Currencies, double, CurrenciesSource> CurrenciesChanged;
     }
 }

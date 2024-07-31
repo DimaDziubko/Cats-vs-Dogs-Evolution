@@ -14,7 +14,7 @@ using UnityEngine.UI;
 namespace _Game.UI.GameResult.Scripts
 {
     [RequireComponent(typeof(Canvas))]
-    public class GameResultWindow : MonoBehaviour
+    public class GameResultPopup : MonoBehaviour
     {
         private const int REWARD_MULTIPLIER = 2;
         

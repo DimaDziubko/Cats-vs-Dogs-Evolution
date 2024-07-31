@@ -15,12 +15,12 @@ namespace _Game.UI._Currencies
         [SerializeField] private float _textAnimationDelay = 1.5f;
 
 
-        public void AnimateCurrenciesTextDelayed(TMP_Text label, float currentValue, float newValue)
+        public void AnimateCurrenciesTextDelayed(TMP_Text label, double currentValue, double newValue)
         {
             DOVirtual.DelayedCall(_textAnimationDelay, () => AnimateCoinText(label, currentValue ,newValue));
         }
 
-        private void AnimateCoinText(TMP_Text label, float currentValue, float newValue)
+        private void AnimateCoinText(TMP_Text label, double currentValue, double newValue)
         {
             DOTween.To(() => currentValue, 
                     x => label.text = x.FormatMoney(),

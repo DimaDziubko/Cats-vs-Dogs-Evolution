@@ -9,6 +9,7 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
@@ -95,7 +96,7 @@ namespace _Game.UI._Shop.Scripts
         private void OnPurchasesChanged() => 
             UpdateItems();
 
-        private void OnCurrenciesChanged(Currencies _, bool __) => 
+        private void OnCurrenciesChanged(Currencies _, double __, CurrenciesSource ___ ) => 
             UpdateItems();
 
         public void OnShopOpened()

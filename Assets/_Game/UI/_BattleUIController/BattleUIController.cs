@@ -4,6 +4,7 @@ using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.UI._Currencies;
 using _Game.UI._Hud;
 using _Game.UI.UnitBuilderBtn.Scripts;
 using Assets._Game.Common;
@@ -109,7 +110,7 @@ namespace _Game.UI._BattleUIController
             if (_coinCounter.Coins > 0)
             {
                 PlayCoinAnimation();
-                _userContainer.CurrenciesHandler.AddCoins(_coinCounter.Coins);
+                _userContainer.CurrenciesHandler.AddCoins(_coinCounter.Coins, CurrenciesSource.Battle);
                 _coinCounter.Cleanup();
             }
             

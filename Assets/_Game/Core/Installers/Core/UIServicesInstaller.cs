@@ -3,6 +3,7 @@ using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
+using _Game.UI.GameResult.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.UI.RateGame.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
@@ -112,7 +113,7 @@ namespace _Game.Core.Installers.Core
 
         private void BindGameResultWindowProvider() => 
             Container
-                .BindInterfacesTo<GameResultWindowProvider>()
+                .BindInterfacesTo<GameResultPopupProvider>()
                 .AsSingle();
 
         private void BindTimelineInfoWindowProvider() => 

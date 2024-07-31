@@ -7,6 +7,7 @@ using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -82,7 +83,7 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
         {
             if (Currency.Coins >= price)
             {
-                _persistentData.PurchaseStateHandler.PurchaseUnit(type, price);
+                _persistentData.PurchaseStateHandler.PurchaseUnit(type, price, CurrenciesSource.Upgrade);
             }
             else
             {
@@ -143,7 +144,8 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
             model.IsBought = TimelineState.OpenUnits.Contains(type);
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, bool isPositive) => UpdateUnitItems();
+        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
+            => UpdateUnitItems();
 
 
         private void UpdateUnitItems()

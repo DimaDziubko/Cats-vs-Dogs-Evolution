@@ -1,4 +1,5 @@
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Core.UserState;
 using UnityEngine;

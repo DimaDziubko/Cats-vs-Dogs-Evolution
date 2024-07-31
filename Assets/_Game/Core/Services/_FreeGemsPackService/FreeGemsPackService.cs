@@ -8,6 +8,7 @@ using _Game.Core.Services.Analytics;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.UI._Currencies;
 using Assets._Game.Core._Logger;
 using CAS;
 using UnityEngine;
@@ -121,7 +122,7 @@ namespace _Game.Core.Services._FreeGemsPackService
                 ? DateTime.UtcNow
                 : FreeGemsPackState.LastFreeGemPackDay);
 
-            _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity);
+            _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity, CurrenciesSource.FreeGemsPack);
         }
     }
 }

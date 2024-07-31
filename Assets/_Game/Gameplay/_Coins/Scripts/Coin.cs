@@ -1,6 +1,6 @@
 ﻿using _Game.Common;
+using _Game.Gameplay._Coins.Factory;
 using Assets._Game.Common;
-using Assets._Game.Gameplay._Coins.Factory;
 using UnityEngine;
 
 namespace Assets._Game.Gameplay._Coins.Scripts

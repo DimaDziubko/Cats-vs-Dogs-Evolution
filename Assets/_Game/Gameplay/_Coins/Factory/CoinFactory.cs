@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Factory;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay._Coins.Factory;
 using Assets._Game.Gameplay._Coins.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
@@ -12,7 +11,6 @@ namespace _Game.Gameplay._Coins.Factory
     public class CoinFactory : GameObjectFactory, ICoinFactory
     {
         [SerializeField] private LootCoin _lootCoinPrefab;
-        [SerializeField] private RewardCoin _rewardCoinPrefab;
         [SerializeField] private RewardCoinVFX _rewardCoinVFXPrefab;
 
         private readonly Queue<LootCoin> _lootCoinsPool = new Queue<LootCoin>();
@@ -35,13 +33,6 @@ namespace _Game.Gameplay._Coins.Factory
             return CreateNewLootCoin();
         }
 
-        public RewardCoin GetRewardCoin()
-        {
-            var rewardCoin = CreateGameObjectInstance(_rewardCoinPrefab);
-            rewardCoin.OriginFactory = this;
-            return rewardCoin;
-        }
-        
         public RewardCoinVFX GetRewardCoinVfx()
         {
             var rewardCoin = CreateGameObjectInstance(_rewardCoinVFXPrefab);

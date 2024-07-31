@@ -623,7 +623,6 @@
               <e p="Scripts" t="Include">
                 <e p="Coin.cs" t="Include" />
                 <e p="LootCoin.cs" t="Include" />
-                <e p="RewardCoin.cs" t="Include" />
               </e>
             </e>
             <e p="_Race" t="Include">
@@ -793,6 +792,7 @@
               <e p="BattleUIController.cs" t="Include" />
             </e>
             <e p="_Currencies" t="Include">
+              <e p="CurrenciesSource.cs" t="Include" />
               <e p="CurrenciesUI.cs" t="Include" />
               <e p="TextScaleAnimator.cs" t="Include" />
             </e>
@@ -910,10 +910,10 @@
                 <e p="DoubleCoinsBtn.cs" t="Include" />
                 <e p="GameResultHandler.cs" t="Include" />
                 <e p="GameResultIntroAnimation.cs" t="Include" />
+                <e p="GameResultPopup.cs" t="Include" />
+                <e p="GameResultPopupProvider.cs" t="Include" />
                 <e p="GameResultType.cs" t="Include" />
-                <e p="GameResultWindow.cs" t="Include" />
-                <e p="GameResultWindowProvider.cs" t="Include" />
-                <e p="IGameResultWindowProvider.cs" t="Include" />
+                <e p="IGameResultPopupProvider.cs" t="Include" />
               </e>
             </e>
             <e p="Header" t="Include">

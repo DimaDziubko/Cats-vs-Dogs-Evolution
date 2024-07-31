@@ -1,4 +1,4 @@
-﻿using _Game.Core.UserState;
+﻿using _Game.Core.UserState._State;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Camera;
 using TMPro;
@@ -22,8 +22,8 @@ namespace _Game.UI._Currencies
 
         [SerializeField] private TextScaleAnimator _animator;
 
-        private float _currentCoinsQuantity;
-        private float _currentGemsQuantity;
+        private double _currentCoinsQuantity;
+        private double _currentGemsQuantity;
         
         private IUserCurrenciesStateReadonly _currencies;
         private IWorldCameraService _cameraService;
@@ -44,50 +44,58 @@ namespace _Game.UI._Currencies
             _currencies.CurrenciesChanged -= OnCurrenciesChanged;
             _currencies.CurrenciesChanged += OnCurrenciesChanged;
             
-            OnCurrenciesChanged(Currencies.Coins, false);
-            OnCurrenciesChanged(Currencies.Gems, false);
+            OnCurrenciesChanged(Currencies.Coins, 0, CurrenciesSource.None);
+            OnCurrenciesChanged(Currencies.Gems, 0, CurrenciesSource.None);
         }
 
-        private void OnCurrenciesChanged(Currencies type, bool isPositive)
+        private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
         {
             switch (type)
             {
                 case Currencies.Coins:
-                    HandleCoins(isPositive);
+                    HandleCoins(source);
                     break;
                 case Currencies.Gems:
-                    HandleGems(isPositive);
+                    HandleGems(source);
                     break;
             }
             
         }
 
-        private void HandleGems(bool isPositive)
+        private void HandleGems(CurrenciesSource source)
         {
-            if (isPositive)
+            switch (source)
             {
-                _animator.PlayScaleAnimation(_gemsLabel);
-                _animator.AnimateCurrenciesTextDelayed(_gemsLabel, _currentGemsQuantity, _currencies.Gems);
-            }
-            else
-            {
-                _currentGemsQuantity = _currencies.Gems;
-                _gemsLabel.text = _currencies.Gems.FormatMoney();
+                default:
+                    UpdateWithoutAnimation(ref _currentGemsQuantity, _currencies.Gems, _gemsLabel);
+                    break;
             }
         }
 
-        private void HandleCoins(bool isPositive)
+        private void HandleCoins(CurrenciesSource source)
         {
-            if (isPositive)
+            switch (source)
             {
-                _animator.PlayScaleAnimation(_coinsLabel);
-                _animator.AnimateCurrenciesTextDelayed(_coinsLabel, _currentCoinsQuantity, _currencies.Coins);
+                case CurrenciesSource.Battle:
+                    UpdateWithAnimation(_coinsLabel, ref _currentCoinsQuantity, _currencies.Coins);
+                    break;
+                default:
+                    UpdateWithoutAnimation(ref _currentCoinsQuantity, _currencies.Coins, _coinsLabel);
+                    break;
             }
-            else
-            {
-                _currentCoinsQuantity = _currencies.Coins;
-                _coinsLabel.text = _currencies.Coins.FormatMoney();
-            }
+        }
+
+        private void UpdateWithAnimation(TMP_Text label, ref double currentValue, double newValue)
+        {
+            _animator.PlayScaleAnimation(label);
+            _animator.AnimateCurrenciesTextDelayed(label, currentValue, newValue);
+            currentValue = newValue;
+        }
+
+        private void UpdateWithoutAnimation(ref double currentValue, double newValue, TMP_Text label)
+        {
+            currentValue = newValue;
+            label.text = newValue.FormatMoney();
         }
 
         public void Hide()
