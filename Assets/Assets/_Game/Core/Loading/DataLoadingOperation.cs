@@ -1,12 +1,12 @@
 ﻿using System;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic;
 using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data.Age.Dynamic;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.UserState;
 using Cysharp.Threading.Tasks;

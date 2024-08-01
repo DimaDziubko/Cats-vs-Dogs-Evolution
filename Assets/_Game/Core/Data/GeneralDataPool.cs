@@ -1,10 +1,10 @@
-﻿using _Game.Core.Data.Age.Static;
+﻿using _Game.Core.Data.Age.Dynamic;
+using _Game.Core.Data.Age.Static;
 using _Game.Core.Data.Battle;
 using _Game.Core.Data.Timeline.Static;
 using _Game.Core.Debugger;
 using _Game.UI._Shop.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data.Age.Dynamic;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 

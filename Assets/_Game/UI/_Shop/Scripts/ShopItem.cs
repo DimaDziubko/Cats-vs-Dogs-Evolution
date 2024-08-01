@@ -2,6 +2,7 @@
 using _Game.UI.Common.Scripts;
 using _Game.UI.Factory;
 using _Game.Utils;
+using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using TMPro;
 using UnityEngine;
@@ -56,7 +57,9 @@ namespace _Game.UI._Shop.Scripts
                 _minorProductIconHolder.sprite = model.ItemStaticData.MinorProductIcon;
             if (_quantity != null)
             {
-                _quantity.text = model.Description.Config.Quantity.ToString();
+                _quantity.text = model.Description.Config.ItemType == Core.Services.IAP.ItemType.Coins 
+                    ? model.Description.Config.Quantity.FormatMoney() 
+                    : model.Description.Config.Quantity.ToString();
             }
             if (_description != null)
             {

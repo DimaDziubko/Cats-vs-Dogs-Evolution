@@ -55,7 +55,8 @@ namespace _Game.Core.UserState._State
                 
                 Currencies = new UserCurrenciesState()
                 {
-                    Coins = 0
+                    Coins = 0,
+                    Gems = 100
                 },
                 
                 FoodBoost = new FoodBoostState()

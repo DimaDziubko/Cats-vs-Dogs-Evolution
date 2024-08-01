@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core.Configs.Repositories.Shop;
+using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._Currencies;
 using _Game.Utils;
+using Assets._Game.Core.UserState;
+using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using UnityEngine;
 
 namespace _Game.Core.Services.IGPService
 {
@@ -26,6 +31,8 @@ namespace _Game.Core.Services.IGPService
         private readonly IUserContainer _userContainer;
         private readonly IShopConfigRepository _shopConfigRepository;
 
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        
         public IGPService(
             IUserContainer userContainer,
             IShopConfigRepository shopConfigRepository)
@@ -53,7 +60,7 @@ namespace _Game.Core.Services.IGPService
                     Notify(
                         config.IGP_ID,
                         config.ItemType.ToString(),
-                        config.Quantity,
+                        (int)config.Quantity,
                         config.Price,
                         Currencies.Gems.ToString());
                     break;
@@ -88,6 +95,12 @@ namespace _Game.Core.Services.IGPService
 
             foreach (var config in configs)
             {
+                if (config.ItemType == ItemType.Coins)
+                {
+                    var level = Mathf.Max(TimelineState.BaseHealthLevel, TimelineState.FoodProductionLevel);
+                    config.Quantity = config.QuantityExponential.GetValue(level);
+                }
+                
                 yield return new ProductDescription()
                 {
                     Id = Constants.ConfigKeys.MISSING_KEY,

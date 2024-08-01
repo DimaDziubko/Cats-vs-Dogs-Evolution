@@ -1,4 +1,5 @@
-﻿using _Game.UI.Factory;
+﻿using _Game.Core.Configs.Models;
+using _Game.UI.Factory;
 using UnityEngine.Purchasing;
 
 namespace _Game.Core.Services.IAP
@@ -9,7 +10,8 @@ namespace _Game.Core.Services.IAP
         public string MajorProductIconKey;
         public string MinorProductIconKey;
         public int Price;
-        public int Quantity;
+        public float Quantity;
+        public Exponential QuantityExponential;
         public string Description;
         public ItemType ItemType;
         public string CurrencyIconKey;

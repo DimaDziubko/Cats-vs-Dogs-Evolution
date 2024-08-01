@@ -22,7 +22,7 @@ namespace _Game.Core.UserState._Handler._Purchase
             }
         }
 
-        public void PurchaseCoinsWithGems(int quantity, int price, CurrenciesSource source)
+        public void PurchaseCoinsWithGems(float quantity, int price, CurrenciesSource source)
         {
             _userContainer.State.Currencies.ChangeCoins(quantity, true, source);
             _userContainer.State.Currencies.ChangeGems(price, false, source);

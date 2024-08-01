@@ -14,7 +14,7 @@ namespace _Game.Core.UserState._Handler.Currencies
         public void AddCoins(in float quantity, CurrenciesSource source) => 
             _userContainer.State.Currencies.ChangeCoins(quantity, true, source);
 
-        public void AddGems(in int quantity, CurrenciesSource source) =>
+        public void AddGems(in float quantity, CurrenciesSource source) =>
             _userContainer.State.Currencies.ChangeGems(quantity, true, source);
     }
 }

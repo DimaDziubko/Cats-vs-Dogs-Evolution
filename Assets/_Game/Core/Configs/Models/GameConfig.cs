@@ -182,10 +182,11 @@ namespace _Game.Core.Configs.Models
         public float A;
         public float B;
         public float C;
+        public float D;
 
         public float GetValue(int level)
         {
-            float cost = A * Mathf.Exp(B * level) + C;
+            float cost = A * Mathf.Exp(B + C * level) + D;
             return cost;
         }
     }
