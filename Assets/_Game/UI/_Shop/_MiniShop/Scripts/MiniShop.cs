@@ -1,6 +1,5 @@
 ﻿using System;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts;
@@ -19,9 +18,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
     public class MiniShop : MonoBehaviour, IPointerDownHandler
     {
         public event Action Opened;
-        
-        private const int MIN_COINS_COLOR_TRESHOLD = 5;
-        
+
         [SerializeField] private Canvas _canvas;
         [SerializeField] private MiniItemShopContainer _container;
         [SerializeField] private Button _exitButton;
