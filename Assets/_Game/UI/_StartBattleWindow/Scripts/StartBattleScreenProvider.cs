@@ -1,18 +1,21 @@
 using _Game.Core.AssetManagement;
+using _Game.Core.Configs.Repositories.Timeline;
+using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
+using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
-using _Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay.BattleLauncher;
+using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Settings.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.UI._StartBattleWindow.Scripts
+namespace _Game.UI._StartBattleWindow.Scripts
 {
     public  class StartBattleScreenProvider : LocalAssetLoader, IStartBattleScreenProvider
     {
@@ -24,6 +27,9 @@ namespace Assets._Game.UI._StartBattleWindow.Scripts
         private readonly IUserContainer _persistentData;
         private readonly ISettingsPopupProvider _settingsPopupProvider;
         private readonly IBattleNavigator _battleNavigator;
+        private readonly ITimelineNavigator _timelineNavigator;
+        private readonly IAgeNavigator _ageNavigator;
+        private readonly ITimelineConfigRepository _timelineConfigRepository;
 
         public StartBattleScreenProvider(
             IWorldCameraService cameraService,
@@ -33,7 +39,10 @@ namespace Assets._Game.UI._StartBattleWindow.Scripts
             IMyLogger logger,
             IUserContainer persistentData,
             ISettingsPopupProvider settingsPopupProvider,
-            IBattleNavigator battleNavigator)
+            IBattleNavigator battleNavigator,
+            ITimelineNavigator timelineNavigator,
+            IAgeNavigator ageNavigator,
+            ITimelineConfigRepository timelineConfigRepository)
         {
             _cameraService = cameraService;
             _audioService = audioService;
@@ -43,6 +52,9 @@ namespace Assets._Game.UI._StartBattleWindow.Scripts
             _persistentData = persistentData;
             _settingsPopupProvider = settingsPopupProvider;
             _battleNavigator = battleNavigator;
+            _timelineNavigator = timelineNavigator;
+            _ageNavigator = ageNavigator;
+            _timelineConfigRepository = timelineConfigRepository;
         }
         public async UniTask<Disposable<StartBattleScreen>> Load()
         {
@@ -57,7 +69,10 @@ namespace Assets._Game.UI._StartBattleWindow.Scripts
                 _logger,
                 _persistentData,
                 _settingsPopupProvider,
-                _battleNavigator);
+                _battleNavigator,
+                _timelineNavigator,
+                _ageNavigator,
+                _timelineConfigRepository);
             return window;
         }
     }

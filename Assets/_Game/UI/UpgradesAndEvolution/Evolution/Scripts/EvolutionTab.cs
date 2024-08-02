@@ -1,8 +1,8 @@
 using System;
+using _Game.Core.DataPresenters.Evolution;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
@@ -81,7 +81,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private async void OnInactiveButtonClick()
         {
             var popup = await _miniShopProvider.Load();
-            bool isExit = await popup.Value.ShowAndAwaitForDecision();
+            bool isExit = await popup.Value.ShowAndAwaitForDecision(_evolutionPresenter.GetEvolutionPrice());
             if(isExit) popup.Dispose();
         }
 

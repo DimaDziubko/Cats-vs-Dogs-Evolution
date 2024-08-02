@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.Core.LoadingScreen
+namespace _Game.Core.LoadingScreen
 {
     public enum LoadingScreenType
     {
@@ -54,7 +54,15 @@ namespace Assets._Game.Core.LoadingScreen
 
         private async UniTask TransparentLoading(Queue<ILoadingOperation> loadingOperations)
         {
-            _canvas.enabled = false;
+            _canvas.enabled = true;
+            Color transparent = new Color(0,0,0,0);
+            _splashImage.color = transparent;
+            _loadingInfo.enabled = false;
+            
+            foreach (var image in _fadableImages)
+            {
+                image.enabled = false;
+            }
             await LoadOperations(loadingOperations);
         }
 

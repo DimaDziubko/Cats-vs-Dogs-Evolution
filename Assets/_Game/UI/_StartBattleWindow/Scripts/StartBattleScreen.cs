@@ -1,7 +1,11 @@
 using System;
+using _Game.Core.Configs.Repositories.Timeline;
+using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
+using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._Currencies;
+using _Game.Utils;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay.BattleLauncher;
@@ -28,14 +32,13 @@ namespace _Game.UI._StartBattleWindow.Scripts
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
 
-        [SerializeField] private Button _cheatBtn;
+        [SerializeField] private CheatPanel _cheatPanel;
         
         private IAudioService _audioService;
 
         private IBattleLaunchManager _battleLaunchManager;
         private IHeader _header;
         private IMyLogger _logger;
-        private IUserContainer _persistentData;
         private ISettingsPopupProvider _settingsPopupProvider;
         private IBattleNavigator _battleNavigator;
 
@@ -46,9 +49,12 @@ namespace _Game.UI._StartBattleWindow.Scripts
             IHeader header,
             IBattleLaunchManager battleLaunchManager,
             IMyLogger logger,
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             ISettingsPopupProvider settingsPopupProvider,
-            IBattleNavigator battleNavigator)
+            IBattleNavigator battleNavigator,
+            ITimelineNavigator timelineNavigator,
+            IAgeNavigator ageNavigator,
+            ITimelineConfigRepository timelineConfigRepository)
         {
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
@@ -57,10 +63,17 @@ namespace _Game.UI._StartBattleWindow.Scripts
 
             _header = header;
             _logger = logger;
-
-            _persistentData = persistentData;
+            
             _settingsPopupProvider = settingsPopupProvider;
             _battleNavigator = battleNavigator;
+            
+            _cheatPanel.Construct(
+                timelineNavigator, 
+                ageNavigator, 
+                battleNavigator, 
+                userContainer, 
+                timelineConfigRepository, 
+                audioService);
         }
 
         public void Show()
@@ -70,6 +83,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             Unsubscribe();
             Subscribe();
 
+            _cheatPanel.Init();
             _canvas.enabled = true;
             
             Opened?.Invoke();
@@ -84,7 +98,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         public void Hide()
         {
             Unsubscribe();
-
+            _cheatPanel.Cleanup();
             _canvas.enabled = false;
         }
 
@@ -97,9 +111,6 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _nextBattleButton.onClick.AddListener(OnNextBattleButtonClick);
             _startBattleButton.onClick.AddListener(OnStartButtonClick);
             _settingsButton.onClick.AddListener(OnSettingsBtnClick);
-            
-            _cheatBtn.onClick.AddListener(OnCheatBtnClicked);
-            
             _quitButton.onClick.AddListener(OnQuitBtnClick);
         }
 
@@ -110,19 +121,11 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _previousBattleButton.onClick.RemoveAllListeners();
             _settingsButton.onClick.RemoveAllListeners();
             _quitButton.onClick.RemoveAllListeners();
-            
-            _cheatBtn.onClick.RemoveAllListeners();
 
             _battleNavigator.NavigationUpdated -= UpdateNavigationButtons;
             Opened -= _battleNavigator.OnStartBattleWindowOpened;
         }
-
-        private void OnCheatBtnClicked()
-        {
-            PlayButtonSound();
-            _persistentData.CurrenciesHandler.AddCoins(10_000_000, CurrenciesSource.None);
-        }
-
+        
         private void OnQuitBtnClick()
         {
             PlayButtonSound();

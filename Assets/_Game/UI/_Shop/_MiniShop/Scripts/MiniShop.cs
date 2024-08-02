@@ -34,6 +34,8 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         private IUserContainer _userContainer;
 
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
+
+        private float _price;
         
         public void Construct(
             Camera uICameraOverlay, 
@@ -51,8 +53,9 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _container.Construct(shopPresenter, uiFactory, audioService, logger);
         }
 
-        public async UniTask<bool> ShowAndAwaitForDecision()
+        public async UniTask<bool> ShowAndAwaitForDecision(float price)
         {
+            _price = price;
             Show();
             _taskCompletion = new UniTaskCompletionSource<bool>();
             var result = await _taskCompletion.Task;
@@ -109,11 +112,11 @@ namespace _Game.UI._Shop._MiniShop.Scripts
 
         private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
         {
-            SetupCoinsLabelColor();
+            UpdateCoinsLabelColor();
             _coinsLabel.text = Currencies.Coins.FormatMoney();
         }
 
-        private void SetupCoinsLabelColor() => 
-            _coinsLabel.color = Currencies.Coins < MIN_COINS_COLOR_TRESHOLD ? Color.red : Color.white;
+        private void UpdateCoinsLabelColor() => 
+            _coinsLabel.color = Currencies.Coins < _price ? Color.red : Color.white;
     }
 }

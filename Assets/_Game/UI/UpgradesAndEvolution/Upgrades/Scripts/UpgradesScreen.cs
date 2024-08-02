@@ -128,10 +128,10 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             Opened -= OnUpgradesScreenOpened;
         }
 
-        private async void OnTryUpgrade()
+        private async void OnTryUpgrade(float price)
         {
             var popup = await _miniShopProvider.Load();
-            var isExit =  await popup.Value.ShowAndAwaitForDecision();
+            var isExit =  await popup.Value.ShowAndAwaitForDecision(price);
             if(isExit) popup.Dispose();
         }
 

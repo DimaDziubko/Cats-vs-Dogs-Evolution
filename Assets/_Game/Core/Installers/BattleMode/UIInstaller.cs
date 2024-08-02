@@ -3,7 +3,6 @@ using _Game.UI._BattleUIController;
 using _Game.UI._Environment;
 using _Game.UI._Hud;
 using _Game.UI.UnitBuilderBtn.Scripts;
-using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using UnityEngine;
@@ -36,7 +35,7 @@ namespace _Game.Core.Installers.BattleMode
             Container.Bind<BattleUIController>().AsSingle();
         
         private void BindRewardAnimator() =>
-            Container.BindInterfacesAndSelfTo<RewardAnimator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RewardAnimator>().AsSingle().Lazy();
 
         private void BindGameplayUI()
         {

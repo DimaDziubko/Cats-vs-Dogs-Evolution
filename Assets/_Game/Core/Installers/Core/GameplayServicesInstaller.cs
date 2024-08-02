@@ -21,7 +21,6 @@ using _Game.Gameplay._Timer.Scripts;
 using Assets._Game.Core._RetentionChecker;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
-using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Analytics;

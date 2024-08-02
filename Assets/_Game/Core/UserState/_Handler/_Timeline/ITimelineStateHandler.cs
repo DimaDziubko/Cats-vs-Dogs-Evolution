@@ -4,9 +4,9 @@ namespace _Game.Core.UserState._Handler._Timeline
 {
     public interface ITimelineStateHandler
     {
-        void OpenNextAge();
-        void OpenNextTimeline();
-        void OpenNextBattle(int nextBattle);
+        void OpenNewAge(bool isNext = true);
+        void OpenNewTimeline(bool isNext = true);
+        void OpenNewBattle(int nextBattle);
         void ChooseRace(Race race);
         void SetAllBattlesWon(bool allBattlesWon);
     }

@@ -12,5 +12,7 @@ namespace _Game.Core.Navigation.Battle
         void MoveToPreviousBattle();
         void MoveToNextBattle();
         void OpenNextBattle();
+        bool CanMoveToPreviousBattle();
+        void ForceMoveToNextBattle();
     }
 }

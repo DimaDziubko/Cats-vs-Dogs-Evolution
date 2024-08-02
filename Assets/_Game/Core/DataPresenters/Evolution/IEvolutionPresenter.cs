@@ -1,7 +1,7 @@
 ﻿using System;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
-namespace Assets._Game.Core.DataPresenters.Evolution
+namespace _Game.Core.DataPresenters.Evolution
 {
     public interface IEvolutionPresenter
     {
@@ -9,5 +9,6 @@ namespace Assets._Game.Core.DataPresenters.Evolution
         event Action LastAgeOpened;
         void OpenNextAge();
         void OnEvolutionTabOpened();
+        float GetEvolutionPrice();
     }
 }

@@ -42,9 +42,17 @@ namespace _Game.Core.UserState._State
             OpenedUnit?.Invoke(type);
         }
         
-        public void OpenNextAge()
+        public void OpenNewAge(bool isNext = true)
         {
-            AgeId++;
+            if (isNext)
+            {
+                AgeId++;
+            }
+            else
+            {
+                AgeId--;
+            }
+            
             FoodProductionLevel = 0;
             BaseHealthLevel = 0;
             AllBattlesWon = false;
@@ -54,9 +62,17 @@ namespace _Game.Core.UserState._State
             NextAgeOpened?.Invoke();
         }
         
-        public void OpenNextTimeline()
+        public void OpenNewTimeline(bool isNext = true)
         {
-            TimelineId++;
+            if (isNext)
+            {
+                TimelineId++;
+            }
+            else
+            {
+                TimelineId--;
+            }
+            
             AgeId = 0;
             FoodProductionLevel = 0;
             BaseHealthLevel = 0;

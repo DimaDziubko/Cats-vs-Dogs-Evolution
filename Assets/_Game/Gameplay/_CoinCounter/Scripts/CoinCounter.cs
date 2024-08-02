@@ -9,7 +9,7 @@ namespace Assets._Game.Gameplay._CoinCounter.Scripts
         private float _coins;
         public float Coins => _coins;
 
-        public float CoinsRation
+        public float CoinsRatio
         {
             get
             {

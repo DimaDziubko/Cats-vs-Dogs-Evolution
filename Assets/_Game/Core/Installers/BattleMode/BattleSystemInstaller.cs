@@ -1,6 +1,7 @@
 ﻿using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleStateHandler;
+using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay.Food.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;

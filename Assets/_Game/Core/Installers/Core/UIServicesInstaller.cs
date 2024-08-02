@@ -1,14 +1,15 @@
-﻿using _Game.UI._MainMenu.Scripts;
+﻿using _Game.Core.LoadingScreen;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI._Shop.Scripts;
+using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.GameResult.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.UI.RateGame.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;

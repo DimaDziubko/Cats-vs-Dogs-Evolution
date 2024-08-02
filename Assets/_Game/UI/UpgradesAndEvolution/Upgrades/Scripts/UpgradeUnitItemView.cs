@@ -12,7 +12,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
     public class UpgradeUnitItemView : MonoBehaviour
     {
         public event Action<UnitType, float> Upgrade;
-        public event Action TryUpgrade;
+        public event Action<float> TryUpgrade;
         
         [SerializeField] private Image _backgroundHolder;
         
@@ -54,7 +54,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         }
 
         private void OnInactiveButtonClick() => 
-            TryUpgrade?.Invoke();
+            TryUpgrade?.Invoke(_price);
 
         private void OnTransactionButtonClick()
         {

@@ -2,7 +2,7 @@ using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Coins.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay.Vfx.Scripts
+namespace _Game.Gameplay.Vfx.Scripts
 {
     [RequireComponent(typeof(ParticleSystem))]
     public class RewardCoinVFX : Coin
@@ -62,7 +62,7 @@ namespace Assets._Game.Gameplay.Vfx.Scripts
             {
                 if (OriginFactory != null)
                 {
-                    //Recycle();
+                    Recycle();
                     return;
                 }
             }

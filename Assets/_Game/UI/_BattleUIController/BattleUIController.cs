@@ -1,5 +1,6 @@
 ﻿using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core.LoadingScreen;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
@@ -7,9 +8,6 @@ using _Game.Gameplay._Battle.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI._Hud;
 using _Game.UI.UnitBuilderBtn.Scripts;
-using Assets._Game.Common;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core.LoadingScreen;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Audio;
@@ -28,7 +26,6 @@ namespace _Game.UI._BattleUIController
         private readonly ICoinCounter _coinCounter;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IHeader _header;
-        private readonly IRewardAnimator _rewardAnimator;
         private readonly IUserContainer _userContainer;
 
         private IBattleMediator _battleMediator;
@@ -45,7 +42,6 @@ namespace _Game.UI._BattleUIController
             IHeader header,
             IUserContainer userContainer,
             ILoadingScreenProvider loadingScreenProvider,
-            IRewardAnimator rewardAnimator,
             IFeatureUnlockSystem featureUnlockSystem,
             IBattleSpeedService battleSpeedService,
             ISpeedBoostService speedBoost)
@@ -53,8 +49,7 @@ namespace _Game.UI._BattleUIController
             _userContainer = userContainer;
             _hud = hud;
             _coinCounter = coinCounter;
-            _loadingScreenProvider = loadingScreenProvider;
-            _rewardAnimator = rewardAnimator;
+            _loadingScreenProvider = loadingScreenProvider; ;
             _gameplayUI = gameplayUI;
 
             _hud.Construct(
@@ -110,19 +105,11 @@ namespace _Game.UI._BattleUIController
         {
             if (_coinCounter.Coins > 0)
             {
-                PlayCoinAnimation();
                 _userContainer.CurrenciesHandler.AddCoins(_coinCounter.Coins, CurrenciesSource.Battle);
                 _coinCounter.Cleanup();
             }
             
             _loadingScreenProvider.LoadingCompleted -= OnLoadingCompleted;
-        }
-
-        private void PlayCoinAnimation()
-        {
-            _rewardAnimator.PlayCoins(
-                _header.CoinsWalletWorldPosition,
-                _coinCounter.CoinsRation);
         }
 
         private void Subscribe()

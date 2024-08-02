@@ -1,14 +1,14 @@
 ﻿using System;
 using _Game.UI.Common.Scripts;
+using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.Common.Scripts;
-using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.Gameplay._UnitBuilder.Scripts
+namespace _Game.Gameplay._UnitBuilder.Scripts
 {
     [RequireComponent(typeof(Button), typeof(CustomButtonPressAnimator))]
     public class UnitBuildButton : MonoBehaviour
@@ -19,10 +19,12 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 
         [SerializeField] private GameObject _container;
 
+        [SerializeField] private RectTransform _transform;
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private Image _foodIconHolder;
         [SerializeField] private Image _unitIconHolder;
-
+        [SerializeField] private UnitBuilderBtnScaleAnimation _animation;
+        
         private Button _button;
 
         private ButtonState _state = ButtonState.Inactive;
@@ -33,19 +35,12 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
         private readonly Color _unitIconAffordableColor = new Color(1f, 1f, 1f, 1f);
         private readonly Color _unitIconExpensiveColor = new Color(1f, 1f, 1f, 0.3f);
 
+
         [ShowInInspector]
         private int _foodPrice = int.MaxValue;
 
         private bool _tempButtonState;
-
-        //Scale animation
-        [SerializeField] private RectTransform _transform;
-        [Space]
-        [SerializeField] private bool _isAnimationShow;
-        [SerializeField] private float _animationDuration = 1f;
-        [SerializeField] private float _targetScale = 1.2f;
-        [SerializeField] private float _initialScale = 1;
-
+        
         public RectTransform RectTransform => _transform;
 
         private void Awake()
@@ -72,10 +67,9 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
             UnitType = model.StaticData.Type;
 
             _foodPrice = model.StaticData.FoodPrice;
-            _priceText.text = _foodPrice.ToString();
-
-            _foodIconHolder.sprite = model.DynamicData.FoodIcon;
-            _unitIconHolder.sprite = model.StaticData.UnitIcon;
+            if(_priceText != null) _priceText.text = _foodPrice.ToString();
+            if(_foodIconHolder != null) _foodIconHolder.sprite = model.DynamicData.FoodIcon;
+            if(_unitIconHolder != null) _unitIconHolder.sprite = model.StaticData.UnitIcon;
 
             ChangeState -= unitBuilder.OnButtonChangeState;
             ChangeState += unitBuilder.OnButtonChangeState;
@@ -94,8 +88,8 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
 
             if (canAfford && !_button.interactable)
             {
-                if (_isAnimationShow)
-                    DoScaleAnimation();
+                if (_animation != null)
+                    _animation.DoScaleAnimation();
             }
 
             _button.interactable = _tempButtonState = canAfford;
@@ -108,15 +102,6 @@ namespace Assets._Game.Gameplay._UnitBuilder.Scripts
         {
             _button.interactable = false;
             _foodPrice = int.MaxValue;
-        }
-
-        private void DoScaleAnimation()
-        {
-            _transform.DOScale(_targetScale, _animationDuration * 0.5f)
-                .SetEase(Ease.OutBack)
-                .OnComplete(() => _transform
-                    .DOScale(_initialScale, _animationDuration * 0.5f)
-                    .SetEase(Ease.InBack));
         }
 
         public void Hide()

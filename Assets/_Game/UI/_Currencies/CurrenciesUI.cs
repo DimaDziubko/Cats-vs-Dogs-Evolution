@@ -79,6 +79,9 @@ namespace _Game.UI._Currencies
                 case CurrenciesSource.Battle:
                     UpdateWithAnimation(_coinsLabel, ref _currentCoinsQuantity, _currencies.Coins);
                     break;
+                case CurrenciesSource.MiniShop:
+                    UpdateWithAnimation(_coinsLabel, ref _currentCoinsQuantity, _currencies.Coins);
+                    break;
                 default:
                     UpdateWithoutAnimation(ref _currentCoinsQuantity, _currencies.Coins, _coinsLabel);
                     break;

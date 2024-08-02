@@ -14,7 +14,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
     {
         public event Action<ButtonState> ButtonStateChanged;
         public event Action<UpgradeItemType, float> Upgrade;
-        public event Action TryUpgrade;
+        public event Action<float> TryUpgrade;
         
         private IAudioService _audioService;
         
@@ -85,7 +85,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         }
 
         private void OnInactiveButtonClick() => 
-            TryUpgrade?.Invoke();
+            TryUpgrade?.Invoke(_price);
 
         private void PlayButtonSound() => 
             _audioService.PlayButtonSound();

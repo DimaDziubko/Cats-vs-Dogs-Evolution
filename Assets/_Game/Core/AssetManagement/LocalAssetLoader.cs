@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Assets._Game.Core.AssetManagement
+namespace _Game.Core.AssetManagement
 {
     public class LocalAssetLoader
     {

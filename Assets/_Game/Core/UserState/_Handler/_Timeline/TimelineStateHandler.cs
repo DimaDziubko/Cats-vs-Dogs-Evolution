@@ -11,19 +11,19 @@ namespace _Game.Core.UserState._Handler._Timeline
             _userContainer = userContainer;
         }
         
-        public void OpenNextAge()
+        public void OpenNewAge(bool isNext = true)
         {
             _userContainer.State.Currencies.RemoveAllCoins();
-            _userContainer.State.TimelineState.OpenNextAge();
+            _userContainer.State.TimelineState.OpenNewAge(isNext);
         }
 
-        public void OpenNextTimeline()
+        public void OpenNewTimeline(bool isNext = true)
         {
             _userContainer.State.Currencies.RemoveAllCoins();
-            _userContainer.State.TimelineState.OpenNextTimeline();
+            _userContainer.State.TimelineState.OpenNewTimeline(isNext);
         }
         
-        public void OpenNextBattle(int nextBattle) => 
+        public void OpenNewBattle(int nextBattle) => 
             _userContainer.State.TimelineState.OpenNextBattle(nextBattle);
         
         public void ChooseRace(Race race) => 

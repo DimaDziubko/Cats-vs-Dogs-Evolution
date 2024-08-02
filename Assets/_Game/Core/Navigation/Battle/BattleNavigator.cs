@@ -69,6 +69,8 @@ namespace _Game.Core.Navigation.Battle
         
         private void OnAgeChanged() => CurrentBattle = TimelineState.MaxBattle;
 
+        public void ForceMoveToNextBattle() => CurrentBattle++;
+
         public void MoveToNextBattle()
         {
             if (CanMoveToNextBattle())
@@ -97,17 +99,17 @@ namespace _Game.Core.Navigation.Battle
 
             if (!IsLastBattle() && !CanMoveToNextBattle())
             {
-                _userContainer.TimelineStateHandler.OpenNextBattle(CurrentBattle + 1);
+                _userContainer.TimelineStateHandler.OpenNewBattle(CurrentBattle + 1);
                 MoveToNextBattle();
             }
         }
 
         public void OnStartBattleWindowOpened() => NavigationUpdated?.Invoke(NavigationModel);
 
-        private bool IsLastBattle() => CurrentBattle == _timelineConfig.LastBattle();
-
         private bool CanMoveToNextBattle() => CurrentBattle < TimelineState.MaxBattle;
 
-        private bool CanMoveToPreviousBattle() => CurrentBattle > 0;
+        public bool CanMoveToPreviousBattle() => CurrentBattle > 0;
+
+        private bool IsLastBattle() => CurrentBattle == _timelineConfig.LastBattle();
     }
 }

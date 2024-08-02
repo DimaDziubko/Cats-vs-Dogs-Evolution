@@ -15,7 +15,6 @@ using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
@@ -93,11 +92,11 @@ namespace _Game.Core.DataPresenters.Evolution
         {
             if (IsNextAge())
             {
-                _userContainer.TimelineStateHandler.OpenNextAge();
+                _userContainer.TimelineStateHandler.OpenNewAge();
             }
             else
             {
-                _userContainer.TimelineStateHandler.OpenNextTimeline();
+                _userContainer.TimelineStateHandler.OpenNewTimeline();
             }
         }
 
@@ -154,7 +153,7 @@ namespace _Game.Core.DataPresenters.Evolution
                 .GetAgePrice(TimelineState.AgeId) <= Currency.Coins;
         }
 
-        private float GetEvolutionPrice()
+        public float GetEvolutionPrice()
         {
             if (TimelineState.MaxBattle > TimelineState.AgeId) return -1;
             return _ageConfigRepository

@@ -1,5 +1,4 @@
-﻿using _Game.Common;
-using _Game.UI._Currencies;
+﻿using _Game.UI._Currencies;
 
 namespace _Game.Core.UserState._Handler.Currencies
 {

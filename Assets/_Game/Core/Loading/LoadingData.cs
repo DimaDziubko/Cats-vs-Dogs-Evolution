@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.LoadingScreen;
 using Assets._Game.Core.Loading;
-using Assets._Game.Core.LoadingScreen;
 
 namespace _Game.Core.Loading
 {

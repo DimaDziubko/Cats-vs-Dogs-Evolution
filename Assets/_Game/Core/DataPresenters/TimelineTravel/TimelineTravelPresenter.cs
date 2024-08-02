@@ -83,7 +83,7 @@ namespace _Game.Core.DataPresenters.TimelineTravel
 
 
         public void OpenNextTimeline() => 
-            _userContainer.TimelineStateHandler.OpenNextTimeline();
+            _userContainer.TimelineStateHandler.OpenNewTimeline();
 
         bool ITimelineTravelPresenter.IsTimeToTravel() => !IsNextAge();
 

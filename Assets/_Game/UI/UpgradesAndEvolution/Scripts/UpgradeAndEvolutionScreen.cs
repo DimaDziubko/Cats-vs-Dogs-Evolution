@@ -1,6 +1,7 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
+using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.UI._MainMenu.Scripts;
@@ -11,7 +12,6 @@ using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;

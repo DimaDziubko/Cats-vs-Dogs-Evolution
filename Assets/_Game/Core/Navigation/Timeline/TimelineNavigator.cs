@@ -8,12 +8,12 @@ using System.Collections.Generic;
  using _Game.Core.DataProviders.ShopDataProvider;
  using _Game.Core.DataProviders.Timeline;
  using _Game.Core.Loading;
+ using _Game.Core.LoadingScreen;
  using _Game.Core.Services.UserContainer;
  using Assets._Game.Core._Logger;
  using Assets._Game.Core.Data;
  using Assets._Game.Core.DataProviders.BattleDataProvider;
  using Assets._Game.Core.Loading;
- using Assets._Game.Core.LoadingScreen;
  using Assets._Game.Core.UserState;
 
  namespace _Game.Core.Navigation.Timeline

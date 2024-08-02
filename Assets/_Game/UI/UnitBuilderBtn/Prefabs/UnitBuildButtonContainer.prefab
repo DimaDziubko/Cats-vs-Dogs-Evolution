@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5627453560582635433}
   - component: {fileID: 3138107001095520637}
   - component: {fileID: 6934969526239574035}
+  - component: {fileID: 8225677798952896120}
   m_Layer: 5
   m_Name: UnitBuilButton
   m_TagString: Untagged
@@ -138,14 +139,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitType: 0
   _container: {fileID: 6981895714869958733}
+  _transform: {fileID: 5387010378764455985}
   _priceText: {fileID: 6981895715041527649}
   _foodIconHolder: {fileID: 6981895713979159647}
   _unitIconHolder: {fileID: 2677151020246839280}
-  _transform: {fileID: 5387010378764455985}
-  _isAnimationShow: 0
-  _animationDuration: 0.1
-  _targetScale: 1.1
-  _initialScale: 1
+  _animation: {fileID: 8225677798952896120}
 --- !u!114 &6934969526239574035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +159,23 @@ MonoBehaviour:
   _buttonTransform: {fileID: 5387010378764455985}
   _contentPanel: {fileID: 1340391262010466080}
   _pressWarp: 0.95
+--- !u!114 &8225677798952896120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189619545526969113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071f428f8d1059b40b9fcdaab0a54424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 5387010378764455985}
+  _isEnabled: 0
+  _animationDuration: 0.1
+  _targetScale: 1.1
+  _initialScale: 1
 --- !u!1 &5672198643572551391
 GameObject:
   m_ObjectHideFlags: 0
