@@ -1,9 +1,9 @@
 ﻿using System;
 using _Game.Core._UpgradesChecker;
 using _Game.UI.Factory;
+using _Game.UI.Header.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 using Screen = _Game.UI._MainMenu.Scripts.Screen;
@@ -18,7 +18,8 @@ namespace _Game.UI._Shop.Scripts
         
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ShopItemsContainer _container;
-        
+        [SerializeField] private Color _color;
+
         private IHeader _header;
         private IShopPresenter _shopPresenter;
         private IUpgradesAvailabilityChecker _checker;
@@ -66,7 +67,7 @@ namespace _Game.UI._Shop.Scripts
         }
 
         private void ShowName() => 
-            _header.ShowWindowName(Screen.ToString());
+            _header.ShowWindowName(Screen.ToString(), _color);
 
         public void Hide()
         {

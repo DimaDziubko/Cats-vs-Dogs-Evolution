@@ -7,14 +7,15 @@ namespace _Game.UI.Factory
     public enum ShopItemViewType
     {
         Type1,
-        Type2,
+        Type2, 
         Type3,
+        Type4,
     }
     
     [CreateAssetMenu(fileName = "UI Factory", menuName = "Factories/UI")]
     public class UIFactory : GameObjectFactory, IUIFactory
     {
-        [SerializeField] private ShopItem _shopItemType1, _shopItemType2, _shopItemType3;
+        [SerializeField] private ShopItem _shopItemType1, _shopItemType2, _shopItemType3, _shopItemType4;
         [SerializeField] private Plug _shopItemPlug;
 
         public ShopItem Get(ShopItemViewType type, Transform parent)
@@ -30,6 +31,9 @@ namespace _Game.UI.Factory
                     break;
                 case ShopItemViewType.Type3:
                     item = CreateGameObjectInstance(_shopItemType3, parent);
+                    break;
+                case ShopItemViewType.Type4:
+                    item = CreateGameObjectInstance(_shopItemType4, parent);
                     break;
             }
             

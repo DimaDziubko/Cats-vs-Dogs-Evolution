@@ -3,9 +3,9 @@ using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.UI._Shop._MiniShop.Scripts;
+using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using UnityEngine;
@@ -63,7 +63,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         public void Show()
         {
-            _header.ShowWindowName(Screen.ToString());
+            _header.ShowWindowName(Screen.ToString(), Color.white);
             
             _canvas.enabled = true;
 

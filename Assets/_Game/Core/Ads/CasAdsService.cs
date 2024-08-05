@@ -9,7 +9,6 @@ using _Game.Core.UserState;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
 using CAS;
@@ -18,7 +17,7 @@ using Zenject;
 
 namespace _Game.Core.Ads
 {
-    public class CasAdsService : IAdsService, IInitializable, IDisposable
+    public class CasAdsService : IAdsService,IDisposable
     {
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
@@ -50,7 +49,8 @@ namespace _Game.Core.Ads
             IUserContainer userContainer,
             ITimerService timerService,
             IAdsConfigRepository adsConfigRepository,
-            IMyDebugger debugger)
+            IMyDebugger debugger,
+            IGameInitializer gameInitializer)
         {
             _rewardAdsService = new CasRewardAdService(logger, battleManager, userContainer);
             _interstitialAdsService = new CasInterstitialAdService(logger, userContainer);
@@ -64,9 +64,11 @@ namespace _Game.Core.Ads
             _rewardAdsService.VideoLoaded += OnVideoLoaded;
             _interstitialAdsService.AdImpression += OnAdImpression;
             _interstitialAdsService.VideoLoaded += OnVideoLoaded;
+            _gameInitializer = gameInitializer;
+            _gameInitializer.OnPostInitialization += Init;
         }
 
-        void IInitializable.Initialize()
+        private void Init()
         {
             _manager = MobileAds.BuildManager()
                 .WithInitListener((success, error) =>
@@ -103,6 +105,7 @@ namespace _Game.Core.Ads
             _interstitialAdsService.VideoLoaded -= OnVideoLoaded;
             
             BattleStatistics.CompletedBattlesCountChanged -= OnCompletedBattleCountChanged;
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
 

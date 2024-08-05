@@ -6,11 +6,11 @@ using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
+using _Game.UI.Header.Scripts;
 using _Game.Utils;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI._StartBattleWindow.Scripts;
-using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.Settings.Scripts;
 using UnityEngine;
@@ -92,7 +92,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void ShowName()
         {
             var fullName = $"{Screen} {_battleNavigator.CurrentBattle + 1}";
-            _header.ShowWindowName(fullName);
+            _header.ShowWindowName(fullName, Color.white);
         }
 
         public void Hide()

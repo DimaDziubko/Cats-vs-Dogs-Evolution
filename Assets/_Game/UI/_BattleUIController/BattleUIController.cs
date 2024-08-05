@@ -9,11 +9,11 @@ using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
+using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
-using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.Utils.Popups;
 
 namespace _Game.UI._BattleUIController

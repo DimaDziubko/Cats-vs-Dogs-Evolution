@@ -4,9 +4,9 @@ using _Game.Core.UserState._State;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI._Currencies;
+using _Game.UI.Header.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.Common.Header.Scripts;
 using UnityEngine;
 using Zenject;
 

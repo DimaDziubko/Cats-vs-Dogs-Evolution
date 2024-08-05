@@ -13,7 +13,6 @@ using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
-using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Settings.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.Utils.Popups;

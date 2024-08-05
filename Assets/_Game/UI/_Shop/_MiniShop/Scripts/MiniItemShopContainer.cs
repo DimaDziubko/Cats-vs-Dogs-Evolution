@@ -49,7 +49,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             
             foreach (var model in relevantModels)
             {
-                var viewType = model.Description.Config.ItemViewType;
+                ShopItemViewType viewType = ShopItemViewType.Type4;
                 ShopItem instance = _uiFactory.Get(viewType, _parent);
                 instance.Construct(_shopPresenter, model, _audioService);
                 

@@ -120,8 +120,7 @@ namespace _Game.Core.Installers.Core
         private void BindAdsService() =>
             Container
                 .BindInterfacesAndSelfTo<CasAdsService>()
-                .AsSingle()
-                .NonLazy();
+                .AsSingle();
 
         private void BindFoodBoostService() => 
             Container

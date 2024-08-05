@@ -5,10 +5,10 @@ using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
@@ -59,7 +59,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         public void Show()
         {
             _canvas.enabled = true;
-            _header.ShowWindowName(Screen.ToString());
+            _header.ShowWindowName(Screen.ToString(), Color.white);
 
             Unsubscribe();
             Subscribe();
