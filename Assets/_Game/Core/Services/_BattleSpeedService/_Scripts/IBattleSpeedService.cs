@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Hud._BattleSpeedView;
 using Assets._Game.Gameplay._Timer.Scripts;
 

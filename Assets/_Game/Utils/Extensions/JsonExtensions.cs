@@ -36,7 +36,7 @@ namespace _Game.Utils.Extensions
             var adsConfigToken = jsonData[Constants.ConfigKeys.ADS_CONFIG];
             if (adsConfigToken == null)
             {
-                Debug.LogError("FreeGemsPackDayConfig is null");
+                Debug.LogError("Ads config is null");
                 return null;
             }
             return adsConfigToken.ToObject<AdsConfig>();

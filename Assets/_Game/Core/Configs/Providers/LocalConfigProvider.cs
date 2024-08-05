@@ -1,4 +1,4 @@
-﻿using Assets._Game.Utils._LocalConfigSaver;
+﻿using _Game.Utils._LocalConfigSaver;
 
 namespace _Game.Core.Configs.Providers
 {

@@ -112,6 +112,9 @@ namespace _Game.Core.Debugger
 
         [ShowInInspector, ReadOnly] 
         public bool IsTimeForInterstitial => CasAdsService.IsTimeForInterstitial;
+        
+        [ShowInInspector, ReadOnly] 
+        public float TimeLeft => CasAdsService.TimeLeft;
 
         [ShowInInspector, ReadOnly] 
         public bool CanShowInterstitial => CasAdsService.CanShowInterstitial;

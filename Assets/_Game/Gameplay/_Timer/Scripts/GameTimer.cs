@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using _Game.Common;
-using Assets._Game.Common;
+using Assets._Game.Gameplay._Timer.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Timer.Scripts
+namespace _Game.Gameplay._Timer.Scripts
 {
     public class GameTimer
     {

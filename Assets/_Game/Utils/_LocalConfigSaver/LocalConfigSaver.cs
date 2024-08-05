@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace Assets._Game.Utils._LocalConfigSaver
+namespace _Game.Utils._LocalConfigSaver
 {
     public static class LocalConfigSaver
     {
