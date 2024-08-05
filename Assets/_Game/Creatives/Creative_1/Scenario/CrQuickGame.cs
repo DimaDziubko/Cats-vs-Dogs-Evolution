@@ -1,10 +1,10 @@
-using _Game.Creatives.Creative_1.Scenario;
-using Assets._Game.Creatives.Scripts;
+using _Game.Creatives.Scripts;
+using Assets._Game.Creatives.Creative_1.Scenario;
 using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Creatives.Creative_1.Scenario
+namespace _Game.Creatives.Creative_1.Scenario
 {
     public class CrQuickGame : MonoBehaviour
     {
@@ -66,7 +66,7 @@ namespace Assets._Game.Creatives.Creative_1.Scenario
 
             if (_activeScenario.Progress())
             {
-                _battleField.GameUpdate();
+                _battleField.GameUpdate(Time.deltaTime);
             }
             
             

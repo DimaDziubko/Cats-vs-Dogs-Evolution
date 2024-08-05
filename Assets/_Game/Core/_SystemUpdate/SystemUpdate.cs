@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets._Game.Core._SystemUpdate
+namespace _Game.Core._SystemUpdate
 {
     public class SystemUpdate : MonoBehaviour, ISystemUpdate
     {

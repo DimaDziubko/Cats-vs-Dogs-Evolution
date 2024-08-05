@@ -1,7 +1,7 @@
 ﻿using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Weapon.Scripts
+namespace _Game.Gameplay._Weapon.Scripts
 {
     public abstract class ProjectileMove : MonoBehaviour
     {
@@ -64,7 +64,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
         
         public abstract void Reset();
 
-        public abstract void Move();
+        public abstract void Move(float deltaTime);
         
     }
 }

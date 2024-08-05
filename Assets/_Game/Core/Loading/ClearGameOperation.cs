@@ -1,10 +1,10 @@
 ﻿using System;
+using _Game._BattleModes.Scripts;
 using _Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.GameModes._BattleMode.Scripts;
+using Assets._Game.Core.Loading;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core.Loading
+namespace _Game.Core.Loading
 {
     public class ClearGameOperation : ILoadingOperation
     {
@@ -23,6 +23,8 @@ namespace Assets._Game.Core.Loading
         
         public async UniTask Load(Action<float> onProgress)
         {
+            onProgress?.Invoke(0.1f);
+            await UniTask.Delay(TimeSpan.FromSeconds(1));
             onProgress?.Invoke(0.2f);
             _gameCleanUp.Cleanup();
             _soundService.Cleanup();

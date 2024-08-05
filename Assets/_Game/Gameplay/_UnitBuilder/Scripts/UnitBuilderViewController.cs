@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay.Food.Scripts;
+using _Game.UI._GameplayUI.Scripts;
 using _Game.UI.Common.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
@@ -14,58 +13,60 @@ using Assets._Game.Gameplay._Units.Scripts;
 
 namespace _Game.Gameplay._UnitBuilder.Scripts
 {
-    public class UnitBuilderViewController : IUnitBuilder, IPauseHandler
+    public class UnitBuilderViewController : 
+        IUnitBuilder,
+        IFoodConsumer, 
+        IStartBattleListener,
+        IPauseListener,
+        IStopBattleListener
     {
         public event Action BuilderStarted;
-        
+        public event Action<int, bool> ChangeFood;
+
         private readonly GameplayUI _gameplayUI;
         private readonly BattleField _battleField;
-        private readonly IFoodGenerator _foodGenerator;
-        
+
         private readonly IUnitBuilderDataPresenter _presenter;
         private readonly IAudioService _audioService;
-        private readonly IPauseManager _pauseManager;
         private readonly ITutorialManager _tutorialManager;
         private readonly IMyLogger _logger;
-
-        private bool IsPaused => _pauseManager.IsPaused;
+        
         private UnitBuilderUI UnitBuilderUI => _gameplayUI.UnitBuilderUI;
 
         private TutorialStep TutorialStep => UnitBuilderUI.TutorialStep;
-        
+
+
         public UnitBuilderViewController(
             GameplayUI gameplayUI,
             BattleField battleField,
-            IFoodGenerator foodGenerator,
             IUnitBuilderDataPresenter presenter,
             IAudioService audioService,
-            IPauseManager pauseManager,
             ITutorialManager tutorialManager,
             IMyLogger logger)
         {
             _gameplayUI = gameplayUI;
             _battleField = battleField;
-            _foodGenerator = foodGenerator;
             _audioService = audioService;
-            _pauseManager = pauseManager;
             _tutorialManager = tutorialManager;
             _logger = logger;
             _presenter = presenter;
         }
 
-        public void StartBuilder()
+        void IStartBattleListener.OnStartBattle()
+        {
+            StartBuilder();
+        }
+
+        private void StartBuilder()
         {
             InitButtonTypes();
 
             Unsubscribe();
             Subscribe();
 
-            _pauseManager.Register(this);
-
             BuilderStarted?.Invoke();
             _gameplayUI.Show();
-
-            OnFoodChanged(_foodGenerator.FoodAmount);
+            
             _tutorialManager.Register(TutorialStep);
         }
 
@@ -77,25 +78,6 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
                 button.UnitType = (UnitType)index;
                 index++;
             }
-        }
-
-        public void StopBuilder()
-        {
-            _gameplayUI.Hide();
-
-            foreach (var button in UnitBuilderUI.Buttons)
-            {
-                button.Hide();
-            }
-
-            _pauseManager.UnRegister(this);
-
-            Unsubscribe();
-
-            TutorialStep.CancelStep();
-            _tutorialManager.UnRegister(TutorialStep);
-
-            DisableButtons();
         }
 
         private void DisableButtons()
@@ -110,23 +92,19 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         {
             BuilderStarted -= _presenter.OnBuilderStarted;
             _presenter.BuilderModelUpdated -= UpdateButtonsData;
-
-            _foodGenerator.FoodChanged -= OnFoodChanged;
         }
 
         private void Subscribe()
         {
             BuilderStarted += _presenter.OnBuilderStarted;
             _presenter.BuilderModelUpdated += UpdateButtonsData;
-            _foodGenerator.FoodChanged += OnFoodChanged;
-            OnFoodChanged(_foodGenerator.FoodAmount);
         }
 
-        private void OnFoodChanged(int amount)
+        void IFoodListener.OnFoodChanged(int value)
         {
             foreach (var button in UnitBuilderUI.Buttons)
             {
-                button.UpdateButtonState(amount);
+                button.UpdateButtonState(value);
             }
         }
 
@@ -149,13 +127,10 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         void IUnitBuilder.Build(UnitType type, int foodPrice)
         {
-            if(IsPaused) return;
-
             TutorialStep.CompleteStep();
             
-            if(foodPrice > _foodGenerator.FoodAmount) return;
             _battleField.UnitSpawner.SpawnPlayerUnit(type);
-            _foodGenerator.SpendFood(foodPrice);
+            ChangeFood?.Invoke(foodPrice, false);
 
             PlayButtonSound();
         }
@@ -170,13 +145,30 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-
-        void IPauseHandler.SetPaused(bool isPaused)
+        
+        void IPauseListener.SetPaused(bool isPaused)
         {
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 button.SetPaused(isPaused);
             }
+        }
+
+        void IStopBattleListener.OnStopBattle()
+        {
+            _gameplayUI.Hide();
+
+            foreach (var button in UnitBuilderUI.Buttons)
+            {
+                button.Hide();
+            }
+            
+            Unsubscribe();
+
+            TutorialStep.CancelStep();
+            _tutorialManager.UnRegister(TutorialStep);
+
+            DisableButtons();
         }
     }
 }

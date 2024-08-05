@@ -8,6 +8,7 @@ using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units.FSM;
 using _Game.Gameplay._Units.FSM.States;
 using _Game.Gameplay._Units.Scripts.Attack;
+using _Game.Gameplay._Units.Scripts.Movement;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.Utils;
@@ -16,7 +17,6 @@ using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Units.Scripts.Movement;
 using Assets._Game.Gameplay._Units.Scripts.Utils;
 using Assets._Game.Utils;
 using Assets._Game.Utils.Extensions;
@@ -223,7 +223,7 @@ namespace _Game.Gameplay._Units.Scripts
             _damageFlash.Reset();
         }
 
-        public override bool GameUpdate()
+        public override bool GameUpdate(float deltaTime)
         {
             RotateHeathBarToCamera();
             

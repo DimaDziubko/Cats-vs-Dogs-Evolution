@@ -4,6 +4,7 @@ using _Game.Core.Data;
 using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.UI._Environment;
 using _Game.UI._Shop.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;

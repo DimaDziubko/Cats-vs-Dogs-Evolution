@@ -59,9 +59,9 @@ namespace _Game.Gameplay.Scenario
                 _unitSpawner = unitSpawner;
             }
 
-            public bool Progress(float speedFactor)
+            public bool Progress(float tickDeltaTime)
             {
-                float deltaTime = _wave.Progress(Time.deltaTime) * speedFactor;
+                float deltaTime = _wave.Progress(tickDeltaTime);
                 while (deltaTime >= 0f)
                 {
                     if (++_index >= _scenarioExecutor._waves.Count)
@@ -70,7 +70,7 @@ namespace _Game.Gameplay.Scenario
                     }
 
                     _wave = _scenarioExecutor._waves[_index].Begin(_unitSpawner);
-                    deltaTime = _wave.Progress(deltaTime);
+                    deltaTime = _wave.Progress(tickDeltaTime);
                 }
 
                 return true;

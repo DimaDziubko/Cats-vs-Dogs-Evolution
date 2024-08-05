@@ -81,7 +81,7 @@ namespace _Game.Gameplay._Weapon.Scripts
             _isDead = false;
         }
 
-        public override bool GameUpdate()
+        public override bool GameUpdate(float deltaTime)
         {
             if (!_move.IsMoving)
             {
@@ -96,7 +96,7 @@ namespace _Game.Gameplay._Weapon.Scripts
 
             if (_isInitialized)
             {
-                _move.Move();
+                _move.Move(deltaTime);
             }
 
             if (_rotator) _rotator.Rotate();
@@ -120,7 +120,7 @@ namespace _Game.Gameplay._Weapon.Scripts
 
             _move.PrepareIntro(target, launchPosition);
             _move.Reset();
-
+            
             SetSpeedFactor(speedFactor);
             _isInitialized = true;
         }
@@ -159,7 +159,7 @@ namespace _Game.Gameplay._Weapon.Scripts
                     .Play();
             }
         }
-
+        
         public override void SetSpeedFactor(float speedFactor)
         {
             var newSpeed = speedFactor * _move.DefaultSpeed;

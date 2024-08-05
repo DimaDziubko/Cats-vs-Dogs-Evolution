@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets._Game.Gameplay.Vfx.Scripts;
+using UnityEngine;
 
-namespace Assets._Game.Gameplay.Vfx.Scripts
+namespace _Game.Gameplay.Vfx.Scripts
 {
     public class BaseSmoke : VfxEntity
     {
@@ -21,9 +22,9 @@ namespace Assets._Game.Gameplay.Vfx.Scripts
             _age = 0;
         }
 
-        public override bool GameUpdate()
+        public override bool GameUpdate(float deltaTime)
         {
-            _age += Time.deltaTime;
+            _age += deltaTime;
             if (_age >= _duration)
             {
                 OriginFactory.Reclaim( Type, this);

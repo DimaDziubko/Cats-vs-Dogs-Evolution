@@ -25,6 +25,8 @@ namespace _Game.Core.UserState._State
         public RetentionState RetentionState;
         public PurchaseDataState PurchaseDataState;
         public FreeGemsPackState FreeGemsPackState;
+        public TasksState TasksState;
+        public DailyTasksState DailyTasksState;
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -104,6 +106,16 @@ namespace _Game.Core.UserState._State
                     FreeGemPackCount = 2,
                     LastFreeGemPackDay = DateTime.UtcNow
                 },
+                
+                DailyTasksState = new DailyTasksState()
+                {
+                    //TODO Set initial state
+                },
+                
+                TasksState = new TasksState()
+                {
+                    //TODO Set initial state
+                }
             };
         }
 

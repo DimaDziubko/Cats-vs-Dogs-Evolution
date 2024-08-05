@@ -1,6 +1,5 @@
-﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
+﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Scripts;
@@ -15,21 +14,21 @@ namespace _Game.UI._Hud._PauseView
         
         private IAudioService _audioService;
         private IFeatureUnlockSystem _featureUnlockSystem;
-        private IPauseManager _pauseManager;
         private IAlertPopupProvider _alertPopupProvider;
+        private IBattleManager _battleManager;
         private Hud _hud;
 
         public void Construct(
             IAudioService audioService,
             IFeatureUnlockSystem featureUnlockSystem,
-            IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
+            IBattleManager battleManager,
             Hud hud)
         {
             _audioService = audioService;
             _featureUnlockSystem = featureUnlockSystem;
-            _pauseManager = pauseManager;
             _alertPopupProvider = alertPopupProvider;
+            _battleManager = battleManager;
             _hud = hud;
             
             HidePauseToggle();
@@ -42,10 +41,8 @@ namespace _Game.UI._Hud._PauseView
             _pauseToggle.SetActive(isPauseAvailable);
         }
 
-        private void SubscribePauseToggle()
-        {
+        private void SubscribePauseToggle() => 
             _pauseToggle.ValueChanged += OnPauseClicked;
-        }
 
         public void HidePauseToggle()
         {
@@ -60,7 +57,7 @@ namespace _Game.UI._Hud._PauseView
         private void OnPauseClicked(bool isPaused)
         {
             _audioService.PlayButtonSound();
-            _pauseManager.SetPaused(isPaused);
+            _battleManager.SetPaused(isPaused);
             ShowAlertPopup();
         }
 
@@ -77,7 +74,7 @@ namespace _Game.UI._Hud._PauseView
             }
             else
             {
-                _pauseManager.SetPaused(false);
+                _battleManager.SetPaused(false);
             }
             
             popup.Dispose();

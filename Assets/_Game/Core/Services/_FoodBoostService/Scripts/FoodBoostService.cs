@@ -2,21 +2,17 @@
 using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
-using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Hud;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data;
-using Assets._Game.Core.Services._FoodBoostService.Scripts;
-using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using CAS;
@@ -24,10 +20,10 @@ using UnityEngine;
 
 namespace _Game.Core.Services._FoodBoostService.Scripts
 {
-    public class FoodBoostService : IFoodBoostService, IDisposable
+    public class FoodBoostService : IFoodBoostService, IDisposable, IFoodConsumer
     {
+        public event Action<int, bool> ChangeFood;
         public event Action<FoodBoostBtnModel> FoodBoostBtnModelChanged;
-        public event Action<int> FoodBoost;
 
         private readonly IUserContainer _userContainer;
         private readonly IEconomyConfigRepository _configRepository;
@@ -42,6 +38,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         private IFoodBoostStateReadonly FoodBoostState => _userContainer.State.FoodBoost;
 
         private readonly FoodBoostBtnModel _foodBoostBtnModel = new FoodBoostBtnModel();
+
 
         public FoodBoostService(
             IUserContainer userContainer,
@@ -61,6 +58,8 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             _gameInitializer = gameInitializer;
             gameInitializer.OnPostInitialization += Init;
         }
+
+        public void OnFoodChanged(int value) { }
 
         private void Init()
         {
@@ -118,7 +117,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
                 UpdateFoodBoostBtnModel();
             }
         }
-        
+
         private void OnFoodBoostRewardedVideoComplete()
         {
             var foodBoostConfig = _configRepository.GetFoodBoostConfig();
@@ -131,9 +130,9 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
                 _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
             }
             
-            FoodBoost?.Invoke(_foodBoostBtnModel.FoodAmount);
+            ChangeFood?.Invoke(_foodBoostBtnModel.FoodAmount, true);
         }
-        
+
         private void UpdateFoodBoostBtnModel()
         {
             FoodBoostConfig foodBoostConfig = _configRepository.GetFoodBoostConfig();

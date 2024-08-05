@@ -15,6 +15,12 @@
           <e p="_AssetProvider" t="Include">
             <e p="AssetProvider.cs" t="Include" />
           </e>
+          <e p="_BattleModes" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="BattleMode.cs" t="Include" />
+              <e p="IGameModeCleaner.cs" t="Include" />
+            </e>
+          </e>
           <e p="Audio" t="Include">
             <e p="Scripts" t="Include">
               <e p="SFXSourcesHolder.cs" t="Include" />
@@ -65,6 +71,17 @@
             <e p="_GameInitializer" t="Include">
               <e p="GameInitializer.cs" t="Include" />
               <e p="IGameInitializer.cs" t="Include" />
+            </e>
+            <e p="_GameListenerComposite" t="Include">
+              <e p="GameListenerComposite.cs" t="Include" />
+              <e p="IBattleListener.cs" t="Include" />
+              <e p="IBattleSpeedListener.cs" t="Include" />
+              <e p="IEndBattleListener.cs" t="Include" />
+              <e p="IFoodConsumer.cs" t="Include" />
+              <e p="IFoodListener.cs" t="Include" />
+              <e p="IPauseListener.cs" t="Include" />
+              <e p="IStartBattleListener.cs" t="Include" />
+              <e p="IStopBattleListener.cs" t="Include" />
             </e>
             <e p="_GameMode" t="Include">
               <e p="GameMode.cs" t="Include" />
@@ -163,6 +180,12 @@
                   <e p="TimelineConfigRepository.cs" t="Include" />
                 </e>
               </e>
+            </e>
+            <e p="CustomKernel" t="Include">
+              <e p="GameKernel.cs" t="Include" />
+              <e p="IGameFixedTickable.cs" t="Include" />
+              <e p="IGameLateTickable.cs" t="Include" />
+              <e p="IGameTickable.cs" t="Include" />
             </e>
             <e p="Data" t="Include">
               <e p="Age" t="Include">
@@ -503,16 +526,20 @@
                 <e p="AdsStatistics.cs" t="Include" />
                 <e p="BattleSpeedState.cs" t="Include" />
                 <e p="BattleStatistics.cs" t="Include" />
+                <e p="DailyTasksState.cs" t="Include" />
                 <e p="FactionState.cs" t="Include" />
                 <e p="FoodBoostState.cs" t="Include" />
                 <e p="FreeGemsPackState.cs" t="Include" />
                 <e p="IBattleSpeedStateReadonly.cs" t="Include" />
+                <e p="IDailyTasksStateReadonly.cs" t="Include" />
                 <e p="IFreeGemsPackStateReadonly.cs" t="Include" />
                 <e p="IPurchaseDataStateReadonly.cs" t="Include" />
+                <e p="ITasksStateReadonly.cs" t="Include" />
                 <e p="ITimelineStateReadonly.cs" t="Include" />
                 <e p="IUserCurrenciesStateReadonly.cs" t="Include" />
                 <e p="PurchaseDataState.cs" t="Include" />
                 <e p="RetentionState.cs" t="Include" />
+                <e p="TasksState.cs" t="Include" />
                 <e p="TimelineState.cs" t="Include" />
                 <e p="TutorialState.cs" t="Include" />
                 <e p="UserAccountState.cs" t="Include" />
@@ -528,6 +555,7 @@
                 <e p="CrSceneContext.cs" t="Include" />
                 <e p="CrSpawnSequence.cs" t="Include" />
                 <e p="CrWave.cs" t="Include" />
+                <e p="ICrUnitBuilder.cs" t="Include" />
               </e>
             </e>
             <e p="Factories" t="Include">
@@ -545,18 +573,12 @@
               <e p="CrFoodGenerator.cs" t="Include" />
               <e p="CrGameplayUI.cs" t="Include" />
               <e p="CrHud.cs" t="Include" />
+              <e p="CrProjectileSpawner.cs" t="Include" />
               <e p="CrSpawnMarker.cs" t="Include" />
               <e p="CrUnitBuilButton.cs" t="Include" />
               <e p="CrUnitBuilderViewController.cs" t="Include" />
               <e p="CrUnitSpawner.cs" t="Include" />
-            </e>
-          </e>
-          <e p="GameModes" t="Include">
-            <e p="_BattleMode" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="BattleMode.cs" t="Include" />
-                <e p="IGameModeCleaner.cs" t="Include" />
-              </e>
+              <e p="ICrFoodGenerator.cs" t="Include" />
             </e>
           </e>
           <e p="Gameplay" t="Include">
@@ -576,9 +598,11 @@
             <e p="_Battle" t="Include">
               <e p="Scripts" t="Include">
                 <e p="Battle.cs" t="Include" />
+                <e p="BattleAmbienceController.cs" t="Include" />
+                <e p="BattleAnalyticsController.cs" t="Include" />
                 <e p="BattleEnvironment.cs" t="Include" />
-                <e p="BattleMediator.cs" t="Include" />
                 <e p="BattleScenarioData.cs" t="Include" />
+                <e p="EndBattleHandler.cs" t="Include" />
               </e>
             </e>
             <e p="_BattleField" t="Include">
@@ -729,9 +753,9 @@
               </e>
             </e>
             <e p="BattleLauncher" t="Include">
-              <e p="BattleLaunchManager.cs" t="Include" />
+              <e p="BattleManager.cs" t="Include" />
               <e p="IBattleLauncher.cs" t="Include" />
-              <e p="IBattleLaunchManager.cs" t="Include" />
+              <e p="IBattleManager.cs" t="Include" />
             </e>
             <e p="Common" t="Include">
               <e p="Scripts" t="Include">
@@ -803,6 +827,11 @@
               <e p="EnvironmentSocket.cs" t="Include" />
               <e p="Factory" t="Include">
                 <e p="EnvironmentFactory.cs" t="Include" />
+              </e>
+            </e>
+            <e p="_GameplayUI" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="GameplayUI.cs" t="Include" />
               </e>
             </e>
             <e p="_Hud" t="Include">
@@ -956,11 +985,6 @@
                 <e p="TimelineInfoScreen.cs" t="Include" />
                 <e p="TimelineInfoScreenProvider.cs" t="Include" />
                 <e p="TimelineProgressBar.cs" t="Include" />
-              </e>
-            </e>
-            <e p="UnitBuilderBtn" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="GameplayUI.cs" t="Include" />
               </e>
             </e>
             <e p="UpgradesAndEvolution" t="Include">

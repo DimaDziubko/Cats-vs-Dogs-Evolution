@@ -1,132 +1,131 @@
 ﻿using System;
+using System.Collections.Generic;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.Configs.Repositories.Economy;
+using _Game.Core.CustomKernel;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services.UserContainer;
-using _Game.Gameplay._Battle.Scripts;
-using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
+using _Game.UI._GameplayUI.Scripts;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core._SystemUpdate;
-using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.Gameplay.Food.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
+using Zenject;
 
 namespace _Game.Gameplay.Food.Scripts
 {
     public interface IFoodGenerator
     {
-        event Action<int> FoodChanged;
-        int FoodAmount { get; set; }
-        public void Init();
-        public void AddFood(int delta);
-        public void SpendFood(int delta);
-        void StartGenerator();
-        void StopGenerator();
-        void SetMediator(IBattleMediator battleMediator);
+        void Register(IFoodListener listener);
+        void Unregister(IFoodListener listener);
     }
 
-    public class FoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler, IDisposable
+    public class FoodGenerator : 
+        IInitializable,
+        IDisposable, 
+        IFoodGenerator,
+        IGameTickable,
+        IStartBattleListener,
+        IStopBattleListener,
+        IBattleSpeedListener
+
     {
         private const float LERP_SPEED_MULTIPLIER = 10f;
         
-        public event Action<int> FoodChanged;
-        
-        private readonly IMyLogger _logger;
-        private readonly IFoodBoostService _foodBoostService;
-        private readonly IPauseManager _pauseManager;
-        private readonly IBattleSpeedManager _speedManager;
-        private readonly ISystemUpdate _systemUpdate;
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IEconomyConfigRepository _economyConfig;
         private readonly IUserContainer _userContainer;
+        private readonly IMyLogger _logger;
 
+        private readonly List<IFoodListener> _listeners = new List<IFoodListener>(1);
+        private readonly List<IFoodConsumer> _consumers = new List<IFoodConsumer>(1);
+        
         private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
-
-        private IBattleMediator _battleMediator;
-
+        
         private float _defaultProductionSpeed;
-        private bool IsPaused => _pauseManager.IsPaused;
-
         private float _productionSpeed;
+        
         private int _foodAmount;
         private float _accumulatedFood;
         private float _smoothProgress;
 
         private readonly FoodPanel _panel;
 
-        public int FoodAmount
+        private int FoodAmount
         {
             get => _foodAmount;
             set
             {
                 _foodAmount = value;
-                FoodChanged?.Invoke(FoodAmount);
+                Notify(_foodAmount);
             }
+        }
+
+        private void Notify(int value)
+        {
+            foreach (var listener in _listeners)
+            {
+                listener.OnFoodChanged(value);
+            }
+            
+            _panel.OnFoodChanged(value);
         }
 
         public FoodGenerator(
             IEconomyConfigRepository economyConfig,
             IMyLogger logger,
             GameplayUI gameplayUI,
-            IFoodBoostService foodBoostService,
-            ISystemUpdate systemUpdate,
-            IPauseManager pauseManager,
-            IBattleSpeedManager speedManager,
             IGeneralDataPool generalDataPool,
             IUserContainer userContainer)
         {
             _economyConfig = economyConfig;
             _panel = gameplayUI.FoodPanel;
             _logger = logger;
-            _foodBoostService = foodBoostService;
-            _speedManager = speedManager;
-            _systemUpdate = systemUpdate;
             _generalDataPool = generalDataPool;
             _userContainer = userContainer;
-            
-            _pauseManager = pauseManager;
         }
 
-        public void Init() => 
+        void IInitializable.Initialize() => 
             UpgradeItems.Changed += UpdateGeneratorData;
 
         void IDisposable.Dispose() => 
             UpgradeItems.Changed -= UpdateGeneratorData;
 
-        public void StartGenerator()
+        public void Register(IFoodListener listener)
+        {
+            _listeners.Add(listener);
+            if (listener is IFoodConsumer consumer)
+            {
+                _consumers.Add(consumer);
+                consumer.ChangeFood += ChangeFood;
+            }
+        }
+
+        public void Unregister(IFoodListener listener)
+        {
+            _listeners.Remove(listener);
+            if (listener is IFoodConsumer consumer)
+            {
+                consumer.ChangeFood -= ChangeFood;
+                _consumers.Remove(consumer);
+            }
+        }
+
+        public void OnStartBattle() => StartGenerator();
+
+        private void StartGenerator()
         {
             _panel.SetupIcon(_generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace));
-            
-            _systemUpdate.Register(this);
-            _speedManager.Register(this);
-            
-            FoodChanged += _panel.OnFoodChanged;
-            _foodBoostService.FoodBoost += AddFood;
-            
+
             _defaultProductionSpeed = UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount;
-            _productionSpeed = _defaultProductionSpeed * _speedManager.CurrentSpeedFactor;
-            
+
             FoodAmount = _economyConfig.GetInitialFoodAmount();
 
             _panel.UpdateFillAmount(0);
             _panel.OnFoodChanged(FoodAmount);
         }
-
-        public void StopGenerator()
-        {
-            _accumulatedFood = 0;
-            FoodChanged -= _panel.OnFoodChanged;
-            _foodBoostService.FoodBoost -= AddFood;
-            _systemUpdate.Unregister(this);
-            _speedManager.UnRegister(this);
-        }
-
-        public void SetMediator(IBattleMediator battleMediator) => _battleMediator = battleMediator;
 
         private void UpdateGeneratorData(UpgradeItemType type, UpgradeItemDynamicData data)
         {
@@ -135,12 +134,10 @@ namespace _Game.Gameplay.Food.Scripts
                 _productionSpeed = data.Amount;
             }
         }
-        
-        void IGameUpdate.GameUpdate()
-        {
-            if(IsPaused || !_battleMediator.BattleInProcess) return;
 
-            _accumulatedFood += Time.deltaTime * _productionSpeed;
+        void IGameTickable.Tick(float deltaTime)
+        {
+            _accumulatedFood += deltaTime * _productionSpeed;
             
             if (_accumulatedFood >= 1f) 
             {
@@ -151,17 +148,25 @@ namespace _Game.Gameplay.Food.Scripts
             else
             {
                 _smoothProgress = Mathf.Lerp(_smoothProgress, _accumulatedFood % 1, 
-                    Time.deltaTime * LERP_SPEED_MULTIPLIER);
+                    deltaTime * LERP_SPEED_MULTIPLIER);
             }
 
             _panel.UpdateFillAmount(_smoothProgress);
         }
 
-        public void AddFood(int delta) => FoodAmount += delta;
+        private void ChangeFood(int delta, bool isPositive)
+        {
+            delta = isPositive ? delta : (delta * -1);
+            if(!isPositive && delta > FoodAmount) return;
+            FoodAmount += delta;
+        }
+        
+        void IStopBattleListener.OnStopBattle() => 
+            _accumulatedFood = 0;
 
-        public void SpendFood(int delta) => FoodAmount -= delta;
-
-        public void SetFactor(float speedFactor) => 
+        void IBattleSpeedListener.OnBattleSpeedFactorChanged(float speedFactor)
+        {
             _productionSpeed = _defaultProductionSpeed * speedFactor;
+        }
     }
 }

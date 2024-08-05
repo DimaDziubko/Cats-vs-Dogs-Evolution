@@ -1,18 +1,16 @@
 using System;
+using _Game.Core._GameListenerComposite;
+using _Game.Core._SystemUpdate;
 using _Game.Creatives.Creative_1.Scenario;
-using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay.Food.Scripts;
-using _Game.UI.UnitBuilderBtn.Scripts;
-using Assets._Game.Core._SystemUpdate;
+using _Game.UI._GameplayUI.Scripts;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Creatives.Creative_1.Scenario;
-using Assets._Game.Gameplay.Food.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Creatives.Scripts
+namespace _Game.Creatives.Scripts
 {
-    public class CrFoodGenerator : IFoodGenerator, IGameUpdate, IBattleSpeedHandler
+    public class CrFoodGenerator : ICrFoodGenerator, IGameUpdate, IBattleSpeedListener
     {
         public event Action<int> FoodChanged;
     
@@ -86,12 +84,17 @@ namespace Assets._Game.Creatives.Scripts
             _accumulatedTime = 0;
             FoodChanged -= _panel.OnFoodChanged;
             _systemUpdate.Unregister(this);
-            _speedManager.UnRegister(this);
+            _speedManager.Unregister(this);
+        }
+        
+        public void Register(IFoodListener listener)
+        {
+            throw new NotImplementedException();
         }
 
-        public void SetMediator(IBattleMediator battleMediator)
+        public void Unregister(IFoodListener listener)
         {
-        
+            throw new NotImplementedException();
         }
 
         void IGameUpdate.GameUpdate()
@@ -110,9 +113,10 @@ namespace Assets._Game.Creatives.Scripts
             _panel.UpdateFillAmount(foodProgress % 1);
         }
 
-        public void SetFactor(float speedFactor)
+        public void OnBattleSpeedFactorChanged(float speedFactor)
         {
             _productionSpeed = _defaultProductionSpeed * speedFactor;
         }
+        
     }
 }

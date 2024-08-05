@@ -1,10 +1,9 @@
 using _Game.Utils;
-using Assets._Game.Utils;
 using Pathfinding;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Scripts.Movement
+namespace _Game.Gameplay._Units.Scripts.Movement
 {
     [RequireComponent(typeof(AIPath), typeof(Rigidbody2D))]
     public class AUnitMove : MonoBehaviour, IMovable

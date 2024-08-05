@@ -40,21 +40,18 @@ namespace _Game.Gameplay._BattleField.Scripts
 
         private readonly InteractionCache _interactionCache = new InteractionCache();
 
-        public BattleField(
-            IWorldCameraService cameraService,
-            IPauseManager pauseManager,
+        public BattleField(IWorldCameraService cameraService,
             IAudioService audioService,
             IBaseDestructionManager baseDestructionManager,
             ICoinCounter coinCounter,
             IFactoriesHolder factoriesHolder,
-            IBattleSpeedManager speedManager,
             Hud hud,
-            IBasePresenter basePresenter)
+            IBasePresenter basePresenter, 
+            IBattleSpeedManager speedManager)
         {
             _cameraService = cameraService;
             _audioService = audioService;
-            _pauseManager = pauseManager;
-            
+
             _coinSpawner = new CoinSpawner(
                 factoriesHolder.CoinFactory, 
                 audioService,
@@ -63,8 +60,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _vfxSpawner = new VfxSpawner(factoriesHolder.VfxFactory);
             
             _projectileSpawner = new ProjectileSpawner(
-                factoriesHolder.ProjectileFactory, 
-                pauseManager, 
+                factoriesHolder.ProjectileFactory,
                 _interactionCache,
                 _vfxSpawner,
                 speedManager);
@@ -72,8 +68,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _unitSpawner = new UnitSpawner(
                 factoriesHolder.UnitFactory, 
                 _interactionCache, 
-                cameraService, 
-                pauseManager, 
+                cameraService,
                 _vfxSpawner, 
                 _projectileSpawner, 
                 _coinSpawner,
@@ -110,11 +105,17 @@ namespace _Game.Gameplay._BattleField.Scripts
 
         public void StartBattle() => _baseSpawner.OnStartBattle();
 
-        public void GameUpdate()
+        public void SetSpeedFactor(float speedFactor)
         {
-            _vfxSpawner.GameUpdate();
-            _unitSpawner.GameUpdate();
-            _projectileSpawner.GameUpdate();
+            _projectileSpawner.SetSpeedFactor(speedFactor);
+            _unitSpawner.SetSpeedFactor(speedFactor);
+        }
+
+        public void GameUpdate(float deltaTime)
+        {
+            _vfxSpawner.GameUpdate(deltaTime);
+            _unitSpawner.GameUpdate(deltaTime);
+            _projectileSpawner.GameUpdate(deltaTime);
         }
 
         public void UpdateBase(Faction faction)
@@ -131,7 +132,7 @@ namespace _Game.Gameplay._BattleField.Scripts
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
             }
         }
-        
+
         public void Cleanup()
         {
             _vfxSpawner.Cleanup();
@@ -140,7 +141,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _interactionCache.Cleanup();
             _baseSpawner.Cleanup();
         }
-        
+
         void IBaseDestructionHandler.OnBaseDestructionStarted(Faction faction, Base @base)
         {
             _vfxSpawner.SpawnBasesSmoke(@base.Position);
@@ -149,10 +150,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _unitSpawner.KillUnits(faction);
         }
 
-        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base)
-        {
-            _pauseManager.SetPaused(true);
-        }
+        void IBaseDestructionHandler.OnBaseDestructionCompleted(Faction faction, Base @base) { }
 
         private void CalculateBasePoints()
         {
@@ -169,6 +167,12 @@ namespace _Game.Gameplay._BattleField.Scripts
             _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth, -offsetY, 0);
             _enemySpawnPoint = new Vector3(_cameraService.CameraWidth, -offsetY, 0);
         }
-        
+
+        public void SetPaused(bool isPaused)
+        {
+            _unitSpawner.SetPaused(isPaused);
+            _projectileSpawner.SetPaused(isPaused);
+            _baseSpawner.SetPaused(isPaused);
+        }
     }
 }

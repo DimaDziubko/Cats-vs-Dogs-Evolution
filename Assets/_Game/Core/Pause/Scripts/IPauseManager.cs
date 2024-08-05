@@ -3,8 +3,8 @@
     public interface IPauseManager 
     {
         bool IsPaused { get; }
-        void Register(IPauseHandler handler);
-        public void UnRegister(IPauseHandler handler);
+        void AddHandler(IPauseHandler handler);
+        public void RemoveHandler(IPauseHandler handler);
         void SetPaused(bool isPaused);
     }
 }

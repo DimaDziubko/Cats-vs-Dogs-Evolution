@@ -6,6 +6,7 @@ using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Environment;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
@@ -78,11 +79,17 @@ namespace _Game.Core.Debugger
         
         [ShowInInspector, ReadOnly]
         public Dictionary<Screen, NotificationData> NotificationData { get; set; }
+        
+        [ShowInInspector]
+        public BattleState State => BattleManager.State;
 
         public UserContainer UserContainer { get; set; }
         public BattleSpeedService BattleSpeedService { get; set; }
         public SpeedBoostService SpeedBoostService { get; set; }
         public CasAdsService CasAdsService { get; set; }
+        public BattleManager BattleManager { get; set; }
+        
+        
 
         [ShowInInspector, ReadOnly]
         public Dictionary<int, EnvironmentData> EnvironmentData =>
@@ -119,5 +126,6 @@ namespace _Game.Core.Debugger
         BattleSpeedService BattleSpeedService { get; set; }
         SpeedBoostService SpeedBoostService { get; set; }
         CasAdsService CasAdsService { get; set; }
+        BattleManager BattleManager { get; set; }
     }
 }

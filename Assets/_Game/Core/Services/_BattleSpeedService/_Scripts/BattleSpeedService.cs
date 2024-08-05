@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Debugger;
@@ -17,7 +18,12 @@ using UnityEngine;
 
 namespace _Game.Core.Services._BattleSpeedService._Scripts
 {
-    public class BattleSpeedService : IBattleSpeedService, IDisposable
+    public class BattleSpeedService : 
+        IBattleSpeedService, 
+        IDisposable,
+        IStartBattleListener,
+        IPauseListener,
+        IStopBattleListener
     {
         public event Action<BattleSpeedBtnModel> BattleSpeedBtnModelChanged;
         public event Action<GameTimer, bool> SpeedBoostTimerActivityChanged;
@@ -96,15 +102,23 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 
         public void OnBattleSpeedBtnClicked() => SwitchBattleSpeed();
 
-        public void OnBattleStopped()
+        public void OnBattleSpeedBtnShown()
         {
-            _isBattleRunning = false;
-            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
-            timer?.Stop();
-            SaveBattleTimerValue();
+            TryNotifyAboutTimerActivity(true);
+            UpdateBattleSpeedBtnModel();
         }
 
-        public void OnBattlePaused(bool isPaused)
+        private void SwitchBattleSpeed() => 
+            CurrentBattleSpeedId++;
+
+        void IStartBattleListener.OnStartBattle()
+        {
+            _isBattleRunning = true;
+            StartSpeedBoostTimer();
+            CurrentBattleSpeedId = _currentBattleSpeedId;
+        }
+
+        void IPauseListener.SetPaused(bool isPaused)
         {
             var timer = _timerService.GetTimer(TimerType.BattleSpeed);
             if (timer == null) return;
@@ -117,20 +131,13 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             if(_isBattleRunning) timer.Start();
         }
 
-        public void OnBattleSpeedBtnShown()
+        void IStopBattleListener.OnStopBattle()
         {
-            TryNotifyAboutTimerActivity(true);
-            UpdateBattleSpeedBtnModel();
+            _isBattleRunning = false;
+            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            timer?.Stop();
+            SaveBattleTimerValue();
         }
-
-        public void OnBattleStarted()
-        {
-            _isBattleRunning = true;
-            StartSpeedBoostTimer();
-        }
-
-        private void SwitchBattleSpeed() => 
-            CurrentBattleSpeedId++;
 
         private void OnPermanentSpeedChanged(int id)
         {

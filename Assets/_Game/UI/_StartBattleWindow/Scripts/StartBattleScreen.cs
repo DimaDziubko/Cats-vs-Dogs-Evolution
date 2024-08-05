@@ -4,11 +4,11 @@ using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
 using _Game.Utils;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay.BattleLauncher;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Common.Scripts;
@@ -36,7 +36,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         
         private IAudioService _audioService;
 
-        private IBattleLaunchManager _battleLaunchManager;
+        private IBattleManager _battleManager;
         private IHeader _header;
         private IMyLogger _logger;
         private ISettingsPopupProvider _settingsPopupProvider;
@@ -47,7 +47,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             Camera uICamera,
             IAudioService audioService,
             IHeader header,
-            IBattleLaunchManager battleLaunchManager,
+            IBattleManager battleManager,
             IMyLogger logger,
             IUserContainer userContainer,
             ISettingsPopupProvider settingsPopupProvider,
@@ -59,7 +59,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
 
-            _battleLaunchManager = battleLaunchManager;
+            _battleManager = battleManager;
 
             _header = header;
             _logger = logger;
@@ -158,7 +158,8 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void OnStartButtonClick()
         {
             PlayButtonSound();
-            _battleLaunchManager.TriggerLaunchBattle();
+            //_battleManager.TriggerLaunchBattle();
+            _battleManager.StartBattle();
         }
 
         private void OnPreviousBattleButtonClick()

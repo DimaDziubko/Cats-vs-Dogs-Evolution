@@ -13,16 +13,16 @@ namespace _Game.Core.DataPresenters.UnitBuilderDataPresenter
         public event Action<Dictionary<UnitType, UnitBuilderBtnModel>> BuilderModelUpdated;
         
         private readonly IGeneralDataPool _dataPool;
-        private readonly IUserContainer _persistentData;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        private IRaceStateReadonly RaceState => _persistentData.State.RaceState;
+        private readonly IUserContainer _userContainer;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         
         public UnitBuilderDataPresenter(
             IGeneralDataPool dataPool,
-            IUserContainer persistentData)
+            IUserContainer userContainer)
         {
             _dataPool = dataPool;
-            _persistentData = persistentData;
+            _userContainer = userContainer;
         }
         
         private void UpdateData()

@@ -4,11 +4,11 @@ using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Gameplay.BattleLauncher;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Header.Scripts;
 using Assets._Game.UI.Settings.Scripts;
@@ -22,7 +22,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
         private readonly IHeader _header;
-        private readonly IBattleLaunchManager _battleLaunchManager;
+        private readonly IBattleManager _battleManager;
         private readonly IMyLogger _logger;
         private readonly IUserContainer _persistentData;
         private readonly ISettingsPopupProvider _settingsPopupProvider;
@@ -35,7 +35,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             IWorldCameraService cameraService,
             IAudioService audioService,
             IHeader header,
-            IBattleLaunchManager battleLaunchManager,
+            IBattleManager battleManager,
             IMyLogger logger,
             IUserContainer persistentData,
             ISettingsPopupProvider settingsPopupProvider,
@@ -47,7 +47,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _cameraService = cameraService;
             _audioService = audioService;
             _header = header;
-            _battleLaunchManager = battleLaunchManager;
+            _battleManager = battleManager;
             _logger = logger;
             _persistentData = persistentData;
             _settingsPopupProvider = settingsPopupProvider;
@@ -65,7 +65,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
                 _cameraService.UICameraOverlay,
                 _audioService,
                 _header,
-                _battleLaunchManager,
+                _battleManager,
                 _logger,
                 _persistentData,
                 _settingsPopupProvider,

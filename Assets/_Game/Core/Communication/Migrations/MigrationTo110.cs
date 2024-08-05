@@ -23,6 +23,16 @@ namespace _Game.Core.Communication.Migrations
                 FreeGemPackCount = 2,
                 LastFreeGemPackDay = DateTime.UtcNow
             };
+            
+            state.DailyTasksState ??= new DailyTasksState()
+            {
+                //TODO Set initital state
+            };
+            
+            state.TasksState ??= new TasksState()
+            {
+                //TODO Set initial state
+            };
         }
     }
 }

@@ -3,19 +3,17 @@ using Assets._Game.Core.Pause.Scripts;
 
 namespace _Game.Core.Pause.Scripts
 {
-    public sealed class 
-        PauseManager : IPauseHandler, IPauseManager
+    public sealed class PauseManager : IPauseHandler, IPauseManager
     {
         private readonly List<IPauseHandler> _handlers = new List<IPauseHandler>();
-
         public bool IsPaused { get; private set; }
-
-        public void Register(IPauseHandler handler)
+        
+        public void AddHandler(IPauseHandler handler)
         {
             _handlers.Add(handler);
         }
 
-        public void UnRegister(IPauseHandler handler)
+        public void RemoveHandler(IPauseHandler handler)
         {
             _handlers.Remove(handler);
         }

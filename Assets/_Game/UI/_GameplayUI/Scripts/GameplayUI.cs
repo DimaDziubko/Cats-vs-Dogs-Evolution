@@ -1,10 +1,10 @@
-﻿using _Game.UI._Hud;
+﻿using _Game.Gameplay.Food.Scripts;
+using _Game.UI._Hud;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
-using Assets._Game.Gameplay.Food.Scripts;
 using UnityEngine;
 
-namespace _Game.UI.UnitBuilderBtn.Scripts
+namespace _Game.UI._GameplayUI.Scripts
 {
     public class GameplayUI : MonoBehaviour
     {

@@ -1,10 +1,12 @@
-﻿namespace _Game.Gameplay._BattleSpeed.Scripts
+﻿using _Game.Core._GameListenerComposite;
+
+namespace _Game.Gameplay._BattleSpeed.Scripts
 {
     public interface IBattleSpeedManager
     {
         float CurrentSpeedFactor { get; }
-        void Register(IBattleSpeedHandler handler);
-        public void UnRegister(IBattleSpeedHandler handler);
+        void Register(IBattleSpeedListener listener);
+        void Unregister(IBattleSpeedListener listener);
         void SetSpeedFactor(float speedFactor);
     }
 }

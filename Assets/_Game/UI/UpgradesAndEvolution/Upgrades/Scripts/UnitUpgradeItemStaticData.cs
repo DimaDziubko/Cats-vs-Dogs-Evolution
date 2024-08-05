@@ -1,7 +1,7 @@
 ﻿using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UnitUpgradeItemStaticData
     {

@@ -25,11 +25,11 @@ namespace Assets._Game.Common
             //_transforms.Add(behaviour.transform);
         }
 
-        public void GameUpdate()
+        public void GameUpdate(float deltaTime)
         {
             for (var i = 0; i < _behaviors.Count; i++)
             {
-                if (_behaviors[i].GameUpdate() == false)
+                if (_behaviors[i].GameUpdate(deltaTime) == false)
                 {
                     var lastIndex = _behaviors.Count - 1;
                     _behaviors[i] = _behaviors[lastIndex];

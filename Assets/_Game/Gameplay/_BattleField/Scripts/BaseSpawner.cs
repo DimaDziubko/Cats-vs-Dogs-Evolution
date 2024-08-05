@@ -10,7 +10,7 @@ namespace _Game.Gameplay._BattleField.Scripts
 {
     public class BaseSpawner : IBaseSpawner
     {
-    private readonly IWorldCameraService _cameraService;
+        private readonly IWorldCameraService _cameraService;
         private readonly IBaseFactory _baseFactory;
         private readonly ICoinSpawner _coinSpawner;
         private readonly IBaseDestructionManager _baseDestructionManager;
@@ -98,6 +98,12 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _enemyBasePoint, 
                 _coinSpawner, 
                 _baseDestructionManager);
+        }
+
+        public void SetPaused(bool isPaused)
+        {
+            _enemyBase.SetPaused(isPaused);
+            _playerBase.SetPaused(isPaused);
         }
 
         private void RemoveBase(Faction faction)

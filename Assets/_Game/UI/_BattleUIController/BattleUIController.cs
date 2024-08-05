@@ -1,15 +1,14 @@
-﻿using _Game.Common;
-using _Game.Core._FeatureUnlockSystem.Scripts;
+﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Services._BattleSpeedService._Scripts;
+using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
-using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
+using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
-using _Game.UI.UnitBuilderBtn.Scripts;
-using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
@@ -19,16 +18,16 @@ using Assets._Game.Utils.Popups;
 
 namespace _Game.UI._BattleUIController
 {
-    public class BattleUIController
+    public class BattleUIController : 
+        IStartBattleListener,
+        IStopBattleListener
     {
         private readonly Hud _hud;
         private readonly GameplayUI _gameplayUI;
         private readonly ICoinCounter _coinCounter;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
-        private readonly IHeader _header;
         private readonly IUserContainer _userContainer;
-
-        private IBattleMediator _battleMediator;
+        private readonly IBattleManager _battleManager;
 
         public BattleUIController(
             Hud hud,
@@ -36,7 +35,6 @@ namespace _Game.UI._BattleUIController
             ICoinCounter coinCounter,
             IWorldCameraService cameraService,
             IAudioService audioService,
-            IPauseManager pauseManager,
             IAlertPopupProvider alertPopupProvider,
             IFoodBoostService foodBoostService,
             IHeader header,
@@ -44,29 +42,30 @@ namespace _Game.UI._BattleUIController
             ILoadingScreenProvider loadingScreenProvider,
             IFeatureUnlockSystem featureUnlockSystem,
             IBattleSpeedService battleSpeedService,
-            ISpeedBoostService speedBoost)
+            ISpeedBoostService speedBoost, 
+            IBattleManager battleManager)
         {
             _userContainer = userContainer;
             _hud = hud;
             _coinCounter = coinCounter;
             _loadingScreenProvider = loadingScreenProvider; ;
             _gameplayUI = gameplayUI;
+            _battleManager = battleManager;
 
             _hud.Construct(
                 cameraService,
-                pauseManager,
                 alertPopupProvider,
                 audioService,
                 foodBoostService,
                 featureUnlockSystem,
                 battleSpeedService,
-                speedBoost);
+                speedBoost,
+                battleManager);
             
             header.Construct(userContainer.State.Currencies, cameraService);
-            _header = header;
         }
         
-        public void OnStartBattle()
+        void IStartBattleListener.OnStartBattle()
         {
             _hud.ShowCoinCounter();
             _hud.ShowPauseToggle();
@@ -76,8 +75,8 @@ namespace _Game.UI._BattleUIController
             Subscribe();
             _hud.OnCoinsChanged(_coinCounter.Coins);
         }
-        
-        public void OnStopBattle()
+
+        void IStopBattleListener.OnStopBattle()
         {
             _gameplayUI.WaveInfoPopup.HideWave();
             _hud.HidePauseToggle();
@@ -85,21 +84,14 @@ namespace _Game.UI._BattleUIController
             Unsubscribe();
         }
         
-        public void SetMediator(IBattleMediator battleMediator)
-        {
-            _battleMediator = battleMediator;
-        }
-
         public void HideCoinCounter()
         {
             _coinCounter.Changed -= _hud.OnCoinsChanged;
             _hud.HideCoinCounter();
         }
 
-        public void ShowRewardCoinsAfterLoading()
-        {
+        public void ShowRewardCoinsAfterLoading() => 
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
-        }
 
         private void OnLoadingCompleted()
         {
@@ -118,16 +110,14 @@ namespace _Game.UI._BattleUIController
             _coinCounter.Changed += _hud.OnCoinsChanged;
         }
 
-        private void Unsubscribe()
-        {
+        private void Unsubscribe() => 
             _hud.QuitBattle -= OnBattleQuit;
-        }
 
         private void OnBattleQuit()
         {
             _gameplayUI.WaveInfoPopup.HideWave();
-            _battleMediator.StopBattle();
-            _battleMediator.EndBattle(GameResultType.Defeat, true);
+            _battleManager.StopBattle();
+            _battleManager.EndBattle(GameResultType.Defeat, true);
         }
 
         public void UpdateWave(int currentWave, int wavesCount) => 

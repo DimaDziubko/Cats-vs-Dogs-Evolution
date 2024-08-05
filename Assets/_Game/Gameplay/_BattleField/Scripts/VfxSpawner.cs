@@ -1,13 +1,10 @@
-﻿using _Game.Gameplay._BattleField.Scripts;
-using _Game.Gameplay.Vfx.Factory;
+﻿using _Game.Gameplay.Vfx.Factory;
 using _Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Common;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
     public class VfxSpawner : IVFXProxy
     {
@@ -18,8 +15,8 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
         public VfxSpawner(IVfxFactory vfxFactory) => 
             _vfxFactory = vfxFactory;
 
-        public void GameUpdate() => 
-            _vfxEntities.GameUpdate();
+        public void GameUpdate(float deltaTime) => 
+            _vfxEntities.GameUpdate(deltaTime);
 
         void IVFXProxy.SpawnMuzzleFlash(MuzzleData data)
         {

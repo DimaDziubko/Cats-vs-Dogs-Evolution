@@ -1,7 +1,7 @@
 ﻿using Assets._Game.Utils.Bezier;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Weapon.Scripts
+namespace _Game.Gameplay._Weapon.Scripts
 {
     public class BezierBallisticMove : ProjectileMove
     {
@@ -27,7 +27,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
             _t = 0;
         }
 
-        public override void Move()
+        public override void Move(float deltaTime)
         {
             UpdateBezierCurve();
 
@@ -36,7 +36,7 @@ namespace Assets._Game.Gameplay._Weapon.Scripts
 
             IsMoving = _t < T_MAX;
 
-            _t += Time.deltaTime / _travelTime;
+            _t += deltaTime / _travelTime;
             _t = Mathf.Clamp(_t, T_MIN, T_MAX);
 
             Vector3 newPosition = Bezier.GetPoint(_points, _t);

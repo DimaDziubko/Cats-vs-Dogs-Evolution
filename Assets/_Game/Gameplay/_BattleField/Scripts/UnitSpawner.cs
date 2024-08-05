@@ -1,21 +1,19 @@
 ﻿using System;
-using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using Assets._Game.Common;
-using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class UnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedHandler
+    public class UnitSpawner : IUnitSpawner
     {
         private readonly IUnitFactory _unitFactory;
         private readonly IInteractionCache _cache;
         private readonly IWorldCameraService _cameraService;
-        private readonly IPauseManager _pauseManager;
         private readonly IVFXProxy _vfxProxy;
         private readonly IShootProxy _shootProxy;
         private readonly ICoinSpawner _coinSpawner;
@@ -34,7 +32,6 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
             IUnitFactory unitFactory, 
             IInteractionCache cache,
             IWorldCameraService cameraService,
-            IPauseManager pauseManager,
             IVFXProxy vfxProxy,
             IShootProxy shootProxy,
             ICoinSpawner coinSpawner,
@@ -43,7 +40,6 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
             _unitFactory = unitFactory;
             _cache = cache;
             _cameraService = cameraService;
-            _pauseManager = pauseManager;
             _vfxProxy = vfxProxy;
             _coinSpawner = coinSpawner;
             _shootProxy = shootProxy;
@@ -58,8 +54,6 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
             _enemyDestinationPoint = enemyDestination;
             
             CalculateUnitSpawnPoints();
-            _pauseManager.Register(this);
-            _speedManager.Register(this);
         }
 
         public void Cleanup()
@@ -68,19 +62,19 @@ namespace Assets._Game.Gameplay._BattleField.Scripts
             _playerUnits.Clear();
         }
 
-        public void GameUpdate()
+        public void GameUpdate(float deltaTime)
         {
-            _playerUnits.GameUpdate();
-            _enemyUnits.GameUpdate();
+            _playerUnits.GameUpdate(deltaTime);
+            _enemyUnits.GameUpdate(deltaTime);
         }
-
-        void IBattleSpeedHandler.SetFactor(float speedFactor)
+        
+        public void SetSpeedFactor(float speedFactor)
         {
             _enemyUnits.SetBattleSpeedFactor(speedFactor);
             _playerUnits.SetBattleSpeedFactor(speedFactor);
         }
 
-        void IPauseHandler.SetPaused(bool isPaused)
+        public void SetPaused(bool isPaused)
         {
             _playerUnits.SetPaused(isPaused);
             _enemyUnits.SetPaused(isPaused);

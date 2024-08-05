@@ -1,16 +1,16 @@
 ﻿using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
-using _Game.UI._Hud;
 using _Game.UI._Hud._CoinCounterView;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Creatives.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Creatives.Scripts
+namespace _Game.Creatives.Scripts
 {
     public class CrBattleField
     {
@@ -29,7 +29,7 @@ namespace Assets._Game.Creatives.Scripts
         private readonly CoinSpawner _coinSpawner;
         private readonly VfxSpawner _vfxSpawner;
         private readonly CrUnitSpawner _unitSpawner;
-        private readonly ProjectileSpawner _projectileSpawner;
+        private readonly CrProjectileSpawner _projectileSpawner;
 
         private readonly CoinCounterView _coinCounterView;
 
@@ -54,7 +54,7 @@ namespace Assets._Game.Creatives.Scripts
             
             _vfxSpawner = new VfxSpawner(factoriesHolder.VfxFactory);
             
-            _projectileSpawner = new ProjectileSpawner(
+            _projectileSpawner = new CrProjectileSpawner(
                 factoriesHolder.ProjectileFactory, 
                 pauseManager, 
                 _interactionCache,
@@ -86,11 +86,11 @@ namespace Assets._Game.Creatives.Scripts
             _coinSpawner.Init(_coinCounterView.CoinIconHolderPosition);
         }
         
-        public void GameUpdate()
+        public void GameUpdate(float deltaTime)
         {
-            _vfxSpawner.GameUpdate();
-            _unitSpawner.GameUpdate();
-            _projectileSpawner.GameUpdate();
+            _vfxSpawner.GameUpdate(deltaTime);
+            _unitSpawner.GameUpdate(deltaTime);
+            _projectileSpawner.GameUpdate(deltaTime);
         }
         
         

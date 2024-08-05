@@ -64,7 +64,6 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         public void UpdateUI(UnitUpgradeItemModel model)
         {
-            
             if(!_transactionButton) return;
 
             _transactionButton.Show();

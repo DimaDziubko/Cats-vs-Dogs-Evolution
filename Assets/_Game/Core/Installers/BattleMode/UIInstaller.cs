@@ -1,10 +1,10 @@
 ﻿using _Game.Common;
 using _Game.UI._BattleUIController;
 using _Game.UI._Environment;
+using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
-using _Game.UI.UnitBuilderBtn.Scripts;
+using _Game.UI.GameResult.Scripts;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Gameplay.GameResult.Scripts;
 using UnityEngine;
 using Zenject;
 
@@ -32,7 +32,7 @@ namespace _Game.Core.Installers.BattleMode
             Container.Bind<Hud>().FromInstance(_hud).AsSingle();
 
         private void BindBattleUIController() => 
-            Container.Bind<BattleUIController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BattleUIController>().AsSingle();
         
         private void BindRewardAnimator() =>
             Container.BindInterfacesAndSelfTo<RewardAnimator>().AsSingle().Lazy();
@@ -45,6 +45,6 @@ namespace _Game.Core.Installers.BattleMode
         }
 
         private void BindEnvironmentController() => 
-            Container.Bind<EnvironmentController>().AsSingle();
+            Container.BindInterfacesTo<EnvironmentController>().AsSingle().NonLazy();
     }
 }

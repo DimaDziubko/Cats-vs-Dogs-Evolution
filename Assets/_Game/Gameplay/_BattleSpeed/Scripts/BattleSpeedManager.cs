@@ -1,30 +1,31 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._GameListenerComposite;
 
 namespace _Game.Gameplay._BattleSpeed.Scripts
 {
     public class BattleSpeedManager : IBattleSpeedManager
     {
         public float CurrentSpeedFactor { get; private set; }
-
-        private readonly List<IBattleSpeedHandler> _handlers = new List<IBattleSpeedHandler>();
         
-        public void Register(IBattleSpeedHandler handler)
+        private readonly List<IBattleSpeedListener> _listeners = new List<IBattleSpeedListener>();
+
+        public void Register(IBattleSpeedListener listener)
         {
-            _handlers.Add(handler);
+            _listeners.Add(listener);
         }
 
-        public void UnRegister(IBattleSpeedHandler handler)
+        public void Unregister(IBattleSpeedListener listener)
         {
-            _handlers.Remove(handler);
+            _listeners.Remove(listener);
         }
-
+        
         public void SetSpeedFactor(float speedFactor)
         {
             CurrentSpeedFactor = speedFactor;
             
-            foreach (var handler in _handlers)
+            foreach (var listener in _listeners)
             {
-                handler.SetFactor(speedFactor);
+                listener.OnBattleSpeedFactorChanged(speedFactor);
             }
         }
     }

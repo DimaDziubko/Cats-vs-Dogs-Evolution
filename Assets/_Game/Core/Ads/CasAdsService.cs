@@ -7,16 +7,18 @@ using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Gameplay._Timer.Scripts;
+using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
 using CAS;
 using UnityEngine;
+using Zenject;
 
 namespace _Game.Core.Ads
 {
-    public class CasAdsService : IAdsService, IDisposable
+    public class CasAdsService : IAdsService, IInitializable, IDisposable
     {
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
@@ -44,16 +46,14 @@ namespace _Game.Core.Ads
 
         public CasAdsService(
             IMyLogger logger,
-            IPauseManager pauseManager,
+            IBattleManager battleManager,
             IUserContainer userContainer,
-            IGameInitializer gameInitializer,
             ITimerService timerService,
             IAdsConfigRepository adsConfigRepository,
             IMyDebugger debugger)
         {
-            _rewardAdsService = new CasRewardAdService(logger, pauseManager, userContainer);
+            _rewardAdsService = new CasRewardAdService(logger, battleManager, userContainer);
             _interstitialAdsService = new CasInterstitialAdService(logger, userContainer);
-            _gameInitializer = gameInitializer;
             _logger = logger;
             _timerService = timerService;
             _adsConfigRepository = adsConfigRepository;
@@ -64,11 +64,9 @@ namespace _Game.Core.Ads
             _rewardAdsService.VideoLoaded += OnVideoLoaded;
             _interstitialAdsService.AdImpression += OnAdImpression;
             _interstitialAdsService.VideoLoaded += OnVideoLoaded;
-            
-            gameInitializer.OnPostInitialization += Init;
         }
 
-        private void Init()
+        void IInitializable.Initialize()
         {
             _manager = MobileAds.BuildManager()
                 .WithInitListener((success, error) =>
@@ -94,7 +92,7 @@ namespace _Game.Core.Ads
             }
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _rewardAdsService.UnRegister(_manager);
             _interstitialAdsService.UnRegister(_manager);
@@ -105,8 +103,6 @@ namespace _Game.Core.Ads
             _interstitialAdsService.VideoLoaded -= OnVideoLoaded;
             
             BattleStatistics.CompletedBattlesCountChanged -= OnCompletedBattleCountChanged;
-            
-            _gameInitializer.OnPostInitialization -= Init;
         }
 
 

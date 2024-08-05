@@ -55,7 +55,6 @@ namespace Assets._Game.Gameplay.Scenario
 
             public float Progress(float deltaTime)
             {
-                
                 deltaTime = _sequence.Progress(deltaTime);
                 
                 while (deltaTime >= 0f)

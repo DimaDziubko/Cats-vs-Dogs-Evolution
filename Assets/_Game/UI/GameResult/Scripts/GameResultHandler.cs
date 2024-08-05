@@ -1,13 +1,12 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.Navigation.Battle;
-using _Game.UI.GameResult.Scripts;
 using _Game.Utils;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
-using Assets._Game.Utils;
+using Assets._Game.Gameplay.GameResult.Scripts;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Gameplay.GameResult.Scripts
+namespace _Game.UI.GameResult.Scripts
 {
     public class GameResultHandler
     {
@@ -30,7 +29,8 @@ namespace Assets._Game.Gameplay.GameResult.Scripts
         
         public async UniTask<bool> ShowGameResultAndWaitForDecision(GameResultType result, bool wasExit = false)
         {
-            if(_coinCounter.Coins == 0 && !wasExit && _battleNavigator.CurrentBattle == 0) _coinCounter.AddCoins(Constants.Money.MIN_COINS_PER_BATTLE);
+            if(_coinCounter.Coins == 0 && !wasExit && _battleNavigator.CurrentBattle == 0) 
+                _coinCounter.AddCoins(Constants.Money.MIN_COINS_PER_BATTLE);
             
             if (_coinCounter.Coins > 0 && _featureUnlock.IsFeatureUnlocked(Feature.X2))
             {

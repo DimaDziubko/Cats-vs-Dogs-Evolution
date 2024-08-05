@@ -3,13 +3,10 @@ using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleStateHandler;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay.Food.Scripts;
-using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._CoinCounter.Scripts;
-using Assets._Game.Gameplay._UnitBuilder.Scripts;
-using Assets._Game.Gameplay.Food.Scripts;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.BattleMode
+namespace _Game.Core.Installers.BattleMode
 {
     public class BattleSystemInstaller : MonoInstaller
     {
@@ -22,13 +19,13 @@ namespace Assets._Game.Core.Installers.BattleMode
             BindUnitBuilderViewController();
             BindBattle();
             BindBattleStateHandler();
+            BindEndBattleHandler();
             BindBattleMode();
-            BindBattleMediator();
         }
-
+        
         private void BindFoodGenerator() =>
-            Container.Bind<IFoodGenerator>().To<FoodGenerator>().AsSingle();
-
+            Container.BindInterfacesAndSelfTo<FoodGenerator>().AsSingle();
+        
         private void BindCoinCounter() =>
             Container.BindInterfacesAndSelfTo<CoinCounter>().AsSingle();
 
@@ -37,21 +34,21 @@ namespace Assets._Game.Core.Installers.BattleMode
 
         private void BindBattleField() =>
             Container.Bind<BattleField>().AsSingle();
-
+        
         private void BindUnitBuilderViewController() =>
-            Container.Bind<IUnitBuilder>().To<UnitBuilderViewController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnitBuilderViewController>().AsSingle();
 
         private void BindBattle() =>
-            Container.Bind<Battle>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Battle>().AsSingle().NonLazy();
 
         private void BindBattleStateHandler() => 
-            Container.Bind<BattleStateHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BattleStateHandler>().AsSingle();
 
         private void BindBattleMode() =>
-            Container.BindInterfacesAndSelfTo<global::_Game.GameModes._BattleMode.Scripts.BattleMode>().AsSingle();
+            Container.BindInterfacesAndSelfTo<_BattleModes.Scripts.BattleMode>().AsSingle().NonLazy();
 
-        private void BindBattleMediator() => 
-            Container.BindInterfacesAndSelfTo<BattleMediator>().AsSingle().NonLazy();
+        private void BindEndBattleHandler() => 
+            Container.BindInterfacesAndSelfTo<EndBattleHandler>().AsSingle();
     }
     
 }

@@ -10,8 +10,5 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         event Action<GameTimer, bool> SpeedBoostTimerActivityChanged;
         void OnBattleSpeedBtnClicked();
         void OnBattleSpeedBtnShown();
-        void OnBattleStarted();
-        void OnBattleStopped();
-        void OnBattlePaused(bool isPaused);
     }
 }

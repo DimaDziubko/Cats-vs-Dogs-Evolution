@@ -18,14 +18,13 @@ using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Upgrades;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Timer.Scripts;
+using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core._RetentionChecker;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Gameplay._Timer.Scripts;
-using Assets._Game.Gameplay.BattleLauncher;
 using Zenject;
 
 namespace _Game.Core.Installers.Core
@@ -86,7 +85,7 @@ namespace _Game.Core.Installers.Core
 
         private void BindBeginGameManager() =>
             Container
-                .BindInterfacesAndSelfTo<BattleLaunchManager>()
+                .BindInterfacesAndSelfTo<BattleManager>()
                 .AsSingle();
 
         private void BindUpgradesCalculator() =>
@@ -120,7 +119,7 @@ namespace _Game.Core.Installers.Core
 
         private void BindAdsService() =>
             Container
-                .Bind<IAdsService>().To<CasAdsService>()
+                .BindInterfacesAndSelfTo<CasAdsService>()
                 .AsSingle()
                 .NonLazy();
 

@@ -35,12 +35,13 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         private readonly Color _unitIconAffordableColor = new Color(1f, 1f, 1f, 1f);
         private readonly Color _unitIconExpensiveColor = new Color(1f, 1f, 1f, 0.3f);
 
+        private IUnitBuilder _unitBuilder;
 
         [ShowInInspector]
         private int _foodPrice = int.MaxValue;
 
         private bool _tempButtonState;
-        
+
         public RectTransform RectTransform => _transform;
 
         private void Awake()
@@ -56,6 +57,8 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
         public void Initialize(IUnitBuilder unitBuilder, UnitBuilderBtnModel model)
         {
+            _unitBuilder = unitBuilder;
+            
             if (!model.DynamicData.IsUnlocked)
             {
                 Hide();
@@ -88,12 +91,10 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
             if (canAfford && !_button.interactable)
             {
-                if (_animation != null)
-                    _animation.DoScaleAnimation();
+                _animation.DoScaleAnimation();
             }
-
+            
             _button.interactable = _tempButtonState = canAfford;
-
             _priceText.color = canAfford ? _affordableColor : _expensiveColor;
             _unitIconHolder.color = canAfford ? _unitIconAffordableColor : _unitIconExpensiveColor;
         }
@@ -110,8 +111,11 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             Cleanup();
         }
 
-        private void Cleanup() =>
+        private void Cleanup()
+        {
+            ChangeState -= _unitBuilder.OnButtonChangeState;
             _button.onClick.RemoveAllListeners();
+        }
 
         public void SetPaused(in bool isPaused)
         {

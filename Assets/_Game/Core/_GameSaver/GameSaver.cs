@@ -1,13 +1,13 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.Communication;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._GameSaver;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -15,7 +15,10 @@ using UnityEngine;
 
 namespace _Game.Core._GameSaver
 {
-    public class GameSaver : IGameSaver, IDisposable
+    public class GameSaver : 
+        IGameSaver, 
+        IDisposable,
+        IStopBattleListener
     {
         private readonly IUserContainer _userContainer;
         private readonly IUserStateCommunicator _communicator;
@@ -98,10 +101,7 @@ namespace _Game.Core._GameSaver
 
         private void OnRaceChanged() => 
             SaveGame();
-
-        public void OnBattleStopped() => 
-            SaveGame();
-
+        
         private void OnFoodBoostChanged() => 
             SaveGame();
 
@@ -134,5 +134,10 @@ namespace _Game.Core._GameSaver
         
         private void SaveGame() => 
             _communicator.SaveUserState(_userContainer.State);
+
+        void IStopBattleListener.OnStopBattle()
+        {
+            SaveGame();
+        }
     }
 }

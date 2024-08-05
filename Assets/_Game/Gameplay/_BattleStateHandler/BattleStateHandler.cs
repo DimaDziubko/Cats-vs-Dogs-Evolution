@@ -1,33 +1,22 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._GameListenerComposite;
 using _Game.Core.GameState;
 using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
-using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 
 namespace _Game.Gameplay._BattleStateHandler
 {
-    public class BattleStateHandler
+    public class BattleStateHandler : IStartBattleListener
     {
         private readonly IGameStateMachine _stateMachine;
         
-        private IBattleMediator _battleMediator;
-
-        public BattleStateHandler(IGameStateMachine stateMachine)
-        {
+        public BattleStateHandler(IGameStateMachine stateMachine) => 
             _stateMachine = stateMachine;
-        }
-        
-        public void SetMediator(IBattleMediator battleMediator)
-        {
-            _battleMediator = battleMediator;
-        }
 
-        public void HandleStart()
-        {
+        void IStartBattleListener.OnStartBattle() => 
             _stateMachine.Enter<GameLoopState>();
-        }
 
         public void GoToMainMenu(Queue<ILoadingOperation> operations)
         {

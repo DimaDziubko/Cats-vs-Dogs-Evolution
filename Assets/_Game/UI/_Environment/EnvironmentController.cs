@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Gameplay._Battle.Scripts;
-using Assets._Game.UI._Environment;
 using Assets._Game.UI._Environment.Factory;
+using Zenject;
 
 namespace _Game.UI._Environment
 {
-    public class EnvironmentController : IDisposable
+    public class EnvironmentController : IInitializable, IDisposable
     {
         private readonly IEnvironmentFactory _factory;
         private readonly IBattlePresenter _battlePresenter;
@@ -24,21 +24,22 @@ namespace _Game.UI._Environment
             _battlePresenter = battlePresenter;
         }
 
-        public void Init()
+        void IInitializable.Initialize()
         {
             ShowEnvironment(_battlePresenter.BattleData.EnvironmentData);
             _battlePresenter.BattleDataUpdated += OnBattleDataUpdated;
+        }
+
+
+        void IDisposable.Dispose()
+        {
+            _battlePresenter.BattleDataUpdated -= OnBattleDataUpdated;
         }
 
         private void OnBattleDataUpdated(BattleData data, bool needClearCache)
         {
             if(needClearCache) Cleanup();
             ShowEnvironment(data.EnvironmentData);
-        }
-
-        public void Dispose()
-        {
-            _battlePresenter.BattleDataUpdated -= OnBattleDataUpdated;
         }
 
         private void ShowEnvironment(EnvironmentData environmentData)

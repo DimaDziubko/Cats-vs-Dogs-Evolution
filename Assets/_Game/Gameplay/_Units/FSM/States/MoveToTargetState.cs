@@ -1,8 +1,8 @@
 ﻿using _Game.Gameplay._Units.FSM;
 using _Game.Gameplay._Units.FSM.States;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Gameplay._Units.Scripts.Movement;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Units.Scripts.Movement;
 
 namespace Assets._Game.Gameplay._Units.FSM.States
 {

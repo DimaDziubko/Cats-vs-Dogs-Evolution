@@ -114,6 +114,8 @@ namespace _Game.Gameplay._Bases.Scripts
             Position = position;
         }
 
+        public override void SetPaused(in bool isPaused) => _effector.enabled = !isPaused;
+
         public void UpdateHealth(float health) => _health.UpdateData(health);
 
         public void ShowHealth() => _health.ShowHealth();

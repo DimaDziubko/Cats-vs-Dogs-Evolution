@@ -1,4 +1,4 @@
-﻿using Assets._Game.Core.Services._FoodBoostService.Scripts;
+﻿using _Game.Core.Services._FoodBoostService.Scripts;
 using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 

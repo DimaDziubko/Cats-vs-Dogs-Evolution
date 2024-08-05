@@ -3,6 +3,7 @@ using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Pause.Scripts;
 using CAS;
@@ -18,22 +19,22 @@ namespace _Game.Core.Ads
         public bool IsRewardedVideoReady => _isRewardedVideoReady;
 
         private readonly IGameInitializer _gameInitializer;
-        private readonly IPauseManager _pauseManager;
+        private readonly IBattleManager _battleManager;
         private readonly IMyLogger _logger;
         private readonly IUserContainer _userContainer;
-        
+
         private Action _onVideoCompleted;
         private Placement _placement;
 
         private IMediationManager _manager;
-        
+
         public CasRewardAdService(
             IMyLogger logger,
-            IPauseManager pauseManager,
+            IBattleManager battleManager,
             IUserContainer userContainer)
         {
             _logger = logger;
-            _pauseManager = pauseManager;
+            _battleManager = battleManager;
             _userContainer = userContainer;
         }
         
@@ -45,7 +46,7 @@ namespace _Game.Core.Ads
                 return;
             }
             
-            _pauseManager.SetPaused(true);
+            _battleManager.SetPaused(true);
             _manager.ShowAd(AdType.Rewarded);
             _onVideoCompleted = onVideoCompleted;
             _placement = placement;
@@ -89,7 +90,7 @@ namespace _Game.Core.Ads
 
         private void OnRewardedAdCompleted()
         {
-            if (_pauseManager.IsPaused) _pauseManager.SetPaused(false);
+            if (_battleManager.IsPaused) _battleManager.SetPaused(false);
             _onVideoCompleted?.Invoke();
             _onVideoCompleted = null;
             _manager.LoadAd(AdType.Rewarded);

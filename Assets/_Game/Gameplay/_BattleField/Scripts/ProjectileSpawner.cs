@@ -2,43 +2,38 @@
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Common;
-using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class ProjectileSpawner : IShootProxy, IPauseHandler, IBattleSpeedHandler
+    public class ProjectileSpawner : IShootProxy
     {
         private readonly IProjectileFactory _projectileFactory;
         private readonly IVFXProxy _vfxProxy;
-        private readonly IBattleSpeedManager _speedManager;
+        private readonly IBattleSpeedManager _battleSpeedManager;
 
         private readonly GameBehaviourCollection _projectiles = new GameBehaviourCollection();
         private readonly IInteractionCache _cache;
 
         public ProjectileSpawner(
             IProjectileFactory projectileFactory,
-            IPauseManager pauseManager,
             IInteractionCache cache,
             IVFXProxy vfxProxy,
-            IBattleSpeedManager speedManager)
+            IBattleSpeedManager battleSpeedManager)
         {
             _projectileFactory = projectileFactory;
             _cache = cache;
             _vfxProxy = vfxProxy;
-            _speedManager = speedManager;
-            
-            pauseManager.Register(this);
-            speedManager.Register(this);
+            _battleSpeedManager = battleSpeedManager;
         }
 
-        public void GameUpdate()
+        public void GameUpdate(float deltaTime)
         {
-            _projectiles.GameUpdate();
+            _projectiles.GameUpdate(deltaTime);
         }
 
-        void IPauseHandler.SetPaused(bool isPaused)
+        public void SetPaused(bool isPaused)
         {
             _projectiles.SetPaused(isPaused);
         }
@@ -59,12 +54,12 @@ namespace _Game.Gameplay._BattleField.Scripts
                 data.Target, 
                 _cache,
                 data.LaunchRotation,
-                _speedManager.CurrentSpeedFactor);
+                _battleSpeedManager.CurrentSpeedFactor);
             
             _projectiles.Add(projectile);
         }
 
-        public void SetFactor(float speedFactor)
+        public void SetSpeedFactor(float speedFactor)
         {
             _projectiles.SetBattleSpeedFactor(speedFactor);
         }
