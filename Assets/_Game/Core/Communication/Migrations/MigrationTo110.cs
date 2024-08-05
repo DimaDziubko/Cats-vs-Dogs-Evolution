@@ -26,12 +26,15 @@ namespace _Game.Core.Communication.Migrations
             
             state.DailyTasksState ??= new DailyTasksState()
             {
-                //TODO Set initital state
+                ProgressOnTask = 0,
+                CompletedTasks = new List<Task>(),
+                CurrentTaskIdx = 0,
+                LastTimeGenerated = DateTime.Now
             };
             
             state.TasksState ??= new TasksState()
             {
-                //TODO Set initial state
+                TotalCompletedTasks = 0
             };
         }
     }

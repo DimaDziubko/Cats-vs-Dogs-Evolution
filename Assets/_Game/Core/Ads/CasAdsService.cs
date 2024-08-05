@@ -12,12 +12,12 @@ using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
 using CAS;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace _Game.Core.Ads
 {
-    public class CasAdsService : IAdsService,IDisposable
+    public class CasAdsService : IAdsService, IDisposable
     {
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
@@ -34,9 +34,9 @@ namespace _Game.Core.Ads
         private readonly CasInterstitialAdService _interstitialAdsService;
 
         private IMediationManager _manager;
-
-        private bool _isTimeForInterstitial;
-        public bool IsTimeForInterstitial => _isTimeForInterstitial; 
+        
+        [ShowInInspector]
+        public bool IsTimeForInterstitial { get; private set; }
 
         public bool CanShowInterstitial => 
             _adsConfigRepository.GetConfig().IsInterstitialActive &&
@@ -75,13 +75,15 @@ namespace _Game.Core.Ads
                 {
                     _rewardAdsService.Register(_manager);
                     _interstitialAdsService.Register(_manager);
-                    _isTimeForInterstitial = true;
+                    IsTimeForInterstitial = false;
                     _logger.Log("success: " + success);
 
                 }).Initialize();
 
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleCountChanged;
-
+            
+            var delay = _adsConfigRepository.GetConfig().RewardInterstitialDelay;
+            StartCountdown(delay);
         }
 
         private void OnCompletedBattleCountChanged()
@@ -135,40 +137,43 @@ namespace _Game.Core.Ads
         public void ShowRewardedVideo(Action onVideoCompleted, Placement placement)
         {
             _rewardAdsService.ShowRewardedVideo(onVideoCompleted, placement);
-            _isTimeForInterstitial = false;
-            StartCountdown();
+            var delay = _adsConfigRepository.GetConfig().RewardInterstitialDelay;
+            StartCountdown(delay);
         }
 
         public void ShowInterstitialVideo(Placement placement)
         {
-            if (_isTimeForInterstitial && CanShowInterstitial)
+            if (IsTimeForInterstitial && CanShowInterstitial)
             {
                 _interstitialAdsService.ShowVideo(placement);
-                _isTimeForInterstitial = false;
-                StartCountdown();
+                var delay = _adsConfigRepository.GetConfig().InterstitialDelay;
+                StartCountdown(delay);
             }
         }
 
-        private void StartCountdown()
+        private void StartCountdown(float delay)
         {
+            _logger.Log("START INTERSTITIAL COUNTDOWN!");
+            IsTimeForInterstitial = false;
+            
             GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
             if (timer != null)
             {
                 timer.Stop();
                 _timerService.RemoveTimer(TimerType.InterstitialAdDelay);
             }
-
-            var config = _adsConfigRepository.GetConfig();
-
+            
             TimerData timerData = new TimerData
             {
                 Countdown = true, 
-                Duration = config.InterstitialDelay, 
-                StartValue = config.InterstitialDelay
+                Duration = delay, 
+                StartValue = delay
             };
             
             _timerService.CreateTimer(TimerType.InterstitialAdDelay, timerData, OnInterstitialAdTimerOut);
             _timerService.StartTimer(TimerType.InterstitialAdDelay);
+            
+            _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!");
         }
 
         private bool IsInternetConnected() => 
@@ -181,6 +186,6 @@ namespace _Game.Core.Ads
             AdImpression?.Invoke(dto);
 
         private void OnInterstitialAdTimerOut() => 
-            _isTimeForInterstitial = true;
+            IsTimeForInterstitial = true;
     }
 }

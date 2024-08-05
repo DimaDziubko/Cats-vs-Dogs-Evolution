@@ -2,5 +2,6 @@
 {
     public class TasksState : ITasksStateReadonly
     {
+        public int TotalCompletedTasks;
     }
 }

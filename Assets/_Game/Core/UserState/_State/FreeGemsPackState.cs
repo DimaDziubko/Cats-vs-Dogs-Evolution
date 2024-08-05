@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public class FreeGemsPackState : IFreeGemsPackStateReadonly
     {

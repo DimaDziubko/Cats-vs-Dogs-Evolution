@@ -109,12 +109,15 @@ namespace _Game.Core.UserState._State
                 
                 DailyTasksState = new DailyTasksState()
                 {
-                    //TODO Set initial state
+                    ProgressOnTask = 0,
+                    CompletedTasks = new List<Task>(),
+                    CurrentTaskIdx = 0,
+                    LastTimeGenerated = DateTime.Now
                 },
                 
                 TasksState = new TasksState()
                 {
-                    //TODO Set initial state
+                    TotalCompletedTasks = 0
                 }
             };
         }
