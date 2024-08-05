@@ -40,7 +40,7 @@ namespace _Game.Core.Ads
 
         public bool CanShowInterstitial => 
             _adsConfigRepository.GetConfig().IsInterstitialActive &&
-            (Purchases.BoughtIAPs?.Find(x => x.Count > 0) != null) &&
+            (Purchases.BoughtIAPs?.Find(x => x.Count > 0) == null) &&
             IsInternetConnected();
 
         public CasAdsService(

@@ -11,7 +11,7 @@ namespace _Game.Core.Installers.BattleMode
         }
 
         private void BindRaceSelectionController() =>
-            Container.Bind<RaceSelectionController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<RaceSelectionController>().AsSingle().NonLazy();
         
     }
 }

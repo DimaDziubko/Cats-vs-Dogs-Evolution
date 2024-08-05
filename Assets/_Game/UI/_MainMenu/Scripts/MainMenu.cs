@@ -165,8 +165,11 @@ namespace _Game.UI._MainMenu.Scripts
         private void OnBattleButtonClick(ToggleButton button) => 
             _menuStateMachine.Enter<BattleState>();
 
-        private void OnUpgradeButtonClick(ToggleButton button) => 
+        private void OnUpgradeButtonClick(ToggleButton button)
+        {
             _menuStateMachine.Enter<UpgradesState>();
+            _upgradesTutorialStep.CompleteStep();
+        }
 
         private void OnShopButtonClick(ToggleButton button) => 
             _menuStateMachine.Enter<ShopState>();
