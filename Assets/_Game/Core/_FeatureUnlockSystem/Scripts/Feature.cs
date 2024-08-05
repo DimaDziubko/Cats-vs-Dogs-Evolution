@@ -1,14 +1,15 @@
-﻿namespace Assets._Game.Core._FeatureUnlockSystem.Scripts
+﻿namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
     public enum Feature
     {
         None,
         AlwaysUnlocked,
-        UpgradesWindow,
-        EvolutionWindow,
+        UpgradesScreen,
+        EvolutionScreen,
         Pause,
         FoodBoost,
         BattleSpeed,
-        X2
+        X2,
+        Shop,
     }
 }

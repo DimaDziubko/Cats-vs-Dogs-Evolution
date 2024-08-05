@@ -223,7 +223,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         private void OnFeatureUnlocked(Feature feature)
         {
-            if (feature == Feature.EvolutionWindow)
+            if (feature == Feature.EvolutionScreen)
             {
                 _evolutionButton.Cleanup();
                 _evolutionButton.Initialize(_featureUnlockSystem.IsFeatureUnlocked(_evolutionButton),

@@ -62,9 +62,9 @@ namespace _Game.Utils
         public sealed class TutorialStepTreshold
         {
             public const int UNIT_BUILDER_BUTTON = 0;
-            public const int UPGRADES_WINDOW = 1;
+            public const int UPGRADES_SCREEN = 1;
             public const int FOOD_UPGRADE_ITEM = 2;
-            public const int EVOLUTION_WINDOW = 3;
+            public const int EVOLUTION_SCREEN = 3;
         }
 
         public static class FeatureCompletedBattleThresholds
@@ -72,9 +72,10 @@ namespace _Game.Utils
             public const int BATTLE_SPEED = 10;
             public const int FOOD_BOOST = 2;
             public const int PAUSE = 1;
-            public const int UPGRADES_WINDOW = 1;
-            public const int EVOLUTION_WINDOW = 3;
+            public const int UPGRADES_SCREEN = 1;
+            public const int EVOLUTION_SCREEN = 3;
             public const int X2 = 3;
+            public const int SHOP = 6;
         }
 
         public sealed class ConfigKeys

@@ -69,7 +69,9 @@ namespace _Game.UI._MainMenu.Scripts
         private bool IsUpgradesUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_upgradeButton);
         private bool IsBattleUnlocked => true;
         private bool IsCardsUnlocked => false;
-        private bool IsShopUnlocked => true;
+        
+        //TODO Add unlock condition
+        private bool IsShopUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_shopButton);
 
         public void Construct(
             IWorldCameraService cameraService,

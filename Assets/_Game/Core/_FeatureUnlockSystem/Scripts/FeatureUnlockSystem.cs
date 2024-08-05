@@ -65,9 +65,9 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
 
         private void CheckForEvolutionFeatureUnlock()
         {
-            if (GetTresholdForEvolutionWindow())
+            if (GetTresholdForEvolutionScreen())
             {
-                FeatureUnlocked?.Invoke(Feature.EvolutionWindow);
+                FeatureUnlocked?.Invoke(Feature.EvolutionScreen);
             }
         }
 
@@ -86,30 +86,35 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
                     return GetTresholdForFoodBoost();
                 case Feature.AlwaysUnlocked:
                     return true;
-                case Feature.UpgradesWindow:
-                    return GetTresholdForUpgradesWindow();
-                case Feature.EvolutionWindow:
-                    return GetTresholdForEvolutionWindow();
+                case Feature.UpgradesScreen:
+                    return GetTresholdForUpgradesScreen();
+                case Feature.EvolutionScreen:
+                    return GetTresholdForEvolutionScreen();
                 case Feature.BattleSpeed:
                     return GetTresholdForBattleSpeed();
                 case Feature.X2:
                     return GetTresholdForX2();
+                case Feature.Shop:
+                    return GetTresholdForShop();
                 default:
                     return false;
             }
         }
 
+        private bool GetTresholdForShop() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_SCREEN &&
+                BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.SHOP;
+
         private bool GetTresholdForX2() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.FOOD_UPGRADE_ITEM &&
                 BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.X2;
         
-
         private bool GetTresholdForBattleSpeed() => TimelineState.TimelineId > 0 ||
             TimelineState.AgeId >= BATTLE_SPEED_AGE_TRESHOLD;
 
-        private bool GetTresholdForEvolutionWindow() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_WINDOW &&
-                BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.EVOLUTION_WINDOW;
+        private bool GetTresholdForEvolutionScreen() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_SCREEN &&
+                BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.EVOLUTION_SCREEN;
 
         private bool GetTresholdForFoodBoost() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.FOOD_UPGRADE_ITEM &&
@@ -118,8 +123,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         private bool GetTresholdForPause() =>
             TimelineState.AgeId >= PAUSE_AGE_TRESHOLD;
 
-        private bool GetTresholdForUpgradesWindow() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.UPGRADES_WINDOW &&
-            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.UPGRADES_WINDOW;
+        private bool GetTresholdForUpgradesScreen() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.UPGRADES_SCREEN &&
+            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.UPGRADES_SCREEN;
     }
 }
