@@ -745,6 +745,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
     - target: {fileID: 4194791445867457061, guid: 665970acfcb89c247aa17eae51af6160, type: 3}
+      propertyPath: m_Color.a
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194791445867457061, guid: 665970acfcb89c247aa17eae51af6160, type: 3}
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
@@ -818,6 +822,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2639045974477056603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3509316204507592404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2270095202162268836}
+  _weaponAimBone: {fileID: 7649976188477299630}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!114 &4308460267675342782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,22 +874,6 @@ MonoBehaviour:
     IgnoreListenerPause: 0
     RolloffMode: 0
   _muzzleTransform: {fileID: 8735983466145912776}
---- !u!114 &2639045974477056603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3509316204507592404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 2270095202162268836}
-  _weaponAimBone: {fileID: 7649976188477299630}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!212 &4395200274971327950 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 840683276609890983, guid: 665970acfcb89c247aa17eae51af6160, type: 3}

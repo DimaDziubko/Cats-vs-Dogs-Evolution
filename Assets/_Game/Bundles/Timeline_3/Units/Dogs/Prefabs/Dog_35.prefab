@@ -597,6 +597,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
     - target: {fileID: 4194791445867457061, guid: 21cfdbb08957f0a4da040e189653d732, type: 3}
+      propertyPath: m_Color.a
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194791445867457061, guid: 21cfdbb08957f0a4da040e189653d732, type: 3}
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
@@ -677,6 +681,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3639812191828609153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749153000015844634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5105794616362550017}
+  _weaponAimBone: {fileID: 1350974148736201640}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!114 &7291534033040318781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,22 +734,6 @@ MonoBehaviour:
     RolloffMode: 0
   _projectileGenerator: {fileID: 1350974148736201640}
   _muzzleTransform: {fileID: 0}
---- !u!114 &3639812191828609153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749153000015844634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 5105794616362550017}
-  _weaponAimBone: {fileID: 1350974148736201640}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!4 &1922367970426195321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 21cfdbb08957f0a4da040e189653d732, type: 3}

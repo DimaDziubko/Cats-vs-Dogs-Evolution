@@ -745,6 +745,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
     - target: {fileID: 4194791445867457061, guid: 6f34118454d3a6f4d9313c5bd244f1d3, type: 3}
+      propertyPath: m_Color.a
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194791445867457061, guid: 6f34118454d3a6f4d9313c5bd244f1d3, type: 3}
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
@@ -834,22 +838,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7852204797752100238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994398664516944580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8318547376255001754}
-  _weaponAimBone: {fileID: 4698437166074392510}
-  _minAngle: -60
-  _maxAngle: 60
 --- !u!114 &1223485055815540799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,6 +874,22 @@ MonoBehaviour:
     IgnoreListenerPause: 0
     RolloffMode: 0
   _muzzleTransform: {fileID: 4634435763446754942}
+--- !u!114 &7852204797752100238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994398664516944580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3952d09ee5d2406d9b552f63d7055e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8318547376255001754}
+  _weaponAimBone: {fileID: 4698437166074392510}
+  _minAngle: -60
+  _maxAngle: 60
 --- !u!212 &3655668150654547423 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: -5840673886908426586, guid: 6f34118454d3a6f4d9313c5bd244f1d3, type: 3}
