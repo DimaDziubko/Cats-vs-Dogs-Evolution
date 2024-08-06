@@ -1,23 +1,18 @@
-using System;
 using System.Collections;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.GameState;
+using _Game.Temp;
 using _Game.UI._MainMenu.State;
 using _Game.UI._Shop.Scripts;
-using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.GameState;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
-using Assets._Game.UI.Common.Scripts;
-using Assets._Game.Utils.Disposable;
 using UnityEngine;
 
 namespace _Game.UI._MainMenu.Scripts
@@ -135,8 +130,11 @@ namespace _Game.UI._MainMenu.Scripts
             _upgradesTutorialStep.ShowStep();
         }
         
-        private void Subscribe() => 
+        private void Subscribe()
+        {
             _upgradesChecker.Notify += OnUpgradesNotified;
+            GlobalEvents.OnInsufficientFunds += OnInfufficientFunds;
+        }
 
         private void OnUpgradesNotified(NotificationData data)
         {
@@ -162,7 +160,10 @@ namespace _Game.UI._MainMenu.Scripts
         private void Unsubscribe()
         {
             _upgradesChecker.Notify -= OnUpgradesNotified;
+            GlobalEvents.OnInsufficientFunds -= OnInfufficientFunds;
         }
+
+        private void OnInfufficientFunds() => OnShopButtonClick(_shopButton);
 
         private void OnBattleButtonClick(ToggleButton button) => 
             _menuStateMachine.Enter<BattleState>();

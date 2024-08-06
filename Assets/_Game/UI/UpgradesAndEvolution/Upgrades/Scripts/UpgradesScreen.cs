@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
@@ -130,6 +131,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private async void OnTryUpgrade(float price)
         {
+            if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             var isExit =  await popup.Value.ShowAndAwaitForDecision(price);
             if(isExit) popup.Dispose();

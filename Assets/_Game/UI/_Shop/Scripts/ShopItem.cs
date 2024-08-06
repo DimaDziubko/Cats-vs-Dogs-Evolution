@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services.IAP;
+using _Game.Temp;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Factory;
 using _Game.Utils;
@@ -93,11 +94,13 @@ namespace _Game.UI._Shop.Scripts
         {
             _button.Init();
             _button.Click += OnTransactionButtonClicked;
+            _button.InactiveClick += OnInactiveButtonClicked;
         }
 
         public void Release()
         {
             _button.Click -= OnTransactionButtonClicked;
+            _button.InactiveClick -= OnInactiveButtonClicked;
             _button.Cleanup();
             OriginFactory.Reclaim(this);
         }
@@ -107,5 +110,7 @@ namespace _Game.UI._Shop.Scripts
             _shopPresenter.TryToBuy(_productDescription);
             _audioService.PlayButtonSound();
         }
+
+        private void OnInactiveButtonClicked() => GlobalEvents.RaiseOnInsufficientFunds();
     }
 }

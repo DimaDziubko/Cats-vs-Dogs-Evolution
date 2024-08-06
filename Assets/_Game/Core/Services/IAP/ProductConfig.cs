@@ -1,4 +1,5 @@
-﻿using _Game.Core.Configs.Models;
+﻿using System.Collections.Generic;
+using _Game.Core.Configs.Models;
 using _Game.UI.Factory;
 using UnityEngine.Purchasing;
 
@@ -11,7 +12,6 @@ namespace _Game.Core.Services.IAP
         public string MinorProductIconKey;
         public int Price;
         public float Quantity;
-        public Exponential QuantityExponential;
         public string Description;
         public ItemType ItemType;
         public string CurrencyIconKey;
@@ -20,5 +20,6 @@ namespace _Game.Core.Services.IAP
         public string IGP_ID;
         public int MaxPurchaseCount;
         public ShopItemViewType ItemViewType;
+        public List<LinearFunction> LinearFunctions;
     }
 }

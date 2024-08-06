@@ -87,6 +87,10 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _shopPresenter.ShopItemsUpdated -= _container.UpdateShopItems;
         }
 
+        public void ForceHide()
+        {
+            _taskCompletion?.TrySetResult(true);
+        }
 
         private void Hide()
         {
@@ -115,5 +119,6 @@ namespace _Game.UI._Shop._MiniShop.Scripts
 
         private void UpdateCoinsLabelColor() => 
             _coinsLabel.color = Currencies.Coins < _price ? Color.red : Color.white;
+        
     }
 }

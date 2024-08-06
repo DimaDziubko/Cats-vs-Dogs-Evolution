@@ -94,8 +94,10 @@ namespace _Game.Core.Services.IGPService
             {
                 if (config.ItemType == ItemType.Coins)
                 {
-                    var level = Mathf.Max(TimelineState.BaseHealthLevel, TimelineState.FoodProductionLevel);
-                    config.Quantity = config.QuantityExponential.GetValue(level);
+                    //var level = Mathf.Max(TimelineState.BaseHealthLevel, TimelineState.FoodProductionLevel);
+                    //config.Quantity = config.QuantityExponential.GetValue(level);
+                    config.Quantity = config.LinearFunctions[TimelineState.AgeId]
+                        .GetValue(TimelineState.FoodProductionLevel);
                 }
                 
                 yield return new ProductDescription()
