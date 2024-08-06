@@ -1,4 +1,5 @@
-﻿using Assets._Game.Gameplay._Weapon.Scripts;
+﻿using _Game.Gameplay._Weapon.Scripts;
+using Assets._Game.Gameplay._Weapon.Scripts;
 
 namespace _Game.Core.DataPresenters.WeaponDataPresenter
 {

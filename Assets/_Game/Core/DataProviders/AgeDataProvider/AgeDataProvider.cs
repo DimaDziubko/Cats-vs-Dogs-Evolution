@@ -7,6 +7,7 @@ using _Game.Core.Data.Age.Static;
 using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils;
 using Assets._Game.Core._Logger;

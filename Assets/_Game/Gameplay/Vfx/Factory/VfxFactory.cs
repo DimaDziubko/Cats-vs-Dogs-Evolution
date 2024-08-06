@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.Utils;
 using Assets._Game.Core.Factory;

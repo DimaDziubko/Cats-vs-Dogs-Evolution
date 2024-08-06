@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -389912175
   m_SortingLayer: 2
   m_SortingOrder: 6
-  m_Sprite: {fileID: -7359113946921847260, guid: d15f8f5945b57694bbd2782219d3f56c, type: 3}
+  m_Sprite: {fileID: 2110958837, guid: a43778be4423b004c8cb6570268d922e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -182,6 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 1097833219250537064}
   _move: {fileID: 4782881472514779018}
+  _rotator: {fileID: 0}
   _soundData:
     Clip: {fileID: 8300000, guid: 7d6065146ea6cfc49ae32170cfd17f1d, type: 3}
     MixerGroup: {fileID: 1224378660055227196, guid: a900eeaac6c5b8449b86bfe8690bd157, type: 2}

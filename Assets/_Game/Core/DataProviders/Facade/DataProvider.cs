@@ -10,6 +10,7 @@ using _Game.Core.DataProviders.UnitBuilderDataProvider;
 using _Game.Core.DataProviders.UnitDataProviders;
 using _Game.Core.DataProviders.UnitUpgradeDataProvider;
 using _Game.Core.DataProviders.WeaponDataProviders;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.UI._Environment;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;

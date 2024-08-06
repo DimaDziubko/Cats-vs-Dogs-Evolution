@@ -2,6 +2,7 @@
 using _Game.Core.Configs.Models;
 using _Game.Core.Data;
 using _Game.Core.DataProviders.BaseDataProvider;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.UI._Environment;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;

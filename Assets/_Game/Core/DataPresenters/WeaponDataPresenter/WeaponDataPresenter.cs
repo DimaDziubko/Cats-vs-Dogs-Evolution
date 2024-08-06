@@ -1,29 +1,31 @@
-﻿using _Game.Core.Data;
-using _Game.Core.DataPresenters.WeaponDataPresenter;
+﻿using _Game.Core.AssetManagement;
+using _Game.Core.Data;
 using _Game.Core.Navigation.Battle;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.Utils;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.Data;
-using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Utils;
+using UnityEngine;
 
-namespace Assets._Game.Core.DataPresenters.WeaponDataPresenter
+namespace _Game.Core.DataPresenters.WeaponDataPresenter
 {
     public class WeaponDataPresenter : IWeaponDataPresenter
     {
         private readonly IGeneralDataPool _dataPool;
         private readonly IBattleNavigator _navigator;
         private readonly IMyLogger _logger;
+        private readonly IAssetRegistry _assetRegistry;
 
         public WeaponDataPresenter(
             IGeneralDataPool dataPool,
             IBattleNavigator navigator,
-            IMyLogger logger
+            IMyLogger logger,
+            IAssetRegistry assetRegistry
         )
         {
             _dataPool = dataPool;
             _navigator = navigator;
             _logger = logger;
+            _assetRegistry = assetRegistry;
         }
         
         public WeaponData GetWeaponData(int weaponId, int context)
@@ -32,15 +34,14 @@ namespace Assets._Game.Core.DataPresenters.WeaponDataPresenter
             {
                 return _dataPool.AgeStaticData.ForWeapon(weaponId);
             }
-            else if(context == Constants.CacheContext.BATTLE)
+
+            if(context == Constants.CacheContext.BATTLE)
             {
                 return _dataPool.BattleStaticData.ForWeapon(_navigator.CurrentBattle, weaponId);
             }
-            else
-            {
-                _logger.LogError("UnitDataPresenter GetUnitData There is no such context");
-                return null;
-            }
+
+            _logger.LogError("UnitDataPresenter GetUnitData There is no such context");
+            return null;
         }
     }
 }

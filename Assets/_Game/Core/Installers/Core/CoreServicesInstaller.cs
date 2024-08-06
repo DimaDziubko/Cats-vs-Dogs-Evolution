@@ -76,7 +76,7 @@ namespace _Game.Core.Installers.Core
         private void BindStaticDataService()
         {
             AssetProvider assetProvider = new AssetProvider();
-            Container.Bind<IAssetProvider>()
+            Container.BindInterfacesAndSelfTo<AssetProvider>()
                 .FromInstance(assetProvider)
                 .AsSingle().NonLazy();
         }

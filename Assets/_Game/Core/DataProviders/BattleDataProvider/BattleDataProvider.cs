@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
-using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Data;
 using _Game.Core.Data.Battle;
@@ -9,18 +8,14 @@ using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.UI._Environment;
 using _Game.Utils;
 using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
-using Assets._Game.Core.Data;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.UI._Environment;
-using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -54,13 +49,13 @@ namespace _Game.Core.DataProviders.BattleDataProvider
             IEnumerable<BattleConfig> battleConfigs = _timelineConfigRepository.GetBattleConfigs();
             
             var unitTask = LoadUnits(battleConfigs, timelineId);
-            var weaponTask = LoadWeapons(battleConfigs, timelineId);
             var baseTask = LoadBases(battleConfigs, timelineId);
             var environmentTask = LoadEnvironments(battleConfigs, timelineId);
             var ambienceTask = LoadAmbience(battleConfigs, timelineId);
             var battleData = LoadBattleScenarioData(battleConfigs);
             var baseHealth = LoadBaseHealth(battleConfigs);
-            
+            var weaponTask = LoadWeapons(battleConfigs, timelineId);
+
             var result = await UniTask.WhenAll(unitTask, weaponTask, baseTask, environmentTask, ambienceTask);
             
             BattleStaticData ageStaticData = new BattleStaticData()

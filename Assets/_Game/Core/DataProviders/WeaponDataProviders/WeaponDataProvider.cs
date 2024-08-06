@@ -34,6 +34,9 @@ namespace _Game.Core.DataProviders.WeaponDataProviders
             var projectileExplosionPrefab = await LoadComponent<ProjectileExplosion>(options.Config.ProjectileExplosionKey, options.context);
 
             _logger.Log($"Weapon with id {options.Config.Id} load successfully");
+            _logger.Log($"ProjectilePrefab {options.Config.ProjectileKey} is null {projectilePrefab == null}");
+            _logger.Log($"MuzzlePrefab {options.Config.MuzzleKey}  is null {muzzlePrefab == null}");
+            _logger.Log($"ProjectileExplosionPrefab{options.Config.ProjectileExplosionKey} is null {projectileExplosionPrefab == null}");
             
             return new WeaponData()
             {

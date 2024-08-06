@@ -15,11 +15,8 @@ namespace _Game._AssetProvider
 
         private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new Dictionary<string, List<AsyncOperationHandle>>();
 
-        public void Initialize()
-        {
-            Addressables.InitializeAsync();
-        }
-        
+        void IInitializable.Initialize() => Addressables.InitializeAsync();
+
         public UniTask<GameObject> Instantiate(string address) => 
             Addressables.InstantiateAsync(address).ToUniTask();
 
@@ -70,7 +67,7 @@ namespace _Game._AssetProvider
             }
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             CleanUp();
         }

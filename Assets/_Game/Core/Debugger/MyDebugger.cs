@@ -6,6 +6,7 @@ using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Environment;
 using _Game.UI._Hud._BattleSpeedView;
