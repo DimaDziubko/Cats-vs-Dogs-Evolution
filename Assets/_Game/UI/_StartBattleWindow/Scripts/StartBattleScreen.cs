@@ -158,7 +158,6 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void OnStartButtonClick()
         {
             PlayButtonSound();
-            //_battleManager.TriggerLaunchBattle();
             _battleManager.StartBattle();
         }
 

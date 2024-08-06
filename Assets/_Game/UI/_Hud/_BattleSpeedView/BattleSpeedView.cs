@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services._BattleSpeedService._Scripts;
+using _Game.Gameplay._Timer.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Timer.Scripts;
 using UnityEngine;

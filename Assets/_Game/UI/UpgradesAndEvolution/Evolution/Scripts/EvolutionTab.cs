@@ -1,4 +1,5 @@
 using System;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
@@ -80,6 +81,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private async void OnInactiveButtonClick()
         {
+            if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             bool isExit = await popup.Value.ShowAndAwaitForDecision(_evolutionPresenter.GetEvolutionPrice());
             if(isExit) popup.Dispose();

@@ -35,8 +35,11 @@ namespace _Game.Core.Ads
 
         private IMediationManager _manager;
         
-        [ShowInInspector]
         public bool IsTimeForInterstitial { get; private set; }
+        public float TimeLeft => _timer.TimeLeft;
+        
+        private GameTimer _timer;
+        
 
         public bool CanShowInterstitial => 
             _adsConfigRepository.GetConfig().IsInterstitialActive &&
@@ -153,7 +156,7 @@ namespace _Game.Core.Ads
 
         private void StartCountdown(float delay)
         {
-            _logger.Log("START INTERSTITIAL COUNTDOWN!");
+            _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}");
             IsTimeForInterstitial = false;
             
             GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
@@ -172,6 +175,7 @@ namespace _Game.Core.Ads
             
             _timerService.CreateTimer(TimerType.InterstitialAdDelay, timerData, OnInterstitialAdTimerOut);
             _timerService.StartTimer(TimerType.InterstitialAdDelay);
+            _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
             
             _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!");
         }

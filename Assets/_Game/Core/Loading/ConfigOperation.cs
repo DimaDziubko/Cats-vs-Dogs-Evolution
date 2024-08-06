@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using _Game.Core.Configs.Providers;
 using _Game.Core.Services.UserContainer;
+using _Game.Utils._LocalConfigSaver;
 using _Game.Utils.Extensions;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.UserState;
-using Assets._Game.Utils._LocalConfigSaver;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -91,6 +91,7 @@ namespace _Game.Core.Loading
                 }
                 else
                 {
+                    _logger.LogWarning($"Remote config not available");
                     throw new Exception("Remote config not available");
                 }
 
@@ -98,6 +99,8 @@ namespace _Game.Core.Loading
             }
             catch (Exception e)
             {
+                _logger.Log($"Catch block with exception {e}");
+                
                 try
                 {
                     string configString = _localConfigProvider.GetConfig();

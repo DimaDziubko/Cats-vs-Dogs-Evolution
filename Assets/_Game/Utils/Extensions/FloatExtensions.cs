@@ -86,7 +86,7 @@ namespace _Game.Utils.Extensions
                 }
             }
 
-            return string.Format("{0:0}", price);
+            return string.Format(CultureInfo.InvariantCulture, "{0:0}", price);
         }
         
         public static string FormatMoney(this double price)
@@ -102,7 +102,7 @@ namespace _Game.Utils.Extensions
                 }
             }
 
-            return string.Format("{0:0}", price);
+            return string.Format(CultureInfo.InvariantCulture, "{0:0}", price);
         }
 
         
@@ -113,11 +113,11 @@ namespace _Game.Utils.Extensions
             var round = RoundNumber(newNum);
             if (round.ToString().Length >= 3)
             {
-                str = round.ToString();
+                str = round.ToString(CultureInfo.InvariantCulture);
             }
             else
             {
-                str = newNum.ToString("0.#");
+                str = newNum.ToString("0.#", CultureInfo.InvariantCulture);
             }
 
             //Debug.Log("MONEY_" + str);

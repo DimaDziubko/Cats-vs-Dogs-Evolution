@@ -82,6 +82,9 @@ namespace _Game.Core.Debugger
         
         [ShowInInspector]
         public BattleState State => BattleManager.State;
+        
+        [ShowInInspector]
+        public bool IsPaused => BattleManager.IsPaused;
 
         public UserContainer UserContainer { get; set; }
         public BattleSpeedService BattleSpeedService { get; set; }
@@ -103,7 +106,7 @@ namespace _Game.Core.Debugger
         public DateTime LastDailyFoodBoost =>
             UserContainer.State.FoodBoost.LastDailyFoodBoost;
 
-
+    
         [ShowInInspector, ReadOnly]
         public SpeedBoostBtnModel SpeedBoostBtnModel => SpeedBoostService.SpeedBoostBtnModel;
         
@@ -112,6 +115,9 @@ namespace _Game.Core.Debugger
 
         [ShowInInspector, ReadOnly] 
         public bool IsTimeForInterstitial => CasAdsService.IsTimeForInterstitial;
+        
+        [ShowInInspector, ReadOnly] 
+        public float TimeLeft => CasAdsService.TimeLeft;
 
         [ShowInInspector, ReadOnly] 
         public bool CanShowInterstitial => CasAdsService.CanShowInterstitial;

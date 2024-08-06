@@ -81,9 +81,9 @@ namespace _Game.Core.Installers.Core
 
         private void BindMiniShopProvider()
         {
-            Container.Bind<IMiniShopProvider>()
-                .To<MiniShopProvider>()
-                .AsSingle();
+            Container.BindInterfacesTo<MiniShopProvider>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindLoadingScreenProvider() =>
