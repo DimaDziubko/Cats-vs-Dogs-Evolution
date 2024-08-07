@@ -1,4 +1,5 @@
-﻿using _Game.Core._UpgradesChecker;
+﻿using _Game.Core._RetentionChecker;
+using _Game.Core._UpgradesChecker;
 using _Game.Core.Ads;
 using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
@@ -19,7 +20,6 @@ using _Game.Core.Services.Upgrades;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
-using Assets._Game.Core._RetentionChecker;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.Pause.Scripts;

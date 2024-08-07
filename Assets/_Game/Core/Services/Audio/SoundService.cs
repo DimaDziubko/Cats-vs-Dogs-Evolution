@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Services.AssetProvider;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
+using Zenject;
 
 namespace _Game.Core.Services.Audio
 {
     public class SoundService : MonoBehaviour, ISoundService
     {
+        private IAssetProvider _assetProvider;
+        
         [ShowInInspector]
         private Dictionary<AudioClip, IObjectPool<SoundEmitter>> _soundEmitterPools =
             new Dictionary<AudioClip, IObjectPool<SoundEmitter>>();
@@ -18,6 +22,7 @@ namespace _Game.Core.Services.Audio
         [ShowInInspector]
         private Dictionary<AudioClip, Queue<SoundEmitter>> _frequentSoundEmitters =
             new Dictionary<AudioClip, Queue<SoundEmitter>>();
+
 
         [SerializeField] SoundEmitter _soundEmitterPrefab;
         [SerializeField] bool _collectionCheck = true;
@@ -34,7 +39,7 @@ namespace _Game.Core.Services.Audio
             get => _transform;
             set => _transform = value;
         }
-
+        
         public SoundBuilder CreateSound() => new SoundBuilder(this);
 
         public bool CanPlaySound(SoundData data)

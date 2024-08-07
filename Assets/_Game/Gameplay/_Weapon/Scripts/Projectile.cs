@@ -5,14 +5,12 @@ using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Weapon.Factory;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Utils.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Gameplay._Weapon.Scripts
 {
-    //TODO Fix bug
     [RequireComponent(typeof(CircleCollider2D))]
     public abstract class Projectile : GameBehaviour
     {

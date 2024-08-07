@@ -9,9 +9,11 @@ namespace _Game.Core.Services.Audio
     {
         private ISoundService _soundService;
         public SoundData Data { get; private set; }
-        
+
+
         [ShowInInspector, ReadOnly]
         private Coroutine _playingCoroutine;
+
         private bool _isPaused;
 
         [SerializeField] private Transform _transform;
@@ -20,8 +22,12 @@ namespace _Game.Core.Services.Audio
         public bool IsPlaying => _audioSource.isPlaying;
         public bool IsPaused => _isPaused;
         public Transform Transform => _transform;
-        public void Construct(ISoundService soundService) => _soundService = soundService;
-    
+        public void Construct(
+            ISoundService soundService)
+        {
+            _soundService = soundService;
+        }
+
         public void Initialize(SoundData data)
         {
             Data = data;
@@ -51,15 +57,14 @@ namespace _Game.Core.Services.Audio
             _audioSource.ignoreListenerPause = data.IgnoreListenerPause;
             
             _audioSource.rolloffMode = data.RolloffMode;
-        
         }
-
+        
         public void PlayOneShot() {
             if (_playingCoroutine != null) {
                 StopCoroutine(_playingCoroutine);
             }
             
-            _audioSource.Play();
+            Play();
             _playingCoroutine = StartCoroutine(WaitForSoundToEnd());
         }
 

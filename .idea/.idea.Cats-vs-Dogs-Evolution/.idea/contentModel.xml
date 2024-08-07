@@ -144,7 +144,26 @@
             </e>
             <e p="Configs" t="Include">
               <e p="Models" t="Include">
+                <e p="AdsConfig.cs" t="Include" />
+                <e p="AgeConfig.cs" t="Include" />
+                <e p="BattleConfig.cs" t="Include" />
+                <e p="BattleScenario.cs" t="Include" />
+                <e p="BattleSpeedConfig.cs" t="Include" />
+                <e p="CommonConfig.cs" t="Include" />
+                <e p="DailyTaskConfig.cs" t="Include" />
+                <e p="EconomyConfig.cs" t="Include" />
+                <e p="EnemySpawnSequence.cs" t="Include" />
+                <e p="EnemyWave.cs" t="Include" />
+                <e p="Exponential.cs" t="Include" />
+                <e p="FoodBoostConfig.cs" t="Include" />
+                <e p="FreeGemsPackDayConfig.cs" t="Include" />
                 <e p="GameConfig.cs" t="Include" />
+                <e p="LinearFunction.cs" t="Include" />
+                <e p="ShopConfig.cs" t="Include" />
+                <e p="TimelineConfig.cs" t="Include" />
+                <e p="UpgradeItemConfig.cs" t="Include" />
+                <e p="WarriorConfig.cs" t="Include" />
+                <e p="WeaponConfig.cs" t="Include" />
               </e>
               <e p="Providers" t="Include">
                 <e p="LocalConfigProvider.cs" t="Include" />
@@ -647,6 +666,11 @@
               <e p="Scripts" t="Include">
                 <e p="Coin.cs" t="Include" />
                 <e p="LootCoin.cs" t="Include" />
+              </e>
+            </e>
+            <e p="_DailyTasks" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="DailyTaskGenerator.cs" t="Include" />
               </e>
             </e>
             <e p="_Race" t="Include">

@@ -21,7 +21,7 @@ namespace _Game.Core.DataProviders.Ambience
         public UniTask<AudioClip> Load(string key, LoadContext cacheContext)
         {
             _logger.Log($"Ambience with key {key} loading...");
-            return _assetRegistry.LoadAsset<AudioClip>(key, cacheContext.Timeline, cacheContext.CacheContext );
+            return _assetRegistry.LoadAsset<AudioClip>(key, cacheContext.Timeline, cacheContext.CacheContext);
         }
     }
 }

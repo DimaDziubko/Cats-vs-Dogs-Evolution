@@ -2,9 +2,8 @@
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
-using Assets._Game.Core.UserState;
 
-namespace Assets._Game.Core._RetentionChecker
+namespace _Game.Core._RetentionChecker
 {
     public class RetentionChecker : IRetentionChecker, IDisposable
     {
