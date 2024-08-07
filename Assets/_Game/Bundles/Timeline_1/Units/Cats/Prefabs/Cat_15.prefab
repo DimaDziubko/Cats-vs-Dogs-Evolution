@@ -197,6 +197,7 @@ MonoBehaviour:
   _damageFlash: {fileID: 7416095518426561936}
   _dynamicSortingOrder: {fileID: 2753424706960606890}
   _rVOController: {fileID: -4241109637799148609}
+  _vfxes: []
   "_stateInd\u0456cator": {fileID: 0}
 --- !u!114 &5457728362176403305
 MonoBehaviour:
@@ -731,6 +732,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5686fabe88eebf748896cbbfd41d5b57, type: 2}
+    - target: {fileID: -4610517115250453608, guid: d15f8f5945b57694bbd2782219d3f56c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 840683276609890983, guid: d15f8f5945b57694bbd2782219d3f56c, type: 3}
       propertyPath: m_SortingLayer
       value: 1
