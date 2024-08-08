@@ -48,7 +48,7 @@ namespace _Game.Gameplay.Scenario
 
             public (int currentWave, int wavesCount) GetWaves()
             {
-                return (_index + 1, _scenarioExecutor._waves.Count + 1);
+                return (_index + 1, _scenarioExecutor._waves.Count);
             }
 
             public State(BattleScenarioExecutor scenarioExecutor, IUnitSpawner unitSpawner)

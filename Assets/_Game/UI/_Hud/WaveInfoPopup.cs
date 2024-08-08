@@ -14,21 +14,17 @@ namespace _Game.UI._Hud
 
         public void ShowWave(int wave, int wavesCount)
         {
-            if (_label == null) return;
-            if (_image == null) return;
-            if (wave < wavesCount - 1)
+            if (wave < wavesCount)
             {
                 _label.text = $"Wave {wave}";
-                //_label.color = Color.white;
                 _image.sprite = _allWavesSprite;
             }
             else
             {
                 _label.text = $"Final wave";
                 _image.sprite = _finalWaveSprite;
-                //_label.color = Color.red;
             }
-            if (_animation == null) return;
+
             _animation.PlayAnimation();
         }
 
