@@ -21,7 +21,7 @@ namespace _Game.Core.Ads
     {
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
-        
+
         private readonly IGameInitializer _gameInitializer;
         private readonly IMyLogger _logger;
         private readonly ITimerService _timerService;
@@ -34,14 +34,14 @@ namespace _Game.Core.Ads
         private readonly CasInterstitialAdService _interstitialAdsService;
 
         private IMediationManager _manager;
-        
+
         public bool IsTimeForInterstitial { get; private set; }
         public float TimeLeft => _timer.TimeLeft;
-        
-        private GameTimer _timer;
-        
 
-        public bool CanShowInterstitial => 
+        private GameTimer _timer;
+
+
+        public bool CanShowInterstitial =>
             _adsConfigRepository.GetConfig().IsInterstitialActive &&
             (Purchases.BoughtIAPs?.Find(x => x.Count > 0) == null) &&
             IsInternetConnected() &&
@@ -84,21 +84,21 @@ namespace _Game.Core.Ads
                     _logger.Log("success: " + success);
 
                 }).Initialize();
-            
+
             var delay = _adsConfigRepository.GetConfig().InterstitialDelay;
             StartCountdown(delay);
+
         }
         
         void IDisposable.Dispose()
         {
             _rewardAdsService.UnRegister(_manager);
             _interstitialAdsService.UnRegister(_manager);
-            
+
             _rewardAdsService.AdImpression -= OnAdImpression;
             _rewardAdsService.VideoLoaded -= OnVideoLoaded;
             _interstitialAdsService.AdImpression -= OnAdImpression;
             _interstitialAdsService.VideoLoaded -= OnVideoLoaded;
-            
             _gameInitializer.OnPostInitialization -= Init;
         }
 
@@ -106,7 +106,7 @@ namespace _Game.Core.Ads
         public bool IsAdReady(AdType type)
         {
             if (!IsInternetConnected()) return false;
-            
+
             switch (type)
             {
                 case AdType.Banner:
@@ -122,7 +122,7 @@ namespace _Game.Core.Ads
                 case AdType.None:
                     break;
             }
-            
+
             return false;
         }
 
@@ -135,11 +135,19 @@ namespace _Game.Core.Ads
 
         public void ShowInterstitialVideo(Placement placement)
         {
+            _logger.Log("Inter_ ShowInterstitialVideo");
             if (IsTimeForInterstitial && CanShowInterstitial)
             {
+                _logger.Log("Inter_ Can Show Ready");
+
                 _interstitialAdsService.ShowVideo(placement);
                 var delay = _adsConfigRepository.GetConfig().InterstitialDelay;
                 StartCountdown(delay);
+            }
+            else
+            {
+                _logger.Log("Inter_ Can't Show Inter");
+
             }
         }
 
@@ -147,38 +155,38 @@ namespace _Game.Core.Ads
         {
             _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}");
             IsTimeForInterstitial = false;
-            
+
             GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
             if (timer != null)
             {
                 timer.Stop();
                 _timerService.RemoveTimer(TimerType.InterstitialAdDelay);
             }
-            
+
             TimerData timerData = new TimerData
             {
-                Countdown = true, 
-                Duration = delay, 
+                Countdown = true,
+                Duration = delay,
                 StartValue = delay
             };
-            
+
             _timerService.CreateTimer(TimerType.InterstitialAdDelay, timerData, OnInterstitialAdTimerOut);
             _timerService.StartTimer(TimerType.InterstitialAdDelay);
             _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
-            
+
             _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!");
         }
 
-        private bool IsInternetConnected() => 
+        private bool IsInternetConnected() =>
             Application.internetReachability != NetworkReachability.NotReachable;
 
-        private void OnVideoLoaded(AdType type) => 
+        private void OnVideoLoaded(AdType type) =>
             VideoLoaded?.Invoke(type);
 
-        private void OnAdImpression(AdImpressionDto dto) => 
+        private void OnAdImpression(AdImpressionDto dto) =>
             AdImpression?.Invoke(dto);
 
-        private void OnInterstitialAdTimerOut() => 
+        private void OnInterstitialAdTimerOut() =>
             IsTimeForInterstitial = true;
     }
 }
