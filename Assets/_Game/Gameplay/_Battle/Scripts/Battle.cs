@@ -59,8 +59,8 @@ namespace _Game.Gameplay._Battle.Scripts
 
         void IInitializable.Initialize()
         {
-            _battleField.Init();
-            
+            _battleField.Init(this);
+
             _scenarioExecutor = new BattleScenarioExecutor();
             
             _battlePresenter.BattleDataUpdated += UpdateBattle;
@@ -98,15 +98,6 @@ namespace _Game.Gameplay._Battle.Scripts
 
         void IGameTickable.Tick(float deltaTime)
         {
-            var waves = _activeScenario.GetWaves();
-            int currentWave = waves.currentWave;
-            if (_currentCachedWave != currentWave && currentWave <= waves.wavesCount)
-            {
-                _uiController.UpdateWave(currentWave, waves.wavesCount);
-                _analyticsController.SendWave($"Wave {currentWave}");
-                _currentCachedWave = currentWave;
-            }
-
             _activeScenario.Progress(deltaTime * _speedFactor);
             _battleField.GameUpdate(deltaTime);
         }
@@ -128,6 +119,30 @@ namespace _Game.Gameplay._Battle.Scripts
         {
             _speedFactor = speedFactor;
             _battleField.SetSpeedFactor(speedFactor);
+        }
+
+        public void OnUnitSpawned(Faction faction)
+        {
+            switch (faction)
+            {
+                case Faction.Player:
+                    break;
+                case Faction.Enemy:
+                    TryToShowWave();
+                    break;
+            }
+        }
+
+        private void TryToShowWave()
+        {
+            var waves = _activeScenario.GetWaves();
+            int currentWave = waves.currentWave;
+            if (_currentCachedWave != currentWave && currentWave <= waves.wavesCount)
+            {
+                _uiController.UpdateWave(currentWave, waves.wavesCount);
+                _analyticsController.SendWave($"Wave {currentWave}");
+                _currentCachedWave = currentWave;
+            }  
         }
     }
 }

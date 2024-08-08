@@ -1,6 +1,7 @@
 using System;
 using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._Hud._CoinCounterView;
@@ -40,7 +41,8 @@ namespace _Game.Gameplay._BattleField.Scripts
 
         private readonly InteractionCache _interactionCache = new InteractionCache();
 
-        public BattleField(IWorldCameraService cameraService,
+        public BattleField(
+            IWorldCameraService cameraService,
             IAudioService audioService,
             IBaseDestructionManager baseDestructionManager,
             ICoinCounter coinCounter,
@@ -88,8 +90,11 @@ namespace _Game.Gameplay._BattleField.Scripts
             baseDestructionManager.Register(this);
         }
 
-        public void Init()
+        public void Init(Battle battle)
         {
+            _unitSpawner.UnitSpawned -= battle.OnUnitSpawned;
+            _unitSpawner.UnitSpawned += battle.OnUnitSpawned;
+            
             CalculateBasePoints();
             CalculateUnitSpawnPoints();
             

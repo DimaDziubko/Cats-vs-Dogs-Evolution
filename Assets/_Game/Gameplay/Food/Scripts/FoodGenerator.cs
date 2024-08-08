@@ -161,8 +161,12 @@ namespace _Game.Gameplay.Food.Scripts
             FoodAmount += delta;
         }
         
-        void IStopBattleListener.OnStopBattle() => 
+        void IStopBattleListener.OnStopBattle()
+        {
+            _panel.UpdateFillAmount(0);
+            _smoothProgress = 0;
             _accumulatedFood = 0;
+        }
 
         void IBattleSpeedListener.OnBattleSpeedFactorChanged(float speedFactor)
         {

@@ -11,6 +11,8 @@ namespace _Game.Gameplay._BattleField.Scripts
 {
     public class UnitSpawner : IUnitSpawner
     {
+        public event Action<Faction> UnitSpawned;
+        
         private readonly IUnitFactory _unitFactory;
         private readonly IInteractionCache _cache;
         private readonly IWorldCameraService _cameraService;
@@ -94,6 +96,8 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _speedManager.CurrentSpeedFactor);
             
             _enemyUnits.Add(enemy);
+            
+            UnitSpawned?.Invoke(Faction.Enemy);
         }
 
         void IUnitSpawner.SpawnPlayerUnit(UnitType type)
