@@ -9,6 +9,5 @@
         GameResult,
         Evolution,
         Shop,
-        BattleTreshold
     }
 }

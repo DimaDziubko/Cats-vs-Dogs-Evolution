@@ -44,7 +44,9 @@ namespace _Game.Core.Ads
         public bool CanShowInterstitial => 
             _adsConfigRepository.GetConfig().IsInterstitialActive &&
             (Purchases.BoughtIAPs?.Find(x => x.Count > 0) == null) &&
-            IsInternetConnected();
+            IsInternetConnected() &&
+            BattleStatistics.BattlesCompleted > _adsConfigRepository.GetConfig().InterstitialBattleTreshold;
+        
 
         public CasAdsService(
             IMyLogger logger,
@@ -78,27 +80,15 @@ namespace _Game.Core.Ads
                 {
                     _rewardAdsService.Register(_manager);
                     _interstitialAdsService.Register(_manager);
-                    IsTimeForInterstitial = false;
+                    IsTimeForInterstitial = true;
                     _logger.Log("success: " + success);
 
                 }).Initialize();
-
-            BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleCountChanged;
             
-            var delay = _adsConfigRepository.GetConfig().RewardInterstitialDelay;
+            var delay = _adsConfigRepository.GetConfig().InterstitialDelay;
             StartCountdown(delay);
         }
-
-        private void OnCompletedBattleCountChanged()
-        {
-            if (BattleStatistics.BattlesCompleted % 
-                _adsConfigRepository.GetConfig().InterstitialBattleTreshold == 0 
-                && IsAdReady(AdType.Interstitial))
-            {
-                ShowInterstitialVideo(Placement.BattleTreshold);
-            }
-        }
-
+        
         void IDisposable.Dispose()
         {
             _rewardAdsService.UnRegister(_manager);
@@ -109,7 +99,6 @@ namespace _Game.Core.Ads
             _interstitialAdsService.AdImpression -= OnAdImpression;
             _interstitialAdsService.VideoLoaded -= OnVideoLoaded;
             
-            BattleStatistics.CompletedBattlesCountChanged -= OnCompletedBattleCountChanged;
             _gameInitializer.OnPostInitialization -= Init;
         }
 
