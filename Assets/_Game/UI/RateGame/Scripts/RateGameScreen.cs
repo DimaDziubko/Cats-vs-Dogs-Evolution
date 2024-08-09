@@ -16,8 +16,6 @@ namespace _Game.UI.RateGame.Scripts
 {
     public class RateGameScreen : MonoBehaviour
     {
-        private const string PP_RATE_GAME_CLICKED = "isrategameclicked_save";
-
         public event Action OnClose;
         public event Action OnRateGame;
         public event Action OnSetPP;
@@ -125,8 +123,6 @@ namespace _Game.UI.RateGame.Scripts
             StartCoroutine(LaunchReview());
 #endif
             Invoke(nameof(Close), 1f);
-
-            PlayerPrefs.SetInt(PP_RATE_GAME_CLICKED, 1);
         }
 
 

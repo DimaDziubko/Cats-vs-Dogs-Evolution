@@ -16,32 +16,32 @@ namespace _Game.Core.UserState._State
         public int FoodProductionLevel;
         public int BaseHealthLevel;
         public List<UnitType> OpenUnits;
-        
+
         public event Action<UnitType> OpenedUnit;
         public event Action NextAgeOpened;
         public event Action NextBattleOpened;
         public event Action NextTimelineOpened;
         public event Action<UpgradeItemType, int> UpgradeItemLevelChanged;
         public event Action LastBattleWon;
-        
+
         int ITimelineStateReadonly.TimelineId => TimelineId;
-        
+
         int ITimelineStateReadonly.AgeId => AgeId;
         int ITimelineStateReadonly.MaxBattle => MaxBattle;
-        
+
         bool ITimelineStateReadonly.AllBattlesWon => AllBattlesWon;
 
         int ITimelineStateReadonly.FoodProductionLevel => FoodProductionLevel;
         int ITimelineStateReadonly.BaseHealthLevel => BaseHealthLevel;
-        
+
         List<UnitType> ITimelineStateReadonly.OpenUnits => OpenUnits;
-        
+
         public void OpenUnit(in UnitType type)
         {
             OpenUnits.Add(type);
             OpenedUnit?.Invoke(type);
         }
-        
+
         public void OpenNewAge(bool isNext = true)
         {
             if (isNext)
@@ -52,16 +52,16 @@ namespace _Game.Core.UserState._State
             {
                 AgeId--;
             }
-            
+
             FoodProductionLevel = 0;
             BaseHealthLevel = 0;
             AllBattlesWon = false;
             MaxBattle = 0;
-            OpenUnits = new List<UnitType>() {UnitType.Light};
-            
+            OpenUnits = new List<UnitType>() { UnitType.Light };
+
             NextAgeOpened?.Invoke();
         }
-        
+
         public void OpenNewTimeline(bool isNext = true)
         {
             if (isNext)
@@ -72,14 +72,14 @@ namespace _Game.Core.UserState._State
             {
                 TimelineId--;
             }
-            
+
             AgeId = 0;
             FoodProductionLevel = 0;
             BaseHealthLevel = 0;
             AllBattlesWon = false;
             MaxBattle = 0;
-            OpenUnits = new List<UnitType>() {UnitType.Light};
-            
+            OpenUnits = new List<UnitType>() { UnitType.Light };
+
             NextTimelineOpened?.Invoke();
         }
 
@@ -88,7 +88,7 @@ namespace _Game.Core.UserState._State
             FoodProductionLevel++;
             UpgradeItemLevelChanged?.Invoke(UpgradeItemType.FoodProduction, FoodProductionLevel);
         }
-        
+
         public void ChangeBaseHealthLevel()
         {
             BaseHealthLevel++;
@@ -99,6 +99,7 @@ namespace _Game.Core.UserState._State
         {
             MaxBattle = nextBattle;
             NextBattleOpened?.Invoke();
+            UnityEngine.Debug.Log("RateGame OpenNextBattle ");
         }
 
         public void SetAllBattlesWon(bool allBattlesWon)

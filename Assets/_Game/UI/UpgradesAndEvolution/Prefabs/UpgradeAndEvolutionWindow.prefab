@@ -114,7 +114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -190.1, y: 1.4763308}
+  m_AnchoredPosition: {x: -203.6, y: 1.4763308}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &530284734004168239
@@ -295,6 +295,8 @@ MonoBehaviour:
   _priceText: {fileID: 0}
   _infoText: {fileID: 4388578983175233558}
   _moneyPanel: {fileID: 0}
+  _currencyIconHolder: {fileID: 0}
+  _loadingText: {fileID: 0}
   _isHoldable: 0
 --- !u!114 &2854530163739894963
 MonoBehaviour:
@@ -2935,6 +2937,8 @@ MonoBehaviour:
   _priceText: {fileID: 1896453102036899691}
   _infoText: {fileID: 4778493538767569479}
   _moneyPanel: {fileID: 8099585543643756977}
+  _currencyIconHolder: {fileID: 0}
+  _loadingText: {fileID: 0}
   _isHoldable: 0
 --- !u!114 &4340772923694681697
 MonoBehaviour:
@@ -3577,8 +3581,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 7687092238827243297}
-  _upgradesWindow: {fileID: 5325380826823761704}
-  _evolutionWindow: {fileID: 2381139613558883205}
+  upgradesScreen: {fileID: 5325380826823761704}
+  evolutionScreen: {fileID: 2381139613558883205}
   _upgradesButton: {fileID: 1169898566791984089}
   _evolutionButton: {fileID: 8381939384941907657}
   _evolutionStep: {fileID: 3212517454750208487}
@@ -4217,7 +4221,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5793246609226388987
 MonoBehaviour:
   m_ObjectHideFlags: 0
