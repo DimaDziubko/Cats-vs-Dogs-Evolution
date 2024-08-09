@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public class AdsStatistics : IAdsStatisticsReadonly
     {
@@ -10,7 +10,7 @@ namespace Assets._Game.Core.UserState
 
         int IAdsStatisticsReadonly.AdsReviewed => AdsReviewed;
 
-        public void AddAdsReviewed()
+        public void AddWatchedAd()
         {
             AdsReviewed++;    
             AdsReviewedChanged?.Invoke();

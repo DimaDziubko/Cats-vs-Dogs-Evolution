@@ -27,6 +27,8 @@ namespace _Game.Core.UserState._State
         public FreeGemsPackState FreeGemsPackState;
         public TasksState TasksState;
         public DailyTasksState DailyTasksState;
+        public AdsWeeklyWatchState AdsWeeklyWatchState;
+
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -118,6 +120,12 @@ namespace _Game.Core.UserState._State
                 TasksState = new TasksState()
                 {
                     TotalCompletedTasks = 0
+                },
+                
+                AdsWeeklyWatchState = new AdsWeeklyWatchState()
+                {
+                    LastWeekAdsWatched = new List<int>(7) { 0, 0, 0, 0, 0, 0, 0 },
+                    LastDay = DateTime.Today
                 }
             };
         }

@@ -31,7 +31,7 @@ namespace _Game.Gameplay.Food.Scripts
         IBattleSpeedListener
 
     {
-        private const float LERP_SPEED_MULTIPLIER = 10f;
+        private const float LERP_SPEED_MULTIPLIER = 150f;
         
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IEconomyConfigRepository _economyConfig;
@@ -139,10 +139,13 @@ namespace _Game.Gameplay.Food.Scripts
         {
             _accumulatedFood += deltaTime * _productionSpeed;
             
-            if (_accumulatedFood >= 1f) 
+            if (_accumulatedFood > 1f) 
             {
                 FoodAmount += (int)_accumulatedFood;
-                _accumulatedFood = 0f;
+                _smoothProgress = 1f;
+                _panel.UpdateFillAmount(_smoothProgress);
+
+                _accumulatedFood %= 1f;
                 _smoothProgress = 0f;
             }
             else

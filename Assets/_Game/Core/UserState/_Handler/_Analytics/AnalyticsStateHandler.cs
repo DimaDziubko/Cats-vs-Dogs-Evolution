@@ -11,7 +11,7 @@ namespace _Game.Core.UserState._Handler._Analytics
         }
         
         public void AddAdsReviewed() => 
-            _userContainer.State.AdsStatistics.AddAdsReviewed();
+            _userContainer.State.AdsStatistics.AddWatchedAd();
 
         public void FirstDayRetentionSent() => 
             _userContainer.State.RetentionState.ChangeFirstDayRetentionEventSent(true);

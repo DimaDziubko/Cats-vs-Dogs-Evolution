@@ -4,6 +4,7 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
