@@ -8,7 +8,7 @@ namespace _Game.Core._GameInitializer
     public class GameInitializer : IGameInitializer
     {
         private readonly List<Func<UniTask>> _initializationTasks = new List<Func<UniTask>>();
-    
+
         public event Action OnPreInitialization;
         public event Action OnMainInitialization;
         public event Action OnPostInitialization;
@@ -26,7 +26,7 @@ namespace _Game.Core._GameInitializer
             OnPostInitialization?.Invoke();
         }
 
-        public void RegisterAsyncInitialization(Func<UniTask> initMethod) => 
+        public void RegisterAsyncInitialization(Func<UniTask> initMethod) =>
             _initializationTasks.Add(initMethod);
     }
 }

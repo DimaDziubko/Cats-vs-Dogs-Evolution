@@ -124,7 +124,8 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
 
         private void BindRateGameChecker() =>
-            Container.BindInterfacesAndSelfTo<RateGameChecker>()
+            Container
+            .BindInterfacesAndSelfTo<RateGameChecker>()
                 .AsSingle();
 
         private void BindUIFactory() => 
