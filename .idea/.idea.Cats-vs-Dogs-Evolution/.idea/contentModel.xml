@@ -5,7 +5,6 @@
     <e p="C:\Users\dimam\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Cats-vs-Dogs-Evolution.-1951554600.00" t="ExcludeRecursive" />
     <e p="C:\Users\dimam\AppData\Roaming\JetBrains\Rider2020.2\scratches" t="IncludeRecursive" />
     <e p="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution" t="IncludeRecursive">
-      <e p="AnalyticsPostAssembly.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -1139,36 +1138,6 @@
             </e>
           </e>
         </e>
-        <e p="DevToDev" t="Include">
-          <e p="Analytics" t="Include">
-            <e p="Editor" t="Include">
-              <e p="AppDependencies.xml" t="Include" />
-              <e p="DTDAnalyticsPostAssembly.asmdef" t="Include" />
-              <e p="DTDPostProcessAnalytics.cs" t="Include" />
-              <e p="GoogleDependencies.xml" t="Include" />
-              <e p="link.xml" t="Include" />
-              <e p="WSA" t="Include">
-                <e p="PostBuildProcessor.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Window" t="Include">
-              <e p="DevToDevSDK.cs" t="Include" />
-              <e p="DTDEditorModel.cs" t="Include" />
-              <e p="DTDEditorViewModel.cs" t="Include" />
-              <e p="DTDVisualEditorStyles.cs" t="Include" />
-              <e p="DTDVisualEditorWindow.cs" t="Include" />
-              <e p="DTDWindowAssembly.asmdef" t="Include" />
-            </e>
-          </e>
-          <e p="Messaging" t="Include">
-            <e p="Editor" t="Include">
-              <e p="AppDependencies.xml" t="Include" />
-              <e p="DTDGoogleServicesConverter.cs" t="Include" />
-              <e p="DTDMessagingPostAssembly.asmdef" t="Include" />
-              <e p="DTDPostProcessMessaging.cs" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="Firebase" t="Include">
           <e p="Editor" t="Include">
             <e p="AnalyticsDependencies.xml" t="Include" />
@@ -1319,6 +1288,19 @@
                 </e>
               </e>
               <e p="Modules" t="Include">
+                <e p="Unity.Addressables" t="Include">
+                  <e p="AddressablesInspectors.cs" t="Include" />
+                  <e p="manifest.txt" t="Include" />
+                  <e p="Sirenix.OdinInspector.Modules.Unity.Addressables.asmdef" t="Include" />
+                  <e p="Validators" t="Include">
+                    <e p="AssetLabelReferenceValidator.cs" t="Include" />
+                    <e p="AssetReferenceValidator.cs" t="Include" />
+                    <e p="CheckDuplicateBundleDependenciesValidator.cs" t="Include" />
+                    <e p="CheckResourcesToAddressableDuplicateDependenciesValidator.cs" t="Include" />
+                    <e p="DisallowAddressableSubAssetFieldAttributeValidator.cs" t="Include" />
+                    <e p="MissingAddressableGroupReferenceValidator.cs" t="Include" />
+                  </e>
+                </e>
                 <e p="Unity.Mathematics" t="Include">
                   <e p="manifest.txt" t="Include" />
                   <e p="MathematicsDrawers.cs" t="Include" />
@@ -2579,9 +2561,7 @@
       <e p="Drawing.csproj" t="IncludeRecursive" />
       <e p="DrawingEditor.csproj" t="IncludeRecursive" />
       <e p="DrawingPackageToolsEditor.csproj" t="IncludeRecursive" />
-      <e p="DTDWindowAssembly.csproj" t="IncludeRecursive" />
       <e p="KinoBloom.Runtime.csproj" t="IncludeRecursive" />
-      <e p="MessagingPostAssembly.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive">
         <e p="com.arongranberg.astar" t="Include">
@@ -3024,6 +3004,7 @@
         </e>
       </e>
       <e p="PackageTools.csproj" t="IncludeRecursive" />
+      <e p="Sirenix.OdinInspector.Modules.Unity.Addressables.csproj" t="IncludeRecursive" />
       <e p="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" t="IncludeRecursive" />
       <e p="StompyRobot.SRDebugger.csproj" t="IncludeRecursive" />
       <e p="StompyRobot.SRDebugger.Editor.csproj" t="IncludeRecursive" />
