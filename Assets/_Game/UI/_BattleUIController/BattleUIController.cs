@@ -5,6 +5,8 @@ using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._CoinCounter.Scripts;
+using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
 using _Game.UI._GameplayUI.Scripts;
@@ -12,7 +14,6 @@ using _Game.UI._Hud;
 using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.Utils.Popups;
 
@@ -43,7 +44,8 @@ namespace _Game.UI._BattleUIController
             IFeatureUnlockSystem featureUnlockSystem,
             IBattleSpeedService battleSpeedService,
             ISpeedBoostService speedBoost, 
-            IBattleManager battleManager)
+            IBattleManager battleManager,
+            IDailyTaskPresenter dailyTaskPresenter)
         {
             _userContainer = userContainer;
             _hud = hud;
@@ -60,7 +62,8 @@ namespace _Game.UI._BattleUIController
                 featureUnlockSystem,
                 battleSpeedService,
                 speedBoost,
-                battleManager);
+                battleManager,
+                dailyTaskPresenter);
             
             header.Construct(userContainer.State.Currencies, cameraService);
         }
@@ -73,7 +76,7 @@ namespace _Game.UI._BattleUIController
             
             Unsubscribe();
             Subscribe();
-            _hud.OnCoinsChanged(_coinCounter.Coins);
+            _hud.OnCoinsCoinsChanged(_coinCounter.Coins);
         }
 
         void IStopBattleListener.OnStopBattle()
@@ -86,7 +89,7 @@ namespace _Game.UI._BattleUIController
         
         public void HideCoinCounter()
         {
-            _coinCounter.Changed -= _hud.OnCoinsChanged;
+            _coinCounter.CoinsChanged -= _hud.OnCoinsCoinsChanged;
             _hud.HideCoinCounter();
         }
 
@@ -107,7 +110,7 @@ namespace _Game.UI._BattleUIController
         private void Subscribe()
         {
             _hud.QuitBattle += OnBattleQuit;
-            _coinCounter.Changed += _hud.OnCoinsChanged;
+            _coinCounter.CoinsChanged += _hud.OnCoinsCoinsChanged;
         }
 
         private void Unsubscribe() => 

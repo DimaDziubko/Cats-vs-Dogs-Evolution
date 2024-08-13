@@ -12,6 +12,6 @@ namespace _Game.Core.Configs.Models
         public ShopConfig ShopConfig;
         public FreeGemsPackDayConfig FreeGemsPackDayConfig;
         public AdsConfig AdsConfig;
-        public List<DailyTaskConfig> DailyTaskConfigs;
+        public GeneralDailyTaskConfig GeneralDailyTaskConfig;
     }
 }

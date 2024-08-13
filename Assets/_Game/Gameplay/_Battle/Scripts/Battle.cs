@@ -59,7 +59,7 @@ namespace _Game.Gameplay._Battle.Scripts
 
         void IInitializable.Initialize()
         {
-            _battleField.Init(this);
+            _battleField.Init();
 
             _scenarioExecutor = new BattleScenarioExecutor();
             
@@ -74,6 +74,8 @@ namespace _Game.Gameplay._Battle.Scripts
 
         void IStartBattleListener.OnStartBattle()
         {
+            _battleField.UnitSpawner.UnitSpawned += OnUnitSpawned;
+            
             _analyticsController.SendStartData();
             
             AstarPath.active.Scan();
@@ -85,8 +87,11 @@ namespace _Game.Gameplay._Battle.Scripts
             _audioService.PlayStartBattleSound();
         }
 
-        void IStopBattleListener.OnStopBattle() => 
+        void IStopBattleListener.OnStopBattle()
+        {
+            _battleField.UnitSpawner.UnitSpawned -= OnUnitSpawned;
             _ambienceController.StopAmbience();
+        }
 
         public void Reset()
         {
@@ -121,7 +126,7 @@ namespace _Game.Gameplay._Battle.Scripts
             _battleField.SetSpeedFactor(speedFactor);
         }
 
-        public void OnUnitSpawned(Faction faction)
+        private void OnUnitSpawned(Faction faction, UnitType type)
         {
             switch (faction)
             {

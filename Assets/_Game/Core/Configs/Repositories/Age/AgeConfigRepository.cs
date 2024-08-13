@@ -36,6 +36,14 @@ namespace _Game.Core.Configs.Repositories.Age
 
         public IEnumerable<WarriorConfig> GetAgeUnits(int ageId) =>
             GetAgeConfig(ageId)?.Warriors;
+
+        public WarriorConfig GetLightWarriorForAge(int ageId) => 
+            GetAgeConfig(ageId)?.Warriors[0];
         
+        public WarriorConfig GetMediumWarriorForAge(int ageId) => 
+            GetAgeConfig(ageId)?.Warriors[1];
+        
+        public WarriorConfig GetHeavyWarriorForAge(int ageId) => 
+            GetAgeConfig(ageId)?.Warriors[2];
     }
 }

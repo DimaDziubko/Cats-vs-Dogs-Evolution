@@ -105,6 +105,9 @@ namespace _Game.Utils
             //Shop
             public const string SHOP_CONFIG = "ShopConfig";
             public const string PLACEMENT = "adPlacement";
+            
+            //GeneralDailyTask
+            public const string GENERAL_DAILY_TASK_CONFIG = "GeneralDailyTaskConfig";
         }
     }
 }

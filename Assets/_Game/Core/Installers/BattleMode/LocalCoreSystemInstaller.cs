@@ -10,12 +10,31 @@ namespace _Game.Core.Installers.BattleMode
         {
             BindRaceSelectionController();
             BindDailyTaskGenerator();
+            BindDailyTaskCompletionChecker();
+            BindDailyTaskPresenter();
         }
 
         private void BindRaceSelectionController() =>
-            Container.BindInterfacesAndSelfTo<RaceSelectionController>().AsSingle().NonLazy();
+            Container
+                .BindInterfacesAndSelfTo<RaceSelectionController>()
+                .AsSingle()
+                .NonLazy();
 
-        private void BindDailyTaskGenerator() => 
-            Container.BindInterfacesAndSelfTo<DailyTaskGenerator>().AsSingle().NonLazy();
+        private void BindDailyTaskGenerator() =>
+            Container
+                .BindInterfacesAndSelfTo<DailyTaskGenerator>()
+                .AsSingle().NonLazy();
+
+        private void BindDailyTaskCompletionChecker() =>
+            Container
+                .BindInterfacesAndSelfTo<DailyTaskCompletionChecker>()
+                .AsSingle()
+                .NonLazy();
+
+        private void BindDailyTaskPresenter() =>
+            Container
+                .BindInterfacesAndSelfTo<DailyTaskPresenter>()
+                .AsSingle()
+                .NonLazy();
     }
 }

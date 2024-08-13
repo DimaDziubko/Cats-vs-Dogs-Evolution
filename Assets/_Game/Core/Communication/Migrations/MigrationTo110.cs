@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Game.Core.Services.IAP;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
+using _Game.Gameplay._DailyTasks.Scripts;
 using Assets._Game.Core.Communication;
 
 namespace _Game.Core.Communication.Migrations
@@ -27,8 +28,8 @@ namespace _Game.Core.Communication.Migrations
             state.DailyTasksState ??= new DailyTasksState()
             {
                 ProgressOnTask = 0,
-                CompletedTasks = new List<Task>(),
-                CurrentTaskIdx = 0,
+                CompletedTasks = new List<int>(),
+                CurrentTaskIdx = -1,
                 LastTimeGenerated = DateTime.Now
             };
             

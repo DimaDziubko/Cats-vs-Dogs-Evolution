@@ -6,11 +6,11 @@
         SpawnUnit,
         SpawnLightUnit,
         SpawnMediumUnit,
-        SpawnHardUnit,
+        SpawnHeavyUnit,
         DefeatEnemy,
         DefeatLightEnemy,
         DefeatMediumEnemy,
-        DefeatHardEnemy,
+        DefeatHeavyEnemy,
         EarnCoins,
     }
 }

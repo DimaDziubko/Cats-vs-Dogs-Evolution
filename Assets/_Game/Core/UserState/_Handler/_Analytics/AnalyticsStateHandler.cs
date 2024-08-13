@@ -1,4 +1,5 @@
-﻿using _Game.Core.Services.UserContainer;
+﻿using System;
+using _Game.Core.Services.UserContainer;
 
 namespace _Game.Core.UserState._Handler._Analytics
 {
@@ -10,8 +11,11 @@ namespace _Game.Core.UserState._Handler._Analytics
             _userContainer = userContainer;
         }
         
-        public void AddAdsReviewed() => 
+        public void AddAdsReviewed()
+        {
             _userContainer.State.AdsStatistics.AddWatchedAd();
+            _userContainer.State.AdsWeeklyWatchState.AddWatchedAd(DateTime.UtcNow);
+        }
 
         public void FirstDayRetentionSent() => 
             _userContainer.State.RetentionState.ChangeFirstDayRetentionEventSent(true);

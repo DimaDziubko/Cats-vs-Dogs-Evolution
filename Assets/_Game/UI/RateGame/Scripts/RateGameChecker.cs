@@ -38,7 +38,6 @@ namespace _Game.UI.RateGame.Scripts
 
         private void Init()
         {
-            _logger.Log("RateGameChecker INIT");
             TimelineStateReadonly.NextBattleOpened += OnNextBattleOpen;
         }
 
@@ -50,10 +49,8 @@ namespace _Game.UI.RateGame.Scripts
 
         private void OnNextBattleOpen()
         {
-            _logger.Log("RateGameChecker OnNextBattleOpen");
             if (IsTimeToShow() && !IsReviewed())
             {
-                _logger.Log("SHOW RATE SCREEN");
                 ShowScreen();
             }
         }

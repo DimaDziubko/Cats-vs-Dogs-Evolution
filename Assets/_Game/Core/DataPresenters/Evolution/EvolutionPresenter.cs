@@ -7,7 +7,6 @@ using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
@@ -148,7 +147,12 @@ namespace _Game.Core.DataPresenters.Evolution
 
         private bool IsNextAgeAffordable()
         {
-            if (TimelineState.MaxBattle > TimelineState.AgeId) return true;
+            _logger.Log("We are here!");
+            if (TimelineState.MaxBattle > TimelineState.AgeId)
+            {
+                _logger.Log("Problem is here!");
+                return true;
+            }
             return _ageConfigRepository
                 .GetAgePrice(TimelineState.AgeId) <= Currency.Coins;
         }

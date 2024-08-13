@@ -159,6 +159,7 @@
                 <e p="FoodBoostConfig.cs" t="Include" />
                 <e p="FreeGemsPackDayConfig.cs" t="Include" />
                 <e p="GameConfig.cs" t="Include" />
+                <e p="GeneralDailyTaskConfig.cs" t="Include" />
                 <e p="LinearFunction.cs" t="Include" />
                 <e p="ShopConfig.cs" t="Include" />
                 <e p="TimelineConfig.cs" t="Include" />
@@ -192,6 +193,7 @@
                   <e p="IEconomyConfigRepository.cs" t="Include" />
                 </e>
                 <e p="Shop" t="Include">
+                  <e p="DailyTaskConfigRepository.cs" t="Include" />
                   <e p="IShopConfigRepository.cs" t="Include" />
                   <e p="ShopConfigRepository.cs" t="Include" />
                 </e>
@@ -513,6 +515,10 @@
                   <e p="BattleSpeedStateHandler.cs" t="Include" />
                   <e p="IBattleSpeedStateHandler.cs" t="Include" />
                 </e>
+                <e p="_DailyTask" t="Include">
+                  <e p="DailyTaskStateHandler.cs" t="Include" />
+                  <e p="IDailyTaskStateHandler.cs" t="Include" />
+                </e>
                 <e p="_FoodBoost" t="Include">
                   <e p="FoodBoostStateHandler.cs" t="Include" />
                   <e p="IFoodBoostStateHandler.cs" t="Include" />
@@ -637,6 +643,7 @@
                 <e p="ICoinSpawner.cs" t="Include" />
                 <e p="InteractionCache.cs" t="Include" />
                 <e p="IShootProxy.cs" t="Include" />
+                <e p="IUnitDeathObserver.cs" t="Include" />
                 <e p="IUnitSpawner.cs" t="Include" />
                 <e p="IVFXProxy.cs" t="Include" />
                 <e p="ProjectileSpawner.cs" t="Include" />
@@ -672,8 +679,11 @@
             </e>
             <e p="_DailyTasks" t="Include">
               <e p="Scripts" t="Include">
+                <e p="DailyTask.cs" t="Include" />
+                <e p="DailyTaskCompletionChecker.cs" t="Include" />
                 <e p="DailyTaskDto.cs" t="Include" />
                 <e p="DailyTaskGenerator.cs" t="Include" />
+                <e p="DailyTaskPresenter.cs" t="Include" />
                 <e p="DailyTaskType.cs" t="Include" />
               </e>
             </e>
@@ -872,6 +882,10 @@
               </e>
               <e p="_CoinCounterView" t="Include">
                 <e p="CoinCounterView.cs" t="Include" />
+              </e>
+              <e p="_DailyTaskView" t="Include">
+                <e p="DailyTaskView.cs" t="Include" />
+                <e p="DailyTaskViewAnimator.cs" t="Include" />
               </e>
               <e p="_FoodBoostView" t="Include">
                 <e p="FoodBoostBtn.cs" t="Include" />
@@ -1079,6 +1093,7 @@
               <e p="FpsDisplay.cs" t="Include" />
             </e>
             <e p="IntRange.cs" t="Include" />
+            <e p="ScreenTypeExtensions.cs" t="Include" />
           </e>
         </e>
         <e p="Assets" t="Include">

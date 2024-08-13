@@ -5,7 +5,7 @@ namespace _Game.Core.Configs.Models
     public class DailyTaskConfig
     {
         public int Id;
-        public DailyTaskType Type;
+        public DailyTaskType DailyTaskType;
         public LinearFunction LinearFunction;
         public int DropChance;
         public string Description;

@@ -1,11 +1,11 @@
 ﻿using _Game.Creatives.Creative_1.Scenario;
+using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI.Common.Scripts;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Creatives.Creative_1.Scenario;
-using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 

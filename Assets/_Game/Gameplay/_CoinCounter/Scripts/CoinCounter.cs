@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Assets._Game.Gameplay._CoinCounter.Scripts
+namespace _Game.Gameplay._CoinCounter.Scripts
 {
     public class CoinCounter : ICoinCounter
     {
-        public event Action<float> Changed;
+        public event Action<float> CoinsChanged;
+        public event Action<float> CoinsCollected;
 
         private float _coins;
         public float Coins => _coins;
@@ -40,9 +41,11 @@ namespace Assets._Game.Gameplay._CoinCounter.Scripts
         
         public void AddCoins(float amount)
         {
-            _coins += amount * _factor;
+            float delta = amount * _factor;
+            _coins += delta;
             
-            Changed?.Invoke(_coins);
+            CoinsChanged?.Invoke(_coins);
+            CoinsCollected?.Invoke(delta);
         }
 
         public void ChangeFactor(int factor)

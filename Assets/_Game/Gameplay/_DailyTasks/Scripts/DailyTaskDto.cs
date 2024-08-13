@@ -2,8 +2,10 @@
 {
     public class DailyTaskDto
     {
-        public string Description;
+        public string DailyInfo;
         public string Progress;
-        public int Reward;
+        public string Reward;
+        public bool IsCompleted;
+        public bool IsRunOut;
     }
 }

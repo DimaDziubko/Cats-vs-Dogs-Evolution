@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Assets._Game.Gameplay._CoinCounter.Scripts
+namespace _Game.Gameplay._CoinCounter.Scripts
 {
     public interface ICoinCounter
     {
-        event Action<float> Changed;
+        event Action<float> CoinsChanged;
+        event Action<float> CoinsCollected;
         float Coins { get; }
         float CoinsRatio { get; }
         float MaxCoinsPerBattle { set;}

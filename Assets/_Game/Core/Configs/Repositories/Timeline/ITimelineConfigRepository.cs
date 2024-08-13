@@ -6,7 +6,7 @@ namespace _Game.Core.Configs.Repositories.Timeline
     public interface ITimelineConfigRepository
     {
         AgeConfig[] GetAgeConfigs();
-        IEnumerable<BattleConfig> GetBattleConfigs();
+        List<BattleConfig> GetBattleConfigs();
         int LastBattle();
         int LastAge();
         int LastTimeline();

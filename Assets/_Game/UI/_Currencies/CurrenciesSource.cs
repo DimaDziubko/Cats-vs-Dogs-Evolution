@@ -7,6 +7,7 @@
         Battle,
         MiniShop,
         FreeGemsPack,
-        Upgrade
+        Upgrade,
+        DailyTask
     }
 }

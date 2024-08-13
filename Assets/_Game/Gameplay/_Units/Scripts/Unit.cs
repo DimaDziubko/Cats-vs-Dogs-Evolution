@@ -18,7 +18,6 @@ using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts.Utils;
-using Assets._Game.Utils;
 using Assets._Game.Utils.Extensions;
 using Pathfinding.RVO;
 using Sirenix.OdinInspector;
@@ -99,6 +98,7 @@ namespace _Game.Gameplay._Units.Scripts
         private IInteractionCache _interactionCache;
         private ICoinSpawner _coinSpawner;
         private IVFXProxy _vfxProxy;
+        private IUnitDeathObserver _deathObserver;
 
         private IInteractionCache InteractionCache
         {
@@ -197,7 +197,8 @@ namespace _Game.Gameplay._Units.Scripts
             IShootProxy shootProxy,
             IVFXProxy vFXProxy,
             ICoinSpawner coinSpawner,
-            float speedFactor)
+            float speedFactor,
+            IUnitDeathObserver deathObserver)
         {
             InteractionCache = interactionCache;
             Position = unitSpawnPoint;
@@ -207,8 +208,10 @@ namespace _Game.Gameplay._Units.Scripts
 
             _coinSpawner = coinSpawner;
             _vfxProxy = vFXProxy;
-            
+
             SetSpeedFactor(speedFactor);
+            
+            _deathObserver = deathObserver;
         }
 
         public override void Reset()
@@ -287,6 +290,8 @@ namespace _Game.Gameplay._Units.Scripts
             ReturnToPoolPosition();
 
             StartCoroutine(ReturnToPoolAfterDelay());
+            
+            _deathObserver.Notify(Faction, Type);
         }
 
         private void ReturnToPoolPosition()

@@ -1,6 +1,7 @@
 ﻿using _Game.Core.Configs.Models;
 using _Game.Core.UserState._Handler._Analytics;
 using _Game.Core.UserState._Handler._BattleSpeed;
+using _Game.Core.UserState._Handler._DailyTask;
 using _Game.Core.UserState._Handler._FoodBoost;
 using _Game.Core.UserState._Handler._Purchase;
 using _Game.Core.UserState._Handler._Timeline;
@@ -25,5 +26,6 @@ namespace _Game.Core.Services.UserContainer
         IFoodBoostStateHandler FoodBoostStateHandler { get; }
         IBattleSpeedStateHandler BattleSpeedStateHandler { get; }
         ITutorialStateHandler TutorialStateHandler { get; }
+        IDailyTaskStateHandler DailyTaskStateHandler { get;}
     }
 }

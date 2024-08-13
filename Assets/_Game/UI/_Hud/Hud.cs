@@ -3,9 +3,11 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
+using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._CoinCounterView;
+using _Game.UI._Hud._DailyTaskView;
 using _Game.UI._Hud._FoodBoostView;
 using _Game.UI._Hud._PauseView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
@@ -26,9 +28,9 @@ namespace _Game.UI._Hud
         [SerializeField] private PauseView _pauseView;
         [SerializeField] private BattleSpeedView _battleSpeedView;
         [SerializeField] private SpeedBoostView _speedBoostView;
+        [SerializeField] private DailyTaskView _dailyTaskView;
 
         public CoinCounterView CounterView => _counterView;
-        
 
         public void Construct(
             IWorldCameraService cameraService,
@@ -38,7 +40,8 @@ namespace _Game.UI._Hud
             IFeatureUnlockSystem featureUnlockSystem,
             IBattleSpeedService battleSpeed,
             ISpeedBoostService speedBoost,
-            IBattleManager battleManager)
+            IBattleManager battleManager,
+            IDailyTaskPresenter dailyTaskPresenter)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
 
@@ -47,6 +50,7 @@ namespace _Game.UI._Hud
             _battleSpeedView.Construct(battleSpeed, audioService);
             _speedBoostView.Construct(speedBoost, audioService);
             _counterView.Construct();
+            _dailyTaskView.Construct(dailyTaskPresenter, audioService);
             
             Show();
         }
@@ -68,7 +72,7 @@ namespace _Game.UI._Hud
             _counterView.Hide();
         }
 
-        public void OnCoinsChanged(float amount) => 
+        public void OnCoinsCoinsChanged(float amount) => 
             _counterView.UpdateCoins(amount);
 
 

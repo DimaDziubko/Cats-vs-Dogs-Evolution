@@ -112,8 +112,8 @@ namespace _Game.Core.UserState._State
                 DailyTasksState = new DailyTasksState()
                 {
                     ProgressOnTask = 0,
-                    CompletedTasks = new List<Task>(),
-                    CurrentTaskIdx = 0,
+                    CompletedTasks = new List<int>(),
+                    CurrentTaskIdx = -1,
                     LastTimeGenerated = DateTime.Now
                 },
                 

@@ -9,10 +9,11 @@ using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class UnitSpawner : IUnitSpawner
+    public class UnitSpawner : IUnitSpawner, IUnitDeathObserver
     {
-        public event Action<Faction> UnitSpawned;
-        
+        public event Action<Faction, UnitType> UnitSpawned;
+        public event Action<Faction, UnitType> UnitDead;
+
         private readonly IUnitFactory _unitFactory;
         private readonly IInteractionCache _cache;
         private readonly IWorldCameraService _cameraService;
@@ -29,6 +30,7 @@ namespace _Game.Gameplay._BattleField.Scripts
 
         private Vector3 _playerSpawnPoint;
         private Vector3 _enemySpawnPoint;
+
 
         public UnitSpawner(
             IUnitFactory unitFactory, 
@@ -47,7 +49,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _shootProxy = shootProxy;
             _speedManager = speedManager;
         }
-        
+
         public void Init(
             Vector3 playerDestination, 
             Vector3 enemyDestination)
@@ -69,7 +71,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             _playerUnits.GameUpdate(deltaTime);
             _enemyUnits.GameUpdate(deltaTime);
         }
-        
+
         public void SetSpeedFactor(float speedFactor)
         {
             _enemyUnits.SetBattleSpeedFactor(speedFactor);
@@ -93,11 +95,12 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _shootProxy,
                 _vfxProxy,
                 _coinSpawner,
-                _speedManager.CurrentSpeedFactor);
+                _speedManager.CurrentSpeedFactor,
+                this);
             
             _enemyUnits.Add(enemy);
-            
-            UnitSpawned?.Invoke(Faction.Enemy);
+
+            UnitSpawned?.Invoke(Faction.Enemy, type);
         }
 
         void IUnitSpawner.SpawnPlayerUnit(UnitType type)
@@ -111,9 +114,12 @@ namespace _Game.Gameplay._BattleField.Scripts
                 _shootProxy,
                 _vfxProxy,
                 _coinSpawner,
-                _speedManager.CurrentSpeedFactor);
+                _speedManager.CurrentSpeedFactor,
+                this);
             
             _playerUnits.Add(unit);
+            
+            UnitSpawned?.Invoke(Faction.Player, type);
         }
 
         public void KillUnits(Faction faction)
@@ -146,6 +152,11 @@ namespace _Game.Gameplay._BattleField.Scripts
             
             _playerSpawnPoint = new Vector3(-_cameraService.CameraWidth - offsetX, -offsetY, 0);
             _enemySpawnPoint = new Vector3(_cameraService.CameraWidth + offsetX , -offsetY, 0);
+        }
+
+        public void Notify(Faction faction, UnitType type)
+        {
+            UnitDead?.Invoke(faction, type);
         }
     }
 }

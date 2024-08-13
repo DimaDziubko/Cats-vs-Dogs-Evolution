@@ -24,6 +24,7 @@ namespace _Game.Core.Installers.Core
             BindEconomyConfigRepository();
             BindShopConfigRepository();
             BindAdsConfigRepository();
+            BindDailyTaskConfigRepository();
         }
 
         private void BindAdsConfigRepository() => 
@@ -71,6 +72,13 @@ namespace _Game.Core.Installers.Core
         {
             Container
                 .BindInterfacesAndSelfTo<ShopConfigRepository>()
+                .AsSingle();
+        }
+
+        private void BindDailyTaskConfigRepository()
+        {
+            Container
+                .BindInterfacesAndSelfTo<DailyTaskConfigRepository>()
                 .AsSingle();
         }
     }

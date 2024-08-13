@@ -7,7 +7,7 @@ namespace _Game.Core.Communication.Migrations
 {
     public class MigrationTo120 : StateMigrationBase
     {
-        public override string TargetVersion => "1.1.0";
+        public override string TargetVersion => "1.2.0";
 
         public override void Migrate(ref UserAccountState state)
         {

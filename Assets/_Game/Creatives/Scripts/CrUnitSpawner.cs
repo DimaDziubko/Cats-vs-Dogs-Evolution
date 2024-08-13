@@ -13,8 +13,11 @@ using UnityEngine;
 
 namespace _Game.Creatives.Scripts
 {
-    public class CrUnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedListener
+    public class CrUnitSpawner : IUnitSpawner, IPauseHandler, IBattleSpeedListener, IUnitDeathObserver
     {
+        public event Action<Faction, UnitType> UnitDead;
+        public event Action<Faction, UnitType> UnitSpawned;
+
         private readonly IUnitFactory _unitFactory;
         private readonly IInteractionCache _cache;
         private readonly IWorldCameraService _cameraService;
@@ -32,6 +35,7 @@ namespace _Game.Creatives.Scripts
 
         private Vector3 _playerSpawnPoint;
         private Vector3 _enemySpawnPoint;
+
 
         public CrUnitSpawner(
             IUnitFactory unitFactory, 
@@ -52,7 +56,7 @@ namespace _Game.Creatives.Scripts
             _shootProxy = shootProxy;
             _speedManager = speedManager;
         }
-        
+
         public void Init(
             Vector3 playerDestination, 
             Vector3 enemyDestination)
@@ -76,7 +80,7 @@ namespace _Game.Creatives.Scripts
             _playerUnits.GameUpdate(deltaTime);
             _enemyUnits.GameUpdate(deltaTime);
         }
-        
+
 
         void IPauseHandler.SetPaused(bool isPaused)
         {
@@ -97,7 +101,8 @@ namespace _Game.Creatives.Scripts
                 _shootProxy,
                 _vfxProxy,
                 _coinSpawner,
-                _speedManager.CurrentSpeedFactor);
+                _speedManager.CurrentSpeedFactor,
+                this);
 
             if (CrQuickGame.I.EnemySpawnPoints.Length > 0)
             {
@@ -118,7 +123,8 @@ namespace _Game.Creatives.Scripts
                 _shootProxy,
                 _vfxProxy,
                 _coinSpawner,
-                _speedManager.CurrentSpeedFactor);
+                _speedManager.CurrentSpeedFactor,
+                this);
 
             if (CrQuickGame.I.PlayerSpawnPoints.Length > 0)
             {
@@ -158,6 +164,11 @@ namespace _Game.Creatives.Scripts
         {
             _enemyUnits.SetBattleSpeedFactor(speedFactor);
             _playerUnits.SetBattleSpeedFactor(speedFactor);
+        }
+
+        public void Notify(Faction faction, UnitType type)
+        {
+            UnitDead?.Invoke(faction, type);
         }
     }
 }

@@ -8,5 +8,8 @@ namespace _Game.Core.Configs.Repositories.Age
         AgeConfig GetAgeConfig(int ageId);
         float GetAgePrice(int ageId);
         IEnumerable<WarriorConfig> GetAgeUnits(int ageId);
+        WarriorConfig GetLightWarriorForAge(int ageId);
+        WarriorConfig GetMediumWarriorForAge(int ageId);
+        WarriorConfig GetHeavyWarriorForAge(int ageId);
     }
 }

@@ -2,6 +2,7 @@
 using _Game.Core.Debugger;
 using _Game.Core.UserState._Handler._Analytics;
 using _Game.Core.UserState._Handler._BattleSpeed;
+using _Game.Core.UserState._Handler._DailyTask;
 using _Game.Core.UserState._Handler._FoodBoost;
 using _Game.Core.UserState._Handler._Purchase;
 using _Game.Core.UserState._Handler._Timeline;
@@ -27,6 +28,7 @@ namespace _Game.Core.Services.UserContainer
         public IFoodBoostStateHandler FoodBoostStateHandler { get; }
         public IBattleSpeedStateHandler BattleSpeedStateHandler { get; }
         public ITutorialStateHandler TutorialStateHandler { get; }
+        public IDailyTaskStateHandler DailyTaskStateHandler { get; }
 
         public UserContainer(IMyDebugger debugger)
         {
@@ -40,6 +42,7 @@ namespace _Game.Core.Services.UserContainer
             FoodBoostStateHandler = new FoodBoostStateHandler(this);
             BattleSpeedStateHandler = new BattleSpeedStateHandler(this);
             TutorialStateHandler = new TutorialStateHandler(this);
+            DailyTaskStateHandler = new DailyTaskStateHandler(this);
         }
     }
 }

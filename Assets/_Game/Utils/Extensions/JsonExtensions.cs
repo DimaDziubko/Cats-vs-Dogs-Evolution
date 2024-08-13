@@ -22,7 +22,8 @@ namespace _Game.Utils.Extensions
                 TimelinesCount = ExtractTimelinesCount(jsonData),
                 ShopConfig = ExtractShopConfig(jsonData),
                 FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
-                AdsConfig = ExtractAdsConfig(jsonData)
+                AdsConfig = ExtractAdsConfig(jsonData),
+                GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
             };
             
             //TODO Delete later
@@ -40,6 +41,17 @@ namespace _Game.Utils.Extensions
                 return null;
             }
             return adsConfigToken.ToObject<AdsConfig>();
+        }
+
+        private static GeneralDailyTaskConfig ExtractGeneralDailyTaskConfig(JObject jsonData)
+        {
+            var generalDailyTaskToken = jsonData[Constants.ConfigKeys.GENERAL_DAILY_TASK_CONFIG];
+            if (generalDailyTaskToken == null)
+            {
+                Debug.LogError("GeneralDailyTaskConfig is null");
+                return null;
+            }
+            return generalDailyTaskToken.ToObject<GeneralDailyTaskConfig>();
         }
 
         private static FreeGemsPackDayConfig ExtractFreeGemsPackDayConfig(JObject jsonData)
@@ -110,7 +122,7 @@ namespace _Game.Utils.Extensions
             }
             return timelineToken.ToObject<TimelineConfig>();
         }
-        
+
         private static int ExtractTimelinesCount(JObject jsonData)
         {
             var timelinesToken = jsonData[Constants.ConfigKeys.TIMELINES];

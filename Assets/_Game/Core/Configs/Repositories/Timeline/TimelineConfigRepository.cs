@@ -12,9 +12,10 @@ namespace _Game.Core.Configs.Repositories.Timeline
         public TimelineConfig GetCurrentTimeline() => _userContainer.GameConfig.CurrentTimeline;
 
         public AgeConfig[] GetAgeConfigs() => GetCurrentTimeline()?.Ages.ToArray();
-        public IEnumerable<BattleConfig> GetBattleConfigs() => GetCurrentTimeline()?.Battles;
+        public List<BattleConfig> GetBattleConfigs() => GetCurrentTimeline()?.Battles;
         public int LastBattle() => GetCurrentTimeline().Battles.Count - 1;
         public int LastAge() => GetCurrentTimeline().Ages.Count - 1;
         public int LastTimeline() => _userContainer.GameConfig.TimelinesCount - 1;
+        
     }
 }

@@ -1,8 +1,9 @@
 using System;
 using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Gameplay._Bases.Scripts;
-using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
+using _Game.Gameplay._CoinCounter.Scripts;
+using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._Hud._CoinCounterView;
 using Assets._Game.Core.Factory;
@@ -10,16 +11,15 @@ using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._BattleField.Scripts;
-using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._BattleField.Scripts
 {
-    public class BattleField : IBaseDestructionHandler
+    public class BattleField : IBaseDestructionHandler, IDisposable
     {
         public IUnitSpawner UnitSpawner => _unitSpawner;
-        
+
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
 
@@ -30,6 +30,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
         private readonly IPauseManager _pauseManager;
+        private readonly IDailyTaskCompletionChecker _dailyTaskCompletionChecker;
 
         private readonly CoinSpawner _coinSpawner;
         private readonly VfxSpawner _vfxSpawner;
@@ -49,10 +50,12 @@ namespace _Game.Gameplay._BattleField.Scripts
             IFactoriesHolder factoriesHolder,
             Hud hud,
             IBasePresenter basePresenter, 
-            IBattleSpeedManager speedManager)
+            IBattleSpeedManager speedManager,
+            IDailyTaskCompletionChecker dailyTaskCompletionChecker)
         {
             _cameraService = cameraService;
             _audioService = audioService;
+            _dailyTaskCompletionChecker = dailyTaskCompletionChecker;
 
             _coinSpawner = new CoinSpawner(
                 factoriesHolder.CoinFactory, 
@@ -90,11 +93,8 @@ namespace _Game.Gameplay._BattleField.Scripts
             baseDestructionManager.Register(this);
         }
 
-        public void Init(Battle battle)
+        public void Init()
         {
-            _unitSpawner.UnitSpawned -= battle.OnUnitSpawned;
-            _unitSpawner.UnitSpawned += battle.OnUnitSpawned;
-            
             CalculateBasePoints();
             CalculateUnitSpawnPoints();
             
@@ -104,8 +104,17 @@ namespace _Game.Gameplay._BattleField.Scripts
             
             _coinSpawner.Init(_coinCounterView.CoinIconHolderPosition);
             _baseSpawner.Init();
+
+            _unitSpawner.UnitSpawned += _dailyTaskCompletionChecker.OnUnitSpawned;
+            _unitSpawner.UnitDead += _dailyTaskCompletionChecker.OnUnitDead;
         }
-        
+
+        void IDisposable.Dispose()
+        {
+            _unitSpawner.UnitSpawned -= _dailyTaskCompletionChecker.OnUnitSpawned;
+            _unitSpawner.UnitDead -= _dailyTaskCompletionChecker.OnUnitDead;
+        }
+
         public void ResetSelf() => UpdateBase(Faction.Player);
 
         public void StartBattle() => _baseSpawner.OnStartBattle();

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._GameInitializer;
 using _Game.Core.Debugger;
+using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
+using _Game.Utils;
 using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 
@@ -20,9 +22,11 @@ namespace _Game.Core._UpgradesChecker
         private readonly IMyLogger _logger;
         private readonly IGameInitializer _gameInitializer;
         private readonly IUserContainer _userContainer;
+        private readonly IAgeNavigator _ageNavigator;
 
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
-        
+
+
         private IEnumerable<Screen> RelevantWindows { get; } = new List<Screen>()
         {
             Screen.Upgrades,
@@ -98,11 +102,16 @@ namespace _Game.Core._UpgradesChecker
             foreach (var provider in _upgradeProviders)
             {
                 bool isAvailable = provider.IsAvailable;
-                foreach (var window in provider.AffectedScreens)
+                foreach (var screen in provider.AffectedScreens)
                 {
-                    if (RelevantWindows.Contains(window))
+                    if (RelevantWindows.Contains(screen))
                     {
-                        _data[window].IsAvailable |= isAvailable;
+                        if(screen.IsComposite())
+                            _data[screen].IsAvailable |= isAvailable;
+                        else
+                        {
+                            _data[screen].IsAvailable = isAvailable;
+                        }
                     }
                 }
             }
@@ -129,10 +138,16 @@ namespace _Game.Core._UpgradesChecker
                 ResetReviewed();
                 UpdateData();
             }
+            else
+            {
+                AggregateAvailabilityStates();
+            }
         }
         
-        void IDisposable.Dispose() => 
+        void IDisposable.Dispose()
+        {
             _gameInitializer.OnPostInitialization -= Init;
+        }
 
         private void ResetReviewed()
         {

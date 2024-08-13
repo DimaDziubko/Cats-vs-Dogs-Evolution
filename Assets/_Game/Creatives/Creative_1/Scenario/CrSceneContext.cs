@@ -10,6 +10,7 @@ using _Game.Creatives.Scripts;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
+using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
@@ -25,7 +26,6 @@ using Assets._Game.Core.Services.Camera;
 using Assets._Game.Creatives.Factories;
 using Assets._Game.Creatives.LocalUnitConfigs.Scr;
 using Assets._Game.Creatives.Scripts;
-using Assets._Game.Gameplay._CoinCounter.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
@@ -132,15 +132,15 @@ namespace _Game.Creatives.Creative_1.Scenario
             _foodGenerator = new CrFoodGenerator(_gameplayUI, _systemUpdate, _pauseManager, _battleSpeedManager);
             //_soundService.Init();
 
-            _coinCounter.Changed -= _hud.OnCoinsChanged;
-            _coinCounter.Changed += _hud.OnCoinsChanged;
+            _coinCounter.CoinsChanged -= _hud.OnCoinsChanged;
+            _coinCounter.CoinsChanged += _hud.OnCoinsChanged;
             if (_isCoinsLogic)
             {
                 _coinCounter.AddCoins(_startGold);
 
                 foreach (CrUnitBuilButton button in _crGameplayUI.CrUnitBuilButtons)
                 {
-                    _coinCounter.Changed += button.OnCoinsChanged;
+                    _coinCounter.CoinsChanged += button.OnCoinsChanged;
                 }
             }
 

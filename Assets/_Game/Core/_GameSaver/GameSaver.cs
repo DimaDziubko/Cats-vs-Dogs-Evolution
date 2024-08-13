@@ -7,7 +7,6 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -32,6 +31,7 @@ namespace _Game.Core._GameSaver
         private IBattleSpeedStateReadonly BattleSpeed => _userContainer.State.BattleSpeedState;
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
         private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
+        private IDailyTasksStateReadonly DailyTasksState => _userContainer.State.DailyTasksState;
 
         private readonly float _debounceTime = 2.0f;
         private float _lastSaveTime;
@@ -64,6 +64,7 @@ namespace _Game.Core._GameSaver
             BattleSpeed.PermanentSpeedChanged += OnPermanentBattleSpeedChanged;
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
             Purchases.Changed += OnPurchasesChanged;
+            DailyTasksState.TaskCompletedChanged += OnTaskCompleted;
         }
 
         public void Dispose()
@@ -82,7 +83,11 @@ namespace _Game.Core._GameSaver
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
             Purchases.Changed -= OnPurchasesChanged;
             _gameInitializer.OnPreInitialization -= Init;
+            DailyTasksState.TaskCompletedChanged -= OnTaskCompleted;
         }
+
+        private void OnTaskCompleted() => 
+            SaveGame();
 
         private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source) => 
             SaveGame();
