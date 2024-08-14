@@ -9,6 +9,5 @@ namespace _Game.Core.Configs.Repositories.Timeline
         List<BattleConfig> GetBattleConfigs();
         int LastBattle();
         int LastAge();
-        int LastTimeline();
     }
 }

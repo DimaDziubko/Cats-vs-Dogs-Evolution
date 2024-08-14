@@ -9,27 +9,61 @@ namespace _Game.Utils.Extensions
     public static class JsonExtensions
     {
         public static TimelineConfig ForTimeline(this JObject jsonData, int timelineId = 0) => 
-            ExtractTimeline(jsonData, timelineId);
+            Generate(jsonData, timelineId);
 
         public static GameConfig ToGameConfig(this JObject jsonData, int timelineId = 0)
         {
             var config = new GameConfig()
             {
-                CurrentTimeline = ExtractTimeline(jsonData, timelineId),
+                CurrentTimeline = Generate(jsonData, timelineId),
                 BattleSpeedConfigs = ExtractBattleSpeedConfig(jsonData),
                 CommonConfig = ExtractCommonConfig(jsonData),
                 FoodBoostConfig = ExtractFoodBoostConfig(jsonData),
-                TimelinesCount = ExtractTimelinesCount(jsonData),
                 ShopConfig = ExtractShopConfig(jsonData),
                 FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
                 AdsConfig = ExtractAdsConfig(jsonData),
                 GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
             };
-            
             //TODO Delete later
             Debug.Log("GAME CONFIG PARSED SUCCESSFULLY");
     
             return config;
+        }
+
+        private static List<WarriorConfig> ExtractWarriors(JObject jsonData)
+        {
+            var warriorsToken = jsonData[Constants.ConfigKeys.WARRIORS];
+            if (warriorsToken == null)
+            {
+                Debug.LogError("WarriorsConfig is null");
+                return null;
+            }
+            
+            return warriorsToken.Select(warriorToken => warriorToken.ToObject<WarriorConfig>()).ToList();
+        }
+
+        private static List<AgeConfig> ExtractAges(JObject jsonData)
+        {
+            var agesToken = jsonData[Constants.ConfigKeys.AGES];
+            if (agesToken == null)
+            {
+                Debug.LogError("AgeConfig is null");
+                return null;
+            }
+            
+            return agesToken.Select(ageToken => ageToken.ToObject<AgeConfig>()).ToList();
+        }
+
+        private static List<BattleConfig> ExtractBattles(JObject jsonData)
+        {
+            var battlesToken = jsonData[Constants.ConfigKeys.BATTLES];
+            if (battlesToken == null)
+            {
+                Debug.LogError("BattleConfig is null");
+                return null;
+            }
+            
+            return battlesToken.Select(battleToken => battleToken.ToObject<BattleConfig>()).ToList();
         }
 
         private static AdsConfig ExtractAdsConfig(JObject jsonData)
@@ -110,28 +144,47 @@ namespace _Game.Utils.Extensions
             return battleSpeedTokens.Select(battleSpeedToken => battleSpeedToken.ToObject<BattleSpeedConfig>()).ToList();
         }
 
-        private static TimelineConfig ExtractTimeline(JObject jsonData, int timelineId)
+        private static TimelineConfig Generate(JObject jsonData, int timelineId)
         {
-            var timelineToken = jsonData[Constants.ConfigKeys.TIMELINES]?
-                .FirstOrDefault(t => ((int)t[Constants.ConfigKeys.ID]) == timelineId);
-            
-            if (timelineToken == null)
-            {
-               Debug.LogError("TimelineConfig is null");
-               return null;
-            }
-            return timelineToken.ToObject<TimelineConfig>();
-        }
+            TimelineConfig timelineConfig = new TimelineConfig();
+            timelineConfig.Ages = new List<AgeConfig>();
+            timelineConfig.Battles = new List<BattleConfig>();
 
-        private static int ExtractTimelinesCount(JObject jsonData)
-        {
-            var timelinesToken = jsonData[Constants.ConfigKeys.TIMELINES];
-            if (timelinesToken == null)
+            List<AgeConfig> ages = ExtractAges(jsonData);
+            List<BattleConfig> battles = ExtractBattles(jsonData);
+            List<WarriorConfig> warriors = ExtractWarriors(jsonData);
+            
+            var levels = new List<List<int>>();
+            for (int i = 1; i <= 6; i++)
             {
-                Debug.LogError("Timelines array is null");
-                return 0;
+                levels.Add(ages.Where(x => x.Level == i).Select((_, index) => index).ToList());
             }
-            return timelinesToken.Count();
+            
+            for (int i = 0; i < levels.Count; i++)
+            {
+                int index = 0;
+                if (timelineId >= levels[i].Count)
+                {
+                    index = (timelineId + i) % levels[i].Count;
+                }
+                else
+                {
+                    index = timelineId;
+                }
+                
+                var age = ages[levels[i][index]];
+                var battle = battles[levels[i][index]];
+                
+                battle.Warriors = age.Warriors = age.WarriorsId
+                    .Select(id => warriors.FirstOrDefault(w => w.Id == id))
+                    .Where(warrior => warrior != null)
+                    .ToList();
+                
+                timelineConfig.Ages.Add(age);
+                timelineConfig.Battles.Add(battle);
+            }
+
+            return timelineConfig;
         }
     }
 }

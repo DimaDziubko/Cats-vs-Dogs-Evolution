@@ -128,12 +128,13 @@ namespace _Game.Gameplay._DailyTasks.Scripts
 
             _userContainer.DailyTaskStateHandler.ChangeTaskIdx(config.Id);
 
-            float target = config.LinearFunction.GetValue(targetArgument);
+            float target = SelectTarget(config, targetArgument);
+            
             bool isCompleted = (target - DailyState.ProgressOnTask) < Constants.ComparisonThreshold.MONEY_EPSILON;
 
             _currentDailyTask.Config = config;
             _currentDailyTask.Progress = DailyState.ProgressOnTask;
-            _currentDailyTask.Target = config.LinearFunction.GetValue(targetArgument);
+            _currentDailyTask.Target = target;
             _currentDailyTask.IsCompleted = isCompleted;
             _currentDailyTask.MaxCountPerDay = _dailyTaskConfigRepository.MaxDailyCountPerDay;
             _currentDailyTask.CompletedCount = DailyState.CompletedTasks.Count;
@@ -141,6 +142,13 @@ namespace _Game.Gameplay._DailyTasks.Scripts
                 DailyState.CompletedTasks.Count >= _dailyTaskConfigRepository.MaxDailyCountPerDay;
             
             DailyTaskGenerated?.Invoke(_currentDailyTask);
+        }
+
+        private float SelectTarget(DailyTaskConfig config, int targetArgument)
+        {
+            return config.LinearFunctions.Count - 1 >= TimelineState.MaxBattle
+                ? config.LinearFunctions[TimelineState.MaxBattle].GetValue(targetArgument) 
+                : config.LinearFunctions[0].GetValue(targetArgument);
         }
 
         private int GetTargetArgumentForType(DailyTaskType dailyTaskType)

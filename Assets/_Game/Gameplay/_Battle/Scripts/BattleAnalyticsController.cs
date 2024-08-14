@@ -30,8 +30,8 @@ namespace _Game.Gameplay._Battle.Scripts
 
         public void SendWave(string wave)
         {
-            _dtdAnalytics.SendEvent(wave);
-            _analytics.SendEvent(wave);
+            _dtdAnalytics.SendWave(wave, _battleAnalyticsData);
+            _analytics.SendWave(wave, _battleAnalyticsData);
         }
     }
 }

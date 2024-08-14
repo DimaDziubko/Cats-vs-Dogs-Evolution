@@ -6,5 +6,6 @@ namespace _Game.Core.Services.Analytics
     {
         void OnBattleStarted(BattleAnalyticsData battleAnalyticsData);
         void SendEvent(string eventName);
+        void SendWave(string wave, BattleAnalyticsData battleAnalyticsData);
     }
 }

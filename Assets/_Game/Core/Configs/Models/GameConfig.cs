@@ -4,7 +4,6 @@ namespace _Game.Core.Configs.Models
 {
     public class GameConfig
     {
-        public int TimelinesCount;
         public TimelineConfig CurrentTimeline;
         public CommonConfig CommonConfig;
         public FoodBoostConfig FoodBoostConfig;

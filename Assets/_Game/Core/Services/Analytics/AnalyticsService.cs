@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
-using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
 using Assets._Game.Core._Logger;
+using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using Cysharp.Threading.Tasks;
@@ -16,7 +16,7 @@ using Firebase.Crashlytics;
 using Firebase.Installations;
 using UnityEngine.Device;
 
-namespace Assets._Game.Core.Services.Analytics
+namespace _Game.Core.Services.Analytics
 {
     public class AnalyticsService : IAnalyticsService, IDisposable
     {
@@ -216,6 +216,18 @@ namespace Assets._Game.Core.Services.Analytics
             {
                 _logger.LogWarning($"Firebase app not initialized. Cannot log event: {eventName}");
             }
+        }
+
+        public void SendWave(string wave, BattleAnalyticsData data)
+        {
+            if (!IsComponentsReady()) return;
+            SendEvent("battle_completed", new Dictionary<string, object>
+            {
+                {"TimelineNumber", data.TimelineNumber},
+                {"AgeNumber", data.AgeNumber},
+                {"BattleNumber", data.BattleNumber},
+                {"Wave", wave},
+            });
         }
     }
 

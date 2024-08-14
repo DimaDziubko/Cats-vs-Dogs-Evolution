@@ -131,7 +131,7 @@ namespace _Game.Utils
         {
             _timelineLabel.text = $"Timeline {TimelineState.TimelineId + 1}";
             _previousTimelineBtn.interactable = TimelineState.TimelineId > 0;
-            _nextTimelineBtn.interactable = TimelineState.TimelineId < _timelineConfigRepository.LastTimeline();
+            _nextTimelineBtn.interactable = true;
         }
 
         private void UpdateAgeNavigation()

@@ -27,19 +27,18 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
 
         private readonly IUserContainer _userContainer;
         private readonly IEconomyConfigRepository _configRepository;
-        private readonly IMyLogger _logger;
         private readonly IAdsService _adsService;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IGameInitializer _gameInitializer;
+        private readonly IMyLogger _logger;
 
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
         private IFoodBoostStateReadonly FoodBoostState => _userContainer.State.FoodBoost;
 
         private readonly FoodBoostBtnModel _foodBoostBtnModel = new FoodBoostBtnModel();
-
-
+        
         public FoodBoostService(
             IUserContainer userContainer,
             IEconomyConfigRepository configRepository,

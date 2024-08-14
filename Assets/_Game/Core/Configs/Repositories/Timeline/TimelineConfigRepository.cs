@@ -15,7 +15,5 @@ namespace _Game.Core.Configs.Repositories.Timeline
         public List<BattleConfig> GetBattleConfigs() => GetCurrentTimeline()?.Battles;
         public int LastBattle() => GetCurrentTimeline().Battles.Count - 1;
         public int LastAge() => GetCurrentTimeline().Ages.Count - 1;
-        public int LastTimeline() => _userContainer.GameConfig.TimelinesCount - 1;
-        
     }
 }

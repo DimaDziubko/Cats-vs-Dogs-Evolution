@@ -80,6 +80,10 @@ namespace _Game.Utils
 
         public sealed class ConfigKeys
         {
+            public static string WARRIORS = "Warriors";
+            public static string AGES = "Ages";
+            public static string BATTLES = "Battles";
+
             //Ads
             public const string ADS_CONFIG = "AdsConfig";
 

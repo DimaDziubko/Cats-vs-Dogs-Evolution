@@ -27,7 +27,7 @@ namespace _Game.Core._UpgradesChecker
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
 
 
-        private IEnumerable<Screen> RelevantWindows { get; } = new List<Screen>()
+        private IEnumerable<Screen> RelevantScreens { get; } = new List<Screen>()
         {
             Screen.Upgrades,
             Screen.Evolution,
@@ -79,47 +79,41 @@ namespace _Game.Core._UpgradesChecker
 
         private void ResetScreenAvailability()
         {
-            foreach (var window in RelevantWindows)
+            foreach (var screen in RelevantScreens)
             {
-                if (!_data.ContainsKey(window))
+                if (!_data.ContainsKey(screen))
                 {
-                    _data[window] = new NotificationData
+                    _data[screen] = new NotificationData
                     {
-                        Screen = window,
+                        Screen = screen,
                         IsAvailable = false,
                         IsReviewed = false
                     };
                 }
                 else
                 {
-                    _data[window].IsAvailable = false;
+                    _data[screen].IsAvailable = false;
                 }
             }
         }
 
         private void AggregateAvailabilityStates()
         {
-            foreach (var provider in _upgradeProviders)
+            foreach (var screen in RelevantScreens)
             {
-                bool isAvailable = provider.IsAvailable;
-                foreach (var screen in provider.AffectedScreens)
+                if (RelevantScreens.Contains(screen))
                 {
-                    if (RelevantWindows.Contains(screen))
-                    {
-                        if(screen.IsComposite())
-                            _data[screen].IsAvailable |= isAvailable;
-                        else
-                        {
-                            _data[screen].IsAvailable = isAvailable;
-                        }
-                    }
+                    _data[screen].IsAvailable = 
+                        _upgradeProviders
+                            .Where(p => p.AffectedScreens.Contains(screen))
+                            .Any(p => p.IsAvailable);
                 }
             }
         }
-
+        
         private void NotifyUpdatedStates()
         {
-            foreach (var window in RelevantWindows)
+            foreach (var window in RelevantScreens)
             {
                 Notify?.Invoke(_data[window]);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Game.Core._GameInitializer;
 using _Game.Core.Ads;
 using _Game.Core.Services.IAP;
@@ -11,7 +12,8 @@ using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using DevToDev.Analytics;
-using UnityEngine.Purchasing;
+using Unity.VisualScripting;
+using Product = UnityEngine.Purchasing.Product;
 
 namespace _Game.Core.Services.Analytics
 {
@@ -134,6 +136,10 @@ namespace _Game.Core.Services.Analytics
                     break;
                 case UI._Currencies.Currencies.Gems:
                     DTDAnalytics.CurrencyAccrual(type.ToString(), (int)amount, source.ToString(), accrualType);
+                    DTDAnalytics.CurrentBalance(new Dictionary<string, long>
+                    {
+                        { type.ToString(), (long)Currencies.Gems }
+                    });
                     break;
             }
         }
@@ -189,6 +195,18 @@ namespace _Game.Core.Services.Analytics
         
             DTDAnalytics.CustomEvent("battle_started", parameters);
         }
+        
+        public void SendWave(string wave, BattleAnalyticsData data)
+        {
+            var parameters = new DTDCustomEventParameters();
+            parameters.Add("timeline№", data.TimelineNumber);
+            parameters.Add("age№", data.AgeNumber);
+            parameters.Add("battle№", data.BattleNumber);
+            parameters.Add("wave№", wave);
+            
+            DTDAnalytics.CustomEvent("wave_started", parameters);
+        }
+
         
         public void SendEvent(string eventName)
         {

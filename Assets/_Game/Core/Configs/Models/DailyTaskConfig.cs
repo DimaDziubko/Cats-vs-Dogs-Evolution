@@ -1,4 +1,5 @@
-﻿using _Game.Gameplay._DailyTasks.Scripts;
+﻿using System.Collections.Generic;
+using _Game.Gameplay._DailyTasks.Scripts;
 
 namespace _Game.Core.Configs.Models
 {
@@ -6,7 +7,7 @@ namespace _Game.Core.Configs.Models
     {
         public int Id;
         public DailyTaskType DailyTaskType;
-        public LinearFunction LinearFunction;
+        public List<LinearFunction> LinearFunctions;
         public int DropChance;
         public string Description;
         public int Reward;

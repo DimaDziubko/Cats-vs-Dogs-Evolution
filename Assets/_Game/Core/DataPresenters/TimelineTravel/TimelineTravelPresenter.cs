@@ -111,7 +111,7 @@ namespace _Game.Core.DataPresenters.TimelineTravel
             TravelTabModelUpdated?.Invoke(travelViewModel);
         }
 
-        private bool IsNextTimeline => TimelineState.TimelineId < _timelineConfigRepository.LastTimeline();
+        private bool IsNextTimeline => true;
         
         private bool IsNextAge() => 
             TimelineState.AgeId < _timelineConfigRepository.LastAge();

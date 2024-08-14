@@ -183,7 +183,7 @@ namespace _Game.Core.DataProviders.BattleDataProvider
                 DataPool<int, WeaponData> dataPool = 
                     await _dataProvider
                         .LoadWeapons(
-                            config.Enemies, 
+                            config.Warriors, 
                             new LoadContext()
                             {
                                 Faction = Faction.Enemy,
@@ -208,7 +208,7 @@ namespace _Game.Core.DataProviders.BattleDataProvider
                 DataPool<UnitType, UnitData> dataPool = 
                     await _dataProvider
                         .LoadUnits(
-                            config.Enemies,
+                            config.Warriors,
                              new LoadContext()
                             {
                                 Faction = Faction.Enemy,
