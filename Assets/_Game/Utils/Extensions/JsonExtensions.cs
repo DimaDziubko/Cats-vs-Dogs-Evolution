@@ -146,43 +146,56 @@ namespace _Game.Utils.Extensions
 
         private static TimelineConfig Generate(JObject jsonData, int timelineId)
         {
-            TimelineConfig timelineConfig = new TimelineConfig();
-            timelineConfig.Ages = new List<AgeConfig>();
-            timelineConfig.Battles = new List<BattleConfig>();
+            TimelineConfig timelineConfig = new TimelineConfig
+            {
+                Id = timelineId, 
+                Ages = new List<AgeConfig>(), 
+                Battles = new List<BattleConfig>()
+            };
 
             List<AgeConfig> ages = ExtractAges(jsonData);
             List<BattleConfig> battles = ExtractBattles(jsonData);
             List<WarriorConfig> warriors = ExtractWarriors(jsonData);
             
-            var levels = new List<List<int>>();
-            for (int i = 1; i <= 6; i++)
-            {
-                levels.Add(ages.Where(x => x.Level == i).Select((_, index) => index).ToList());
-            }
+            List<int> ageIds = new List<int>();
+            List<int> battleIds = new List<int>();
             
-            for (int i = 0; i < levels.Count; i++)
+            for (int i = 0; i < 6; i++)
             {
+                List<AgeConfig> ageLevelGroup = ages.Where(x => x.Level == i+1).ToList();
+                List<BattleConfig> battleLevelGroup = battles.Where(x => x.Level == i+1).ToList();
+                
                 int index = 0;
-                if (timelineId >= levels[i].Count)
+                if (timelineId >= ageLevelGroup.Count)
                 {
-                    index = (timelineId + i) % levels[i].Count;
+                    index = (timelineId + i) % ageLevelGroup.Count;
                 }
                 else
                 {
                     index = timelineId;
                 }
                 
-                var age = ages[levels[i][index]];
-                var battle = battles[levels[i][index]];
+                var age = ageLevelGroup[index];
+                var battle = battleLevelGroup[index];
+
+                int idOffset = 1;
                 
                 battle.Warriors = age.Warriors = age.WarriorsId
-                    .Select(id => warriors.FirstOrDefault(w => w.Id == id))
+                    .Select(id => warriors.FirstOrDefault(w => w.Id == (id - idOffset)))
                     .Where(warrior => warrior != null)
                     .ToList();
+                
+                ageIds.Add(age.Id);
+                battleIds.Add(battle.Id);
                 
                 timelineConfig.Ages.Add(age);
                 timelineConfig.Battles.Add(battle);
             }
+            
+            Debug.Log($"TimelineId: {timelineId}");
+            Debug.Log("Ages: [" + string.Join(", ", ageIds) + "]");
+            Debug.Log("Battles: [" + string.Join(", ", battleIds) + "]");
+
 
             return timelineConfig;
         }

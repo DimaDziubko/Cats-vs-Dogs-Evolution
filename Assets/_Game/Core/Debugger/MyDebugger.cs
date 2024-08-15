@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Ads;
+using _Game.Core.Configs.Models;
 using _Game.Core.Data;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
@@ -23,6 +24,7 @@ using Assets._Game.Gameplay.Common.Scripts;
 using Assets._Game.UI._Environment;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.Core.Debugger
@@ -87,6 +89,9 @@ namespace _Game.Core.Debugger
         
         [ShowInInspector]
         public bool IsPaused => BattleManager.IsPaused;
+
+        [ShowInInspector] 
+        public TimelineConfig TimelineConfig => UserContainer.GameConfig.CurrentTimeline;
 
         public UserContainer UserContainer { get; set; }
         public BattleSpeedService BattleSpeedService { get; set; }
