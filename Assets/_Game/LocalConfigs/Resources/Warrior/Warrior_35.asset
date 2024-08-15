@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_35
+  m_EditorClassIdentifier: 
+  Id: 35
+  Type: 1
+  Health: 486
+  Speed: 0.25
+  WeaponConfig:
+    Id: 35
+    WeaponType: 1
+    Damage: 122
+    ProjectileSpeed: 6
+    ProjectileKey: Laser
+    TrajectoryWarpFactor: 0
+    MuzzleKey: '-'
+    ProjectileExplosionKey: '-'
+    SplashRadius: 0
+    PlayerDamageMultiplier: 1.5
+    EnemyDamageMultiplier: 1
+  Name: Drone
+  CatIconKey: CatIcon_11[0]
+  DogIconKey: DogIcon_11[0]
+  DogKey: Drone_0
+  Price: 4910000
+  CatKey: Drone_0
+  FoodPrice: 17
+  CoinsPerKill: 524288
+  PlayerHealthMultiplier: 1.28
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 2
+  AttackDistance: 1.5

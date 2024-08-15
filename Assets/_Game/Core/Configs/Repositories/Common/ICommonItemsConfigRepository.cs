@@ -1,4 +1,5 @@
 ﻿using Assets._Game.Gameplay.Common.Scripts;
+using UnityEngine.AddressableAssets;
 
 namespace _Game.Core.Configs.Repositories.Common
 {

@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _Game.Core.Configs.Models
 {
+    [Serializable]
     public class Exponential
     {
         public int Id;

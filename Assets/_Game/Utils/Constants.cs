@@ -4,6 +4,12 @@ namespace _Game.Utils
 {
     public sealed class Constants
     {
+        public sealed class LocalConfigPath
+        {
+            public const string COMMON_CONFIG_PATH = "Common/CommonConfig";
+            public const string GENERAL_AGE_CONFIG_PATH = "Age/GeneralAgeConfig";
+            public const string GENERAL_BATTLE_CONFIG_PATH = "Battle/GeneralBattleConfig";
+        }
         public sealed class Money
         {
             public const int MIN_COINS_PER_BATTLE = 9;

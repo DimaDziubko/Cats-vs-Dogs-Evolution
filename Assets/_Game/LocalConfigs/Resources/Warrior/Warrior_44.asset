@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_44
+  m_EditorClassIdentifier: 
+  Id: 44
+  Type: 1
+  Health: 18
+  Speed: 0.25
+  WeaponConfig:
+    Id: 44
+    WeaponType: 1
+    Damage: 18
+    ProjectileSpeed: 4
+    ProjectileKey: Arrow
+    TrajectoryWarpFactor: 0.2
+    MuzzleKey: '-'
+    ProjectileExplosionKey: '-'
+    SplashRadius: 0
+    PlayerDamageMultiplier: 1.7
+    EnemyDamageMultiplier: 1
+  Name: Archer
+  CatIconKey: CatIcon_14[1]
+  DogIconKey: DogIcon_14[1]
+  DogKey: Dog_41
+  Price: 9600
+  CatKey: Cat_41
+  FoodPrice: 12
+  CoinsPerKill: 1024
+  PlayerHealthMultiplier: 1.33
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 0.4
+  AttackDistance: 2

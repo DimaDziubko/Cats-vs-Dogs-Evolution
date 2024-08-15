@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_51
+  m_EditorClassIdentifier: 
+  Id: 51
+  Type: 2
+  Health: 404
+  Speed: 0.25
+  WeaponConfig:
+    Id: 51
+    WeaponType: 1
+    Damage: 162
+    ProjectileSpeed: 0
+    ProjectileKey: '-'
+    TrajectoryWarpFactor: 0
+    MuzzleKey: Muzzle_3
+    ProjectileExplosionKey: '-'
+    SplashRadius: 0
+    PlayerDamageMultiplier: 1.8
+    EnemyDamageMultiplier: 1
+  Name: Sniper
+  CatIconKey: CatIcon_16[2]
+  DogIconKey: DogIcon_16[2]
+  DogKey: Dog_48
+  Price: 1630000
+  CatKey: Cat_48
+  FoodPrice: 22
+  CoinsPerKill: 81920
+  PlayerHealthMultiplier: 1.4
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 0.3
+  AttackDistance: 3

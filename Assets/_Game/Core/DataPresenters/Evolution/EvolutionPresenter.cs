@@ -147,10 +147,8 @@ namespace _Game.Core.DataPresenters.Evolution
 
         private bool IsNextAgeAffordable()
         {
-            _logger.Log("We are here!");
             if (TimelineState.MaxBattle > TimelineState.AgeId)
             {
-                _logger.Log("Problem is here!");
                 return true;
             }
             return _ageConfigRepository

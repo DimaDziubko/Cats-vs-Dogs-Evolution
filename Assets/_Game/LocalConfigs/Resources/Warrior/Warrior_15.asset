@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_15
+  m_EditorClassIdentifier: 
+  Id: 15
+  Type: 2
+  Health: 1460
+  Speed: 0.25
+  WeaponConfig:
+    Id: 15
+    WeaponType: 1
+    Damage: 243
+    ProjectileSpeed: 4
+    ProjectileKey: Projectile_1
+    TrajectoryWarpFactor: 0.1
+    MuzzleKey: Muzzle_1
+    ProjectileExplosionKey: Explosion_0
+    SplashRadius: 0.4
+    PlayerDamageMultiplier: 1.33
+    EnemyDamageMultiplier: 1
+  Name: Tank
+  CatIconKey: CatIcon_4[CatIcon_2]
+  DogIconKey: DogIcon_4[DogIcon_2]
+  DogKey: Tank_0
+  Price: 1630000
+  CatKey: Tank_0
+  FoodPrice: 16
+  CoinsPerKill: 81920
+  PlayerHealthMultiplier: 1.17
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 0.3
+  AttackDistance: 2

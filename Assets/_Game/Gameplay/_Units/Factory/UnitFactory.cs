@@ -5,14 +5,12 @@ using _Game.Core.Services.Random;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Utils;
 using Assets._Game.Core.DataPresenters.UnitDataPresenter;
-using Assets._Game.Core.Factory;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Utils;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Units.Factory
+namespace _Game.Gameplay._Units.Factory
 {
     [CreateAssetMenu(fileName = "Unit Factory", menuName = "Factories/Unit")]
     public class UnitFactory : GameObjectFactory, IUnitFactory

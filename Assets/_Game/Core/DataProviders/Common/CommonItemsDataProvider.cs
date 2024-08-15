@@ -31,21 +31,21 @@ namespace _Game.Core.DataProviders.Common
             
             foreach (Race race in Enum.GetValues(typeof(Race)))
             {
-                var iconKey = _commonItemsConfigRepository.GetFoodIconKey(race);
+                string iconKey = _commonItemsConfigRepository.GetFoodIconKey(race);
                 var iconSprite = await _assetRegistry.LoadAsset<Sprite>(iconKey, context.Timeline, context.CacheContext);
                 pool.Add(race, iconSprite);
                 
-                _logger.Log($"Food icon for race{race} loaded successfully");
+                _logger.Log($"Food icon {iconSprite.name} for race{race} loaded successfully");
             }
 
             return  pool;
         }
-
+        
         public async UniTask<Sprite> LoadBaseIcon(LoadContext context)
         {
-            var iconKey = _commonItemsConfigRepository.GetBaseIconKey();
-            var iconSprite = await _assetRegistry.LoadAsset<Sprite>(iconKey, context.Timeline, context.CacheContext);
-            _logger.Log($"Base icon loaded successfully");
+            string key = _commonItemsConfigRepository.GetBaseIconKey();
+            var iconSprite = await _assetRegistry.LoadAsset<Sprite>(key, context.Timeline, context.CacheContext);
+            _logger.Log($"Base icon {iconSprite.name} loaded successfully");
             return iconSprite;
         }
     }

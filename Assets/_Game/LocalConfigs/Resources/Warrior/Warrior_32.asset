@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_32
+  m_EditorClassIdentifier: 
+  Id: 32
+  Type: 1
+  Health: 162
+  Speed: 0.25
+  WeaponConfig:
+    Id: 32
+    WeaponType: 1
+    Damage: 162
+    ProjectileSpeed: 0
+    ProjectileKey: Grenade
+    TrajectoryWarpFactor: 0
+    MuzzleKey: Muzzle_3
+    ProjectileExplosionKey: Explosion_0
+    SplashRadius: 0.4
+    PlayerDamageMultiplier: 1.5
+    EnemyDamageMultiplier: 1
+  Name: Grenadier
+  CatIconKey: CatIcon_10[1]
+  DogIconKey: DogIcon_10[1]
+  DogKey: Dog_30
+  Price: 614000
+  CatKey: Cat_30
+  FoodPrice: 15
+  CoinsPerKill: 65536
+  PlayerHealthMultiplier: 1.28
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 0.6
+  AttackDistance: 2

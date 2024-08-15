@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_27
+  m_EditorClassIdentifier: 
+  Id: 27
+  Type: 2
+  Health: 108
+  Speed: 0.25
+  WeaponConfig:
+    Id: 27
+    WeaponType: 1
+    Damage: 36
+    ProjectileSpeed: 5
+    ProjectileKey: Arrow
+    TrajectoryWarpFactor: 0.2
+    MuzzleKey: '-'
+    ProjectileExplosionKey: '-'
+    SplashRadius: 0
+    PlayerDamageMultiplier: 1.5
+    EnemyDamageMultiplier: 1
+  Name: Yabusame
+  CatIconKey: CatIcon_8[2]
+  DogIconKey: DogIcon_8[2]
+  DogKey: Dog_25
+  Price: 25600
+  CatKey: Cat_25
+  FoodPrice: 17
+  CoinsPerKill: 1280
+  PlayerHealthMultiplier: 1.25
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 0.5
+  AttackDistance: 1.5

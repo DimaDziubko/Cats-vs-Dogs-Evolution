@@ -1,6 +1,11 @@
-﻿namespace _Game.Core.Configs.Models
+﻿using System;
+using UnityEngine;
+
+namespace _Game.Core.Configs.Models
 {
-    public class CommonConfig
+    [CreateAssetMenu(fileName = "CommonConfig", menuName = "Configs/Common")]
+    [Serializable]
+    public class CommonConfig : ScriptableObject
     {
         public int Id;
         public string FoodIconKey;

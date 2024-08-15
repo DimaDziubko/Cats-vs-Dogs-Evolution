@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102d6b0bfbe14d3baa24cdf99e4fde8e, type: 3}
+  m_Name: Warrior_53
+  m_EditorClassIdentifier: 
+  Id: 53
+  Type: 1
+  Health: 486
+  Speed: 0.25
+  WeaponConfig:
+    Id: 53
+    WeaponType: 0
+    Damage: 730
+    ProjectileSpeed: 6
+    ProjectileKey: LaserSplash
+    TrajectoryWarpFactor: 0
+    MuzzleKey: Muzzle_1
+    ProjectileExplosionKey: Explosion_0
+    SplashRadius: 0.4
+    PlayerDamageMultiplier: 1.8
+    EnemyDamageMultiplier: 1
+  Name: Lightbeam
+  CatIconKey: CatIcon_17[1]
+  DogIconKey: DogIcon_17[1]
+  DogKey: Dog_50
+  Price: 4910000
+  CatKey: Cat_50
+  FoodPrice: 18
+  CoinsPerKill: 524288
+  PlayerHealthMultiplier: 1.4
+  EnemyHealthMultiplier: 1
+  AttackPerSecond: 0.5
+  AttackDistance: 1.5

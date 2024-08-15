@@ -1,5 +1,8 @@
-﻿namespace _Game.Core.Configs.Models
+﻿using System;
+
+namespace _Game.Core.Configs.Models
 {
+    [Serializable]
     public class EconomyConfig
     {
         public int Id;

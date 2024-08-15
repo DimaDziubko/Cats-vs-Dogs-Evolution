@@ -99,7 +99,6 @@ namespace _Game.Core.UserState._State
         {
             MaxBattle = nextBattle;
             NextBattleOpened?.Invoke();
-            UnityEngine.Debug.Log("RateGame OpenNextBattle ");
         }
 
         public void SetAllBattlesWon(bool allBattlesWon)
