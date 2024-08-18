@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Data;
 using _Game.Core.DataProviders.Facade;
 using _Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Data;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Cysharp.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace _Game.Core.DataProviders.WeaponDataProviders
         }
         
         
-        public async UniTask<DataPool<int, WeaponData>> Load(IEnumerable<WarriorConfig> configs, LoadContext context)
+        public DataPool<int, WeaponData> Load(IEnumerable<WarriorConfig> configs, LoadContext context)
         {
             DataPool<int, WeaponData> pool = new DataPool<int, WeaponData>();
             
@@ -40,7 +40,7 @@ namespace _Game.Core.DataProviders.WeaponDataProviders
                 };
             
                 WeaponData data =
-                    await _weaponDataProvider.LoadWeapon(weaponLoadOptions);
+                     _weaponDataProvider.LoadWeapon(weaponLoadOptions);
                 
                 pool.Add(config.WeaponConfig.Id,  data);
             }

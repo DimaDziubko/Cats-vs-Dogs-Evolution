@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Debugger;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
@@ -10,7 +11,6 @@ using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 
 namespace _Game.Core._UpgradesChecker
@@ -27,23 +27,23 @@ namespace _Game.Core._UpgradesChecker
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
 
 
-        private IEnumerable<Screen> RelevantScreens { get; } = new List<Screen>()
+        private IEnumerable<GameScreen> RelevantScreens { get; } = new List<GameScreen>()
         {
-            Screen.Upgrades,
-            Screen.Evolution,
-            Screen.UpgradesAndEvolution,
-            Screen.Shop,
+            GameScreen.Upgrades,
+            GameScreen.Evolution,
+            GameScreen.UpgradesAndEvolution,
+            GameScreen.Shop,
         };
 
         private readonly List<IUpgradeAvailabilityProvider> _upgradeProviders 
             = new List<IUpgradeAvailabilityProvider>();
 
-        private readonly Dictionary<Screen, NotificationData> _data
-            = new Dictionary<Screen, NotificationData>(3);
+        private readonly Dictionary<GameScreen, NotificationData> _data
+            = new Dictionary<GameScreen, NotificationData>(3);
 
-        public NotificationData GetNotificationData(Screen screen)
+        public NotificationData GetNotificationData(GameScreen gameScreen)
         {
-            if (_data.TryGetValue(screen, out var data)) return data;
+            if (_data.TryGetValue(gameScreen, out var data)) return data;
             else
             {
                 _logger.Log("Data doesn't contains key {}");
@@ -54,14 +54,13 @@ namespace _Game.Core._UpgradesChecker
         public UpgradesAvailabilityChecker(
             IMyLogger logger,
             IGameInitializer gameInitializer,
-            IMyDebugger debugger,
             IUserContainer userContainer)
         {
             _logger = logger;
             _gameInitializer = gameInitializer;
             _userContainer = userContainer;
             gameInitializer.OnPostInitialization += Init;
-            debugger.NotificationData = _data;
+            //debugger.NotificationData = _data;
         }
 
         public void Register(IUpgradeAvailabilityProvider provider) => 
@@ -85,7 +84,7 @@ namespace _Game.Core._UpgradesChecker
                 {
                     _data[screen] = new NotificationData
                     {
-                        Screen = screen,
+                        GameScreen = screen,
                         IsAvailable = false,
                         IsReviewed = false
                     };
@@ -151,23 +150,23 @@ namespace _Game.Core._UpgradesChecker
             }
         }
 
-        public void MarkAsReviewed(Screen screen)
+        public void MarkAsReviewed(GameScreen gameScreen)
         {
-            if (screen == Screen.UpgradesAndEvolution)
+            if (gameScreen == GameScreen.UpgradesAndEvolution)
             {
-                _data[screen].IsReviewed = CheckAllUpgradesReviewed();
-                Notify?.Invoke(_data[screen]);
+                _data[gameScreen].IsReviewed = CheckAllUpgradesReviewed();
+                Notify?.Invoke(_data[gameScreen]);
                 return;
             }
-            _data[screen].IsReviewed = true;
-            Notify?.Invoke(_data[screen]);
+            _data[gameScreen].IsReviewed = true;
+            Notify?.Invoke(_data[gameScreen]);
         }
 
         private bool CheckAllUpgradesReviewed()
         {
-            return (_data[Screen.Upgrades].IsReviewed && _data[Screen.Evolution].IsReviewed)
-                   || (_data[Screen.Upgrades].IsReviewed && !_data[Screen.Evolution].IsAvailable)
-                   || (!_data[Screen.Upgrades].IsAvailable && _data[Screen.Evolution].IsReviewed);
+            return (_data[GameScreen.Upgrades].IsReviewed && _data[GameScreen.Evolution].IsReviewed)
+                   || (_data[GameScreen.Upgrades].IsReviewed && !_data[GameScreen.Evolution].IsAvailable)
+                   || (!_data[GameScreen.Upgrades].IsAvailable && _data[GameScreen.Evolution].IsReviewed);
         }
     }
 }

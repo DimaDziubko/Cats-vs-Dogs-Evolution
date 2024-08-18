@@ -158,8 +158,13 @@
                 <e p="FoodBoostConfig.cs" t="Include" />
                 <e p="FreeGemsPackDayConfig.cs" t="Include" />
                 <e p="GameConfig.cs" t="Include" />
+                <e p="GeneralAgesConfig.cs" t="Include" />
+                <e p="GeneralBattlesConfig.cs" t="Include" />
                 <e p="GeneralDailyTaskConfig.cs" t="Include" />
+                <e p="GeneralWarriorsConfig.cs" t="Include" />
                 <e p="LinearFunction.cs" t="Include" />
+                <e p="RemoteAgeConfig.cs" t="Include" />
+                <e p="RemoteWarriorConfig.cs" t="Include" />
                 <e p="ShopConfig.cs" t="Include" />
                 <e p="TimelineConfig.cs" t="Include" />
                 <e p="UpgradeItemConfig.cs" t="Include" />
@@ -387,7 +392,6 @@
             </e>
             <e p="Loading" t="Include">
               <e p="AgeDataLoadingOperation.cs" t="Include" />
-              <e p="AssetLoadingOperation.cs" t="Include" />
               <e p="ChangingRaceOperation.cs" t="Include" />
               <e p="ClearGameOperation.cs" t="Include" />
               <e p="ConfigOperation.cs" t="Include" />
@@ -900,7 +904,9 @@
                   <e p="SpeedBoostView.cs" t="Include" />
                 </e>
               </e>
+              <e p="Curtain.cs" t="Include" />
               <e p="Hud.cs" t="Include" />
+              <e p="IUIListener.cs" t="Include" />
               <e p="WaveInfoPopup.cs" t="Include" />
               <e p="WaveInfoPopupAnimation.cs" t="Include" />
             </e>
@@ -990,6 +996,10 @@
                 <e p="IGameResultPopupProvider.cs" t="Include" />
               </e>
             </e>
+            <e p="Global" t="Include">
+              <e p="IUINotifier.cs" t="Include" />
+              <e p="UIManager.cs" t="Include" />
+            </e>
             <e p="Header" t="Include">
               <e p="Scripts" t="Include">
                 <e p="Header.cs" t="Include" />
@@ -1063,6 +1073,9 @@
             </e>
           </e>
           <e p="Utils" t="Include">
+            <e p="_Addressables" t="Include">
+              <e p="SpriteControlTest.cs" t="Include" />
+            </e>
             <e p="_LocalConfigSaver" t="Include">
               <e p="LocalConfigSaver.cs" t="Include" />
             </e>

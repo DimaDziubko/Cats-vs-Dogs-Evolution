@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace _Game.Core.Configs.Models
 {
-    [CreateAssetMenu(fileName = "GeneralBattleConfig", menuName = "Configs/Battles")]
-    [Serializable]
-    public class GeneralBattleConfig : ScriptableObject
-    {
-        public List<BattleConfig> BattleConfigs;
-    }
-    
     [CreateAssetMenu(fileName = "BattleConfig", menuName = "Configs/Battle")]
     [Serializable]
     public class BattleConfig : ScriptableObject
@@ -24,7 +18,7 @@ namespace _Game.Core.Configs.Models
         public string AmbienceKey;
         public float CoinsPerBase;
         public float MaxCoinsPerBattle;
-        public string BaseKey;
+        public AssetReferenceGameObject BasePrefab;
         public int Level;
     }
     

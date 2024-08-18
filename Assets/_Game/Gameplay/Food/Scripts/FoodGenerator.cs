@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.CustomKernel;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._GameplayUI.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
@@ -67,7 +67,7 @@ namespace _Game.Gameplay.Food.Scripts
         {
             foreach (var listener in _listeners)
             {
-                listener.OnFoodChanged(value);
+                listener.OnFoodBalanceChanged(value);
             }
             
             _panel.OnFoodChanged(value);
@@ -139,9 +139,15 @@ namespace _Game.Gameplay.Food.Scripts
         {
             _accumulatedFood += deltaTime * _productionSpeed;
             
-            if (_accumulatedFood > 1f) 
+            if (_accumulatedFood > 1f)
             {
                 FoodAmount += (int)_accumulatedFood;
+                
+                foreach (var listener in _listeners)
+                {
+                    listener.OnFoodGenerated();
+                }
+                
                 _smoothProgress = 1f;
                 _panel.UpdateFillAmount(_smoothProgress);
 

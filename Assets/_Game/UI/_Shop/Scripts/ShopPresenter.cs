@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Data;
 using _Game.Core.Services._FreeGemsPackService;
@@ -14,7 +15,6 @@ using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 
 namespace _Game.UI._Shop.Scripts
@@ -23,11 +23,11 @@ namespace _Game.UI._Shop.Scripts
     {
         public event Action<List<ShopItemModel>> ShopItemsUpdated;
 
-        public IEnumerable<Screen> AffectedScreens
+        public IEnumerable<GameScreen> AffectedScreens
         {
             get
             {
-                yield return Screen.Shop;
+                yield return GameScreen.Shop;
             }
         }
 

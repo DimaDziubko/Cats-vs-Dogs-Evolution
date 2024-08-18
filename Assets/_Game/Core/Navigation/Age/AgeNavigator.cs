@@ -7,7 +7,6 @@ using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Data;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.UserState;

@@ -1,7 +1,8 @@
 ﻿using System;
+using Assets._Game.Gameplay._Tutorial.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Tutorial.Scripts
+namespace _Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialStep : MonoBehaviour, ITutorialStep
     {
@@ -42,6 +43,7 @@ namespace Assets._Game.Gameplay._Tutorial.Scripts
                 RequiredPointerPosition = CalculateRequiredPointerPosition(),
                 RequiredPointerRotation = CalculateRequiredRotation(),
                 NeedAppearanceAnimation = _needAppearanceAnimation,
+                IsUnderneath = _isUnderneath
             };
         }
 
@@ -65,7 +67,7 @@ namespace Assets._Game.Gameplay._Tutorial.Scripts
 
         private Quaternion CalculateRequiredRotation()
         {
-            Quaternion requiredPointerRotation = _isUnderneath ? Quaternion.Euler(0, 180, 0) : Quaternion.Euler(0, 0, 0);
+            Quaternion requiredPointerRotation = _isUnderneath ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0);
             return requiredPointerRotation;
         }
     }

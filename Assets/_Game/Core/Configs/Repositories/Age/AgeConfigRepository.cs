@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.Timeline;
-using Assets._Game.Core._Logger;
 
 namespace _Game.Core.Configs.Repositories.Age
 {

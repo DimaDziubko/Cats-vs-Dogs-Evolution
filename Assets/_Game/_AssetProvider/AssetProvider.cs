@@ -17,20 +17,32 @@ namespace _Game._AssetProvider
 
         void IInitializable.Initialize() => Addressables.InitializeAsync();
 
-        public UniTask<GameObject> Instantiate(string address) => 
-            Addressables.InstantiateAsync(address).ToUniTask();
+        public UniTask<GameObject> Instantiate(string address)
+        {
+            var handle = Addressables.InstantiateAsync(address);
+            AddHandler(address, handle);
+            return handle.ToUniTask();
+        }
 
-        public UniTask<GameObject> Instantiate(string address, Vector3 at) => 
-            Addressables.InstantiateAsync(address, at, Quaternion.identity).ToUniTask();
+        public UniTask<GameObject> Instantiate(string address, Vector3 at)
+        {
+            var handle = Addressables.InstantiateAsync(address, at, Quaternion.identity);
+            AddHandler(address, handle);
+            return handle.ToUniTask();
+        }
 
-        public UniTask<GameObject> Instantiate(string address, Transform under) => 
-            Addressables.InstantiateAsync(address, under).ToUniTask();
+        public UniTask<GameObject> Instantiate(string address, Transform under)
+        {
+                var handle = Addressables.InstantiateAsync(address, under);
+                AddHandler(address, handle);
+                return handle.ToUniTask();
+        }
 
         public async UniTask<T> Load<T>(AssetReference assetReference) where T : class
         {
             if (_completeCache.TryGetValue(assetReference.AssetGUID, out AsyncOperationHandle completeHandle))
                 return completeHandle.Result as T;
-
+            
             return await RunWithCacheOnComplete(
                 Addressables.LoadAssetAsync<T>(assetReference),
                 cacheKey: assetReference.AssetGUID);

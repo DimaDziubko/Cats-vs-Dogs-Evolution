@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
@@ -13,6 +14,7 @@ using _Game.UI._Hud._PauseView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Utils.Popups;
 using UnityEngine;
 
@@ -41,7 +43,9 @@ namespace _Game.UI._Hud
             IBattleSpeedService battleSpeed,
             ISpeedBoostService speedBoost,
             IBattleManager battleManager,
-            IDailyTaskPresenter dailyTaskPresenter)
+            IDailyTaskPresenter dailyTaskPresenter,
+            ITutorialManager tutorialManager,
+            IMyLogger logger)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
 
@@ -50,18 +54,42 @@ namespace _Game.UI._Hud
             _battleSpeedView.Construct(battleSpeed, audioService);
             _speedBoostView.Construct(speedBoost, audioService);
             _counterView.Construct();
-            _dailyTaskView.Construct(dailyTaskPresenter, audioService);
-            
+            _dailyTaskView.Construct(dailyTaskPresenter, audioService, tutorialManager, logger);
+        }
+
+        public void Init()
+        {
+            _dailyTaskView.Init();
+            _speedBoostView.Init();
+            _pauseView.Init();
+            _foodBoostView.Init();
             Show();
         }
 
-        private void Show()
+        private void OnDestroy()
         {
-            _canvas.enabled = true;
+            _dailyTaskView.Cleanup();
+            _speedBoostView.Cleanup();
+            _pauseView.Cleanup();
+            _foodBoostView.Cleanup();
         }
 
-        public void Hide() => 
+        public void Show()
+        {
+            _canvas.enabled = true;
+            _speedBoostView.Show();
+            _dailyTaskView.Show();
+            _pauseView.Show();
+            _foodBoostView.Show();
+        }
+
+        public void Hide()
+        {
             _canvas.enabled = false;
+            _dailyTaskView.Hide();
+            _pauseView.Hide();
+            _foodBoostView.Hide();
+        }
 
         public void ShowCoinCounter() => 
             _counterView.Show();
@@ -77,17 +105,17 @@ namespace _Game.UI._Hud
 
 
         public void ShowFoodBoostBtn() => 
-            _foodBoostView.ShowFoodBoostBtn();
+            _foodBoostView.Show();
 
         public void HideFoodBoostBtn() => 
-            _foodBoostView.HideFoodBoostBtn();
+            _foodBoostView.Hide();
 
 
         public void ShowPauseToggle() => 
-            _pauseView.ShowPauseToggle();
+            _pauseView.Show();
 
         public void HidePauseToggle() => 
-            _pauseView.HidePauseToggle();
+            _pauseView.Hide();
 
         public void Quit() => 
             QuitBattle?.Invoke();

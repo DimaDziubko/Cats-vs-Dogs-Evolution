@@ -5,7 +5,7 @@ using Google.Play.Review;
 #endif
 using System;
 using System.Collections;
-using Assets._Game.Core._Logger;
+using _Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Cysharp.Threading.Tasks;

@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Gameplay._Tutorial.Scripts;
 
 namespace Assets._Game.Gameplay._Tutorial.Scripts
 {

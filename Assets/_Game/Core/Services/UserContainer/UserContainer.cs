@@ -30,9 +30,9 @@ namespace _Game.Core.Services.UserContainer
         public ITutorialStateHandler TutorialStateHandler { get; }
         public IDailyTaskStateHandler DailyTaskStateHandler { get; }
 
-        public UserContainer(IMyDebugger debugger)
+        public UserContainer()
         {
-            debugger.UserContainer = this;
+            //debugger.UserContainer = this;
             CurrenciesHandler = new CurrenciesHandler(this);
             TimelineStateHandler = new TimelineStateHandler(this);
             AnalyticsStateHandler = new AnalyticsStateHandler(this);

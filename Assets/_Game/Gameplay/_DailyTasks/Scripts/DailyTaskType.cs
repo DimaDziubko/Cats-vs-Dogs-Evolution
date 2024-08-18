@@ -12,5 +12,6 @@
         DefeatMediumEnemy,
         DefeatHeavyEnemy,
         EarnCoins,
+        ProduceFood
     }
 }

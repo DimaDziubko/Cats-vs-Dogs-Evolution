@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
@@ -9,7 +10,6 @@ using _Game.Core.Services.UserContainer;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
@@ -20,12 +20,12 @@ namespace _Game.Core.DataPresenters.TimelineTravel
     public class TimelineTravelPresenter : ITimelineTravelPresenter, IUpgradeAvailabilityProvider, IDisposable
     {
         public event Action<TravelTabModel> TravelTabModelUpdated;
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
+        IEnumerable<GameScreen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
-                yield return Screen.Evolution;
-                yield return Screen.UpgradesAndEvolution;
+                yield return GameScreen.Evolution;
+                yield return GameScreen.UpgradesAndEvolution;
             }
         }
 

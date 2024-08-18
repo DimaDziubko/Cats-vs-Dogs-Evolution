@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using _Game.Gameplay.Food.Scripts;
-using Assets._Game.Core._Logger;
+using _Game.UI._Hud;
+using _Game.UI._MainMenu.Scripts;
+using _Game.UI.Global;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -18,7 +21,8 @@ namespace _Game.Core._GameListenerComposite
         IStopBattleListener,
         IPauseListener,
         IEndBattleListener,
-        IBattleSpeedListener
+        IBattleSpeedListener,
+        IUIListener
     {
         public event Action<int, bool> ChangeFood;
 
@@ -42,6 +46,7 @@ namespace _Game.Core._GameListenerComposite
         [InjectLocal] 
         private List<IEndBattleListener> _endBattleListeners = new List<IEndBattleListener>();
         
+        
         [ShowInInspector]
         [Inject]
         private IFoodGenerator _foodGenerator;
@@ -62,7 +67,13 @@ namespace _Game.Core._GameListenerComposite
         [ShowInInspector]
         [Inject] 
         private List<IBattleSpeedListener> _battleSpeedListeners = new List<IBattleSpeedListener>();
+
+        [ShowInInspector] 
+        [Inject] private IUINotifier _uiNotifier;
         
+        [ShowInInspector]
+        [Inject] 
+        private List<IUIListener> _uiListeners = new List<IUIListener>();
         
         [Inject]
         private IMyLogger _logger;
@@ -75,6 +86,7 @@ namespace _Game.Core._GameListenerComposite
             foreach (var consumer in _consumers) consumer.ChangeFood += OnChangeFood;
             _battleManager.Register(this);
             _battleSpeedManager.Register(this);
+            _uiNotifier.Register(this);
         }
 
         private void OnDestroy()
@@ -83,15 +95,27 @@ namespace _Game.Core._GameListenerComposite
             foreach (var consumer in _consumers) consumer.ChangeFood -= OnChangeFood;
             _battleManager.Unregister(this);
             _battleSpeedManager.Unregister(this);
+            _uiNotifier.Unregister(this);
         }
 
-        void IFoodListener.OnFoodChanged(int value)
+        void IFoodListener.OnFoodBalanceChanged(int value)
         {
             foreach (var it in _foodListeners)
             {
                 if (it is { } listener)
                 {
-                    listener.OnFoodChanged(value);
+                    listener.OnFoodBalanceChanged(value);
+                }
+            }
+        }
+
+        void IFoodListener.OnFoodGenerated()
+        {
+            foreach (var it in _foodListeners)
+            {
+                if (it is { } listener)
+                {
+                    listener.OnFoodGenerated();
                 }
             }
         }
@@ -101,7 +125,7 @@ namespace _Game.Core._GameListenerComposite
             ChangeFood?.Invoke(amount, isPositive);
         }
 
-        public void OnStartBattle()
+        void IStartBattleListener.OnStartBattle()
         {
             foreach (var it in _startBattleListeners)
             {
@@ -112,7 +136,7 @@ namespace _Game.Core._GameListenerComposite
             }
         }
 
-        public void SetPaused(bool isPaused)
+        void IPauseListener.SetPaused(bool isPaused)
         {
             foreach (var it in _pauseListeners)
             {
@@ -123,7 +147,7 @@ namespace _Game.Core._GameListenerComposite
             }
         }
 
-        public void OnStopBattle()
+        void IStopBattleListener.OnStopBattle()
         {
             foreach (var it in _stopBattleListeners)
             {
@@ -133,8 +157,8 @@ namespace _Game.Core._GameListenerComposite
                 }
             }
         }
-        
-        public void OnEndBattle(GameResultType result, bool wasExit)
+
+        void IEndBattleListener.OnEndBattle(GameResultType result, bool wasExit)
         {
             foreach (var it in _endBattleListeners)
             {
@@ -145,13 +169,35 @@ namespace _Game.Core._GameListenerComposite
             }
         }
 
-        public void OnBattleSpeedFactorChanged(float speedFactor)
+        void IBattleSpeedListener.OnBattleSpeedFactorChanged(float speedFactor)
         {
             foreach (var it in _battleSpeedListeners)
             {
                 if (it is { } listener)
                 {
                     listener.OnBattleSpeedFactorChanged(speedFactor);
+                }
+            }
+        }
+
+        void IUIListener.OnScreenOpened(GameScreen gameScreen)
+        {
+            foreach (var it in _uiListeners)
+            {
+                if (it is { } listener)
+                {
+                    listener.OnScreenOpened(gameScreen);
+                }
+            }
+        }
+
+        void IUIListener.OnScreenClosed(GameScreen gameScreen)
+        {
+            foreach (var it in _uiListeners)
+            {
+                if (it is { } listener)
+                {
+                    listener.OnScreenClosed(gameScreen);
                 }
             }
         }

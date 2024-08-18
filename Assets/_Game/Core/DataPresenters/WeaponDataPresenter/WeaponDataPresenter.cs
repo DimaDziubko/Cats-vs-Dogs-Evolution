@@ -1,9 +1,9 @@
-﻿using _Game.Core.AssetManagement;
+﻿using _Game.Core._Logger;
+using _Game.Core.AssetManagement;
 using _Game.Core.Data;
 using _Game.Core.Navigation.Battle;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
 using UnityEngine;
 
 namespace _Game.Core.DataPresenters.WeaponDataPresenter

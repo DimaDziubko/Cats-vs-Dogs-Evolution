@@ -8,7 +8,7 @@ namespace _Game.Utils.Extensions
 {
     public static class JsonExtensions
     {
-        public static TimelineConfig ForTimeline(this JObject jsonData, int timelineId = 0) => 
+        public static TimelineConfig ForTimeline(this JObject jsonData, int timelineId = 0) =>
             Generate(jsonData, timelineId);
 
         public static GameConfig ToGameConfig(this JObject jsonData, int timelineId = 0)
@@ -24,13 +24,14 @@ namespace _Game.Utils.Extensions
                 AdsConfig = ExtractAdsConfig(jsonData),
                 GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
             };
+            
             //TODO Delete later
             Debug.Log("GAME CONFIG PARSED SUCCESSFULLY");
-    
+
             return config;
         }
 
-        private static List<WarriorConfig> ExtractWarriors(JObject jsonData)
+        private static List<RemoteWarriorConfig> ExtractWarriors(JObject jsonData)
         {
             var warriorsToken = jsonData[Constants.ConfigKeys.WARRIORS];
             if (warriorsToken == null)
@@ -38,8 +39,8 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("WarriorsConfig is null");
                 return null;
             }
-            
-            return warriorsToken.Select(warriorToken => warriorToken.ToObject<WarriorConfig>()).ToList();
+
+            return warriorsToken.Select(warriorToken => warriorToken.ToObject<RemoteWarriorConfig>()).ToList();
         }
 
         private static List<RemoteAgeConfig> ExtractAges(JObject jsonData)
@@ -50,7 +51,7 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("AgeConfig is null");
                 return null;
             }
-            
+
             return agesToken.Select(ageToken => ageToken.ToObject<RemoteAgeConfig>()).ToList();
         }
 
@@ -62,7 +63,7 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("BattleConfig is null");
                 return null;
             }
-            
+
             return battlesToken.Select(battleToken => battleToken.ToObject<RemoteBattleConfig>()).ToList();
         }
 
@@ -74,6 +75,7 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("Ads config is null");
                 return null;
             }
+
             return adsConfigToken.ToObject<AdsConfig>();
         }
 
@@ -85,6 +87,7 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("GeneralDailyTaskConfig is null");
                 return null;
             }
+
             return generalDailyTaskToken.ToObject<GeneralDailyTaskConfig>();
         }
 
@@ -96,6 +99,7 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("FreeGemsPackDayConfig is null");
                 return null;
             }
+
             return freeGemsPackDayConfigToken.ToObject<FreeGemsPackDayConfig>();
         }
 
@@ -107,6 +111,7 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("ShopConfig is null");
                 return null;
             }
+
             return shopToken.ToObject<ShopConfig>();
         }
 
@@ -118,10 +123,11 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("FoodBoostConfig is null");
                 return null;
             }
+
             return foodBoostToken.ToObject<FoodBoostConfig>();
         }
 
-        private static CommonConfig ExtractCommonConfig(JObject jsonData) => 
+        private static CommonConfig ExtractCommonConfig(JObject jsonData) =>
             Resources.Load<CommonConfig>(Constants.LocalConfigPath.COMMON_CONFIG_PATH);
 
         private static List<BattleSpeedConfig> ExtractBattleSpeedConfig(JObject jsonData)
@@ -132,64 +138,117 @@ namespace _Game.Utils.Extensions
                 Debug.LogError("BattleSpeedConfig is null");
                 return null;
             }
-            
-            return battleSpeedTokens.Select(battleSpeedToken => battleSpeedToken.ToObject<BattleSpeedConfig>()).ToList();
+
+            return battleSpeedTokens.Select(battleSpeedToken => battleSpeedToken.ToObject<BattleSpeedConfig>())
+                .ToList();
         }
 
         private static TimelineConfig Generate(JObject jsonData, int timelineId)
         {
             TimelineConfig timelineConfig = new TimelineConfig
             {
-                Id = timelineId, 
-                Ages = new List<AgeConfig>(), 
+                Id = timelineId,
+                Ages = new List<AgeConfig>(),
                 Battles = new List<BattleConfig>()
             };
 
             List<RemoteAgeConfig> remoteAgesData = ExtractAges(jsonData);
-            GeneralAgeConfig ages = Resources.Load<GeneralAgeConfig>(Constants.LocalConfigPath.GENERAL_AGE_CONFIG_PATH);
+            GeneralAgesConfig ages = Resources.Load<GeneralAgesConfig>(Constants.LocalConfigPath.GENERAL_AGE_CONFIG_PATH);
 
             List<RemoteBattleConfig> remoteBattlesData = ExtractBattles(jsonData);
-            GeneralBattleConfig battles = Resources.Load<GeneralBattleConfig>(Constants.LocalConfigPath.GENERAL_BATTLE_CONFIG_PATH);
+            GeneralBattlesConfig battles =
+                Resources.Load<GeneralBattlesConfig>(Constants.LocalConfigPath.GENERAL_BATTLE_CONFIG_PATH);
 
-
-            List<WarriorConfig> warriors = ExtractWarriors(jsonData);
+            List<RemoteWarriorConfig> remoteWarriorsData = ExtractWarriors(jsonData);
+            GeneralWarriorsConfig warriors =
+                Resources.Load<GeneralWarriorsConfig>(Constants.LocalConfigPath.GENERAL_WARRIOR_CONFIG_PATH);
 
             for (int level = 1; level <= 6; level++)
             {
                 List<AgeConfig> ageLevelGroup = ages.AgeConfigs.Where(x => x.Level == level).ToList();
                 List<BattleConfig> battleLevelGroup = battles.BattleConfigs.Where(x => x.Level == level).ToList();
 
-                int index = (timelineId < ageLevelGroup.Count) ? timelineId : (timelineId + level - 1) % ageLevelGroup.Count;
-        
+                int index = (timelineId < ageLevelGroup.Count)
+                    ? timelineId
+                    : (timelineId + level - 1) % ageLevelGroup.Count;
+
                 AgeConfig age = ageLevelGroup[index];
                 BattleConfig battle = battleLevelGroup[index];
-                
-                var remoteAgeData = remoteAgesData.First(x => x.Id == age.Id);
-                age.Economy = remoteAgeData.Economy;
-                age.WarriorsId = remoteAgeData.WarriorsId;
-                age.GemsPerAge = remoteAgeData.GemsPerAge;
-                age.Price = remoteAgeData.Price;
-                
-                var remoteBattleData = remoteBattlesData.First(x => x.Id == battle.Id);
-                battle.Scenario = remoteBattleData.Scenario;
-                battle.WarriorsId = remoteBattleData.WarriorsId;
-                battle.CoinsPerBase = remoteBattleData.CoinsPerBase;
-                battle.MaxCoinsPerBattle = remoteBattleData.MaxCoinsPerBattle;
-                battle.EnemyBaseHealth = remoteBattleData.EnemyBaseHealth;
 
-                var warriorsForAgeAndBattle = age.WarriorsId
-                    .Select(id => warriors.FirstOrDefault(w => w.Id == id))
-                    .Where(warrior => warrior != null)
-                    .ToList();
-
-                age.Warriors = warriorsForAgeAndBattle;
-                battle.Warriors = warriorsForAgeAndBattle;
+                age = UpdateAgeConfigWithRemoteData(age, remoteAgesData, remoteWarriorsData, warriors);
+                battle = UpdateBattleConfigWithRemoteData(battle, remoteBattlesData, remoteWarriorsData, warriors);
 
                 timelineConfig.Ages.Add(age);
                 timelineConfig.Battles.Add(battle);
             }
 
             return timelineConfig;
+        }
+
+        private static AgeConfig UpdateAgeConfigWithRemoteData(AgeConfig age, List<RemoteAgeConfig> remoteAgesData,
+            List<RemoteWarriorConfig> remoteWarriorsData, GeneralWarriorsConfig warriorses)
+        {
+            var remoteAgeData = remoteAgesData.First(x => x.Id == age.Id);
+            age.Economy = remoteAgeData.Economy;
+            age.WarriorsId = remoteAgeData.WarriorsId;
+            age.GemsPerAge = remoteAgeData.GemsPerAge;
+            age.Price = remoteAgeData.Price;
+
+            var relevantWarriors = GetRelevantWarriors(age.WarriorsId, remoteWarriorsData, warriorses);
+            age.Warriors = relevantWarriors;
+
+            return age;
+        }
+
+        private static BattleConfig UpdateBattleConfigWithRemoteData(BattleConfig battle,
+            List<RemoteBattleConfig> remoteBattlesData, List<RemoteWarriorConfig> remoteWarriorsData,
+            GeneralWarriorsConfig warriorses)
+        {
+            var remoteBattleData = remoteBattlesData.First(x => x.Id == battle.Id);
+            battle.Scenario = remoteBattleData.Scenario;
+            battle.WarriorsId = remoteBattleData.WarriorsId;
+            battle.CoinsPerBase = remoteBattleData.CoinsPerBase;
+            battle.MaxCoinsPerBattle = remoteBattleData.MaxCoinsPerBattle;
+            battle.EnemyBaseHealth = remoteBattleData.EnemyBaseHealth;
+
+            var relevantWarriors = GetRelevantWarriors(battle.WarriorsId, remoteWarriorsData, warriorses);
+            battle.Warriors = relevantWarriors;
+
+            return battle;
+        }
+
+        private static List<WarriorConfig> GetRelevantWarriors(List<int> warriorIds,
+            List<RemoteWarriorConfig> remoteWarriorsData, GeneralWarriorsConfig warriorses)
+        {
+            return warriorIds
+                .Select(id => warriorses.WarriorConfigs.FirstOrDefault(w => w.Id == id))
+                .Where(warrior => warrior != null)
+                .Select(relevantWarrior => UpdateWarriorConfigWithRemoteData(relevantWarrior, remoteWarriorsData))
+                .ToList();
+        }
+
+        private static WarriorConfig UpdateWarriorConfigWithRemoteData(WarriorConfig warrior,
+            List<RemoteWarriorConfig> remoteWarriorsData)
+        {
+            var remoteWarriorData = remoteWarriorsData.First(w => w.Id == warrior.Id);
+            warrior.Health = remoteWarriorData.Health;
+            warrior.Price = remoteWarriorData.Price;
+            warrior.FoodPrice = remoteWarriorData.FoodPrice;
+            warrior.Speed = remoteWarriorData.Speed;
+            warrior.AttackPerSecond = remoteWarriorData.AttackPerSecond;
+            warrior.AttackDistance = remoteWarriorData.AttackDistance;
+            warrior.CoinsPerKill = remoteWarriorData.CoinsPerKill;
+            warrior.EnemyHealthMultiplier = remoteWarriorData.EnemyHealthMultiplier;
+            warrior.PlayerHealthMultiplier = remoteWarriorData.PlayerHealthMultiplier;
+
+            warrior.WeaponConfig.Damage = remoteWarriorData.WeaponConfig.Damage;
+            warrior.WeaponConfig.ProjectileSpeed = remoteWarriorData.WeaponConfig.ProjectileSpeed;
+            warrior.WeaponConfig.SplashRadius = remoteWarriorData.WeaponConfig.SplashRadius;
+            warrior.WeaponConfig.EnemyDamageMultiplier = remoteWarriorData.WeaponConfig.EnemyDamageMultiplier;
+            warrior.WeaponConfig.PlayerDamageMultiplier = remoteWarriorData.WeaponConfig.PlayerDamageMultiplier;
+            warrior.WeaponConfig.TrajectoryWarpFactor = remoteWarriorData.WeaponConfig.TrajectoryWarpFactor;
+
+            return warrior;
         }
     }
 }

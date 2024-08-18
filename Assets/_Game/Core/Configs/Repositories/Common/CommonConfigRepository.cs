@@ -1,8 +1,7 @@
 ﻿using System;
+using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._Logger;
 using Assets._Game.Gameplay.Common.Scripts;
-using UnityEngine.AddressableAssets;
 
 namespace _Game.Core.Configs.Repositories.Common
 {
@@ -19,7 +18,7 @@ namespace _Game.Core.Configs.Repositories.Common
             _logger = logger;
         }
 
-        public string GetFoodIconKey(Race race)
+        public string  GetFoodIconKey(Race race)
         {
             switch (race)
             {
@@ -60,8 +59,9 @@ namespace _Game.Core.Configs.Repositories.Common
                 .CommonConfig
                 .BaseIconKey;
         }
+        
 
-        private string GetCommonFoodIconReference()
+        private string  GetCommonFoodIconReference()
         {
             _logger.Log("Try to GetCommonFoodIconReference");
             return _userContainer

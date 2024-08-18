@@ -1,4 +1,5 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
@@ -7,8 +8,6 @@ using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;

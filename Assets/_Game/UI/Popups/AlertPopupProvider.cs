@@ -1,5 +1,4 @@
 ﻿using _Game.Core.AssetManagement;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;

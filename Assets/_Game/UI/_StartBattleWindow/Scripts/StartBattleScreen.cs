@@ -1,4 +1,5 @@
 using System;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
@@ -6,23 +7,22 @@ using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.Settings.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI._StartBattleWindow.Scripts
 {
     public class StartBattleScreen : MonoBehaviour, IUIScreen
     {
         public event Action Opened;
-        public Screen Screen => Screen.Battle;
+        public GameScreen GameScreen => GameScreen.Battle;
 
         [SerializeField] private Canvas _canvas;
 
@@ -91,7 +91,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
 
         private void ShowName()
         {
-            var fullName = $"{Screen} {_battleNavigator.CurrentBattle + 1}";
+            var fullName = $"{GameScreen} {_battleNavigator.CurrentBattle + 1}";
             _header.ShowWindowName(fullName, Color.white);
         }
 

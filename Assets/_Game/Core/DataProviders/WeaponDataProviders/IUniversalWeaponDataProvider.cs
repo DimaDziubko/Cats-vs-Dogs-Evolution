@@ -11,6 +11,6 @@ namespace _Game.Core.DataProviders.WeaponDataProviders
 {
     public interface IUniversalWeaponDataProvider
     {
-        UniTask<DataPool<int, WeaponData>> Load(IEnumerable<WarriorConfig> configs, LoadContext context);
+        DataPool<int, WeaponData> Load(IEnumerable<WarriorConfig> configs, LoadContext context);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets._Game.Gameplay._Units.Scripts;
+using UnityEngine.AddressableAssets;
 
 namespace _Game.Core.DataProviders.BaseDataProvider
 {
@@ -7,7 +8,7 @@ namespace _Game.Core.DataProviders.BaseDataProvider
         public Faction Faction;
         public int Timeline;
         public int CacheContext;
-        public string PrefabKey;
+        public AssetReferenceGameObject BasePrefab;
         public float CoinsAmount;
     }
 }

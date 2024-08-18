@@ -1,7 +1,7 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using UnityEngine;
 

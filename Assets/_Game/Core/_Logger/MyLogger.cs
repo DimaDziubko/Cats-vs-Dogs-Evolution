@@ -1,5 +1,4 @@
-﻿using Assets._Game.Core._Logger;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Game.Core._Logger
 {

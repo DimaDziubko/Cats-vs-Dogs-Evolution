@@ -31,12 +31,21 @@ namespace _Game.UI._Hud._PauseView
             _battleManager = battleManager;
             _hud = hud;
             
-            HidePauseToggle();
+            Hide();
         }
-        
-        public void ShowPauseToggle()
+
+        public void Init()
         {
             SubscribePauseToggle();
+        }
+
+        public void Cleanup()
+        {
+            UnsubscribePauseToggle();
+        }
+        
+        public void Show()
+        {
             var isPauseAvailable = _featureUnlockSystem.IsFeatureUnlocked(_pauseToggle);
             _pauseToggle.SetActive(isPauseAvailable);
         }
@@ -44,11 +53,7 @@ namespace _Game.UI._Hud._PauseView
         private void SubscribePauseToggle() => 
             _pauseToggle.ValueChanged += OnPauseClicked;
 
-        public void HidePauseToggle()
-        {
-            UnsubscribePauseToggle();
-            _pauseToggle.SetActive(false);
-        }
+        public void Hide() => _pauseToggle.SetActive(false);
 
         private void UnsubscribePauseToggle() => 
             _pauseToggle.ValueChanged -= OnPauseClicked;
@@ -71,5 +76,6 @@ namespace _Game.UI._Hud._PauseView
             _battleManager.SetPaused(false);
             popup.Dispose();
         }
+        
     }
 }

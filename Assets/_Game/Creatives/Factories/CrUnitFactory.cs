@@ -3,16 +3,14 @@ using _Game.Core.Factory;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Random;
 using _Game.Creatives.Creative_1.Scenario;
+using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Units.Scripts;
-using Assets._Game.Core.Factory;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
-using Assets._Game.Creatives.Creative_1.Scenario;
-using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Game.Creatives.Factories
+namespace _Game.Creatives.Factories
 {
     [CreateAssetMenu(fileName = "CrUnitFactory", menuName = "CrFactories/Unit")]
     public class CrUnitFactory : GameObjectFactory, IUnitFactory
@@ -32,7 +30,6 @@ namespace Assets._Game.Creatives.Factories
             _cameraService = cameraService;
             _random = random;
             _soundService = soundService;
-            //TODO add SoundService
         }
         
         public Unit Get(Faction faction, UnitType type)
@@ -69,6 +66,11 @@ namespace Assets._Game.Creatives.Factories
             }
             
             return instance;
+        }
+
+        public UniTask<Unit> GetAsync(Faction faction, UnitType type)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Reclaim(Unit unit)

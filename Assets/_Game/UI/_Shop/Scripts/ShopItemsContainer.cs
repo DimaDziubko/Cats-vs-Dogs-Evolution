@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.UI.Factory;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 

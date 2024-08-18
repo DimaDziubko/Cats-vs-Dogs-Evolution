@@ -1,4 +1,6 @@
 ﻿using _Game.Core.LoadingScreen;
+using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._Hud;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionWindow.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
@@ -6,11 +8,11 @@ using _Game.UI._Shop.Scripts;
 using _Game.UI._StartBattleWindow.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.GameResult.Scripts;
+using _Game.UI.Global;
 using _Game.UI.Header.Scripts;
 using _Game.UI.RateGame.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.UI.Settings.Scripts;
 using Assets._Game.Utils.Popups;
 using UnityEngine;
@@ -23,9 +25,12 @@ namespace _Game.Core.Installers.Core
         [SerializeField] private Header _header;
         [SerializeField] private TutorialPointerView _tutorialPointerView;
         [SerializeField] private UIFactory _uiFactory;
+        [SerializeField] private Curtain _curtain;
         
         public override void InstallBindings()
         {
+            BindUINotifier();
+            BindCurtain();
             BindHeader();
             BindAlertPopupProvider();
             BindTutorialPointerView();
@@ -44,6 +49,12 @@ namespace _Game.Core.Installers.Core
             BindRateGameChecker();
             BindUIFactory();
         }
+
+        private void BindUINotifier() => 
+            Container.BindInterfacesAndSelfTo<UINotifier>().AsSingle();
+
+        private void BindCurtain() => 
+            Container.Bind<Curtain>().FromInstance(_curtain).AsSingle();
 
         private void BindGameRateScreenProvider() =>
             Container.BindInterfacesTo<RateGameScreenProvider>().AsSingle();

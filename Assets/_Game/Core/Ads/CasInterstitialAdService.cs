@@ -1,8 +1,8 @@
 ﻿using System;
 using _Game.Common;
+using _Game.Core._Logger;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._Logger;
 using CAS;
 
 namespace _Game.Core.Ads

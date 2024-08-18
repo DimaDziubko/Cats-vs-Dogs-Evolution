@@ -1,4 +1,5 @@
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Core.UserState;

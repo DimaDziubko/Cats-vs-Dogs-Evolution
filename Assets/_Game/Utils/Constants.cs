@@ -6,9 +6,10 @@ namespace _Game.Utils
     {
         public sealed class LocalConfigPath
         {
+            public const string GENERAL_WARRIOR_CONFIG_PATH = "Warrior/GeneralWarriorsConfig";
             public const string COMMON_CONFIG_PATH = "Common/CommonConfig";
-            public const string GENERAL_AGE_CONFIG_PATH = "Age/GeneralAgeConfig";
-            public const string GENERAL_BATTLE_CONFIG_PATH = "Battle/GeneralBattleConfig";
+            public const string GENERAL_AGE_CONFIG_PATH = "Age/GeneralAgesConfig";
+            public const string GENERAL_BATTLE_CONFIG_PATH = "Battle/GeneralBattlesConfig";
         }
         public sealed class Money
         {

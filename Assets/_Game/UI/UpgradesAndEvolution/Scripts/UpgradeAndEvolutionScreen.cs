@@ -1,17 +1,17 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
@@ -21,7 +21,6 @@ using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI.UpgradesAndEvolution.Scripts
 {
@@ -125,7 +124,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             if (_featureUnlockSystem.IsFeatureUnlocked(_evolutionButton))
                 _evolutionStep.ShowStep();
 
-            if (_upgradesChecker.GetNotificationData(Screen.Evolution).IsAvailable)
+            if (_upgradesChecker.GetNotificationData(GameScreen.Evolution).IsAvailable)
                 OnEvolutionButtonClick(_evolutionButton);
             else OnUpgradesButtonClick(_upgradesButton);
         }
@@ -138,12 +137,12 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 true,
                 OnUpgradesButtonClick,
                 PlayButtonSound,
-                _upgradesChecker.GetNotificationData(Screen.Upgrades));
+                _upgradesChecker.GetNotificationData(GameScreen.Upgrades));
             _evolutionButton.Initialize(
                 _featureUnlockSystem.IsFeatureUnlocked(_evolutionButton),
                 OnEvolutionButtonClick,
                 PlayButtonSound,
-                _upgradesChecker.GetNotificationData(Screen.Evolution));
+                _upgradesChecker.GetNotificationData(GameScreen.Evolution));
         }
 
         private void Unsubscribe()
@@ -158,19 +157,19 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
         private void OnUpgradeNotified(NotificationData data)
         {
-            switch (data.Screen)
+            switch (data.GameScreen)
             {
-                case Screen.Upgrades:
+                case GameScreen.Upgrades:
                     _upgradesButton.SetupPin(data);
                     break;
-                case Screen.Evolution:
+                case GameScreen.Evolution:
                     _evolutionButton.SetupPin(data);
                     break;
             }
         }
 
 
-        private void UpdateButtonsView(Screen screen)
+        private void UpdateButtonsView(GameScreen gameScreen)
         {
             if (_activeButton != null)
             {
@@ -184,13 +183,13 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _evolutionButton.RectTransform.anchoredPosition = _evolutionBtnStartPos;
 
 
-            switch (screen)
+            switch (gameScreen)
             {
-                case Screen.Upgrades:
+                case GameScreen.Upgrades:
                     ExpandLeftSide(_evolutionButton.RectTransform, _expansionAmount);
                     MoveUpInHierarchy(_upgradesButton.RectTransform);
                     break;
-                case Screen.Evolution:
+                case GameScreen.Evolution:
                     ExpandRightSide(_upgradesButton.RectTransform, _expansionAmount);
                     MoveUpInHierarchy(_evolutionButton.RectTransform);
                     break;
@@ -236,7 +235,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private void OnUpgradesButtonClick(ToggleButton button)
         {
             evolutionScreen.Hide();
-            UpdateButtonsView(Screen.Upgrades);
+            UpdateButtonsView(GameScreen.Upgrades);
             ActiveButton = button;
             upgradesScreen.Show();
         }
@@ -245,7 +244,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         {
             _evolutionStep.CompleteStep();
             evolutionScreen.Show();
-            UpdateButtonsView(Screen.Evolution);
+            UpdateButtonsView(GameScreen.Evolution);
             ActiveButton = button;
             upgradesScreen.Hide();
         }

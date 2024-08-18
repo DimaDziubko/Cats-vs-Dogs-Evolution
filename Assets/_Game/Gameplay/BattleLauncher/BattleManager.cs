@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.Debugger;
-using Assets._Game.Core._Logger;
 using Assets._Game.Gameplay.GameResult.Scripts;
 
 namespace _Game.Gameplay.BattleLauncher
@@ -26,11 +26,10 @@ namespace _Game.Gameplay.BattleLauncher
         public bool IsPaused { get; private set; }
 
         public BattleManager(
-            IMyDebugger debugger,
             IMyLogger logger)
         {
             State = BattleState.None;
-            debugger.BattleManager = this;
+            //debugger.BattleManager = this;
             _logger = logger;
         }
         

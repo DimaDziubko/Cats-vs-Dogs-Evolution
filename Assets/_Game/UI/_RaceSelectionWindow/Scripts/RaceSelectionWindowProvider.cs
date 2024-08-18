@@ -1,6 +1,5 @@
 using _Game.Core.AssetManagement;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;

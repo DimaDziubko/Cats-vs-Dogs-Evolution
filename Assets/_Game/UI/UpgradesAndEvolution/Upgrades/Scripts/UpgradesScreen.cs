@@ -4,6 +4,8 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
@@ -13,14 +15,13 @@ using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
-using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
     public class UpgradesScreen : MonoBehaviour, IUIScreen
     {
         public event Action Opened;
-        public Screen Screen => Screen.Upgrades;
+        public GameScreen GameScreen => GameScreen.Upgrades;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private UpgradeUnitItemView[] _unitItems;
@@ -60,7 +61,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         public void Show()
         {
             _canvas.enabled = true;
-            _header.ShowWindowName(Screen.ToString(), Color.white);
+            _header.ShowWindowName(GameScreen.ToString(), Color.white);
 
             Unsubscribe();
             Subscribe();
@@ -71,8 +72,8 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         
             Opened?.Invoke();
 
-            _upgradesChecker.MarkAsReviewed(Screen);
-            _upgradesChecker.MarkAsReviewed(Screen.UpgradesAndEvolution);
+            _upgradesChecker.MarkAsReviewed(GameScreen);
+            _upgradesChecker.MarkAsReviewed(GameScreen.UpgradesAndEvolution);
         }
 
         private void Subscribe()

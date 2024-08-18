@@ -6,7 +6,7 @@ using _Game.Core.Services.Audio;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Utils;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.Gameplay._Weapon.Factory
@@ -14,6 +14,7 @@ namespace _Game.Gameplay._Weapon.Factory
     public interface IProjectileFactory
     {
         Projectile Get(Faction faction, int weaponId);
+        UniTask<Projectile> GetAsync(Faction faction, int weaponId);
         public void Reclaim(Projectile proj);
     }
 
@@ -62,6 +63,36 @@ namespace _Game.Gameplay._Weapon.Factory
             instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
             return instance;
         }
+        
+        public async UniTask<Projectile> GetAsync(Faction faction,  int weaponId)
+        {
+            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            if (weaponData == null) return null;
+            if (weaponData.Config.ProjectileKey == Constants.ConfigKeys.MISSING_KEY) return null;
+
+            if (!_projectilesPools.TryGetValue((faction, weaponId), out Queue<Projectile> pool))
+            {
+                pool = new Queue<Projectile>();
+                _projectilesPools[(faction, weaponId)] = pool;
+            }
+            
+            Projectile instance;
+            if (pool.Count > 0)
+            {
+                instance = pool.Dequeue();
+                instance.gameObject.SetActive(true);
+            }
+            else
+            {
+                instance = await CreateGameObjectInstanceAsync<Projectile>(weaponData.Config.ProjectileKey);
+                instance.OriginFactory = this;
+            }
+
+            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            return instance;
+        }
+        
+        
 
         private WeaponData GetWeaponData(Faction faction, int weaponId)
         {
@@ -104,6 +135,9 @@ namespace _Game.Gameplay._Weapon.Factory
                 }
             }
             _projectilesPools.Clear(); 
+            
+            base.Cleanup();
         }
+        
     }
 }

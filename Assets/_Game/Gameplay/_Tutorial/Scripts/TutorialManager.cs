@@ -2,8 +2,9 @@ using System;
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
+using Assets._Game.Gameplay._Tutorial.Scripts;
 
-namespace Assets._Game.Gameplay._Tutorial.Scripts
+namespace _Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialManager : ITutorialManager, IDisposable
     {

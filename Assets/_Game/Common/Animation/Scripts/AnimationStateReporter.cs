@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets._Game.Common.Animation.Scripts
+namespace _Game.Common.Animation.Scripts
 {
     public class AnimationStateReporter : StateMachineBehaviour
     {

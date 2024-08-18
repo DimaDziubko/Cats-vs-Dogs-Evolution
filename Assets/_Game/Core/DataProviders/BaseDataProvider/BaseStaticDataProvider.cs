@@ -1,8 +1,7 @@
-﻿using _Game.Core.AssetManagement;
+﻿using _Game.Core._Logger;
+using _Game.Core.AssetManagement;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Utils;
@@ -27,12 +26,10 @@ namespace _Game.Core.DataProviders.BaseDataProvider
         public async UniTask<BaseStaticData> Load(BaseLoadOptions options)
         {
             var basePrefab = await _assetRegistry.LoadAsset<GameObject>(
-                options.PrefabKey, 
+                options.BasePrefab, 
                 options.Timeline, 
                 options.CacheContext);
-            
-            _logger.Log($"Base data with key {options.PrefabKey} load successfully");
-            
+
             return new BaseStaticData()
             {
                 BasePrefab = basePrefab.GetComponent<Base>(),

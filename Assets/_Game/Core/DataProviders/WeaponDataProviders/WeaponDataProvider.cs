@@ -1,11 +1,10 @@
-﻿using _Game.Core.AssetManagement;
+﻿using _Game.Core._Logger;
+using _Game.Core.AssetManagement;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Debugger;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Utils;
 using Assets._Game.Utils.Extensions;
@@ -27,19 +26,19 @@ namespace _Game.Core.DataProviders.WeaponDataProviders
             _logger = logger;
         }
 
-        public async UniTask<WeaponData> LoadWeapon(WeaponLoadOptions options)
+        public WeaponData LoadWeapon(WeaponLoadOptions options)
         {
-            var projectilePrefab = await LoadComponent<Projectile>(options.Config.ProjectileKey, options.context);
-            var muzzlePrefab = await LoadComponent<MuzzleFlash>(options.Config.MuzzleKey, options.context);
-            var projectileExplosionPrefab = await LoadComponent<ProjectileExplosion>(options.Config.ProjectileExplosionKey, options.context);
+            //var projectilePrefab = await LoadComponent<Projectile>(options.Config.ProjectileKey, options.context);
+            //var muzzlePrefab = await LoadComponent<MuzzleFlash>(options.Config.MuzzleKey, options.context);
+            //var projectileExplosionPrefab = await LoadComponent<ProjectileExplosion>(options.Config.ProjectileExplosionKey, options.context);
 
             return new WeaponData()
             {
                 Config = options.Config,
                 Layer = options.Config.GetProjectileLayerForFaction(options.Faction),
-                ProjectilePrefab = projectilePrefab,
-                MuzzlePrefab = muzzlePrefab,
-                ProjectileExplosionPrefab = projectileExplosionPrefab,
+                //ProjectilePrefab = projectilePrefab,
+                //MuzzlePrefab = muzzlePrefab,
+                //ProjectileExplosionPrefab = projectileExplosionPrefab,
             };
         }
 

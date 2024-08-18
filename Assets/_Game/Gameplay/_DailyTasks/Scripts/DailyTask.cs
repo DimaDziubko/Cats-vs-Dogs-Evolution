@@ -11,5 +11,6 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         public int CompletedCount;
         public int MaxCountPerDay;
         public bool IsRunOut;
+        public bool IsUnlocked;
     }
 }

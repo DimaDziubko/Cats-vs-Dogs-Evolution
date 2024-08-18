@@ -6,6 +6,6 @@ namespace _Game.Core.DataProviders.WeaponDataProviders
 {
     public interface IWeaponDataProvider
     {
-        UniTask<WeaponData> LoadWeapon(WeaponLoadOptions options);
+        WeaponData LoadWeapon(WeaponLoadOptions options);
     }
 }

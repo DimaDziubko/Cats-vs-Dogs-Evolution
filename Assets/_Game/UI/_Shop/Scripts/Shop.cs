@@ -1,12 +1,12 @@
 ﻿using System;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
-using Screen = _Game.UI._MainMenu.Scripts.Screen;
 
 namespace _Game.UI._Shop.Scripts
 {
@@ -14,7 +14,7 @@ namespace _Game.UI._Shop.Scripts
     public class Shop : MonoBehaviour, IUIScreen
     {
         public event Action Opened;
-        public Screen Screen => Screen.Shop;
+        public GameScreen GameScreen => GameScreen.Shop;
         
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ShopItemsContainer _container;
@@ -51,7 +51,7 @@ namespace _Game.UI._Shop.Scripts
             _canvas.enabled = true;
             
             Opened?.Invoke();
-            _checker.MarkAsReviewed(Screen);
+            _checker.MarkAsReviewed(GameScreen);
         }
         
         private void Subscribe()
@@ -67,7 +67,7 @@ namespace _Game.UI._Shop.Scripts
         }
 
         private void ShowName() => 
-            _header.ShowWindowName(Screen.ToString(), _color);
+            _header.ShowWindowName(GameScreen.ToString(), _color);
 
         public void Hide()
         {

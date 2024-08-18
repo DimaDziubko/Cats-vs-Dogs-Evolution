@@ -22,11 +22,10 @@ namespace _Game.UI.Common.Scripts
         [SerializeField] private GameObject _moneyPanel;
         [SerializeField] private Image _currencyIconHolder;
         [SerializeField] private TMP_Text _loadingText;
-        
+        [SerializeField] private Button _button;
+
         [SerializeField] private bool _isHoldable = false;
-
-        private Button _button;
-
+        
         private ButtonState _state = ButtonState.Inactive;
 
         private readonly Color _affordableColor = new Color(1f, 1f, 1f);
@@ -54,8 +53,6 @@ namespace _Game.UI.Common.Scripts
         
         public void Init()
         {
-            _button = GetComponent<Button>();
-            
             Unsubscribe();
             Subscribe();
         }
@@ -158,7 +155,6 @@ namespace _Game.UI.Common.Scripts
         {
             _isPointerDown = false;
             CancelAndDisposeCancellationToken();
-            
             Unsubscribe();
         }
 
@@ -169,11 +165,6 @@ namespace _Game.UI.Common.Scripts
 
         private void Unsubscribe()
         {
-            if (!_button)
-            {
-                _button = GetComponent<Button>();
-            }
-
             _button.onClick.RemoveAllListeners();
         }
 
@@ -202,8 +193,21 @@ namespace _Game.UI.Common.Scripts
         
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
-            if (!_button.interactable) InactiveClick?.Invoke();
-            if (!_isHoldable || !_button.interactable) return;
+            if (_button == null)
+                return;
+
+            if (!_button.interactable)
+            {
+                InactiveClick?.Invoke();
+                return;
+            }
+            
+            if (_cancellationTokenSource != null)
+            {
+                CancelAndDisposeCancellationToken();
+            }
+
+            if (!_isHoldable) return;
 
             _isPointerDown = true;
             _cancellationTokenSource = new CancellationTokenSource();

@@ -1,5 +1,6 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
@@ -11,20 +12,27 @@ using _Game.Gameplay.BattleLauncher;
 using _Game.UI._Currencies;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Assets._Game.Utils.Popups;
+using Zenject;
 
 namespace _Game.UI._BattleUIController
 {
-    public class BattleUIController : 
+    public class BattleUIController :
+        IInitializable,
         IStartBattleListener,
-        IStopBattleListener
+        IStopBattleListener,
+        IUIListener
     {
         private readonly Hud _hud;
+
         private readonly GameplayUI _gameplayUI;
+
         private readonly ICoinCounter _coinCounter;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IUserContainer _userContainer;
@@ -43,9 +51,11 @@ namespace _Game.UI._BattleUIController
             ILoadingScreenProvider loadingScreenProvider,
             IFeatureUnlockSystem featureUnlockSystem,
             IBattleSpeedService battleSpeedService,
-            ISpeedBoostService speedBoost, 
+            ISpeedBoostService speedBoost,
             IBattleManager battleManager,
-            IDailyTaskPresenter dailyTaskPresenter)
+            IDailyTaskPresenter dailyTaskPresenter,
+            ITutorialManager tutorialManager, 
+            IMyLogger logger)
         {
             _userContainer = userContainer;
             _hud = hud;
@@ -54,6 +64,7 @@ namespace _Game.UI._BattleUIController
             _gameplayUI = gameplayUI;
             _battleManager = battleManager;
 
+            
             _hud.Construct(
                 cameraService,
                 alertPopupProvider,
@@ -63,11 +74,18 @@ namespace _Game.UI._BattleUIController
                 battleSpeedService,
                 speedBoost,
                 battleManager,
-                dailyTaskPresenter);
+                dailyTaskPresenter,
+                tutorialManager,
+                logger);
             
             header.Construct(userContainer.State.Currencies, cameraService);
         }
-        
+
+        void IInitializable.Initialize()
+        {
+            _hud.Init();
+        }
+
         void IStartBattleListener.OnStartBattle()
         {
             _hud.ShowCoinCounter();
@@ -86,7 +104,7 @@ namespace _Game.UI._BattleUIController
             _hud.HideFoodBoostBtn();
             Unsubscribe();
         }
-        
+
         public void HideCoinCounter()
         {
             _coinCounter.CoinsChanged -= _hud.OnCoinsCoinsChanged;
@@ -125,5 +143,24 @@ namespace _Game.UI._BattleUIController
 
         public void UpdateWave(int currentWave, int wavesCount) => 
             _gameplayUI.WaveInfoPopup.ShowWave(currentWave, wavesCount);
+
+        void IUIListener.OnScreenOpened(GameScreen gameScreen)
+        {
+            switch (gameScreen)
+            {
+                case GameScreen.Battle:
+                    _hud.Show();
+                    break;
+                default:
+                    _hud.Hide();
+                    break;
+            }
+        }
+
+        void IUIListener.OnScreenClosed(GameScreen gameScreen)
+        {
+            
+        }
     }
+    
 }

@@ -3,6 +3,7 @@ using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.Economy;
@@ -11,8 +12,6 @@ using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Hud;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using CAS;
@@ -58,7 +57,9 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             gameInitializer.OnPostInitialization += Init;
         }
 
-        public void OnFoodChanged(int value) { }
+        void IFoodListener.OnFoodBalanceChanged(int value) { }
+
+        void IFoodListener.OnFoodGenerated() { }
 
         private void Init()
         {

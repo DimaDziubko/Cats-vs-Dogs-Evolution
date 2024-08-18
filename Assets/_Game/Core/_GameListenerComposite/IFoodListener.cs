@@ -2,6 +2,7 @@
 {
     public interface IFoodListener
     {
-        void OnFoodChanged(int value);
+        void OnFoodBalanceChanged(int value);
+        void OnFoodGenerated();
     }
 }

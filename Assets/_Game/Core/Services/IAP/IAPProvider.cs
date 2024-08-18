@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories.Shop;
-using Assets._Game.Core._Logger;
 using UnityEngine.Purchasing;
 
 namespace _Game.Core.Services.IAP

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI.Common.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
@@ -100,13 +101,15 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
             _presenter.BuilderModelUpdated += UpdateButtonsData;
         }
 
-        void IFoodListener.OnFoodChanged(int value)
+        void IFoodListener.OnFoodBalanceChanged(int value)
         {
             foreach (var button in UnitBuilderUI.Buttons)
             {
                 button.UpdateButtonState(value);
             }
         }
+
+        void IFoodListener.OnFoodGenerated() { }
 
         private void UpdateButtonsData(Dictionary<UnitType, UnitBuilderBtnModel> models)
         {

@@ -18,4 +18,16 @@ namespace _Game.Core.Configs.Models
         public float PlayerDamageMultiplier;
         public float EnemyDamageMultiplier;
     }
+    
+    [Serializable]
+    public class RemoteWeaponConfig
+    {
+        public int Id;
+        public float Damage;
+        public float ProjectileSpeed;
+        public float TrajectoryWarpFactor;
+        public float SplashRadius;
+        public float PlayerDamageMultiplier;
+        public float EnemyDamageMultiplier;
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets._Game.Gameplay._Tutorial.Scripts
+namespace _Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialStepData
     {
@@ -9,5 +9,6 @@ namespace Assets._Game.Gameplay._Tutorial.Scripts
         public Vector3 RequiredPointerPosition;
         public Quaternion RequiredPointerRotation;
         public bool NeedAppearanceAnimation;
+        public bool IsUnderneath;
     }
 }

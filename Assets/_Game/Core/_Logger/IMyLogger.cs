@@ -1,4 +1,4 @@
-﻿namespace Assets._Game.Core._Logger
+﻿namespace _Game.Core._Logger
 {
     public interface IMyLogger
     {

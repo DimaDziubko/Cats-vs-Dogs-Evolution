@@ -2,6 +2,7 @@
 using _Game.Common;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Debugger;
@@ -9,8 +10,6 @@ using _Game.Core.Services.UserContainer;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using CAS;
 using UnityEngine;
@@ -40,8 +39,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
             IBattleSpeedConfigRepository battleSpeedConfigRepository,
             IMyLogger logger,
             IFeatureUnlockSystem featureUnlockSystem,
-            IGameInitializer gameInitializer,
-            IMyDebugger debugger)
+            IGameInitializer gameInitializer)
         {
             _adsService = adsService;
             _userContainer = userContainer;
@@ -49,7 +47,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
             _logger = logger;
             _featureUnlockSystem = featureUnlockSystem;
             _gameInitializer = gameInitializer;
-            debugger.SpeedBoostService = this;
+            //debugger.SpeedBoostService = this;
             _gameInitializer.OnPostInitialization += Init;
         }
 

@@ -6,7 +6,6 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using UnityEngine.Purchasing;
 
 namespace _Game.Core.Services.IAP

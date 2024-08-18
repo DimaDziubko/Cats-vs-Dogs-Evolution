@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using _Game._AssetProvider;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,30 @@ namespace _Game.Core.Factory
     {
         private Scene _scene;
 
+        private readonly AssetProvider _assetProvider = new AssetProvider(); 
+        
+        protected async UniTask<T> CreateGameObjectInstanceAsync<T>(string prefabKey) where T : MonoBehaviour
+        {
+            GetOrCreateScene();
+            
+            GameObject gameObject = await _assetProvider.Instantiate(prefabKey);
+            
+            T instance = gameObject.GetComponent<T>();
+            
+            SceneManager.MoveGameObjectToScene(gameObject, _scene);
+    
+            return instance;
+        }
+
+        protected async UniTask<T> CreateGameObjectInstanceAsync<T>(string prefabKey, Transform parent) where T : MonoBehaviour
+        {
+            GameObject gameObject = await _assetProvider.Instantiate(prefabKey, parent);
+            
+            T instance = gameObject.GetComponent<T>();
+    
+            return instance;
+        }
+        
         protected T CreateGameObjectInstance<T>(T prefab) where T : MonoBehaviour
         {
             GetOrCreateScene();
@@ -35,11 +60,6 @@ namespace _Game.Core.Factory
             }
         }
 
-        public virtual void Cleanup()
-        {
-            
-        }
-
         private void GetOrCreateScene() 
         {
             if (_scene.isLoaded)
@@ -58,6 +78,10 @@ namespace _Game.Core.Factory
                 _scene = SceneManager.CreateScene(name);
             }
         }
-        
+
+        public virtual void Cleanup()
+        {
+            _assetProvider.CleanUp();
+        }
     }
 }

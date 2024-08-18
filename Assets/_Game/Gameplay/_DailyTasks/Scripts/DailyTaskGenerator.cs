@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Services.Random;
@@ -25,6 +27,8 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         private readonly IDailyTaskConfigRepository _dailyTaskConfigRepository;
         private readonly IUserContainer _userContainer;
         private readonly IRandomService _random;
+        private readonly IFeatureUnlockSystem _featureUnlockSystem;
+        private readonly IMyLogger _logger;
 
         private IDailyTasksStateReadonly DailyState => _userContainer.State.DailyTasksState;
         private IAdsWeeklyWatchStateReadonly AdsWeeklyWatchState => _userContainer.State.AdsWeeklyWatchState;
@@ -36,11 +40,15 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         public DailyTaskGenerator(
             IDailyTaskConfigRepository dailyTaskConfigRepository,
             IUserContainer userContainer,
-            IRandomService random)
+            IRandomService random,
+            IFeatureUnlockSystem featureUnlockSystem,
+            IMyLogger logger)
         {
             _dailyTaskConfigRepository = dailyTaskConfigRepository;
             _userContainer = userContainer;
             _random = random;
+            _featureUnlockSystem = featureUnlockSystem;
+            _logger = logger;
         }
         
         void IInitializable.Initialize()
@@ -60,7 +68,8 @@ namespace _Game.Gameplay._DailyTasks.Scripts
                 RestoreDailyTask();
             }
             
-            DailyState.TaskCompletedChanged += OnTaskCompleted;     
+            DailyState.TaskCompletedChanged += OnTaskCompleted;
+            _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
         }
 
         private void RestoreDailyTask()
@@ -95,8 +104,17 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         void IDisposable.Dispose()
         {
             DailyState.TaskCompletedChanged -= OnTaskCompleted;     
+            _featureUnlockSystem.FeatureUnlocked -= OnFeatureUnlocked;
         }
-        
+
+        private void OnFeatureUnlocked(Feature feature)
+        {
+            if (feature == Feature.DailyTask)
+            {
+                GenerateNewDailyTask();
+            }
+        }
+
         private void OnTaskCompleted()
         {
             AddReward();
@@ -112,7 +130,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             List<int> ids = new List<int>();
             foreach (var config in configs)
             {
-                if(DailyState.CompletedTasks.Contains(config.Id)) continue;
+                if(DailyState.CompletedTasks.Contains(config.Id - 1)) continue; //Completed tasks are idx
                 for (int i = 0; i < config.DropChance; i++)
                 {
                     ids.Add(config.Id);
@@ -140,6 +158,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             _currentDailyTask.CompletedCount = DailyState.CompletedTasks.Count;
             _currentDailyTask.IsRunOut =
                 DailyState.CompletedTasks.Count >= _dailyTaskConfigRepository.MaxDailyCountPerDay;
+            _currentDailyTask.IsUnlocked = _featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask);
             
             DailyTaskGenerated?.Invoke(_currentDailyTask);
         }

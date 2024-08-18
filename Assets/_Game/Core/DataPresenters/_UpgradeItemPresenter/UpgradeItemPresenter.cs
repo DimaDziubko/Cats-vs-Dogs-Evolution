@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
@@ -15,7 +16,6 @@ using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.UserState;
@@ -27,12 +27,12 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
     {
         public event Action<UpgradeItemModel> UpgradeItemUpdated;
 
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
+        IEnumerable<GameScreen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
-                yield return Screen.Upgrades;
-                yield return Screen.UpgradesAndEvolution;
+                yield return GameScreen.Upgrades;
+                yield return GameScreen.UpgradesAndEvolution;
             }
         }
 

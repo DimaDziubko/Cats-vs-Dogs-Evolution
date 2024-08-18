@@ -4,7 +4,7 @@ namespace _Game.Core._UpgradesChecker
 {
     public class NotificationData
     {
-        public Screen Screen;
+        public GameScreen GameScreen;
         public bool IsAvailable;
         public bool IsReviewed;
     }

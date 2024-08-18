@@ -1,9 +1,8 @@
-﻿using _Game.Core.Ads;
+﻿using _Game.Core._Logger;
+using _Game.Core.Ads;
 using _Game.Core.AssetManagement;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using _Game.Core.DataPresenters.Evolution;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;

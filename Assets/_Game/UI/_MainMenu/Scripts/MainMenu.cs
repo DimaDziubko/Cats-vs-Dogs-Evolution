@@ -1,14 +1,16 @@
 using System.Collections;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.GameState;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Temp;
+using _Game.UI._Hud;
 using _Game.UI._MainMenu.State;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
@@ -17,7 +19,7 @@ using UnityEngine;
 
 namespace _Game.UI._MainMenu.Scripts
 {
-    public enum Screen
+    public enum GameScreen
     {
         None,
         Battle,
@@ -50,15 +52,15 @@ namespace _Game.UI._MainMenu.Scripts
         [SerializeField] private RectTransform[] _buttons;
 
         private MenuStateMachine _menuStateMachine;
-        
+
         private IGameStateMachine _stateMachine;
         private IAudioService _audioService;
         private IFeatureUnlockSystem _featureUnlockSystem;
         private ITutorialManager _tutorialManager;
         private IUpgradesAvailabilityChecker _upgradesChecker;
         private IMyLogger _logger;
-
-
+        private Curtain _curtain;
+        
         //TODO Change step by step
         private bool IsDungeonUnlocked => false;
         private bool IsUpgradesUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_upgradeButton);
@@ -77,7 +79,9 @@ namespace _Game.UI._MainMenu.Scripts
             IFeatureUnlockSystem featureUnlockSystem,
             ITutorialManager tutorialManager,
             IUpgradesAvailabilityChecker upgradesChecker,
-            IMyLogger logger)
+            IMyLogger logger,
+            Curtain curtain,
+            IUINotifier uiNotifier)
         {
 
             _audioService = audioService;
@@ -86,16 +90,21 @@ namespace _Game.UI._MainMenu.Scripts
             _tutorialManager = tutorialManager;
             _upgradesChecker = upgradesChecker;
             _logger = logger;
-            
+            _curtain = curtain;
+
             _menuStateMachine = new MenuStateMachine();
-            BattleState battleState = new BattleState(this, startBattleScreenProvider, _battleButton);
-            UpgradesState upgradesState = new UpgradesState(this, upgradeAndEvolutionScreenProvider, _upgradeButton);
-            ShopState shopState = new ShopState(this, shopProvider, _shopButton);
+            BattleState battleState = new BattleState(this, startBattleScreenProvider, _battleButton, uiNotifier);
+            UpgradesState upgradesState = new UpgradesState(this, upgradeAndEvolutionScreenProvider, _upgradeButton, uiNotifier);
+            ShopState shopState = new ShopState(this, shopProvider, _shopButton, uiNotifier);
             
             _menuStateMachine.AddState(battleState);
             _menuStateMachine.AddState(upgradesState);
             _menuStateMachine.AddState(shopState);
         }
+
+        public void HideCurtain() => _curtain.Hide();
+
+        public void ShowCurtain() => _curtain.Show();
 
         public void Show()
         {
@@ -106,11 +115,11 @@ namespace _Game.UI._MainMenu.Scripts
 
             _dungeonButton.Initialize(IsDungeonUnlocked, OnDungeonClick, PlayButtonSound);
             _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound,
-                _upgradesChecker.GetNotificationData(Screen.UpgradesAndEvolution));
+                _upgradesChecker.GetNotificationData(GameScreen.UpgradesAndEvolution));
             _battleButton.Initialize(IsBattleUnlocked, OnBattleButtonClick, PlayButtonSound);
             _cardsButton.Initialize(IsCardsUnlocked, OnCardsButtonClick, PlayButtonSound);
             _shopButton.Initialize(IsShopUnlocked, OnShopButtonClick, PlayButtonSound,
-                _upgradesChecker.GetNotificationData(Screen.Shop));
+                _upgradesChecker.GetNotificationData(GameScreen.Shop));
 
 
             OnBattleButtonClick(_battleButton);
@@ -129,29 +138,29 @@ namespace _Game.UI._MainMenu.Scripts
             yield return new WaitForSeconds(TUTORIAL_POINTER_DELAY);
             _upgradesTutorialStep.ShowStep();
         }
-        
+
         private void Subscribe()
         {
             _upgradesChecker.Notify += OnUpgradesNotified;
-            GlobalEvents.OnInsufficientFunds += OnInfufficientFunds;
+            GlobalEvents.OnInsufficientFunds += OnInsufficientFunds;
         }
 
         private void OnUpgradesNotified(NotificationData data)
         {
-            switch (data.Screen)
+            switch (data.GameScreen)
             {
-                case Screen.None:
+                case GameScreen.None:
                     break;
-                case Screen.Battle:
+                case GameScreen.Battle:
                     break;
-                case Screen.Upgrades:
+                case GameScreen.Upgrades:
                     break;
-                case Screen.Evolution:
+                case GameScreen.Evolution:
                     break;
-                case Screen.UpgradesAndEvolution:
+                case GameScreen.UpgradesAndEvolution:
                     _upgradeButton.SetupPin(data);
                     break;
-                case Screen.Shop:
+                case GameScreen.Shop:
                     _shopButton.SetupPin(data);
                     break;
             }
@@ -160,10 +169,11 @@ namespace _Game.UI._MainMenu.Scripts
         private void Unsubscribe()
         {
             _upgradesChecker.Notify -= OnUpgradesNotified;
-            GlobalEvents.OnInsufficientFunds -= OnInfufficientFunds;
+            GlobalEvents.OnInsufficientFunds -= OnInsufficientFunds;
         }
 
-        private void OnInfufficientFunds() => OnShopButtonClick(_shopButton);
+        private void OnInsufficientFunds() => OnShopButtonClick(_shopButton);
+
 
         private void OnBattleButtonClick(ToggleButton button) => 
             _menuStateMachine.Enter<BattleState>();
@@ -189,6 +199,7 @@ namespace _Game.UI._MainMenu.Scripts
 
         public void Hide()
         {
+            HideCurtain();
             Unsubscribe();
             _upgradeButton.Cleanup();
             _battleButton.Cleanup();
@@ -203,7 +214,8 @@ namespace _Game.UI._MainMenu.Scripts
         }
 
         private void PlayButtonSound() => _audioService.PlayButtonSound();
-        
+
+
         public void RebuildLayout()
         {
             var with = _canvasRectTransform.rect.width;

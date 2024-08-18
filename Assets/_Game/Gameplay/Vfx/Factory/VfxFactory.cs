@@ -10,6 +10,7 @@ using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
 using Assets._Game.Utils;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Game.Gameplay.Vfx.Factory
@@ -86,6 +87,62 @@ namespace _Game.Gameplay.Vfx.Factory
             else
             {
                 instance = CreateGameObjectInstance(weaponData.ProjectileExplosionPrefab);
+                instance.Construct(weaponId);
+                instance.OriginFactory = this;
+            }
+            
+            return instance;
+        }
+        
+        public async UniTask<ProjectileExplosion> GetProjectileExplosionAsync(Faction faction, int weaponId)
+        {
+            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            if (weaponData == null) return null;
+            if (weaponData.Config.ProjectileExplosionKey == Constants.ConfigKeys.MISSING_KEY) return null;
+            
+            if (!_projectileExplosionPools.TryGetValue(weaponId, out Queue<ProjectileExplosion> pool))
+            {
+                pool = new Queue<ProjectileExplosion>();
+                _projectileExplosionPools[weaponId] = pool;
+            }
+            
+            ProjectileExplosion instance;
+            if (pool.Count > 0)
+            {
+                instance = pool.Dequeue();
+                instance.gameObject.SetActive(true);
+            }
+            else
+            {
+                instance = await CreateGameObjectInstanceAsync<ProjectileExplosion>(weaponData.Config.ProjectileExplosionKey);
+                instance.Construct(weaponId);
+                instance.OriginFactory = this;
+            }
+            
+            return instance;
+        }
+        
+        public async UniTask<MuzzleFlash> GetMuzzleFlashAsync(Faction faction, int weaponId)
+        {
+            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            if (weaponData == null ) return null;
+            if (weaponData.Config.MuzzleKey == Constants.ConfigKeys.MISSING_KEY) return null;
+            
+            if (!_muzzlesPools.TryGetValue(weaponId, out Queue<MuzzleFlash> pool))
+            {
+                pool = new Queue<MuzzleFlash>();
+                _muzzlesPools[weaponId] = pool;
+            }
+            
+            MuzzleFlash instance;
+            if (pool.Count > 0)
+            {
+                instance = pool.Dequeue();
+                instance.gameObject.SetActive(true);
+            }
+            else
+            {
+                instance = await CreateGameObjectInstanceAsync<MuzzleFlash>(weaponData.Config.MuzzleKey);
                 instance.Construct(weaponId);
                 instance.OriginFactory = this;
             }
@@ -211,6 +268,8 @@ namespace _Game.Gameplay.Vfx.Factory
                 }
             }
             _projectileExplosionPools.Clear();
+            
+            base.Cleanup();
         }
     }
 }

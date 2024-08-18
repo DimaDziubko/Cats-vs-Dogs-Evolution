@@ -7,9 +7,9 @@ namespace _Game.Core._UpgradesChecker
     public interface IUpgradesAvailabilityChecker
     {
         event Action<NotificationData> Notify;
-        NotificationData GetNotificationData(Screen screen);
+        NotificationData GetNotificationData(GameScreen gameScreen);
         void Register(IUpgradeAvailabilityProvider unitUpgradesPresenter);
         void UnRegister(IUpgradeAvailabilityProvider unitUpgradesPresenter);
-        void MarkAsReviewed(Screen screen);
+        void MarkAsReviewed(GameScreen gameScreen);
     }
 }

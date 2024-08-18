@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.Timeline;
@@ -8,10 +9,10 @@ using _Game.Core.DataProviders.BaseDataProvider;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.UI._Environment;
 using _Game.Utils;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
@@ -48,24 +49,25 @@ namespace _Game.Core.DataProviders.BattleDataProvider
         {
             IEnumerable<BattleConfig> battleConfigs = _timelineConfigRepository.GetBattleConfigs();
             
-            var unitTask = LoadUnits(battleConfigs, timelineId);
+            var unitDataPool = LoadUnits(battleConfigs, timelineId);
+            var weaponDataPool = LoadWeapons(battleConfigs, timelineId);
+
             var baseTask = LoadBases(battleConfigs, timelineId);
             var environmentTask = LoadEnvironments(battleConfigs, timelineId);
             var ambienceTask = LoadAmbience(battleConfigs, timelineId);
             var battleData = LoadBattleScenarioData(battleConfigs);
             var baseHealth = LoadBaseHealth(battleConfigs);
-            var weaponTask = LoadWeapons(battleConfigs, timelineId);
 
-            var result = await UniTask.WhenAll(unitTask, weaponTask, baseTask, environmentTask, ambienceTask);
+            var result = await UniTask.WhenAll(baseTask, environmentTask, ambienceTask);
             
             BattleStaticData ageStaticData = new BattleStaticData()
             {
-                UnitDataPools = result.Item1,
-                WeaponDataPools = result.Item2,
-                BasePool = result.Item3,
-                EnvironmentPool = result.Item4,
+                UnitDataPools = unitDataPool,
+                WeaponDataPools = weaponDataPool,
+                BasePool = result.Item1,
+                EnvironmentPool = result.Item2,
                 BattleDataPools = battleData,
-                AmbiencePool = result.Item5,
+                AmbiencePool = result.Item3,
                 BaseHealthPool = baseHealth
             };
 
@@ -152,14 +154,13 @@ namespace _Game.Core.DataProviders.BattleDataProvider
             int battleIndex = 0;
             foreach (var config in configs)
             {
-                string key = config.BaseKey;
                 var baseLoadOptions = new BaseLoadOptions()
                 {
                     Faction = Faction.Enemy,
                     CacheContext = Constants.CacheContext.BATTLE,
-                    PrefabKey = key,
                     Timeline = timelineId,
                     CoinsAmount = config.CoinsPerBase,
+                    BasePrefab = config.BasePrefab
                 };
 
                 BaseStaticData staticData = await _dataProvider.LoadBase(baseLoadOptions);
@@ -171,7 +172,7 @@ namespace _Game.Core.DataProviders.BattleDataProvider
             return basePool;
         }
 
-        private async UniTask<Dictionary<int, DataPool<int, WeaponData>>> LoadWeapons(
+        private Dictionary<int, DataPool<int, WeaponData>> LoadWeapons(
             IEnumerable<BattleConfig> configs,
             int timelineId)
         {
@@ -181,7 +182,7 @@ namespace _Game.Core.DataProviders.BattleDataProvider
             foreach (var config in configs)
             {
                 DataPool<int, WeaponData> dataPool = 
-                    await _dataProvider
+                     _dataProvider
                         .LoadWeapons(
                             config.Warriors, 
                             new LoadContext()
@@ -198,7 +199,7 @@ namespace _Game.Core.DataProviders.BattleDataProvider
             return weaponDataPools;
         }
 
-        private async UniTask<Dictionary<int, DataPool<UnitType, UnitData>>> LoadUnits(IEnumerable<BattleConfig> configs, int timelineId)
+        private Dictionary<int, DataPool<UnitType, UnitData>> LoadUnits(IEnumerable<BattleConfig> configs, int timelineId)
         {
             Dictionary<int, DataPool<UnitType, UnitData>> unitDataPools = new Dictionary<int, DataPool<UnitType, UnitData>>();
             
@@ -206,7 +207,7 @@ namespace _Game.Core.DataProviders.BattleDataProvider
             foreach (var config in configs)
             {
                 DataPool<UnitType, UnitData> dataPool = 
-                    await _dataProvider
+                    _dataProvider
                         .LoadUnits(
                             config.Warriors,
                              new LoadContext()

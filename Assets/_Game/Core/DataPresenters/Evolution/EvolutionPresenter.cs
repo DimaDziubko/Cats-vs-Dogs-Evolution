@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Configs.Repositories.Timeline;
@@ -12,7 +13,6 @@ using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
@@ -24,12 +24,12 @@ namespace _Game.Core.DataPresenters.Evolution
         public event Action<EvolutionTabModel> EvolutionModelUpdated;
         public event Action LastAgeOpened;
         
-        IEnumerable<Screen> IUpgradeAvailabilityProvider.AffectedScreens
+        IEnumerable<GameScreen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
             {
-                yield return Screen.Evolution;
-                yield return Screen.UpgradesAndEvolution;
+                yield return GameScreen.Evolution;
+                yield return GameScreen.UpgradesAndEvolution;
             }
         }
 

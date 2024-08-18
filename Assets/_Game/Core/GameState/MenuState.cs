@@ -1,15 +1,13 @@
-using _Game.Core.GameState;
 using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Services.Analytics;
 using _Game.UI._MainMenu.Scripts;
-using Assets._Game.Core.Loading;
-using Assets._Game.Core.Services.Analytics;
+using Assets._Game.Core.GameState;
 using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.Core.GameState
+namespace _Game.Core.GameState
 {
     public class MenuState : IPayloadedState<LoadingData>
     {

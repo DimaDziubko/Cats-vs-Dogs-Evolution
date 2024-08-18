@@ -1,4 +1,6 @@
 ﻿using System;
+using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._CoinCounter.Scripts;
@@ -16,13 +18,18 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         void OnUnitDead(Faction faction, UnitType type);
     }
 
-    public class DailyTaskCompletionChecker : IDailyTaskCompletionChecker, IInitializable, IDisposable
+    public class DailyTaskCompletionChecker : 
+        IDailyTaskCompletionChecker, 
+        IInitializable, 
+        IDisposable, 
+        IFoodListener
     {
         public event Action<DailyTask> DailyTaskUpdated;
 
         private readonly IUserContainer _userContainer;
         private readonly IDailyTaskGenerator _taskGenerator;
         private readonly ICoinCounter _coinCounter;
+        private readonly IMyLogger _logger;
 
         private IDailyTasksStateReadonly DailyState => _userContainer.State.DailyTasksState;
         private IAdsWeeklyWatchStateReadonly AdsWeeklyWatchState => _userContainer.State.AdsWeeklyWatchState;
@@ -32,11 +39,13 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         public DailyTaskCompletionChecker(
             IUserContainer userContainer,
             IDailyTaskGenerator taskGenerator,
-            ICoinCounter coinCounter)
+            ICoinCounter coinCounter,
+            IMyLogger logger)
         {
             _userContainer = userContainer;
             _taskGenerator = taskGenerator;
             _coinCounter = coinCounter;
+            _logger = logger;
         }
 
         void IInitializable.Initialize()
@@ -190,10 +199,26 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             }
         }
 
+        void IFoodListener.OnFoodBalanceChanged(int value)
+        {
+
+        }
+
+        void IFoodListener.OnFoodGenerated()
+        {
+            if (NeedChangeProgressForType(DailyTaskType.ProduceFood))
+            {
+                _userContainer.DailyTaskStateHandler.AddProgress(1);
+            }
+        }
+
         #endregion
 
-        private void OnTaskGenerated(DailyTask task) => 
+        private void OnTaskGenerated(DailyTask task)
+        {
+            _logger.Log($"CHECKER DAILY TASK IS UNLOCKED {CurrentTask.IsUnlocked}");
             DailyTaskUpdated?.Invoke(CurrentTask);
+        }
 
         private void OnAdsWatchedChanged()
         {
@@ -221,6 +246,8 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             {
                 CurrentTask.Progress = CurrentTask.Target;
             }
+            
+            _logger.Log($"CHECKER DAILY TASK IS UNLOCKED {CurrentTask.IsUnlocked}");
             DailyTaskUpdated?.Invoke(CurrentTask);
         }
 
@@ -229,7 +256,9 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             return 
                 CurrentTask.Config.DailyTaskType == type && 
                 CurrentTask.Progress < CurrentTask.Target &&
-                !CurrentTask.IsRunOut;
+                !CurrentTask.IsRunOut &&
+                CurrentTask.IsUnlocked;
+            
         }
     }
 }

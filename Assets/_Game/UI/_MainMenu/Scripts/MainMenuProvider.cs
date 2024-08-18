@@ -1,12 +1,11 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
+using _Game.UI._Hud;
 using _Game.UI._Shop.Scripts;
+using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
@@ -28,6 +27,8 @@ namespace _Game.UI._MainMenu.Scripts
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly IMyLogger _logger;
         private readonly IShopProvider _shopProvider;
+        private readonly IUINotifier _uiNotifier;
+        private readonly Curtain _curtain;
 
         private Disposable<MainMenu> _mainMenu;
 
@@ -40,7 +41,9 @@ namespace _Game.UI._MainMenu.Scripts
             IFeatureUnlockSystem featureUnlockSystem,
             ITutorialManager tutorialManager,
             IUpgradesAvailabilityChecker upgradesChecker,
-            IMyLogger logger)
+            IMyLogger logger,
+            Curtain curtain,
+            IUINotifier uiNotifier)
         {
             _cameraService = cameraService;
             _audioService = audioService;
@@ -51,6 +54,8 @@ namespace _Game.UI._MainMenu.Scripts
             _tutorialManager = tutorialManager;
             _upgradesChecker = upgradesChecker;
             _logger = logger;
+            _curtain = curtain;
+            _uiNotifier = uiNotifier;
         }
         public async UniTask Load()
         {
@@ -65,7 +70,9 @@ namespace _Game.UI._MainMenu.Scripts
                 _featureUnlockSystem,
                 _tutorialManager,
                 _upgradesChecker,
-                _logger);
+                _logger,
+                _curtain,
+                _uiNotifier);
 
             ShowMainMenu();
         }

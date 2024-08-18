@@ -43,9 +43,9 @@ namespace _Game.Gameplay._BattleField.Scripts
             _projectiles.Clear();
         }
 
-        void IShootProxy.Shoot(ShootData data)
+        async void  IShootProxy.Shoot(ShootData data)
         {
-            Projectile projectile = _projectileFactory.Get(data.Faction, data.WeaponId);
+            Projectile projectile = await _projectileFactory.GetAsync(data.Faction, data.WeaponId);
             if(projectile == null) return;
 
             projectile.PrepareIntro(
@@ -59,9 +59,6 @@ namespace _Game.Gameplay._BattleField.Scripts
             _projectiles.Add(projectile);
         }
 
-        public void SetSpeedFactor(float speedFactor)
-        {
-            _projectiles.SetBattleSpeedFactor(speedFactor);
-        }
+        public void SetSpeedFactor(float speedFactor) => _projectiles.SetBattleSpeedFactor(speedFactor);
     }
 }

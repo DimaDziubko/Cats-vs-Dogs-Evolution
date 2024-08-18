@@ -11,5 +11,6 @@
         BattleSpeed,
         X2,
         Shop,
+        DailyTask
     }
 }

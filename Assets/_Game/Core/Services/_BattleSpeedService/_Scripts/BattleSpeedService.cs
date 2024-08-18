@@ -2,6 +2,7 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core._GameListenerComposite;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Debugger;
@@ -10,8 +11,6 @@ using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.Utils.Extensions;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
 using UnityEngine;
@@ -70,8 +69,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             IMyLogger logger,
             ITimerService timerService,
             IFeatureUnlockSystem featureUnlockSystem,
-            IGameInitializer gameInitializer,
-            IMyDebugger debugger)
+            IGameInitializer gameInitializer)
         {
             _battleSpeedManager = battleSpeedManager;
             _userContainer = userContainer;
@@ -80,7 +78,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             _timerService = timerService;
             _featureUnlockSystem = featureUnlockSystem;
             _gameInitializer = gameInitializer;
-            debugger.BattleSpeedService = this;
+            //debugger.BattleSpeedService = this;
             _gameInitializer.OnPostInitialization += Init;
         }
 

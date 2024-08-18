@@ -1,8 +1,8 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
-using _Game.Gameplay._Units.Scripts;
+using Assets._Game.Gameplay.Common.Scripts;
 
-namespace Assets._Game.Gameplay._Units.Scripts
+namespace _Game.Gameplay._Units.Scripts
 {
     [Serializable]
     public class UnitData
@@ -12,5 +12,6 @@ namespace Assets._Game.Gameplay._Units.Scripts
         public int UnitLayer;
         public int AggroLayer;
         public int AttackLayer;
+        public Race Race;
     }
 }

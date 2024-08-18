@@ -17,32 +17,40 @@ namespace _Game.UI._Hud._FoodBoostView
         {
             _foodBoostService = foodBoostService;
             _audioService = audioService;
-            HideFoodBoostBtn();
+            Hide();
+        }
+
+        public void Init()
+        {
+            Subscribe();
+            _foodBoostBtn.Initialize(OnFoodBoostBtnClicked);
+        }
+
+        public void Cleanup()
+        {
+            Unsubscribe();
+            _foodBoostBtn.Cleanup();
         }
         
-        public void ShowFoodBoostBtn()
+        
+        public void Show()
         {
-            SubscribeFoodBoostBtn();
-            _foodBoostBtn.Initialize(OnFoodBoostBtnClicked);
             _foodBoostBtn.Show();
             OnFoodBoostBtnShown();
         }
 
+        public void Hide() => _foodBoostBtn.Hide();
+
         private void OnFoodBoostBtnShown() => 
             _foodBoostService.OnFoodBoostShown();
 
-        private void SubscribeFoodBoostBtn() => 
+        private void Subscribe() => 
             _foodBoostService.FoodBoostBtnModelChanged += _foodBoostBtn.UpdateBtnState;
 
-        public void HideFoodBoostBtn()
+        private void Unsubscribe()
         {
-            _foodBoostBtn.Hide();
-            _foodBoostBtn.Cleanup();
-            UnsubscribeFoodBoostBtn();
-        }
-
-        private void UnsubscribeFoodBoostBtn() => 
             _foodBoostService.FoodBoostBtnModelChanged -= _foodBoostBtn.UpdateBtnState;
+        }
 
         private void OnFoodBoostBtnClicked()
         {

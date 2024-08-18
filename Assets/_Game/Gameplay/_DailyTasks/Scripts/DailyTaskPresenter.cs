@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core._Logger;
 using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
@@ -24,6 +25,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         private readonly IBattleNavigator _battleNavigator;
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IAgeNavigator _ageNavigator;
+        private readonly IMyLogger _logger;
 
         private readonly DailyTaskDto _currentDto = new DailyTaskDto();
 
@@ -35,13 +37,15 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             IDailyTaskCompletionChecker dailyTaskCompletionChecker,
             IBattleNavigator battleNavigator,
             IGeneralDataPool generalDataPool,
-            IAgeNavigator ageNavigator)
+            IAgeNavigator ageNavigator,
+            IMyLogger logger)
         {
             _userContainer = userContainer;
             _dailyTaskCompletionChecker = dailyTaskCompletionChecker;
             _battleNavigator = battleNavigator;
             _generalDataPool = generalDataPool;
             _ageNavigator = ageNavigator;
+            _logger = logger;
         }
 
         void IInitializable.Initialize()
@@ -74,6 +78,9 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             _currentDto.Reward = task.Config.Reward.ToString();
             _currentDto.IsCompleted = task.IsCompleted;
             _currentDto.IsRunOut = task.IsRunOut;
+            _currentDto.IsUnlocked = task.IsUnlocked;
+            
+            _logger.Log($"PRESENTER DAILY TASK IS UNLOCKED {_currentDto.IsUnlocked}");
             DailyTaskUpdated?.Invoke(_currentDto);
         }
 

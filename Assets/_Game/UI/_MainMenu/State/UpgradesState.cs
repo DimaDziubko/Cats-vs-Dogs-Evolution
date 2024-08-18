@@ -1,5 +1,6 @@
 ﻿using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Assets._Game.Utils.Disposable;
@@ -10,18 +11,21 @@ namespace _Game.UI._MainMenu.State
     {
         private readonly MainMenu _mainMenu;
         private readonly IUpgradeAndEvolutionScreenProvider _provider;
-
+        private readonly IUINotifier _uiNotifier;
+        
         private Disposable<UpgradeAndEvolutionScreen> _upgradesAndEvolutionScreen;
         private readonly ToggleButton _button;
 
         public UpgradesState(
             MainMenu mainMenu,
             IUpgradeAndEvolutionScreenProvider provider,
-            ToggleButton button)
+            ToggleButton button,
+            IUINotifier uiNotifier)
         {
             _mainMenu = mainMenu;
             _provider = provider;
             _button = button;
+            _uiNotifier = uiNotifier;
         }
         
         public async void Enter()
@@ -30,26 +34,35 @@ namespace _Game.UI._MainMenu.State
             _button.HighlightBtn();
             _mainMenu.RebuildLayout();
             _upgradesAndEvolutionScreen = await _provider.Load();
-            _upgradesAndEvolutionScreen.Value.Show();
+
+            if (_upgradesAndEvolutionScreen?.Value != null)
+            {
+                _upgradesAndEvolutionScreen.Value.Show();
+                _uiNotifier.OnScreenOpened(GameScreen.UpgradesAndEvolution);
+            }
         }
 
         public void Exit()
         {
-            _upgradesAndEvolutionScreen.Value.Hide();
-            _upgradesAndEvolutionScreen.Dispose();
-            _upgradesAndEvolutionScreen = null;
-            _button.UnHighlightBtn();
-        }
-
-        public void Cleanup()
-        {
-            if (_upgradesAndEvolutionScreen != null)
+            if (_upgradesAndEvolutionScreen?.Value != null)
             {
                 _upgradesAndEvolutionScreen.Value.Hide();
                 _upgradesAndEvolutionScreen.Dispose();
                 _upgradesAndEvolutionScreen = null;
-                _button.UnHighlightBtn();
             }
+            _button.UnHighlightBtn();
+            _uiNotifier.OnScreenClosed(GameScreen.UpgradesAndEvolution);
+        }
+
+        public void Cleanup()
+        {
+            if (_upgradesAndEvolutionScreen?.Value != null)
+            {
+                _upgradesAndEvolutionScreen.Value.Hide();
+                _upgradesAndEvolutionScreen.Dispose();
+                _upgradesAndEvolutionScreen = null;
+            }
+            _button.UnHighlightBtn();
         }
     }
 }

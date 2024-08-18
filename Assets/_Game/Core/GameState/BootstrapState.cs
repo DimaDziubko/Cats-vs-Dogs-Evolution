@@ -1,5 +1,5 @@
-﻿using _Game.Utils;
-using Assets._Game.Core._SceneLoader;
+﻿using _Game.Core._SceneLoader;
+using _Game.Utils;
 using Assets._Game.Core.GameState;
 using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;

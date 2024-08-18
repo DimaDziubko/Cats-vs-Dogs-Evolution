@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Common;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Debugger;
 using _Game.Core.Services.Analytics;
@@ -8,7 +9,6 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
 using CAS;
@@ -54,7 +54,6 @@ namespace _Game.Core.Ads
             IUserContainer userContainer,
             ITimerService timerService,
             IAdsConfigRepository adsConfigRepository,
-            IMyDebugger debugger,
             IGameInitializer gameInitializer)
         {
             _rewardAdsService = new CasRewardAdService(logger, battleManager, userContainer);
@@ -63,7 +62,7 @@ namespace _Game.Core.Ads
             _timerService = timerService;
             _adsConfigRepository = adsConfigRepository;
             _userContainer = userContainer;
-            debugger.CasAdsService = this;
+            //debugger.CasAdsService = this;
 
             _rewardAdsService.AdImpression += OnAdImpression;
             _rewardAdsService.VideoLoaded += OnVideoLoaded;

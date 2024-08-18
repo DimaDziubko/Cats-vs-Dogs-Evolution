@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Data;
 using _Game.Core.DataProviders.Facade;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._Logger;
+using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Core.Data;
 using Assets._Game.Gameplay._Units.Scripts;
 using Cysharp.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace _Game.Core.DataProviders.UnitDataProviders
             _userContainer = userContainer;
         }
 
-        public async UniTask<DataPool<UnitType, UnitData>> Load (IEnumerable<WarriorConfig> configs, LoadContext context)
+        public DataPool<UnitType, UnitData> Load (IEnumerable<WarriorConfig> configs, LoadContext context)
         {
             var raceState = _userContainer.State.RaceState;
             DataPool<UnitType, UnitData> pool = new DataPool<UnitType, UnitData>();
@@ -42,7 +43,7 @@ namespace _Game.Core.DataProviders.UnitDataProviders
                     CurrentRace = raceState.CurrentRace
                 };
 
-                var data = await _unitDataProvider.LoadUnitData(unitLoadOptions);
+                var data = _unitDataProvider.LoadUnitData(unitLoadOptions);
                 pool.Add(config.Type, data);
             }
 

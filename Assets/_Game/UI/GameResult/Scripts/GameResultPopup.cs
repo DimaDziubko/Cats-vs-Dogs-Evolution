@@ -1,8 +1,8 @@
 ﻿using _Game.Common;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using CAS;

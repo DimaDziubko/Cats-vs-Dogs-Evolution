@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Providers;
 using _Game.Core.Loading;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 

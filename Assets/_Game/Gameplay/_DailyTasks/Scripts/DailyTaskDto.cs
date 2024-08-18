@@ -7,5 +7,6 @@
         public string Reward;
         public bool IsCompleted;
         public bool IsRunOut;
+        public bool IsUnlocked;
     }
 }

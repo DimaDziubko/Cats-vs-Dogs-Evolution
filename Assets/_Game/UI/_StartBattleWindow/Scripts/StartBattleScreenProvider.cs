@@ -1,3 +1,4 @@
+using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
@@ -6,8 +7,6 @@ using _Game.Core.Navigation.Timeline;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core._Logger;
-using Assets._Game.Core.AssetManagement;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI._StartBattleWindow.Scripts;

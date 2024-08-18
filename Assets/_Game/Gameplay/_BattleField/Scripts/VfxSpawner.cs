@@ -18,17 +18,17 @@ namespace _Game.Gameplay._BattleField.Scripts
         public void GameUpdate(float deltaTime) => 
             _vfxEntities.GameUpdate(deltaTime);
 
-        void IVFXProxy.SpawnMuzzleFlash(MuzzleData data)
+        async void IVFXProxy.SpawnMuzzleFlash(MuzzleData data)
         {
-            MuzzleFlash muzzle = _vfxFactory.GetMuzzleFlash(data.Faction, data.WeaponId);
+            MuzzleFlash muzzle = await _vfxFactory.GetMuzzleFlashAsync(data.Faction, data.WeaponId);
             if(muzzle == null) return;
             muzzle.Initialize(data.Position, data.Direction);
             _vfxEntities.Add(muzzle);
         }
 
-        void IVFXProxy.SpawnProjectileExplosion(ExplosionData explosionData)
+        async void IVFXProxy.SpawnProjectileExplosion(ExplosionData explosionData)
         {
-            ProjectileExplosion explosion = _vfxFactory.GetProjectileExplosion(explosionData.Faction, explosionData.WeaponId);
+            ProjectileExplosion explosion = await _vfxFactory.GetProjectileExplosionAsync(explosionData.Faction, explosionData.WeaponId);
             if(explosion == null) return;
             explosion.Initialize(explosionData.Positon);
             _vfxEntities.Add(explosion);

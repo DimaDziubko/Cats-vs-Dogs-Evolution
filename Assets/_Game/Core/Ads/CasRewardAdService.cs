@@ -1,10 +1,10 @@
 ﻿using System;
 using _Game.Common;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay.BattleLauncher;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Pause.Scripts;
 using CAS;
 

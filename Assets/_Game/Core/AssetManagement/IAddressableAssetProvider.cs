@@ -3,7 +3,7 @@ using Assets._Game.Core.Loading;
 using Cysharp.Threading.Tasks;
 using UnityEngine.ResourceManagement.ResourceProviders;
 
-namespace Assets._Game.Core.AssetManagement
+namespace _Game.Core.AssetManagement
 {
     public interface IAddressableAssetProvider :  ILoadingOperation
     {

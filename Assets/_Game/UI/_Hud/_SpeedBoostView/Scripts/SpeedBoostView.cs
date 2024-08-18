@@ -17,18 +17,17 @@ namespace _Game.UI._Hud._SpeedBoostView.Scripts
         {
             _speedBoost = speedBoost;
             _audioService = audioService;
-            Show();
         }
 
-        private void Show()
+        public void Init()
         {
             SubscribeSpeedBoostBtn();
             InitSpeedBoostBtn();
-            OnSpeedBoostBtnShown();
         }
 
-        public void Hide() =>
-            UnsubscribeSpeedBoostBtn();
+        public void Show() => OnSpeedBoostBtnShown();
+
+        public void Hide() { }
 
         private void SubscribeSpeedBoostBtn() =>
             _speedBoost.SpeedBoostBtnModelChanged += _speedBoostBtn.UpdateBtnState;
@@ -47,5 +46,7 @@ namespace _Game.UI._Hud._SpeedBoostView.Scripts
             _speedBoost.OnSpeedBoostBtnClicked();
             _audioService.PlayButtonSound();
         }
+
+        public void Cleanup() => UnsubscribeSpeedBoostBtn();
     }
 }

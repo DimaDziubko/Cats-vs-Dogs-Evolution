@@ -10,6 +10,7 @@ using Assets._Game.Creatives.Creative_1.Scenario;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Vfx.Scripts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -76,6 +77,16 @@ namespace _Game.Creatives.Factories
             }
             
             return instance;
+        }
+
+        public UniTask<MuzzleFlash> GetMuzzleFlashAsync(Faction faction, int weaponId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UniTask<ProjectileExplosion> GetProjectileExplosionAsync(Faction faction, int weaponId)
+        {
+            throw new NotImplementedException();
         }
 
 

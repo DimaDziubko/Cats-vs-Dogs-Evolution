@@ -1,6 +1,6 @@
 ﻿using System;
+using _Game.Core._SceneLoader;
 using _Game.Utils;
-using Assets._Game.Core._SceneLoader;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.Services.Camera;
 using Cysharp.Threading.Tasks;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Assets._Game.Core._GameMode;
-using Assets._Game.Core._Logger;
+using _Game.Core._GameMode;
+using _Game.Core._Logger;
 using Firebase.Extensions;
 using Firebase.RemoteConfig;
 using Newtonsoft.Json.Linq;

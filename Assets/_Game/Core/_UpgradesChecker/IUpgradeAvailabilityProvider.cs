@@ -5,7 +5,7 @@ namespace Assets._Game.Core._UpgradesChecker
 {
     public interface IUpgradeAvailabilityProvider
     {
-        IEnumerable<Screen> AffectedScreens { get; }
+        IEnumerable<GameScreen> AffectedScreens { get; }
         bool IsAvailable { get; }
     }
 }

@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._Tutorial.Scripts
+namespace _Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialPointerView : MonoBehaviour
     {
@@ -32,7 +32,10 @@ namespace Assets._Game.Gameplay._Tutorial.Scripts
         private void ShowWithAppearanceAnimation(TutorialStepData tutorialData)
         {
             Enable();
-            _pointerTransform.anchoredPosition = new Vector2(tutorialData.RequiredPointerPosition.x, DefaultPosition.y);
+            _pointerTransform.anchoredPosition = tutorialData.IsUnderneath ? 
+                new Vector2(tutorialData.RequiredPointerPosition.x, -DefaultPosition.y) :
+                new Vector2(tutorialData.RequiredPointerPosition.x, DefaultPosition.y);
+            
             _pointerTransform.localScale = StartAppearanceScale;
 
             _pointerTransform.DOAnchorPosY(tutorialData.RequiredPointerPosition.y, _animationDuration)

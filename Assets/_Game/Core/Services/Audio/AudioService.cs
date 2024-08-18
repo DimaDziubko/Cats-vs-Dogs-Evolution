@@ -1,4 +1,4 @@
-﻿using Assets._Game.Audio.Scripts;
+﻿using _Game.Audio.Scripts;
 using Assets._Game.Core.Prefabs;
 using UnityEngine;
 using UnityEngine.Audio;

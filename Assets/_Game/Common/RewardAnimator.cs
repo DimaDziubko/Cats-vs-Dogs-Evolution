@@ -1,11 +1,11 @@
 ﻿using System;
+using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 using Zenject;
@@ -42,7 +42,6 @@ namespace _Game.Common
         void IInitializable.Initialize()
         {
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
-            _logger.Log("REWARD ANIMATOR INITIALIZED SUCCESSFULLY");
         }
         
         void IDisposable.Dispose()
@@ -76,8 +75,7 @@ namespace _Game.Common
             if(delta < Currencies.Coins)
                 ratio = (float)(delta / Currencies.Coins);
             if (delta > Currencies.Coins) ratio = 1;
-
-            _logger.Log($"Delta: {delta}, Ratio: {ratio}");
+            
             
             switch (source)
             {
@@ -103,7 +101,6 @@ namespace _Game.Common
         public void PlayCoins(Vector3 animationTargetPoint, float coinsRatio)
         {
             int coinsToSpawn = CalculateCoinsToSpawn(coinsRatio);
-            _logger.Log($"Coins to Spawn: {coinsToSpawn}");
             PlayCoinsSound();
             RewardCoinVFX coins = _coinFactory.GetRewardCoinVfx();
             coins.Init(Vector3.zero, animationTargetPoint, coinsToSpawn);

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets._Game.Core._StateFactory;
+using _Game.Core._StateFactory;
 using Assets._Game.Core.GameState;
 using Zenject;
 

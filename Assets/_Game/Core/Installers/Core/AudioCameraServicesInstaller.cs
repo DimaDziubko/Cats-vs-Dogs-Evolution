@@ -1,5 +1,5 @@
-﻿using _Game.Core.Services.Audio;
-using Assets._Game.Audio.Scripts;
+﻿using _Game.Audio.Scripts;
+using _Game.Core.Services.Audio;
 using Assets._Game.Core.Prefabs;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;

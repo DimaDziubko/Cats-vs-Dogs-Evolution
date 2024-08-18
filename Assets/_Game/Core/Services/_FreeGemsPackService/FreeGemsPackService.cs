@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Common;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Configs.Repositories.Shop;
@@ -9,7 +10,6 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
-using Assets._Game.Core._Logger;
 using CAS;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
-﻿using _Game.Core.AssetManagement;
+﻿using _Game.Core._Logger;
+using _Game.Core.AssetManagement;
 using _Game.Core.DataProviders.Facade;
-using Assets._Game.Core._Logger;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

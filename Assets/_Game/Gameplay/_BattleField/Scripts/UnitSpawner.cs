@@ -1,9 +1,9 @@
 ﻿using System;
 using _Game.Gameplay._BattleSpeed.Scripts;
+using _Game.Gameplay._Units.Factory;
 using Assets._Game.Common;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._BattleField.Scripts;
-using Assets._Game.Gameplay._Units.Factory;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
@@ -84,9 +84,10 @@ namespace _Game.Gameplay._BattleField.Scripts
             _enemyUnits.SetPaused(isPaused);
         }
 
-        void IUnitSpawner.SpawnEnemy(UnitType type)
+        async void IUnitSpawner.SpawnEnemy(UnitType type)
         {
-            var enemy = _unitFactory.Get(Faction.Enemy, type);
+            var enemy = await _unitFactory.GetAsync(Faction.Enemy, type);
+            //var enemy = _unitFactory.Get(Faction.Enemy, type);
             
             enemy.Initialize(
                 _cache,
@@ -103,9 +104,10 @@ namespace _Game.Gameplay._BattleField.Scripts
             UnitSpawned?.Invoke(Faction.Enemy, type);
         }
 
-        void IUnitSpawner.SpawnPlayerUnit(UnitType type)
+        async void IUnitSpawner.SpawnPlayerUnit(UnitType type)
         {
-            var unit = _unitFactory.Get(Faction.Player, type);
+            //var unit = _unitFactory.Get(Faction.Player, type);
+            var unit = await _unitFactory.GetAsync(Faction.Player, type);
 
             unit.Initialize(
                 _cache,

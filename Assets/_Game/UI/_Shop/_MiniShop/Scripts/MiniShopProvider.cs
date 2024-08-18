@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
 using _Game.Core.Services.UserContainer;
@@ -7,7 +8,6 @@ using _Game.Temp;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core._Logger;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;
@@ -72,6 +72,6 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _miniShop?.Dispose();
         }
 
-        private void OnInsufficientFunds() => _miniShop.Value.ForceHide();
+        private void OnInsufficientFunds() => _miniShop?.Value.ForceHide();
     }
 }

@@ -2,7 +2,6 @@
 using _Game.Core.Navigation.Battle;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Utils;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
 using Cysharp.Threading.Tasks;
 

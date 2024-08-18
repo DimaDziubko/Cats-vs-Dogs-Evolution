@@ -2,9 +2,7 @@
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Utils;
-using Assets._Game.Core._FeatureUnlockSystem.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.Utils;
 
 namespace _Game.Core._FeatureUnlockSystem.Scripts
 {
@@ -53,6 +51,15 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             CheckForEvolutionFeatureUnlock();
             CheckForBattleSpeedFeatureUnlock();
+            CheckForDailyTaskUnlock();
+        }
+
+        private void CheckForDailyTaskUnlock()
+        {
+            if (GetTresholdForDailyTask())
+            {
+                FeatureUnlocked?.Invoke(Feature.DailyTask);
+            }
         }
 
         private void CheckForBattleSpeedFeatureUnlock()
@@ -96,10 +103,16 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
                     return GetTresholdForX2();
                 case Feature.Shop:
                     return GetTresholdForShop();
+                case Feature.DailyTask:
+                    return GetTresholdForDailyTask();
                 default:
                     return false;
             }
         }
+
+        private bool GetTresholdForDailyTask() =>
+            TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_SCREEN &&
+                BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.SHOP;
 
         private bool GetTresholdForShop() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_SCREEN &&
