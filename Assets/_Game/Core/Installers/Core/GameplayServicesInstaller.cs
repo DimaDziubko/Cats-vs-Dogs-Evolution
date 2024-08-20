@@ -1,5 +1,6 @@
 ﻿using _Game.Core._RetentionChecker;
 using _Game.Core._UpgradesChecker;
+using _Game.Core.Ads.ApplovinMaxAds;
 using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
@@ -35,9 +36,7 @@ namespace _Game.Core.Installers.Core
             BindUpgradesServices();
             BindEvolutionService();
             BindTimerService();
-#if cas_advertisment_enabled
             BindAdsService();
-#endif 
             BindFoodBoostService();
             BindSpeedBoostService();
             BindBattleSpeedService();
@@ -115,6 +114,9 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<CasAdsService>()
                 .AsSingle();
 #endif
+        private void BindAdsService() =>
+            Container.BindInterfacesAndSelfTo<MaxAdsService>()
+                .AsSingle();
 
         private void BindFoodBoostService() =>
             Container

@@ -23,11 +23,6 @@ namespace _Game.Core.Ads.CASAds
 
     public class CasAdsService : IAdsService, IDisposable
     {
-        //if (MaxSdk.IsRewardedAdReady(adUnitId))
-        //{
-        //  MaxSdk.ShowRewardedAd(adUnitId);
-        //}
-
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
 

@@ -55,7 +55,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
 
         private void Init()
         {
-            _adsService.VideoLoaded += OnRewardVideoLoaded;
+            _adsService.OnVideoLoaded += OnRewardVideoLoaded;
             _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
             BattleSpeed.IsNormalSpeedActiveChanged += OnNormalSpeedChanged;
             BattleSpeed.PermanentSpeedChanged += OnPermanentSpeedChanged;
@@ -63,7 +63,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
 
         void IDisposable.Dispose()
         {
-            _adsService.VideoLoaded -= OnRewardVideoLoaded;
+            _adsService.OnVideoLoaded -= OnRewardVideoLoaded;
             _featureUnlockSystem.FeatureUnlocked -= OnFeatureUnlocked;
             BattleSpeed.IsNormalSpeedActiveChanged -= OnNormalSpeedChanged;
             BattleSpeed.PermanentSpeedChanged -= OnPermanentSpeedChanged;

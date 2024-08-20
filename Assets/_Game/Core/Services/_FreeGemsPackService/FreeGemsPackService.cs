@@ -51,7 +51,7 @@ namespace _Game.Core.Services._FreeGemsPackService
         private void Init()
         {
             UpdateFreeGemsPack();
-            _adsService.VideoLoaded += OnRewardVideoLoaded;
+            _adsService.OnVideoLoaded += OnRewardVideoLoaded;
 
         }
 
@@ -79,7 +79,7 @@ namespace _Game.Core.Services._FreeGemsPackService
 
         void IDisposable.Dispose()
         {
-            _adsService.VideoLoaded -= OnRewardVideoLoaded;
+            _adsService.OnVideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
         }
 

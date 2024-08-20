@@ -66,7 +66,7 @@ namespace _Game.UI.GameResult.Scripts
             _doubleCoinsBtn.Initialize(OnAdsBtnClicked);
             _doubleCoinsBtn.SetInteractable(_adsService.IsAdReady(AdType.Rewarded));
 
-            _adsService.VideoLoaded += OnVideoLoaded;
+            _adsService.OnVideoLoaded += OnVideoLoaded;
 
             _coinCounter = coinCounter;
 
@@ -119,7 +119,7 @@ namespace _Game.UI.GameResult.Scripts
 
         private void Cleanup()
         {
-            _adsService.VideoLoaded -= OnVideoLoaded;
+            _adsService.OnVideoLoaded -= OnVideoLoaded;
             _quitButton.onClick.RemoveAllListeners();
             _doubleCoinsBtn.Cleanup();
         }

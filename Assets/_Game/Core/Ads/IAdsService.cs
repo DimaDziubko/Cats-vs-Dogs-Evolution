@@ -12,7 +12,7 @@ namespace _Game.Core.Ads
 #if cas_advertisment_enabled
         event Action<AdImpressionDto> AdImpression;
 #endif
-        event Action<AdType> VideoLoaded;
+        event Action<AdType> OnVideoLoaded;
         bool IsAdReady(AdType type);
 
         bool IsRewardAdReady();
