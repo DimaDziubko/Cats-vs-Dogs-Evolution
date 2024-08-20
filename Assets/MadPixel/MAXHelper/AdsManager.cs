@@ -32,6 +32,8 @@ namespace MAXHelper {
         private GameObject AdsInstigatorObj;
         private UnityAction<bool> CallbackPending;
 
+        public MAXCustomSettings MAXCustomSettings => CustomSettings;
+
         #endregion
 
         #region Events Declaration (Can be used for Analytics)

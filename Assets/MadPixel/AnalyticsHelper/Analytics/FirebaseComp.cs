@@ -4,35 +4,43 @@ using Firebase;
 using Firebase.Analytics;
 using UnityEngine;
 
-public class FirebaseComp : MonoBehaviour {
+public class FirebaseComp : MonoBehaviour
+{
     private static bool bInitialized = false;
 
 
 
     #region Unity events
-    void Start() {
+    void Start()
+    {
 #if UNITY_EDITOR
         return;
+        InnerInit();
 #endif
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
-            var dependencyStatus = task.Result;
-            if (dependencyStatus == Firebase.DependencyStatus.Available) {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
-                FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
-                FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-                InnerInit();
+        //FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        //{
+        //    var dependencyStatus = task.Result;
+        //    if (dependencyStatus == Firebase.DependencyStatus.Available)
+        //    {
+        //        // Create and hold a reference to your FirebaseApp,
+        //        // where app is a Firebase.FirebaseApp property of your application class.
+        //        FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
+        //        FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+        //        InnerInit();
 
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
-            } else {
-                Debug.LogError(System.String.Format(
-                    "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
-            }
-        });
+        //        // Set a flag here to indicate whether Firebase is ready to use by your app.
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError(System.String.Format(
+        //            "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+        //        // Firebase Unity SDK is not safe to use here.
+        //    }
+        //});
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent -= LogAdPurchase;
         MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent -= LogAdPurchase;
         MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent -= LogAdPurchase;
@@ -40,7 +48,8 @@ public class FirebaseComp : MonoBehaviour {
     }
     #endregion
 
-    private void InnerInit() {
+    private void InnerInit()
+    {
         bInitialized = true;
 
         MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += LogAdPurchase;
@@ -49,9 +58,11 @@ public class FirebaseComp : MonoBehaviour {
         MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += LogAdPurchase;
     }
 
-    public void LogAdPurchase(string AdUnitID, MaxSdkBase.AdInfo adInfo) {
+    public void LogAdPurchase(string AdUnitID, MaxSdkBase.AdInfo adInfo)
+    {
         double revenue = adInfo.Revenue;
-        if (revenue > 0 && bInitialized) {
+        if (revenue > 0 && bInitialized)
+        {
             string countryCode = MaxSdk.GetSdkConfiguration()
                         .CountryCode; // "US" for the United States, etc - Note: Do not confuse this with currency code which is "USD" in most cases!
             string networkName = adInfo.NetworkName; // Display name of the network that showed the ad (e.g. "AdColony")

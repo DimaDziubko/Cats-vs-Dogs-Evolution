@@ -14,8 +14,6 @@ namespace _Game.Core.Ads
 #endif
         event Action<AdType> OnVideoLoaded;
         bool IsAdReady(AdType type);
-
-        bool IsRewardAdReady();
         void ShowRewardedVideo(Action onVideoCompleted, Placement placement);
         void ShowInterstitialVideo(Placement placement);
     }
