@@ -11,14 +11,23 @@ using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
+#if cas_advertisment_enabled
 using CAS;
+#endif
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Game.Core.Ads
+namespace _Game.Core.Ads.CASAds
 {
+#if cas_advertisment_enabled
+
     public class CasAdsService : IAdsService, IDisposable
     {
+        //if (MaxSdk.IsRewardedAdReady(adUnitId))
+        //{
+        //  MaxSdk.ShowRewardedAd(adUnitId);
+        //}
+
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
 
@@ -46,7 +55,7 @@ namespace _Game.Core.Ads
             (Purchases.BoughtIAPs?.Find(x => x.Count > 0) == null) &&
             IsInternetConnected() &&
             BattleStatistics.BattlesCompleted > _adsConfigRepository.GetConfig().InterstitialBattleTreshold;
-        
+
 
         public CasAdsService(
             IMyLogger logger,
@@ -88,7 +97,7 @@ namespace _Game.Core.Ads
             StartCountdown(delay);
 
         }
-        
+
         void IDisposable.Dispose()
         {
             _rewardAdsService.UnRegister(_manager);
@@ -188,4 +197,5 @@ namespace _Game.Core.Ads
         private void OnInterstitialAdTimerOut() =>
             IsTimeForInterstitial = true;
     }
+#endif
 }

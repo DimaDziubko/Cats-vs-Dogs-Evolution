@@ -3,10 +3,13 @@ using _Game.Common;
 using _Game.Core._Logger;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
+#if cas_advertisment_enabled
 using CAS;
-
-namespace _Game.Core.Ads
+#endif
+namespace _Game.Core.Ads.CASAds
 {
+#if cas_advertisment_enabled
+
     public class CasInterstitialAdService
     {
         public event Action<AdType> VideoLoaded;
@@ -109,4 +112,5 @@ namespace _Game.Core.Ads
             _placement = placement;
         }
     }
+#endif
 }

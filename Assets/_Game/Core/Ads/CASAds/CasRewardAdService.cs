@@ -6,10 +6,12 @@ using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core.Pause.Scripts;
+#if cas_advertisment_enabled
 using CAS;
-
-namespace _Game.Core.Ads
+#endif
+namespace _Game.Core.Ads.CASAds
 {
+#if cas_advertisment_enabled
     public class CasRewardAdService
     {
         public event Action<AdImpressionDto> AdImpression;
@@ -118,4 +120,5 @@ namespace _Game.Core.Ads
         }
         
     }
+#endif
 }

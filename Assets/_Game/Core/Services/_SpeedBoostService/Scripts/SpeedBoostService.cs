@@ -11,7 +11,9 @@ using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.UserState;
+#if cas_advertisment_enabled
 using CAS;
+#endif
 using UnityEngine;
 
 namespace _Game.Core.Services._SpeedBoostService.Scripts
