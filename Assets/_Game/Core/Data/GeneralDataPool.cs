@@ -16,15 +16,15 @@ namespace _Game.Core.Data
         public AgeStaticData AgeStaticData { get; set; }
         public AgeDynamicData AgeDynamicData { get; set; }
         public BattleStaticData BattleStaticData { get; set; }
-
         public DataPool<int, ShopItemStaticData> ShopItemStaticDataPool { get; set; }
 
         public UnitBuilderBtnStaticData GetBuilderButtonData(UnitType type) => AgeStaticData.GetBuilderButtonData(type);
 
         public GeneralDataPool(
-            IMyLogger logger)
+            IMyLogger logger,
+            IMyDebugger debugger)
         {
-            //debugger.GeneralDataPool = this;
+            debugger.GeneralDataPool = this;
         }
     }
 }

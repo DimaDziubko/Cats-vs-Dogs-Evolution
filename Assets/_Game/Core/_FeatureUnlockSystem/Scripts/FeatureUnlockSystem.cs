@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Utils;
@@ -14,7 +15,7 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
 
         private readonly IUserContainer _persistentData;
         private readonly IGameInitializer _gameInitializer;
-
+        private readonly Dictionary<Feature, bool> _featureUnlockState = new Dictionary<Feature, bool>();
         private ITutorialStateReadonly TutorialState => _persistentData.State.TutorialState;
         private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
         private IBattleStatisticsReadonly BattleStatisticsState => _persistentData.State.BattleStatistics;
@@ -30,6 +31,11 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
 
         private void Init()
         {
+            foreach (Feature feature in Enum.GetValues(typeof(Feature)))
+            {
+                _featureUnlockState[feature] = CheckInitialUnlockState(feature);
+            }
+            
             TutorialState.StepsCompletedChanged += OnTutorialStepCompleted;
             BattleStatisticsState.CompletedBattlesCountChanged += OnBattleStatisticsChanged;
         }
@@ -40,48 +46,13 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
             BattleStatisticsState.CompletedBattlesCountChanged -= OnBattleStatisticsChanged;
             _gameInitializer.OnPostInitialization -= Init;
         }
-
-        private void OnBattleStatisticsChanged() => 
-            CheckForFeaturesUnlock();
-
-        private void OnTutorialStepCompleted(int step) => 
-            CheckForFeaturesUnlock();
-
-        private void CheckForFeaturesUnlock()
-        {
-            CheckForEvolutionFeatureUnlock();
-            CheckForBattleSpeedFeatureUnlock();
-            CheckForDailyTaskUnlock();
-        }
-
-        private void CheckForDailyTaskUnlock()
-        {
-            if (GetTresholdForDailyTask())
-            {
-                FeatureUnlocked?.Invoke(Feature.DailyTask);
-            }
-        }
-
-        private void CheckForBattleSpeedFeatureUnlock()
-        {
-            if (GetTresholdForBattleSpeed())
-            {
-                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
-            }
-        }
-
-        private void CheckForEvolutionFeatureUnlock()
-        {
-            if (GetTresholdForEvolutionScreen())
-            {
-                FeatureUnlocked?.Invoke(Feature.EvolutionScreen);
-            }
-        }
-
-        public bool IsFeatureUnlocked(IFeature feature) => 
-            IsFeatureUnlocked(feature.Feature);
-
+        
         public bool IsFeatureUnlocked(Feature feature)
+        {
+            return _featureUnlockState.TryGetValue(feature, out bool isUnlocked) && isUnlocked;
+        }
+        
+        private bool CheckInitialUnlockState(Feature feature)
         {
             switch (feature)
             {
@@ -110,6 +81,49 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
             }
         }
 
+        private void OnBattleStatisticsChanged() => 
+            CheckForFeaturesUnlock();
+
+        private void OnTutorialStepCompleted(int step) => 
+            CheckForFeaturesUnlock();
+
+        private void CheckForFeaturesUnlock()
+        {
+            CheckForEvolutionFeatureUnlock();
+            CheckForBattleSpeedFeatureUnlock();
+            CheckForDailyTaskUnlock();
+        }
+
+        private void CheckForDailyTaskUnlock()
+        {
+            if (!IsFeatureUnlocked(Feature.BattleSpeed) && GetTresholdForBattleSpeed())
+            {
+                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
+                _featureUnlockState[Feature.BattleSpeed] = true;
+            }
+        }
+
+        private void CheckForBattleSpeedFeatureUnlock()
+        {
+            if (!IsFeatureUnlocked(Feature.BattleSpeed) && GetTresholdForBattleSpeed())
+            {
+                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
+                _featureUnlockState[Feature.BattleSpeed] = true;
+            }
+        }
+
+        private void CheckForEvolutionFeatureUnlock()
+        {
+            if (!IsFeatureUnlocked(Feature.EvolutionScreen) && GetTresholdForEvolutionScreen())
+            {
+                FeatureUnlocked?.Invoke(Feature.EvolutionScreen);
+                _featureUnlockState[Feature.EvolutionScreen] = true;
+            }
+        }
+
+        public bool IsFeatureUnlocked(IFeature feature) => 
+            IsFeatureUnlocked(feature.Feature);
+        
         private bool GetTresholdForDailyTask() =>
             TutorialState.StepsCompleted >= Constants.TutorialStepTreshold.EVOLUTION_SCREEN &&
                 BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.SHOP;

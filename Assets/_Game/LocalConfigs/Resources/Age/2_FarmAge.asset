@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 16000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 1
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 2
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 1
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 1
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 6
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: bf2d3dff847fc6b4c87010038602212b, type: 2}
+  - {fileID: 11400000, guid: 2adaed1b87275a945a42f35871dddf7f, type: 2}
+  - {fileID: 11400000, guid: de116c4205957e6468b142e1455e6ac8, type: 2}
   WarriorsId: 040000000500000006000000
   Name: Farm age
   AgeIconKey: AgeIcon[AgeIcon_1]
+  AgeIconAtlas:
+    m_AssetGUID: 26417f9fd21215142a85c58fb9957849
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: AgeIcon_1
   Description: Cats guarded granaries, while dogs protected livestock, fostering
     mutual respect and cooperation on farms
   DateRange: 12000 BC - 3000 BC

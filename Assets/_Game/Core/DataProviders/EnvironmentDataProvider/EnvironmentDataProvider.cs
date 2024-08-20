@@ -24,6 +24,8 @@ namespace _Game.Core.DataProviders.EnvironmentDataProvider
         
         public async UniTask<EnvironmentData> Load(string key, LoadContext context)
         {
+            await _assetRegistry.Warmup<GameObject>(key);
+            
             GameObject environmentGO =
                 await _assetRegistry.LoadAsset<GameObject>(key, context.Timeline, context.CacheContext);
             

@@ -79,8 +79,6 @@ namespace _Game.UI._Hud
             _canvas.enabled = true;
             _speedBoostView.Show();
             _dailyTaskView.Show();
-            _pauseView.Show();
-            _foodBoostView.Show();
         }
 
         public void Hide()
@@ -107,7 +105,7 @@ namespace _Game.UI._Hud
         public void ShowFoodBoostBtn() => 
             _foodBoostView.Show();
 
-        public void HideFoodBoostBtn() => 
+        public void HideFoodBoostView() => 
             _foodBoostView.Hide();
 
 

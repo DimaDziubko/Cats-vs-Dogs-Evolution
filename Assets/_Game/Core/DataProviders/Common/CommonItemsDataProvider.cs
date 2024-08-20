@@ -31,9 +31,10 @@ namespace _Game.Core.DataProviders.Common
             
             foreach (Race race in Enum.GetValues(typeof(Race)))
             {
-                var iconReference = _commonItemsConfigRepository.GetFoodIconKey(race);
-
-                var iconSprite = await _assetRegistry.LoadAsset<Sprite>(iconReference, context.Timeline, context.CacheContext);
+                var iconKey = _commonItemsConfigRepository.GetFoodIconKey(race);
+                
+                await _assetRegistry.Warmup<Sprite>(iconKey);
+                var iconSprite = await _assetRegistry.LoadAsset<Sprite>(iconKey, context.Timeline, context.CacheContext);
                 pool.Add(race, iconSprite);
                 
                 _logger.Log($"Food icon {iconSprite.name} for race{race} loaded successfully");
@@ -45,6 +46,7 @@ namespace _Game.Core.DataProviders.Common
         public async UniTask<Sprite> LoadBaseIcon(LoadContext context)
         {
             string key = _commonItemsConfigRepository.GetBaseIconKey();
+            await _assetRegistry.Warmup<Sprite>(key);
             var iconSprite = await _assetRegistry.LoadAsset<Sprite>(key, context.Timeline, context.CacheContext);
             _logger.Log($"Base icon {iconSprite.name} loaded successfully");
             return iconSprite;

@@ -17,13 +17,13 @@ namespace _Game.UI._Hud._FoodBoostView
         {
             _foodBoostService = foodBoostService;
             _audioService = audioService;
-            Hide();
         }
 
         public void Init()
         {
             Subscribe();
             _foodBoostBtn.Initialize(OnFoodBoostBtnClicked);
+            Hide();
         }
 
         public void Cleanup()
@@ -35,11 +35,16 @@ namespace _Game.UI._Hud._FoodBoostView
         
         public void Show()
         {
-            _foodBoostBtn.Show();
+            Debug.Log("Food boost btn show");
+            gameObject.SetActive(true);
             OnFoodBoostBtnShown();
         }
 
-        public void Hide() => _foodBoostBtn.Hide();
+        public void Hide()
+        {
+            Debug.Log("Food boost btn hide");
+            gameObject.SetActive(false);
+        }
 
         private void OnFoodBoostBtnShown() => 
             _foodBoostService.OnFoodBoostShown();

@@ -22,6 +22,21 @@ namespace _Game.Core.AssetManagement
             _logger = logger;
         }
 
+        public async UniTask Warmup<T>(AssetReference assetReference) where T : class
+        {
+            await _assetProvider.Load<T>(assetReference);
+            
+            _logger.Log($"Warmup completed for asset {assetReference.AssetGUID}");
+        }
+        
+        public async UniTask Warmup<T>(string address) where T : class
+        {
+            await _assetProvider.Load<T>(address);
+            
+            _logger.Log($"Warmup completed for asset {address}");
+        }
+
+        
         public async UniTask<T> LoadAsset<T>(AssetReference assetReference, int timeline, int context) where T : class
         {
             var asset = await _assetProvider.Load<T>(assetReference);

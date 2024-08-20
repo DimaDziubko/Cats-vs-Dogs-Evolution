@@ -16,10 +16,7 @@ using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Bases.Scripts;
 using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

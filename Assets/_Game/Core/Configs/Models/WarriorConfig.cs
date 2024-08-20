@@ -1,7 +1,7 @@
 ﻿using System;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.AddressableAssets;
 
 namespace _Game.Core.Configs.Models
 {
@@ -15,8 +15,12 @@ namespace _Game.Core.Configs.Models
         public float Speed;
         public WeaponConfig WeaponConfig;
         public string Name;
+        public AssetReference CatIconAtlas;
+        public AssetReference DogIconAtlas;
         public string CatIconKey;
         public string DogIconKey;
+        public string CatIconName;
+        public string DogIconName;
         public string DogKey;
         public float Price;
         public string CatKey;
