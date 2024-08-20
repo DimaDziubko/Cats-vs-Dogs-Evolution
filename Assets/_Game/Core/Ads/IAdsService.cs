@@ -10,11 +10,10 @@ namespace _Game.Core.Ads
     public interface IAdsService
     {
 #if cas_advertisment_enabled
-        event Action<AdType> VideoLoaded;
         event Action<AdImpressionDto> AdImpression;
-        bool IsAdReady(AdType type);
 #endif
         event Action<AdType> VideoLoaded;
+        bool IsAdReady(AdType type);
 
         bool IsRewardAdReady();
         void ShowRewardedVideo(Action onVideoCompleted, Placement placement);

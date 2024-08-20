@@ -7,7 +7,9 @@ using _Game.Core.DataPresenters.Evolution;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
+#if cas_advertisment_enabled
 using CAS;
+#endif
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Pathfinding.ECS.RVO;

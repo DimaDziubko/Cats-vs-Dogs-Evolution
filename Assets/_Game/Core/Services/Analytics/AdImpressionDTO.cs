@@ -1,8 +1,10 @@
 ﻿using _Game.Common;
+#if cas_advertisment_enabled
 using CAS;
-
+#endif
 namespace _Game.Core.Services.Analytics
 {
+#if cas_advertisment_enabled
     public class AdImpressionDto
     {
         public AdType Type;
@@ -11,4 +13,5 @@ namespace _Game.Core.Services.Analytics
         public Placement Placement;
         public string UnitId;
     }
+#endif
 }

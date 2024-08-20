@@ -16,7 +16,6 @@ namespace _Game.Core.GameState
         private readonly IMainMenuProvider _mainMenuProvider;
         private readonly ILoadingScreenProvider _loadingProvider;
         private readonly IGameStateMachine _stateMachine;
-        private readonly IDTDAnalyticsService _dtdAnalyticsService;
         private readonly IAnalyticsService _analyticsService;
 
         private Disposable<MainMenu> _mainMenu;
@@ -25,13 +24,11 @@ namespace _Game.Core.GameState
             IMainMenuProvider mainMenuProvider,
             ILoadingScreenProvider loadingProvider,
             IGameStateMachine stateMachine,
-            IDTDAnalyticsService dtdAnalyticsService,
             IAnalyticsService analyticsService)
         {
             _mainMenuProvider = mainMenuProvider;
             _loadingProvider = loadingProvider;
             _stateMachine = stateMachine;
-            _dtdAnalyticsService = dtdAnalyticsService;
             _analyticsService = analyticsService;
         }
         
@@ -40,7 +37,6 @@ namespace _Game.Core.GameState
             data.Operations.Enqueue(new MainMenuLoadingOperation(_mainMenuProvider));
             _loadingProvider.LoadAndDestroy(data.Operations, data.Type).Forget();
             
-            _dtdAnalyticsService.SendEvent(ANALYTICS_EVENT_NAME);
             _analyticsService.SendEvent(ANALYTICS_EVENT_NAME);
         }
         

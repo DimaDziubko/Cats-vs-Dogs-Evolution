@@ -10,7 +10,9 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
+#if cas_advertisment_enabled
 using CAS;
+#endif
 using UnityEngine;
 
 namespace _Game.Core.Services._FreeGemsPackService
@@ -18,7 +20,7 @@ namespace _Game.Core.Services._FreeGemsPackService
     public class FreeGemsPackService : IFreeGemsPackService, IDisposable
     {
         public event Action FreeGemsPackUpdated;
-        
+
         private readonly IUserContainer _userContainer;
         private readonly IEconomyConfigRepository _economyConfigRepository;
         private readonly IShopConfigRepository _shopConfigRepository;
@@ -56,7 +58,7 @@ namespace _Game.Core.Services._FreeGemsPackService
         public void UpdateFreeGemsPack()
         {
             var freeGemsPackDayConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
-            
+
             DateTime now = DateTime.UtcNow;
 
             TimeSpan timeSinceLastBoost = now - FreeGemsPackState.LastFreeGemPackDay;
@@ -66,7 +68,7 @@ namespace _Game.Core.Services._FreeGemsPackService
             {
                 int lackingPacks = freeGemsPackDayConfig.DailyGemsPackCount - FreeGemsPackState.FreeGemPackCount;
                 int packsToAdd = Mathf.Min(recoverablePacks, lackingPacks);
-                
+
                 DateTime newLastDailyFreePackSpent = FreeGemsPackState.LastFreeGemPackDay
                     .AddMinutes(packsToAdd * freeGemsPackDayConfig.RecoverTimeMinutes);
                 _userContainer.FreeGemsPackStateHandler.RecoverFreeGemsPack(
@@ -90,11 +92,11 @@ namespace _Game.Core.Services._FreeGemsPackService
             }
         }
 
-        private void NotifyUpdateFreeGemsPack() => 
+        private void NotifyUpdateFreeGemsPack() =>
             FreeGemsPackUpdated?.Invoke();
 
 
-        void IFreeGemsPackService.OnFreeGemsPackBtnClicked() => 
+        void IFreeGemsPackService.OnFreeGemsPackBtnClicked() =>
             _adsService.ShowRewardedVideo(OnRewardedVideoComplete, Placement.FreeGemsPack);
 
         private ProductDescription MakeProductDefinition()

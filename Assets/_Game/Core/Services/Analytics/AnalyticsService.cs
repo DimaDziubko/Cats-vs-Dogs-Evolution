@@ -13,7 +13,6 @@ using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
-using Firebase.Installations;
 using UnityEngine.Device;
 
 namespace _Game.Core.Services.Analytics
@@ -52,7 +51,9 @@ namespace _Game.Core.Services.Analytics
                 _app = FirebaseApp.DefaultInstance;
                 FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
                 Crashlytics.ReportUncaughtExceptionsAsFatal = true;
-                await FetchUniqueIDAsync();
+
+                SetUniqID();
+
                 _isFirebaseInitialized = true;
                 _logger.Log("Firebase Initialized Successfully");
             }
@@ -69,6 +70,16 @@ namespace _Game.Core.Services.Analytics
             AdsStatistics.AdsReviewedChanged += OnAdsStatisticsChanged;
             RetentionStateReadonly.FirstDayRetentionEventSentChanged += SendFirstDayRetentionEvent;
             RetentionStateReadonly.SecondDayRetentionEventSentChanged += SendSecondDayRetentionEvent;
+        }
+
+        private void SetUniqID()
+        {
+            UniqueID = SystemInfo.deviceUniqueIdentifier;
+            if (string.IsNullOrEmpty(UniqueID))
+            {
+                UniqueID = Guid.NewGuid().ToString();
+            }
+            _logger.Log($"Generated fallback Unique ID: {UniqueID}");
         }
 
         void IDisposable.Dispose()
@@ -163,29 +174,6 @@ namespace _Game.Core.Services.Analytics
         {
             if (!IsComponentsReady()) return;
             SendEvent($"ad_impression_{AdsStatistics.AdsReviewed}");
-        }
-
-        private async UniTask FetchUniqueIDAsync()
-        {
-            await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
-
-            try
-            {
-                var token = await FirebaseInstallations.DefaultInstance.GetTokenAsync(forceRefresh: true);
-                UniqueID = token;
-                _logger.Log($"Firebase Unique ID: {UniqueID}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error getting Firebase Unique ID: {ex.Message}");
-                
-                UniqueID = SystemInfo.deviceUniqueIdentifier;
-                if (string.IsNullOrEmpty(UniqueID))
-                {
-                    UniqueID = Guid.NewGuid().ToString();
-                }
-                _logger.Log($"Generated fallback Unique ID: {UniqueID}");
-            }
         }
 
         private void SendEvent(string eventName, Dictionary<string, object> eventData)

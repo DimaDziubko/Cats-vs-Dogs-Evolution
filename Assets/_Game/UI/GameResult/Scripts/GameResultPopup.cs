@@ -5,7 +5,9 @@ using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay.GameResult.Scripts;
+#if cas_advertisment_enabled
 using CAS;
+#endif
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;

@@ -1,6 +1,5 @@
 ﻿using _Game.Core._RetentionChecker;
 using _Game.Core._UpgradesChecker;
-using _Game.Core.Ads;
 using _Game.Core.DataPresenters._RaceChanger;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
@@ -13,18 +12,13 @@ using _Game.Core.Navigation.Timeline;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services._FreeGemsPackService;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Upgrades;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
-using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services.Analytics;
-using Assets._Game.Gameplay._Timer.Scripts;
 using Zenject;
 
 namespace _Game.Core.Installers.Core
@@ -41,12 +35,13 @@ namespace _Game.Core.Installers.Core
             BindUpgradesServices();
             BindEvolutionService();
             BindTimerService();
+#if cas_advertisment_enabled
             BindAdsService();
+#endif 
             BindFoodBoostService();
             BindSpeedBoostService();
             BindBattleSpeedService();
             BindAnalyticsService();
-            BindDTDAnalyticsService();
             BindTimelineNavigator();
             BindAgeNavigator();
             BindBattleNavigator();
@@ -54,16 +49,13 @@ namespace _Game.Core.Installers.Core
             BindRetentionChecker();
         }
 
-        private void BindRetentionChecker() => 
+        private void BindRetentionChecker() =>
             Container.BindInterfacesAndSelfTo<RetentionChecker>().AsSingle();
 
-        private void BindRaceChanger() => 
+        private void BindRaceChanger() =>
             Container.BindInterfacesAndSelfTo<RaceChanger>().AsSingle();
 
-        private void BindDTDAnalyticsService() => 
-            Container.BindInterfacesAndSelfTo<DTDAnalyticsService>().AsSingle();
-
-        private void BindAnalyticsService() => 
+        private void BindAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<AnalyticsService>().AsSingle();
 
         private void BindUpgradesAvailabilityChecker() =>
@@ -98,15 +90,15 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<UpgradeItemPresenter>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<UnitUpgradesPresenter>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<TimelineInfoPresenter>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<TimelineTravelPresenter>()
                 .AsSingle();
@@ -117,12 +109,14 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<EvolutionPresenter>()
                 .AsSingle();
 
+#if cas_advertisment_enabled
         private void BindAdsService() =>
             Container
                 .BindInterfacesAndSelfTo<CasAdsService>()
                 .AsSingle();
+#endif
 
-        private void BindFoodBoostService() => 
+        private void BindFoodBoostService() =>
             Container
                 .BindInterfacesAndSelfTo<FoodBoostService>()
                 .AsSingle();
@@ -142,7 +136,7 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<BattleSpeedService>()
                 .AsSingle();
 
-        private void BindBattleNavigator() => 
+        private void BindBattleNavigator() =>
             Container
                 .BindInterfacesAndSelfTo<BattleNavigator>()
                 .AsSingle();
@@ -151,7 +145,7 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<AgeNavigator>()
                 .AsSingle();
-        
+
         private void BindTimelineNavigator() =>
             Container
                 .BindInterfacesAndSelfTo<TimelineNavigator>()

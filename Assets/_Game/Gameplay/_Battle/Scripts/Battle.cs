@@ -43,7 +43,6 @@ namespace _Game.Gameplay._Battle.Scripts
             IAudioService audioService,
             BattleField battleField,
             IAnalyticsService analytics,
-            IDTDAnalyticsService dtdAnalytics,
             IBattlePresenter battlePresenter,
             BattleUIController uiController,
             IMyLogger logger)
@@ -52,7 +51,7 @@ namespace _Game.Gameplay._Battle.Scripts
             _audioService = audioService;
             _battlePresenter = battlePresenter;
             _ambienceController = new BattleAmbienceController(audioService);
-            _analyticsController = new BattleAnalyticsController(analytics, dtdAnalytics);
+            _analyticsController = new BattleAnalyticsController(analytics);
             _uiController = uiController;
             _logger = logger;
         }
