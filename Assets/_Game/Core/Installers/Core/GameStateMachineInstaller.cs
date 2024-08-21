@@ -2,7 +2,7 @@
 using Assets._Game.Core.GameState;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class GameStateMachineInstaller : MonoInstaller
     {

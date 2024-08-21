@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class AudioCameraServicesInstaller : MonoInstaller
     {
