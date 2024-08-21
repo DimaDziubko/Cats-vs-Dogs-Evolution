@@ -9,5 +9,6 @@ namespace _Game.UI.Header.Scripts
         void ShowWindowName(string windowName, Color color);
         void Construct(IUserCurrenciesStateReadonly currenciesState, IWorldCameraService cameraService);
         Vector3 CoinsWalletWorldPosition { get; }
+        void SetActive(bool isActive);
     }
 }

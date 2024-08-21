@@ -63,7 +63,6 @@ namespace MadPixelAnalytics {
         private void Awake() {
             if (_instance == null) {
                 _instance = this;
-                GameObject.DontDestroyOnLoad(this.gameObject);
             }
             else {
                 GameObject.Destroy(gameObject);

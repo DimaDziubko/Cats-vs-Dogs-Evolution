@@ -76,7 +76,8 @@ namespace _Game.UI._BattleUIController
                 battleManager,
                 dailyTaskPresenter,
                 tutorialManager,
-                logger);
+                logger,
+                header);
             
             header.Construct(userContainer.State.Currencies, cameraService);
         }

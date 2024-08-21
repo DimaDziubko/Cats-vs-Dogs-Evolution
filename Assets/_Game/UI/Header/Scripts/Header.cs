@@ -1,4 +1,3 @@
-using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using Assets._Game.Core.Services.Camera;
@@ -13,6 +12,10 @@ namespace _Game.UI.Header.Scripts
         [SerializeField] private CurrenciesUI _currenciesUI;
 
         public Vector3 CoinsWalletWorldPosition => _currenciesUI.CoinsWalletWorldPosition;
+        
+        //Util
+        public void SetActive(bool isActive) => gameObject.SetActive(isActive);
+
         public Vector3 GemsWalletWorldPosition => _currenciesUI.GemsWalletWorldPosition;
 
         public void Construct(
@@ -22,7 +25,7 @@ namespace _Game.UI.Header.Scripts
             _currenciesUI.Construct(currenciesState, cameraService);
             _currenciesUI.Show();
         }
-        
+
         public void ShowWindowName(string windowName, Color color)
         {
             _windowNameLabel.text = windowName;

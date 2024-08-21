@@ -14,9 +14,7 @@ namespace _Game.Core.Communication
 
         public StateMigrationManager()
         {
-            _migrations.Add(new MigrationTo104());
-            _migrations.Add(new MigrationTo110());
-            _migrations.Add(new MigrationTo120());
+
         }
 
         public void Migrate(ref UserAccountState state)

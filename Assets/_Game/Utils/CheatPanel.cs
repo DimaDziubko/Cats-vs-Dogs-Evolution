@@ -1,3 +1,4 @@
+using _Game.Core._GameMode;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
@@ -52,6 +53,8 @@ namespace _Game.Utils
             _userContainer = userContainer;
             _timelineConfigRepository = timelineConfigRepository;
             _audioService = audioService;
+            
+            gameObject.SetActive(GameMode.I.IsCheatEnabled);
         }
 
         public void Init()
