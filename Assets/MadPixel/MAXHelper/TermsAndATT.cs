@@ -25,15 +25,17 @@ namespace AudienceNetwork
 
 #endif
 
-namespace MAXHelper {
-    
-    public class TermsAndATT : MonoBehaviour {
+namespace MAXHelper
+{
+
+    public class TermsAndATT : MonoBehaviour
+    {
 
         private const string TermsAcceptedKey = "UserAcceptTerms";
-        
+
         #region Fields
         public event UnityAction EventOnTermsAccepted;
-        
+
         [SerializeField] protected UITermsPanel TermsPanelPrefab;
         [SerializeField] protected Transform PanelParentCanvas;
 
@@ -41,23 +43,28 @@ namespace MAXHelper {
         #endregion
 
         #region Public
-        public void BeginPlay() {
+        public void BeginPlay()
+        {
 #if UNITY_IOS
             ShowATTIOSDialog();
 #endif
             int TermsAcceptValue = PlayerPrefs.GetInt(TermsAcceptedKey, 0);
             bool bTermsAccepted = (TermsAcceptValue != 0);
-            if (!bTermsAccepted) {
+            if (!bTermsAccepted)
+            {
                 ShowTermsPanel();
-            }else {
+            }
+            else
+            {
                 EventOnTermsAccepted?.Invoke();
             }
         }
         #endregion
-        
+
         #region Helpers
 
-        private void ShowATTIOSDialog() {
+        private void ShowATTIOSDialog()
+        {
 #if UNITY_IOS
             if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED) {
                 ATTrackingStatusBinding.RequestAuthorizationTracking();
@@ -65,31 +72,39 @@ namespace MAXHelper {
 #endif
         }
 
-        private void ShowTermsPanel() {
-            
+        private void ShowTermsPanel()
+        {
             Transform PanelParent = PanelParentCanvas;
-            if (!PanelParent) {
+            if (!PanelParent)
+            {
                 Canvas AnyCanvas = FindObjectOfType<Canvas>();
-                if (AnyCanvas) {
+                if (AnyCanvas)
+                {
                     PanelParent = AnyCanvas.transform;
                 }
             }
 
-            if (PanelParent) {
-                if (TermsPanelPrefab) {
+            if (PanelParent)
+            {
+                if (TermsPanelPrefab)
+                {
                     PanelInstance = Instantiate(TermsPanelPrefab, PanelParent);
-                    if (PanelInstance) {
+                    if (PanelInstance)
+                    {
                         PanelInstance.EventOnAcceptClick += PanelInstanceOnEventOnAcceptClick;
                     }
                 }
-            }else {
+            }
+            else
+            {
                 Debug.LogError($"MAXHelper: Unable to find proper canvas for Terms panel!", gameObject);
             }
 
         }
 
-        private void PanelInstanceOnEventOnAcceptClick() {
-            PlayerPrefs.SetInt(TermsAcceptedKey, 1);            
+        private void PanelInstanceOnEventOnAcceptClick()
+        {
+            PlayerPrefs.SetInt(TermsAcceptedKey, 1);
             bool bHasConsent = true;
 #if UNITY_IOS && !UNITY_EDITOR
             ATTrackingStatusBinding.AuthorizationTrackingStatus Status = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
@@ -98,9 +113,9 @@ namespace MAXHelper {
             
             AudienceNetwork.AdSettings.SetAdvertiserTrackingEnabled(bHasConsent);
 #endif
-            
+
             MaxSdk.SetHasUserConsent(bHasConsent);
-            
+
 
 
             PanelInstance.EventOnAcceptClick -= PanelInstanceOnEventOnAcceptClick;
@@ -108,7 +123,7 @@ namespace MAXHelper {
         }
         #endregion
     }
-    
+
 }
 
 

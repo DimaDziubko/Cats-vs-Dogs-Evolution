@@ -21,7 +21,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
     public class SpeedBoostService : ISpeedBoostService, IDisposable
     {
         public event Action<SpeedBoostBtnModel> SpeedBoostBtnModelChanged;
-        
+
         private readonly IAdsService _adsService;
         private readonly IUserContainer _userContainer;
         private readonly IBattleSpeedConfigRepository _battleSpeedConfigRepository;
@@ -31,7 +31,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
         private IBattleSpeedStateReadonly BattleSpeed => _userContainer.State.BattleSpeedState;
 
         private int _maxAvailableSpeedId;
-        
+
         private readonly SpeedBoostBtnModel _speedBoostBtnModel = new SpeedBoostBtnModel();
         public SpeedBoostBtnModel SpeedBoostBtnModel => _speedBoostBtnModel;
 
@@ -70,18 +70,18 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
             _gameInitializer.OnPostInitialization -= Init;
         }
 
-        private void OnNormalSpeedChanged(bool _) => 
+        private void OnNormalSpeedChanged(bool _) =>
             UpdateSpeedBoostBtnModel();
 
-        private void OnPermanentSpeedChanged(int _) => 
+        private void OnPermanentSpeedChanged(int _) =>
             UpdateSpeedBoostBtnModel();
 
-        void ISpeedBoostService.OnSpeedBoostBtnClicked() => 
+        void ISpeedBoostService.OnSpeedBoostBtnClicked() =>
             AttemptToShowRewardedVideo();
 
-        void ISpeedBoostService.OnSpeedBoostBtnShown() => 
+        void ISpeedBoostService.OnSpeedBoostBtnShown() =>
             UpdateSpeedBoostBtnModel();
-        
+
         private void AttemptToShowRewardedVideo()
         {
             if (_adsService.IsAdReady(AdType.Rewarded))
@@ -93,7 +93,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
                 _logger.LogWarning("Attempted to show video ad, but none was ready.");
             }
         }
-        
+
         private void OnFeatureUnlocked(Feature feature)
         {
             if (feature == Feature.BattleSpeed)
@@ -101,7 +101,7 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
                 UpdateSpeedBoostBtnModel();
             }
         }
-        
+
         private void UpdateSpeedBoostBtnModel()
         {
             UpdateSpeedInfo();
@@ -113,8 +113,8 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
         {
             var nextSpeedId = BattleSpeed.PermanentSpeedId + 1;
             var maxSpeedId = _battleSpeedConfigRepository.GetBattleSpeedConfigs().Count - 1;
-            var nextAvailableSpeedId = Mathf.Min(nextSpeedId, maxSpeedId); 
-            
+            var nextAvailableSpeedId = Mathf.Min(nextSpeedId, maxSpeedId);
+
             var boostedSpeedConfig = _battleSpeedConfigRepository.GetBattleSpeedConfig(nextAvailableSpeedId);
             _speedBoostBtnModel.InfoText = $"x{boostedSpeedConfig.SpeedFactor.ToInvariantString()}";
         }
@@ -126,28 +126,38 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
                 _speedBoostBtnModel.State = BtnState.Locked;
                 return;
             }
-            
+
             if (!BattleSpeed.IsNormalSpeedActive)
             {
                 _speedBoostBtnModel.State = BtnState.Activated;
                 return;
             }
-            
-            _speedBoostBtnModel.State = 
-                _adsService.IsAdReady(AdType.Rewarded) 
-                    ? BtnState.Active 
+
+            _speedBoostBtnModel.State =
+                _adsService.IsAdReady(AdType.Rewarded)
+                    ? BtnState.Active
                     : BtnState.Loading;
         }
 
-        private bool SpeedConfigOut() => 
+        private bool SpeedConfigOut() =>
             BattleSpeed.PermanentSpeedId == _battleSpeedConfigRepository.GetBattleSpeedConfigs().Count - 1;
 
-        private void OnSpeedBoostRewardedVideoComplete() => 
-            _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(false);
+        private void OnSpeedBoostRewardedVideoComplete(bool successAd)
+        {
+            if (successAd)
+            {
+                _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(false);
+            }
+            else
+            {
+
+            }
+
+        }
 
         private void OnRewardVideoLoaded(AdType type)
         {
-            if(type == AdType.Rewarded)
+            if (type == AdType.Rewarded)
                 UpdateSpeedBoostBtnModel();
         }
     }

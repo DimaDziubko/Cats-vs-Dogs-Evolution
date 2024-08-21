@@ -111,10 +111,17 @@ namespace _Game.UI.GameResult.Scripts
             _adsService.ShowRewardedVideo(MultiplyRewardAndQuit, Placement.X2);
         }
 
-        private void MultiplyRewardAndQuit()
+        private void MultiplyRewardAndQuit(bool successAd)
         {
-            _coinCounter.MultiplyCoins(REWARD_MULTIPLIER);
-            OnQuitClicked();
+            if (successAd)
+            {
+                _coinCounter.MultiplyCoins(REWARD_MULTIPLIER);
+                OnQuitClicked();
+            }
+            else
+            {
+                //OnQuitClicked();
+            }
         }
 
         private void Cleanup()

@@ -24,7 +24,7 @@ namespace _Game.Core.Ads.CASAds
     public class CasAdsService : IAdsService, IDisposable
     {
         public event Action<AdImpressionDto> AdImpression;
-        public event Action<AdType> VideoLoaded;
+        public event Action<AdType> OnVideoLoaded;
 
         private readonly IGameInitializer _gameInitializer;
         private readonly IMyLogger _logger;
