@@ -15,6 +15,7 @@ using Assets._Game.Gameplay._Timer.Scripts;
 using Zenject;
 using _Game.Core.Ads.ApplovinMaxAds;
 using Cysharp.Threading.Tasks;
+using MadPixelAnalytics;
 
 namespace _Game.Core.Ads.ApplovinMaxAds
 {
@@ -137,6 +138,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         private async UniTask WaitForAdsManagerInit()
         {
             await UniTask.WaitUntil(() => AdsManager.Ready());
+            AnalyticsManager.Instance.Init();
             Subscribe();
             //TODO
             //LoadMainScene();

@@ -6,7 +6,9 @@ using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
+using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Security;
 
 namespace _Game.Core.Services.IAP
 {
@@ -140,6 +142,7 @@ namespace _Game.Core.Services.IAP
         {
             ProductConfig productConfig =  _iapProvider.Configs[purchasedProduct.definition.id];
 
+
             switch (productConfig.ItemType)
             {
                 case ItemType.x1_5:
@@ -162,7 +165,6 @@ namespace _Game.Core.Services.IAP
                     break;
             }
 
-            Purchased?.Invoke(purchasedProduct);
             return PurchaseProcessingResult.Complete;
         }
     }
