@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 130000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 2
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 4
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 2
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 2
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 18
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 74fd22b1e02e951478b80bb586fd44d1, type: 2}
+  - {fileID: 11400000, guid: 8016a4acaa3a9ae42b34126b51912e5c, type: 2}
+  - {fileID: 11400000, guid: 9c6920ea8c6e7d74a91d4746a2b233ea, type: 2}
   WarriorsId: 070000000800000009000000
   Name: Knight age
   AgeIconKey: AgeIcon[AgeIcon_2]
+  AgeIconAtlas:
+    m_AssetGUID: 26417f9fd21215142a85c58fb9957849
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: AgeIcon_2
   Description: Cats served as stealthy spies, while dogs became loyal knights, forging
     strong alliances in kingdoms
   DateRange: 1000 - 1600

@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 10000000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 16
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 7
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 4
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 4
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 162
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: a18c010c9e12299498cbac09f85c5ec2, type: 2}
+  - {fileID: 11400000, guid: e505feb8601cf8f469efd697ce6a3e3c, type: 2}
+  - {fileID: 11400000, guid: e274931f003a3834ba7576d653d4e260, type: 2}
   WarriorsId: 310000003200000033000000
   Name: Cold War
   AgeIconKey: AgeIcon_3[4]
+  AgeIconAtlas:
+    m_AssetGUID: 6e2b7c26cbd310f49986ffe4e4e95cec
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 4
   Description: Cats and dogs engaged in espionage and intelligence battles, each
     side vying for global influence and technological supremacy
   DateRange: 1947 - 1991

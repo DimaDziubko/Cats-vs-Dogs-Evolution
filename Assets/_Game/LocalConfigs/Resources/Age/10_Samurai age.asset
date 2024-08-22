@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 1000000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 9
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 5
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 3
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 3
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 54
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 73ff51a744bfc904197f43a73e84ca67, type: 2}
+  - {fileID: 11400000, guid: 53df342d054727a4a8e1c53d71c78b02, type: 2}
+  - {fileID: 11400000, guid: 282486631e921ad46b0e884d6a08303b, type: 2}
   WarriorsId: 1c0000001d0000001e000000
   Name: British Empire
   AgeIconKey: AgeIcon_2[3]
+  AgeIconAtlas:
+    m_AssetGUID: 0a7e5e46449bf254786dc8e86d726624
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 3
   Description: In the British Empire age, cats served as naval strategists, while
     dogs were valiant soldiers, clashing in overseas battles and colonial conflicts
   DateRange: 1500 - 1900

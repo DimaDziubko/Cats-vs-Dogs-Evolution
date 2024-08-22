@@ -54,7 +54,7 @@ namespace _Game.UI._BattleUIController
             ISpeedBoostService speedBoost,
             IBattleManager battleManager,
             IDailyTaskPresenter dailyTaskPresenter,
-            ITutorialManager tutorialManager, 
+            ITutorialManager tutorialManager,
             IMyLogger logger)
         {
             _userContainer = userContainer;
@@ -64,7 +64,7 @@ namespace _Game.UI._BattleUIController
             _gameplayUI = gameplayUI;
             _battleManager = battleManager;
 
-            
+
             _hud.Construct(
                 cameraService,
                 alertPopupProvider,
@@ -76,9 +76,8 @@ namespace _Game.UI._BattleUIController
                 battleManager,
                 dailyTaskPresenter,
                 tutorialManager,
-                logger,
-                header);
-            
+                logger);
+
             header.Construct(userContainer.State.Currencies, cameraService);
         }
 
@@ -92,7 +91,7 @@ namespace _Game.UI._BattleUIController
             _hud.ShowCoinCounter();
             _hud.ShowPauseToggle();
             _hud.ShowFoodBoostBtn();
-            
+
             Unsubscribe();
             Subscribe();
             _hud.OnCoinsCoinsChanged(_coinCounter.Coins);
@@ -102,7 +101,7 @@ namespace _Game.UI._BattleUIController
         {
             _gameplayUI.WaveInfoPopup.HideWave();
             _hud.HidePauseToggle();
-            _hud.HideFoodBoostBtn();
+            _hud.HideFoodBoostView();
             Unsubscribe();
         }
 
@@ -112,7 +111,7 @@ namespace _Game.UI._BattleUIController
             _hud.HideCoinCounter();
         }
 
-        public void ShowRewardCoinsAfterLoading() => 
+        public void ShowRewardCoinsAfterLoading() =>
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
 
         private void OnLoadingCompleted()
@@ -122,7 +121,7 @@ namespace _Game.UI._BattleUIController
                 _userContainer.CurrenciesHandler.AddCoins(_coinCounter.Coins, CurrenciesSource.Battle);
                 _coinCounter.Cleanup();
             }
-            
+
             _loadingScreenProvider.LoadingCompleted -= OnLoadingCompleted;
         }
 
@@ -132,7 +131,7 @@ namespace _Game.UI._BattleUIController
             _coinCounter.CoinsChanged += _hud.OnCoinsCoinsChanged;
         }
 
-        private void Unsubscribe() => 
+        private void Unsubscribe() =>
             _hud.QuitBattle -= OnBattleQuit;
 
         private void OnBattleQuit()
@@ -142,7 +141,7 @@ namespace _Game.UI._BattleUIController
             _battleManager.EndBattle(GameResultType.Defeat, true);
         }
 
-        public void UpdateWave(int currentWave, int wavesCount) => 
+        public void UpdateWave(int currentWave, int wavesCount) =>
             _gameplayUI.WaveInfoPopup.ShowWave(currentWave, wavesCount);
 
         void IUIListener.OnScreenOpened(GameScreen gameScreen)
@@ -160,8 +159,8 @@ namespace _Game.UI._BattleUIController
 
         void IUIListener.OnScreenClosed(GameScreen gameScreen)
         {
-            
+
         }
     }
-    
+
 }

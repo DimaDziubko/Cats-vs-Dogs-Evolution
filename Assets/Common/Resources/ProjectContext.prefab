@@ -1137,6 +1137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coroutineRunner: {fileID: 2942010692569547753}
+  _debugger: {fileID: 2959857015608930252}
 --- !u!114 &-7382605006623287254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,6 +1210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _madPixelAdsManager: {fileID: 8988387341099029210}
+  _madPixelAppMetrica: {fileID: 6170170001380692489}
 --- !u!114 &5017407520400509462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,13 +1244,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8122894764690313344}
+  - component: {fileID: 2959857015608930252}
   m_Layer: 0
   m_Name: Debugger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8122894764690313344
 Transform:
   m_ObjectHideFlags: 0
@@ -1264,6 +1267,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1258253947384861881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2959857015608930252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507026609203256125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e87560ac9514704b1f364a587a4cfde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7098074204996009186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,6 +2249,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a4811ed6993684d8ce6dde62e6c4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6170170001380692489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7019281010441104460, guid: 80dfd38ed10d0d64a85dc773c4624df4, type: 3}
+  m_PrefabInstance: {fileID: 3803753944819039813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5575772867588061323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ffceae1c3dc36b4082e2d36754acdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5113247316333002550

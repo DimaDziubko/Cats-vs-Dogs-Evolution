@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _Game.Core._Logger;
-using _Game.Core.Debugger;
 using _Game.UI._Hud;
 using _Game.UI._MainMenu.Scripts;
 

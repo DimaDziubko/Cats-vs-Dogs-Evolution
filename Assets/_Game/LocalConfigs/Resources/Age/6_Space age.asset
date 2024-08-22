@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 0
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 5
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 7
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 5
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 5
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 486
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 7bd53f9116f993e49ad9a27a8818f6e7, type: 2}
+  - {fileID: 11400000, guid: 9ee08ee7ac35ca84a8b21549f3316689, type: 2}
+  - {fileID: 11400000, guid: 9332ed8e3a6c6c440a34c9c654a21321, type: 2}
   WarriorsId: 100000001100000012000000
   Name: Space age
   AgeIconKey: AgeIcon[AgeIcon_5]
+  AgeIconAtlas:
+    m_AssetGUID: 26417f9fd21215142a85c58fb9957849
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: AgeIcon_5
   Description: Cats and dogs embarked on separate interstellar missions, competing
     to colonize and explore distant planets
   DateRange: 3000

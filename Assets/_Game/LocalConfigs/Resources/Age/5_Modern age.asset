@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 10000000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 4
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 6
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 4
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 4
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 162
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 24987b8c1625a34449a2f2312b96004c, type: 2}
+  - {fileID: 11400000, guid: 2266f38162f21e145a50b59771445959, type: 2}
+  - {fileID: 11400000, guid: 411c87cccb1bdca438498db7883cf1fb, type: 2}
   WarriorsId: 0d0000000e0000000f000000
   Name: Modern age
   AgeIconKey: AgeIcon[AgeIcon_4]
+  AgeIconAtlas:
+    m_AssetGUID: 26417f9fd21215142a85c58fb9957849
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: AgeIcon_4
   Description: Cats and dogs clashed fiercely in a devastating war, each side employing
     advanced tactics and technology
   DateRange: 1990 - 2025

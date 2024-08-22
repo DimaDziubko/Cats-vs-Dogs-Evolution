@@ -33,6 +33,7 @@ namespace _Game.Core.DataProviders.ShopDataProvider
                 Sprite majorProductIconKey = null;
                 if (config.MajorProductIconKey != Constants.ConfigKeys.MISSING_KEY)
                 {
+                    await _assetRegistry.Warmup<Sprite>(config.MajorProductIconKey);
                     majorProductIconKey = await
                         _assetRegistry.LoadAsset<Sprite>(config.MajorProductIconKey, PERSISTENT_TIMELINE_ID,
                             Constants.CacheContext.GENERAL);
@@ -42,6 +43,7 @@ namespace _Game.Core.DataProviders.ShopDataProvider
                 Sprite minorProductIconKey = null;
                 if (config.MinorProductIconKey != Constants.ConfigKeys.MISSING_KEY)
                 {
+                    await _assetRegistry.Warmup<Sprite>(config.MinorProductIconKey);
                     minorProductIconKey = await
                         _assetRegistry.LoadAsset<Sprite>(config.MinorProductIconKey, PERSISTENT_TIMELINE_ID,
                             Constants.CacheContext.GENERAL);
@@ -50,6 +52,7 @@ namespace _Game.Core.DataProviders.ShopDataProvider
                 Sprite currencyIconKey = null;
                 if (config.CurrencyIconKey != Constants.ConfigKeys.MISSING_KEY)
                 {
+                    await _assetRegistry.Warmup<Sprite>(config.CurrencyIconKey);
                     currencyIconKey = await
                         _assetRegistry.LoadAsset<Sprite>(config.CurrencyIconKey, PERSISTENT_TIMELINE_ID,
                             Constants.CacheContext.GENERAL);

@@ -25,12 +25,12 @@ namespace _Game.Core.Installers.Core
     public class CoreServicesInstaller : MonoInstaller
     {
         [SerializeField] private CoroutineRunner _coroutineRunner;
-        //[SerializeField] private MyDebugger _debugger;
+        [SerializeField] private MyDebugger _debugger;
 
         public override void InstallBindings()
         {
             BindLogger();
-            //BindDebugger();
+            BindDebugger();
             BindInitializer();
             BindSceneLoader();
             BindStaticDataService();
@@ -60,11 +60,11 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<MyLogger>()
                 .AsSingle();
 
-        // private void BindDebugger() =>
-        //     Container
-        //         .BindInterfacesAndSelfTo<MyDebugger>()
-        //         .FromInstance(_debugger)
-        //         .AsSingle();
+        private void BindDebugger() =>
+            Container
+                .BindInterfacesAndSelfTo<MyDebugger>()
+                .FromInstance(_debugger)
+                .AsSingle();
 
         private void BindSceneLoader() => 
             Container

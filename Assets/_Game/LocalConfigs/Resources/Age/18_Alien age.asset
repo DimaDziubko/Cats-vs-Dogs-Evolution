@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 0
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 17
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 8
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 5
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 5
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 486
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 58be1e4e2432a4041a042a8b4ea42deb, type: 2}
+  - {fileID: 11400000, guid: 6302322feaaaee14db9641cfa6082d8f, type: 2}
+  - {fileID: 11400000, guid: e92f6f034ffb8f7418634b93dc76eee7, type: 2}
   WarriorsId: 340000003500000036000000
   Name: Alien age
   AgeIconKey: AgeIcon_3[5]
+  AgeIconAtlas:
+    m_AssetGUID: 6e2b7c26cbd310f49986ffe4e4e95cec
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 5
   Description: Cat and dog aliens, with advanced technology, vied for dominance across
     the cosmos, their rivalry spanning countless star systems
   DateRange: 2500 - 4000

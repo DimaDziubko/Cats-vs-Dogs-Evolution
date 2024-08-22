@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 10000000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 10
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 6
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 4
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 4
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 162
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 13328afb00c011d4f8ac721cbd0fa2e1, type: 2}
+  - {fileID: 11400000, guid: 17de16b62c6cfb141aa9628dc841b774, type: 2}
+  - {fileID: 11400000, guid: 7ffe9c581104cb446bd04b9175b60799, type: 2}
   WarriorsId: 1f0000002000000021000000
   Name: Age Of World Wars
   AgeIconKey: AgeIcon_2[4]
+  AgeIconAtlas:
+    m_AssetGUID: 0a7e5e46449bf254786dc8e86d726624
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 4
   Description: In the World Wars, every cat and dog became a soldier, fiercely battling
     each other in relentless and devastating global conflicts
   DateRange: 1914 - 1945

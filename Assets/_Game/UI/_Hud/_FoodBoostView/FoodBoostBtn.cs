@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Game.UI._Hud
+namespace _Game.UI._Hud._FoodBoostView
 {
     public class FoodBoostBtn : MonoBehaviour
     {
