@@ -13,6 +13,7 @@ using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
+using MadPixelAnalytics;
 using UnityEngine.Device;
 
 namespace _Game.Core.Services.Analytics
@@ -25,21 +26,23 @@ namespace _Game.Core.Services.Analytics
 
         private readonly IMyLogger _logger;
         private readonly IUserContainer _userContainer;
-
+        private readonly AppMetricaComp _appMetricaComp;
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         private IBattleStatisticsReadonly BattleStatistics => _userContainer.State.BattleStatistics;
         private ITutorialStateReadonly TutorialState => _userContainer.State.TutorialState;
         private IAdsStatisticsReadonly AdsStatistics => _userContainer.State.AdsStatistics;
         private IRetentionStateReadonly RetentionStateReadonly => _userContainer.State.RetentionState;
-        
+
         public AnalyticsService(
-            IMyLogger logger, 
+            IMyLogger logger,
             IUserContainer userContainer,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            AppMetricaComp appMetricaComp)
         {
             _logger = logger;
             _userContainer = userContainer;
+            _appMetricaComp = appMetricaComp;
             gameInitializer.RegisterAsyncInitialization(Init);
         }
 
@@ -70,6 +73,7 @@ namespace _Game.Core.Services.Analytics
             AdsStatistics.AdsReviewedChanged += OnAdsStatisticsChanged;
             RetentionStateReadonly.FirstDayRetentionEventSentChanged += SendFirstDayRetentionEvent;
             RetentionStateReadonly.SecondDayRetentionEventSentChanged += SendSecondDayRetentionEvent;
+            TutorialState.StepsCompletedChanged += OnStepCompleted;
         }
 
         private void SetUniqID()
@@ -90,6 +94,7 @@ namespace _Game.Core.Services.Analytics
             RaceState.Changed -= OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged -= OnCompletedBattleChanged;
             AdsStatistics.AdsReviewedChanged -= OnAdsStatisticsChanged;
+            TutorialState.StepsCompletedChanged -= OnStepCompleted;
             _app?.Dispose();
         }
 
@@ -104,7 +109,7 @@ namespace _Game.Core.Services.Analytics
             if (IsComponentsReady()) return;
             SendEvent($"second_open");
         }
-        
+
         private void OnCompletedBattleChanged()
         {
             if (!IsComponentsReady()) return;
@@ -113,8 +118,10 @@ namespace _Game.Core.Services.Analytics
             {
                 SendEvent("first_build_success");
                 _logger.Log("first_build_success");
+
+
             }
-            
+
             else if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 0)
             {
                 SendEvent("first_build_failed");
@@ -131,7 +138,7 @@ namespace _Game.Core.Services.Analytics
                 SendEvent($"race_selected_{RaceState.CurrentRace.ToString()}");
                 return;
             }
-            
+
             SendEvent($"race_changed_{RaceState.CurrentRace.ToString()}");
         }
 
@@ -139,9 +146,16 @@ namespace _Game.Core.Services.Analytics
         {
             if (!IsComponentsReady()) return;
             SendEvent($"battle_started_{battleAnalyticsData.BattleNumber}");
+
+
+            _appMetricaComp.SendCustomEvent("level_start", new Dictionary<string, object>() {
+                {"level_number", battleAnalyticsData.BattleNumber },
+                {"age_number", battleAnalyticsData.AgeNumber },
+                {"timeline_number", battleAnalyticsData.TimelineNumber },
+            }, true);
         }
 
-        private bool IsComponentsReady() => 
+        private bool IsComponentsReady() =>
             _isFirebaseInitialized || _userContainer != null;
 
         private void OnUnitOpened(UnitType type)
@@ -155,13 +169,19 @@ namespace _Game.Core.Services.Analytics
             if (!IsComponentsReady()) return;
 
             SendEvent($"battle_completed_{TimelineState.MaxBattle}");
-            
+
             // SendEvent("battle_completed", new Dictionary<string, object>
             // {
             //     {"TimelineNumber", TimelineState.TimelineId + 1},
             //     {"AgeNumber", TimelineState.AgeId + 1},
             //     {"BattleNumber", TimelineState.MaxBattle}
             // });
+
+            _appMetricaComp.SendCustomEvent("level_finish", new Dictionary<string, object>() {
+                {"level_number", TimelineState.MaxBattle },
+                {"age_number", TimelineState.AgeId},
+                {"timeline_number", TimelineState.TimelineId},
+            }, true);
         }
 
         private void OnNextAgeOpened()
@@ -216,6 +236,22 @@ namespace _Game.Core.Services.Analytics
                 {"BattleNumber", data.BattleNumber},
                 {"Wave", wave},
             });
+        }
+
+        private void OnStepCompleted(int step)
+        {
+            var trueStepNumber = step + 1;
+            int lastStep = 5;
+            if (trueStepNumber == lastStep)
+            {
+                _appMetricaComp.SendCustomEvent("tutorial", new Dictionary<string, object>() {
+                {"step_name", $"{lastStep}_mainTutorFinish" },
+            }, true);
+                return;
+            }
+            _appMetricaComp.SendCustomEvent("tutorial", new Dictionary<string, object>() {
+                {"step_name", $"{trueStepNumber}_mainTutor" },
+            }, true);
         }
     }
 

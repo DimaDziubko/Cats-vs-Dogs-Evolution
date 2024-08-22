@@ -23,7 +23,7 @@ namespace _Game.UI._Hud
     public class Hud : MonoBehaviour
     {
         public event Action QuitBattle;
-        
+
         [SerializeField] private Canvas _canvas;
         [SerializeField] private CoinCounterView _counterView;
         [SerializeField] private FoodBoostView _foodBoostView;
@@ -45,12 +45,13 @@ namespace _Game.UI._Hud
             IBattleManager battleManager,
             IDailyTaskPresenter dailyTaskPresenter,
             ITutorialManager tutorialManager,
-            IMyLogger logger)
+            IMyLogger logger
+            )
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
 
             _foodBoostView.Construct(foodBoostService, audioService);
-            _pauseView.Construct(audioService, featureUnlockSystem, alertPopupProvider,  battleManager, this);
+            _pauseView.Construct(audioService, featureUnlockSystem, alertPopupProvider, battleManager, this);
             _battleSpeedView.Construct(battleSpeed, audioService);
             _speedBoostView.Construct(speedBoost, audioService);
             _counterView.Construct();
@@ -89,7 +90,7 @@ namespace _Game.UI._Hud
             _foodBoostView.Hide();
         }
 
-        public void ShowCoinCounter() => 
+        public void ShowCoinCounter() =>
             _counterView.Show();
 
         public void HideCoinCounter()
@@ -98,24 +99,24 @@ namespace _Game.UI._Hud
             _counterView.Hide();
         }
 
-        public void OnCoinsCoinsChanged(float amount) => 
+        public void OnCoinsCoinsChanged(float amount) =>
             _counterView.UpdateCoins(amount);
 
 
-        public void ShowFoodBoostBtn() => 
+        public void ShowFoodBoostBtn() =>
             _foodBoostView.Show();
 
-        public void HideFoodBoostView() => 
+        public void HideFoodBoostView() =>
             _foodBoostView.Hide();
 
 
-        public void ShowPauseToggle() => 
+        public void ShowPauseToggle() =>
             _pauseView.Show();
 
-        public void HidePauseToggle() => 
+        public void HidePauseToggle() =>
             _pauseView.Hide();
 
-        public void Quit() => 
+        public void Quit() =>
             QuitBattle?.Invoke();
     }
 }

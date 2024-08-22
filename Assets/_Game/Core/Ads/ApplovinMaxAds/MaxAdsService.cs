@@ -12,8 +12,6 @@ using UnityEngine;
 using _Game.Gameplay.BattleLauncher;
 using UnityEngine.Events;
 using Assets._Game.Gameplay._Timer.Scripts;
-using Zenject;
-using _Game.Core.Ads.ApplovinMaxAds;
 using Cysharp.Threading.Tasks;
 using MadPixelAnalytics;
 
