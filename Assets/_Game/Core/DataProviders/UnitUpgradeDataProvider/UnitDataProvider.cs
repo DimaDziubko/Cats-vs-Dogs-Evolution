@@ -2,6 +2,7 @@
 using _Game.Core.AssetManagement;
 using _Game.Core.DataProviders.UnitDataProviders;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Utils.Extensions;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using Assets._Game.Utils.Extensions;

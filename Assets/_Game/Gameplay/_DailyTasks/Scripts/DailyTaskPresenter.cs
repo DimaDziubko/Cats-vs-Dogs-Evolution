@@ -74,7 +74,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         {
             string additionalDescription = GetAdditionalDescription(task.Config.DailyTaskType);
             _currentDto.DailyInfo = $"Daily {task.CompletedCount}/{task.MaxCountPerDay}";
-            _currentDto.Progress = $"{task.Config.Description} {additionalDescription} {task.Progress}/{task.Target}";
+            _currentDto.Progress = $"{task.Config.Description} {additionalDescription} {task.Progress:0}/{task.Target:0}";
             _currentDto.Reward = task.Config.Reward.ToString();
             _currentDto.IsCompleted = task.IsCompleted;
             _currentDto.IsRunOut = task.IsRunOut;

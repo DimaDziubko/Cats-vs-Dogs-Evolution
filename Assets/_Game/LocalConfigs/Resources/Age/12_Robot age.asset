@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 0
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 11
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 7
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 5
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 5
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 486
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 8e6dfedf0c3f8fe458c4634c29cc8c70, type: 2}
+  - {fileID: 11400000, guid: 02634cda96e313f4e8fec824228b8f65, type: 2}
+  - {fileID: 11400000, guid: 1486578374f6b3c458a2134001d5ed49, type: 2}
   WarriorsId: 220000002300000024000000
   Name: Robot age
   AgeIconKey: AgeIcon_2[5]
+  AgeIconAtlas:
+    m_AssetGUID: 0a7e5e46449bf254786dc8e86d726624
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 5
   Description: "\u0421ats and dogs each created advanced AI, sparking a new era of
     technological breakthroughs and intense rivalry in robotics"
   DateRange: 2100 - 5000

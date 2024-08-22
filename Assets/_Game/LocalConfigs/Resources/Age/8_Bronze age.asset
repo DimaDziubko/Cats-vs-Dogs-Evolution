@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 16000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 7
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 2
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 1
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 1
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 6
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 6d6c09c0aa745b4499cf66e7acfbff48, type: 2}
+  - {fileID: 11400000, guid: fec305312d6f70641bb1e23d2a3461ed, type: 2}
+  - {fileID: 11400000, guid: a3fb7c320e89e654ab61c0c681724be9, type: 2}
   WarriorsId: 160000001700000018000000
   Name: Bronze age
   AgeIconKey: AgeIcon_2[1]
+  AgeIconAtlas:
+    m_AssetGUID: 0a7e5e46449bf254786dc8e86d726624
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 1
   Description: In the Bronze Age, cats mastered metallurgy for crafting, while dogs
     forged weapons and armor, leading to intensified conflicts and alliances
   DateRange: 3000 BC - 500 BC

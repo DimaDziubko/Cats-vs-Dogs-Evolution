@@ -33,9 +33,6 @@ namespace _Game.UI._Hud._DailyTaskView
 
         public void PlayNotificationAnimation()
         {
-            //TODO Delete later 
-            Debug.Log("PLAY NOTIFICATION ANIMATION");
-    
             if(!_isNotificationAnimationActive || _isNotificationPlaying) return;
     
             StopNotificationAnimation();
@@ -58,9 +55,6 @@ namespace _Game.UI._Hud._DailyTaskView
         {
             if (_notificationTween != null && _notificationTween.IsActive())
             {
-                //TODO Delete later 
-                Debug.Log("STOP NOTIFICATION ANIMATION");
-                
                 _notificationTween.Kill();
                 _notificationTween = null;
             }

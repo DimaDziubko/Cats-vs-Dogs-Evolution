@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
@@ -15,13 +17,16 @@ namespace _Game.Core.DataProviders.Timeline
     {
         private readonly ITimelineConfigRepository _timelineConfigRepository;
         private readonly IAssetRegistry _assetRegistry;
-        
+        private readonly IMyLogger _logger;
+
         public TimelineDataProvider(
             ITimelineConfigRepository timelineConfigRepository,
-            IAssetRegistry assetRegistry)
+            IAssetRegistry assetRegistry,
+            IMyLogger logger)
         {
             _timelineConfigRepository = timelineConfigRepository;
             _assetRegistry = assetRegistry;
+            _logger = logger;
         }
         
         public async UniTask<TimelineStaticData> Load(int timelineId)
@@ -46,13 +51,19 @@ namespace _Game.Core.DataProviders.Timeline
             var ageConfigs = _timelineConfigRepository.GetAgeConfigs();
             
             int ageIndex = 0;
-
+            
+            _logger.Log("Loading age icons");
+            
             foreach (var config in ageConfigs)
             {
-                var icon = await _assetRegistry.LoadAsset<Sprite>(
-                    config.AgeIconKey,
+                await _assetRegistry.Warmup<IList<Sprite>>(config.AgeIconAtlas);
+            
+                IList<Sprite> atlas = await _assetRegistry.LoadAsset<IList<Sprite>>(
+                    config.AgeIconAtlas,
                     timelineId,
                     Constants.CacheContext.TIMELINE);
+                
+                var icon = atlas.FirstOrDefault(x => x.name == config.AgeIconName);
                 
                 var model = new TimlineInfoItemStaticData
                 {

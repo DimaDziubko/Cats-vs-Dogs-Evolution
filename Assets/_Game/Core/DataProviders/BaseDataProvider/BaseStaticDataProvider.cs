@@ -25,6 +25,8 @@ namespace _Game.Core.DataProviders.BaseDataProvider
         
         public async UniTask<BaseStaticData> Load(BaseLoadOptions options)
         {
+            await _assetRegistry.Warmup<GameObject>(options.BasePrefab);
+            
             var basePrefab = await _assetRegistry.LoadAsset<GameObject>(
                 options.BasePrefab, 
                 options.Timeline, 

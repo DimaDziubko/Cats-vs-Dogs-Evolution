@@ -1137,6 +1137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coroutineRunner: {fileID: 2942010692569547753}
+  _debugger: {fileID: 2959857015608930252}
 --- !u!114 &-7382605006623287254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,13 +1243,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8122894764690313344}
+  - component: {fileID: 2959857015608930252}
   m_Layer: 0
   m_Name: Debugger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8122894764690313344
 Transform:
   m_ObjectHideFlags: 0
@@ -1264,6 +1266,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1258253947384861881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2959857015608930252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507026609203256125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e87560ac9514704b1f364a587a4cfde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7098074204996009186
 GameObject:
   m_ObjectHideFlags: 0

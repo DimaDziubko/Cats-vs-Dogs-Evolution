@@ -18,6 +18,8 @@ namespace _Game.Core.Configs.Models
         public List<int> WarriorsId;
         public string Name;
         public string AgeIconKey;
+        public AssetReference AgeIconAtlas;
+        public string AgeIconName;
         [MultiLineProperty(5)] 
         public string Description;
         public string DateRange;

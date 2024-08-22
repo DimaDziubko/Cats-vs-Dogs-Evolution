@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 2000
   GemsPerAge: 0
   Economy:
-    Id: 0
-    CoinPerBattle: 0
+    Id: 12
+    CoinPerBattle: 9
     InitialFoodAmount: 0
     FoodProduction:
       Id: 0
-      Price: 0
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
       Id: 0
-      Price: 0
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 2
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 133c0666ac217f143a7e3ac459bdf8ea, type: 2}
+  - {fileID: 11400000, guid: 3f95bd3dd41dc864bba7608cfcddc999, type: 2}
+  - {fileID: 11400000, guid: c5938bce41f476f4d8ebec02278861b6, type: 2}
   WarriorsId: 250000002600000027000000
   Name: Jungle age
   AgeIconKey: AgeIcon_3[0]
+  AgeIconAtlas:
+    m_AssetGUID: 6e2b7c26cbd310f49986ffe4e4e95cec
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 0
   Description: Cats excelled as solitary hunters, while dogs formed packs, leading
     to constant skirmishes over territory and resources
   DateRange: 70000 BC - 20000 BC

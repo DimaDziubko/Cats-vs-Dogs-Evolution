@@ -13,38 +13,47 @@ MonoBehaviour:
   m_Name: 1_StoneAge
   m_EditorClassIdentifier: 
   Id: 1
-  Price: 200
+  Price: 2000
   GemsPerAge: 0
   Economy:
     Id: 0
-    CoinPerBattle: 0
+    CoinPerBattle: 9
     InitialFoodAmount: 0
     FoodProduction:
       Id: 0
-      Price: 0
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
       Id: 0
-      Price: 0
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 2
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: cd50f8b12743a5841974d38ad9385fba, type: 2}
+  - {fileID: 11400000, guid: b0330bd738a750940b2988cd736eb36b, type: 2}
+  - {fileID: 11400000, guid: 5d48d8dd4c93c0b41b10fcaf018da680, type: 2}
   WarriorsId: 010000000200000003000000
   Name: Stone age
   AgeIconKey: AgeIcon[AgeIcon_0]
+  AgeIconAtlas:
+    m_AssetGUID: 26417f9fd21215142a85c58fb9957849
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: AgeIcon_0
   Description: Cat clans hunted stealthily, while dog tribes thrived on teamwork,
     occasionally forming alliances against larger threats
   DateRange: 80000 BC - 20000 BC

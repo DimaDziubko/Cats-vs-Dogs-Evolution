@@ -1621,10 +1621,12 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1303780902}
   - {fileID: 1033314475}
-  - {fileID: 1849129568}
+  - {fileID: 1945372224}
   - {fileID: 1121376726}
   - {fileID: 1849029378}
+  - {fileID: 630047937}
   - {fileID: 279173707}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1647,12 +1649,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 520730400}
   _counterView: {fileID: 1303780905}
-  _foodBoostView: {fileID: 1895292083}
+  _foodBoostView: {fileID: 1945372223}
   _pauseView: {fileID: 1759967769}
   _battleSpeedView: {fileID: 630047936}
   _speedBoostView: {fileID: 630047940}
   _dailyTaskView: {fileID: 1755846643}
-  _btn: {fileID: 0}
 --- !u!1 &557806997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,18 +1931,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 630047935}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 372894576}
   - {fileID: 1568408014}
-  m_Father: {fileID: 1849129568}
+  m_Father: {fileID: 520730401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 145, y: -240}
+  m_AnchoredPosition: {x: 145, y: -440}
   m_SizeDelta: {x: 250, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &630047938
@@ -3540,11 +3541,11 @@ RectTransform:
   - {fileID: 989950017}
   - {fileID: 1466580840}
   - {fileID: 757611364}
-  m_Father: {fileID: 1849129568}
+  m_Father: {fileID: 520730401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: 0}
+  m_AnchoredPosition: {x: 20, y: -200}
   m_SizeDelta: {x: 250, y: 120}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1303780903
@@ -4972,7 +4973,7 @@ MonoBehaviour:
   _maxScale: 1.1
   _notificationDelay: 5
   _notificationTime: 0.5
-  _refreshTime: 1
+  _refreshTime: 0.5
   _isNotificationAnimationActive: 1
   _isRefreshAnimationActive: 1
 --- !u!114 &1755846645
@@ -5419,84 +5420,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849029377}
   m_CullTransparentMesh: 1
---- !u!1 &1849129567
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1849129568}
-  - component: {fileID: 1849129570}
-  - component: {fileID: 1849129569}
-  m_Layer: 5
-  m_Name: LeftPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1849129568
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849129567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 630047937}
-  - {fileID: 1895292076}
-  - {fileID: 1303780902}
-  m_Father: {fileID: 520730401}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 300, y: -440}
-  m_Pivot: {x: 0, y: 1}
---- !u!114 &1849129569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849129567}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1849129570
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849129567}
-  m_CullTransparentMesh: 1
 --- !u!1 &1882407570
 GameObject:
   m_ObjectHideFlags: 0
@@ -5664,11 +5587,10 @@ GameObject:
   - component: {fileID: 1895292080}
   - component: {fileID: 1895292079}
   - component: {fileID: 1895292078}
-  - component: {fileID: 1895292083}
   - component: {fileID: 1895292081}
   - component: {fileID: 1895292082}
   m_Layer: 5
-  m_Name: FoodBoostView
+  m_Name: FoodBoostBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5688,11 +5610,11 @@ RectTransform:
   m_Children:
   - {fileID: 1818387825}
   - {fileID: 1882407571}
-  m_Father: {fileID: 1849129568}
+  m_Father: {fileID: 1945372224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 30, y: 120}
+  m_AnchoredPosition: {x: 30, y: 110}
   m_SizeDelta: {x: 240, y: 110}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1895292078
@@ -5809,19 +5731,6 @@ MonoBehaviour:
   _buttonTransform: {fileID: 1895292076}
   _contentPanel: {fileID: 1818387825}
   _pressWarp: 0.9
---- !u!114 &1895292083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895292075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1e886391eb4239878c9b48d37efde3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _foodBoostBtn: {fileID: 1895292081}
 --- !u!1001 &1903057937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6085,6 +5994,65 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1945372222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1945372224}
+  - component: {fileID: 1945372225}
+  - component: {fileID: 1945372223}
+  m_Layer: 5
+  m_Name: FoodBoostView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1945372223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945372222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c1e886391eb4239878c9b48d37efde3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _foodBoostBtn: {fileID: 1895292081}
+--- !u!224 &1945372224
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945372222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1895292076}
+  m_Father: {fileID: 520730401}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 260}
+  m_SizeDelta: {x: 300, y: 200}
+  m_Pivot: {x: 0, y: 0}
+--- !u!222 &1945372225
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945372222}
+  m_CullTransparentMesh: 1
 --- !u!1 &2013579700
 GameObject:
   m_ObjectHideFlags: 0
@@ -6120,7 +6088,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 20, y: 40.6}
-  m_SizeDelta: {x: 540, y: 50}
+  m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2013579702
 MonoBehaviour:

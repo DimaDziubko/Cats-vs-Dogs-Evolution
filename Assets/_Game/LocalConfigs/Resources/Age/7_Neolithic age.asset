@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 2000
   GemsPerAge: 0
   Economy:
-    Id: 0
-    CoinPerBattle: 0
+    Id: 6
+    CoinPerBattle: 9
     InitialFoodAmount: 0
     FoodProduction:
       Id: 0
-      Price: 0
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
       Id: 0
-      Price: 0
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 2
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 9a3a2716dc480284aae46c83d4f8b886, type: 2}
+  - {fileID: 11400000, guid: af2a99ccadf396240a51c6320fcf4290, type: 2}
+  - {fileID: 11400000, guid: bba2f5d36aa345a47b493df7ce4152ed, type: 2}
   WarriorsId: 130000001400000015000000
   Name: Neolithic age
   AgeIconKey: AgeIcon_2[0]
+  AgeIconAtlas:
+    m_AssetGUID: 0a7e5e46449bf254786dc8e86d726624
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 0
   Description: Cats grow crops while dogs herded livestock, leading to early agricultural
     societies and occasional territorial disputes
   DateRange: 70000 BC - 20000 BC

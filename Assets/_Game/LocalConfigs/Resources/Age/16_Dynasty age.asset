@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 1000000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 15
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 5
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 3
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 3
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 54
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: fedc40e87570bff4eb3c5eaa43376b6b, type: 2}
+  - {fileID: 11400000, guid: b847ca02bbbb8734598fad6c7e895202, type: 2}
+  - {fileID: 11400000, guid: 9ca97063550baee438615e45ce78e5b9, type: 2}
   WarriorsId: 2e0000002f00000030000000
   Name: Dynasty age
   AgeIconKey: AgeIcon_3[3]
+  AgeIconAtlas:
+    m_AssetGUID: 6e2b7c26cbd310f49986ffe4e4e95cec
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 3
   Description: Cats were esteemed as scholars and artists, while dogs served as loyal
     warriors, balancing intellectual and martial pursuits
   DateRange: 1000 BC - 500 AD

@@ -69,7 +69,9 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             }
             
             DailyState.TaskCompletedChanged += OnTaskCompleted;
-            _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
+            
+            if(!_featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask))
+                _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
         }
 
         private void RestoreDailyTask()

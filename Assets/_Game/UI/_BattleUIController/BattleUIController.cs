@@ -102,7 +102,7 @@ namespace _Game.UI._BattleUIController
         {
             _gameplayUI.WaveInfoPopup.HideWave();
             _hud.HidePauseToggle();
-            _hud.HideFoodBoostBtn();
+            _hud.HideFoodBoostView();
             Unsubscribe();
         }
 

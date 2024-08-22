@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 130000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 14
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 4
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 2
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 2
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 18
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 143994db72e8f80419c19ea82bd65101, type: 2}
+  - {fileID: 11400000, guid: 2b51ba7d4489a374faddaddc26b086f9, type: 2}
+  - {fileID: 11400000, guid: 62b93ae6a23e72b43982478a54349cd3, type: 2}
   WarriorsId: 2b0000002c0000002d000000
   Name: Roman age
   AgeIconKey: AgeIcon_3[2]
+  AgeIconAtlas:
+    m_AssetGUID: 6e2b7c26cbd310f49986ffe4e4e95cec
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: 2
   Description: Cats thrived as cunning merchants, while dogs served as disciplined
     legionnaires, their interactions marked by trade and warfare
   DateRange: 650 BC - 500 AD

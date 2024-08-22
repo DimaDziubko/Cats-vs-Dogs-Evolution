@@ -16,35 +16,44 @@ MonoBehaviour:
   Price: 1000000
   GemsPerAge: 0
   Economy:
-    Id: 0
+    Id: 3
     CoinPerBattle: 0
-    InitialFoodAmount: 0
+    InitialFoodAmount: 5
     FoodProduction:
-      Id: 0
-      Price: 0
+      Id: 3
+      Price: 8
       PriceExponential:
         Id: 0
-        A: 0
+        A: 8.0472
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
+        C: 0.1653
+        D: -7.645
+      Value: 0.18
+      ValueStep: 0.02
     BaseHealth:
-      Id: 0
-      Price: 0
+      Id: 3
+      Price: 30
       PriceExponential:
-        Id: 0
-        A: 0
+        Id: 1
+        A: 32.007225
         B: 0
-        C: 0
-        D: 0
-      Value: 0
-      ValueStep: 0
-  Warriors: []
+        C: 0.17674902
+        D: -32.016148
+      Value: 54
+      ValueStep: 1
+  Warriors:
+  - {fileID: 11400000, guid: 9bdb2f6de91d1154197d3429f2f57dfc, type: 2}
+  - {fileID: 11400000, guid: 8c5997cb48ef7ca4c8a929c5aae6a667, type: 2}
+  - {fileID: 11400000, guid: 0662825ec7efd9d42acd3374ac72ad59, type: 2}
   WarriorsId: 0a0000000b0000000c000000
   Name: Renaissance age
   AgeIconKey: AgeIcon[AgeIcon_3]
+  AgeIconAtlas:
+    m_AssetGUID: 26417f9fd21215142a85c58fb9957849
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  AgeIconName: AgeIcon_3
   Description: Cats excelled as scholars and artists, while dogs advanced as inventors
     and explorers, collaborating on projects
   DateRange: 1500 - 1800

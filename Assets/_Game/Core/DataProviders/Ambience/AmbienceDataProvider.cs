@@ -18,10 +18,11 @@ namespace _Game.Core.DataProviders.Ambience
             _assetRegistry = assetRegistry;
             _logger = logger;
         }
-        public UniTask<AudioClip> Load(string key, LoadContext cacheContext)
+        public async UniTask<AudioClip> Load(string key, LoadContext cacheContext)
         {
+            await _assetRegistry.Warmup<AudioClip>(key);
             _logger.Log($"Ambience with key {key} loading...");
-            return _assetRegistry.LoadAsset<AudioClip>(key, cacheContext.Timeline, cacheContext.CacheContext);
+            return await _assetRegistry.LoadAsset<AudioClip>(key, cacheContext.Timeline, cacheContext.CacheContext);
         }
     }
 }
