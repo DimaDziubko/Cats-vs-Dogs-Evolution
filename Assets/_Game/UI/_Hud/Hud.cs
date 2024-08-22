@@ -25,7 +25,7 @@ namespace _Game.UI._Hud
     public class Hud : MonoBehaviour
     {
         public event Action QuitBattle;
-        
+
         [SerializeField] private Canvas _canvas;
         [SerializeField] private CoinCounterView _counterView;
         [SerializeField] private FoodBoostView _foodBoostView;
@@ -54,12 +54,13 @@ namespace _Game.UI._Hud
             _canvas.worldCamera = cameraService.UICameraOverlay;
 
             _foodBoostView.Construct(foodBoostService, audioService);
-            _pauseView.Construct(audioService, featureUnlockSystem, alertPopupProvider,  battleManager, this);
+            _pauseView.Construct(audioService, featureUnlockSystem, alertPopupProvider, battleManager, this);
             _battleSpeedView.Construct(battleSpeed, audioService);
             _speedBoostView.Construct(speedBoost, audioService);
             _counterView.Construct();
             _dailyTaskView.Construct(dailyTaskPresenter, audioService, tutorialManager, logger);
-            _btn.Construct(header);
+            if (_btn)
+                _btn.Construct(header);
         }
 
         public void Init()
@@ -68,7 +69,8 @@ namespace _Game.UI._Hud
             _speedBoostView.Init();
             _pauseView.Init();
             _foodBoostView.Init();
-            _btn.Init();
+            if (_btn)
+                _btn.Init();
             Show();
         }
 
@@ -78,7 +80,8 @@ namespace _Game.UI._Hud
             _speedBoostView.Cleanup();
             _pauseView.Cleanup();
             _foodBoostView.Cleanup();
-            _btn.Cleanup();
+            if (_btn)
+                _btn.Cleanup();
         }
 
         public void Show()
@@ -98,7 +101,7 @@ namespace _Game.UI._Hud
             _foodBoostView.Hide();
         }
 
-        public void ShowCoinCounter() => 
+        public void ShowCoinCounter() =>
             _counterView.Show();
 
         public void HideCoinCounter()
@@ -107,24 +110,24 @@ namespace _Game.UI._Hud
             _counterView.Hide();
         }
 
-        public void OnCoinsCoinsChanged(float amount) => 
+        public void OnCoinsCoinsChanged(float amount) =>
             _counterView.UpdateCoins(amount);
 
 
-        public void ShowFoodBoostBtn() => 
+        public void ShowFoodBoostBtn() =>
             _foodBoostView.Show();
 
-        public void HideFoodBoostBtn() => 
+        public void HideFoodBoostBtn() =>
             _foodBoostView.Hide();
 
 
-        public void ShowPauseToggle() => 
+        public void ShowPauseToggle() =>
             _pauseView.Show();
 
-        public void HidePauseToggle() => 
+        public void HidePauseToggle() =>
             _pauseView.Hide();
 
-        public void Quit() => 
+        public void Quit() =>
             QuitBattle?.Invoke();
     }
 }
