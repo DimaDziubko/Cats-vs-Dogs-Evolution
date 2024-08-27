@@ -20,11 +20,11 @@ namespace _Game.Core.DataProviders.Timeline
         private readonly IMyLogger _logger;
 
         public TimelineDataProvider(
-            ITimelineConfigRepository timelineConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
-            _timelineConfigRepository = timelineConfigRepository;
+            _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
             _assetRegistry = assetRegistry;
             _logger = logger;
         }

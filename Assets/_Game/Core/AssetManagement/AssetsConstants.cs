@@ -15,6 +15,8 @@ namespace _Game.Core.AssetManagement
         public const string SETTINGS = "Settings";
         public const string TRAVEL_ANIMATION_SCREEN = "TravelAnimationScreen";
         public const string RATE_GAME_WINDOW = "RateGameWindow";
-
+        public const string GENERAL_CARDS_SCREEN = "GeneralCardsScreen";
+        public const string CARDS_SCREEN = "CardsScreen";
+        public const string SUMMONING_POPUP = "SummoningPopup";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._Currencies;
 using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -33,5 +34,20 @@ namespace _Game.Core.UserState._Handler._Upgrade
                 }
             }
         }
+        
+        public void ChangeCardSummoningLevel(int newLevel) => 
+            _userContainer.State.CardsCollectionState.ChangeCardSummoningLevel(newLevel);
+        
+        public void AddCards(List<int> cardsId)
+        {
+            _userContainer.State.CardsCollectionState.AddCards(cardsId);
+        }
+        
+        public void BuyCard(int amount, int price)
+        {
+            _userContainer.State.Currencies.ChangeGems(price, false, CurrenciesSource.Cards);
+        }
+
+        public void UpgradeCard(int id) => _userContainer.State.CardsCollectionState.UpgradeCard(id);
     }
 }

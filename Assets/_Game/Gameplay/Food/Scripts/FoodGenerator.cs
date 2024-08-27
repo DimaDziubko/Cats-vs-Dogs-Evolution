@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core._GameListenerComposite;
 using _Game.Core._Logger;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.CustomKernel;
 using _Game.Core.Data;
@@ -74,13 +75,13 @@ namespace _Game.Gameplay.Food.Scripts
         }
 
         public FoodGenerator(
-            IEconomyConfigRepository economyConfig,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             GameplayUI gameplayUI,
             IGeneralDataPool generalDataPool,
             IUserContainer userContainer)
         {
-            _economyConfig = economyConfig;
+            _economyConfig = configRepositoryFacade.EconomyConfigRepository;
             _panel = gameplayUI.FoodPanel;
             _logger = logger;
             _generalDataPool = generalDataPool;

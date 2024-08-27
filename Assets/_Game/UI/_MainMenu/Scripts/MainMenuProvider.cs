@@ -2,6 +2,7 @@
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
+using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Global;
@@ -28,6 +29,7 @@ namespace _Game.UI._MainMenu.Scripts
         private readonly IMyLogger _logger;
         private readonly IShopProvider _shopProvider;
         private readonly IUINotifier _uiNotifier;
+        private readonly IGeneralCardsScreenProvider _generalCardsScreenProvider;
         private readonly Curtain _curtain;
 
         private Disposable<MainMenu> _mainMenu;
@@ -43,7 +45,8 @@ namespace _Game.UI._MainMenu.Scripts
             IUpgradesAvailabilityChecker upgradesChecker,
             IMyLogger logger,
             Curtain curtain,
-            IUINotifier uiNotifier)
+            IUINotifier uiNotifier,
+            IGeneralCardsScreenProvider generalCardsScreenProvider)
         {
             _cameraService = cameraService;
             _audioService = audioService;
@@ -56,6 +59,7 @@ namespace _Game.UI._MainMenu.Scripts
             _logger = logger;
             _curtain = curtain;
             _uiNotifier = uiNotifier;
+            _generalCardsScreenProvider = generalCardsScreenProvider;
         }
         public async UniTask Load()
         {
@@ -72,7 +76,8 @@ namespace _Game.UI._MainMenu.Scripts
                 _upgradesChecker,
                 _logger,
                 _curtain,
-                _uiNotifier);
+                _uiNotifier,
+                _generalCardsScreenProvider);
 
             ShowMainMenu();
         }

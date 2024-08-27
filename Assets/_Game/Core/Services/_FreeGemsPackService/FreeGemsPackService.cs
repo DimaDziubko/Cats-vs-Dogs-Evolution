@@ -3,6 +3,7 @@ using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Services.Analytics;
@@ -31,15 +32,14 @@ namespace _Game.Core.Services._FreeGemsPackService
 
         public FreeGemsPackService(
             IUserContainer userContainer,
-            IEconomyConfigRepository economyConfigRepository,
-            IShopConfigRepository shopConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IAdsService adsService,
             IGameInitializer gameInitializer)
         {
             _userContainer = userContainer;
-            _economyConfigRepository = economyConfigRepository;
-            _shopConfigRepository = shopConfigRepository;
+            _economyConfigRepository = configRepositoryFacade.EconomyConfigRepository;
+            _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
             _logger = logger;
             _adsService = adsService;
             _gameInitializer = gameInitializer;

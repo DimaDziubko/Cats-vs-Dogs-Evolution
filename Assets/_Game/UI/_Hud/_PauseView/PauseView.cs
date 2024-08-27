@@ -74,6 +74,7 @@ namespace _Game.UI._Hud._PauseView
             _pauseToggle.UpdateToggleStateManually(false);
             if (isConfirmed) _hud.Quit();
             _battleManager.SetPaused(false);
+            popup.Value.Cleanup();
             popup.Dispose();
         }
         

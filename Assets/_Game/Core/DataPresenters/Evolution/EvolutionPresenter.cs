@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Data;
@@ -50,8 +51,7 @@ namespace _Game.Core.DataPresenters.Evolution
 
         public EvolutionPresenter(
             IUserContainer userContainer,
-            ITimelineConfigRepository timelineConfigRepository,
-            IAgeConfigRepository ageConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IUpgradesAvailabilityChecker upgradesChecker,
             IGeneralDataPool generalDataPool,
@@ -59,8 +59,8 @@ namespace _Game.Core.DataPresenters.Evolution
             IAgeNavigator ageNavigator)
         {
             _userContainer = userContainer;
-            _timelineConfigRepository = timelineConfigRepository;
-            _ageConfigRepository = ageConfigRepository;
+            _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
+            _ageConfigRepository = configRepositoryFacade.AgeConfigRepository;
             _logger = logger;
             _upgradesChecker = upgradesChecker;
             _generalDataPool = generalDataPool;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
@@ -32,10 +33,10 @@ namespace _Game.Core.Services.IGPService
         
         public IGPService(
             IUserContainer userContainer,
-            IShopConfigRepository shopConfigRepository)
+            IConfigRepositoryFacade configRepositoryFacade)
         {
             _userContainer = userContainer;
-            _shopConfigRepository = shopConfigRepository;
+            _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
         }
 
         public List<ProductDescription> Products() => 

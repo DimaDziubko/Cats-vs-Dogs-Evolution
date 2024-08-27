@@ -7,7 +7,7 @@ using Assets._Game.Utils.Disposable;
 
 namespace _Game.UI._MainMenu.State
 {
-    public class BattleState : IMenuState
+    public class BattleState : ILocalState
     {
         private readonly MainMenu _mainMenu;
         private readonly IStartBattleScreenProvider _provider;

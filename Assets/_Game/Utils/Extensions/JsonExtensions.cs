@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Models._Cards;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -23,13 +25,43 @@ namespace _Game.Utils.Extensions
                 FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
                 AdsConfig = ExtractAdsConfig(jsonData),
                 GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
+                SummoningConfig = ExtractSummoning(jsonData),
+                CardPricingConfig = ExtractCardsPricingConfig(jsonData),
             };
+
+            var (cardConfigsByType, cardConfigsById) = ExtractCardsConfig(jsonData);
+
+            config.CardConfigsByType = cardConfigsByType;
+            config.CardConfigsById = cardConfigsById;
             
             //TODO Delete later
             Debug.Log("GAME CONFIG PARSED SUCCESSFULLY");
 
             return config;
         }
+
+        private static (Dictionary<CardType, List<CardConfig>>, Dictionary<int, CardConfig>) ExtractCardsConfig(JObject jsonData)
+        {
+            var cardsByType = new Dictionary<CardType, List<CardConfig>>();
+            var cardsById = new Dictionary<int, CardConfig>();
+            var cardsConfig = Resources.Load<CardsConfig>(Constants.LocalConfigPath.CARDS_CONFIG_PATH);
+
+            foreach (var card in cardsConfig.CardConfigs)
+            {
+                if (!cardsByType.ContainsKey(card.Type))
+                {
+                    cardsByType[card.Type] = new List<CardConfig>();
+                }
+                cardsByType[card.Type].Add(card);
+                
+                cardsById[card.Id] = card;
+            }
+
+            return (cardsByType, cardsById);
+        }
+        
+        private static CardsPricingConfig ExtractCardsPricingConfig(JObject jsonData) => 
+            Resources.Load<CardsPricingConfig>(Constants.LocalConfigPath.CARDS_PRICING_PATH);
 
         private static List<RemoteWarriorConfig> ExtractWarriors(JObject jsonData)
         {
@@ -127,8 +159,15 @@ namespace _Game.Utils.Extensions
             return foodBoostToken.ToObject<FoodBoostConfig>();
         }
 
-        private static CommonConfig ExtractCommonConfig(JObject jsonData) =>
-            Resources.Load<CommonConfig>(Constants.LocalConfigPath.COMMON_CONFIG_PATH);
+        private static CommonConfig ExtractCommonConfig(JObject jsonData)
+        {
+            var commonConfig = Resources.Load<CommonConfig>(Constants.LocalConfigPath.COMMON_CONFIG_PATH);
+            if (commonConfig == null)
+            {
+                Debug.LogError("CommonConfig is null");
+            }
+            return commonConfig;
+        }
 
         private static List<BattleSpeedConfig> ExtractBattleSpeedConfig(JObject jsonData)
         {
@@ -185,8 +224,20 @@ namespace _Game.Utils.Extensions
             return timelineConfig;
         }
 
+        private static Dictionary<int, CardsSummoning> ExtractSummoning(JObject jsonData)
+        {
+            var config = Resources.Load<SummoningConfigs>(Constants.LocalConfigPath.SUMMONING_CONFIG_PATH);
+            int accumulated = 0;
+            foreach (var summoning in config.CardsSummoningConfigs)
+            {
+                accumulated += summoning.CardsRequiredForLevel;
+                summoning.AccumulatedCardsRequiredForLevel = accumulated;
+            }
+            return config.CardsSummoningConfigs.ToDictionary(x => x.Level, x => x);
+        }
+
         private static AgeConfig UpdateAgeConfigWithRemoteData(AgeConfig age, List<RemoteAgeConfig> remoteAgesData,
-            List<RemoteWarriorConfig> remoteWarriorsData, GeneralWarriorsConfig warriorses)
+            List<RemoteWarriorConfig> remoteWarriorsData, GeneralWarriorsConfig warriors)
         {
             var remoteAgeData = remoteAgesData.First(x => x.Id == age.Id);
             age.Economy = remoteAgeData.Economy;
@@ -194,7 +245,7 @@ namespace _Game.Utils.Extensions
             age.GemsPerAge = remoteAgeData.GemsPerAge;
             age.Price = remoteAgeData.Price;
 
-            var relevantWarriors = GetRelevantWarriors(age.WarriorsId, remoteWarriorsData, warriorses);
+            var relevantWarriors = GetRelevantWarriors(age.WarriorsId, remoteWarriorsData, warriors);
             age.Warriors = relevantWarriors;
 
             return age;

@@ -1,4 +1,5 @@
 ﻿using _Game.Core.AssetManagement;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Data;
 using _Game.UI._Shop.Scripts;
@@ -16,10 +17,10 @@ namespace _Game.Core.DataProviders.ShopDataProvider
         private readonly IAssetRegistry _assetRegistry;
 
         public ShopDataProvider(
-            IShopConfigRepository shopConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IAssetRegistry assetRegistry)
         {
-            _shopConfigRepository = shopConfigRepository;
+            _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
             _assetRegistry = assetRegistry;
         }
 

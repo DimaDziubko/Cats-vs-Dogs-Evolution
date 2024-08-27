@@ -28,6 +28,7 @@ namespace _Game.Core.UserState._State
         public TasksState TasksState;
         public DailyTasksState DailyTasksState;
         public AdsWeeklyWatchState AdsWeeklyWatchState;
+        public CardsCollectionState CardsCollectionState;
 
         
         public static UserAccountState GetInitial(
@@ -126,6 +127,13 @@ namespace _Game.Core.UserState._State
                 {
                     LastWeekAdsWatched = new List<int>(7) { 0, 0, 0, 0, 0, 0, 0 },
                     LastDay = DateTime.Today
+                },
+                
+                CardsCollectionState = new CardsCollectionState()
+                {
+                    CardSummoningLevel = 1,
+                    CardsSummoningProgressCount = 0,
+                    Cards = new List<Card>(),
                 }
             };
         }

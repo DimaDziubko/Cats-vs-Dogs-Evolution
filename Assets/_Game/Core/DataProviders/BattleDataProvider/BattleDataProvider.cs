@@ -2,6 +2,7 @@
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Data;
 using _Game.Core.Data.Battle;
@@ -32,14 +33,14 @@ namespace _Game.Core.DataProviders.BattleDataProvider
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         public BattleDataProvider(
-            ITimelineConfigRepository timelineConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IUserContainer userContainer,
             IDataProviderFacade dataProvider,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
             _logger = logger;
-            _timelineConfigRepository = timelineConfigRepository;
+            _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
             _userContainer = userContainer;
             _dataProvider = dataProvider;
             _assetRegistry = assetRegistry;

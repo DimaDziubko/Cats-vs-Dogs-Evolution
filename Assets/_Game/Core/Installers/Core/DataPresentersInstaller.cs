@@ -2,6 +2,7 @@
 using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
 using Assets._Game.Core.DataPresenters.UnitDataPresenter;
 using Zenject;
@@ -18,6 +19,7 @@ namespace _Game.Core.Installers.Core
             BindTowerDataPresenter();
             BindBattlePresenter();
             BindShopPresenter();
+            BindCardsPresenter();
         }
 
         private void BindUnitBuilderDataPresenter() => 
@@ -48,6 +50,11 @@ namespace _Game.Core.Installers.Core
         private void BindShopPresenter() =>
             Container
                 .BindInterfacesAndSelfTo<ShopPresenter>()
+                .AsSingle();
+
+        private void BindCardsPresenter() =>
+            Container
+                .BindInterfacesAndSelfTo<CardsScreenPresenter>()
                 .AsSingle();
     }
 }

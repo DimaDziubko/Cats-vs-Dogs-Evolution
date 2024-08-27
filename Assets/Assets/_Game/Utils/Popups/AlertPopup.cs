@@ -51,5 +51,11 @@ namespace Assets._Game.Utils.Popups
             _audioService.PlayButtonSound();
             _taskCompletion.TrySetResult(false);
         }
+        
+        public void Cleanup()
+        {
+            _okButton.onClick.RemoveListener(OnAccept);
+            _cancelButton.onClick.RemoveListener(OnCancelled);
+        }
     }
 }

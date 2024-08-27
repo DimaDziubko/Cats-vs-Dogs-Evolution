@@ -31,14 +31,14 @@ namespace _Game.Core.DataPresenters._TimelineInfoPresenter
 
         public TimelineInfoPresenter(
             IUserContainer userContainer,
-            ITimelineConfigRepository timelineConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IGeneralDataPool generalDataPool,
             IGameInitializer gameInitializer,
             ITimelineNavigator timelineNavigator)
         {
             _userContainer = userContainer;
-            _timelineConfigRepository = timelineConfigRepository;
+            _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
             _logger = logger;
             _generalDataPool = generalDataPool;
             _gameInitializer = gameInitializer;

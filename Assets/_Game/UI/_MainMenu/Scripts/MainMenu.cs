@@ -5,6 +5,7 @@ using _Game.Core._UpgradesChecker;
 using _Game.Core.GameState;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Temp;
+using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._MainMenu.State;
 using _Game.UI._Shop.Scripts;
@@ -27,6 +28,8 @@ namespace _Game.UI._MainMenu.Scripts
         Evolution,
         UpgradesAndEvolution,
         Shop,
+        GeneralCards,
+        Cards,
     }
 
     [RequireComponent(typeof(Canvas))]
@@ -51,7 +54,7 @@ namespace _Game.UI._MainMenu.Scripts
 
         [SerializeField] private RectTransform[] _buttons;
 
-        private MenuStateMachine _menuStateMachine;
+        private LocalStateMachine _menuStateMachine;
 
         private IGameStateMachine _stateMachine;
         private IAudioService _audioService;
@@ -60,12 +63,12 @@ namespace _Game.UI._MainMenu.Scripts
         private IUpgradesAvailabilityChecker _upgradesChecker;
         private IMyLogger _logger;
         private Curtain _curtain;
-        
+
         //TODO Change step by step
         private bool IsDungeonUnlocked => false;
         private bool IsUpgradesUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_upgradeButton);
         private bool IsBattleUnlocked => true;
-        private bool IsCardsUnlocked => false;
+        private bool IsCardsUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_cardsButton);
         
         //TODO Add unlock condition
         private bool IsShopUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_shopButton);
@@ -81,7 +84,8 @@ namespace _Game.UI._MainMenu.Scripts
             IUpgradesAvailabilityChecker upgradesChecker,
             IMyLogger logger,
             Curtain curtain,
-            IUINotifier uiNotifier)
+            IUINotifier uiNotifier,
+            IGeneralCardsScreenProvider generalCardsScreenProvider)
         {
 
             _audioService = audioService;
@@ -92,14 +96,16 @@ namespace _Game.UI._MainMenu.Scripts
             _logger = logger;
             _curtain = curtain;
 
-            _menuStateMachine = new MenuStateMachine();
+            _menuStateMachine = new LocalStateMachine();
             BattleState battleState = new BattleState(this, startBattleScreenProvider, _battleButton, uiNotifier);
             UpgradesState upgradesState = new UpgradesState(this, upgradeAndEvolutionScreenProvider, _upgradeButton, uiNotifier);
             ShopState shopState = new ShopState(this, shopProvider, _shopButton, uiNotifier);
+            GeneralCardsState generalCardsState = new GeneralCardsState(this, generalCardsScreenProvider, _cardsButton, uiNotifier);
             
             _menuStateMachine.AddState(battleState);
             _menuStateMachine.AddState(upgradesState);
             _menuStateMachine.AddState(shopState);
+            _menuStateMachine.AddState(generalCardsState);
         }
 
         public void HideCurtain() => _curtain.Hide();
@@ -187,10 +193,8 @@ namespace _Game.UI._MainMenu.Scripts
         private void OnShopButtonClick(ToggleButton button) => 
             _menuStateMachine.Enter<ShopState>();
 
-        private void OnCardsButtonClick(ToggleButton obj)
-        {
-            //TODO Implement later
-        }
+        private void OnCardsButtonClick(ToggleButton obj) => 
+            _menuStateMachine.Enter<GeneralCardsState>();
 
         private void OnDungeonClick(ToggleButton obj)
         {

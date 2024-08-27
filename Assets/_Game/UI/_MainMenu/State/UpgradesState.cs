@@ -7,7 +7,7 @@ using Assets._Game.Utils.Disposable;
 
 namespace _Game.UI._MainMenu.State
 {
-    public class UpgradesState : IMenuState
+    public class UpgradesState : ILocalState
     {
         private readonly MainMenu _mainMenu;
         private readonly IUpgradeAndEvolutionScreenProvider _provider;

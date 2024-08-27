@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Game.Core.Configs.Models._Cards;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 
 namespace _Game.Core.Configs.Models
 {
@@ -12,5 +14,9 @@ namespace _Game.Core.Configs.Models
         public FreeGemsPackDayConfig FreeGemsPackDayConfig;
         public AdsConfig AdsConfig;
         public GeneralDailyTaskConfig GeneralDailyTaskConfig;
+        public Dictionary<int, CardsSummoning> SummoningConfig;
+        public Dictionary<CardType, List<CardConfig>> CardConfigsByType;
+        public Dictionary<int, CardConfig> CardConfigsById;
+        public CardsPricingConfig CardPricingConfig;
     }
 }

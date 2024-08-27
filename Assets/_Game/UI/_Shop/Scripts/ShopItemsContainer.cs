@@ -43,24 +43,6 @@ namespace _Game.UI._Shop.Scripts
             _logger = logger;
         }
 
-        private void Init()
-        {
-            foreach (var item in _itemsType1)
-            {
-                item.Init();
-            }
-            
-            foreach (var item in _itemsType2)
-            {
-                item.Init();
-            }
-            
-            foreach (var item in _itemsType3)
-            {
-                item.Init();
-            }
-        }
-
         public void UpdateShopItems(List<ShopItemModel> models)
         {
             Cleanup();
@@ -93,6 +75,24 @@ namespace _Game.UI._Shop.Scripts
 
             _logger.Log("Shop items updated");
             Init();
+        }
+
+        private void Init()
+        {
+            foreach (var item in _itemsType1)
+            {
+                item.Init();
+            }
+            
+            foreach (var item in _itemsType2)
+            {
+                item.Init();
+            }
+            
+            foreach (var item in _itemsType3)
+            {
+                item.Init();
+            }
         }
 
         private void AddPlugsIfNeeded(List<ShopItem> items, Transform parent)

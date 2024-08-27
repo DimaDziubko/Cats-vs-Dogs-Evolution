@@ -4,6 +4,7 @@ using _Game.Core._GameInitializer;
 using _Game.Core._GameListenerComposite;
 using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Debugger;
 using _Game.Core.Services.UserContainer;
@@ -65,7 +66,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         public BattleSpeedService(
             IBattleSpeedManager battleSpeedManager,
             IUserContainer userContainer,
-            IBattleSpeedConfigRepository battleSpeedConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             ITimerService timerService,
             IFeatureUnlockSystem featureUnlockSystem,
@@ -73,7 +74,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         {
             _battleSpeedManager = battleSpeedManager;
             _userContainer = userContainer;
-            _battleSpeedConfigRepository = battleSpeedConfigRepository;
+            _battleSpeedConfigRepository = configRepositoryFacade.BattleSpeedConfigRepository;
             _logger = logger;
             _timerService = timerService;
             _featureUnlockSystem = featureUnlockSystem;

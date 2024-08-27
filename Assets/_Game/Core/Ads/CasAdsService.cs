@@ -2,6 +2,7 @@
 using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Debugger;
 using _Game.Core.Services.Analytics;
@@ -53,14 +54,14 @@ namespace _Game.Core.Ads
             IBattleManager battleManager,
             IUserContainer userContainer,
             ITimerService timerService,
-            IAdsConfigRepository adsConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IGameInitializer gameInitializer)
         {
             _rewardAdsService = new CasRewardAdService(logger, battleManager, userContainer);
             _interstitialAdsService = new CasInterstitialAdService(logger, userContainer);
             _logger = logger;
             _timerService = timerService;
-            _adsConfigRepository = adsConfigRepository;
+            _adsConfigRepository = configRepositoryFacade.AdsConfigRepository;
             _userContainer = userContainer;
             //debugger.CasAdsService = this;
 

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
-using _Game.Core.Configs.Repositories.Shop;
+using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.DailyTask;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
@@ -38,13 +39,13 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         public DailyTask CurrentTask => _currentDailyTask;
 
         public DailyTaskGenerator(
-            IDailyTaskConfigRepository dailyTaskConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IUserContainer userContainer,
             IRandomService random,
             IFeatureUnlockSystem featureUnlockSystem,
             IMyLogger logger)
         {
-            _dailyTaskConfigRepository = dailyTaskConfigRepository;
+            _dailyTaskConfigRepository = configRepositoryFacade.DailyTaskConfigRepository;
             _userContainer = userContainer;
             _random = random;
             _featureUnlockSystem = featureUnlockSystem;

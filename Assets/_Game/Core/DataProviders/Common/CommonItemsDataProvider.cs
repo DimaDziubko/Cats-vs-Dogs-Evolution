@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Data;
 using _Game.Core.DataProviders.Facade;
@@ -18,11 +19,11 @@ namespace _Game.Core.DataProviders.Common
         
         public CommonItemsDataProvider(
             IAssetRegistry assetRegistry,
-            ICommonItemsConfigRepository commonItemsConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger)
         {
             _assetRegistry = assetRegistry;
-            _commonItemsConfigRepository = commonItemsConfigRepository;
+            _commonItemsConfigRepository = configRepositoryFacade.CommonItemsConfigRepository;
             _logger = logger;
         }
         public async UniTask<DataPool<Race, Sprite>> LoadFoodIcons(LoadContext context)

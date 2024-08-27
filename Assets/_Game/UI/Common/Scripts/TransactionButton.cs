@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -55,6 +56,12 @@ namespace _Game.UI.Common.Scripts
         {
             Unsubscribe();
             Subscribe();
+        }
+
+        public void UpdateButtonState(
+            TransactionButtonModel model)
+        {
+            UpdateButtonState(model.State, model.Price, model.ShowMoneyPanel);
         }
 
         public void UpdateButtonState(

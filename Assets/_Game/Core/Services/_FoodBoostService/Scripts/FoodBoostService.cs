@@ -6,6 +6,7 @@ using _Game.Core._GameListenerComposite;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
@@ -40,7 +41,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         
         public FoodBoostService(
             IUserContainer userContainer,
-            IEconomyConfigRepository configRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IAdsService adsService,
             IFeatureUnlockSystem featureUnlockSystem,
@@ -48,7 +49,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             IGameInitializer gameInitializer)
         {
             _userContainer = userContainer;
-            _configRepository = configRepository;
+            _configRepository = configRepositoryFacade.EconomyConfigRepository;
             _logger = logger;
             _adsService = adsService;
             _featureUnlockSystem = featureUnlockSystem;

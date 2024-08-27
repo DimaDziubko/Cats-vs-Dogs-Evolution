@@ -7,7 +7,7 @@ using Assets._Game.Utils.Disposable;
 
 namespace _Game.UI._MainMenu.State
 {
-    public class ShopState : IMenuState
+    public class ShopState : ILocalState
     {
         private readonly MainMenu _mainMenu;
         private readonly IShopProvider _provider;

@@ -82,9 +82,17 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
                     return GetTresholdForShop();
                 case Feature.DailyTask:
                     return GetTresholdForDailyTask();
+                case Feature.Cards:
+                    return GetTresholdForCards();
                 default:
                     return false;
             }
+        }
+
+        private bool GetTresholdForCards()
+        {
+            //For test
+            return true;
         }
 
         private void OnBattleStatisticsChanged() => 
@@ -103,10 +111,20 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
             CheckForShopFeatureUnlock();
             CheckForX2FeatureUnlock();
             CheckForPauseFeatureUnlock();
+            CheckForCardsUnlock();
+        }
+
+        private void CheckForCardsUnlock()
+        {
+            if (!IsFeatureUnlocked(Feature.Cards) && GetTresholdForCards())
+            {
+                FeatureUnlocked?.Invoke(Feature.Cards);
+                _featureUnlockState[Feature.Cards] = true;
+            }
         }
 
 
-     private void CheckForDailyTaskUnlock()
+        private void CheckForDailyTaskUnlock()
         {
             if (!IsFeatureUnlocked(Feature.DailyTask) && GetTresholdForDailyTask())
             {

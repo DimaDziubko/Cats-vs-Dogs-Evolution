@@ -10,6 +10,9 @@ namespace _Game.Utils
             public const string COMMON_CONFIG_PATH = "Common/CommonConfig";
             public const string GENERAL_AGE_CONFIG_PATH = "Age/GeneralAgesConfig";
             public const string GENERAL_BATTLE_CONFIG_PATH = "Battle/GeneralBattlesConfig";
+            public const string CARDS_CONFIG_PATH = "Card/CardsConfig";
+            public const string SUMMONING_CONFIG_PATH = "Card/SummoningConfig";
+            public const string CARDS_PRICING_PATH = "Card/CardsPricingConfig";
         }
         public sealed class Money
         {

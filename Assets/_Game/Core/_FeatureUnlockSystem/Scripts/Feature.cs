@@ -11,6 +11,10 @@
         BattleSpeed,
         X2,
         Shop,
-        DailyTask
+        DailyTask,
+        Cards,
+        Skills,
+        Runes,
+        Heroes
     }
 }

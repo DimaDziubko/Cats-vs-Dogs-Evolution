@@ -1,5 +1,7 @@
 ﻿using _Game.Core.LoadingScreen;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._CardsGeneral._Cards.Scripts;
+using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionWindow.Scripts;
@@ -10,6 +12,7 @@ using _Game.UI.Factory;
 using _Game.UI.GameResult.Scripts;
 using _Game.UI.Global;
 using _Game.UI.Header.Scripts;
+using _Game.UI.Popups;
 using _Game.UI.RateGame.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
@@ -48,6 +51,8 @@ namespace _Game.Core.Installers.Core
             BindGameRateScreenProvider();
             BindRateGameChecker();
             BindUIFactory();
+            BindCardsScreenProvider();
+            BindGeneralCardsScreenProvider();
         }
 
         private void BindUINotifier() => 
@@ -141,5 +146,15 @@ namespace _Game.Core.Installers.Core
 
         private void BindUIFactory() => 
             Container.Bind<IUIFactory>().To<UIFactory>().FromInstance(_uiFactory).AsSingle();
+
+        private void BindCardsScreenProvider() =>
+            Container.Bind<ICardsScreenProvider>()
+                .To<CardsScreenProvider>()
+                .AsSingle();
+
+        private void BindGeneralCardsScreenProvider() =>
+            Container.Bind<IGeneralCardsScreenProvider>()
+                .To<GeneralCardsScreenProvider>()
+                .AsSingle();
     }
 }

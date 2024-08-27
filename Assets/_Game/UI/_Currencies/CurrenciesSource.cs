@@ -8,6 +8,7 @@
         MiniShop,
         FreeGemsPack,
         Upgrade,
-        DailyTask
+        DailyTask,
+        Cards
     }
 }

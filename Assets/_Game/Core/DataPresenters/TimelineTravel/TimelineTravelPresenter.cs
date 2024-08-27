@@ -46,14 +46,14 @@ namespace _Game.Core.DataPresenters.TimelineTravel
 
         public TimelineTravelPresenter(
             IUserContainer userContainer,
-            ITimelineConfigRepository timelineConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IUpgradesAvailabilityChecker upgradesChecker,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator)
         {
             _userContainer = userContainer;
-            _timelineConfigRepository = timelineConfigRepository;
+            _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
             _logger = logger;
             _upgradesChecker = upgradesChecker;
             _gameInitializer = gameInitializer;

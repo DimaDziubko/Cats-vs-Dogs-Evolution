@@ -1,5 +1,6 @@
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
@@ -41,7 +42,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             IBattleNavigator battleNavigator,
             ITimelineNavigator timelineNavigator,
             IAgeNavigator ageNavigator,
-            ITimelineConfigRepository timelineConfigRepository)
+            IConfigRepositoryFacade configRepositoryFacade)
         {
             _cameraService = cameraService;
             _audioService = audioService;
@@ -53,7 +54,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
             _battleNavigator = battleNavigator;
             _timelineNavigator = timelineNavigator;
             _ageNavigator = ageNavigator;
-            _timelineConfigRepository = timelineConfigRepository;
+            _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
         }
         public async UniTask<Disposable<StartBattleScreen>> Load()
         {

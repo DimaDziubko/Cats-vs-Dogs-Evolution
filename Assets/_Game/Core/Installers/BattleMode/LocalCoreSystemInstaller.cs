@@ -1,4 +1,5 @@
-﻿using _Game.Gameplay._DailyTasks.Scripts;
+﻿using _Game.Gameplay._Cards.Scripts;
+using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay._Race;
 using Zenject;
 
@@ -12,7 +13,14 @@ namespace _Game.Core.Installers.BattleMode
             BindDailyTaskGenerator();
             BindDailyTaskCompletionChecker();
             BindDailyTaskPresenter();
+            BindCardGenerator();
         }
+
+        private void BindCardGenerator() =>
+            Container     
+                .BindInterfacesAndSelfTo<CardGenerator>()
+                .AsSingle()
+                .NonLazy();
 
         private void BindRaceSelectionController() =>
             Container

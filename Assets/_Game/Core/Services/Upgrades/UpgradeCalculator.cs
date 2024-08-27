@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
@@ -22,13 +23,13 @@ namespace _Game.Core.Services.Upgrades
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         public  UpgradeCalculator(
-            IEconomyConfigRepository economyConfigRepository, 
+            IConfigRepositoryFacade configRepositoryFacade, 
             IUserContainer userContainer,
             IGeneralDataPool generalDataPool,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator)
         {
-            _economyConfigRepository = economyConfigRepository;
+            _economyConfigRepository = configRepositoryFacade.EconomyConfigRepository;
             _userContainer = userContainer;
             _generalDataPool = generalDataPool;
             _gameInitializer = gameInitializer;

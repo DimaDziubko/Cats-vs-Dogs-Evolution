@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._Logger;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
 using UnityEngine.Purchasing;
 
@@ -27,10 +28,10 @@ namespace _Game.Core.Services.IAP
 
         public IAPProvider(
             IMyLogger logger,
-            IShopConfigRepository shopConfigRepository)
+            IConfigRepositoryFacade configRepositoryFacade)
         {
             _logger = logger;
-            _shopConfigRepository = shopConfigRepository;
+            _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
         }
 
         public void Initialize(IAPService iapService)

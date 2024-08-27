@@ -1,5 +1,4 @@
 ﻿using System;
-using _Game.Common;
 using _Game.UI._Currencies;
 using _Game.Utils;
 

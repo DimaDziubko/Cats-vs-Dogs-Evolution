@@ -2,6 +2,7 @@
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Static;
@@ -33,14 +34,14 @@ namespace _Game.Core.DataProviders.AgeDataProvider
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
 
         public AgeDataProvider(
-            IAgeConfigRepository ageConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IUserContainer userContainer,
             IDataProviderFacade dataProvider,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
             _logger = logger;
-            _ageConfigRepository = ageConfigRepository;
+            _ageConfigRepository = configRepositoryFacade.AgeConfigRepository;
             _userContainer = userContainer;
             _dataProvider = dataProvider;
             _assetRegistry = assetRegistry;
