@@ -64,7 +64,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         public void Show()
         {
-            _header.ShowWindowName(GameScreen.ToString(), Color.white);
+            _header.ShowScreenName(GameScreen.ToString(), Color.white);
             
             _canvas.enabled = true;
 

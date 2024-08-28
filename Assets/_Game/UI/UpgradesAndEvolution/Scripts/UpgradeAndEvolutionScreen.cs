@@ -12,13 +12,10 @@ using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 

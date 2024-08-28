@@ -103,6 +103,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
                 StartAnimation();
                 return;
             }
+            
             Disable();
         }
     }

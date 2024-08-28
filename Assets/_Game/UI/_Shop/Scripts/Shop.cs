@@ -67,7 +67,7 @@ namespace _Game.UI._Shop.Scripts
         }
 
         private void ShowName() => 
-            _header.ShowWindowName(GameScreen.ToString(), _color);
+            _header.ShowScreenName(GameScreen.ToString(), _color);
 
         public void Hide()
         {

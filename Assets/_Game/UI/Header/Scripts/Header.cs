@@ -26,7 +26,7 @@ namespace _Game.UI.Header.Scripts
             _currenciesUI.Show();
         }
 
-        public void ShowWindowName(string windowName, Color color)
+        public void ShowScreenName(string windowName, Color color)
         {
             _windowNameLabel.text = windowName;
             _windowNameLabel.color = color;

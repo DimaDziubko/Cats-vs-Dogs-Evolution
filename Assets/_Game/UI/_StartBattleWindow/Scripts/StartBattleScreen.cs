@@ -92,7 +92,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void ShowName()
         {
             var fullName = $"{GameScreen} {_battleNavigator.CurrentBattle + 1}";
-            _header.ShowWindowName(fullName, Color.white);
+            _header.ShowScreenName(fullName, Color.white);
         }
 
         public void Hide()

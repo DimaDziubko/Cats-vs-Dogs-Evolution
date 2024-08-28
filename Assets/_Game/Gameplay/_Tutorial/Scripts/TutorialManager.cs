@@ -1,28 +1,33 @@
 using System;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Tutorial.Scripts;
+using fbg;
 
 namespace _Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialManager : ITutorialManager, IDisposable
     {
         private readonly TutorialPointerView _pointerView;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IGameInitializer _gameInitializer;
-        private ITutorialStateReadonly TutorialStateReadonly => _persistentData.State.TutorialState;
+        private readonly IMyLogger _logger;
+        private ITutorialStateReadonly TutorialStateReadonly => _userContainer.State.TutorialState;
 
         private bool _inProgress;
 
         public TutorialManager(
             TutorialPointerView pointerView,
-            IUserContainer persistentData,
-            IGameInitializer gameInitializer)
+            IUserContainer userContainer,
+            IGameInitializer gameInitializer,
+            IMyLogger logger)
         {
             _pointerView = pointerView;
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _gameInitializer = gameInitializer;
+            _logger = logger;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -43,7 +48,8 @@ namespace _Game.Gameplay._Tutorial.Scripts
         {
             if(tutorialStep == null) return;
             var step = tutorialStep.GetTutorialStepData().Step;
-            if(TutorialStateReadonly.StepsCompleted >= step) return;
+            if(TutorialStateReadonly.StepsCompleted >= step 
+               || step > TutorialStateReadonly.StepsCompleted + 1 ) return;
             tutorialStep.Show += Show;
             tutorialStep.Complete += OnStepComplete;
             tutorialStep.Cancel += OnTutorialBroke;
@@ -63,16 +69,21 @@ namespace _Game.Gameplay._Tutorial.Scripts
             var tutorialData = tutorialStep.GetTutorialStepData();
             _pointerView.Show(tutorialData);
             _inProgress = true;
+            _logger.Log($"SHOW TUTORIAL STEP {tutorialData.Step}");
         }
 
-        private void OnTutorialBroke(ITutorialStep tutorialStep) => 
+        private void OnTutorialBroke(ITutorialStep tutorialStep)
+        {
             Break();
+            _logger.Log($"BREAK TUTORIAL STEP {tutorialStep.GetTutorialStepData().Step}");
+        }
 
         private void OnStepComplete(ITutorialStep tutorialStep)
         {
             UnRegister(tutorialStep);
             var tutorialData = tutorialStep.GetTutorialStepData();
-            _persistentData.TutorialStateHandler.CompleteTutorialStep(tutorialData.Step);
+            _userContainer.TutorialStateHandler.CompleteTutorialStep(tutorialData.Step);
+            _logger.Log($"COMPLETE TUTORIAL STEP {tutorialStep.GetTutorialStepData().Step}");
         }
 
         private void OnStepCompleted(int step) => Break();
