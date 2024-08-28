@@ -4,7 +4,6 @@ using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using fbg;
 
 namespace _Game.Gameplay._Tutorial.Scripts
 {
