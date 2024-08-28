@@ -43,7 +43,8 @@ namespace _Game.Gameplay._Tutorial.Scripts
         {
             if(tutorialStep == null) return;
             var step = tutorialStep.GetTutorialStepData().Step;
-            if(TutorialStateReadonly.StepsCompleted >= step) return;
+            if(TutorialStateReadonly.StepsCompleted >= step ||
+               step > TutorialStateReadonly.StepsCompleted + 1) return;
             tutorialStep.Show += Show;
             tutorialStep.Complete += OnStepComplete;
             tutorialStep.Cancel += OnTutorialBroke;

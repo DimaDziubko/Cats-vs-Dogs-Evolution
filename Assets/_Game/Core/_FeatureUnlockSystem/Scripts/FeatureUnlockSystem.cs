@@ -118,8 +118,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.Cards) && GetTresholdForCards())
             {
-                FeatureUnlocked?.Invoke(Feature.Cards);
                 _featureUnlockState[Feature.Cards] = true;
+                FeatureUnlocked?.Invoke(Feature.Cards);
             }
         }
 
@@ -128,8 +128,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.DailyTask) && GetTresholdForDailyTask())
             {
-                FeatureUnlocked?.Invoke(Feature.DailyTask);
                 _featureUnlockState[Feature.DailyTask] = true;
+                FeatureUnlocked?.Invoke(Feature.DailyTask);
             }
         }
 
@@ -137,8 +137,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.BattleSpeed) && GetTresholdForBattleSpeed())
             {
-                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
                 _featureUnlockState[Feature.BattleSpeed] = true;
+                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
             }
         }
 
@@ -146,8 +146,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.EvolutionScreen) && GetTresholdForEvolutionScreen())
             {
-                FeatureUnlocked?.Invoke(Feature.EvolutionScreen);
                 _featureUnlockState[Feature.EvolutionScreen] = true;
+                FeatureUnlocked?.Invoke(Feature.EvolutionScreen);
             }
         }
 
@@ -155,8 +155,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.Shop) && GetTresholdForShop())
             {
-                FeatureUnlocked?.Invoke(Feature.Shop);
                 _featureUnlockState[Feature.Shop] = true;
+                FeatureUnlocked?.Invoke(Feature.Shop);
             }
         }
 
@@ -164,8 +164,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.UpgradesScreen) && GetTresholdForUpgradesScreen())
             {
-                FeatureUnlocked?.Invoke(Feature.UpgradesScreen);
                 _featureUnlockState[Feature.UpgradesScreen] = true;
+                FeatureUnlocked?.Invoke(Feature.UpgradesScreen);
             }
         }
 
@@ -173,8 +173,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.FoodBoost) && GetTresholdForFoodBoost())
             {
-                FeatureUnlocked?.Invoke(Feature.FoodBoost);
                 _featureUnlockState[Feature.FoodBoost] = true;
+                FeatureUnlocked?.Invoke(Feature.FoodBoost);
             }
         }
 
@@ -182,8 +182,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.X2) && GetTresholdForX2())
             {
-                FeatureUnlocked?.Invoke(Feature.X2);
                 _featureUnlockState[Feature.X2] = true;
+                FeatureUnlocked?.Invoke(Feature.X2);
             }
         }
 
@@ -191,8 +191,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.Pause) && GetTresholdForPause())
             {
-                FeatureUnlocked?.Invoke(Feature.Pause);
                 _featureUnlockState[Feature.Pause] = true;
+                FeatureUnlocked?.Invoke(Feature.Pause);
             }
         }
         public bool IsFeatureUnlocked(IFeature feature) => 

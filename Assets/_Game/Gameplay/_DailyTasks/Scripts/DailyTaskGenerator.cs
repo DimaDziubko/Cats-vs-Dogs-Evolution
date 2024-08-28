@@ -169,8 +169,8 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         private float SelectTarget(DailyTaskConfig config, int targetArgument)
         {
             return config.LinearFunctions.Count - 1 >= TimelineState.MaxBattle
-                ? config.LinearFunctions[TimelineState.MaxBattle].GetValue(targetArgument) 
-                : config.LinearFunctions[0].GetValue(targetArgument);
+                ? config.LinearFunctions[TimelineState.MaxBattle].GetIntValue(targetArgument) 
+                : config.LinearFunctions[0].GetIntValue(targetArgument);
         }
 
         private int GetTargetArgumentForType(DailyTaskType dailyTaskType)
