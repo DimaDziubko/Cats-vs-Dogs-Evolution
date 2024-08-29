@@ -82,7 +82,7 @@ namespace _Game.Core.Configs.Providers
             }
             else
             {
-                configString = remoteConfig.GetValue("ProdConfig1_1_0").StringValue;
+                configString = remoteConfig.GetValue("ProdConfig").StringValue;
                 _logger.Log($"PROD CONFIGS loaded");
             }
             
