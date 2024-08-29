@@ -94,6 +94,23 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         public void OnFoodBoostBtnClicked() =>
             _adsService.ShowRewardedVideo(OnFoodBoostRewardedVideoComplete, Placement.Food);
 
+        //CREATIVE CHEAT
+        public void OnAddFreeFoodCheat()
+        {
+            //var foodBoostConfig = _configRepository.GetFoodBoostConfig();
+            //if (FoodBoostState.DailyFoodBoostCount == foodBoostConfig.DailyFoodBoostCount)
+            //{
+            //    _userContainer.FoodBoostStateHandler.SpendFoodBoost(DateTime.UtcNow);
+            //}
+            //else
+            //{
+            //    _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
+            //}
+
+            ChangeFood?.Invoke(2, true);
+
+        }
+
         private void OnFoodBoostChanged() =>
             UpdateFoodBoostBtnModel();
 

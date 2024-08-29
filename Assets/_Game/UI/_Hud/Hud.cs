@@ -33,7 +33,9 @@ namespace _Game.UI._Hud
         [SerializeField] private BattleSpeedView _battleSpeedView;
         [SerializeField] private SpeedBoostView _speedBoostView;
         [SerializeField] private DailyTaskView _dailyTaskView;
-        [SerializeField] private HudVisibilityBtn _btn;
+        [Space, Header("CHEAT BTNS")]
+        [SerializeField] private HudVisibilityBtn _disableHudBtn;
+        [SerializeField] private CheatBoostFoodBtn _cheatBoostFoodBtn;
 
         public CoinCounterView CounterView => _counterView;
 
@@ -60,8 +62,15 @@ namespace _Game.UI._Hud
             _speedBoostView.Construct(speedBoost, audioService);
             _counterView.Construct();
             _dailyTaskView.Construct(dailyTaskPresenter, audioService, tutorialManager, logger);
-            if (_btn)
-                _btn.Construct(header);
+            if (_disableHudBtn)
+                _disableHudBtn.Construct(header);
+
+            if (_cheatBoostFoodBtn)
+            {
+                FoodBoostService service = foodBoostService as FoodBoostService;
+
+                _cheatBoostFoodBtn.Initialize(() => service.OnAddFreeFoodCheat());
+            }
         }
 
         public void Init()
@@ -70,8 +79,8 @@ namespace _Game.UI._Hud
             _speedBoostView.Init();
             _pauseView.Init();
             _foodBoostView.Init();
-            if (_btn)
-                _btn.Init();
+            if (_disableHudBtn)
+                _disableHudBtn.Init();
             Show();
         }
 
@@ -81,8 +90,8 @@ namespace _Game.UI._Hud
             _speedBoostView.Cleanup();
             _pauseView.Cleanup();
             _foodBoostView.Cleanup();
-            if (_btn)
-                _btn.Cleanup();
+            if (_disableHudBtn)
+                _disableHudBtn.Cleanup();
         }
 
         public void Show()
