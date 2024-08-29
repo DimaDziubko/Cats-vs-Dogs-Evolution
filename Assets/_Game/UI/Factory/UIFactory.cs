@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Factory;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace _Game.UI.Factory
         [SerializeField] private ShopItem _shopItemType1, _shopItemType2, _shopItemType3, _shopItemType4;
         [SerializeField] private Plug _shopItemPlug;
 
+        [SerializeField] private CardView _cardView;
+        
         public ShopItem Get(ShopItemViewType type, Transform parent)
         {
             ShopItem item = null;
@@ -51,18 +54,40 @@ namespace _Game.UI.Factory
             return instance;
         }
 
+        public CardView GetCard(Transform parent)
+        {
+            var instance = CreateGameObjectInstance(_cardView, parent);
+            if(instance != null)
+                instance.OriginFactory = this;
+            return instance;
+        }
+
+        public CardView GetCard()
+        {
+            var instance = CreateGameObjectInstance(_cardView);
+            if(instance != null)
+                instance.OriginFactory = this;
+            return instance;
+        }
+
         public void Reclaim(ShopItem item) => 
             Destroy(item.gameObject);
 
         public void Reclaim(Plug item) => 
             Destroy(item.gameObject);
+        
+        public void Reclaim(CardView cardView) => 
+            Destroy(cardView.gameObject);
     }
 
     public interface IUIFactory
     {
         ShopItem Get(ShopItemViewType type, Transform parent);
         Plug GetShopItemPlug(Transform parent);
+        CardView GetCard(Transform parent);
+        CardView GetCard();
         void Reclaim(Plug item);
         void Reclaim(ShopItem item);
+        void Reclaim(CardView cardView);
     }
 }

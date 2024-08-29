@@ -1,5 +1,7 @@
-﻿using _Game.UI._CardsGeneral._Summoning.Scripts;
+﻿using _Game.Core._Logger;
+using _Game.UI._CardsGeneral._Summoning.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.Factory;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using TMPro;
@@ -26,14 +28,18 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         private ICardsScreenPresenter _cardsScreenPresenter;
         
         public void Construct(
-            IWorldCameraService cameraService, 
+            IWorldCameraService cameraService,
             IAudioService audioService,
-            ICardsScreenPresenter cardsScreenPresenter)
+            ICardsScreenPresenter cardsScreenPresenter,
+            IUIFactory uiFactory, 
+            IMyLogger logger)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _cameraService = cameraService;
             _audioService = audioService;
             _cardsScreenPresenter = cardsScreenPresenter;
+            
+            _container.Construct(cardsScreenPresenter, uiFactory, audioService, logger);
             Init();
         }
 
@@ -43,6 +49,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             UpdateSummoningView(_cardsScreenPresenter.CardsSummoningPresenter.CardsSummoningModel);
             _x1CardBtn.Init();
             _x10CardBtn.Init();
+            _container.Init();
         }
 
         private void UpdateSummoningView(
@@ -74,15 +81,9 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _x10CardBtn.UpdateButtonState(models[1]);
         }
 
-        private void OnX10CardBtnClicked()
-        {
-            _cardsScreenPresenter.TryToBuyX10Card();
-        }
+        private void OnX10CardBtnClicked() => _cardsScreenPresenter.TryToBuyX10Card();
 
-        private void OnX1CardBtnClicked()
-        {
-            _cardsScreenPresenter.TryToBuyX1Card();
-        }
+        private void OnX1CardBtnClicked() => _cardsScreenPresenter.TryToBuyX1Card();
 
         private async void OnSummoningButtonClicked()
         {
@@ -115,6 +116,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         {
             _x1CardBtn.Cleanup();
             _x10CardBtn.Cleanup();
+            _container.Cleanup();
         }
         
         private void PlayButtonSound() => _audioService.PlayButtonSound();

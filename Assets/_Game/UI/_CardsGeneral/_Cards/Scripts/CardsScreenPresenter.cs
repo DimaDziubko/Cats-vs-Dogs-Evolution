@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using _Game.Core._GameInitializer;
+using _Game.Core.Configs.Models._Cards;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories._Cards;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI.Common.Scripts;
+using UnityEngine;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
 {
@@ -14,18 +18,18 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         public event Action<TransactionButtonModel[]> ButtonModelsChanged;
         public event Action<int> CardBought;
         public ICardsSummoningPresenter CardsSummoningPresenter { get; private set; }
+        public ICardsPresenter CardsPresenter { get; private set; }
 
         private readonly IUserContainer _userContainer;
         private readonly ICardsConfigRepository _cardsConfigRepository;
         private readonly IGameInitializer _gameInitializer;
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
         private ICardsCollectionStateReadonly CardsState => _userContainer.State.CardsCollectionState;
-
+        
         private readonly TransactionButtonModel[] _buttonModels 
             = {new TransactionButtonModel(), new TransactionButtonModel()};
-
         public TransactionButtonModel[] ButtonModels => _buttonModels;
-        
+
         void ICardsScreenPresenter.TryToBuyX1Card()
         {
             int amount = 1;
@@ -52,13 +56,17 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _gameInitializer = gameInitializer;
             _userContainer = userContainer;
             _cardsConfigRepository = facade.CardsConfigRepository;
+            
             CardsSummoningPresenter = new CardsSummoningPresenter(userContainer, facade.CardsConfigRepository);
+            CardsPresenter = new CardsPresenter(userContainer, facade.CardsConfigRepository);
+            
             gameInitializer.OnMainInitialization += Init;
         }
 
         void Init()
         {
             CardsSummoningPresenter.Init();
+            CardsPresenter.Init();
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
             UpdateButtonModels();
         }

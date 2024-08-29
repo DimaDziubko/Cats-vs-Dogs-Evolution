@@ -1,0 +1,1916 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_unity.rider.package</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_unity.rider.package</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{ab3a59b5-6ad2-e0ff-585f-bc5b85854450}</ProjectGuid>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>.</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\Bin\Debug\Assembly-CSharp\</OutputPath>
+    <DefineConstants>UNITY_2022_3_40;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_ANDROID;TEXTCORE_1_0_OR_NEWER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;ENABLE_ETC_COMPRESSION;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;DOTWEEN;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169,0649</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+    <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
+    <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
+  </PropertyGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
+    <Analyzer Include="C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\_Game\Scenes\Tests\Mover.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuilderViewController.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\BinaryFormatterSaveLoadStrategy.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\GameConfig.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\TimelineInfoItemModel.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\IGameResultPopupProvider.cs" />
+    <Compile Include="Assets\_Game\Core\_UpgradesChecker\UpgradesAvailabilityChecker.cs" />
+    <Compile Include="Assets\_Game\UI\Settings\Scripts\SettingsPopup.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\ToggleWithSpriteSwap.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_SpeedBoostService\Scripts\ISpeedBoostService.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\BaseDataProvider\BaseStaticDataProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Coins\Scripts\LootCoin.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\_Cards\CardsConfig.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\TravelTabModel.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\BaseSpawner.cs" />
+    <Compile Include="Assets\_Game\Core\AssetManagement\AssetsConstants.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\_Cards\SummoningConfigs.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\ShopDataProvider\ShopDataProvider.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\ParticlesMoveToTarget.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\UnitAttack.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\UnitBuilderDataPresenter\IUnitBuilderDataPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\RateGame\Scripts\RateGameScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\SoundService.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\FoodBoostState.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_TimelineInfoPresenter\TimelineInfoPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardsScreen.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\Migrations\MigrationTo110.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_DailyTasks\Scripts\DailyTask.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Common\ICommonItemsDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\GameLoadingState.cs" />
+    <Compile Include="Assets\_Game\Creatives\Creative_1\Scenario\ICrUnitBuilder.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_BattleSpeedService\_Scripts\IBattleSpeedService.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Factory\IBaseFactory.cs" />
+    <Compile Include="Assets\_Game\Common\RewardAnimator.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_FreeGemsPackService\IFreeGemsPackService.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Tutorial\Scripts\TutorialStep.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\EvolutionTab.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Attack\MeleeAttack.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuilderBtnStaticData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Tutorial\Scripts\ITutorialStep.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\_Target\TargetCollection.cs" />
+    <Compile Include="Assets\_Game\Core\Debugger\MyDebugger.cs" />
+    <Compile Include="Assets\_Game\UI\Header\Scripts\Header.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\IConfigRepositoryFacade.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IFoodListener.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Providers\LocalConfigProvider.cs" />
+    <Compile Include="Assets\_Game\Temp\GlobalEvents.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IGPService\IGPService.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\ILoadingOperation.cs" />
+    <Compile Include="Assets\_Game\Audio\Scripts\SFXSourcesHolder.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\RemoteAgeConfig.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Scripts\UpgradeAndEvolutionScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Scenario\EnemyWaveScheduler.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\AnalyticsService.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_RaceChanger\RaceChanger.cs" />
+    <Compile Include="Assets\_Game\Utils\CheatPanel.cs" />
+    <Compile Include="Assets\_Game\Creatives\Factories\CrProjectileFactory.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\WeaponDataProviders\WeaponDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Economy\IEconomyConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitDataProviders\UniversalUnitDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_DailyTask\IDailyTaskStateHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\UnitType.cs" />
+    <Compile Include="Assets\_Game\UI\Popups\IAlertPopupProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_RaceSelectionWindow\Scripts\RaceSelectionWindow.cs" />
+    <Compile Include="Assets\_Game\UI\_GameplayUI\Scripts\GameplayUI.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\BattleSpeedConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Battle\Scripts\BattleEnvironment.cs" />
+    <Compile Include="Assets\_Game\UI\_Currencies\CurrenciesUI.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\Hud.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Upgrade\UpgradeStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\Services\AssetProvider\IAssetProvider.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\TiggerTest.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\TravelAnimationScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\_Cards\CardConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuilderUI.cs" />
+    <Compile Include="Assets\_Game\Core\_UpgradesChecker\NotificationData.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\Curtain.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\BattlePresenter\BattlePresenter.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\Proj_2.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Timeline\TimelineDataProvider.cs" />
+    <Compile Include="Assets\Assets\_Game\Common\GameBehaviourCollection.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\TimelineInfoScreen.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\IShopProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\IDamageable.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\EnvironmentDataProvider\IEnvironmentDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\LoadingScreen\ILoadingScreenProvider.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\EvolutionScreen.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\TriggerObserver.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\UnitBuilderDataPresenter\UnitBuilderDataPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\Card.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\GameResultPopup.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\WarriorConfigExtension.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardsScreenProvider.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\GameObjectExtensions.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\FreeGemsPack\IFreeGemsPackStateHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\DynamicSortingOrder.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\AgeConfig.cs" />
+    <Compile Include="Assets\_Game\Utils\_Static\CardColorMapper.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\States\DeathState.cs" />
+    <Compile Include="Assets\_Game\Common\Animation\Scripts\IAnimationStateReader.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardScreenPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Age\IAgeConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Factory\IVfxFactory.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitUpgradeDataProvider\UnitDataProvider.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardView.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\DailyTasksState.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Timeline\TimelineStateHandler.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\_MiniShop\Scripts\IMiniShopProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\TimelineTravel\TimelineTravelPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Age\Static\AgeStaticData.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\ConfigManager.cs" />
+    <Compile Include="Assets\_Game\Core\Data\IGeneralDataPool.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ShopItemModel.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Tutorial\Scripts\ITutorialManager.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\IAPProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\Projectile.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\TestUnit.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\BootstrapState.cs" />
+    <Compile Include="Assets\_Game\Common\GameBehaviour.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\UnitAnimator.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\BattleScenario.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_SpeedBoostService\Scripts\SpeedBoostService.cs" />
+    <Compile Include="Assets\_Game\Core\Factory\FactoriesHolder.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuilderBtnModel.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\GeneralBattlesConfig.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\GameConfigExtensions.cs" />
+    <Compile Include="Assets\_Game\Core\_FeatureUnlockSystem\Scripts\FeatureUnlockSystem.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Cards\Scripts\CardsGenerator.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\CustomButtonPressAnimator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Attack\ContinuousSplashAttack.cs" />
+    <Compile Include="Assets\_Game\UI\_RaceSelectionWindow\Scripts\IRaceSelectionWindowProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_BaseDataPresenter\IBasePresenter.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\ITasksStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\AssetManagement\AddressableAssetProvider.cs" />
+    <Compile Include="Assets\_Game\_AssetProvider\AssetProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\GeneralCardsState.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Random\IRandomService.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_BaseDataPresenter\BasePresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Factory\GameObjectFactory.cs" />
+    <Compile Include="Assets\_Game\Utils\IntRange.cs" />
+    <Compile Include="Assets\_Game\Core\Services\UserContainer\IUserContainer.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrFoodGenerator.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Timeline\TimelineConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\DataPresentersInstaller.cs" />
+    <Compile Include="Assets\_Game\UI\Popups\AlertPopupProvider.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\Currencies\ICurrenciesHandler.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\TimelineState.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\DailyTask\IDailyTaskConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\ICrFoodGenerator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\UnitExplosion.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\ISoundService.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\DTDAnalyticsService.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_FoodBoostView\FoodBoostBtn.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\FloatExtensions.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IShootProxy.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Tutorial\TutorialStateHandler.cs" />
+    <Compile Include="Assets\Assets\_Game\Core\Loading\DataLoadingOperation.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Camera\WorldCameraService.cs" />
+    <Compile Include="Assets\_Game\Core\Login\LoginOperation.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Factory\IUnitFactory.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Coins\Scripts\Coin.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IFoodConsumer.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_FoodBoost\FoodBoostStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\IUserCurrenciesStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\FoodBoostConfig.cs" />
+    <Compile Include="Assets\_Game\Core\_Logger\MyLogger.cs" />
+    <Compile Include="Assets\Assets\_Game\Core\DataProviders\BattleDataProvider\IBattleDataProvider.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrHud.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\RewardCoinVFX.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\BattleConfig.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\_Game\Common\ICoroutineRunner.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\JsonExtensions.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\TestAttack.cs" />
+    <Compile Include="Assets\_Game\UI\RateGame\Scripts\RateGameChecker.cs" />
+    <Compile Include="Assets\_Game\Core\Ads\CasInterstitialAdService.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\ClearGameOperation.cs" />
+    <Compile Include="Assets\StompyRobot\SROptions\SROptions.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\WaveInfoPopup.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\UnitUpgradePresenter\UnitUpgradesPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Ads\UnityAdsService.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\_Cards\CardsPricingConfig.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\FactionState.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\AdsConfig.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\DailyTask\DailyTaskConfigRepository.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\_Game\Creatives\Creative_1\Scenario\CrScenario.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\LookAtJob.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\AgeDataProvider\AgeDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\DynamicGridLayout.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Attack\DamageFlashEffect.cs" />
+    <Compile Include="Assets\_Game\Utils\Bezier\BezierCurve.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\Scripts\IGeneralCardsScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Common\CommonItemsDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardModel.cs" />
+    <Compile Include="Assets\_Game\Core\AssetManagement\LocalAssetLoader.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Food\Scripts\FoodGenerator.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\TravelAnimationScreen.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\Migrations\MigrationTo130.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\RewardType.cs" />
+    <Compile Include="Assets\_Game\Core\_SystemUpdate\SystemUpdate.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Shop\ShopConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_BattleSpeed\IBattleSpeedStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitUpgradeDataProvider\UnitUpgradeDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_StartBattleWindow\Scripts\StartBattleScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_TimelineInfoPresenter\ITimelineInfoPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\CardsDataProvider\ICardsDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\ITimelineStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\BattleSpeed\BattleSpeedConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Upgrade\IUpgradeStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\ItemType.cs" />
+    <Compile Include="Assets\_Game\UI\_Environment\Factory\EnvironmentFactory.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardsContainer.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\Projectile_1.cs" />
+    <Compile Include="Assets\_Game\Core\Pause\Scripts\IPauseManager.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\WeaponType.cs" />
+    <Compile Include="Assets\_Game\UI\_Currencies\CurrenciesSource.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\Rotator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IVFXProxy.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\TimelineConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_DailyTasks\Scripts\DailyTaskPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\DataProvidersInstaller.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IBattleSpeedListener.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Food\Scripts\FoodPanel.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\LocalUserStateCommunicator.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\TravelTab.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\DataLoadingState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Factory\VfxFactory.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\AdsWeeklyWatchState.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\EvolutionBtnData.cs" />
+    <Compile Include="Assets\_Game\Core\_GameSaver\IGameSaver.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\ISaveLoadStrategy.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\UpgradesState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Movement\UnitMove.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\_MiniShop\Scripts\MiniItemShopContainer.cs" />
+    <Compile Include="Assets\_Game\Creatives\Factories\CrUnitFactory.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\FreeGemsPackDayConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\PersistentVfx.cs" />
+    <Compile Include="Assets\_Game\Core\Factory\IFactoriesHolder.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\MenuState.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\Scripts\MainMenu.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\BattleSpeed\IBattleSpeedConfigRepository.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\ToggleButtonView.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_SpeedBoostView\Scripts\SpeedBoostBtn.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Tutorial\Scripts\TutorialStepData.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\IIAPService.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\States\MoveToPointState.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_DailyTaskView\DailyTaskView.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\AdImpressionDTO.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\AgeMarker.cs" />
+    <Compile Include="Assets\_Game\UI\Pin\Scripts\PinView.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\Scripts\GeneralCardsScreen.cs" />
+    <Compile Include="Assets\_Game\Utils\_Addressables\SpriteControlTest.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Age\AgeConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Timer\Scripts\TimerType.cs" />
+    <Compile Include="Assets\_Game\Core\_StateFactory\StateFactory.cs" />
+    <Compile Include="Assets\StompyRobot\SROptions\SROptions.Attributes.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\ConfigRepositoryFacade.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Battle\BattleStaticData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_DailyTasks\Scripts\DailyTaskType.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\BezierBallisticMove.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IBaseDestructionHandler.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
+    <Compile Include="Assets\_Game\UI\_RaceSelectionWindow\Scripts\RaceSelectionBtn.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\TimelineInfoScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Utils\_LocalConfigSaver\LocalConfigSaver.cs" />
+    <Compile Include="Assets\_Game\Core\Pause\Scripts\IPauseHandler.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\ProductConfig.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\IStateMigration.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Analytics\AnalyticsStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\CardsCollectionState.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IStopBattleListener.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_FoodBoostService\Scripts\IFoodBoostService.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\IAPService.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\TimelineTravel\ITimelineTravelPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_PauseView\PauseView.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\MainMenuLoadingOperation.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleSpeed\Scripts\IBattleSpeedHandler.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\States\MoveToTargetState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleSpeed\Scripts\IBattleSpeedManager.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Scripts\Base.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\SplashProjectile.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\BattleDataProvider\BattleDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_RaceSelectionWindow\Scripts\RaceSelectionWindowProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\ChangingRaceOperation.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Providers\RemoteConfigProvider.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\IDailyTasksStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\LoadingData.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
+    <Compile Include="Assets\_Game\Core\_FeatureUnlockSystem\Scripts\IFeature.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_DailyTasks\Scripts\DailyTaskDto.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitBuilderDataProvider\UnitBuilderDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\UnitUpgradePresenter\IUnitUpgradesPresenter.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrUnitBuilderViewController.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\AudioService.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\UnitFsm.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradeUnitItemView.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrBattleField.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\FreeGemsPackState.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\BoughtIAP.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\Delimiter.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitDataProviders\IUniversalUnitDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\ShopConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\WeaponData.cs" />
+    <Compile Include="Assets\_Game\Utils\Fps\FpsCounter.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_BattleSpeedView\BattleSpeedView.cs" />
+    <Compile Include="Assets\_Game\Core\_UpgradesChecker\IUpgradesAvailabilityChecker.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Ambience\IAmbienceDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ShopPresenter.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Battle\Scripts\BattleScenarioData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\InteractionCache.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\Plug.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_FreeGemsPackService\FreeGemsPackService.cs" />
+    <Compile Include="Assets\_Game\_BattleModes\Scripts\BattleMode.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\GeneralAgesConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Battle\Scripts\Battle.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_SpeedBoostView\Scripts\SpeedBoostView.cs" />
+    <Compile Include="Assets\_Game\Utils\Constants.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\UserAccountState.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Age\Dynamic\_UpgradeItem\IUpgradeItemsReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Timeline\Static\TimelineStaticData.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\AgeDataProvider\IAgeDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_CoinCounterView\CoinCounterView.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\WeaponDataProviders\IUniversalWeaponDataProvider.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradesScreen.cs" />
+    <Compile Include="Assets\_Game\Gameplay\BattleLauncher\BattleManager.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\Migrations\MigrationTo120.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrProjectileSpawner.cs" />
+    <Compile Include="Assets\_Game\Common\IRewardAnimator.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\GameStateMachine.cs" />
+    <Compile Include="Assets\Assets\_Game\Utils\Popups\AlertPopup.cs" />
+    <Compile Include="Assets\_Game\UI\Factory\UIFactory.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\ConfigOperation.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardsScreenPresenter.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Scenario\BattleScenarioExecutor.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\WarriorConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Timer\Scripts\TimerData.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitDataProviders\UnitLoadOptions.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\PlayerLivesView.cs" />
+    <Compile Include="Assets\_Game\Core\Navigation\Battle\BattleNavigator.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Purchase\IPurchaseStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Purchase\PurchaseStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\Evolution\IEvolutionPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_BattleSpeedView\BattleSpeedBtn.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Evolution\Scripts\EvolutionTabModel.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\WeaponDataProviders\WeaponLoadOptions.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Age\Dynamic\_UpgradeItem\UpgradeItemDynamicData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Coins\Factory\ICoinFactory.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UnitUpgradeItemModel.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_DailyTaskView\DailyTaskViewAnimator.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\AgeDataLoadingOperation.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IPauseListener.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Factory\ProjectileFactory.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\IShopPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\_Environment\EnvironmentController.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Ambience\AmbienceDataProvider.cs" />
+    <Compile Include="Assets\_Game\_BattleModes\Scripts\IGameModeCleaner.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\TimelineInfoModel.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\SliderHelper.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\_Ads\IAdsConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\BattleField.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\_Game\Core\AssetManagement\IAddressableAssetProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\AnalyticsEvent.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\AudioManager.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_CoinCounter\Scripts\CoinCounter.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Random\UnityRandomService.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\DailyTaskConfig.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Facade\IDataProviderFacade.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\TargetDetection.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\TimelineInfoItem.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\Kick.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\BattleState.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\ICardsScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_BattleSpeed\BattleSpeedStateHandler.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\LivesUI.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_DailyTask\DailyTaskStateHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Scripts\TowerDestructionAnimator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Battle\Scripts\BattleAmbienceController.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Upgrades\IUpgradeCalculator.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\CustomToggle.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\Scripts\GeneralCardsScreenProvider.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\ToggleButton.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\InitializationOperation.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrUnitBuilButton.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradeItemView.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\_Game\Core\_UpgradesChecker\IUpgradeAvailabilityProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Navigation\Timeline\ITimelineNavigator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\ShootData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IUnitSpawner.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IEndBattleListener.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleSpeed\Scripts\BattleSpeedManager.cs" />
+    <Compile Include="Assets\_Game\Utils\FloatRange.cs" />
+    <Compile Include="Assets\_Game\Core\Data\DataPool.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\Shop.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\GameLoopState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IUnitDeathObserver.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\Scripts\MainMenuProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Pause\Scripts\PauseManager.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\StateMigrationManager.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuilderBtnDynamicData.cs" />
+    <Compile Include="Assets\_Game\Core\Ads\CasAdsService.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\TransactionButton.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Common\CommonItemsConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Timeline\ITimelineConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\PurchaseDataState.cs" />
+    <Compile Include="Assets\_Game\Common\Animation\Scripts\AnimationStateReporter.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\IPurchaseDataStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Timeline\ITimelineDataProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\VfxSpawner.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\ConfigServicesInstaller.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Age\Dynamic\_UpgradeItem\UpgradeItems.cs" />
+    <Compile Include="Assets\CodeBase\Infrastructure\Services\IAP\ProductConfigWrapper.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\StringExtensions.cs" />
+    <Compile Include="Assets\_Game\Core\Navigation\Age\IAgeNavigator.cs" />
+    <Compile Include="Assets\_Game\Core\Ads\IAdsService.cs" />
+    <Compile Include="Assets\_Game\Core\AssetManagement\IAssetRegistry.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Summoning\Scripts\CardSummoningView.cs" />
+    <Compile Include="Assets\_Game\Creatives\LocalUnitConfigs\Scr\LocalUnitConfig.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\IUIScreen.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\IAudioService.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\FreeGemsPack\FreeGemsPackStateHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\ITarget.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\BattleMode\LocalCoreSystemInstaller.cs" />
+    <Compile Include="Assets\_Game\Core\_Logger\IMyLogger.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\IFreeGemsPackStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\BaseDataProvider\BaseLoadOptions.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IAP\ProductDescription.cs" />
+    <Compile Include="Assets\_Game\Core\_FeatureUnlockSystem\Scripts\Feature.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\LootCoinTest.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\ITimelineInfoScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Race\RaceSelectionController.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\CoreServicesInstaller.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\ClearGameSaveFile.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\GeneralWarriorsConfig.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Scripts\BaseModel.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ShopProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\SimpleProjectile.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\GameResultIntroAnimation.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_FoodBoost\IFoodBoostStateHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\IUnitFsmState.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\ButtonState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\UnitAudioHolder.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\ICardScreenPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\_GameSaver\GameSaver.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\States\AttackState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\MuzzleFlash.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\HealthBar.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\LocalStateMachine.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\ProjectileExplosion.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\ShopDataProvider\IShopDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\ILocalExitableState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_CoinCounter\Scripts\ICoinCounter.cs" />
+    <Compile Include="Assets\_Game\UI\RateGame\Scripts\RateGameScreen.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\EnemySpawnSequence.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Factory\UnitFactory.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\DoubleCoinsBtn.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\UnitDataPresenter\UnitDataPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\WaveInfoPopupAnimation.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\Evolution\EvolutionPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\SoundEmitter.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\UIServicesInstaller.cs" />
+    <Compile Include="Assets\_Game\Creatives\Factories\CrVfxFactory.cs" />
+    <Compile Include="Assets\_Game\Core\Ads\CasRewardAdService.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrGameplayUI.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Analytics\IAnalyticsStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitBuilderDataProvider\BuilderLoadOptions.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\Scripts\CardsState.cs" />
+    <Compile Include="Assets\_Game\Core\Navigation\Battle\IBattleNavigator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Unit.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Common\Scripts\Race.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IStartBattleListener.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\IUIListener.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\ILocalState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Factory\BaseFactory.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\UnitBlot.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\ProjectileMove.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\TutorialState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\AnimatorState.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UnitUpgradeItemStaticData.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\Bullet.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\RemoteWarriorConfig.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\StateMigrationBase.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\_Cards\ICardsConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\UnitSpawner.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitUpgradeDataProvider\IUnitUpgradeDataProvider.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\GameResultType.cs" />
+    <Compile Include="Assets\_Game\Creatives\Creative_1\Scenario\CrQuickGame.cs" />
+    <Compile Include="Assets\_Game\Core\CustomKernel\GameKernel.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\SceneExtensions.cs" />
+    <Compile Include="Assets\_Game\Core\LoadingScreen\LoadingScreen.cs" />
+    <Compile Include="Assets\_Game\Gameplay\BattleLauncher\IBattleLauncher.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Battle\Scripts\EndBattleHandler.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\VfxEntity.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ItemType.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleStateHandler\BattleStateHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\ICoinSpawner.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuildButton.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrUnitSpawner.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Tutorial\Scripts\TutorialManager.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Common\ICommonItemsConfigRepository.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\_MiniShop\Scripts\MiniShopProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Timer\Scripts\TimerService.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\EconomyConfig.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Timeline\Static\TimlineInfoItemStaticData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\TargetPoint.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ShopItemsContainer.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Timeline\ITimelineStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\UserCurrenciesState.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\Currencies\CurrenciesHandler.cs" />
+    <Compile Include="Assets\_Game\UI\Header\Scripts\IHeader.cs" />
+    <Compile Include="Assets\_Game\Utils\Bezier\Bezier.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Economy\EconomyConfigRepository.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Scripts\IUpgradeAndEvolutionScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Facade\LoadContext.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\WeaponDataProviders\UniversalWeaponDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\_FeatureUnlockSystem\Scripts\IFeatureUnlockSystem.cs" />
+    <Compile Include="Assets\_Game\Core\Loading\GameLoadingOperation.cs" />
+    <Compile Include="Assets\_Game\Creatives\Scripts\CrSpawnMarker.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\BattleMode\BattleSystemInstaller.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\EnvironmentDataProvider\EnvironmentDataProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\FSM\States\IdleState.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\GameResultHandler.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\UnitBuilderBtnScaleAnimation.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\_Game\Core\Navigation\Age\AgeNavigator.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\_Ads\AdsConfigRepository.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IBaseSpawner.cs" />
+    <Compile Include="Assets\_Game\Utils\Fps\FpsDisplay.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_UnitBuilder\Scripts\IUnitBuilder.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\Shooter.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\LinearFunction.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitDataProviders\IUnitDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\BattlePresenter\IBattlePresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Camera\IWorldCameraService.cs" />
+    <Compile Include="Assets\StompyRobot\SROptions\SROptions.Test.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_FoodBoostService\Scripts\FoodBoostService.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ShopItemStaticData.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Summoning\Scripts\CardSummoningModel.cs" />
+    <Compile Include="Assets\_Game\UI\Global\IUINotifier.cs" />
+    <Compile Include="Assets\_Game\Core\Navigation\Timeline\TimelineNavigator.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\ICardsScreenPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\IState.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\BattleMode\FactoriesInstaller.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\BattleStatistics.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Weapon\Scripts\BezierHighArcMove.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Age\Static\_UpgradeItem\UpgradeItemStaticData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Health.cs" />
+    <Compile Include="Assets\_Game\Core\Services\IGPService\IIGPService.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\AudioCameraServicesInstaller.cs" />
+    <Compile Include="Assets\_Game\UI\Settings\Scripts\ISettingsPopupProvider.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\IBattleListener.cs" />
+    <Compile Include="Assets\_Game\Core\Data\GeneralDataPool.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\UpgradeItemConfig.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\BattleSpeedState.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\Shop\IShopConfigRepository.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardType.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\_Game\UI\_BattleUIController\BattleUIController.cs" />
+    <Compile Include="Assets\_Game\Creatives\Creative_1\Scenario\CrSceneContext.cs" />
+    <Compile Include="Assets\_Game\UI\Settings\Scripts\SettingsPopupProvider.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\_Game\UI\_Currencies\TextScaleAnimator.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_FoodBoostView\FoodBoostBtnModel.cs" />
+    <Compile Include="Assets\_Game\Core\CustomKernel\IGameFixedTickable.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Summoning\Scripts\SummoningPopup.cs" />
+    <Compile Include="Assets\_Game\UI\_Environment\EnvironmentSocket.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\Exponential.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\WeaponDataPresenter\WeaponDataPresenter.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\_Game\UI\_Environment\EnvironmentData.cs" />
+    <Compile Include="Assets\_Game\Common\CustomAttribute\SerializeInterfaceAttribute.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\ShopState.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\UITest\UITest.cs" />
+    <Compile Include="Assets\_Game\Creatives\Creative_1\Scenario\CrSpawnSequence.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\TransactionButtonModel.cs" />
+    <Compile Include="Assets\_Game\Common\Placement.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Movement\AUnitMove.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardsSummoningModel.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Faction.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\_MiniShop\Scripts\MiniShop.cs" />
+    <Compile Include="Assets\_Game\UI\GameResult\Scripts\GameResultPopupProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_DailyTasks\Scripts\DailyTaskCompletionChecker.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\CoinSpawner.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_RaceChanger\IRaceChanger.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_UpgradeItemPresenter\IUpgradeItemPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\IGameStateMachine.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\BaseSmoke.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\CardsSummoningPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\_Shop\Scripts\ShopItem.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\RetentionState.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\IBattleSpeedStateReadonly.cs" />
+    <Compile Include="Assets\_Game\Core\_GameInitializer\IGameInitializer.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\WeaponDataProviders\IWeaponDataProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Scenario\EnemySpawnSequenceRunner.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\IBaseDestructionManager.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
+    <Compile Include="Assets\_Game\UI\_StartBattleWindow\Scripts\StartBattleScreen.cs" />
+    <Compile Include="Assets\_Game\Gameplay\BattleLauncher\IBattleManager.cs" />
+    <Compile Include="Assets\_Game\Core\_GameMode\GameMode.cs" />
+    <Compile Include="Assets\_Game\UI\_StartBattleWindow\Scripts\IStartBattleScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\CommonConfig.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\Migrations\MigrationTo104.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\UnitDataPresenter\IUnitDataPresenter.cs" />
+    <Compile Include="Assets\_Game\Creatives\Creative_1\Scenario\CrWave.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\SoundBuilder.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\GameplayServicesInstaller.cs" />
+    <Compile Include="Assets\_Game\Common\CoroutineRunner.cs" />
+    <Compile Include="Assets\_Game\Utils\Disposable\Disposable.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\GeneralDailyTaskConfig.cs" />
+    <Compile Include="Assets\_Game\Core\LoadingScreen\LoadingScreenProvider.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Utils\StateIndіcator.cs" />
+    <Compile Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\WeaponDataPresenter\IWeaponDataPresenter.cs" />
+    <Compile Include="Assets\_Game\UI\Common\Scripts\ToggleButtonStateAnimator.cs" />
+    <Compile Include="Assets\_Game\Core\Services\_BattleSpeedService\_Scripts\BattleSpeedService.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\IAnalyticsService.cs" />
+    <Compile Include="Assets\_Game\UI\Global\UIManager.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Coins\Factory\CoinFactory.cs" />
+    <Compile Include="Assets\Assets\_Game\UI\_MainMenu\Scripts\IMainMenuProvider.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\BaseDataProvider\IBaseStaticDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\_GameInitializer\GameInitializer.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_BattleField\Scripts\ProjectileSpawner.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Upgrades\UpgradeCalculator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Attack\NonProjectileAttack.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\ConfigurationState.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\JsonSaveLoadStrategy.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradeItemType.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_DailyTasks\Scripts\DailyTaskGenerator.cs" />
+    <Compile Include="Assets\_Game\Core\Communication\IUserStateCommunicator.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Scripts\TowerHealth.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\BattleMode\UIInstaller.cs" />
+    <Compile Include="Assets\_Game\Core\_SceneLoader\SceneLoader.cs" />
+    <Compile Include="Assets\_Game\UI\_StartBattleWindow\Scripts\BattleNavigationModel.cs" />
+    <Compile Include="Assets\_Game\Core\_RetentionChecker\RetentionChecker.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\TasksState.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Timer\Scripts\GameTimer.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\Attack\ProjectileAttack.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Audio\SoundData.cs" />
+    <Compile Include="Assets\_Game\Core\DataPresenters\_UpgradeItemPresenter\UpgradeItemPresenter.cs" />
+    <Compile Include="Assets\_Game\Core\Data\Age\Dynamic\AgeDynamicData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Bases\Scripts\BaseStaticData.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\WeaponConfig.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Summoning\Scripts\SummoningPopupProvider.cs" />
+    <Compile Include="Assets\_Game\Core\CustomKernel\IGameTickable.cs" />
+    <Compile Include="Assets\_Game\UI\_MainMenu\State\ILocalPayloadedState.cs" />
+    <Compile Include="Assets\_Game\Core\CustomKernel\IGameLateTickable.cs" />
+    <Compile Include="Assets\_Game\UI\_CardsGeneral\_Cards\Scripts\ICardsSummoningPresenter.cs" />
+    <Compile Include="Assets\_Game\Gameplay\Vfx\Scripts\MuzzleData.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Units\Scripts\UnitData.cs" />
+    <Compile Include="Assets\_Game\Core\Services\UserContainer\UserContainer.cs" />
+    <Compile Include="Assets\_Game\Core\Services\Analytics\IDTDAnalyticsService.cs" />
+    <Compile Include="Assets\_Game\Scenes\Tests\_RemoteConfigProvider.cs" />
+    <Compile Include="Assets\_Game\UI\TimelineInfoWindow\Scripts\TimelineProgressBar.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_Handler\_Tutorial\ITutorialStateHandler.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\UnitBuilderDataProvider\IUnitBuilderDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Repositories\_Cards\CardsConfigRepository.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Tutorial\Scripts\TutorialPointerView.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\Facade\DataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\UserState\_State\AdsStatistics.cs" />
+    <Compile Include="Assets\_Game\Core\Configs\Models\EnemyWave.cs" />
+    <Compile Include="Assets\_Game\Core\DataProviders\CardsDataProvider\CardsDataProvider.cs" />
+    <Compile Include="Assets\_Game\Core\_GameListenerComposite\GameListenerComposite.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\LoginState.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Scripts\UpgradeAndEvolutionScreen.cs" />
+    <Compile Include="Assets\_Game\Core\AssetManagement\AssetRegistry.cs" />
+    <Compile Include="Assets\_Game\Core\Installers\Core\GameStateMachineInstaller.cs" />
+    <Compile Include="Assets\_Game\UI\_Hud\_FoodBoostView\FoodBoostView.cs" />
+    <Compile Include="Assets\_Game\Core\Prefabs\SoundsHolder.cs" />
+    <Compile Include="Assets\_Game\Core\Prefabs\MusicSourceHolder.cs" />
+    <Compile Include="Assets\_Game\Core\GameState\InitializationState.cs" />
+    <Compile Include="Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradeItemModel.cs" />
+    <Compile Include="Assets\_Game\Utils\Extensions\WeaponConfigExtension.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\_Game\Gameplay\_Battle\Scripts\BattleAnalyticsController.cs" />
+    <Compile Include="Assets\_Game\Utils\Bezier\BezierPoint.cs" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFX3 Multiply Color.shader" />
+    <None Include="Assets\_Game\Bundles\Shared\Vfx\Shaders\CFXR_SETTINGS.cginc" />
+    <None Include="Assets\Resources\BillingMode.json" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX (legacy)\CartoonFX Free.txt" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
+    <None Include="Assets\_Game\Bundles\Shared\Shaders\SpriteOutlineV_2.shader" />
+    <None Include="Assets\_Game\Bundles\Shared\Vfx\Shaders\CFXR.cginc" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\_Game\Bundles\Shared\Shaders\SpriteOutline.shader" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\StreamingAssets\google-services.json" />
+    <None Include="Assets\Resources\IAPProductCatalog.json" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster FREE.txt" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-installations-unity\maven-metadata.xml" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-config-unity\maven-metadata.xml" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-analytics-unity\maven-metadata.xml" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+    <None Include="Assets\_Game\Bundles\Shared\Vfx\Shaders\CFXR_PASSES.cginc" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\StreamingAssets\google-services-desktop.json" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-crashlytics-unity\maven-metadata.xml" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\_Game\Bundles\Shared\Vfx\Shaders\CFXR_URP.cginc" />
+    <None Include="Assets\Resources\DevToDev\DevToDev.xml" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Sprites\EmojiOne.json" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\ThirdParty\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ContentLoadModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ContentLoadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.DSPGraphModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GIModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.GIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PropertiesModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.PropertiesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.SubsystemsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreFontEngineModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreTextEngineModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityCurlModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityCurlModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.CoreModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.DeviceSimulatorModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.DeviceSimulatorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.DiagnosticsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.DiagnosticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.EditorToolbarModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.EditorToolbarModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.GraphViewModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.GraphViewModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.PresetsUIModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.PresetsUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.QuickSearchModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.QuickSearchModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SceneTemplateModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.SceneTemplateModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SceneViewModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.SceneViewModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TextCoreFontEngineModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.TextCoreFontEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TextCoreTextEngineModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.TextCoreTextEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIBuilderModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.UIBuilderModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIElementsModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIElementsSamplesModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.UIElementsSamplesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UnityConnectModule">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject-usage">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Zenject\Source\Usage\Zenject-usage.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Reflection.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.Reflection.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Analytics">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.unity.collections@1.5.1\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="DevToDev.Core">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.devtodev.sdk.analytics@1b2514e1fe\Plugins\Analytics\Windows\DevToDev.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.App">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.devtodev.sdk.analytics@1b2514e1fe\Plugins\Analytics\Windows\Dependencies\Mono.Data.Sqlite\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization.Config">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.RemoteConfig">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.RemoteConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="DevToDev.Analytics">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.devtodev.sdk.analytics@1b2514e1fe\Plugins\Analytics\Windows\DevToDev.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.TaskExtension">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Installations">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.Installations.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject.ReflectionBaking.Mono.Cecil.Pdb">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Zenject\OptionalExtras\ReflectionBaking\Lib\Zenject.ReflectionBaking.Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="AnalyticsWindowsEditor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.devtodev.sdk.analytics@1b2514e1fe\Plugins\Analytics\Windows\AnalyticsWindowsEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Attributes">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="CleverAdsSolutions.Common">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.cleversolutions.ads.unity@c06f93bb57\Runtime\CleverAdsSolutions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject.ReflectionBaking.Mono.Cecil.Rocks">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Zenject\OptionalExtras\ReflectionBaking\Lib\Zenject.ReflectionBaking.Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Crashlytics">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.Crashlytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject.ReflectionBaking.Mono.Cecil.Mdb">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Zenject\OptionalExtras\ReflectionBaking\Lib\Zenject.ReflectionBaking.Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="AntiCheatEditor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.devtodev.sdk.analytics@1b2514e1fe\Plugins\Analytics\AntiCheatEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Platform">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject.ReflectionBaking.Mono.Cecil">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\Plugins\Zenject\OptionalExtras\ReflectionBaking\Lib\Zenject.ReflectionBaking.Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Data.DataSetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.Transactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Concurrent">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Collections.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Collections.NonGeneric.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Specialized">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Collections.Specialized.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.EventBasedAsync">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ComponentModel.EventBasedAsync.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ComponentModel.TypeConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Common">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Contracts">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Debug">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.FileVersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Process">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.StackTrace.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TextWriterTraceListener">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.TextWriterTraceListener.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tools">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Diagnostics.TraceSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Drawing.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Dynamic.Runtime">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Dynamic.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Globalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Extensions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Globalization.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.DriveInfo">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.FileSystem.DriveInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Watcher">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.FileSystem.Watcher.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.IsolatedStorage">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.IsolatedStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.MemoryMappedFiles">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.MemoryMappedFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipes">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.Pipes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.UnmanagedMemoryStream">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.IO.UnmanagedMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Parallel">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Linq.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Queryable">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Linq.Queryable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Rtc">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.Http.Rtc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.NameResolution.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NetworkInformation">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.NetworkInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Ping">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.Ping.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Requests">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.Requests.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Security">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebHeaderCollection">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.WebHeaderCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets.Client">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.WebSockets.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Net.WebSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ObjectModel">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.DispatchProxy">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.DispatchProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.Emit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.ILGeneration">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.Emit.ILGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.Lightweight">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.Emit.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Extensions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Reflection.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Reader">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Resources.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.ResourceManager">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Resources.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Writer">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Resources.Writer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.VisualC">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.CompilerServices.VisualC.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Handles">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Handles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Numerics">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Serialization.Formatters.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Json">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Xml">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.Serialization.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Claims">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Claims.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Csp">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Cryptography.Csp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.Principal.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.SecureString">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Security.SecureString.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Duplex">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ServiceModel.Duplex.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Http">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ServiceModel.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.NetTcp">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ServiceModel.NetTcp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Primitives">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Security">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ServiceModel.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Text.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.Extensions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Text.Encoding.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Overlapped">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.Overlapped.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Parallel">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.Tasks.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.ThreadPool">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.ThreadPool.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Timer">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Threading.Timer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XDocument">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XmlDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlSerializer">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XmlSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument">
+      <HintPath>C:\Users\dimam\Programs\2022.3.40f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Recorder.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Recorder.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.Stores">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEngine.Purchasing.Stores.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Path.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Aseprite.Common">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Aseprite.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.SecurityCore">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
+    </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Recorder">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Recorder.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Aseprite.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="CAS.UserConsent-Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\CAS.UserConsent-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.SecurityStub">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityStub.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Recorder.Base">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Recorder.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.Linq">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UniTask.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Flow.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Addressables.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="CleverAdsSolutions-Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\CleverAdsSolutions-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.State">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
+    <Reference Include="com.devtodev.sdk.analytics.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\com.devtodev.sdk.analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.IK.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.IK.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.AI.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.AppBundle.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Google.Android.AppBundle.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Flow">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Play.Review">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Google.Play.Review.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Environments">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
+    </Reference>
+    <Reference Include="CAS.UserConsent">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\CAS.UserConsent.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.Codeless">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEngine.Purchasing.Codeless.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="CleverAdsSolutions">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\CleverAdsSolutions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Analytics">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Play.Common">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Google.Play.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="PsdPlugin">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.TextMeshPro">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UniTask.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Shared.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.DOTween">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UniTask.DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.Addressables">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UniTask.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Purchasing.Common">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Purchasing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.001">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Runtime">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Psdimporter.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.State.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.devtodev.sdk.analytics">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\com.devtodev.sdk.analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\UniTask.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Play.Core">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Google.Play.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Editor">
+      <HintPath>C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{e3f38cde-fbdb-de53-a8c4-cdf3004c17c2}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="Drawing.csproj">
+      <Project>{d1422c09-af84-3c76-3aad-b2923692f1c2}</Project>
+      <Name>Drawing</Name>
+    </ProjectReference>
+    <ProjectReference Include="AstarPathfindingProject.csproj">
+      <Project>{5aad7534-c1bc-89d7-f0c3-9ab7da7e825a}</Project>
+      <Name>AstarPathfindingProject</Name>
+    </ProjectReference>
+    <ProjectReference Include="Zenject-PoolMonitor-Editor.csproj">
+      <Project>{d04b6b21-9b5a-6802-7fa4-2d584a823eb9}</Project>
+      <Name>Zenject-PoolMonitor-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXR.WelcomeScreen.csproj">
+      <Project>{b6ee936d-21b7-01ac-3cf5-07ef5fc75f91}</Project>
+      <Name>CFXR.WelcomeScreen</Name>
+    </ProjectReference>
+    <ProjectReference Include="Zenject-Editor.csproj">
+      <Project>{543b99ef-6176-7e39-4af5-ca8b696fdf0b}</Project>
+      <Name>Zenject-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="StompyRobot.SRDebugger.csproj">
+      <Project>{c1edbce5-3f8c-4c4c-e32c-0ea663544e61}</Project>
+      <Name>StompyRobot.SRDebugger</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.Modules.UnityMathematics.csproj">
+      <Project>{e3e4498b-4d22-9aa5-84fa-da8ca3182d97}</Project>
+      <Name>Sirenix.OdinInspector.Modules.UnityMathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="StompyRobot.SRDebugger.Editor.csproj">
+      <Project>{cb3bdb05-40d5-7e62-9839-73f564f6b842}</Project>
+      <Name>StompyRobot.SRDebugger.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Zenject-ReflectionBaking-Editor.csproj">
+      <Project>{e750c430-42d2-e9ff-4bf2-c99637d00967}</Project>
+      <Name>Zenject-ReflectionBaking-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXREditor.csproj">
+      <Project>{b3db31a3-2d9d-7e02-d857-ce77927a1c2f}</Project>
+      <Name>CFXREditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="StompyRobot.SRF.csproj">
+      <Project>{28e4ec51-11c1-75b1-7922-507c1634775b}</Project>
+      <Name>StompyRobot.SRF</Name>
+    </ProjectReference>
+    <ProjectReference Include="StompyRobot.SRF.Editor.csproj">
+      <Project>{872cde2e-4ebb-49f0-9924-77d8d815e65c}</Project>
+      <Name>StompyRobot.SRF.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Zenject.csproj">
+      <Project>{de2a5fad-5d5a-06a1-5fd2-5b1856c7f44e}</Project>
+      <Name>Zenject</Name>
+    </ProjectReference>
+    <ProjectReference Include="DrawingPackageToolsEditor.csproj">
+      <Project>{12e86384-fe5d-ac86-3033-f5ddaae5ceaf}</Project>
+      <Name>DrawingPackageToolsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
+      <Project>{0fe6ecad-ae2d-e957-8bb5-653a593b6ba8}</Project>
+      <Name>ToonyColorsPro.Demo.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRRuntime.csproj">
+      <Project>{2f945651-9b31-c63a-b9f8-8c8cc46d6b59}</Project>
+      <Name>CFXRRuntime</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{8f594d38-a700-7bed-5553-8bf139e127b8}</Project>
+      <Name>CFXRDemo</Name>
+    </ProjectReference>
+    <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
+      <Project>{8811d15a-0e7e-d654-e525-45c0b1a629e9}</Project>
+      <Name>AstarPathfindingProjectEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PackageTools.csproj">
+      <Project>{960d8ad8-75fa-f3e3-368c-147bddf09717}</Project>
+      <Name>PackageTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="KinoBloom.Runtime.csproj">
+      <Project>{7297ff0f-503b-19bc-019f-29acab80d1c6}</Project>
+      <Name>KinoBloom.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.Modules.Unity.Addressables.csproj">
+      <Project>{bf783dfd-ccb7-b0e2-6405-919f30801710}</Project>
+      <Name>Sirenix.OdinInspector.Modules.Unity.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="DrawingEditor.csproj">
+      <Project>{64254c40-cd5e-8900-d300-e3addcb1864a}</Project>
+      <Name>DrawingEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AstarPackageToolsEditor.csproj">
+      <Project>{68ffca6d-c836-d466-3d06-941392db446f}</Project>
+      <Name>AstarPackageToolsEditor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

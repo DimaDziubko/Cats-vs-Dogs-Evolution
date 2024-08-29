@@ -8,12 +8,10 @@ namespace _Game.Core.Configs.Repositories._Cards
     {
         int MinSummoningLevel { get; }
         int MaxSummoningLevel { get; }
-        CardsSummoning GetSummoning(int level);
         int GetX1CardPrice();
         int GetX10CardPrice();
-        int GetCardsRequiredForNextLevel(int level);
         Dictionary<int, CardsSummoning> GetAllSummonings();
         bool TryGetCardsByType(CardType type, out List<CardConfig> cards);
-        
+        CardConfig ForCard(int cardId);
     }
 }

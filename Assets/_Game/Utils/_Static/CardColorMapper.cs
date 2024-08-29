@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.Configs.Models._Cards;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using UnityEngine;
 
@@ -7,17 +6,17 @@ namespace _Game.Utils._Static
 {
     public static class CardColorMapper
     { 
-        private static readonly Dictionary<CardType, Color> cardColors = new Dictionary<CardType, Color>
+        private static readonly Dictionary<CardType, Color> _cardColors = new Dictionary<CardType, Color>
         {
-            { CardType.Common, new Color(189f/255f, 189f/255f, 189f/255f, 1f) },
             { CardType.Rare, new Color(1f/255f, 163f/255f, 254f/255f, 1f) },
             { CardType.Epic, new Color(160f/255f, 98f/255f, 255f/255f, 1f) },
-            { CardType.Legendary, new Color(255f/255f, 200f/255f, 0f/255f, 1f) }
+            { CardType.Legendary, new Color(255f/255f, 200f/255f, 0f/255f, 1f)},
+            { CardType.Common, new Color(189f/255f, 189f/255f, 189f/255f, 1f) }
         };
 
         public static Color GetColorForType(CardType type)
         {
-            if (cardColors.TryGetValue(type, out Color color))
+            if (_cardColors.TryGetValue(type, out Color color))
             {
                 return color;
             }

@@ -24,9 +24,10 @@ namespace _Game.Core.Configs.Repositories._Cards
         public int GetCardsRequiredForNextLevel(int level) => GetSummoning(level).CardsRequiredForLevel;
 
         public Dictionary<int, CardsSummoning> GetAllSummonings() => _userContainer.GameConfig.SummoningConfig;
-        public bool TryGetCardsByType(CardType type, out List<CardConfig> cards)
-        {
-           return _userContainer.GameConfig.CardConfigsByType.TryGetValue(type, out cards);
-        }
+        public bool TryGetCardsByType(CardType type, out List<CardConfig> cards) => 
+            _userContainer.GameConfig.CardConfigsByType.TryGetValue(type, out cards);
+
+        public CardConfig ForCard(int cardId) => 
+            _userContainer.GameConfig.CardConfigsById[cardId];
     }
 }

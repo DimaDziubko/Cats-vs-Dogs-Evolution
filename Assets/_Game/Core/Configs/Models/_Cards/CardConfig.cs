@@ -18,21 +18,27 @@ namespace _Game.Core.Configs.Models._Cards
         [ColorPalette] 
         public Color ColorIdentifier;
 
+        public Sprite Icon;
+        
         public bool IsNew;
-        
-        private void UpdateColorBasedOnType()
+
+        public int GetUpgradeCount(int level)
         {
-            ColorIdentifier = GetColorForType(Type);
+            switch (level)
+            {
+                case 1:
+                    return 2;
+                case 2:
+                    return 3;
+                default:
+                    return 4;
+            }   
         }
-        
-        private Color GetColorForType(CardType type)
-        {
-            return CardColorMapper.GetColorForType(Type);
-        }
-        
-        private CardType[] GetCardTypes()
-        {
-            return (CardType[])System.Enum.GetValues(typeof(CardType));
-        }
+
+        private void UpdateColorBasedOnType() => ColorIdentifier = GetColorForType(Type);
+
+        private Color GetColorForType(CardType type) => CardColorMapper.GetColorForType(Type);
+
+        private CardType[] GetCardTypes() => (CardType[])System.Enum.GetValues(typeof(CardType));
     }
 }

@@ -2,6 +2,7 @@
 using _Game.Core._Logger;
 using _Game.UI.Factory;
 using Assets._Game.Core.Services.Audio;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
@@ -10,7 +11,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
     {
         [SerializeField] private Transform _parent;
 
-        private readonly List<CardView> _cards = new List<CardView>();
+        private readonly Dictionary<int, CardView> _cards = new  Dictionary<int, CardView>();
         
         private IUIFactory _uiFactory;
         private ICardsScreenPresenter _cardsScreenPresenter;
@@ -28,36 +29,61 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _audioService = audioService;
             _logger = logger;
         }
-
-        public void UpdateCards(List<CardModel> models)
+        
+        public void Init()
         {
-            Cleanup();
-            
-            foreach (var model in models)
+            foreach (var model in _cardsScreenPresenter.CardsPresenter.CardModels)
             {
-                //TODO Implement later
-                //CardView instance = _uiFactory.GetCard();
-                //instance.Construct(_shopPresenter, model, _audioService);
-                //_cards.Add(instance);
+                CreateNewCard(model.Key, model.Value);
             }
 
-            _logger.Log("Cards updated");
-            Init();
+            Subscribe();
         }
 
-        private void Init()
+        public void Cleanup()
         {
-            
-            foreach (var card in _cards)
+            Unsubscribe();
+            foreach (var card in _cards) card.Value.Release();
+            _cards.Clear();
+        }
+
+        private void UpdateCard(int id, CardModel model)
+        {
+            if(_cards.ContainsKey(id))
+                _cards[id].UpdateView(model);
+            else
             {
-                card.Init();
+                CreateNewCard(id, model);
+            }
+        }
+
+        private void CreateNewCard(int id, CardModel model)
+        {
+            CardView instance = _uiFactory.GetCard(_parent);
+            instance.Construct(_cardsScreenPresenter.CardsPresenter, _audioService);
+            instance.UpdateView(model);
+            instance.Init();
+            _cards[id] = instance;
+        }
+
+        [Button]
+        private void UpdateCards()
+        {
+            foreach (var pair in _cards)
+            {
+                pair.Value.UpdateView(_cardsScreenPresenter.CardsPresenter.CardModels[pair.Key]);
+                break;
             }
         }
         
-        public void Cleanup()
+        private void Subscribe()
         {
-            foreach (var card in _cards) card.Release();
-            _cards.Clear();
+            _cardsScreenPresenter.CardsPresenter.CardModelUpdated += UpdateCard;
+        }
+
+        private void Unsubscribe()
+        {
+            _cardsScreenPresenter.CardsPresenter.CardModelUpdated -= UpdateCard;
         }
     }
 }
