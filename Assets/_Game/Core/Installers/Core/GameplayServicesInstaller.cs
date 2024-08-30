@@ -24,6 +24,7 @@ using Zenject;
 using UnityEngine;
 using MAXHelper;
 using MadPixelAnalytics;
+using _Game.Core.Notifications;
 
 namespace _Game.Core.Installers.Core
 {
@@ -44,6 +45,7 @@ namespace _Game.Core.Installers.Core
             BindMadPixelAdsManager();
             BindMadPixelAppMetrica();
             BindAdsService();
+            BindNotificationService();
             BindFoodBoostService();
             BindSpeedBoostService();
             BindBattleSpeedService();
@@ -136,6 +138,9 @@ namespace _Game.Core.Installers.Core
 #endif
         private void BindAdsService() =>
             Container.BindInterfacesAndSelfTo<MaxAdsService>()
+                .AsSingle();
+        private void BindNotificationService() =>
+            Container.Bind<NotificationService>()
                 .AsSingle();
 
         private void BindFoodBoostService() =>

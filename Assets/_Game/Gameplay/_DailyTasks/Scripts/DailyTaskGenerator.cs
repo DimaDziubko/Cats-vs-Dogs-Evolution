@@ -17,7 +17,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
     public interface IDailyTaskGenerator
     {
         event Action<DailyTask> DailyTaskGenerated;
-        DailyTask CurrentTask { get;}
+        DailyTask CurrentTask { get; }
     }
 
     public class DailyTaskGenerator : IDailyTaskGenerator, IInitializable, IDisposable
@@ -50,7 +50,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             _featureUnlockSystem = featureUnlockSystem;
             _logger = logger;
         }
-        
+
         void IInitializable.Initialize()
         {
             if (TimeToGenerateNewDailyTasks())
@@ -59,7 +59,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
                 _userContainer.DailyTaskStateHandler.ChangeLastTimeGenerated(DateTime.UtcNow);
                 GenerateNewDailyTask();
             }
-            else if(NotGeneratedYet())
+            else if (NotGeneratedYet())
             {
                 GenerateNewDailyTask();
             }
@@ -67,10 +67,10 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             {
                 RestoreDailyTask();
             }
-            
+
             DailyState.TaskCompletedChanged += OnTaskCompleted;
-            
-            if(!_featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask))
+
+            if (!_featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask))
                 _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
         }
 
@@ -91,8 +91,8 @@ namespace _Game.Gameplay._DailyTasks.Scripts
         private bool TimeToGenerateNewDailyTasks()
         {
             DateTime lastTimeGenerated = DailyState.LastTimeGenerated;
-            
-            if (DateTime.UtcNow - lastTimeGenerated > 
+
+            if (DateTime.UtcNow - lastTimeGenerated >
                 TimeSpan.FromMinutes(_dailyTaskConfigRepository.RecoverTimeMinutes))
             {
                 return true;
@@ -101,11 +101,26 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             return false;
         }
 
+        public float GetMinutesToGenerateDailyTask()
+        {
+            if (_userContainer.State.TutorialState.StepsCompleted < 5)
+                return 0;
+
+            DateTime lastTimeGenerated = DailyState.LastTimeGenerated;
+
+            var minutesSpend = (DateTime.UtcNow - lastTimeGenerated).Minutes;
+            //UnityEngine.Debug.Log("TIME : minutesSpend " + minutesSpend);
+            //UnityEngine.Debug.Log("TIME : lastTimeGenerated " + lastTimeGenerated.Minute);
+
+
+            return _dailyTaskConfigRepository.RecoverTimeMinutes + minutesSpend;
+        }
+
         private bool NotGeneratedYet() => DailyState.CurrentTaskIdx == -1;
 
         void IDisposable.Dispose()
         {
-            DailyState.TaskCompletedChanged -= OnTaskCompleted;     
+            DailyState.TaskCompletedChanged -= OnTaskCompleted;
             _featureUnlockSystem.FeatureUnlocked -= OnFeatureUnlocked;
         }
 
@@ -124,7 +139,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
 
         }
 
-        private void AddReward() => 
+        private void AddReward() =>
             _userContainer.CurrenciesHandler.AddGems(_currentDailyTask.Config.Reward, CurrenciesSource.DailyTask);
 
         private int SelectRandomDailyTask(List<DailyTaskConfig> configs)
@@ -132,7 +147,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             List<int> ids = new List<int>();
             foreach (var config in configs)
             {
-                if(DailyState.CompletedTasks.Contains(config.Id - 1)) continue; //Completed tasks are idx
+                if (DailyState.CompletedTasks.Contains(config.Id - 1)) continue; //Completed tasks are idx
                 for (int i = 0; i < config.DropChance; i++)
                 {
                     ids.Add(config.Id);
@@ -149,7 +164,7 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             _userContainer.DailyTaskStateHandler.ChangeTaskIdx(config.Id);
 
             float target = SelectTarget(config, targetArgument);
-            
+
             bool isCompleted = (target - DailyState.ProgressOnTask) < Constants.ComparisonThreshold.MONEY_EPSILON;
 
             _currentDailyTask.Config = config;
@@ -161,14 +176,14 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             _currentDailyTask.IsRunOut =
                 DailyState.CompletedTasks.Count >= _dailyTaskConfigRepository.MaxDailyCountPerDay;
             _currentDailyTask.IsUnlocked = _featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask);
-            
+
             DailyTaskGenerated?.Invoke(_currentDailyTask);
         }
 
         private float SelectTarget(DailyTaskConfig config, int targetArgument)
         {
             return config.LinearFunctions.Count - 1 >= TimelineState.MaxBattle
-                ? config.LinearFunctions[TimelineState.MaxBattle].GetIntValue(targetArgument) 
+                ? config.LinearFunctions[TimelineState.MaxBattle].GetIntValue(targetArgument)
                 : config.LinearFunctions[0].GetIntValue(targetArgument);
         }
 

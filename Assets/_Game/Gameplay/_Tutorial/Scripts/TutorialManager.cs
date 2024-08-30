@@ -45,10 +45,14 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public void Register(ITutorialStep tutorialStep)
         {
-            if(tutorialStep == null) return;
+            if (tutorialStep == null) return;
             var step = tutorialStep.GetTutorialStepData().Step;
-            if(TutorialStateReadonly.StepsCompleted >= step 
-               || step > TutorialStateReadonly.StepsCompleted + 1 ) return;
+            if (step != 5) //DAILY TASK STEP TODO change
+            {
+                if (TutorialStateReadonly.StepsCompleted >= step
+                    || step > TutorialStateReadonly.StepsCompleted + 1) return;
+            }
+
             tutorialStep.Show += Show;
             tutorialStep.Complete += OnStepComplete;
             tutorialStep.Cancel += OnTutorialBroke;
@@ -56,7 +60,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public void UnRegister(ITutorialStep tutorialStep)
         {
-            if(tutorialStep == null) return;
+            if (tutorialStep == null) return;
             tutorialStep.Show -= Show;
             tutorialStep.Complete -= OnStepComplete;
             tutorialStep.Cancel -= OnTutorialBroke;
@@ -64,7 +68,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         private void Show(ITutorialStep tutorialStep)
         {
-            if(_inProgress) return;
+            if (_inProgress) return;
             var tutorialData = tutorialStep.GetTutorialStepData();
             _pointerView.Show(tutorialData);
             _inProgress = true;
