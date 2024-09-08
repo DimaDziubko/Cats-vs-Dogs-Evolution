@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Firebase;
-using Firebase.Analytics;
 using UnityEngine;
 
 public class FirebaseComp : MonoBehaviour
 {
     private static bool bInitialized = false;
-
-
 
     #region Unity events
     void Start()

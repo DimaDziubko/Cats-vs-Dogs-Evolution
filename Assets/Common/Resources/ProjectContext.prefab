@@ -1072,6 +1072,7 @@ Transform:
   - {fileID: 3458006266743657768}
   - {fileID: 1928983122615667952}
   - {fileID: 5633299287466413877}
+  - {fileID: 1600908822374647058}
   - {fileID: 5715547429396363306}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1475,6 +1476,50 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &7433880245956849609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1600908822374647058}
+  - component: {fileID: 8066867244130405321}
+  m_Layer: 0
+  m_Name: GeoLocationChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1600908822374647058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433880245956849609}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1258253947384861881}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8066867244130405321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433880245956849609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c3e15bca652d1418e29fd75e7c6fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8735768697727210976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2078,7 +2123,7 @@ PrefabInstance:
       objectReference: {fileID: 5715547429396363306}
     - target: {fileID: 2712611857145178298, guid: 8989aa7a79c46c449945bde093d5cf0a, type: 3}
       propertyPath: bShowDebug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891749430784731945, guid: 8989aa7a79c46c449945bde093d5cf0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2126,7 +2171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7875766025419721369, guid: 8989aa7a79c46c449945bde093d5cf0a, type: 3}
       propertyPath: bUseTermsAndATT
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7875766025419721369, guid: 8989aa7a79c46c449945bde093d5cf0a, type: 3}
       propertyPath: bInitializeOnStart
@@ -2172,6 +2217,14 @@ PrefabInstance:
     - target: {fileID: 3194373316483798984, guid: 80dfd38ed10d0d64a85dc773c4624df4, type: 3}
       propertyPath: monetizaionPubKey
       value: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAokQ7zMwYRnTCXfOSVa4yoARUazeknH2xb+GXKrknwijfy/PQh+81Sp6fLImvKowPE0uswa0+sz67IOU9oA/e6PEMFQCUqxU7qgf5FHPVpWn4s7as979Lt37ekx9TQ3g6Sm4iH+tkU/s/pMc2PU9TaxbgW332dEd7f/qmGwkJ8w/9/UKe62VfN68jTfpoNuDdT7SmYfbakt0XImTc6C2Bq6fAw84dD/efVeKMkP/UT0R8h2ppftUBCp1bf/PF4e65Ip0JdKRZjmJ7rRWtcMuZ+S2csQBGbo9YHIoIAWnjOCGqqcaBbmT7u9hUtHgWy7mV+tbZb72hDWSFe96kXlYE8QIDAQAB
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019281010441104460, guid: 80dfd38ed10d0d64a85dc773c4624df4, type: 3}
+      propertyPath: bSendAdRevenue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019281010441104460, guid: 80dfd38ed10d0d64a85dc773c4624df4, type: 3}
+      propertyPath: bLogEventsOnDevice
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8766461110375483084, guid: 80dfd38ed10d0d64a85dc773c4624df4, type: 3}
       propertyPath: bUseAutoInit
