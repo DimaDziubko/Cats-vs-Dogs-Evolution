@@ -13,18 +13,14 @@ using _Game.Core.Navigation.Timeline;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
-using _Game.Core.Services._FreeGemsPackService;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.Upgrades;
 using _Game.Gameplay._BattleSpeed.Scripts;
+using _Game.Gameplay._Boosts.Scripts;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
-using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services.Analytics;
-using Assets._Game.Gameplay._Timer.Scripts;
 using Zenject;
 
 namespace _Game.Core.Installers.Core
@@ -38,6 +34,7 @@ namespace _Game.Core.Installers.Core
             BindBattleSpeedManager();
             BindBeginGameManager();
             BindUpgradesCalculator();
+            BindBoostsCalculator();
             BindUpgradesServices();
             BindEvolutionService();
             BindTimerService();
@@ -52,6 +49,11 @@ namespace _Game.Core.Installers.Core
             BindBattleNavigator();
             BindRaceChanger();
             BindRetentionChecker();
+        }
+
+        private void BindBoostsCalculator()
+        {
+            Container.BindInterfacesAndSelfTo<BoostsCalculator>().AsSingle();
         }
 
         private void BindRetentionChecker() => 
@@ -109,6 +111,10 @@ namespace _Game.Core.Installers.Core
             
             Container
                 .BindInterfacesAndSelfTo<TimelineTravelPresenter>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<StatsPopupPresenter>()
                 .AsSingle();
         }
 

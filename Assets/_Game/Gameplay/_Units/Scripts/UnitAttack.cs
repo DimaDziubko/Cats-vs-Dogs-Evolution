@@ -51,7 +51,7 @@ namespace _Game.Gameplay._Units.Scripts
             _vFXProxy = vFXProxy;
 
         public virtual void Construct(
-            WeaponConfig config,
+            IUnitData unitData,
             Faction faction,
             ISoundService soundService,
             Transform unitTransform)

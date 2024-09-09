@@ -11,13 +11,25 @@ namespace _Game.Core.UserState._Handler._BattleSpeed
             _userContainer = userContainer;
         }
 
-        public void ChangeNormalSpeed(bool isNormal) => 
+        public void ChangeNormalSpeed(bool isNormal)
+        {
             _userContainer.State.BattleSpeedState.SetNormalSpeedActive(isNormal);
+            _userContainer.RequestSaveGame();
 
-        public void ChangeBattleSpeedTimerDurationLeft(float timerTimeLeft) => 
+        }
+
+        public void ChangeBattleSpeedTimerDurationLeft(float timerTimeLeft)
+        {
             _userContainer.State.BattleSpeedState.ChangeDurationLeft(timerTimeLeft);
+            _userContainer.RequestSaveGame();
 
-        public void ChangePermanentSpeedId(int newId) => 
+        }
+
+        public void ChangePermanentSpeedId(int newId)
+        {
             _userContainer.State.BattleSpeedState.ChangePermanentSpeed(newId);
+            _userContainer.RequestSaveGame();
+
+        }
     }
 }

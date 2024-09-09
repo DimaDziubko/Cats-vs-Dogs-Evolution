@@ -13,5 +13,6 @@ namespace _Game.Core.Configs.Repositories._Cards
         Dictionary<int, CardsSummoning> GetAllSummonings();
         bool TryGetCardsByType(CardType type, out List<CardConfig> cards);
         CardConfig ForCard(int cardId);
+        int GetAllCardsCount();
     }
 }

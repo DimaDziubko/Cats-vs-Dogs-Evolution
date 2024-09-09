@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Services.UserContainer;
@@ -15,45 +15,45 @@ namespace _Game.Core.GameState
     public class DataLoadingState : IPayloadedState<Queue<ILoadingOperation>>
     {
         private readonly IGeneralDataPool _generalDataPool;
-        private readonly IAgeDataProvider _ageDataProvider;
-        private readonly IBattleDataProvider _battleDataProvider;
+        private readonly IAgeDataLoader _ageDataLoader;
+        private readonly IBattleDataLoader _battleDataLoader;
         private readonly IMyLogger _logger;
         private readonly IGameStateMachine _stateMachine;
-        private readonly ITimelineDataProvider _timelineDataProvider;
+        private readonly ITimelineDataLoader _timelineDataLoader;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
-        private readonly IShopDataProvider _shopDataProvider;
+        private readonly IShopDataLoader _shopDataLoader;
 
         public DataLoadingState(
             IGeneralDataPool generalDataPool,
-            IAgeDataProvider ageDataProvider,
-            IBattleDataProvider battleDataProvider,
-            ITimelineDataProvider timelineDataProvider,
+            IAgeDataLoader ageDataLoader,
+            IBattleDataLoader battleDataLoader,
+            ITimelineDataLoader timelineDataLoader,
             IMyLogger logger,
             IGameStateMachine stateMachine,
             IAssetRegistry assetRegistry,
             IUserContainer userContainer, 
-            IShopDataProvider shopDataProvider)
+            IShopDataLoader shopDataLoader)
         {
             _generalDataPool = generalDataPool;
-            _ageDataProvider = ageDataProvider;
-            _battleDataProvider = battleDataProvider;
-            _timelineDataProvider = timelineDataProvider;
+            _ageDataLoader = ageDataLoader;
+            _battleDataLoader = battleDataLoader;
+            _timelineDataLoader = timelineDataLoader;
             _logger = logger;
             _stateMachine = stateMachine;
             _assetRegistry = assetRegistry;
             _userContainer = userContainer;
-            _shopDataProvider = shopDataProvider;
+            _shopDataLoader = shopDataLoader;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
         {
             loadingOperations.Enqueue(new DataLoadingOperation(
                 _generalDataPool,
-                _ageDataProvider,
-                _battleDataProvider,
-                _timelineDataProvider,
-                _shopDataProvider,
+                _ageDataLoader,
+                _battleDataLoader,
+                _timelineDataLoader,
+                _shopDataLoader,
                 _assetRegistry,
                 _userContainer,
                 _logger

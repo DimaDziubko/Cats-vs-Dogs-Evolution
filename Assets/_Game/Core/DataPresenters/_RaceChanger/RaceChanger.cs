@@ -1,8 +1,8 @@
 ﻿using System;
+using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._GameInitializer;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Services.UserContainer;
@@ -19,8 +19,8 @@ namespace _Game.Core.DataPresenters._RaceChanger
         
         private readonly IUserContainer _useContainer;
         private readonly IGeneralDataPool _generalDataPool;
-        private readonly IAgeDataProvider _ageDataProvider;
-        private readonly IBattleDataProvider _battleDataProvider;
+        private readonly IAgeDataLoader _ageDataLoader;
+        private readonly IBattleDataLoader _battleDataLoader;
         private readonly IAssetRegistry _assetRegistry;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IGameInitializer _gameInitializer;
@@ -31,8 +31,8 @@ namespace _Game.Core.DataPresenters._RaceChanger
             ILoadingScreenProvider loadingScreenProvider,
             IUserContainer useContainer,
             IGeneralDataPool generalDataPool,
-            IAgeDataProvider ageDataProvider,
-            IBattleDataProvider battleDataProvider,
+            IAgeDataLoader ageDataLoader,
+            IBattleDataLoader battleDataLoader,
             IAssetRegistry assetRegistry,
             IGameInitializer gameInitializer)
         {
@@ -41,9 +41,9 @@ namespace _Game.Core.DataPresenters._RaceChanger
             _gameInitializer = gameInitializer;
             _useContainer = useContainer;
             _generalDataPool = generalDataPool;
-            _ageDataProvider = ageDataProvider;
+            _ageDataLoader = ageDataLoader;
             _assetRegistry = assetRegistry;
-            _battleDataProvider = battleDataProvider;
+            _battleDataLoader = battleDataLoader;
             gameInitializer.OnPostInitialization += Init;
         }
         
@@ -60,8 +60,8 @@ namespace _Game.Core.DataPresenters._RaceChanger
         {
             var raceChangingOperation = new ChangingRaceOperation(
                 _generalDataPool,
-                _ageDataProvider,
-                _battleDataProvider,
+                _ageDataLoader,
+                _battleDataLoader,
                 _assetRegistry,
                 _useContainer);
             

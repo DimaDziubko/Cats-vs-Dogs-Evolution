@@ -6,6 +6,7 @@ using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
@@ -34,6 +35,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly ITimelineTravelPresenter _timelineTravelPresenter;
         private readonly IMiniShopProvider _miniShopProvider;
+        private readonly IBoostDataPresenter _boostDataPresenter;
 
         public UpgradeAndEvolutionScreenProvider(
             IWorldCameraService cameraService,
@@ -48,7 +50,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             IFeatureUnlockSystem featureUnlockSystem,
             IUpgradesAvailabilityChecker upgradesChecker, 
             ITimelineTravelPresenter timelineTravelPresenter,
-            IMiniShopProvider miniShopProvider)
+            IMiniShopProvider miniShopProvider,
+            IBoostDataPresenter boostDataPresenter)
         {
             _logger = logger;
             
@@ -64,6 +67,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _upgradesChecker = upgradesChecker;
             _timelineTravelPresenter = timelineTravelPresenter;
             _miniShopProvider = miniShopProvider;
+            _boostDataPresenter = boostDataPresenter;
         }
         public async UniTask<Disposable<UpgradeAndEvolutionScreen>> Load()
         {
@@ -82,7 +86,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 _tutorialManager,
                 _featureUnlockSystem,
                 _upgradesChecker, 
-                _miniShopProvider);
+                _miniShopProvider,
+                _boostDataPresenter);
             return popup;
         }
     }

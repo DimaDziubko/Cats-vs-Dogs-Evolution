@@ -27,5 +27,6 @@ namespace _Game.Core.Services.UserContainer
         IBattleSpeedStateHandler BattleSpeedStateHandler { get; }
         ITutorialStateHandler TutorialStateHandler { get; }
         IDailyTaskStateHandler DailyTaskStateHandler { get;}
+        void RequestSaveGame(bool isDebounced = false);
     }
 }

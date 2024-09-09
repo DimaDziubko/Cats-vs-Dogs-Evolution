@@ -18,5 +18,10 @@ namespace _Game.Core.AssetManagement
         public const string GENERAL_CARDS_SCREEN = "GeneralCardsScreen";
         public const string CARDS_SCREEN = "CardsScreen";
         public const string SUMMONING_POPUP = "SummoningPopup";
+        public const string CARD_POPUP = "CardPopup";
+        public const string CARD_POPUP_TEST = "CardPopupTest";
+        public const string CARD_APPEARANCE_POPUP = "CardAppearancePopup";
+        public const string BOOST_POPUP = "BoostPopup";
+        public const string STATS_POPUP = "StatsPopup";
     }
 }

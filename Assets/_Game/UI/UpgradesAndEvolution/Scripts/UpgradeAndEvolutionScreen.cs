@@ -1,56 +1,45 @@
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Gameplay._Boosts.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._BoostPopup;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.UI.Common.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Game.UI.UpgradesAndEvolution.Scripts
 {
     public class UpgradeAndEvolutionScreen : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        [FormerlySerializedAs("_upgradesWindow")] [SerializeField] private UpgradesScreen upgradesScreen;
-        [FormerlySerializedAs("_evolutionWindow")] [SerializeField] private EvolutionScreen evolutionScreen;
+        [SerializeField] private UpgradesScreen upgradesScreen;
+        [SerializeField] private EvolutionScreen evolutionScreen;
         [SerializeField] private ToggleButton _upgradesButton;
         [SerializeField] private ToggleButton _evolutionButton;
         [SerializeField] private TutorialStep _evolutionStep;
-
+        [SerializeField] private QuickBoostInfoPanel _quickBoostInfoPanel;
+        
         private ToggleButton _activeButton;
-
-        private Vector2 _upgradeBtnStartSize;
-        private Vector2 _upgradeBtnStartPos;
-
-        private Vector2 _evolutionBtnStartSize;
-        private Vector2 _evolutionBtnStartPos;
-        private float _expansionAmount = 25f;
-
+        
         private ToggleButton ActiveButton
         {
             get => _activeButton;
             set
             {
-                //if (_activeButton != null)
-                //{
-                //    _activeButton.UnHighlightBtn();
-                //}
                 _activeButton = value;
                 _activeButton.HighlightBtn();
             }
@@ -61,6 +50,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private ITutorialManager _tutorialManager;
         private IFeatureUnlockSystem _featureUnlockSystem;
         private IUpgradesAvailabilityChecker _upgradesChecker;
+
 
         public void Construct(
             IWorldCameraService cameraService,
@@ -75,7 +65,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             ITutorialManager tutorialManager,
             IFeatureUnlockSystem featureUnlockSystem,
             IUpgradesAvailabilityChecker upgradesChecker, 
-            IMiniShopProvider miniShopProvider)
+            IMiniShopProvider miniShopProvider,
+            IBoostDataPresenter boostDataPresenter)
         {
             _logger = logger;
 
@@ -86,6 +77,11 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _audioService = audioService;
             _upgradesChecker = upgradesChecker;
 
+            _quickBoostInfoPanel.Construct(
+                boostDataPresenter,
+                audioService,
+                BoostSource.TotalBoosts);
+            
             upgradesScreen.Construct(
                 header, 
                 upgradeItemPresenter, 
@@ -104,15 +100,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 cameraService,
                 miniShopProvider);
 
-        }
-        private void Awake()
-        {
-            _upgradeBtnStartSize = _upgradesButton.RectTransform.sizeDelta;
-            _upgradeBtnStartPos = _upgradesButton.RectTransform.anchoredPosition;
-
-            _evolutionBtnStartSize = _evolutionButton.RectTransform.sizeDelta;
-            _evolutionBtnStartPos = _evolutionButton.RectTransform.anchoredPosition;
-        }
+        } 
 
         public void Show()
         {
@@ -127,8 +115,10 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             if (_upgradesChecker.GetNotificationData(GameScreen.Evolution).IsAvailable)
                 OnEvolutionButtonClick(_evolutionButton);
             else OnUpgradesButtonClick(_upgradesButton);
+            
+            _quickBoostInfoPanel.Init();
         }
-
+        
         private void Subscribe()
         {
             _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
@@ -153,8 +143,6 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             _evolutionButton.Cleanup();
         }
 
-        //ExpandRightSide(_upgradesButton.RectTransform, 50f);
-
         private void OnUpgradeNotified(NotificationData data)
         {
             switch (data.GameScreen)
@@ -175,22 +163,13 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
             {
                 _activeButton.UnHighlightBtn();
             }
-
-            _upgradesButton.RectTransform.sizeDelta = _upgradeBtnStartSize;
-            _upgradesButton.RectTransform.anchoredPosition = _upgradeBtnStartPos;
-
-            _evolutionButton.RectTransform.sizeDelta = _evolutionBtnStartSize;
-            _evolutionButton.RectTransform.anchoredPosition = _evolutionBtnStartPos;
-
-
+            
             switch (gameScreen)
             {
                 case GameScreen.Upgrades:
-                    ExpandLeftSide(_evolutionButton.RectTransform, _expansionAmount);
                     MoveUpInHierarchy(_upgradesButton.RectTransform);
                     break;
                 case GameScreen.Evolution:
-                    ExpandRightSide(_upgradesButton.RectTransform, _expansionAmount);
                     MoveUpInHierarchy(_evolutionButton.RectTransform);
                     break;
             }
@@ -206,20 +185,7 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 rectTransform.SetSiblingIndex(siblingIndex + 1);
             }
         }
-        private void ExpandRightSide(RectTransform rectTransform, float amount)
-        {
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + amount, rectTransform.sizeDelta.y);
-
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x + amount / 2, rectTransform.anchoredPosition.y);
-        }
-        private void ExpandLeftSide(RectTransform rectTransform, float amount)
-        {
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + amount, rectTransform.sizeDelta.y);
-
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x - amount / 2, rectTransform.anchoredPosition.y);
-        }
-
-
+        
         private void OnFeatureUnlocked(Feature feature)
         {
             if (feature == Feature.EvolutionScreen)
@@ -258,6 +224,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
 
             evolutionScreen.Hide();
             upgradesScreen.Hide();
+            
+            _quickBoostInfoPanel.Cleanup();
         }
 
 

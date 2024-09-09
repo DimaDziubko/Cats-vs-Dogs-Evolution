@@ -5,6 +5,7 @@ using _Game.Core.Data;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.BattleLauncher;
@@ -20,26 +21,23 @@ namespace _Game.Core.Debugger
     public class MyDebugger : MonoBehaviour, IMyDebugger
     {
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> AgeUnitDataPool => GeneralDataPool.AgeStaticData.UnitDataPool.GetData();
-    
-         [ShowInInspector]
-         public Dictionary<UnitType, UnitBuilderBtnStaticData> UnitBuilderDataPool => GeneralDataPool.AgeStaticData.UnitBuilderDataPool.GetData();
+         public Dictionary<UnitType, IUnitData> AgeUnitDataPool => GeneralDataPool.AgeStaticData.UnitDataPool.GetData();
          
          [ShowInInspector]
          public Dictionary<int, WeaponData> AgeWeaponDataPool => GeneralDataPool.AgeStaticData.WeaponDataPool.GetData();
          
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> BattleUnitDataPool_0 => GeneralDataPool.BattleStaticData.UnitDataPools[0].GetData();
+         public Dictionary<UnitType, IUnitData> BattleUnitDataPool_0 => GeneralDataPool.BattleStaticData.UnitDataPools[0].GetData();
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> BattleUnitDataPool_1 => GeneralDataPool.BattleStaticData.UnitDataPools[1].GetData();
+         public Dictionary<UnitType, IUnitData> BattleUnitDataPool_1 => GeneralDataPool.BattleStaticData.UnitDataPools[1].GetData();
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> BattleUnitDataPool_2 => GeneralDataPool.BattleStaticData.UnitDataPools[2].GetData();
+         public Dictionary<UnitType, IUnitData> BattleUnitDataPool_2 => GeneralDataPool.BattleStaticData.UnitDataPools[2].GetData();
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> BattleUnitDataPool_3 => GeneralDataPool.BattleStaticData.UnitDataPools[3].GetData();
+         public Dictionary<UnitType, IUnitData> BattleUnitDataPool_3 => GeneralDataPool.BattleStaticData.UnitDataPools[3].GetData();
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> BattleUnitDataPool_4 => GeneralDataPool.BattleStaticData.UnitDataPools[4].GetData();
+         public Dictionary<UnitType, IUnitData> BattleUnitDataPool_4 => GeneralDataPool.BattleStaticData.UnitDataPools[4].GetData();
          [ShowInInspector]
-         public Dictionary<UnitType, UnitData> BattleUnitDataPool_5 => GeneralDataPool.BattleStaticData.UnitDataPools[5].GetData();
+         public Dictionary<UnitType, IUnitData> BattleUnitDataPool_5 => GeneralDataPool.BattleStaticData.UnitDataPools[5].GetData();
          
          
          [ShowInInspector]

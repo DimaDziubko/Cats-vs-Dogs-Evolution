@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _Game.Core._Logger;
+using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using Assets._Game.Core.Services.Audio;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
@@ -10,33 +11,35 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
     public class CardsContainer : MonoBehaviour
     {
         [SerializeField] private Transform _parent;
+        [SerializeField] private DynamicGridLayout _dynamicGridLayout;
 
-        private readonly Dictionary<int, CardView> _cards = new  Dictionary<int, CardView>();
+        private readonly Dictionary<int, CardItemView> _cards = new  Dictionary<int, CardItemView>();
         
         private IUIFactory _uiFactory;
-        private ICardsScreenPresenter _cardsScreenPresenter;
+        private ICardsPresenter _cardsPresenter;
         private IAudioService _audioService;
         private IMyLogger _logger;
 
         public void Construct(
-            ICardsScreenPresenter cardsScreenPresenter, 
+            ICardsPresenter cardsPresenter, 
             IUIFactory uiFactory,
             IAudioService audioService,
             IMyLogger logger)
         {
             _uiFactory = uiFactory;
-            _cardsScreenPresenter = cardsScreenPresenter;
+            _cardsPresenter = cardsPresenter;
             _audioService = audioService;
             _logger = logger;
         }
         
         public void Init()
         {
-            foreach (var model in _cardsScreenPresenter.CardsPresenter.CardModels)
+            foreach (var model in _cardsPresenter.CardModels)
             {
                 CreateNewCard(model.Key, model.Value);
             }
-
+            SortCardsById();
+            AdjustViewport();
             Subscribe();
         }
 
@@ -54,36 +57,43 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             else
             {
                 CreateNewCard(id, model);
+                SortCardsById();
             }
+            AdjustViewport();
+        }
+
+        private void AdjustViewport()
+        {
+            _dynamicGridLayout.AdjustViewport(_cards.Count);
         }
 
         private void CreateNewCard(int id, CardModel model)
         {
-            CardView instance = _uiFactory.GetCard(_parent);
-            instance.Construct(_cardsScreenPresenter.CardsPresenter, _audioService);
+            CardItemView instance = _uiFactory.GetCard(_parent);
+            instance.Construct(_cardsPresenter, _audioService);
             instance.UpdateView(model);
-            instance.Init();
+            instance.Init(id);
             _cards[id] = instance;
-        }
-
-        [Button]
-        private void UpdateCards()
-        {
-            foreach (var pair in _cards)
-            {
-                pair.Value.UpdateView(_cardsScreenPresenter.CardsPresenter.CardModels[pair.Key]);
-                break;
-            }
         }
         
         private void Subscribe()
         {
-            _cardsScreenPresenter.CardsPresenter.CardModelUpdated += UpdateCard;
+            _cardsPresenter.CardModelUpdated += UpdateCard;
         }
 
         private void Unsubscribe()
         {
-            _cardsScreenPresenter.CardsPresenter.CardModelUpdated -= UpdateCard;
+            _cardsPresenter.CardModelUpdated -= UpdateCard;
+        }
+        
+        private void SortCardsById()
+        {
+            int index = 0;
+            foreach (var cardId in _cards.Keys.OrderBy(k => k))
+            {
+                _cards[cardId].transform.SetSiblingIndex(index);
+                index++;
+            }
         }
     }
 }

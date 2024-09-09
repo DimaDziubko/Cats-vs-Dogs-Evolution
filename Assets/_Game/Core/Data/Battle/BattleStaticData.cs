@@ -12,7 +12,7 @@ namespace _Game.Core.Data.Battle
 {
     public class BattleStaticData
     {
-        public Dictionary<int, DataPool<UnitType, UnitData>> UnitDataPools;
+        public Dictionary<int, DataPool<UnitType, IUnitData>> UnitDataPools;
         public Dictionary<int, DataPool<int, WeaponData>> WeaponDataPools;
         public Dictionary<int, BattleScenarioData> BattleDataPools;
         public Dictionary<int, BaseStaticData> BasePool;
@@ -20,7 +20,7 @@ namespace _Game.Core.Data.Battle
         public Dictionary<int, EnvironmentData> EnvironmentPool;
         public Dictionary<int, AudioClip> AmbiencePool;
         
-        public UnitData ForUnit(int battle, UnitType type) => UnitDataPools[battle].ForType(type);
+        public IUnitData ForUnit(int battle, UnitType type) => UnitDataPools[battle].ForType(type);
         public WeaponData ForWeapon(int battle, int weaponId) => WeaponDataPools[battle].ForType(weaponId);
         public BaseStaticData ForBase(int battle) => BasePool[battle];
         public AudioClip ForAmbience(int battle) => AmbiencePool[battle];

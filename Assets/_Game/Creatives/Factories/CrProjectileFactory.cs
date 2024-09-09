@@ -50,7 +50,7 @@ namespace _Game.Creatives.Factories
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData);
             return instance;
         }
 

@@ -38,7 +38,7 @@ namespace _Game.Gameplay._Weapon.Factory
         
         public Projectile Get(Faction faction,  int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null) return null;
             if (weaponData.ProjectilePrefab == null) return null;
 
@@ -60,15 +60,15 @@ namespace _Game.Gameplay._Weapon.Factory
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData);
             return instance;
         }
         
         public async UniTask<Projectile> GetAsync(Faction faction,  int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null) return null;
-            if (weaponData.Config.ProjectileKey == Constants.ConfigKeys.MISSING_KEY) return null;
+            if (weaponData.ProjectileKey == Constants.ConfigKeys.MISSING_KEY) return null;
 
             if (!_projectilesPools.TryGetValue((faction, weaponId), out Queue<Projectile> pool))
             {
@@ -84,11 +84,11 @@ namespace _Game.Gameplay._Weapon.Factory
             }
             else
             {
-                instance = await CreateGameObjectInstanceAsync<Projectile>(weaponData.Config.ProjectileKey);
+                instance = await CreateGameObjectInstanceAsync<Projectile>(weaponData.ProjectileKey);
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData);
             return instance;
         }
         

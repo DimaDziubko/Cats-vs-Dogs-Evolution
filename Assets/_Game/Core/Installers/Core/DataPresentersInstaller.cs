@@ -2,9 +2,9 @@
 using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
+using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
-using Assets._Game.Core.DataPresenters.UnitDataPresenter;
 using Zenject;
 
 namespace _Game.Core.Installers.Core
@@ -14,22 +14,17 @@ namespace _Game.Core.Installers.Core
         public override void InstallBindings()
         {
             BindUnitBuilderDataPresenter();
-            BindUnitDataPresenter();
             BindWeaponDataPresenter();
             BindTowerDataPresenter();
             BindBattlePresenter();
             BindShopPresenter();
             BindCardsPresenter();
+            BindBoostDataPresenter();
         }
 
         private void BindUnitBuilderDataPresenter() => 
             Container
                 .BindInterfacesAndSelfTo<UnitBuilderDataPresenter>()
-                .AsSingle();
-
-        private void BindUnitDataPresenter() =>
-            Container
-                .BindInterfacesAndSelfTo<UnitDataPresenter>()
                 .AsSingle();
 
         private void BindWeaponDataPresenter() =>
@@ -55,6 +50,11 @@ namespace _Game.Core.Installers.Core
         private void BindCardsPresenter() =>
             Container
                 .BindInterfacesAndSelfTo<CardsScreenPresenter>()
+                .AsSingle();
+
+        private void BindBoostDataPresenter() =>
+            Container
+                .BindInterfacesAndSelfTo<BoostDataPresenter>()
                 .AsSingle();
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
+using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic;
-using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Services.UserContainer;
@@ -18,33 +18,33 @@ namespace Assets._Game.Core.Loading
         public string Description => "Loading resources...";
         
         private readonly IGeneralDataPool _generalDataPool;
-        private readonly IAgeDataProvider _ageDataProvider;
-        private readonly IBattleDataProvider _battleDataProvider;
-        private readonly ITimelineDataProvider _timelineDataProvider;
+        private readonly IAgeDataLoader _ageDataLoader;
+        private readonly IBattleDataLoader _battleDataLoader;
+        private readonly ITimelineDataLoader _timelineDataLoader;
         private readonly IMyLogger _logger;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
-        private readonly IShopDataProvider _shopDataProvider;
+        private readonly IShopDataLoader _shopDataLoader;
         private ITimelineStateReadonly TimelineStateReadonly => _userContainer.State.TimelineState;
         
         public DataLoadingOperation(
             IGeneralDataPool generalDataPool,
-            IAgeDataProvider ageDataProvider,
-            IBattleDataProvider baseDataProvider,
-            ITimelineDataProvider timelineDataProvider,
-            IShopDataProvider shopDataProvider,
+            IAgeDataLoader ageDataLoader,
+            IBattleDataLoader baseDataLoader,
+            ITimelineDataLoader timelineDataLoader,
+            IShopDataLoader shopDataLoader,
             IAssetRegistry assetRegistry,
             IUserContainer userContainer,
             IMyLogger logger)
         {
             _generalDataPool = generalDataPool;
-            _ageDataProvider = ageDataProvider;
-            _battleDataProvider = baseDataProvider;
-            _timelineDataProvider = timelineDataProvider;
+            _ageDataLoader = ageDataLoader;
+            _battleDataLoader = baseDataLoader;
+            _timelineDataLoader = timelineDataLoader;
             _assetRegistry = assetRegistry; 
             _logger = logger;
             _userContainer = userContainer;
-            _shopDataProvider = shopDataProvider;
+            _shopDataLoader = shopDataLoader;
         }
         
         public async UniTask Load(Action<float> onProgress)
@@ -61,26 +61,26 @@ namespace Assets._Game.Core.Loading
 
         private async UniTask LoadTimelineData()
         {
-            _generalDataPool.TimelineStaticData = await _timelineDataProvider.Load(TimelineStateReadonly.TimelineId);
+            _generalDataPool.TimelineStaticData = await _timelineDataLoader.Load(TimelineStateReadonly.TimelineId);
             _logger.Log("TimelineData load successfully");
         }
 
         private async UniTask LoadBattleData()
         {
-            _generalDataPool.BattleStaticData = await _battleDataProvider.Load(TimelineStateReadonly.TimelineId);
+            _generalDataPool.BattleStaticData = await _battleDataLoader.Load(TimelineStateReadonly.TimelineId);
             _logger.Log("BattleData load successfully");
         }
 
         private async UniTask LoadAgeData()
         {
-            _generalDataPool.AgeStaticData = await _ageDataProvider.Load(TimelineStateReadonly.TimelineId);
+            _generalDataPool.AgeStaticData = await _ageDataLoader.Load(TimelineStateReadonly.TimelineId);
             _generalDataPool.AgeDynamicData = new AgeDynamicData();
             _logger.Log("AgeData load successfully");
         }
 
         private async UniTask LoadShopData()
         {
-            _generalDataPool.ShopItemStaticDataPool = await _shopDataProvider.LoadShopData();
+            _generalDataPool.ShopItemStaticDataPool = await _shopDataLoader.LoadShopData();
             _logger.Log("Shop load successfully");
         }
     }

@@ -11,13 +11,13 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         private float _damage;
         
         public override void Construct(
-            WeaponConfig config,
+            IUnitData unitData,
             Faction faction,
             ISoundService soundService,
             Transform unitTransform)
         {
-            base.Construct(config, faction, soundService, unitTransform);
-            _damage = config.Damage;
+            base.Construct(unitData, faction, soundService, unitTransform);
+            _damage = unitData.Damage;
         }
 
         protected override void OnAttack()

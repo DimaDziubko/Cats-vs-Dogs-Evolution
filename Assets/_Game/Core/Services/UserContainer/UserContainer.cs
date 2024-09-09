@@ -1,4 +1,5 @@
-﻿using _Game.Core.Configs.Models;
+﻿using System;
+using _Game.Core.Configs.Models;
 using _Game.Core.Debugger;
 using _Game.Core.UserState._Handler._Analytics;
 using _Game.Core.UserState._Handler._BattleSpeed;
@@ -14,8 +15,10 @@ using _Game.Core.UserState._State;
 
 namespace _Game.Core.Services.UserContainer
 {
-    public class UserContainer : IUserContainer
+    public class UserContainer : IUserContainer, ISaveGameTrigger
     {
+        public event Action<bool> SaveGameRequested;
+        
         public UserAccountState State { get; set; }
         public GameConfig GameConfig { get; set; }
 
@@ -29,6 +32,7 @@ namespace _Game.Core.Services.UserContainer
         public IBattleSpeedStateHandler BattleSpeedStateHandler { get; }
         public ITutorialStateHandler TutorialStateHandler { get; }
         public IDailyTaskStateHandler DailyTaskStateHandler { get; }
+
 
         public UserContainer()
         {
@@ -44,5 +48,7 @@ namespace _Game.Core.Services.UserContainer
             TutorialStateHandler = new TutorialStateHandler(this);
             DailyTaskStateHandler = new DailyTaskStateHandler(this);
         }
+        
+        public void RequestSaveGame(bool isDebounced = false) => SaveGameRequested?.Invoke(isDebounced);
     }
 }

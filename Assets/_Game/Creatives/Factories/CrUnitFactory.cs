@@ -52,17 +52,17 @@ namespace _Game.Creatives.Factories
             else
             {
                 instance = CreateGameObjectInstance(unitData.Prefab);
-                instance.OriginFactory = this;
-                instance.Construct(
-                    unitData.Config, 
-                    _cameraService, 
-                    faction, 
-                    type,
-                    _random,
-                    _soundService,
-                    unitData.UnitLayer,
-                    unitData.AggroLayer,
-                    unitData.AttackLayer);
+                // instance.OriginFactory = this;
+                // instance.Construct(
+                //     unitData.Config, 
+                //     _cameraService, 
+                //     faction, 
+                //     type,
+                //     _random,
+                //     _soundService,
+                //     unitData.UnitLayer,
+                //     unitData.AggroLayer,
+                //     unitData.AttackLayer);
             }
             
             return instance;

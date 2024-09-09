@@ -1,4 +1,5 @@
-﻿using _Game.Core.DataPresenters._BaseDataPresenter;
+﻿using _Game.Core._DataProviders.UnitDataProvider;
+using _Game.Core.DataPresenters._BaseDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Random;
@@ -8,7 +9,6 @@ using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Vfx.Factory;
 using _Game.UI.Factory;
-using Assets._Game.Core.DataPresenters.UnitDataPresenter;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
@@ -35,7 +35,7 @@ namespace _Game.Core.Installers.BattleMode
         }
         private void BindFactories()
         {
-            var unitDataPresenter = Container.Resolve<IUnitDataPresenter>();
+            var unitDataPresenter = Container.Resolve<IUnitDataProvider>();
             var weaponDataPresenter = Container.Resolve<IWeaponDataPresenter>();
             var towerDataPresenter = Container.Resolve<IBasePresenter>();
             
@@ -64,9 +64,9 @@ namespace _Game.Core.Installers.BattleMode
             IWorldCameraService cameraService,
             IRandomService random,
             ISoundService soundService,
-            IUnitDataPresenter unitDataPresenter)
+            IUnitDataProvider unitDataProvider)
         {
-            _unitFactory.Initialize(cameraService, random, soundService, unitDataPresenter);
+            _unitFactory.Initialize(cameraService, random, soundService, unitDataProvider);
             Container.Bind<IUnitFactory>().To<UnitFactory>().FromInstance(_unitFactory).AsSingle();
         }
 

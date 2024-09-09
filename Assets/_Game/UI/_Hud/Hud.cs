@@ -6,6 +6,7 @@ using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay.BattleLauncher;
+using _Game.UI._AlertPopup;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._CoinCounterView;
 using _Game.UI._Hud._DailyTaskView;

@@ -68,7 +68,7 @@ namespace _Game.Gameplay.Vfx.Factory
         
         public ProjectileExplosion GetProjectileExplosion(Faction faction, int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null) return null;
             if (weaponData.ProjectileExplosionPrefab == null) return null;
             
@@ -96,9 +96,9 @@ namespace _Game.Gameplay.Vfx.Factory
         
         public async UniTask<ProjectileExplosion> GetProjectileExplosionAsync(Faction faction, int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null) return null;
-            if (weaponData.Config.ProjectileExplosionKey == Constants.ConfigKeys.MISSING_KEY) return null;
+            if (weaponData.ProjectileExplosionKey == Constants.ConfigKeys.MISSING_KEY) return null;
             
             if (!_projectileExplosionPools.TryGetValue(weaponId, out Queue<ProjectileExplosion> pool))
             {
@@ -114,7 +114,7 @@ namespace _Game.Gameplay.Vfx.Factory
             }
             else
             {
-                instance = await CreateGameObjectInstanceAsync<ProjectileExplosion>(weaponData.Config.ProjectileExplosionKey);
+                instance = await CreateGameObjectInstanceAsync<ProjectileExplosion>(weaponData.ProjectileExplosionKey);
                 instance.Construct(weaponId);
                 instance.OriginFactory = this;
             }
@@ -124,9 +124,9 @@ namespace _Game.Gameplay.Vfx.Factory
         
         public async UniTask<MuzzleFlash> GetMuzzleFlashAsync(Faction faction, int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null ) return null;
-            if (weaponData.Config.MuzzleKey == Constants.ConfigKeys.MISSING_KEY) return null;
+            if (weaponData.MuzzleKey == Constants.ConfigKeys.MISSING_KEY) return null;
             
             if (!_muzzlesPools.TryGetValue(weaponId, out Queue<MuzzleFlash> pool))
             {
@@ -142,7 +142,7 @@ namespace _Game.Gameplay.Vfx.Factory
             }
             else
             {
-                instance = await CreateGameObjectInstanceAsync<MuzzleFlash>(weaponData.Config.MuzzleKey);
+                instance = await CreateGameObjectInstanceAsync<MuzzleFlash>(weaponData.MuzzleKey);
                 instance.Construct(weaponId);
                 instance.OriginFactory = this;
             }

@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 887475558977660336}
   - component: {fileID: 5017407520400509462}
   - component: {fileID: 5932694215118979118}
+  - component: {fileID: 7154840847258007648}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -991,6 +992,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 332449148820911838}
   - {fileID: -7382605006623287254}
+  - {fileID: 7154840847258007648}
   - {fileID: 822772221306906843}
   - {fileID: 4049454704554127754}
   - {fileID: 887475558977660336}
@@ -1118,6 +1120,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 494c2bc63f564879a8ef1b45afed9c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7154840847258007648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033977587745188400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df13f4e7ea8e4bc99ad7642512626267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6507026609203256125
@@ -1566,15 +1580,15 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
-  m_ClearDepth: 1
+  m_ClearDepth: 0
   m_AllowXRRendering: 1
   m_AllowHDROutput: 1
   m_UseScreenCoordOverride: 0
@@ -1971,7 +1985,7 @@ PrefabInstance:
       objectReference: {fileID: -6188652404990471670, guid: f95018f929702c14897fab4b4f19f12c, type: 2}
     - target: {fileID: 1709854710546509504, guid: 3221a2b4bf0fb9e478f55c0c57d4f55f, type: 3}
       propertyPath: m_VerticalAlignment
-      value: 512
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 1709854710546509504, guid: 3221a2b4bf0fb9e478f55c0c57d4f55f, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1983,11 +1997,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1709854710546509507, guid: 3221a2b4bf0fb9e478f55c0c57d4f55f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 60
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1709854710546509507, guid: 3221a2b4bf0fb9e478f55c0c57d4f55f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -97.1
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 1921310521036351216, guid: 3221a2b4bf0fb9e478f55c0c57d4f55f, type: 3}
       propertyPath: m_Camera

@@ -7,6 +7,7 @@ using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
@@ -32,13 +33,14 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IGameInitializer _gameInitializer;
         private readonly IMyLogger _logger;
+        private readonly ICommonItemsConfigRepository _commonConfig;
 
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
         private IFoodBoostStateReadonly FoodBoostState => _userContainer.State.FoodBoost;
 
         private readonly FoodBoostBtnModel _foodBoostBtnModel = new FoodBoostBtnModel();
-        
+
         public FoodBoostService(
             IUserContainer userContainer,
             IConfigRepositoryFacade configRepositoryFacade,
@@ -50,6 +52,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         {
             _userContainer = userContainer;
             _configRepository = configRepositoryFacade.EconomyConfigRepository;
+            _commonConfig = configRepositoryFacade.CommonItemsConfigRepository;
             _logger = logger;
             _adsService = adsService;
             _featureUnlockSystem = featureUnlockSystem;
@@ -138,7 +141,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         {
             FoodBoostConfig foodBoostConfig = _configRepository.GetFoodBoostConfig();
             
-            _foodBoostBtnModel.FoodIcon = _generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace);
+            _foodBoostBtnModel.FoodIcon = _commonConfig.ForFoodIcon(RaceState.CurrentRace);
             _foodBoostBtnModel.FoodAmount = (int)(UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount 
                                                   * foodBoostConfig.FoodBoostCoefficient);
             

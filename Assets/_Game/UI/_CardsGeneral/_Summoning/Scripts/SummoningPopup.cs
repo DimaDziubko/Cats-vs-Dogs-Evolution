@@ -124,9 +124,7 @@ namespace _Game.UI._CardsGeneral._Summoning.Scripts
             _taskCompletion.TrySetResult(false);
         }
 
-        private void PlayButtonSound()
-        {
+        private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-        }
     }
 }

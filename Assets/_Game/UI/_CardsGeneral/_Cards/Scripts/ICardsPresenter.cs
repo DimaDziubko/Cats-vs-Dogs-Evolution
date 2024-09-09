@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
@@ -7,7 +6,9 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
     public interface ICardsPresenter
     {
         event Action<int, CardModel> CardModelUpdated;
-        Dictionary<int, CardModel> CardModels { get;}
+        SortedDictionary<int, CardModel> CardModels { get;}
+        void OnCardClicked(int id);
         void Init();
+        void UpgradeCard(int id);
     }
 }

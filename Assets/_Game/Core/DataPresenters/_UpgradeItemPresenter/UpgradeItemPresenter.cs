@@ -4,6 +4,8 @@ using System.Linq;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
+using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Data.Age.Static._UpgradeItem;
@@ -46,6 +48,8 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
         private readonly IGeneralDataPool _dataPool;
         private readonly IAgeNavigator _ageNavigator;
         private readonly IRaceChanger _raceChanger;
+        private readonly ICommonItemsConfigRepository _commonItemsConfigRepository;
+
 
         private readonly Dictionary<UpgradeItemType, UpgradeItemModel> _models = 
             new Dictionary<UpgradeItemType, UpgradeItemModel>(2);
@@ -61,7 +65,8 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             IGeneralDataPool dataPool,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator,
-            IRaceChanger raceChanger)
+            IRaceChanger raceChanger,
+            IConfigRepositoryFacade configRepositoryFacade)
         {
             _userContainer = userContainer;
             _logger = logger;
@@ -70,6 +75,7 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             _gameInitializer = gameInitializer;
             _ageNavigator = ageNavigator;
             _raceChanger = raceChanger;
+            _commonItemsConfigRepository = configRepositoryFacade.CommonItemsConfigRepository;
             
             gameInitializer.OnMainInitialization += Init;
         }
@@ -141,8 +147,8 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
                 StaticData = new UpgradeItemStaticData
                 {
                     Icon = type == UpgradeItemType.FoodProduction 
-                        ? _dataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace)
-                        : _dataPool.AgeStaticData.ForTowerIcon(),
+                        ? _commonItemsConfigRepository.ForFoodIcon(RaceState.CurrentRace)
+                        : _commonItemsConfigRepository.ForBaseIcon(),
                     Type = type,
                     Name = type == UpgradeItemType.FoodProduction ? "Food Production" : "Base Health"
                 },

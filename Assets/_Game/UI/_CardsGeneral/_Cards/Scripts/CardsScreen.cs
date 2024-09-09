@@ -1,17 +1,23 @@
 ﻿using _Game.Core._Logger;
+using _Game.Core._UpgradesChecker;
 using _Game.UI._CardsGeneral._Summoning.Scripts;
+using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Factory;
+using _Game.UI.Header.Scripts;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.Services.Camera;
+using Assets._Game.UI.Common.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
 {
-    public class CardsScreen : MonoBehaviour
+    public class CardsScreen : MonoBehaviour, IGameScreen
     {
+        public GameScreen GameScreen => GameScreen.Cards;
+        
         [SerializeField] private Canvas _canvas;
         [SerializeField] private CardsContainer _container;
 
@@ -26,20 +32,26 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         private IWorldCameraService _cameraService;
         private IAudioService _audioService;
         private ICardsScreenPresenter _cardsScreenPresenter;
-        
+        private IHeader _header;
+        private IUpgradesAvailabilityChecker _upgradesChecker;
+
         public void Construct(
             IWorldCameraService cameraService,
             IAudioService audioService,
             ICardsScreenPresenter cardsScreenPresenter,
             IUIFactory uiFactory, 
-            IMyLogger logger)
+            IMyLogger logger,
+            IHeader header,
+            IUpgradesAvailabilityChecker upgradesChecker)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _cameraService = cameraService;
             _audioService = audioService;
             _cardsScreenPresenter = cardsScreenPresenter;
-            
-            _container.Construct(cardsScreenPresenter, uiFactory, audioService, logger);
+            _header = header;
+            _upgradesChecker = upgradesChecker;
+
+            _container.Construct(cardsScreenPresenter.CardsPresenter, uiFactory, audioService, logger);
             Init();
         }
 
@@ -64,6 +76,18 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         {
             Unsubscribe();
             Subscribe();
+            UpdateScreenName();
+            
+            _upgradesChecker.MarkAsReviewed(GameScreen);
+            _upgradesChecker.MarkAsReviewed(GameScreen.GeneralCards);
+        }
+
+        private void UpdateScreenName()
+        {
+            var screenName = GameScreen.ToString();
+            var smallerFontSize = 50;
+            var fullName = $"{screenName} \n<size={smallerFontSize}%>{_cardsScreenPresenter.CardsCountInfo}</size>";
+            _header.ShowScreenName(fullName, Color.white);
         }
 
         private void Subscribe()
@@ -73,6 +97,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _x10CardBtn.Click += OnX10CardBtnClicked;
             _cardsScreenPresenter.ButtonModelsChanged += UpdateButtons;
             _cardsScreenPresenter.CardsSummoningPresenter.CardsSummoningModelChanged += UpdateSummoningView;
+            _cardsScreenPresenter.CardsPresenter.CardModelUpdated += OnCardModelUpdated;
         }
 
         private void UpdateButtons(TransactionButtonModel[] models)
@@ -81,9 +106,17 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _x10CardBtn.UpdateButtonState(models[1]);
         }
 
-        private void OnX10CardBtnClicked() => _cardsScreenPresenter.TryToBuyX10Card();
+        private void OnX10CardBtnClicked()
+        {
+            _cardsScreenPresenter.TryToBuyX10Card();
+            PlayButtonSound();
+        }
 
-        private void OnX1CardBtnClicked() => _cardsScreenPresenter.TryToBuyX1Card();
+        private void OnX1CardBtnClicked()
+        {
+            _cardsScreenPresenter.TryToBuyX1Card();
+            PlayButtonSound();
+        }
 
         private async void OnSummoningButtonClicked()
         {
@@ -104,7 +137,10 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _x10CardBtn.Click -= OnX10CardBtnClicked;
             _cardsScreenPresenter.ButtonModelsChanged -= UpdateButtons;
             _cardsScreenPresenter.CardsSummoningPresenter.CardsSummoningModelChanged -= UpdateSummoningView;
+            _cardsScreenPresenter.CardsPresenter.CardModelUpdated -= OnCardModelUpdated;
         }
+
+        private void OnCardModelUpdated(int _, CardModel __) => UpdateScreenName();
 
         public void Hide()
         {
@@ -112,7 +148,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             Cleanup();
         }
 
-        public void Cleanup()
+        private void Cleanup()
         {
             _x1CardBtn.Cleanup();
             _x10CardBtn.Cleanup();

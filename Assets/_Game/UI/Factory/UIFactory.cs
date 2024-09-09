@@ -2,6 +2,7 @@
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Game.UI.Factory
 {
@@ -19,7 +20,7 @@ namespace _Game.UI.Factory
         [SerializeField] private ShopItem _shopItemType1, _shopItemType2, _shopItemType3, _shopItemType4;
         [SerializeField] private Plug _shopItemPlug;
 
-        [SerializeField] private CardView _cardView;
+        [FormerlySerializedAs("_cardView")] [SerializeField] private CardItemView cardItemView;
         
         public ShopItem Get(ShopItemViewType type, Transform parent)
         {
@@ -54,17 +55,17 @@ namespace _Game.UI.Factory
             return instance;
         }
 
-        public CardView GetCard(Transform parent)
+        public CardItemView GetCard(Transform parent)
         {
-            var instance = CreateGameObjectInstance(_cardView, parent);
+            var instance = CreateGameObjectInstance(cardItemView, parent);
             if(instance != null)
                 instance.OriginFactory = this;
             return instance;
         }
 
-        public CardView GetCard()
+        public CardItemView GetCard()
         {
-            var instance = CreateGameObjectInstance(_cardView);
+            var instance = CreateGameObjectInstance(cardItemView);
             if(instance != null)
                 instance.OriginFactory = this;
             return instance;
@@ -76,18 +77,18 @@ namespace _Game.UI.Factory
         public void Reclaim(Plug item) => 
             Destroy(item.gameObject);
         
-        public void Reclaim(CardView cardView) => 
-            Destroy(cardView.gameObject);
+        public void Reclaim(CardItemView cardItemView) => 
+            Destroy(cardItemView.gameObject);
     }
 
     public interface IUIFactory
     {
         ShopItem Get(ShopItemViewType type, Transform parent);
         Plug GetShopItemPlug(Transform parent);
-        CardView GetCard(Transform parent);
-        CardView GetCard();
+        CardItemView GetCard(Transform parent);
+        CardItemView GetCard();
         void Reclaim(Plug item);
         void Reclaim(ShopItem item);
-        void Reclaim(CardView cardView);
+        void Reclaim(CardItemView cardItemView);
     }
 }

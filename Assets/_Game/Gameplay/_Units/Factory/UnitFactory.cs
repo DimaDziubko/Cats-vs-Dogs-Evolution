@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using _Game.Core._DataProviders.UnitDataProvider;
 using _Game.Core.Factory;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Utils;
-using Assets._Game.Core.DataPresenters.UnitDataPresenter;
 using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
@@ -18,7 +18,7 @@ namespace _Game.Gameplay._Units.Factory
     {
         private IWorldCameraService _cameraService;
         private IRandomService _random;
-        private IUnitDataPresenter _unitDataPresenter;
+        private IUnitDataProvider _unitDataProvider;
         private ISoundService _soundService;
 
 
@@ -29,19 +29,19 @@ namespace _Game.Gameplay._Units.Factory
             IWorldCameraService cameraService,
             IRandomService random,
             ISoundService soundService,
-            IUnitDataPresenter unitDataPresenter)
+            IUnitDataProvider unitDataProvider)
         {
             _cameraService = cameraService;
             _random = random;
-            _unitDataPresenter = unitDataPresenter;
+            _unitDataProvider = unitDataProvider;
             _soundService = soundService;
         }
         
         public  Unit Get(Faction faction, UnitType type)
         {
-            UnitData unitData = faction == Faction.Player 
-                ? _unitDataPresenter.GetUnitData(type, Constants.CacheContext.AGE) 
-                : _unitDataPresenter.GetUnitData(type, Constants.CacheContext.BATTLE);
+            IUnitData unitData = faction == Faction.Player 
+                ? _unitDataProvider.GetDecoratedUnitData(type, Constants.CacheContext.AGE) 
+                : _unitDataProvider.GetDecoratedUnitData(type, Constants.CacheContext.BATTLE);
 
             if (!_unitsPools.TryGetValue((faction, type), out Queue<Unit> pool))
             {
@@ -61,15 +61,11 @@ namespace _Game.Gameplay._Units.Factory
                 instance = CreateGameObjectInstance(unitData.Prefab);
                 instance.OriginFactory = this;
                 instance.Construct(
-                    unitData.Config, 
+                    unitData,
                     _cameraService, 
-                    faction, 
-                    type,
+                    faction,
                     _random,
-                    _soundService,
-                    unitData.UnitLayer,
-                    unitData.AggroLayer,
-                    unitData.AttackLayer);
+                    _soundService);
             }
             
             return instance;
@@ -77,9 +73,9 @@ namespace _Game.Gameplay._Units.Factory
 
         public async UniTask<Unit> GetAsync(Faction faction, UnitType type)
         {
-            UnitData unitData = faction == Faction.Player 
-                ? _unitDataPresenter.GetUnitData(type, Constants.CacheContext.AGE) 
-                : _unitDataPresenter.GetUnitData(type, Constants.CacheContext.BATTLE);
+            IUnitData unitData = faction == Faction.Player 
+                ? _unitDataProvider.GetDecoratedUnitData(type, Constants.CacheContext.AGE) 
+                : _unitDataProvider.GetDecoratedUnitData(type, Constants.CacheContext.BATTLE);
 
             if (!_unitsPools.TryGetValue((faction, type), out Queue<Unit> pool))
             {
@@ -96,19 +92,15 @@ namespace _Game.Gameplay._Units.Factory
             }
             else
             {
-                var key = unitData.Race == Race.Cat ? unitData.Config.CatKey : unitData.Config.DogKey;
+                var key = unitData.Race == Race.Cat ? unitData.CatKey : unitData.DogKey;
                 instance = await CreateGameObjectInstanceAsync<Unit>(key);
                 instance.OriginFactory = this;
                 instance.Construct(
-                    unitData.Config, 
+                    unitData, 
                     _cameraService, 
-                    faction, 
-                    type,
+                    faction,
                     _random,
-                    _soundService,
-                    unitData.UnitLayer,
-                    unitData.AggroLayer,
-                    unitData.AttackLayer);
+                    _soundService);
             }
             
             return instance;

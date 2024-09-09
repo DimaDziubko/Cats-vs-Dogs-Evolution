@@ -16,18 +16,35 @@ namespace _Game.Core.UserState._Handler._DailyTask
         {
             _userContainer.State.DailyTasksState.CompleteTask();
             _userContainer.State.TasksState.AddCompletedTask();
+            _userContainer.RequestSaveGame();
+
         }
 
-        public void ChangeTaskIdx(int id) => 
+        public void ChangeTaskIdx(int id)
+        {
             _userContainer.State.DailyTasksState.ChangeCurrentTaskIdx(id);
+            _userContainer.RequestSaveGame();
 
-        public void AddProgress(float delta) => 
+        }
+
+        public void AddProgress(float delta)
+        {
             _userContainer.State.DailyTasksState.AddProgress(delta);
+            _userContainer.RequestSaveGame();
+        }
 
-        public void ClearCompleted() => 
+        public void ClearCompleted()
+        {
             _userContainer.State.DailyTasksState.ClearCompleted();
+            _userContainer.RequestSaveGame();
 
-        public void ChangeLastTimeGenerated(DateTime newTime) => 
+        }
+
+        public void ChangeLastTimeGenerated(DateTime newTime)
+        {
             _userContainer.State.DailyTasksState.ChangeLastTimeGenerated(newTime);
+            _userContainer.RequestSaveGame();
+
+        }
     }
 }

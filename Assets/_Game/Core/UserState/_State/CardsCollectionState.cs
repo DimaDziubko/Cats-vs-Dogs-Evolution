@@ -8,6 +8,7 @@ namespace _Game.Core.UserState._State
     {
         event Action<int> CardsSummoningLevelChanged;
         event Action<int> CardsSummoningProgressChanged;
+        event Action<int> CardUpgraded;
         event Action CardsCollectionChanged;
         event Action<List<int>> CardsCollected;
         int CardsSummoningLevel { get; }
@@ -19,6 +20,7 @@ namespace _Game.Core.UserState._State
     {
         public event Action<int> CardsSummoningLevelChanged;
         public event Action<int> CardsSummoningProgressChanged;
+        public event Action<int> CardUpgraded;
         public event Action CardsCollectionChanged;
         public event Action<List<int>> CardsCollected;
 
@@ -43,14 +45,15 @@ namespace _Game.Core.UserState._State
             CardsSummoningProgressChanged?.Invoke(CardsSummoningProgressCount);
         }
 
-        public void UpgradeCard(int id)
+        public void UpgradeCard(int id, int needForUpgrade)
         {
             var card = Cards.FirstOrDefault(x => x.Id == id);
             if (card != null)
             {
                 card.Level++;
+                card.Count -= needForUpgrade;
             }
-            CardsCollectionChanged?.Invoke();
+            CardUpgraded?.Invoke(id);
         }
         
         public void AddCards(List<int> cardsId)

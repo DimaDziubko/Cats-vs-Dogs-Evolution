@@ -5,6 +5,7 @@ using _Game.Core._UpgradesChecker;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
@@ -18,7 +19,7 @@ using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
-    public class UpgradesScreen : MonoBehaviour, IUIScreen
+    public class UpgradesScreen : MonoBehaviour, IGameScreen
     {
         public event Action Opened;
         public GameScreen GameScreen => GameScreen.Upgrades;
@@ -61,7 +62,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         public void Show()
         {
             _canvas.enabled = true;
-            _header.ShowWindowName(GameScreen.ToString(), Color.white);
+            _header.ShowScreenName(GameScreen.ToString(), Color.white);
 
             Unsubscribe();
             Subscribe();
@@ -82,6 +83,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             {
                 unitItem.Upgrade += OnUnitItemUpgrade;
                 unitItem.TryUpgrade += OnTryUpgrade;
+                unitItem.InfoClicked += OnInfoClicked;
             }
             
             _foodProduction.Upgrade += OnItemUpgrade;
@@ -91,9 +93,14 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _foodProduction.ButtonStateChanged += OnFoodProductionButtonStateChanged;
 
             _unitUpgradesPresenter.UpgradeUnitItemsUpdated += UpdateUnitItems;
-            _upgradeItemPresenter.UpgradeItemUpdated += UpdateUpgradeItemItem;
+            _upgradeItemPresenter.UpgradeItemUpdated += UpdateUpgradeItem;
 
             Opened += OnUpgradesScreenOpened;
+        }
+
+        private void OnInfoClicked(UnitType type)
+        {
+            _unitUpgradesPresenter.ShowInfoFor(type);
         }
 
         public void Hide()
@@ -112,12 +119,13 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private void Unsubscribe()
         {
             _unitUpgradesPresenter.UpgradeUnitItemsUpdated -= UpdateUnitItems;
-            _upgradeItemPresenter.UpgradeItemUpdated -= UpdateUpgradeItemItem;
+            _upgradeItemPresenter.UpgradeItemUpdated -= UpdateUpgradeItem;
 
             foreach (var item in _unitItems)
             {
                 item.Upgrade -= OnUnitItemUpgrade;
                 item.TryUpgrade -= OnTryUpgrade;
+                item.InfoClicked -= OnInfoClicked;
                 item.Cleanup();
             }
 
@@ -135,7 +143,11 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             var isExit =  await popup.Value.ShowAndAwaitForDecision(price);
-            if(isExit) popup.Dispose();
+            if (isExit)
+            {
+                popup.Value.Hide();
+                popup.Dispose();
+            }
         }
 
         private void OnFoodProductionButtonStateChanged(ButtonState state)
@@ -189,7 +201,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _baseHealth.Init(_audioService);
         }
 
-        private void UpdateUpgradeItemItem(UpgradeItemModel model)
+        private void UpdateUpgradeItem(UpgradeItemModel model)
         {
             switch (model.StaticData.Type)
             {

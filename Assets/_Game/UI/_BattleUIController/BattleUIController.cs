@@ -9,6 +9,7 @@ using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay.BattleLauncher;
+using _Game.UI._AlertPopup;
 using _Game.UI._Currencies;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;

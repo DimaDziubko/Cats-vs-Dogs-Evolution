@@ -9,6 +9,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         ICardsSummoningPresenter CardsSummoningPresenter { get; }
         ICardsPresenter CardsPresenter { get;}
         TransactionButtonModel[] ButtonModels { get;}
+        string CardsCountInfo { get; }
         void TryToBuyX1Card();
         void TryToBuyX10Card();
     }

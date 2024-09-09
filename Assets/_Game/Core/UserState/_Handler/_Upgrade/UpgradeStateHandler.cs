@@ -33,21 +33,29 @@ namespace _Game.Core.UserState._Handler._Upgrade
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
             }
+            
+            _userContainer.RequestSaveGame(true);
+
         }
         
-        public void ChangeCardSummoningLevel(int newLevel) => 
+        public void ChangeCardSummoningLevel(int newLevel)
+        {
             _userContainer.State.CardsCollectionState.ChangeCardSummoningLevel(newLevel);
-        
+            _userContainer.RequestSaveGame();
+
+        }
+
         public void AddCards(List<int> cardsId)
         {
             _userContainer.State.CardsCollectionState.AddCards(cardsId);
-        }
-        
-        public void BuyCard(int amount, int price)
-        {
-            _userContainer.State.Currencies.ChangeGems(price, false, CurrenciesSource.Cards);
-        }
+            _userContainer.RequestSaveGame();
 
-        public void UpgradeCard(int id) => _userContainer.State.CardsCollectionState.UpgradeCard(id);
+        }
+        public void UpgradeCard(int id, int needForUpgrade)
+        {
+            _userContainer.State.CardsCollectionState.UpgradeCard(id, needForUpgrade);
+            _userContainer.RequestSaveGame();
+
+        }
     }
 }

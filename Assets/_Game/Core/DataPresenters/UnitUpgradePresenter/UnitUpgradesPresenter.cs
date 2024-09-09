@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using _Game.Core._DataProviders.UnitDataProvider;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
-using _Game.Core.Data;
+using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using _Game.Utils;
+using _Game.Utils.Extensions;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.DataPresenters._RaceChanger;
 using Assets._Game.Core.UserState;
@@ -20,9 +27,10 @@ using UnityEngine;
 
 namespace _Game.Core.DataPresenters.UnitUpgradePresenter
 {
-    public class UnitUpgradesPresenter : IUnitUpgradesPresenter, IUpgradeAvailabilityProvider, IDisposable 
+    public class UnitUpgradesPresenter : IUnitUpgradesPresenter, IUpgradeAvailabilityProvider, IDisposable
     {
         public event Action<Dictionary<UnitType, UnitUpgradeItemModel>> UpgradeUnitItemsUpdated;
+
         IEnumerable<GameScreen> IUpgradeAvailabilityProvider.AffectedScreens
         {
             get
@@ -31,38 +39,47 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
                 yield return GameScreen.UpgradesAndEvolution;
             }
         }
-        bool IUpgradeAvailabilityProvider.IsAvailable =>  
+
+        bool IUpgradeAvailabilityProvider.IsAvailable =>
             _models.Values.Any(model => model.ButtonState == ButtonState.Active && !model.IsBought);
 
         private readonly IGameInitializer _gameInitializer;
-        private readonly IUserContainer _persistentData;
+        private readonly IUserContainer _userContainer;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
-        private readonly IGeneralDataPool _dataPool;
         private readonly IAgeNavigator _ageNavigator;
         private readonly IRaceChanger _raceChanger;
         private readonly IMyLogger _logger;
-        private ITimelineStateReadonly TimelineState => _persistentData.State.TimelineState;
-        private IUserCurrenciesStateReadonly Currency => _persistentData.State.Currencies;
+        private readonly IUnitDataProvider _unitDataProvider;
+        private readonly ICommonItemsConfigRepository _commonConfig;
+        private readonly IStatsPopupProvider _statsPopupProvider;
+        private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private IUserCurrenciesStateReadonly Currency => _userContainer.State.Currencies;
 
-        private readonly Dictionary<UnitType, UnitUpgradeItemModel> _models 
+
+        private readonly Dictionary<UnitType, UnitUpgradeItemModel> _models
             = new Dictionary<UnitType, UnitUpgradeItemModel>(3);
 
         public UnitUpgradesPresenter(
-            IUserContainer persistentData,
+            IUserContainer userContainer,
             IMyLogger logger,
             IUpgradesAvailabilityChecker upgradesChecker,
-            IGeneralDataPool dataPool,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator,
-            IRaceChanger raceChanger)
+            IRaceChanger raceChanger,
+            IUnitDataProvider unitDataProvider,
+            IConfigRepositoryFacade configRepositoryFacade,
+            IStatsPopupProvider statsPopupProvider)
         {
-            _persistentData = persistentData;
+            _userContainer = userContainer;
             _logger = logger;
             _upgradesChecker = upgradesChecker;
-            _dataPool = dataPool;
             _gameInitializer = gameInitializer;
             _ageNavigator = ageNavigator;
             _raceChanger = raceChanger;
+            _unitDataProvider = unitDataProvider;
+            _commonConfig = configRepositoryFacade.CommonItemsConfigRepository;
+            _statsPopupProvider = statsPopupProvider;
+            
             gameInitializer.OnMainInitialization += Init;
         }
 
@@ -80,7 +97,7 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
         {
             if (Currency.Coins >= price)
             {
-                _persistentData.PurchaseStateHandler.PurchaseUnit(type, price, CurrenciesSource.Upgrade);
+                _userContainer.PurchaseStateHandler.PurchaseUnit(type, price, CurrenciesSource.Upgrade);
             }
             else
             {
@@ -111,16 +128,50 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
             _raceChanger.RaceChanged -= OnRaceChanged;
         }
 
+        async void IUnitUpgradesPresenter.ShowInfoFor(UnitType type)
+        {
+            var popup = await _statsPopupProvider.Load();
+            bool isConfirmed = await popup.Value.ShowStatsAndAwaitForExit(type);
+            if (isConfirmed)
+            {
+                popup.Value.Cleanup();
+                popup.Dispose();
+            }
+        }
+
         private void PrepareUnitUpgradeItemModels()
         {
-            foreach (var unitItem in _dataPool.AgeStaticData.GetUnitUpgradeItems())
+            foreach (UnitType type in Enum.GetValues(typeof(UnitType)))
             {
-                _models[unitItem.Key] = new UnitUpgradeItemModel()
+                IUnitData unitData = _unitDataProvider.GetDecoratedUnitData(type, Constants.CacheContext.AGE);
+                
+                _models[type] = new UnitUpgradeItemModel()
                 {
-                    StaticData = unitItem.Value,
-                    IsBought = TimelineState.OpenUnits.Contains(unitItem.Key),
-                    ButtonState = Currency.Coins > unitItem.Value.Price 
-                        ? ButtonState.Active 
+                    WarriorIcon = unitData.Icon,
+                    Name = unitData.Name,
+                    Price = unitData.Price,
+                    Type = type,
+                    
+                    Stats = new Dictionary<StatType, StatInfoModel>()
+                    {
+                        {StatType.Damage, new StatInfoModel()
+                        {
+                            StatIcon = _commonConfig.GetUnitAttackIconFor(unitData.Race),
+                            StatFullValue = unitData.Damage.ToFormattedString(1),
+                            StatBoostValue = unitData.GetStatBoost(StatType.Damage).ToFormattedString(),
+                        }},
+                        
+                        {StatType.Health, new StatInfoModel()
+                        {
+                            StatIcon = _commonConfig.GetUnitHealthIconFor(unitData.Race),
+                            StatFullValue = unitData.GetUnitHealthForFaction(Faction.Player).ToFormattedString(1),
+                            StatBoostValue = unitData.GetStatBoost(StatType.Health).ToFormattedString(),
+                        }},
+                    },
+                        
+                    IsBought = TimelineState.OpenUnits.Contains(type),
+                    ButtonState = Currency.Coins > unitData.Price
+                        ? ButtonState.Active
                         : ButtonState.Inactive
                 };
             }
@@ -134,11 +185,22 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
 
         private void UpdateUnitItem(UnitType type)
         {
+            IUnitData unitData = _unitDataProvider.GetDecoratedUnitData(type, Constants.CacheContext.AGE);
+            
             var model = _models[type];
-            model.ButtonState = Currency.Coins > model.StaticData.Price 
-                ? ButtonState.Active 
+            model.ButtonState = Currency.Coins > model.Price
+                ? ButtonState.Active
                 : ButtonState.Inactive;
             model.IsBought = TimelineState.OpenUnits.Contains(type);
+
+            model.Stats[StatType.Damage].StatIcon = _commonConfig.GetUnitAttackIconFor(unitData.Race);
+            model.Stats[StatType.Damage].StatBoostValue = unitData.Damage.ToFormattedString();
+            model.Stats[StatType.Damage].StatBoostValue = unitData.GetStatBoost(StatType.Damage).ToFormattedString();
+
+            model.Stats[StatType.Health].StatIcon = _commonConfig.GetUnitHealthIconFor(unitData.Race);
+            model.Stats[StatType.Health].StatFullValue =
+                unitData.GetUnitHealthForFaction(Faction.Player).ToFormattedString();
+            model.Stats[StatType.Health].StatBoostValue = unitData.GetStatBoost(StatType.Health).ToFormattedString();
         }
 
         private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
@@ -147,15 +209,15 @@ namespace _Game.Core.DataPresenters.UnitUpgradePresenter
 
         private void UpdateUnitItems()
         {
-            foreach (var unitItem in _dataPool.AgeStaticData.GetUnitUpgradeItems())
+            foreach (UnitType type in Enum.GetValues(typeof(UnitType)))
             {
-                UpdateUnitItem(unitItem.Key);
+                UpdateUnitItem(type);
             }
-
+            
             UpgradeUnitItemsUpdated?.Invoke(_models);
         }
 
-        void IUnitUpgradesPresenter.OnUpgradesWindowOpened() => 
+        void IUnitUpgradesPresenter.OnUpgradesWindowOpened() =>
             UpgradeUnitItemsUpdated?.Invoke(_models);
 
         private void Cleanup() => _models.Clear();

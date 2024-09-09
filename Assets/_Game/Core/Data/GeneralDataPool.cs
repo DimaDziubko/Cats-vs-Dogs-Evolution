@@ -5,8 +5,6 @@ using _Game.Core.Data.Battle;
 using _Game.Core.Data.Timeline.Static;
 using _Game.Core.Debugger;
 using _Game.UI._Shop.Scripts;
-using Assets._Game.Gameplay._UnitBuilder.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
 
 namespace _Game.Core.Data
 {
@@ -17,8 +15,6 @@ namespace _Game.Core.Data
         public AgeDynamicData AgeDynamicData { get; set; }
         public BattleStaticData BattleStaticData { get; set; }
         public DataPool<int, ShopItemStaticData> ShopItemStaticDataPool { get; set; }
-
-        public UnitBuilderBtnStaticData GetBuilderButtonData(UnitType type) => AgeStaticData.GetBuilderButtonData(type);
 
         public GeneralDataPool(
             IMyLogger logger,

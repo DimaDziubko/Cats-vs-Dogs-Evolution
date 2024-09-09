@@ -123,7 +123,8 @@ namespace _Game.UI._MainMenu.Scripts
             _upgradeButton.Initialize(IsUpgradesUnlocked, OnUpgradeButtonClick, PlayButtonSound,
                 _upgradesChecker.GetNotificationData(GameScreen.UpgradesAndEvolution));
             _battleButton.Initialize(IsBattleUnlocked, OnBattleButtonClick, PlayButtonSound);
-            _cardsButton.Initialize(IsCardsUnlocked, OnCardsButtonClick, PlayButtonSound);
+            _cardsButton.Initialize(IsCardsUnlocked, OnCardsButtonClick, PlayButtonSound,
+                _upgradesChecker.GetNotificationData(GameScreen.GeneralCards));
             _shopButton.Initialize(IsShopUnlocked, OnShopButtonClick, PlayButtonSound,
                 _upgradesChecker.GetNotificationData(GameScreen.Shop));
 
@@ -168,6 +169,9 @@ namespace _Game.UI._MainMenu.Scripts
                     break;
                 case GameScreen.Shop:
                     _shopButton.SetupPin(data);
+                    break;
+                case GameScreen.GeneralCards:
+                    _cardsButton.SetupPin(data);
                     break;
             }
         }

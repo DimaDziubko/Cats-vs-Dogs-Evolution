@@ -160,40 +160,40 @@ namespace _Game.Creatives.Creative_1.Scenario
 
         private void SetupWeaponData()
         {
-            foreach (var unit in _playerUnits)
-            {
-                if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
-                WeaponData data = new WeaponData()
-                {
-                    Config = unit.Data.Config.WeaponConfig,
-                    Layer = Constants.Layer.PLAYER_PROJECTILE,
-                    MuzzlePrefab = unit.MuzzlePrefab,
-                    ProjectilePrefab = unit.ProjectilePrefab,
-                    ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
-                };
-                _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
-            }
-
-            foreach (var unit in _enemyUnits)
-            {
-                if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
-                WeaponData data = new WeaponData()
-                {
-                    Config = unit.Data.Config.WeaponConfig,
-                    Layer = Constants.Layer.ENEMY_PROJECTILE,
-                    MuzzlePrefab = unit.MuzzlePrefab,
-                    ProjectilePrefab = unit.ProjectilePrefab,
-                    ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
-                };
-                _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
-            }
+            // foreach (var unit in _playerUnits)
+            // {
+            //     if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
+            //     WeaponData data = new WeaponData()
+            //     {
+            //         Config = unit.Data.Config.WeaponConfig,
+            //         Layer = Constants.Layer.PLAYER_PROJECTILE,
+            //         MuzzlePrefab = unit.MuzzlePrefab,
+            //         ProjectilePrefab = unit.ProjectilePrefab,
+            //         ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
+            //     };
+            //     _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
+            // }
+            //
+            // foreach (var unit in _enemyUnits)
+            // {
+            //     if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
+            //     WeaponData data = new WeaponData()
+            //     {
+            //         Config = unit.Data.Config.WeaponConfig,
+            //         Layer = Constants.Layer.ENEMY_PROJECTILE,
+            //         MuzzlePrefab = unit.MuzzlePrefab,
+            //         ProjectilePrefab = unit.ProjectilePrefab,
+            //         ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
+            //     };
+            //     _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
+            // }
         }
         private void SetupUnitBuilderCoinsBtnData()
         {
             int index = 0;
             foreach (var unit in _playerUnits)
             {
-                _crGameplayUI.CrUnitBuilButtons[index].InitButtonData(unit.name, unit.Icon, unit.Data.Config.FoodPrice);
+                //_crGameplayUI.CrUnitBuilButtons[index].InitButtonData(unit.name, unit.Icon, unit.Data.Config.FoodPrice);
             }
 
             _builder = new CrUnitBuilderViewController(_gameplayUI, _foodGenerator, _coinCounter, _audioService, _pauseManager);
@@ -215,18 +215,7 @@ namespace _Game.Creatives.Creative_1.Scenario
             {
                 var newData = new UnitBuilderBtnModel()
                 {
-                    StaticData = new UnitBuilderBtnStaticData()
-                    {
-                        FoodPrice = unit.Data.Config.FoodPrice,
-                        Type = unit.Type,
-                        UnitIcon = unit.Icon
-                    },
-
-                    DynamicData = new UnitBuilderBtnDynamicData()
-                    {
-                        FoodIcon = _foodSprite,
-                        IsUnlocked = true,
-                    }
+                    //TODO Fix later
 
                 };
 

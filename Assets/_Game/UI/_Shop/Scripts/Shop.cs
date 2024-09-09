@@ -11,7 +11,7 @@ using UnityEngine;
 namespace _Game.UI._Shop.Scripts
 {
     [RequireComponent(typeof(Canvas))]
-    public class Shop : MonoBehaviour, IUIScreen
+    public class Shop : MonoBehaviour, IGameScreen
     {
         public event Action Opened;
         public GameScreen GameScreen => GameScreen.Shop;
@@ -67,7 +67,7 @@ namespace _Game.UI._Shop.Scripts
         }
 
         private void ShowName() => 
-            _header.ShowWindowName(GameScreen.ToString(), _color);
+            _header.ShowScreenName(GameScreen.ToString(), _color);
 
         public void Hide()
         {

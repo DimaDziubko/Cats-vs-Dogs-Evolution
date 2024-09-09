@@ -20,7 +20,7 @@ using UnityEngine.UI;
 
 namespace _Game.UI._StartBattleWindow.Scripts
 {
-    public class StartBattleScreen : MonoBehaviour, IUIScreen
+    public class StartBattleScreen : MonoBehaviour, IGameScreen
     {
         public event Action Opened;
         public GameScreen GameScreen => GameScreen.Battle;
@@ -93,7 +93,7 @@ namespace _Game.UI._StartBattleWindow.Scripts
         private void ShowName()
         {
             var fullName = $"{GameScreen} {_battleNavigator.CurrentBattle + 1}";
-            _header.ShowWindowName(fullName, Color.white);
+            _header.ShowScreenName(fullName, Color.white);
         }
 
         public void Hide()

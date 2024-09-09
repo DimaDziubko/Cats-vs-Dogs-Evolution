@@ -1,7 +1,13 @@
 ﻿using System;
 
-namespace Assets._Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
+    public interface ITutorialStateReadonly
+    {
+        int StepsCompleted { get; }
+        event Action<int> StepsCompletedChanged;
+    }
+
     public class TutorialState : ITutorialStateReadonly 
     {
         public int StepsCompleted;
@@ -15,11 +21,5 @@ namespace Assets._Game.Core.UserState
             StepsCompleted = step;    
             StepsCompletedChanged?.Invoke(step);
         }
-    }
-
-    public interface ITutorialStateReadonly
-    {
-        int StepsCompleted { get; }
-        event Action<int> StepsCompletedChanged;
     }
 }

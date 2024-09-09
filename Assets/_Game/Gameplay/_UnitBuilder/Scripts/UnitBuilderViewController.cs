@@ -5,6 +5,7 @@ using _Game.Core._Logger;
 using _Game.Core.DataPresenters.UnitBuilderDataPresenter;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI.Common.Scripts;
 using Assets._Game.Core.Services.Audio;

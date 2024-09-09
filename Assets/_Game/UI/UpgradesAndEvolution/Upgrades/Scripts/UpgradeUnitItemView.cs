@@ -1,5 +1,7 @@
 ﻿using System;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Scripts;
+using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Extensions;
 using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -13,6 +15,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
     {
         public event Action<UnitType, float> Upgrade;
         public event Action<float> TryUpgrade;
+        public event Action<UnitType> InfoClicked;
         
         [SerializeField] private Image _backgroundHolder;
         
@@ -24,6 +27,10 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         [SerializeField] private TransactionButton _transactionButton;
         [SerializeField] private TMP_Text _unitNameLabel;
 
+        [SerializeField] private Button _infoButton;
+
+        [SerializeField] private StatsInfoPanel _statsInfoPanel;
+        
         private IAudioService _audioService;
         
         [SerializeField] private UnitType _type;
@@ -45,12 +52,20 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             _transactionButton.Click += OnTransactionButtonClick;
             _transactionButton.InactiveClick += OnInactiveButtonClick;
+            _infoButton.onClick.AddListener(OnInfoButtonClicked);
+        }
+
+        private void OnInfoButtonClicked()
+        {
+            InfoClicked?.Invoke(_type);
+            PlayButtonSound();
         }
 
         private void Unsubscribe()
         {
             _transactionButton.Click -= OnTransactionButtonClick;
             _transactionButton.InactiveClick -= OnInactiveButtonClick;
+            _infoButton.onClick.RemoveAllListeners();
         }
 
         private void OnInactiveButtonClick() => 
@@ -64,27 +79,42 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         public void UpdateUI(UnitUpgradeItemModel model)
         {
-            if(!_transactionButton) return;
-
-            _transactionButton.Show();
-            
-            _unitIconHolder.sprite = model.StaticData.Icon;
-            _type = model.StaticData.Type;
-            _price = model.StaticData.Price;
-            
             if (model.IsBought)
             {
-                _backgroundHolder.sprite = _unlockedItemImage;
-                _transactionButton.Hide();
-                _unitNameLabel.enabled = true;
-                _unitNameLabel.text = model.StaticData.Name;
+                HandleUnlockedState(model);
                 return;
             }
             
+            HandleLockedState(model);
+        }
+
+        private void HandleLockedState(UnitUpgradeItemModel model)
+        {
+            _transactionButton.Show();
+            _unitIconHolder.sprite = model.WarriorIcon;
+            _type = model.Type;
+            _price = model.Price;
             _backgroundHolder.sprite = _lockedItemImage;
             _unitNameLabel.enabled = false;
-            _transactionButton.UpdateButtonState(model.ButtonState, model.StaticData.Price.FormatMoney());
+            _transactionButton.UpdateButtonState(model.ButtonState, model.Price.FormatMoney());
+            _infoButton.interactable = false;
+            _statsInfoPanel.UpdateView(model.Stats, false);
         }
+
+        private void HandleUnlockedState(UnitUpgradeItemModel model)
+        {
+            _transactionButton.Hide();
+            _unitIconHolder.sprite = model.WarriorIcon;
+            _type = model.Type;
+            _price = model.Price;
+            _backgroundHolder.sprite = _unlockedItemImage;
+            _unitNameLabel.enabled = true;
+            _transactionButton.UpdateButtonState(model.ButtonState, model.Price.FormatMoney());
+            _unitNameLabel.text = model.Name;
+            _infoButton.interactable = true;
+            _statsInfoPanel.UpdateView(model.Stats, true);
+        }
+
 
         public void Cleanup()
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Game.Core._GameListenerComposite;
 using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.CustomKernel;
 using _Game.Core.Data;
@@ -38,16 +39,17 @@ namespace _Game.Gameplay.Food.Scripts
         private readonly IEconomyConfigRepository _economyConfig;
         private readonly IUserContainer _userContainer;
         private readonly IMyLogger _logger;
+        private readonly ICommonItemsConfigRepository _commonConfig;
 
         private readonly List<IFoodListener> _listeners = new List<IFoodListener>(1);
         private readonly List<IFoodConsumer> _consumers = new List<IFoodConsumer>(1);
-        
+
         private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
-        
+
         private float _defaultProductionSpeed;
         private float _productionSpeed;
-        
+
         private int _foodAmount;
         private float _accumulatedFood;
         private float _smoothProgress;
@@ -81,6 +83,7 @@ namespace _Game.Gameplay.Food.Scripts
             IGeneralDataPool generalDataPool,
             IUserContainer userContainer)
         {
+            _commonConfig = configRepositoryFacade.CommonItemsConfigRepository;
             _economyConfig = configRepositoryFacade.EconomyConfigRepository;
             _panel = gameplayUI.FoodPanel;
             _logger = logger;
@@ -118,7 +121,7 @@ namespace _Game.Gameplay.Food.Scripts
 
         private void StartGenerator()
         {
-            _panel.SetupIcon(_generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace));
+            _panel.SetupIcon(_commonConfig.ForFoodIcon(RaceState.CurrentRace));
 
             _defaultProductionSpeed = UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount;
 

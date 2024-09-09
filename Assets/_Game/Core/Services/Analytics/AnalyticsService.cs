@@ -6,6 +6,7 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -221,7 +222,7 @@ namespace _Game.Core.Services.Analytics
         public void SendWave(string wave, BattleAnalyticsData data)
         {
             if (!IsComponentsReady()) return;
-            SendEvent("battle_completed", new Dictionary<string, object>
+            SendEvent("wave_spawned", new Dictionary<string, object>
             {
                 {"TimelineNumber", data.TimelineNumber},
                 {"AgeNumber", data.AgeNumber},

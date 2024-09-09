@@ -69,7 +69,7 @@ namespace _Game.Utils
             public const float UNIT_ROTATION_EPSILON = 0.05f;
         }
 
-        public sealed class TutorialStepTreshold
+        public sealed class TutorialStepThresholds
         {
             public const int UNIT_BUILDER_BUTTON = 0;
             public const int UPGRADES_SCREEN = 1;

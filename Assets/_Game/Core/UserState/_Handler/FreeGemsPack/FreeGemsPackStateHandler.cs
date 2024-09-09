@@ -12,16 +12,26 @@ namespace _Game.Core.UserState._Handler.FreeGemsPack
             _userContainer = userContainer;
         }
 
-        public void RecoverFreeGemsPack(int packsToAdd, DateTime newLastDailyFreePackSpent) => 
+        public void RecoverFreeGemsPack(int packsToAdd, DateTime newLastDailyFreePackSpent)
+        {
             ChangeGemsPack(packsToAdd, true, newLastDailyFreePackSpent);
+            _userContainer.RequestSaveGame();
 
-        public void SpendGemsPack(DateTime lastDailyGemsPack) => 
+        }
+
+        public void SpendGemsPack(DateTime lastDailyGemsPack)
+        {
             ChangeGemsPack(1, false, lastDailyGemsPack);
+            _userContainer.RequestSaveGame();
+
+        }
 
         private void ChangeGemsPack(int delta, bool isPositive, DateTime lastDailyGemsPack)
         {
             delta = isPositive ? delta : (delta * -1);
             _userContainer.State.FreeGemsPackState.ChangeFreeGemPackCount(delta, lastDailyGemsPack);
+            _userContainer.RequestSaveGame();
+
         }
     }
 }

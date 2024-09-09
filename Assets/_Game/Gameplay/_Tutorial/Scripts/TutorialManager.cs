@@ -1,6 +1,7 @@
 using System;
 using _Game.Core._GameInitializer;
 using _Game.Core.Services.UserContainer;
+using _Game.Core.UserState._State;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 

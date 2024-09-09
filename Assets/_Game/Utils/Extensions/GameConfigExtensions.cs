@@ -1,7 +1,7 @@
 ﻿using _Game.Core.Configs.Models;
 using Newtonsoft.Json;
 
-namespace Assets._Game.Utils.Extensions
+namespace _Game.Utils.Extensions
 {
     public static class GameConfigExtensions
     {

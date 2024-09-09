@@ -29,5 +29,8 @@ namespace _Game.Core.Configs.Repositories._Cards
 
         public CardConfig ForCard(int cardId) => 
             _userContainer.GameConfig.CardConfigsById[cardId];
+
+        public int GetAllCardsCount() => 
+            _userContainer.GameConfig.CardConfigsById.Count;
     }
 }

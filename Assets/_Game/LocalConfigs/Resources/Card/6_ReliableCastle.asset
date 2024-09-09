@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54599f83d19e4a10a94556b3b0914e85, type: 3}
+  m_Name: 6_ReliableCastle
+  m_EditorClassIdentifier: 
+  Id: 6
+  Type: 2
+  ColorIdentifier: {r: 0.6509804, g: 0.19607843, b: 0.9529412, a: 1}
+  Icon: {fileID: 1854557828, guid: 7e6d3d61185023946ba361e727281192, type: 3}
+  Name: Reliable Castle
+  Derscription: Impenetrable walls offering defense and strategic advantage in every
+    conflict.
+  MaterialIdentifier: {fileID: 2100000, guid: 541aada8e09bbf4439601315cee03932, type: 2}
+  Boosts:
+  - Type: 2
+    Name: All Unit Health
+    Exponential:
+      _id: 7
+      A: 1
+      B: 0.0255
+      C: 0.1397
+      D: 0
+  - Type: 4
+    Name: Base Health
+    Exponential:
+      _id: 8
+      A: 1
+      B: 0.8053
+      C: 0.2994
+      D: 0

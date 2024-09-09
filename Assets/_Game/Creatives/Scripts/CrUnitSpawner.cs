@@ -4,6 +4,7 @@ using _Game.Creatives.Creative_1.Scenario;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._Units.Factory;
+using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Common;
 using Assets._Game.Core.Pause.Scripts;
 using Assets._Game.Core.Services.Camera;

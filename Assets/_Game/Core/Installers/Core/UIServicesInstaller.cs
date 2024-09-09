@@ -1,5 +1,7 @@
 ﻿using _Game.Core.LoadingScreen;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._AlertPopup;
+using _Game.UI._BoostPopup;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
@@ -12,12 +14,10 @@ using _Game.UI.Factory;
 using _Game.UI.GameResult.Scripts;
 using _Game.UI.Global;
 using _Game.UI.Header.Scripts;
-using _Game.UI.Popups;
 using _Game.UI.RateGame.Scripts;
 using _Game.UI.TimelineInfoWindow.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using Assets._Game.UI.Settings.Scripts;
-using Assets._Game.Utils.Popups;
 using UnityEngine;
 using Zenject;
 
@@ -29,7 +29,7 @@ namespace _Game.Core.Installers.Core
         [SerializeField] private TutorialPointerView _tutorialPointerView;
         [SerializeField] private UIFactory _uiFactory;
         [SerializeField] private Curtain _curtain;
-        
+
         public override void InstallBindings()
         {
             BindUINotifier();
@@ -53,6 +53,7 @@ namespace _Game.Core.Installers.Core
             BindUIFactory();
             BindCardsScreenProvider();
             BindGeneralCardsScreenProvider();
+            BindStatsPopupProvider();
         }
 
         private void BindUINotifier() => 
@@ -155,6 +156,11 @@ namespace _Game.Core.Installers.Core
         private void BindGeneralCardsScreenProvider() =>
             Container.Bind<IGeneralCardsScreenProvider>()
                 .To<GeneralCardsScreenProvider>()
+                .AsSingle();
+
+        private void BindStatsPopupProvider() =>
+            Container.Bind<IStatsPopupProvider>()
+                .To<StatsPopupProvider>()
                 .AsSingle();
     }
 }

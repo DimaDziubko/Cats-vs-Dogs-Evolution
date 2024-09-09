@@ -33,6 +33,8 @@ namespace _Game.Core._UpgradesChecker
             GameScreen.Evolution,
             GameScreen.UpgradesAndEvolution,
             GameScreen.Shop,
+            GameScreen.GeneralCards,
+            GameScreen.Cards
         };
 
         private readonly List<IUpgradeAvailabilityProvider> _upgradeProviders 

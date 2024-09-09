@@ -1,7 +1,9 @@
 ﻿using System;
 using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._Boosts.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
+using UnityEngine;
 
 namespace _Game.Core.Configs.Repositories.Common
 {
@@ -33,33 +35,39 @@ namespace _Game.Core.Configs.Repositories.Common
             }
         }
 
-        private string GetDogFoodIconReference()
-        {
-            _logger.Log("Try to GetDogFoodIconReference");
-            return _userContainer
+        private string GetDogFoodIconReference() =>
+            _userContainer
                 .GameConfig
                 .CommonConfig
                 .DogFoodIconKey;
-        }
 
-        private string GetCatFoodIconReference()
-        {
-            _logger.Log("Try to GetCatFoodIconReference");
-            return _userContainer
+        private string GetCatFoodIconReference() =>
+            _userContainer
                 .GameConfig
                 .CommonConfig
                 .CatFoodIconKey;
-        }
 
-        public string GetBaseIconKey()
-        {
-            _logger.Log("Try to GetBaseIconReference");
-            return _userContainer
+        public string GetBaseIconKey() =>
+            _userContainer
                 .GameConfig
                 .CommonConfig
                 .BaseIconKey;
-        }
-        
+
+        public Sprite ForFoodIcon(Race race) => 
+            _userContainer.GameConfig.CommonConfig.GetFoodIconForRace(race);
+
+        public Sprite ForBaseIcon() => 
+            _userContainer.GameConfig.CommonConfig.BaseIcon;
+
+        public Sprite ForBoostIcon(BoostType boostType) => 
+            _userContainer.GameConfig.CommonConfig.GetBoostIconFor(boostType);
+
+        public Sprite GetUnitAttackIconFor(Race race) => 
+            _userContainer.GameConfig.CommonConfig.GetAttackIconForRace(race);
+
+        public Sprite GetUnitHealthIconFor(Race race) => 
+            _userContainer.GameConfig.CommonConfig.GetHealthIconForRace(race);
+
 
         private string  GetCommonFoodIconReference()
         {

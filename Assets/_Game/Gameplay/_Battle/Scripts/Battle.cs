@@ -5,6 +5,7 @@ using _Game.Core.CustomKernel;
 using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Core.Services.Analytics;
 using _Game.Gameplay._BattleField.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay.Scenario;
 using _Game.UI._BattleUIController;
 using Assets._Game.Core.Services.Audio;
