@@ -135,7 +135,11 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             var isExit =  await popup.Value.ShowAndAwaitForDecision(price);
-            if(isExit) popup.Dispose();
+            if (isExit)
+            {
+                popup.Value.Hide();
+                popup.Dispose();
+            }
         }
 
         private void OnFoodProductionButtonStateChanged(ButtonState state)

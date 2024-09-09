@@ -84,7 +84,11 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             bool isExit = await popup.Value.ShowAndAwaitForDecision(_evolutionPresenter.GetEvolutionPrice());
-            if(isExit) popup.Dispose();
+            if (isExit)
+            {
+                popup.Value.Hide();
+                popup.Dispose();
+            }
         }
 
         public void Hide()

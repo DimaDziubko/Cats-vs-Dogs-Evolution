@@ -15,15 +15,15 @@ using UnityEngine.UI;
 
 namespace _Game.UI._Shop._MiniShop.Scripts
 {
-    public class MiniShop : MonoBehaviour, IPointerDownHandler
+    public class MiniShop : MonoBehaviour
     {
         public event Action Opened;
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private MiniItemShopContainer _container;
-        [SerializeField] private Button _exitButton;
+        [SerializeField] private Button[] _exitButtons;
         [SerializeField] private TMP_Text _coinsLabel;
-        
+
         private IShopPresenter _shopPresenter;
 
         private UniTaskCompletionSource<bool> _taskCompletion;
@@ -33,11 +33,11 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
 
         private float _price;
-        
+
         public void Construct(
-            Camera uICameraOverlay, 
-            IAudioService audioService, 
-            IUIFactory uiFactory, 
+            Camera uICameraOverlay,
+            IAudioService audioService,
+            IUIFactory uiFactory,
             IShopPresenter shopPresenter,
             IMyLogger logger,
             IUserContainer userContainer)
@@ -56,7 +56,6 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             Show();
             _taskCompletion = new UniTaskCompletionSource<bool>();
             var result = await _taskCompletion.Task;
-            Hide();
             return result;
         }
 
@@ -66,25 +65,31 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             Subscribe();
 
             _canvas.enabled = true;
-            
+
             Opened?.Invoke();
         }
-        
+
         private void Subscribe()
         {
             Opened += _shopPresenter.OnShopOpened;
             _shopPresenter.ShopItemsUpdated += _container.UpdateShopItems;
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
             OnCurrenciesChanged(_Currencies.Currencies.Coins, 0, CurrenciesSource.None);
-            _exitButton.onClick.AddListener(OnCancelled);
+            foreach (var button in _exitButtons)
+            {
+                button.onClick.AddListener(OnCancelled);
+            }
         }
 
         private void Unsubscribe()
         {
-            _exitButton.onClick.RemoveAllListeners();
             Opened -= _shopPresenter.OnShopOpened;
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
             _shopPresenter.ShopItemsUpdated -= _container.UpdateShopItems;
+            foreach (var button in _exitButtons)
+            {
+                button.onClick.RemoveAllListeners();
+            }
         }
 
         public void ForceHide()
@@ -92,7 +97,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _taskCompletion?.TrySetResult(true);
         }
 
-        private void Hide()
+        public void Hide()
         {
             Unsubscribe();
             _container.Cleanup();
@@ -102,22 +107,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         private void OnCancelled()
         {
             _audioService.PlayButtonSound();
-            SetCompletionResult(true);
-        }
-
-        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
-        {
-            _audioService.PlayButtonSound();
-            SetCompletionResult(true);
-        }
-        
-        private void SetCompletionResult(bool result)
-        {
-            if (_taskCompletion != null)
-            {
-                _taskCompletion.TrySetResult(result);
-                _taskCompletion = null;
-            }
+            _taskCompletion.TrySetResult(true);
         }
 
         private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
@@ -126,8 +116,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _coinsLabel.text = Currencies.Coins.FormatMoney();
         }
 
-        private void UpdateCoinsLabelColor() => 
+        private void UpdateCoinsLabelColor() =>
             _coinsLabel.color = Currencies.Coins < _price ? Color.red : Color.white;
-        
     }
 }
