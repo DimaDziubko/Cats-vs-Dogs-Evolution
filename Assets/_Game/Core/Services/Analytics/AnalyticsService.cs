@@ -270,7 +270,7 @@ namespace _Game.Core.Services.Analytics
         public void SendWave(string wave, BattleAnalyticsData data)
         {
             if (!IsComponentsReady()) return;
-            SendEvent("battle_completed", new Dictionary<string, object>
+            SendEvent("wave_spawned", new Dictionary<string, object>
             {
                 {"TimelineNumber", data.TimelineNumber},
                 {"AgeNumber", data.AgeNumber},
