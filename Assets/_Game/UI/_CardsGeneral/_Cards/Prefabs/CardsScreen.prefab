@@ -448,6 +448,7 @@ MonoBehaviour:
   _summoningLevelLabel: {fileID: 3534702694827434469}
   _x1CardBtn: {fileID: 6376841751126499331}
   _x10CardBtn: {fileID: 1151823833868973511}
+  _cardsTutorialStep: {fileID: 29441907417379480}
 --- !u!1 &3233214262343637431
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,14 +1779,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2347864147199452965, guid: 66d1dae50e0b87b46b9f647d3936138c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 29441907417379480}
   m_SourcePrefab: {fileID: 100100000, guid: 66d1dae50e0b87b46b9f647d3936138c, type: 3}
 --- !u!114 &1151823833868973511 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4786902053708996058, guid: 66d1dae50e0b87b46b9f647d3936138c, type: 3}
   m_PrefabInstance: {fileID: 5589644036634781725}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7856298249899855672}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f1a5d893ded44328605b6ad99fa36c7, type: 3}
@@ -1796,3 +1800,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6023132438082954220, guid: 66d1dae50e0b87b46b9f647d3936138c, type: 3}
   m_PrefabInstance: {fileID: 5589644036634781725}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7856298249899855672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2347864147199452965, guid: 66d1dae50e0b87b46b9f647d3936138c, type: 3}
+  m_PrefabInstance: {fileID: 5589644036634781725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &29441907417379480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7856298249899855672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c01f693c8f46a3a080227ec3d92609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _step: 8
+  _affectedSteps: 0700000008000000
+  _requiredPointerSize: {x: 140, y: 140}
+  _offset: {x: 0, y: -100}
+  _rootCanvasTransform: {fileID: 2383661259262155792}
+  _tutorialObjectRectTransform: {fileID: 2162872037057367025}
+  _isUnderneath: 0
+  _needAppearanceAnimation: 0

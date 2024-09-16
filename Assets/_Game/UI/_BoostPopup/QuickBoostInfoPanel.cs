@@ -1,6 +1,6 @@
 ﻿using _Game.Core.Data.Age.Dynamic._UpgradeItem;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay._Boosts.Scripts;
-using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -70,4 +70,5 @@ namespace _Game.UI._BoostPopup
             _audioService.PlayButtonSound();
         }
     }
+    
 }

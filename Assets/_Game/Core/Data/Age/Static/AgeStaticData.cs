@@ -1,7 +1,6 @@
-﻿using _Game.Gameplay._Units.Scripts;
+﻿using _Game.Gameplay._Bases.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Gameplay._Bases.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
 
 namespace _Game.Core.Data.Age.Static
 {

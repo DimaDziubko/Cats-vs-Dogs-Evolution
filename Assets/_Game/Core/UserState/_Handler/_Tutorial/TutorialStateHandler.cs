@@ -13,9 +13,8 @@ namespace _Game.Core.UserState._Handler._Tutorial
 
         public void CompleteTutorialStep(int step)
         {
-            _userContainer.State.TutorialState.ChangeCompletedStep(step);
+            _userContainer.State.TutorialState.AddCompletedStep(step);
             _userContainer.RequestSaveGame();
-
         }
     }
 }

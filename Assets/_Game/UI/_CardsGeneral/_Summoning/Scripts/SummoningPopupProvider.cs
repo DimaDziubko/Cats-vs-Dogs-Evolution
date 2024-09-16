@@ -1,10 +1,7 @@
 using _Game.Core.AssetManagement;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Configs.Repositories._Cards;
-using _Game.Core.Services.UserContainer;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.UI._CardsGeneral._Cards.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 

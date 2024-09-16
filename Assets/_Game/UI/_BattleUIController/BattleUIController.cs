@@ -5,6 +5,8 @@ using _Game.Core.LoadingScreen;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._DailyTasks.Scripts;
@@ -15,11 +17,8 @@ using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.Gameplay.GameResult.Scripts;
-using Assets._Game.Utils.Popups;
 using Zenject;
 
 namespace _Game.UI._BattleUIController

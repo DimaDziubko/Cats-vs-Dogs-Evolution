@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Models._Cards;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories._Cards;
 using _Game.Core.Configs.Repositories.Common;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
+using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.Utils;
 using _Game.Utils.Extensions;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using UnityEngine;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
@@ -39,12 +42,14 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
 
         private readonly IUserContainer _userContainer;
         private readonly ICardsConfigRepository _cardsConfigRepository;
-        private readonly IWorldCameraService _cameraService;
-        private readonly IAudioService _audioService;
         private readonly IMyLogger _logger;
         private readonly ICommonItemsConfigRepository _commonConfig;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
-        
+        private readonly IGameInitializer _gameInitializer;
+        private readonly IWorldCameraService _cameraService;
+        private readonly IAudioService _audioService;
+        private readonly IBoostDataPresenter _boostDataPresenter;
+
         private ICardsCollectionStateReadonly CardsState => _userContainer.State.CardsCollectionState;
 
         private CardType _greatestAvailableType = CardType.Rare;
@@ -52,24 +57,27 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
 
         public CardsPresenter(
             IUserContainer userContainer,
-            ICardsConfigRepository cardsConfigRepository,
-            ICommonItemsConfigRepository commonConfig,
+            IConfigRepositoryFacade configRepositoryFacade,
+            IMyLogger logger,
+            IUpgradesAvailabilityChecker checker,
+            IGameInitializer gameInitializer,
             IWorldCameraService cameraService,
             IAudioService audioService,
-            IMyLogger logger,
-            IUpgradesAvailabilityChecker checker)
+            IBoostDataPresenter boostDataPresenter)
         {
             _userContainer = userContainer;
-            _cardsConfigRepository = cardsConfigRepository;
+            _cardsConfigRepository = configRepositoryFacade.CardsConfigRepository;
+            _logger = logger;
+            _commonConfig = configRepositoryFacade.CommonItemsConfigRepository;
+            _upgradesChecker = checker;
+            _gameInitializer = gameInitializer;
             _cameraService = cameraService;
             _audioService = audioService;
-            _logger = logger;
-            _commonConfig = commonConfig;
-            _upgradesChecker = checker;
+            _boostDataPresenter = boostDataPresenter;
+            _gameInitializer.OnMainInitialization += Init;
         }
-
-
-        public void Init()
+        
+        private void Init()
         {
             InitCardModels();
             CardsState.CardsCollected += OnCardsCollected;
@@ -81,6 +89,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         {
             CardsState.CardsCollected -= OnCardsCollected;
             CardsState.CardUpgraded -= OnCardUpgraded;
+            _gameInitializer.OnMainInitialization -= Init;
             _upgradesChecker.UnRegister(this);
         }
 
@@ -222,15 +231,14 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
 
         public void UpgradeCard(int id)
         {
-
             int needForUpgrade = _cardModels[id].UpgradeCount;
             _userContainer.UpgradeStateHandler.UpgradeCard(id, needForUpgrade);
         }
-
+        
         async void ICardsPresenter.OnCardClicked(int id)
         {
-            ICardPopupProvider cardPopupProvider = new CardPopupProvider(_cameraService, this, _audioService);
-            var popup = await cardPopupProvider.Load();
+            ICardPopupProvider provider = new CardPopupProvider(_cameraService, this, _audioService, _boostDataPresenter);
+            var popup = await provider.Load();
             var isConfirmed = await popup.Value.ShowDetailsAndAwaitForExit(id);
             if (isConfirmed)
             {

@@ -3,13 +3,13 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.UserContainer;
 using _Game.Temp;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 using Zenject;
@@ -28,7 +28,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         private readonly IUserContainer _userContainer;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
 
-        public bool IsUnlocked => _featureUnlockSystem.IsFeatureUnlocked(Feature.Shop);
+        public bool IsUnlocked => _featureUnlockSystem.IsFeatureUnlocked(Feature.GemsShopping);
 
         private Disposable<MiniShop> _miniShop;
         

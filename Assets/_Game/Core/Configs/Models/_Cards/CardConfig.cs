@@ -28,6 +28,7 @@ namespace _Game.Core.Configs.Models._Cards
         public string Derscription;
         public Material MaterialIdentifier;
 
+        public float DropChance;
         public Boost[] Boosts;
 
         public int GetUpgradeCount(int level)

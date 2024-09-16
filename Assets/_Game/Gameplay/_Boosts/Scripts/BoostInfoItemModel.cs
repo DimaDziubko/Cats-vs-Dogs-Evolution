@@ -6,7 +6,7 @@ namespace _Game.Gameplay._Boosts.Scripts
     {
         public BoostType Type;
         public Sprite Icon;
-        public string Value;
+        public string DisplayValue;
         public bool IsActive;
     }
 }

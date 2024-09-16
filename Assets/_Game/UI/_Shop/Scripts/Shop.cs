@@ -1,10 +1,10 @@
 ﻿using System;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
+using _Game.Core.Services.Audio;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 

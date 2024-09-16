@@ -4,7 +4,6 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 using UnityEngine;
 
@@ -56,13 +55,13 @@ namespace _Game.Core.UserState._State
                     OpenUnits = new List<UnitType>(3)
                     {
                         UnitType.Light,
-                    }
+                    } 
                 },
                 
                 Currencies = new UserCurrenciesState()
                 {
                     Coins = 0,
-                    Gems = 100
+                    Gems = 1000
                 },
                 
                 FoodBoost = new FoodBoostState()
@@ -78,7 +77,10 @@ namespace _Game.Core.UserState._State
                 
                 TutorialState = new TutorialState()
                 {
-                    StepsCompleted = -1
+                    CompletedSteps = new List<int>()
+                    {
+                        -1
+                    }
                 },
                 
                 BattleSpeedState = new BattleSpeedState()

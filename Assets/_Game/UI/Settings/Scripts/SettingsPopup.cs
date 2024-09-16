@@ -1,13 +1,13 @@
-﻿using _Game.Core.Services.UserContainer;
-using _Game.UI._RaceSelectionWindow.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.Common.Scripts;
+﻿using _Game.Core.Services.Audio;
+using _Game.Core.Services.UserContainer;
+using _Game.UI._RaceSelectionScreen.Scripts;
+using _Game.UI.Common.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.Settings.Scripts
+namespace _Game.UI.Settings.Scripts
 {
     [RequireComponent(typeof(Canvas))]
     public class SettingsPopup : MonoBehaviour

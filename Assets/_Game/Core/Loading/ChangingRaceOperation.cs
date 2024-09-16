@@ -2,13 +2,11 @@
 using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
+using _Game.Core.DataProviders.BattleDataProvider;
 using _Game.Core.Services.UserContainer;
 using _Game.Utils;
-using Assets._Game.Core.Data;
-using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.Loading;
 using Assets._Game.Core.UserState;
-using Assets._Game.Utils;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.Core.Loading

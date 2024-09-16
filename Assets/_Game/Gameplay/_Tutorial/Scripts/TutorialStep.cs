@@ -11,6 +11,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
         public event Action<ITutorialStep> Cancel;
         
         [SerializeField] private int _step;
+        [SerializeField] private int[] _affectedSteps;
         [SerializeField] private Vector2 _requiredPointerSize;
         [SerializeField] private Vector2 _offset;
         [SerializeField] private RectTransform _rootCanvasTransform;
@@ -39,6 +40,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
             _data = new TutorialStepData()
             {
                 Step = _step,
+                AffectedSteps = _affectedSteps,
                 RequiredPointerSize = _requiredPointerSize,
                 RequiredPointerPosition = CalculateRequiredPointerPosition(),
                 RequiredPointerRotation = CalculateRequiredRotation(),

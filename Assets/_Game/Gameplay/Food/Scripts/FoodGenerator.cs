@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using _Game.Core._DataProviders._FoodDataProvider;
 using _Game.Core._GameListenerComposite;
 using _Game.Core._Logger;
-using _Game.Core.Configs.Repositories;
-using _Game.Core.Configs.Repositories.Common;
-using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.CustomKernel;
-using _Game.Core.Data;
-using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.Services.UserContainer;
 using _Game.UI._GameplayUI.Scripts;
-using Assets._Game.Core.UserState;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
-using Zenject;
 
 namespace _Game.Gameplay.Food.Scripts
 {
@@ -23,9 +14,7 @@ namespace _Game.Gameplay.Food.Scripts
         void Unregister(IFoodListener listener);
     }
 
-    public class FoodGenerator : 
-        IInitializable,
-        IDisposable, 
+    public class FoodGenerator :
         IFoodGenerator,
         IGameTickable,
         IStartBattleListener,
@@ -35,17 +24,11 @@ namespace _Game.Gameplay.Food.Scripts
     {
         private const float LERP_SPEED_MULTIPLIER = 150f;
         
-        private readonly IGeneralDataPool _generalDataPool;
-        private readonly IEconomyConfigRepository _economyConfig;
-        private readonly IUserContainer _userContainer;
         private readonly IMyLogger _logger;
-        private readonly ICommonItemsConfigRepository _commonConfig;
+        private readonly IFoodProductionDataProvider _dataProvider;
 
         private readonly List<IFoodListener> _listeners = new List<IFoodListener>(1);
         private readonly List<IFoodConsumer> _consumers = new List<IFoodConsumer>(1);
-
-        private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
-        private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
 
         private float _defaultProductionSpeed;
         private float _productionSpeed;
@@ -77,26 +60,15 @@ namespace _Game.Gameplay.Food.Scripts
         }
 
         public FoodGenerator(
-            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             GameplayUI gameplayUI,
-            IGeneralDataPool generalDataPool,
-            IUserContainer userContainer)
+            IFoodProductionDataProvider dataProvider)
         {
-            _commonConfig = configRepositoryFacade.CommonItemsConfigRepository;
-            _economyConfig = configRepositoryFacade.EconomyConfigRepository;
             _panel = gameplayUI.FoodPanel;
             _logger = logger;
-            _generalDataPool = generalDataPool;
-            _userContainer = userContainer;
+            _dataProvider = dataProvider;
         }
-
-        void IInitializable.Initialize() => 
-            UpgradeItems.Changed += UpdateGeneratorData;
-
-        void IDisposable.Dispose() => 
-            UpgradeItems.Changed -= UpdateGeneratorData;
-
+        
         public void Register(IFoodListener listener)
         {
             _listeners.Add(listener);
@@ -121,22 +93,20 @@ namespace _Game.Gameplay.Food.Scripts
 
         private void StartGenerator()
         {
-            _panel.SetupIcon(_commonConfig.ForFoodIcon(RaceState.CurrentRace));
+            var data = _dataProvider.GetData();
+            UpdateGeneratorData(data);
+        }
 
-            _defaultProductionSpeed = UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount;
+        private void UpdateGeneratorData(IFoodProductionData data)
+        {
+            _panel.SetupIcon(data.FoodIcon);
 
-            FoodAmount = _economyConfig.GetInitialFoodAmount();
+            _defaultProductionSpeed = data.ProductionSpeed;
+
+            FoodAmount = data.InitialFoodAmount;
 
             _panel.UpdateFillAmount(0);
             _panel.OnFoodChanged(FoodAmount);
-        }
-
-        private void UpdateGeneratorData(UpgradeItemType type, UpgradeItemDynamicData data)
-        {
-            if (type == UpgradeItemType.FoodProduction)
-            {
-                _productionSpeed = data.Amount;
-            }
         }
 
         void IGameTickable.Tick(float deltaTime)

@@ -1,12 +1,11 @@
 using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core.DataPresenters.Evolution;
+using _Game.Core.Services.Audio;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
 using UnityEngine;

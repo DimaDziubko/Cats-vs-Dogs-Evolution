@@ -1,12 +1,10 @@
 using System;
 using _Game.Core.DataPresenters.TimelineTravel;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.UI.Common.Scripts;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
-using Assets._Game.UI.Common.Scripts;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
 using UnityEngine;
 

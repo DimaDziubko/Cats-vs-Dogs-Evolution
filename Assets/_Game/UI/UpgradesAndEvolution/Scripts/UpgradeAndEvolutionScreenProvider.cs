@@ -1,18 +1,18 @@
+using _Game.Core._DataPresenters._UpgradeItemPresenter;
+using _Game.Core._DataPresenters.UnitUpgradePresenter;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
-using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 

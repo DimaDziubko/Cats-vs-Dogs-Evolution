@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Scripts
@@ -16,6 +17,14 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 {
                     item.UpdateView(statsInfo[item.StatType], false);
                 }
+            }
+        }
+
+        public void Cleanup()
+        {
+            foreach (var item in _statInfoItems)
+            {
+                item.Cleanup();
             }
         }
     }

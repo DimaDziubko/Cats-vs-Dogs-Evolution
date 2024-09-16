@@ -1,5 +1,5 @@
 ﻿using _Game.UI._MainMenu.Scripts;
-using _Game.UI._StartBattleWindow.Scripts;
+using _Game.UI._StartBattleScreen.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Global;
 using Assets._Game.UI._StartBattleWindow.Scripts;

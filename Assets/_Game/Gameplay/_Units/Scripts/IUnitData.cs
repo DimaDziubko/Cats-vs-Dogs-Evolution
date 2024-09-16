@@ -14,7 +14,7 @@ namespace _Game.Gameplay._Units.Scripts
         int AttackLayer { get;}
         Race Race { get;}
         WeaponType WeaponType { get; }
-        int CoinsPerKill { get;}
+        float CoinsPerKill { get;}
         float AttackDistance { get;}
         float Speed { get;}
         float AttackPerSecond { get;}

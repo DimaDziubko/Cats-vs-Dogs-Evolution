@@ -1,7 +1,7 @@
 using System;
+using _Game.Core.Services.Audio;
 using _Game.UI.Factory;
 using _Game.Utils;
-using Assets._Game.Core.Services.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

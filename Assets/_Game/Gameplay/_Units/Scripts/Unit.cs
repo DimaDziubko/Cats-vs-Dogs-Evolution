@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using _Game.Common;
-using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units.Factory;
@@ -13,13 +13,10 @@ using _Game.Gameplay._Units.Scripts.Movement;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.Utils;
-using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts.Utils;
-using Assets._Game.Utils.Extensions;
 using Pathfinding.RVO;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -56,7 +53,7 @@ namespace _Game.Gameplay._Units.Scripts
         public Faction Faction { get; private set; }
         public UnitType Type { get; private set; }
 
-        private int _coinsPerKill;
+        private float _coinsPerKill;
 
         private IRandomService _random;
 

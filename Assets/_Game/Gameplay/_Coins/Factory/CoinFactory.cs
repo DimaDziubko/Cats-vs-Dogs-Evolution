@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Factory;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay.Vfx.Scripts;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Coins.Scripts;
-using Assets._Game.Gameplay.Vfx.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._Coins.Factory

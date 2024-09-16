@@ -1,4 +1,4 @@
-﻿using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+﻿using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
 namespace _Game.Core.Data.Age.Static._UpgradeItem

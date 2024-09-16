@@ -3,10 +3,11 @@ using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
+using _Game.Core.DataProviders.BattleDataProvider;
 using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
+using _Game.Core.Loading;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core.DataProviders.BattleDataProvider;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
 

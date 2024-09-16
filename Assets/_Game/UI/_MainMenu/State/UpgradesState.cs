@@ -2,7 +2,6 @@
 using _Game.UI.Common.Scripts;
 using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.UI.Common.Scripts;
 using Assets._Game.Utils.Disposable;
 
 namespace _Game.UI._MainMenu.State
@@ -40,6 +39,8 @@ namespace _Game.UI._MainMenu.State
                 _upgradesAndEvolutionScreen.Value.Show();
                 _uiNotifier.OnScreenOpened(GameScreen.UpgradesAndEvolution);
             }
+            
+            _mainMenu.UpgradeTutorialStep.CancelStep();
         }
 
         public void Exit()
@@ -52,6 +53,9 @@ namespace _Game.UI._MainMenu.State
             }
             _button.UnHighlightBtn();
             _uiNotifier.OnScreenClosed(GameScreen.UpgradesAndEvolution);
+            
+            _mainMenu.RebuildLayout();
+            _mainMenu.ShowUpgradeTutorialWithDelay(0.5f);
         }
 
         public void Cleanup()

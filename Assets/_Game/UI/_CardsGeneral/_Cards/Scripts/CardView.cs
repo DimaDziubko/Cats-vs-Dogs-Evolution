@@ -1,4 +1,4 @@
-﻿using Assets._Game.Core.Services.Audio;
+﻿using _Game.Core.Services.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +13,8 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         [SerializeField] private GameObject _newNotification;
         [SerializeField] private CardViewAppearanceAnimation _appearanceAnimation;
         [SerializeField] private Image _coloredRippleImage;
-        
+        [SerializeField] private Image _maskImage;
+
         public void UpdateView(CardModel model)
         {
             _icon.sprite = model.Config.Icon;
@@ -24,9 +25,11 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             {
                 _colorIdentifier.material = model.Config.MaterialIdentifier;
                 _coloredRippleImage.material = model.Config.MaterialIdentifier;
+                _maskImage.material = model.Config.MaterialIdentifier;
             }
 
             _coloredRippleImage.enabled = false;
+            _maskImage.enabled = false;
         }
 
         public void Enable()
@@ -38,9 +41,13 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             gameObject.SetActive(false);
         }
 
-        public void PlayAppearanceAnimation(IAudioService audioService, Color flashColor, bool needIlluminationAnimation)
+        public void PlayAppearanceAnimation(
+            IAudioService audioService, 
+            Color flashColor, 
+            bool needIlluminationAnimation,
+            bool isNew)
         {
-            _appearanceAnimation.Init(audioService, flashColor);
+            _appearanceAnimation.Init(audioService, flashColor, isNew);
             _appearanceAnimation.Play(needIlluminationAnimation);
         }
     }

@@ -76,42 +76,45 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
                 Feature.Shop => GetThresholdFor(GetThresholdForShop),
                 Feature.DailyTask => GetThresholdFor(GetThresholdForDailyTask),
                 Feature.Cards => GetThresholdFor(GetThresholdForCards),
+                Feature.GemsShopping => GetThresholdFor(GetThresholdForGemsShopping),
                 _ => false
             };
         }
 
-        private bool GetThresholdFor(Func<bool> thresholdFunc)
-        {
-            return thresholdFunc();
-        }
+        private bool GetThresholdForGemsShopping() => 
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.CARDS_PURCHASE);
 
-        private bool GetThresholdForCards() => true;
+        private bool GetThresholdFor(Func<bool> thresholdFunc) => thresholdFunc();
+
+        private bool GetThresholdForCards() => GetThresholdForShop();
 
         private bool GetThresholdForDailyTask() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepThresholds.EVOLUTION_SCREEN &&
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.EVOLVE) &&
+            BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.DAILY;
+
+        private bool GetThresholdForShop() => 
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.EVOLVE) &&
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.SHOP;
-
-        private bool GetThresholdForShop() => GetThresholdForDailyTask();
-
+        
         private bool GetThresholdForX2() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepThresholds.FOOD_UPGRADE_ITEM &&
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.FOOD_UPGRADE) &&
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.X2;
 
         private bool GetThresholdForBattleSpeed() =>
             TimelineState.TimelineId > 0 || TimelineState.AgeId >= BATTLE_SPEED_AGE_THRESHOLD;
 
         private bool GetThresholdForEvolutionScreen() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepThresholds.EVOLUTION_SCREEN &&
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.FOOD_UPGRADE) &&
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.EVOLUTION_SCREEN;
 
         private bool GetThresholdForFoodBoost() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepThresholds.FOOD_UPGRADE_ITEM &&
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.FOOD_UPGRADE) &&
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.FOOD_BOOST;
 
         private bool GetThresholdForPause() => TimelineState.AgeId >= PAUSE_AGE_THRESHOLD;
 
         private bool GetThresholdForUpgradesScreen() =>
-            TutorialState.StepsCompleted >= Constants.TutorialStepThresholds.UPGRADES_SCREEN &&
+            TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER) &&
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.UPGRADES_SCREEN;
 
         private void OnBattleStatisticsChanged() => CheckForFeaturesUnlock();
@@ -128,6 +131,7 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
             CheckAndUnlockFeature(Feature.FoodBoost, GetThresholdForFoodBoost);
             CheckAndUnlockFeature(Feature.X2, GetThresholdForX2);
             CheckAndUnlockFeature(Feature.Pause, GetThresholdForPause);
+            CheckAndUnlockFeature(Feature.GemsShopping, GetThresholdForGemsShopping);
         }
 
         private void CheckAndUnlockFeature(Feature feature, Func<bool> getThresholdFunc)

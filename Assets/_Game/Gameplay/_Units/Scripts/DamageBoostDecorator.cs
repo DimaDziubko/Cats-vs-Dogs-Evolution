@@ -12,7 +12,7 @@ namespace _Game.Gameplay._Units.Scripts
             _damageMultiplier = damageMultiplier;
         }
 
-        public override float Damage => _unitData.Damage * _damageMultiplier;
+        public override float Damage => base.Damage * _damageMultiplier;
 
         public override float GetStatBoost(StatType statType)
         {

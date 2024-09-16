@@ -19,8 +19,9 @@ MonoBehaviour:
   Name: Dragon
   Derscription: A mythical guardian that inspires fear and respect on the battlefield.
   MaterialIdentifier: {fileID: 2100000, guid: 2b2081e1a6464244db958b8b7364bf6c, type: 2}
+  DropChance: 50
   Boosts:
-  - Type: 0
+  - Type: 1
     Name: All Unit Damage
     Exponential:
       _id: 0
@@ -28,7 +29,7 @@ MonoBehaviour:
       B: 0.223
       C: 0.1823
       D: 0
-  - Type: 2
+  - Type: 3
     Name: Food Production
     Exponential:
       _id: 0

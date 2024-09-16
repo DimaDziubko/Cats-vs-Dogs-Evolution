@@ -1,17 +1,15 @@
 ﻿using System;
 using _Game.Core._Logger;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Game.UI._Shop._MiniShop.Scripts

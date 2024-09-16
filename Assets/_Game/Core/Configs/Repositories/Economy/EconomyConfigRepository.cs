@@ -2,8 +2,8 @@
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Services.UserContainer;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.Configs.Repositories.Economy
 {

@@ -1,11 +1,11 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI.Global;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 

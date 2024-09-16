@@ -64,21 +64,21 @@ namespace _Game.Gameplay._Units.Scripts.Movement
         public float SpeedFactor => _agent.speed;
 
         //TODO Delete 
-        private void OnDrawGizmos()
-        {
-            // If the destination vector is set
-            if (Destination != Vector3.zero)
-            {
-                Gizmos.color = Color.blue;
-                Gizmos.DrawSphere(Destination, 0.1f); 
-            }
-            
-            if (DeviationPoint != Vector3.zero && DeviationPoint != Destination)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(DeviationPoint, 0.1f); 
-            }
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     // If the destination vector is set
+        //     if (Destination != Vector3.zero)
+        //     {
+        //         Gizmos.color = Color.blue;
+        //         Gizmos.DrawSphere(Destination, 0.1f); 
+        //     }
+        //     
+        //     if (DeviationPoint != Vector3.zero && DeviationPoint != Destination)
+        //     {
+        //         Gizmos.color = Color.green;
+        //         Gizmos.DrawSphere(DeviationPoint, 0.1f); 
+        //     }
+        // }
         public void SetSpeed(float speed)
         {
             _agent.speed = speed;

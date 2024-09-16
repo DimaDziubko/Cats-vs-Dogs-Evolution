@@ -40,6 +40,8 @@ namespace _Game.UI._MainMenu.State
                 _generalCardsScreen.Value.Show();
                 _uiNotifier.OnScreenOpened(GameScreen.GeneralCards);
             }
+            
+            _mainMenu.CardsTutorialStep.CancelStep();
         }
 
         public void Exit()
@@ -52,6 +54,8 @@ namespace _Game.UI._MainMenu.State
             }
             _button.UnHighlightBtn();
             _uiNotifier.OnScreenClosed(GameScreen.GeneralCards);
+            
+            _mainMenu.ShowCardsTutorialWithDelay(0.5f);
         }
 
         public void Cleanup()

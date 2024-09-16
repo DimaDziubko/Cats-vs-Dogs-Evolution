@@ -1,13 +1,13 @@
 ﻿using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Gameplay._Boosts.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.Data.Age.Dynamic
 {
     public class AgeDynamicData
     {
-        public UpgradeItems UpgradeItems;
-        public BoostsData BoostsData;
+        public readonly UpgradeItems UpgradeItems;
+        public readonly BoostsData BoostsData;
 
         public AgeDynamicData()
         {

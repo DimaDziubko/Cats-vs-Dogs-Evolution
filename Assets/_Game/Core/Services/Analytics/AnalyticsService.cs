@@ -7,6 +7,7 @@ using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._Units.Scripts;
+using _Game.Utils;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -99,13 +100,13 @@ namespace _Game.Core.Services.Analytics
         {
             if (!IsComponentsReady()) return;
 
-            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 1)
+            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER))
             {
                 SendEvent("first_build_success");
                 _logger.Log("first_build_success");
             }
             
-            else if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 0)
+            else if (BattleStatistics.BattlesCompleted == 1 && !TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER))
             {
                 SendEvent("first_build_failed");
                 _logger.Log("first_build_failed");

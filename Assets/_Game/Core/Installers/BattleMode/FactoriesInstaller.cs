@@ -1,19 +1,17 @@
-﻿using _Game.Core._DataProviders.UnitDataProvider;
-using _Game.Core.DataPresenters._BaseDataPresenter;
-using _Game.Core.DataPresenters.WeaponDataPresenter;
+﻿using _Game.Core._DataPresenters.WeaponDataPresenter;
+using _Game.Core._DataProviders._BaseDataProvider;
+using _Game.Core._DataProviders.UnitDataProvider;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._Bases.Factory;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._Units.Factory;
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay.Vfx.Factory;
-using _Game.UI.Factory;
+using _Game.UI._Environment.Factory;
 using Assets._Game.Core.Factory;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Bases.Factory;
-using Assets._Game.UI._Environment.Factory;
 using UnityEngine;
 using Zenject;
 
@@ -36,8 +34,8 @@ namespace _Game.Core.Installers.BattleMode
         private void BindFactories()
         {
             var unitDataPresenter = Container.Resolve<IUnitDataProvider>();
-            var weaponDataPresenter = Container.Resolve<IWeaponDataPresenter>();
-            var towerDataPresenter = Container.Resolve<IBasePresenter>();
+            var weaponDataPresenter = Container.Resolve<IWeaponDataProvider>();
+            var towerDataPresenter = Container.Resolve<IBaseDataProvider>();
             
             var cameraService = Container.Resolve<IWorldCameraService>();
             var random = Container.Resolve<IRandomService>();
@@ -54,9 +52,9 @@ namespace _Game.Core.Installers.BattleMode
 
         private void BindProjectileFactory(
             ISoundService soundService,
-            IWeaponDataPresenter weaponDataPresenter)
+            IWeaponDataProvider weaponDataProvider)
         {
-            _projectileFactory.Initialize(soundService, weaponDataPresenter);
+            _projectileFactory.Initialize(soundService, weaponDataProvider);
             Container.Bind<IProjectileFactory>().To<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
         }
 
@@ -77,17 +75,17 @@ namespace _Game.Core.Installers.BattleMode
         }
 
         private void BindVfxFactory(
-            IWeaponDataPresenter weaponDataPresenter)
+            IWeaponDataProvider weaponDataProvider)
         {
-            _vfxFactory.Initialize(weaponDataPresenter);
+            _vfxFactory.Initialize(weaponDataProvider);
             Container.Bind<IVfxFactory>().To<VfxFactory>().FromInstance(_vfxFactory).AsSingle();
         }
 
         private void BindTowerFactory(
-            IBasePresenter basePresenter,
+            IBaseDataProvider baseDataProvider,
             IWorldCameraService cameraService)
         {
-            baseFactory.Initialize(basePresenter, cameraService);
+            baseFactory.Initialize(baseDataProvider, cameraService);
             Container.Bind<IBaseFactory>().To<BaseFactory>().FromInstance(baseFactory).AsSingle();
         }
 

@@ -15,6 +15,17 @@ namespace _Game.Core.Communication.Migrations
                 CardsSummoningProgressCount = 0,
                 Cards = new List<Card>(),
             };
+            
+            state.TutorialState.CompletedSteps = new List<int>()
+            {
+                -1,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            };
         }
     }
 }

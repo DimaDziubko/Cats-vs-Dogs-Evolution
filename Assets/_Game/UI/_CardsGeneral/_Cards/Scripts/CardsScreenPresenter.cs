@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
@@ -12,8 +13,6 @@ using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using Assets._Game.Core._UpgradesChecker;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts
 {
@@ -31,7 +30,6 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         public event Action<TransactionButtonModel[]> ButtonModelsChanged;
         public event Action<int> CardBought;
         public ICardsSummoningPresenter CardsSummoningPresenter { get; private set; }
-        public ICardsPresenter CardsPresenter { get; private set; }
 
         public string CardsCountInfo => $"{CardsState.Cards.Count}/{_cardsConfigRepository.GetAllCardsCount()}";
 
@@ -39,6 +37,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         private readonly ICardsConfigRepository _cardsConfigRepository;
         private readonly IGameInitializer _gameInitializer;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
+        private readonly IFeatureUnlockSystem _featureUnlockSystem;
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
         private ICardsCollectionStateReadonly CardsState => _userContainer.State.CardsCollectionState;
 
@@ -53,26 +52,19 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             IUserContainer userContainer,
             IConfigRepositoryFacade facade,
             IGameInitializer gameInitializer,
-            IWorldCameraService cameraService, 
-            IAudioService audioService,
             IMyLogger logger,
-            IUpgradesAvailabilityChecker upgradesChecker)
+            IUpgradesAvailabilityChecker upgradesChecker,
+            IFeatureUnlockSystem featureUnlockSystem)
         {
             _gameInitializer = gameInitializer;
             _userContainer = userContainer;
             _cardsConfigRepository = facade.CardsConfigRepository;
 
             CardsSummoningPresenter = new CardsSummoningPresenter(userContainer, facade.CardsConfigRepository);
-            CardsPresenter = new CardsPresenter(
-                userContainer, 
-                facade.CardsConfigRepository, 
-                facade.CommonItemsConfigRepository, 
-                cameraService, 
-                audioService,
-                logger,
-                upgradesChecker);
             _upgradesChecker = upgradesChecker;
-            
+
+            _featureUnlockSystem = featureUnlockSystem;
+
             gameInitializer.OnMainInitialization += Init;
         }
 
@@ -94,12 +86,15 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             CardBought?.Invoke(amount);
         }
 
+        void ICardsScreenPresenter.OnCardsScreenOpened() => 
+            UpdateButtonModels();
+
         void Init()
         {
             _upgradesChecker.Register(this);
             CardsSummoningPresenter.Init();
-            CardsPresenter.Init();
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
+            _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
             UpdateButtonModels();
         }
 
@@ -108,6 +103,13 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _upgradesChecker.UnRegister(this);
             _gameInitializer.OnMainInitialization -= Init;
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
+            _featureUnlockSystem.FeatureUnlocked -= OnFeatureUnlocked;
+        }
+
+        private void OnFeatureUnlocked(Feature feature)
+        {
+            if(feature == Feature.GemsShopping)
+                UpdateButtonModels();
         }
 
         private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
@@ -118,7 +120,9 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         private void UpdateButtonModels()
         {
             _buttonModels[0].Price = _cardsConfigRepository.GetX1CardPrice().ToString();
-            _buttonModels[0].State = _cardsConfigRepository.GetX1CardPrice() < Currencies.Gems
+            _buttonModels[0].State = _cardsConfigRepository.GetX1CardPrice() 
+                                     < Currencies.Gems
+                                     && _featureUnlockSystem.IsFeatureUnlocked(Feature.GemsShopping)
                 ? ButtonState.Active
                 : ButtonState.Inactive;
             

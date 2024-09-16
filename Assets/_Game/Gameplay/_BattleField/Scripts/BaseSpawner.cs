@@ -1,6 +1,7 @@
-﻿using _Game.Core.DataPresenters._BaseDataPresenter;
+﻿using _Game.Core._DataProviders._BaseDataProvider;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Bases.Scripts;
-using Assets._Game.Core.Services.Camera;
+using _Game.Utils;
 using Assets._Game.Gameplay._Bases.Factory;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -15,7 +16,7 @@ namespace _Game.Gameplay._BattleField.Scripts
         private readonly ICoinSpawner _coinSpawner;
         private readonly IBaseDestructionManager _baseDestructionManager;
         private readonly IInteractionCache _interactionCache;
-        private readonly IBasePresenter _basePresenter;
+        private readonly IBaseDataProvider _baseDataProvider;
 
         private Vector3 _enemyBasePoint;
         private Vector3 _playerBasePoint;
@@ -28,22 +29,22 @@ namespace _Game.Gameplay._BattleField.Scripts
             ICoinSpawner coinSpawner,
             IBaseDestructionManager baseDestructionManager,
             IInteractionCache interactionCache,
-            IBasePresenter basePresenter)
+            IBaseDataProvider baseDataProvider)
         {
             _baseFactory = baseFactory;
             _cameraService = cameraService;
             _coinSpawner = coinSpawner;
             _baseDestructionManager = baseDestructionManager;
             _interactionCache = interactionCache;
-            _basePresenter = basePresenter;
+            _baseDataProvider = baseDataProvider;
         }
 
         public void OnStartBattle()
         {
             _enemyBase.InteractionCache = _interactionCache;
             _playerBase.InteractionCache = _interactionCache;
-            _playerBase.UpdateHealth(_basePresenter.GetBaseHealth(Faction.Player));
-            _enemyBase.UpdateHealth(_basePresenter.GetBaseHealth(Faction.Enemy));
+            _playerBase.UpdateHealth(_baseDataProvider.GetBaseData(Constants.CacheContext.AGE).Health);
+            _enemyBase.UpdateHealth(_baseDataProvider.GetBaseData(Constants.CacheContext.BATTLE).Health);
             _enemyBase.ShowHealth();
             _playerBase.ShowHealth();
             
@@ -54,7 +55,7 @@ namespace _Game.Gameplay._BattleField.Scripts
             CalculateBasePoints();
             UpdatePlayerBase();
             
-            _basePresenter.BaseUpdated += UpdateBase;
+            _baseDataProvider.BaseUpdated += UpdateBase;
         }
 
         private void UpdateBase(Faction faction)

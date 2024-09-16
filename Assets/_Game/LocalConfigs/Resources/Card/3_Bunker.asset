@@ -19,8 +19,9 @@ MonoBehaviour:
   Name: Bunker
   Derscription: Fortified shelter providing unmatched protection during intense confrontations.
   MaterialIdentifier: {fileID: 2100000, guid: 541aada8e09bbf4439601315cee03932, type: 2}
+  DropChance: 22.5
   Boosts:
-  - Type: 0
+  - Type: 1
     Name: All Unit Damage
     Exponential:
       _id: 7
@@ -28,7 +29,7 @@ MonoBehaviour:
       B: 0.0255
       C: 0.1397
       D: 0
-  - Type: 3
+  - Type: 4
     Name: Base Health
     Exponential:
       _id: 8

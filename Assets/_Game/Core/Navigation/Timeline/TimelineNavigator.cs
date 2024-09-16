@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
  using _Game.Core._DataLoaders.AgeDataProvider;
  using _Game.Core._GameInitializer;
@@ -6,13 +6,12 @@ using System.Collections.Generic;
  using _Game.Core.AssetManagement;
  using _Game.Core.Configs.Providers;
  using _Game.Core.Data;
+ using _Game.Core.DataProviders.BattleDataProvider;
  using _Game.Core.DataProviders.ShopDataProvider;
  using _Game.Core.DataProviders.Timeline;
  using _Game.Core.Loading;
  using _Game.Core.LoadingScreen;
  using _Game.Core.Services.UserContainer;
- using Assets._Game.Core.Data;
- using Assets._Game.Core.DataProviders.BattleDataProvider;
  using Assets._Game.Core.Loading;
  using Assets._Game.Core.UserState;
 

@@ -11,19 +11,21 @@ namespace _Game.Core.Configs.Repositories._Cards
 
         public CardsConfigRepository(IUserContainer userContainer) => 
             _userContainer = userContainer;
-
+        
+        public bool IsDropListEnabled => _userContainer.GameConfig.SummoningData.DropListsEnabled;
+        public List<int> InitialDropList => _userContainer.GameConfig.SummoningData.InitialDropList;
         public int MinSummoningLevel => 1;
-        public int MaxSummoningLevel => _userContainer.GameConfig.SummoningConfig.Count;
+        public int MaxSummoningLevel => _userContainer.GameConfig.SummoningData.SummoningConfig.Count;
 
         public CardsSummoning GetSummoning(int level) => 
-            _userContainer.GameConfig.SummoningConfig[level];
+            _userContainer.GameConfig.SummoningData.SummoningConfig[level];
 
         public int GetX1CardPrice() => _userContainer.GameConfig.CardPricingConfig.x1CardPrice;
 
         public int GetX10CardPrice() => _userContainer.GameConfig.CardPricingConfig.x10CardPrice;
         public int GetCardsRequiredForNextLevel(int level) => GetSummoning(level).CardsRequiredForLevel;
 
-        public Dictionary<int, CardsSummoning> GetAllSummonings() => _userContainer.GameConfig.SummoningConfig;
+        public Dictionary<int, CardsSummoning> GetAllSummonings() => _userContainer.GameConfig.SummoningData.SummoningConfig;
         public bool TryGetCardsByType(CardType type, out List<CardConfig> cards) => 
             _userContainer.GameConfig.CardConfigsByType.TryGetValue(type, out cards);
 
@@ -32,5 +34,8 @@ namespace _Game.Core.Configs.Repositories._Cards
 
         public int GetAllCardsCount() => 
             _userContainer.GameConfig.CardConfigsById.Count;
+
+        public bool TryGetSummoning(int currentLevel, out CardsSummoning summoning) => 
+            _userContainer.GameConfig.SummoningData.SummoningConfig.TryGetValue(currentLevel, out summoning);
     }
 }

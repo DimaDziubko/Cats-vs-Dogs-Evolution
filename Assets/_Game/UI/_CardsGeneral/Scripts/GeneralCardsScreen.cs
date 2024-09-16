@@ -1,7 +1,8 @@
-using System;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._BoostPopup;
 using _Game.UI._CardsGeneral._Cards.Scripts;
@@ -9,8 +10,6 @@ using _Game.UI._MainMenu.Scripts;
 using _Game.UI._MainMenu.State;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Global;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 

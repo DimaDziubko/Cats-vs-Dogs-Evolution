@@ -19,7 +19,7 @@ namespace _Game.UI._BoostPopup
         {
             gameObject.SetActive(model.IsActive);
             _iconPlaceholder.sprite = model.Icon;
-            _infoLabel.text = needToShowName ? $"{model.Type.ToName()} x{model.Value}" : $"x{model.Value}";
+            _infoLabel.text = needToShowName ? $"{model.Type.ToName()} x{model.DisplayValue}" : $"x{model.DisplayValue}";
         }
     }
 }

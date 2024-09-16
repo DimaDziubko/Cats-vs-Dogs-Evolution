@@ -7,16 +7,26 @@ using UnityEngine.Serialization;
 
 namespace _Game.Core.Configs.Models._Cards
 {
+    public class SummoningData
+    {
+        public bool DropListsEnabled;
+        public List<int> InitialDropList;
+        public Dictionary<int, CardsSummoning> SummoningConfig;
+    } 
+    
     [CreateAssetMenu(fileName = "CardsConfig", menuName = "Configs/Summoning")]
     public class SummoningConfigs : ScriptableObject
     {
         public int Id;
+        public bool DropListsEnabled;
+        public List<int> InitialDropList;
         [FormerlySerializedAs("LevelDropRates")] public List<CardsSummoning> CardsSummoningConfigs;
     }
 
     [Serializable]
     public class CardsSummoning
     {
+        public int Id;
         public int Level;
         [FormerlySerializedAs("CardsRequiredForNextLevel")] public int CardsRequiredForLevel;
         
@@ -56,5 +66,7 @@ namespace _Game.Core.Configs.Models._Cards
             }
             return rate.ToString("0.000") + "%";
         }
+
+        public List<int> DropList;
     }
 }

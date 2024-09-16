@@ -3,6 +3,8 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.GameState;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.Temp;
 using _Game.UI._CardsGeneral.Scripts;
@@ -12,8 +14,6 @@ using _Game.UI._Shop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using UnityEngine;
@@ -48,8 +48,13 @@ namespace _Game.UI._MainMenu.Scripts
 
         [SerializeField] private float _highlightedBtnScale = 1.65f;
         
-        [SerializeField] public TutorialStep _upgradesTutorialStep;
+        [SerializeField] private TutorialStep _upgradesTutorialStep;
+        [SerializeField] private TutorialStep _cardsTutorialStep;
 
+        public TutorialStep UpgradeTutorialStep => _upgradesTutorialStep;
+        public TutorialStep CardsTutorialStep => _cardsTutorialStep;
+        
+        
         private ToggleButton _activeButton;
 
         [SerializeField] private RectTransform[] _buttons;
@@ -69,8 +74,6 @@ namespace _Game.UI._MainMenu.Scripts
         private bool IsUpgradesUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_upgradeButton);
         private bool IsBattleUnlocked => true;
         private bool IsCardsUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_cardsButton);
-        
-        //TODO Add unlock condition
         private bool IsShopUnlocked => _featureUnlockSystem.IsFeatureUnlocked(_shopButton);
 
         public void Construct(
@@ -114,7 +117,8 @@ namespace _Game.UI._MainMenu.Scripts
 
         public void Show()
         {
-            _tutorialManager.Register(_upgradesTutorialStep);
+            _tutorialManager.Register(UpgradeTutorialStep);
+            _tutorialManager.Register(CardsTutorialStep);
 
             Unsubscribe();
             Subscribe();
@@ -131,19 +135,33 @@ namespace _Game.UI._MainMenu.Scripts
 
             OnBattleButtonClick(_battleButton);
 
+            ShowUpgradeTutorialWithDelay(TUTORIAL_POINTER_DELAY);
+            ShowCardsTutorialWithDelay(TUTORIAL_POINTER_DELAY);
+        }
+
+        public void ShowCardsTutorialWithDelay(float delay)
+        {
+            if (IsCardsUnlocked)
+            {
+                StartCoroutine(ShowTutorialStepWithDelay(CardsTutorialStep, delay));
+            }
+        }
+
+        public void ShowUpgradeTutorialWithDelay(float delay)
+        {
             if (IsUpgradesUnlocked)
             {
-                StartCoroutine(ShowUpgradesTutorialStepWithDelay());
+                StartCoroutine(ShowTutorialStepWithDelay(UpgradeTutorialStep, delay));
             }
         }
 
         public void SetActiveButton(ToggleButton button) => 
             _activeButton = button;
 
-        private IEnumerator ShowUpgradesTutorialStepWithDelay()
+        private IEnumerator ShowTutorialStepWithDelay(TutorialStep tutorialStep, float delay)
         {
-            yield return new WaitForSeconds(TUTORIAL_POINTER_DELAY);
-            _upgradesTutorialStep.ShowStep();
+            yield return new WaitForSeconds(delay);
+            tutorialStep.ShowStep();
         }
 
         private void Subscribe()
@@ -191,7 +209,6 @@ namespace _Game.UI._MainMenu.Scripts
         private void OnUpgradeButtonClick(ToggleButton button)
         {
             _menuStateMachine.Enter<UpgradesState>();
-            _upgradesTutorialStep.CompleteStep();
         }
 
         private void OnShopButtonClick(ToggleButton button) => 
@@ -217,8 +234,9 @@ namespace _Game.UI._MainMenu.Scripts
             
             _menuStateMachine.Cleanup();
             
-            _upgradesTutorialStep.CancelStep();
-            _tutorialManager.UnRegister(_upgradesTutorialStep);
+            UpgradeTutorialStep.CancelStep();
+            _tutorialManager.UnRegister(UpgradeTutorialStep);
+            _tutorialManager.UnRegister(CardsTutorialStep);
         }
 
         private void PlayButtonSound() => _audioService.PlayButtonSound();

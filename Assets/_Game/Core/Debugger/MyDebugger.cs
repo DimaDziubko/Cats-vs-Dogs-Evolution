@@ -2,17 +2,16 @@
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Ads;
 using _Game.Core.Data;
+using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
 using _Game.Core.Services.UserContainer;
-using _Game.Gameplay._UnitBuilder.Scripts;
+using _Game.Gameplay._Boosts.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Global;
-using Assets._Game.Gameplay._UnitBuilder.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -114,6 +113,11 @@ namespace _Game.Core.Debugger
          public CasAdsService CasAdsService { get; set; }
          public BattleManager BattleManager { get; set; }
          public UINotifier UINotifier { get; set; }
+         
+         [ShowInInspector, ReadOnly]
+         public Dictionary<BoostSource, BoostPanelModel> Boosts { get; set; }
+         [ShowInInspector, ReadOnly]
+         public BoostUpgradePanelModel BoostUpgrades { get; set; }
     }
     
 
@@ -127,5 +131,7 @@ namespace _Game.Core.Debugger
          CasAdsService CasAdsService { get; set; }
          BattleManager BattleManager { get; set; }
          UINotifier UINotifier { get; set; }
+         Dictionary<BoostSource, BoostPanelModel> Boosts { get; set; }
+         BoostUpgradePanelModel BoostUpgrades { get; set; }
     }
 }

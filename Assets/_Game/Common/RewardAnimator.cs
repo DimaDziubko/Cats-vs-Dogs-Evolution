@@ -1,12 +1,12 @@
 ﻿using System;
 using _Game.Core._Logger;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 using Zenject;
 

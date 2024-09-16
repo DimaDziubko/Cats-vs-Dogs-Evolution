@@ -2,7 +2,6 @@
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts

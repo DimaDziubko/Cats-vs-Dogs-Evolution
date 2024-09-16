@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
+using _Game.Core.Debugger;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.UI._BoostPopup;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 
 namespace _Game.Gameplay._Boosts.Scripts
 {
@@ -17,30 +19,35 @@ namespace _Game.Gameplay._Boosts.Scripts
         event Action<BoostType> BoostModelChanged;
         void ShowBoosts(BoostSource source);
         BoostInfoItemModel TryGetBoostFor(BoostSource source, BoostType itemBoostType);
+        BoostUpgradeInfoItemModel TryGetBoostUpgradeInfoFor(BoostType itemBoostType);
     }
 
     public class BoostDataPresenter : IBoostDataPresenter, IDisposable
     {
         public event Action<BoostType> BoostModelChanged;
-        
+
         private const float MIN_BOOST_VALUE = 1;
-        
+
         private readonly IGeneralDataPool _dataPool;
         private readonly IGameInitializer _gameInitializer;
         private readonly ICommonItemsConfigRepository _commonConfig;
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-        
+        private readonly IMyLogger _logger;
+
         private IBoostsDataReadonly BoostData => _dataPool.AgeDynamicData.BoostsData;
 
         private readonly Dictionary<BoostSource, BoostPanelModel> _boosts = new Dictionary<BoostSource, BoostPanelModel>();
-
+        private readonly BoostUpgradePanelModel _boostUpgrade = new BoostUpgradePanelModel();
+        
         public BoostDataPresenter(
             IGeneralDataPool dataPool,
             IGameInitializer gameInitializer,
             IConfigRepositoryFacade configRepositoryFacade,
             IWorldCameraService cameraService,
-            IAudioService audioService)
+            IAudioService audioService,
+            IMyDebugger debugger,
+            IMyLogger logger)
         {
             _dataPool = dataPool;
             _gameInitializer = gameInitializer;
@@ -48,59 +55,101 @@ namespace _Game.Gameplay._Boosts.Scripts
             _cameraService = cameraService;
             _audioService = audioService;
             _gameInitializer.OnMainInitialization += Init;
+            _logger = logger;
+
+            debugger.Boosts = _boosts;
+            debugger.BoostUpgrades = _boostUpgrade;
         }
 
         private void Init()
         {
             BoostData.Changed += OnBoostDataChanged;
-            
+            PrepareBoostPanelModel();
+            PrepareUpgradePanelModel();
+        }
+
+        void IDisposable.Dispose()
+        {
+            _gameInitializer.OnMainInitialization -= Init;
+            BoostData.Changed -= OnBoostDataChanged;
+        }
+
+        private void PrepareUpgradePanelModel()
+        {
+            _boostUpgrade.BoostUpgradeItemModels = new Dictionary<BoostType, BoostUpgradeInfoItemModel>(5);
+            foreach (BoostType type in Enum.GetValues(typeof(BoostType)))
+            {
+                if (type == BoostType.None) continue;
+                float value = BoostData.GetBoost(BoostSource.TotalBoosts, type);
+                bool isActive = false;
+                BoostUpgradeInfoItemModel upgradeInfoItemModel = new BoostUpgradeInfoItemModel()
+                {
+                    Type = type,
+                    CurrentValue = value,
+                    Delta = 0f.ToFormattedString(),
+                    DisplayValue = value.ToFormattedString(),
+                    Icon = _commonConfig.ForBoostIcon(type),
+                    IsUpgraded = false
+                };
+                
+                _boostUpgrade.BoostUpgradeItemModels.Add(type, upgradeInfoItemModel);
+            }
+        }
+
+        private void PrepareBoostPanelModel()
+        {
             foreach (BoostSource source in Enum.GetValues(typeof(BoostSource)))
             {
                 BoostPanelModel model = new BoostPanelModel();
                 model.BoostItemModels = new Dictionary<BoostType, BoostInfoItemModel>(5);
 
                 model.Name = source.ToName();
-                
+
                 foreach (BoostType type in Enum.GetValues(typeof(BoostType)))
                 {
-                    if(type == BoostType.None) continue;
-                    
+                    if (type == BoostType.None) continue;
+
                     float value = BoostData.GetBoost(source, type);
 
-                    bool isActive;
-                    
-                    if(IsAlwaysShownBoosts(source, type))
-                    {
-                        isActive = true;
-                    }
-                    else
-                    {
-                        isActive = value > MIN_BOOST_VALUE;
-                    }
-                     
                     BoostInfoItemModel infoItemModel = new BoostInfoItemModel()
                     {
                         Type = type,
                         Icon = _commonConfig.ForBoostIcon(type),
-                        Value = $"x{value}",
-                        IsActive = isActive
+                        DisplayValue = $"x{value}",
+                        IsActive = IsActiveBoost(source, type, value)
                     };
-                    
+
                     model.BoostItemModels.Add(type, infoItemModel);
                 }
-                
+
                 _boosts.Add(source, model);
             }
         }
 
         private void OnBoostDataChanged(BoostSource source, BoostType type, float newValue)
         {
-            UpdateInfoItemModel(source, type, newValue);
-            UpdateInfoItemModel(BoostSource.TotalBoosts, type, newValue);
+            UpdateBoostPanelModel(source, type, newValue);
+            UpdateBoostPanelModel(BoostSource.TotalBoosts, type, BoostData.GetBoost(BoostSource.TotalBoosts, type));
+            UpdateUpgradePanelModel(type, newValue);
             BoostModelChanged?.Invoke(type);
         }
+        
+        private void UpdateUpgradePanelModel(BoostType type, float newValue)
+        {
+            if (_boostUpgrade.BoostUpgradeItemModels.ContainsKey(type))
+            {
+                var item = _boostUpgrade.BoostUpgradeItemModels[type];
+                if (item != null)
+                {
+                    item.Delta = (newValue - item.CurrentValue).ToFormattedString();
+                    item.DisplayValue = newValue.ToFormattedString();
+                    item.IsUpgraded = newValue - item.CurrentValue > 0;
+                    item.CurrentValue = newValue;
+                }
+            }
+        }
 
-        private void UpdateInfoItemModel(BoostSource source, BoostType type, float newValue)
+        private void UpdateBoostPanelModel(BoostSource source, BoostType type, float newValue)
         {
             if (_boosts.ContainsKey(source))
             {
@@ -112,14 +161,31 @@ namespace _Game.Gameplay._Boosts.Scripts
                         var boostItem = boostModel.BoostItemModels[type];
                         if (boostItem != null)
                         {
-                            boostItem.Value = newValue.ToFormattedString();
-                            boostItem.IsActive = newValue > MIN_BOOST_VALUE;
+                            boostItem.DisplayValue = newValue.ToFormattedString();
+                            boostItem.IsActive = IsActiveBoost(source, type, newValue);
                         }
                     }
                 }
             }
         }
-        
+
+        private bool IsActiveBoost(BoostSource source, BoostType type, float newValue)
+        {
+            bool isActive;
+
+            if (IsAlwaysShownBoosts(source, type))
+            {
+                isActive = true;
+            }
+            else
+            {
+                isActive = newValue > MIN_BOOST_VALUE;
+            }
+
+            return isActive;
+        }
+
+
         private bool IsAlwaysShownBoosts(BoostSource source, BoostType type) => 
             source == BoostSource.TotalBoosts && (type == BoostType.AllUnitHealth || type == BoostType.AllUnitDamage);
 
@@ -156,11 +222,12 @@ namespace _Game.Gameplay._Boosts.Scripts
             
             return new BoostInfoItemModel() {IsActive = false};
         }
-        
-        public void Dispose()
+
+        public BoostUpgradeInfoItemModel TryGetBoostUpgradeInfoFor(BoostType type)
         {
-            _gameInitializer.OnMainInitialization -= Init;
-            BoostData.Changed -= OnBoostDataChanged;
+            if (_boostUpgrade.BoostUpgradeItemModels.ContainsKey(type))
+                return _boostUpgrade.BoostUpgradeItemModels[type];
+            return new BoostUpgradeInfoItemModel();
         }
     }
 }

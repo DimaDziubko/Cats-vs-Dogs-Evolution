@@ -1,7 +1,9 @@
 ﻿using System;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
+using _Game.Gameplay._Boosts.Scripts;
+using _Game.UI._BoostPopup;
 using _Game.Utils;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -19,6 +21,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private Button[] _cancelButtons;
         [SerializeField] private UpgradeInfoItem[] _infoItems;
+        [SerializeField] private BoostUpgradeInfoPanel _upgradeInfoPanel;
         
         private ICardsPresenter _cardPresenter;
         private IAudioService _audioService;
@@ -30,12 +33,14 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         public void Construct(
             IWorldCameraService cameraService,
             ICardsPresenter cardsPresenter,
+            IBoostDataPresenter boostDataPresenter,
             IAudioService audioService)
         {
             _canvas.enabled = false;
             _canvas.worldCamera = cameraService.UICameraOverlay;
             _cardPresenter = cardsPresenter;
             _audioService = audioService;
+            _upgradeInfoPanel.Construct(boostDataPresenter);
             Init();
         }
 
@@ -47,7 +52,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             }
             
             _upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
-
+            _upgradeInfoPanel.Init();
             Unsubscribe();
             Subscribe();
         }
@@ -67,7 +72,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         {
             _cardPresenter.CardModelUpdated -= OnCardModelUpdated;
         }
-
+        
         public async UniTask<bool> ShowDetailsAndAwaitForExit(int id)
         {
             _currentCardId = id;
@@ -116,6 +121,12 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         {
             _cardPresenter.UpgradeCard(_currentCardId);
             PlayButtonSound();
+            PlayUpgradeSound();
+        }
+
+        private void PlayUpgradeSound()
+        {
+            _audioService.PlayUpgradeSound();
         }
 
         private void PlayButtonSound()
@@ -126,7 +137,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         private void OnCancelled()
         {
             PlayButtonSound();
-            _taskCompletion.TrySetResult(false);
+            _taskCompletion.TrySetResult(true);
         }
 
         public void Cleanup()
@@ -139,6 +150,8 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _upgradeButton.onClick.RemoveAllListeners();
             
             Unsubscribe();
+            
+            _upgradeInfoPanel.Cleanup();
         }
     }
 }

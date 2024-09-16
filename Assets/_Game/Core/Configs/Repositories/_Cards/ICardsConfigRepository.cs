@@ -6,6 +6,8 @@ namespace _Game.Core.Configs.Repositories._Cards
 {
     public interface ICardsConfigRepository
     {
+        bool IsDropListEnabled { get; }
+        List<int> InitialDropList { get; }
         int MinSummoningLevel { get; }
         int MaxSummoningLevel { get; }
         int GetX1CardPrice();
@@ -14,5 +16,6 @@ namespace _Game.Core.Configs.Repositories._Cards
         bool TryGetCardsByType(CardType type, out List<CardConfig> cards);
         CardConfig ForCard(int cardId);
         int GetAllCardsCount();
+        bool TryGetSummoning(int currentLevel, out CardsSummoning summoning);
     }
 }

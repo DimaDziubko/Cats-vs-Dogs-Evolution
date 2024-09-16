@@ -14,6 +14,7 @@ namespace _Game.Core.UserState._State
         int CardsSummoningLevel { get; }
         int CardsSummoningProgressCount { get; }
         List<Card> Cards { get; }
+        int LastDropIdx { get; }
     }
 
     public class CardsCollectionState : ICardsCollectionStateReadonly
@@ -26,9 +27,11 @@ namespace _Game.Core.UserState._State
 
         public int CardSummoningLevel;
         public int CardsSummoningProgressCount;
+        public int LastDropIdx;
         public List<Card> Cards;
 
         int ICardsCollectionStateReadonly.CardsSummoningLevel => CardSummoningLevel;
+        int ICardsCollectionStateReadonly.LastDropIdx => LastDropIdx;
         int ICardsCollectionStateReadonly.CardsSummoningProgressCount => CardsSummoningProgressCount;
         List<Card> ICardsCollectionStateReadonly.Cards => Cards;
 
@@ -36,6 +39,7 @@ namespace _Game.Core.UserState._State
         public void ChangeCardSummoningLevel(int newLevel)
         {
             CardSummoningLevel = newLevel;
+            LastDropIdx = 0;
             CardsSummoningLevelChanged?.Invoke(CardSummoningLevel);
         }
 
@@ -85,6 +89,11 @@ namespace _Game.Core.UserState._State
             
             CardsCollected?.Invoke(cardsId);
             CardsCollectionChanged?.Invoke();
+        }
+
+        public void ChangeLastDropIdx(int nextIndex)
+        {
+            LastDropIdx = nextIndex;
         }
     }
 }

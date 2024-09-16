@@ -1,4 +1,4 @@
-﻿using Assets._Game.Core.Services.Audio;
+﻿using _Game.Core.Services.Audio;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +7,8 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
 {
     public class CardViewAppearanceAnimation : MonoBehaviour
     {
+        [SerializeField] private bool _useFlashAnimation = false; 
+        
         [SerializeField] private RectTransform _cardBgTransform;
         [SerializeField] private float _newCardScale;
         [SerializeField] private float _scaleAnimationDuration;
@@ -14,24 +16,34 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         [SerializeField] private Image _rippleImage;
         [SerializeField] private RectTransform _rippleTransform;
         [SerializeField] private float _rippleAnimationDuration;
-        [SerializeField] private float _rippleScale = 1.3f;
-
+        [SerializeField] private Vector2 _rippleScale = new Vector2(1.5f, 1.4f);
+        
         [SerializeField] private ImageFlashEffect _appearanceImageFlash;
+        [SerializeField] private ImageMaskAnimation _maskAnimation;
+        
         [SerializeField] private ImageAlphaFlashEffect _rippleImageAlphaFlash;
 
+        [SerializeField] private ScaleAnimation _newNotifierScaleAnimation;
+        
         [SerializeField] private AudioClip _cardAppearanceSfx;
         [SerializeField] private AudioClip _cardIlluminationSfx;
         
         private IAudioService _audioService;
+
+        private bool _isNew;
         
-        public void Init(IAudioService audioService, Color flashColor)
+        public void Init(IAudioService audioService, Color flashColor, bool isNew)
         {
             _audioService = audioService;
             _appearanceImageFlash.Init();
             _rippleImageAlphaFlash.Init(flashColor);
+            _maskAnimation.Init();
+            _newNotifierScaleAnimation.Init();
+            _isNew = isNew;
         }
 
-        public void Play(bool needIlluminationAnimation)
+        public void Play(
+            bool needIlluminationAnimation)
         {
             if (!needIlluminationAnimation)
             {
@@ -44,18 +56,31 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
 
         private void PlaySimple()
         {
-            _appearanceImageFlash.TriggerFlash();
+            if(_useFlashAnimation)
+                _appearanceImageFlash.TriggerFlash();
+            else
+            {
+                _maskAnimation.TriggerMask();
+            }
+            
             _audioService.PlayOneShot(_cardAppearanceSfx);
         }
 
         private void PlayWithRipple()
         {
-            _appearanceImageFlash.TriggerFlash(OnAppearanceFinished);
+            if(_useFlashAnimation)
+                _appearanceImageFlash.TriggerFlash(OnAppearanceFinished);
+            else
+            {
+                _maskAnimation.TriggerMask(OnAppearanceFinished);
+            }
         }
 
         private void OnAppearanceFinished()
         {
             PlayRippleAnimation();
+            if(_isNew)
+                _newNotifierScaleAnimation.Play();
             _audioService.PlayOneShot(_cardIlluminationSfx);
         }
 

@@ -1,13 +1,12 @@
 ﻿using _Game.Audio.Scripts;
+using _Game.Core.Prefabs;
 using _Game.Core.Services.Audio;
-using Assets._Game.Core.Prefabs;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
+using _Game.Core.Services.Camera;
 using UnityEngine;
 using UnityEngine.Audio;
 using Zenject;
 
-namespace Assets._Game.Core.Installers.Core
+namespace _Game.Core.Installers.Core
 {
     public class AudioCameraServicesInstaller : MonoInstaller
     {

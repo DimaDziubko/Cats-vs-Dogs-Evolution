@@ -1,6 +1,6 @@
-﻿using _Game.Core.UserState._State;
+﻿using _Game.Core.Services.Camera;
+using _Game.Core.UserState._State;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Camera;
 using TMPro;
 using UnityEngine;
 

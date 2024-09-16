@@ -1,8 +1,7 @@
 ﻿using System;
+using _Game.Core.Services.Audio;
 using _Game.UI.Common.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

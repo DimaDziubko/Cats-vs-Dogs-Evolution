@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.Data.Age.Dynamic._UpgradeItem
 {

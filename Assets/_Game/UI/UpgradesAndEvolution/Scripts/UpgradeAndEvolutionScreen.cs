@@ -1,11 +1,13 @@
+using _Game.Core._DataPresenters._UpgradeItemPresenter;
+using _Game.Core._DataPresenters.UnitUpgradePresenter;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
-using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
-using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._BoostPopup;
@@ -13,12 +15,10 @@ using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Scripts

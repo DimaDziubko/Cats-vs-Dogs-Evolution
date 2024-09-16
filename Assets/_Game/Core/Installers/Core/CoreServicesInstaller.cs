@@ -11,12 +11,10 @@ using _Game.Core.Communication;
 using _Game.Core.Data;
 using _Game.Core.Debugger;
 using _Game.Core.Services._FreeGemsPackService;
-using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Common;
 using UnityEngine;
 using Zenject;
 
@@ -72,21 +70,16 @@ namespace _Game.Core.Installers.Core
                 .FromNew()
                 .AsSingle();
 
-        private void BindStaticDataService()
-        {
-            AssetProvider assetProvider = new AssetProvider();
+        private void BindStaticDataService() =>
             Container.BindInterfacesAndSelfTo<AssetProvider>()
-                .FromInstance(assetProvider)
                 .AsSingle().NonLazy();
-        }
 
         private void BindAssetRegistry() => 
             Container.BindInterfacesAndSelfTo<AssetRegistry>()
                 .AsSingle();
 
         private void BindPersistentData() =>
-            Container.Bind<IUserContainer>()
-                .To<UserContainer>()
+            Container.BindInterfacesAndSelfTo<UserContainer>()
                 .AsSingle();
 
         private void BindStateCommunicator()

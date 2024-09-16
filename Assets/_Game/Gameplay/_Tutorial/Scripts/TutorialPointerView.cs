@@ -1,3 +1,4 @@
+using _Game.UI.Factory;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,10 +15,13 @@ namespace _Game.Gameplay._Tutorial.Scripts
         [SerializeField] private Vector3 StartAppearanceScale = new Vector3(4, 4, 1);
         [SerializeField] private float _animationDuration = 0.5f;
 
+        public IUIFactory OriginFactory { get; set; }
+
         public void Show(TutorialStepData tutorialData)
         {
             if (tutorialData.NeedAppearanceAnimation)
             {
+                Rotation = tutorialData.RequiredPointerRotation;
                 ShowWithAppearanceAnimation(tutorialData);
                 return;
             }
@@ -35,6 +39,8 @@ namespace _Game.Gameplay._Tutorial.Scripts
             _pointerTransform.anchoredPosition = tutorialData.IsUnderneath ? 
                 new Vector2(tutorialData.RequiredPointerPosition.x, -DefaultPosition.y) :
                 new Vector2(tutorialData.RequiredPointerPosition.x, DefaultPosition.y);
+            
+            
             
             _pointerTransform.localScale = StartAppearanceScale;
 
@@ -55,6 +61,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
         {
             StopAnimation();
             Disable();
+            OriginFactory.Reclaim(this);
         }
 
         private Vector3 Position

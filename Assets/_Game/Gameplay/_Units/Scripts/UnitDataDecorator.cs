@@ -18,7 +18,7 @@ namespace _Game.Gameplay._Units.Scripts
         public virtual int AttackLayer => _unitData.AttackLayer;
         public virtual Race Race => _unitData.Race;
         public WeaponType WeaponType => _unitData.WeaponType;
-        public int CoinsPerKill => _unitData.CoinsPerKill;
+        public virtual float CoinsPerKill => _unitData.CoinsPerKill;
         public float AttackDistance => _unitData.AttackDistance;
         public float Speed => _unitData.Speed;
         public float AttackPerSecond => _unitData.AttackPerSecond;

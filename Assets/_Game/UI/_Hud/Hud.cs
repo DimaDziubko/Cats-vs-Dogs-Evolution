@@ -4,6 +4,8 @@ using _Game.Core._Logger;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using _Game.UI._AlertPopup;
@@ -13,10 +15,7 @@ using _Game.UI._Hud._DailyTaskView;
 using _Game.UI._Hud._FoodBoostView;
 using _Game.UI._Hud._PauseView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.Utils.Popups;
 using UnityEngine;
 
 namespace _Game.UI._Hud

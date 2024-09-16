@@ -15,6 +15,7 @@
         Cards,
         Skills,
         Runes,
-        Heroes
+        Heroes,
+        GemsShopping
     }
 }

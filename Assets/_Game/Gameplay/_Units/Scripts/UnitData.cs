@@ -28,7 +28,7 @@ namespace _Game.Gameplay._Units.Scripts
         }
 
         public WeaponType WeaponType => _config.WeaponConfig.WeaponType;
-        public int CoinsPerKill => _config.CoinsPerKill;
+        public float CoinsPerKill => _config.CoinsPerKill;
         public float AttackDistance => _config.AttackDistance;
         public float Speed => _config.Speed;
         public float AttackPerSecond => _config.AttackPerSecond;

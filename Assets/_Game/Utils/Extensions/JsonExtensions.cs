@@ -25,7 +25,7 @@ namespace _Game.Utils.Extensions
                 FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
                 AdsConfig = ExtractAdsConfig(jsonData),
                 GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
-                SummoningConfig = ExtractSummoning(jsonData),
+                SummoningData = ExtractSummoning(jsonData),
                 CardPricingConfig = ExtractCardsPricingConfig(jsonData),
             };
 
@@ -33,10 +33,6 @@ namespace _Game.Utils.Extensions
 
             config.CardConfigsByType = cardConfigsByType;
             config.CardConfigsById = cardConfigsById;
-            
-            //TODO Delete later
-            Debug.Log("GAME CONFIG PARSED SUCCESSFULLY");
-
             return config;
         }
 
@@ -224,7 +220,7 @@ namespace _Game.Utils.Extensions
             return timelineConfig;
         }
 
-        private static Dictionary<int, CardsSummoning> ExtractSummoning(JObject jsonData)
+        private static SummoningData ExtractSummoning(JObject jsonData)
         {
             var config = Resources.Load<SummoningConfigs>(Constants.LocalConfigPath.SUMMONING_CONFIG_PATH);
             int accumulated = 0;
@@ -233,7 +229,37 @@ namespace _Game.Utils.Extensions
                 accumulated += summoning.CardsRequiredForLevel;
                 summoning.AccumulatedCardsRequiredForLevel = accumulated;
             }
-            return config.CardsSummoningConfigs.ToDictionary(x => x.Level, x => x);
+            
+            var summoningToken = jsonData[Constants.ConfigKeys.SUMMONING_CONFIGS];
+            SummoningConfigs remoteConfig = summoningToken?.ToObject<SummoningConfigs>();
+
+            MergeSummonings(config, remoteConfig); 
+            
+            var summoningData = new SummoningData()
+            {
+                DropListsEnabled = config.DropListsEnabled,
+                InitialDropList = config.InitialDropList,
+                SummoningConfig = config.CardsSummoningConfigs.ToDictionary(x => x.Level, x => x)
+                
+            };
+
+            return summoningData;
+        }
+
+        private static void MergeSummonings(SummoningConfigs local, SummoningConfigs remote)
+        {
+            local.DropListsEnabled = remote.DropListsEnabled;
+            local.InitialDropList = remote.InitialDropList;
+            
+            var remoteCardSummoningsDict = remote.CardsSummoningConfigs.ToDictionary(x => x.Id);
+            
+            foreach (var cardsSummoning in local.CardsSummoningConfigs)
+            {
+                if (remoteCardSummoningsDict.TryGetValue(cardsSummoning.Id, out var remoteConfig))
+                {
+                    cardsSummoning.DropList = remoteConfig.DropList;
+                }
+            }
         }
 
         private static AgeConfig UpdateAgeConfigWithRemoteData(AgeConfig age, List<RemoteAgeConfig> remoteAgesData,
@@ -253,7 +279,7 @@ namespace _Game.Utils.Extensions
 
         private static BattleConfig UpdateBattleConfigWithRemoteData(BattleConfig battle,
             List<RemoteBattleConfig> remoteBattlesData, List<RemoteWarriorConfig> remoteWarriorsData,
-            GeneralWarriorsConfig warriorses)
+            GeneralWarriorsConfig warriors)
         {
             var remoteBattleData = remoteBattlesData.First(x => x.Id == battle.Id);
             battle.Scenario = remoteBattleData.Scenario;
@@ -262,17 +288,17 @@ namespace _Game.Utils.Extensions
             battle.MaxCoinsPerBattle = remoteBattleData.MaxCoinsPerBattle;
             battle.EnemyBaseHealth = remoteBattleData.EnemyBaseHealth;
 
-            var relevantWarriors = GetRelevantWarriors(battle.WarriorsId, remoteWarriorsData, warriorses);
+            var relevantWarriors = GetRelevantWarriors(battle.WarriorsId, remoteWarriorsData, warriors);
             battle.Warriors = relevantWarriors;
 
             return battle;
         }
 
         private static List<WarriorConfig> GetRelevantWarriors(List<int> warriorIds,
-            List<RemoteWarriorConfig> remoteWarriorsData, GeneralWarriorsConfig warriorses)
+            List<RemoteWarriorConfig> remoteWarriorsData, GeneralWarriorsConfig warriors)
         {
             return warriorIds
-                .Select(id => warriorses.WarriorConfigs.FirstOrDefault(w => w.Id == id))
+                .Select(id => warriors.WarriorConfigs.FirstOrDefault(w => w.Id == id))
                 .Where(warrior => warrior != null)
                 .Select(relevantWarrior => UpdateWarriorConfigWithRemoteData(relevantWarrior, remoteWarriorsData))
                 .ToList();

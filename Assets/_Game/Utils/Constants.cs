@@ -68,13 +68,22 @@ namespace _Game.Utils
             public const float MONEY_EPSILON = 0.01f;
             public const float UNIT_ROTATION_EPSILON = 0.05f;
         }
-
-        public sealed class TutorialStepThresholds
+        
+        public class TutorialSteps
         {
-            public const int UNIT_BUILDER_BUTTON = 0;
-            public const int UPGRADES_SCREEN = 1;
-            public const int FOOD_UPGRADE_ITEM = 2;
-            public const int EVOLUTION_SCREEN = 3;
+            public const int START_TUTORIAL_KEY = -1;
+            
+            public const int RACE_SELECTION = 1;
+            public const int BUILDER = 2;
+            public const int UPGRADE_SCREEN_BTN = 3;
+            public const int FOOD_UPGRADE = 4;
+            public const int EVOLVE = 5;
+            public const int DAILY = 6;
+            public const int CARDS_SCREEN_BTN = 7;
+            public const int CARDS_PURCHASE = 8;
+            
+            public const int LAST_STEP = 8;
+            public const int COMPLETE_TUTORIAL_KEY = -2;
         }
 
         public static class FeatureCompletedBattleThresholds
@@ -86,13 +95,17 @@ namespace _Game.Utils
             public const int EVOLUTION_SCREEN = 3;
             public const int X2 = 3;
             public const int SHOP = 6;
+            public const int DAILY = 5;
         }
 
         public sealed class ConfigKeys
         {
-            public static string WARRIORS = "Warriors";
-            public static string AGES = "Ages";
-            public static string BATTLES = "Battles";
+            public const string WARRIORS = "Warriors";
+            public const string AGES = "Ages";
+            public const string BATTLES = "Battles";
+            
+            //Summoning
+            public const string SUMMONING_CONFIGS = "SummoningConfigs";
 
             //Ads
             public const string ADS_CONFIG = "AdsConfig";

@@ -2,7 +2,7 @@
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
 
-namespace _Game.Core.DataLoaders.UnitDataLoaders
+namespace _Game.Core._DataLoaders.UnitDataLoaders
 {
     public class UnitLoadOptions
     {

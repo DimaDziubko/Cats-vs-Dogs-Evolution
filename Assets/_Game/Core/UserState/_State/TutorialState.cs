@@ -1,24 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace _Game.Core.UserState._State
 {
     public interface ITutorialStateReadonly
     {
-        int StepsCompleted { get; }
+        List<int> CompletedSteps { get; }
         event Action<int> StepsCompletedChanged;
     }
 
     public class TutorialState : ITutorialStateReadonly 
     {
-        public int StepsCompleted;
-
+        public List<int> CompletedSteps;
         public event Action<int> StepsCompletedChanged;
-
-        int ITutorialStateReadonly.StepsCompleted => StepsCompleted;
-
-        public void ChangeCompletedStep(int step)
+        List<int> ITutorialStateReadonly.CompletedSteps => CompletedSteps;
+        
+        public void AddCompletedStep(int step)
         {
-            StepsCompleted = step;    
+            if(CompletedSteps.Contains(step)) return;
+            CompletedSteps.Add(step);
             StepsCompletedChanged?.Invoke(step);
         }
     }

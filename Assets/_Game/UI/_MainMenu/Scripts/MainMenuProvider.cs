@@ -2,15 +2,14 @@
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.UI._MainMenu.Scripts;
 using Assets._Game.UI._StartBattleWindow.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;

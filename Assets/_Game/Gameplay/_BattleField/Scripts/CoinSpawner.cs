@@ -1,10 +1,11 @@
-﻿using _Game.Gameplay._CoinCounter.Scripts;
+﻿using _Game.Core.Services.Audio;
+using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.Gameplay._Coins.Factory;
-using Assets._Game.Core.Services.Audio;
+using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Coins.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Gameplay._BattleField.Scripts
+namespace _Game.Gameplay._BattleField.Scripts
 {
     public class CoinSpawner : ICoinSpawner
     {

@@ -1,7 +1,14 @@
 ﻿using System;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
+    public interface IFoodBoostStateReadonly
+    {
+        event Action FoodBoostChanged;
+        int DailyFoodBoostCount { get; }
+        DateTime LastDailyFoodBoost { get;}
+    }
+
     public class FoodBoostState : IFoodBoostStateReadonly
     {
         public int DailyFoodBoostCount;
@@ -19,12 +26,5 @@ namespace _Game.Core.UserState
             
             FoodBoostChanged?.Invoke();
         }
-    }
-
-    public interface IFoodBoostStateReadonly
-    {
-        event Action FoodBoostChanged;
-        int DailyFoodBoostCount { get; }
-        DateTime LastDailyFoodBoost { get;}
     }
 }

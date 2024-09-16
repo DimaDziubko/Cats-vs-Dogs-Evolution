@@ -129,6 +129,7 @@ MonoBehaviour:
   _shopButton: {fileID: 8131754043181798695}
   _highlightedBtnScale: 1.65
   _upgradesTutorialStep: {fileID: 562974313384637120}
+  _cardsTutorialStep: {fileID: 5923939532086468469}
   _buttons:
   - {fileID: 8280471575231645109}
   - {fileID: 1814862364867945180}
@@ -321,14 +322,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6518251969977860387, guid: 95e5ddbd9e6f6bf43b0385c621ccce8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5923939532086468469}
   m_SourcePrefab: {fileID: 100100000, guid: 95e5ddbd9e6f6bf43b0385c621ccce8a, type: 3}
 --- !u!114 &2955102261014301360 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3552066115039020151, guid: 95e5ddbd9e6f6bf43b0385c621ccce8a, type: 3}
   m_PrefabInstance: {fileID: 1750168071704432327}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4772869161861320676}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44620b10ffd476d40ac37ae58aa571af, type: 3}
@@ -339,12 +343,37 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3554592783193809247, guid: 95e5ddbd9e6f6bf43b0385c621ccce8a, type: 3}
   m_PrefabInstance: {fileID: 1750168071704432327}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4772869161861320676 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6518251969977860387, guid: 95e5ddbd9e6f6bf43b0385c621ccce8a, type: 3}
+  m_PrefabInstance: {fileID: 1750168071704432327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5923939532086468469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772869161861320676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c01f693c8f46a3a080227ec3d92609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _step: 7
+  _affectedSteps: 
+  _requiredPointerSize: {x: 170, y: 170}
+  _offset: {x: 0, y: -150}
+  _rootCanvasTransform: {fileID: 5906523230924860663}
+  _tutorialObjectRectTransform: {fileID: 2962713086970261400}
+  _isUnderneath: 0
+  _needAppearanceAnimation: 1
 --- !u!114 &5218705878214954739 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5775103246436827188, guid: 95e5ddbd9e6f6bf43b0385c621ccce8a, type: 3}
   m_PrefabInstance: {fileID: 1750168071704432327}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4772869161861320676}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -643,13 +672,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c01f693c8f46a3a080227ec3d92609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _step: 2
+  _step: 3
+  _affectedSteps: 
   _requiredPointerSize: {x: 170, y: 170}
   _offset: {x: 0, y: -150}
   _rootCanvasTransform: {fileID: 5906523230924860663}
   _tutorialObjectRectTransform: {fileID: 1814862364867945180}
   _isUnderneath: 0
-  _needAppearanceAnimation: 0
+  _needAppearanceAnimation: 1
 --- !u!114 &8673533996427133879 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5775103246436827188, guid: acfadc5757e756d4d831925edfc58468, type: 3}

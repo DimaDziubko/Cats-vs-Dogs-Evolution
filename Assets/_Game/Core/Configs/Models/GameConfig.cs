@@ -14,7 +14,7 @@ namespace _Game.Core.Configs.Models
         public FreeGemsPackDayConfig FreeGemsPackDayConfig;
         public AdsConfig AdsConfig;
         public GeneralDailyTaskConfig GeneralDailyTaskConfig;
-        public Dictionary<int, CardsSummoning> SummoningConfig;
+        public SummoningData SummoningData;
         public Dictionary<CardType, List<CardConfig>> CardConfigsByType;
         public Dictionary<int, CardConfig> CardConfigsById;
         public CardsPricingConfig CardPricingConfig;

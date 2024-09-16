@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
@@ -42,6 +43,7 @@ namespace _Game.UI._Shop.Scripts
         private readonly IFreeGemsPackService _freeGemsPackService;
         private readonly IUpgradesAvailabilityChecker _checker;
         private readonly IMyLogger _logger;
+        private readonly IFeatureUnlockSystem _featureUnlockSystem;
 
         private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
         private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
@@ -57,7 +59,8 @@ namespace _Game.UI._Shop.Scripts
             IGameInitializer gameInitializer,
             IFreeGemsPackService freeGemsPackService,
             IUpgradesAvailabilityChecker checker,
-            IMyLogger logger)
+            IMyLogger logger,
+            IFeatureUnlockSystem featureUnlockSystem)
         {
             _generalDataPool = generalDataPool;
             _iapService = iapService;
@@ -68,6 +71,7 @@ namespace _Game.UI._Shop.Scripts
             _logger = logger;
             gameInitializer.OnMainInitialization += Init;
             _gameInitializer = gameInitializer;
+            _featureUnlockSystem = featureUnlockSystem;
         }
 
         private void Init()
@@ -133,6 +137,9 @@ namespace _Game.UI._Shop.Scripts
         private void UpdateIGPs(List<ShopItemModel> models)
         {
             List<ProductDescription> products = _igpService.Products();
+            
+            if(!_featureUnlockSystem.IsFeatureUnlocked(Feature.GemsShopping)) return;
+            
             foreach (var product in products)
             {
                 ShopItemModel model = new ShopItemModel

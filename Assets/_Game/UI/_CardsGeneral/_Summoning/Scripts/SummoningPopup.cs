@@ -1,7 +1,7 @@
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.Utils._Static;
-using Assets._Game.Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;

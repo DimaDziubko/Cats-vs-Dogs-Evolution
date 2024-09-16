@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._Logger;
+using _Game.Core.Services.Audio;
 using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
-using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 
 namespace _Game.UI._CardsGeneral._Cards.Scripts

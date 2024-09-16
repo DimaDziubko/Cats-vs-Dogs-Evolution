@@ -1,16 +1,14 @@
-﻿using _Game.Core._DataLoaders.AgeDataProvider;
+﻿using _Game.Core._DataLoaders.AgeDataLoader;
+using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._DataLoaders.Ambience;
 using _Game.Core._DataLoaders.BaseDataProvider;
-using _Game.Core._DataLoaders.BattleDataProvider;
+using _Game.Core._DataLoaders.BattleDataLoader;
 using _Game.Core._DataLoaders.EnvironmentDataProvider;
 using _Game.Core._DataLoaders.Facade;
 using _Game.Core._DataLoaders.ShopDataProvider;
 using _Game.Core._DataLoaders.Timeline;
 using _Game.Core._DataLoaders.UnitDataLoaders;
-using _Game.Core._DataLoaders.UnitUpgradeDataProvider;
 using _Game.Core._DataLoaders.WeaponDataProviders;
-using _Game.Core.DataLoaders.UnitBuilderDataProvider;
-using _Game.Core.DataLoaders.UnitDataLoaders;
 using _Game.Core.DataLoaders.WeaponDataProviders;
 using Zenject;
 
@@ -21,16 +19,15 @@ namespace _Game.Core.Installers.Core
         public override void InstallBindings()
         {
             BindUnitDataLoader();
+            
             BindWeaponDataLoader();
             BaseDataLoader();
-            
+
             BindUniversalUnitDataLoader();
-            BindUnitBuilderDataProvider();
             BindAgeWeaponDataProvider();
             BindEnvironmentDataLoader();
             BindAmbienceDataProvider();
-            BindUnitUpgradeDataLoader();
-            
+
             BindTimelineDataLoader();
             BindShopDataLoader();
             
@@ -40,15 +37,15 @@ namespace _Game.Core.Installers.Core
             BindBattleDataLoader();
         }
 
+        private void BindUnitDataLoader() =>
+            Container.BindInterfacesAndSelfTo<UnitDataLoader>()
+                .AsSingle();
+
         private void BindTimelineDataLoader() =>
             Container.BindInterfacesAndSelfTo<TimelineDataLoader>()
                 .AsSingle();
 
-
-        private void BindUnitDataLoader() => 
-            Container.BindInterfacesAndSelfTo<UnitDataLoader>()
-                .AsSingle();
-
+        
         private void BindWeaponDataLoader() => 
             Container.BindInterfacesAndSelfTo<WeaponDataLoader>()
                 .AsSingle();
@@ -60,11 +57,7 @@ namespace _Game.Core.Installers.Core
         private void BindUniversalUnitDataLoader() =>
             Container.BindInterfacesAndSelfTo<UniversalUnitDataLoader>()
                 .AsSingle();
-
-        private void BindUnitBuilderDataProvider() =>
-            Container.BindInterfacesAndSelfTo<UnitBuilderDataLoader>()
-                .AsSingle();
-
+        
         private void BindAgeWeaponDataProvider() =>
             Container.BindInterfacesAndSelfTo<UniversalWeaponDataLoader>()
                 .AsSingle();
@@ -76,10 +69,7 @@ namespace _Game.Core.Installers.Core
         private void BindAmbienceDataProvider() =>
             Container.BindInterfacesAndSelfTo<AmbienceDataLoader>()
                 .AsSingle();
-
-        private void BindUnitUpgradeDataLoader() =>
-            Container.BindInterfacesAndSelfTo<UnitUpgradeDataLoader>()
-                .AsSingle();
+        
 
         private void BindDataLoaderFacade() =>
             Container.BindInterfacesAndSelfTo<DataLoaderFacade>()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._DataPresenters.WeaponDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
 using _Game.Core.Services.Audio;
@@ -21,7 +22,7 @@ namespace _Game.Gameplay._Weapon.Factory
     [CreateAssetMenu(fileName = "Projectile Factory", menuName = "Factories/Projectile")]
     public class ProjectileFactory : GameObjectFactory, IProjectileFactory
     {
-        private IWeaponDataPresenter _weaponDataPresenter;
+        private IWeaponDataProvider _weaponDataProvider;
         private ISoundService _soundService;
 
 
@@ -30,9 +31,9 @@ namespace _Game.Gameplay._Weapon.Factory
 
         public void Initialize(
             ISoundService soundService,
-            IWeaponDataPresenter weaponDataPresenter)
+            IWeaponDataProvider weaponDataProvider)
         {
-            _weaponDataPresenter = weaponDataPresenter;
+            _weaponDataProvider = weaponDataProvider;
             _soundService = soundService;
         }
         
@@ -100,10 +101,10 @@ namespace _Game.Gameplay._Weapon.Factory
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.AGE);
+                    weaponData = _weaponDataProvider.GetWeaponData(weaponId, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
+                    weaponData = _weaponDataProvider.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using  System;
+using _Game.UI._MainMenu.Scripts;
 using Assets._Game.Core.Loading;
-using Assets._Game.UI._MainMenu.Scripts;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.Core.Loading

@@ -10,10 +10,9 @@ using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI._Currencies;
+using _Game.Utils;
 using Assets._Game.Core.UserState;
-using Assets._Game.Gameplay._Units.Scripts;
 using DevToDev.Analytics;
-using Unity.VisualScripting;
 using Product = UnityEngine.Purchasing.Product;
 
 namespace _Game.Core.Services.Analytics
@@ -62,12 +61,11 @@ namespace _Game.Core.Services.Analytics
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
             _iapService.Purchased += TrackPurchase;
             _igpService.Purchased += TrackInGamePurchase;
-                
-            int zeroTutorialStepNumber = -1;
-            if (TutorialState.StepsCompleted == zeroTutorialStepNumber)
+            
+            if (!TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.START_TUTORIAL_KEY))
             {
-                int tutorialStartedKey = -1;
-                DTDAnalytics.Tutorial(tutorialStartedKey);
+                DTDAnalytics.Tutorial(Constants.TutorialSteps.START_TUTORIAL_KEY);
+                _userContainer.TutorialStateHandler.CompleteTutorialStep(Constants.TutorialSteps.START_TUTORIAL_KEY);
             }
         }
 
@@ -147,15 +145,14 @@ namespace _Game.Core.Services.Analytics
         
         private void OnStepCompleted(int step)
         {
-            var trueStepNumber = step + 1;
-            int lastStep = 5;
-            if (trueStepNumber == lastStep)
+            int lastStep = Constants.TutorialSteps.LAST_STEP;
+            if (step == lastStep)
             {
-                int tutorialCompleteKey = -2;
-                DTDAnalytics.Tutorial( tutorialCompleteKey);
+                DTDAnalytics.Tutorial(Constants.TutorialSteps.COMPLETE_TUTORIAL_KEY);
+                _userContainer.TutorialStateHandler.CompleteTutorialStep(Constants.TutorialSteps.COMPLETE_TUTORIAL_KEY);
                 return;
             }
-            DTDAnalytics.Tutorial(trueStepNumber);
+            DTDAnalytics.Tutorial(step);
         }
 
         private void TrackRewardedVideoAdImpression(AdImpressionDto dto) => 
@@ -244,13 +241,13 @@ namespace _Game.Core.Services.Analytics
         
         private void OnCompletedBattleChanged()
         {
-            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 1)
+            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER))
             {
                 DTDAnalytics.CustomEvent("first_build_success");
                 _logger.Log("first_build_success");
             }
             
-            else if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 0)
+            else if (BattleStatistics.BattlesCompleted == 1 && !TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER))
             {
                 DTDAnalytics.CustomEvent("first_build_failed");
                 _logger.Log("first_build_failed");

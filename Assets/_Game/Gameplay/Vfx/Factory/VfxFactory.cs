@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._DataPresenters.WeaponDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
 using _Game.Gameplay._Weapon.Scripts;
@@ -29,7 +30,7 @@ namespace _Game.Gameplay.Vfx.Factory
         [SerializeField] private UnitExplosion _unitExplosionPrefab;
         [SerializeField] private BaseSmoke _baseSmokePrefab;
         
-        private IWeaponDataPresenter _weaponDataPresenter;
+        private IWeaponDataProvider _weaponDataProvider;
 
         private readonly Dictionary<VfxType, Queue<VfxEntity>> _sharedPools = 
             new Dictionary<VfxType, Queue<VfxEntity>>();
@@ -45,8 +46,8 @@ namespace _Game.Gameplay.Vfx.Factory
         public UnitExplosion GetUnitExplosion() => (UnitExplosion)Get(VfxType.UnitExplosion, _unitExplosionPrefab);
         public BaseSmoke GetBaseSmoke() => (BaseSmoke)Get(VfxType.BaseExplosion, _baseSmokePrefab);
         
-        public void Initialize(IWeaponDataPresenter weaponDataPresenter) => 
-            _weaponDataPresenter = weaponDataPresenter;
+        public void Initialize(IWeaponDataProvider weaponDataProvider) => 
+            _weaponDataProvider = weaponDataProvider;
 
         private WeaponData GetWeaponData(Faction faction, int weaponId)
         {
@@ -54,10 +55,10 @@ namespace _Game.Gameplay.Vfx.Factory
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.AGE);
+                    weaponData = _weaponDataProvider.GetWeaponData(weaponId, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
+                    weaponData = _weaponDataProvider.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);

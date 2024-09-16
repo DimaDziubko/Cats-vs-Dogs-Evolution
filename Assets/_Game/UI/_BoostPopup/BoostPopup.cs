@@ -1,5 +1,5 @@
-﻿using _Game.Gameplay._Boosts.Scripts;
-using Assets._Game.Core.Services.Audio;
+﻿using _Game.Core.Services.Audio;
+using _Game.Gameplay._Boosts.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;

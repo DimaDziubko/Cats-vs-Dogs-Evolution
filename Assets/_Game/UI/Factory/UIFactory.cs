@@ -1,8 +1,8 @@
 ﻿using _Game.Core.Factory;
+using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Game.UI.Factory
 {
@@ -20,7 +20,8 @@ namespace _Game.UI.Factory
         [SerializeField] private ShopItem _shopItemType1, _shopItemType2, _shopItemType3, _shopItemType4;
         [SerializeField] private Plug _shopItemPlug;
 
-        [FormerlySerializedAs("_cardView")] [SerializeField] private CardItemView cardItemView;
+        [SerializeField] private CardItemView cardItemView;
+        [SerializeField] private TutorialPointerView _tutorialPointer;
         
         public ShopItem Get(ShopItemViewType type, Transform parent)
         {
@@ -63,9 +64,9 @@ namespace _Game.UI.Factory
             return instance;
         }
 
-        public CardItemView GetCard()
+        public TutorialPointerView GetTutorialPointer(Transform parent)
         {
-            var instance = CreateGameObjectInstance(cardItemView);
+            var instance = CreateGameObjectInstance(_tutorialPointer, parent);
             if(instance != null)
                 instance.OriginFactory = this;
             return instance;
@@ -79,6 +80,9 @@ namespace _Game.UI.Factory
         
         public void Reclaim(CardItemView cardItemView) => 
             Destroy(cardItemView.gameObject);
+            
+        public void Reclaim(TutorialPointerView tutorialPointer) => 
+            Destroy(tutorialPointer.gameObject);
     }
 
     public interface IUIFactory
@@ -86,9 +90,10 @@ namespace _Game.UI.Factory
         ShopItem Get(ShopItemViewType type, Transform parent);
         Plug GetShopItemPlug(Transform parent);
         CardItemView GetCard(Transform parent);
-        CardItemView GetCard();
+        TutorialPointerView GetTutorialPointer(Transform parent);
         void Reclaim(Plug item);
         void Reclaim(ShopItem item);
         void Reclaim(CardItemView cardItemView);
+        void Reclaim(TutorialPointerView cardItemView);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets._Game.Core.Services.Audio
+namespace _Game.Core.Services.Audio
 {
     public interface IAudioService 
     {
@@ -13,6 +13,7 @@ namespace Assets._Game.Core.Services.Audio
         void PlayButtonSound();
         void PlayCoinDropSound();
         void PlayCoinCollectSound();
+        void PlayUpgradeSound();
         void Stop();
         void PlayBaseDestructionSFX();
 

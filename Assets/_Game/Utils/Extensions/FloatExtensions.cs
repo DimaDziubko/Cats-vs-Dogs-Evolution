@@ -162,17 +162,26 @@ namespace _Game.Utils.Extensions
         {
             if (decimalPlaces < 0)
                 throw new ArgumentException("Decimal places must be non-negative", nameof(decimalPlaces));
-
+            
             if (number < 100)
             {
+                if (decimalPlaces == 0 || Math.Abs(number % 1) < 1e-10)
+                {
+                    return number.ToString("0", CultureInfo.InvariantCulture);
+                }
                 return number.ToString("N" + decimalPlaces, CultureInfo.InvariantCulture);
             }
 
-            foreach (var (Threshold, Suffix) in CurrencyThresholds)
+            foreach (var (threshold, suffix) in CurrencyThresholds)
             {
-                if (number >= Threshold)
+                if (number >= threshold)
                 {
-                    return (number / Threshold).ToString("N" + decimalPlaces, CultureInfo.InvariantCulture) + Suffix;
+                    var formattedNumber = number / threshold;
+                    if (decimalPlaces == 0 || Math.Abs(formattedNumber % 1) < 1e-10)
+                    {
+                        return formattedNumber.ToString("0", CultureInfo.InvariantCulture) + suffix;
+                    }
+                    return formattedNumber.ToString("N" + decimalPlaces, CultureInfo.InvariantCulture) + suffix;
                 }
             }
 

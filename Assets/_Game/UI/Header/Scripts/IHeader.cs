@@ -1,5 +1,5 @@
+using _Game.Core.Services.Camera;
 using _Game.Core.UserState._State;
-using Assets._Game.Core.Services.Camera;
 using UnityEngine;
 
 namespace _Game.UI.Header.Scripts

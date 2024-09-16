@@ -1,8 +1,8 @@
 ﻿using _Game.Core.AssetManagement;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
+using _Game.Utils.Popups;
 using Assets._Game.Utils.Disposable;
-using Assets._Game.Utils.Popups;
 using Cysharp.Threading.Tasks;
 
 namespace _Game.UI._AlertPopup

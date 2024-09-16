@@ -1,10 +1,9 @@
 ﻿using System;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Gameplay._Units.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -120,6 +119,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             Unsubscribe();
             _transactionButton.Cleanup();
+            _statsInfoPanel.Cleanup();
         }
 
         private void PlayButtonSound() => 

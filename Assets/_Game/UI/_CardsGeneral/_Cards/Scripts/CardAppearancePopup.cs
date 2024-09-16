@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets._Game.Core.Services.Audio;
+using _Game.Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,7 +82,8 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             view.PlayAppearanceAnimation(
                 _audioService, 
                 cardModel.Config.ColorIdentifier,
-                needIlluminationAnimation);
+                needIlluminationAnimation,
+                cardModel.IsNew);
             if (needIlluminationAnimation)
             {
                 await UniTask.Delay(_illuminationAnimationDelay);

@@ -1,9 +1,9 @@
 ﻿using _Game.Audio.Scripts;
-using Assets._Game.Core.Prefabs;
+using _Game.Core.Prefabs;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Assets._Game.Core.Services.Audio
+namespace _Game.Core.Services.Audio
 {
     public class AudioService : IAudioService
     {
@@ -116,6 +116,15 @@ namespace Assets._Game.Core.Services.Audio
             if (dropSound != null)
             {
                 PlayOneShot(dropSound);
+            }
+        }
+        
+        public void PlayUpgradeSound()
+        {
+            var upgradeSound = _soundsHolder.UpgradeSound;
+            if (upgradeSound != null)
+            {
+                PlayOneShot(upgradeSound);
             }
         }
 
