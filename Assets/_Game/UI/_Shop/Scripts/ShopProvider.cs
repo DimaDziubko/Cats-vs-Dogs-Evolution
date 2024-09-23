@@ -20,6 +20,8 @@ namespace _Game.UI._Shop.Scripts
         private readonly IUpgradesAvailabilityChecker _checker;
         private readonly IMyLogger _logger;
 
+        private Disposable<Shop> _screen;
+        
         public ShopProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
@@ -39,8 +41,9 @@ namespace _Game.UI._Shop.Scripts
         }
         public async UniTask<Disposable<Shop>> Load()
         {
-            var popup = await LoadDisposable<Shop>(AssetsConstants.SHOP);
-            popup.Value.Construct(
+            if (_screen != null) return _screen;
+            _screen = await LoadDisposable<Shop>(AssetsConstants.SHOP);
+            _screen.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
                 _header,
@@ -48,7 +51,19 @@ namespace _Game.UI._Shop.Scripts
                 _shopPresenter,
                 _checker,
                 _logger);
-            return popup;
+            return _screen;
+        }
+        
+        public override void Unload()
+        {
+            if (_screen != null)
+            {
+                _screen.Value.Hide();
+                _screen.Dispose();
+                _screen = null;
+            }
+
+            base.Unload();
         }
     }
 }

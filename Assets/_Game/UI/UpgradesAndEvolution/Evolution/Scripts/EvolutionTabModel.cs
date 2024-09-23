@@ -1,7 +1,6 @@
-﻿using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts
+namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
     public class EvolutionTabModel
     {

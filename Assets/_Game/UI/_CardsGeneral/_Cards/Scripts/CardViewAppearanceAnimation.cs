@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services.Audio;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,8 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
 {
     public class CardViewAppearanceAnimation : MonoBehaviour
     {
-        [SerializeField] private bool _useFlashAnimation = false; 
-        
+        [SerializeField] private bool _useFlashAnimation = false;
+
         [SerializeField] private RectTransform _cardBgTransform;
         [SerializeField] private float _newCardScale;
         [SerializeField] private float _scaleAnimationDuration;
@@ -17,21 +18,24 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         [SerializeField] private RectTransform _rippleTransform;
         [SerializeField] private float _rippleAnimationDuration;
         [SerializeField] private Vector2 _rippleScale = new Vector2(1.5f, 1.4f);
-        
+
         [SerializeField] private ImageFlashEffect _appearanceImageFlash;
         [SerializeField] private ImageMaskAnimation _maskAnimation;
-        
+
         [SerializeField] private ImageAlphaFlashEffect _rippleImageAlphaFlash;
 
         [SerializeField] private ScaleAnimation _newNotifierScaleAnimation;
-        
+
         [SerializeField] private AudioClip _cardAppearanceSfx;
         [SerializeField] private AudioClip _cardIlluminationSfx;
-        
+
         private IAudioService _audioService;
 
         private bool _isNew;
-        
+
+        private Tween _bgScaleTween;
+        private Tween _rippleScaleTween;
+
         public void Init(IAudioService audioService, Color flashColor, bool isNew)
         {
             _audioService = audioService;
@@ -42,59 +46,75 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _isNew = isNew;
         }
 
-        public void Play(
-            bool needIlluminationAnimation)
+        public async UniTask PlayAsync(bool needIlluminationAnimation)
         {
             if (!needIlluminationAnimation)
             {
-                PlaySimple();
-                return;
+                await PlaySimpleAsync();
             }
-
-            PlayWithRipple();
-        }
-
-        private void PlaySimple()
-        {
-            if(_useFlashAnimation)
-                _appearanceImageFlash.TriggerFlash();
             else
             {
-                _maskAnimation.TriggerMask();
+                await PlayWithRippleAsync();
             }
-            
+        }
+
+        private async UniTask PlaySimpleAsync()
+        {
+            if (_useFlashAnimation)
+                await _appearanceImageFlash.TriggerFlashAsync();
+            else
+                await _maskAnimation.TriggerMaskAsync();
+
             _audioService.PlayOneShot(_cardAppearanceSfx);
         }
 
-        private void PlayWithRipple()
+        private async UniTask PlayWithRippleAsync()
         {
-            if(_useFlashAnimation)
-                _appearanceImageFlash.TriggerFlash(OnAppearanceFinished);
+            if (_useFlashAnimation)
+                await _appearanceImageFlash.TriggerFlashAsync();
             else
-            {
-                _maskAnimation.TriggerMask(OnAppearanceFinished);
-            }
+                await _maskAnimation.TriggerMaskAsync();
+
+            await OnAppearanceFinishedAsync();
         }
 
-        private void OnAppearanceFinished()
+        private async UniTask OnAppearanceFinishedAsync()
         {
-            PlayRippleAnimation();
-            if(_isNew)
-                _newNotifierScaleAnimation.Play();
-            _audioService.PlayOneShot(_cardIlluminationSfx);
-        }
-
-        private void PlayRippleAnimation()
-        {
-            _cardBgTransform.DOScale(_newCardScale, _scaleAnimationDuration / 2)
-                .OnComplete(() =>
-                    _cardBgTransform.DOScale(1, _scaleAnimationDuration / 2));
+            _newNotifierScaleAnimation.Cleanup();
             
+            _audioService.PlayOneShot(_cardIlluminationSfx);
+            
+            var rippleTask = PlayRippleAnimationAsync();
+            UniTask notifierTask = UniTask.CompletedTask;
+
+            if (_isNew)
+            {
+                notifierTask = _newNotifierScaleAnimation.PlayAsync();
+            }
+            
+            await UniTask.WhenAll(rippleTask, notifierTask);
+        }
+
+        private async UniTask PlayRippleAnimationAsync()
+        {
+            Cleanup();
+            
+            _bgScaleTween = _cardBgTransform.DOScale(_newCardScale, _scaleAnimationDuration / 2)
+                .OnComplete(() => _bgScaleTween = _cardBgTransform.DOScale(1, _scaleAnimationDuration / 2));
+
             _rippleImage.enabled = true;
             _rippleImageAlphaFlash.TriggerFlash();
-            _rippleTransform.DOScale(_rippleScale, _rippleAnimationDuration);
             
-            DOVirtual.DelayedCall(_rippleAnimationDuration, () => _rippleImage.enabled = false);
+            _rippleScaleTween = _rippleTransform.DOScale(_rippleScale, _rippleAnimationDuration)
+                .OnComplete(() => _rippleImage.enabled = false);
+
+            await UniTask.Delay((int) (_rippleAnimationDuration * 1000));
+        }
+
+        public void Cleanup()
+        {
+            if (_bgScaleTween?.IsActive() == true) _bgScaleTween.Kill();
+            if (_rippleScaleTween?.IsActive() == true) _rippleScaleTween.Kill();
         }
     }
 }

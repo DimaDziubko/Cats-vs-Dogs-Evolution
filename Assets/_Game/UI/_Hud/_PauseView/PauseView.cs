@@ -71,10 +71,13 @@ namespace _Game.UI._Hud._PauseView
             var isConfirmed = await popup.Value.AwaitForDecision("End battle?");
             
             _pauseToggle.UpdateToggleStateManually(false);
-            if (isConfirmed) _hud.Quit();
-            _battleManager.SetPaused(false);
-            popup.Value.Cleanup();
-            popup.Dispose();
+            
+            if (isConfirmed)
+            {
+                _hud.Quit();
+                _battleManager.SetPaused(false);
+                _alertPopupProvider.Unload();
+            }
         }
         
     }

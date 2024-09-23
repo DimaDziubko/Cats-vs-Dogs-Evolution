@@ -12,8 +12,7 @@ namespace _Game.UI._CardsGeneral.Scripts
         private readonly GeneralCardsScreen _generalCardsScreen;
         private readonly ICardsScreenProvider _provider;
         private readonly IUINotifier _uiNotifier;
-
-        private Disposable<CardsScreen> _cardsScreen;
+        
         private readonly ToggleButton _button;
 
         public CardsState(
@@ -33,35 +32,23 @@ namespace _Game.UI._CardsGeneral.Scripts
         {
             _generalCardsScreen.SetActiveButton(_button);
             _button.HighlightBtn();
-            _cardsScreen = await _provider.Load();
+            
+            var cardsScreen = await _provider.Load();
 
-            if (_cardsScreen?.Value != null)
-            {
-                _cardsScreen.Value.Show();
-                _uiNotifier.OnScreenOpened(GameScreen.Cards);
-            }
+            cardsScreen.Value.Show();
+            _uiNotifier.OnScreenOpened(GameScreen.Cards);
         }
 
         public void Exit()
         {
-            if (_cardsScreen?.Value != null)
-            {
-                _cardsScreen.Value.Hide();
-                _cardsScreen.Dispose();
-                _cardsScreen = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
             _uiNotifier.OnScreenClosed(GameScreen.Cards);
         }
 
         public void Cleanup()
         {
-            if (_cardsScreen?.Value != null)
-            {
-                _cardsScreen.Value.Hide();
-                _cardsScreen.Dispose();
-                _cardsScreen = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
         }
     }

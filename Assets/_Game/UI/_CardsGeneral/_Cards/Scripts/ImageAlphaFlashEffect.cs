@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,6 +48,26 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         }
 
         
+        public async UniTask TriggerFlashAsync()
+        {
+            await UniTask.DelayFrame(1);  
+
+            SetFlashColor();
+
+            float elapsedTime = 0f;
+            while (elapsedTime < _flashTime)
+            {
+                elapsedTime += Time.deltaTime;
+                float currentFlashAmount = Mathf.Lerp(1f, _flashSpeedCurve.Evaluate(elapsedTime), (elapsedTime / _flashTime));
+                float alpha = currentFlashAmount / _alphaFlashRatio;
+                
+                SetFlashAmount(currentFlashAmount);
+                SetBaseColorAlpha(alpha);
+
+                await UniTask.Yield();
+            }
+        }
+        
         public void TriggerFlash(Action callback = null)
         {
             if (_imageFlashCoroutine != null)
@@ -77,7 +98,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             
             callback?.Invoke();
         }
-
+        
         private void SetBaseColorAlpha(float alpha)
         {
             foreach (var material in _materials)

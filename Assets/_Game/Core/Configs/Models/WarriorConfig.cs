@@ -18,8 +18,6 @@ namespace _Game.Core.Configs.Models
         public string Name;
         public AssetReference CatIconAtlas;
         public AssetReference DogIconAtlas;
-        public string CatIconKey;
-        public string DogIconKey;
         public string CatIconName;
         public string DogIconName;
         public string DogKey;

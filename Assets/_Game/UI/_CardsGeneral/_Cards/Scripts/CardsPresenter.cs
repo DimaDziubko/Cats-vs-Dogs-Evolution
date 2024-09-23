@@ -242,8 +242,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             var isConfirmed = await popup.Value.ShowDetailsAndAwaitForExit(id);
             if (isConfirmed)
             {
-                popup.Value.Cleanup();
-                popup.Dispose();
+                provider.Unload();
             }
         }
 

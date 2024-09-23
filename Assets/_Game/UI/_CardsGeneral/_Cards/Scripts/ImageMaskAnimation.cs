@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +41,20 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _imageFlashCoroutine = StartCoroutine(FadeAnimation(callback));
         }
 
+        public async UniTask TriggerMaskAsync()
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < _hideTime)
+            {
+                elapsedTime += Time.deltaTime;
+                var currentFadeAmount = Mathf.Lerp(1f, _flashSpeedCurve.Evaluate(elapsedTime), (elapsedTime / _hideTime));
+                SetBaseColorAlpha(currentFadeAmount);
+                await UniTask.Yield();
+            }
+
+            ImagesSetActive(false);
+        }
+        
         private IEnumerator FadeAnimation(Action callback = null)
         {
             float elapsedTime = 0f;

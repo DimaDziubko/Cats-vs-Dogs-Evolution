@@ -1,4 +1,4 @@
-﻿namespace Assets._Game.Gameplay._Units.Scripts
+﻿namespace _Game.Gameplay._Units.Scripts
 {
     public enum AnimatorState
     {

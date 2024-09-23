@@ -11,6 +11,7 @@ using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._MainMenu.State;
 using _Game.UI._Shop.Scripts;
+using _Game.UI._StartBattleScreen.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Global;
 using _Game.UI.UpgradesAndEvolution.Scripts;

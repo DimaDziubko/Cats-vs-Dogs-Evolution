@@ -13,7 +13,6 @@ using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.UserState;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
 namespace _Game.Core.DataPresenters.TimelineTravel
 {

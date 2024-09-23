@@ -149,8 +149,7 @@ namespace _Game.Core._DataPresenters.UnitUpgradePresenter
             bool isConfirmed = await popup.Value.ShowStatsAndAwaitForExit(type);
             if (isConfirmed)
             {
-                popup.Value.Cleanup();
-                popup.Dispose();
+                _statsPopupProvider.Unload();
             }
         }
 

@@ -7,5 +7,6 @@ namespace _Game.UI._Shop._MiniShop.Scripts
     {
         bool IsUnlocked { get; }
         UniTask<Disposable<MiniShop>> Load();
+        void Unload();
     }
 }

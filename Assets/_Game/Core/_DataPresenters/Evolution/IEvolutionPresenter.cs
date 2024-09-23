@@ -1,7 +1,7 @@
 ﻿using System;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
+using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
-namespace _Game.Core.DataPresenters.Evolution
+namespace _Game.Core._DataPresenters.Evolution
 {
     public interface IEvolutionPresenter
     {

@@ -31,6 +31,8 @@ namespace _Game.UI._StartBattleScreen.Scripts
         private readonly IAgeNavigator _ageNavigator;
         private readonly ITimelineConfigRepository _timelineConfigRepository;
 
+        private Disposable<StartBattleScreen> _screen;
+        
         public StartBattleScreenProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
@@ -58,10 +60,12 @@ namespace _Game.UI._StartBattleScreen.Scripts
         }
         public async UniTask<Disposable<StartBattleScreen>> Load()
         {
-            var window = await
+            if (_screen != null) return _screen;
+            
+            _screen = await
                 LoadDisposable<StartBattleScreen>(AssetsConstants.START_BATTLE_WINDOW);
             
-            window.Value.Construct(
+            _screen.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
                 _header,
@@ -73,7 +77,19 @@ namespace _Game.UI._StartBattleScreen.Scripts
                 _timelineNavigator,
                 _ageNavigator,
                 _timelineConfigRepository);
-            return window;
+            return _screen;
+        }
+        
+        public override void Unload()
+        {
+            if (_screen != null)
+            {
+                _screen.Value.Hide();
+                _screen.Dispose();
+                _screen = null;
+            }
+
+            base.Unload();
         }
     }
 }

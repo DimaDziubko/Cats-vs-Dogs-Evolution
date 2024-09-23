@@ -1,4 +1,5 @@
 ﻿using _Game.Core._Logger;
+using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Configs.Repositories._Cards;
 using _Game.Core.Configs.Repositories.Age;
@@ -23,6 +24,7 @@ namespace _Game.Core.Configs.Repositories
         public IEconomyConfigRepository EconomyConfigRepository { get; }
         public IDailyTaskConfigRepository DailyTaskConfigRepository { get; }
         public IShopConfigRepository ShopConfigRepository { get; }
+        public IDifficultyConfigRepository DifficultyConfigRepository { get; }
 
         public ConfigRepositoryFacade(
             IUserContainer userContainer,
@@ -37,6 +39,7 @@ namespace _Game.Core.Configs.Repositories
             EconomyConfigRepository = new EconomyConfigRepository(userContainer, AgeConfigRepository);
             DailyTaskConfigRepository = new DailyTaskConfigRepository(userContainer);
             ShopConfigRepository = new ShopConfigRepository(userContainer);
+            DifficultyConfigRepository = new DifficultyConfigRepository(userContainer);
         }
         
     }

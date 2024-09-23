@@ -7,5 +7,6 @@ namespace _Game.UI._AlertPopup
     public interface IAlertPopupProvider
     {
         UniTask<Disposable<AlertPopup>> Load();
+        void Unload();
     }
 }

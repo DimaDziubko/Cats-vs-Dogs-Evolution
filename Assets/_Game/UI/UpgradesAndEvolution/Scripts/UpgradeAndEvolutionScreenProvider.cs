@@ -1,10 +1,10 @@
 using _Game.Core._DataPresenters._UpgradeItemPresenter;
+using _Game.Core._DataPresenters.Evolution;
 using _Game.Core._DataPresenters.UnitUpgradePresenter;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
-using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
@@ -37,6 +37,8 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         private readonly IMiniShopProvider _miniShopProvider;
         private readonly IBoostDataPresenter _boostDataPresenter;
 
+        private Disposable<UpgradeAndEvolutionScreen> _screen;
+        
         public UpgradeAndEvolutionScreenProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
@@ -71,9 +73,11 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
         }
         public async UniTask<Disposable<UpgradeAndEvolutionScreen>> Load()
         {
-            var popup = await LoadDisposable<UpgradeAndEvolutionScreen>(AssetsConstants.UPGRADE_AND_EVOLUTION_WINDOW);
+            if (_screen != null) return _screen;
             
-            popup.Value.Construct(
+            _screen = await LoadDisposable<UpgradeAndEvolutionScreen>(AssetsConstants.UPGRADE_AND_EVOLUTION_WINDOW);
+            
+            _screen.Value.Construct(
                 _cameraService,
                 _audioService,
                 _header,
@@ -88,7 +92,19 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
                 _upgradesChecker, 
                 _miniShopProvider,
                 _boostDataPresenter);
-            return popup;
+            return _screen;
+        }
+        
+        public override void Unload()
+        {
+            if (_screen != null)
+            {
+                _screen.Value.Hide();
+                _screen.Dispose();
+                _screen = null;
+            }
+
+            base.Unload();
         }
     }
 }

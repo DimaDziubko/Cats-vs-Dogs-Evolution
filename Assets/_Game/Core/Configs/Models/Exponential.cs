@@ -63,6 +63,8 @@ namespace _Game.Core.Configs.Models
                     return (1f, 0.3976f, 0.0097f, 0f);                
                 case 11:
                     return (1f, 0.3882f, 0.0212f, 0f);
+                case 12:
+                    return (1f, -0.3645f, 0.1823f, 0f);
                 default:
                     return (0, 0, 0, 0);
             }

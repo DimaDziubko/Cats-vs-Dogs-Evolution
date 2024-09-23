@@ -1,10 +1,12 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
+using _Game.Core.Navigation.Timeline;
 using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
@@ -24,6 +26,8 @@ namespace _Game.Core._DataProviders._BaseDataProvider
         private readonly IGameInitializer _gameInitializer;
         private readonly IAgeNavigator _ageNavigator;
         private readonly IRaceChanger _raceChanger;
+        private readonly IDifficultyConfigRepository _difficultyConfig;
+        private readonly ITimelineNavigator _timelineNavigator;
         private IUpgradeItemsReadonly UpgradeItems => _dataPool.AgeDynamicData.UpgradeItems;
         private IBoostsDataReadonly BoostData => _dataPool.AgeDynamicData.BoostsData;
 
@@ -33,7 +37,9 @@ namespace _Game.Core._DataProviders._BaseDataProvider
             IMyLogger logger,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator,
-            IRaceChanger raceChanger)
+            IRaceChanger raceChanger,
+            IConfigRepositoryFacade configRepositoryFacade,
+            ITimelineNavigator timelineNavigator)
         {
             _dataPool = dataPool;
             _navigator = navigator;
@@ -41,6 +47,8 @@ namespace _Game.Core._DataProviders._BaseDataProvider
             _ageNavigator = ageNavigator;
             _gameInitializer = gameInitializer;
             _raceChanger = raceChanger;
+            _timelineNavigator = timelineNavigator;
+            _difficultyConfig = configRepositoryFacade.DifficultyConfigRepository;
             gameInitializer.OnMainInitialization += Init;
         }
 
@@ -93,8 +101,12 @@ namespace _Game.Core._DataProviders._BaseDataProvider
                 BaseLootBoostDecorator lootBoostDecorator
                     = new BaseLootBoostDecorator(model,
                         BoostData.GetBoost(BoostSource.TotalBoosts, BoostType.BaseHealth));
-
-                return lootBoostDecorator;
+                
+                BaseHealthBoostDecorator healthBoostDecorator
+                    = new BaseHealthBoostDecorator(lootBoostDecorator,
+                        _difficultyConfig.GetDifficultyValue(_timelineNavigator.CurrentTimelineNumber));
+                
+                return healthBoostDecorator;
             }
             else
             {

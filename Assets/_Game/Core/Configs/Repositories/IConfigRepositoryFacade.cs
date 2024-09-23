@@ -21,5 +21,6 @@ namespace _Game.Core.Configs.Repositories
         IEconomyConfigRepository EconomyConfigRepository { get; }
         IDailyTaskConfigRepository DailyTaskConfigRepository { get; }
         IShopConfigRepository ShopConfigRepository { get; }
+        IDifficultyConfigRepository DifficultyConfigRepository { get;}
     }
 }

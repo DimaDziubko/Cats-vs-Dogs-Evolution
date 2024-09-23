@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
-namespace Assets._Game.UI.Common.Scripts
+namespace _Game.UI.Common.Scripts
 {
     [RequireComponent(typeof(RectTransform))]
     public class ToggleButtonStateAnimator : MonoBehaviour
@@ -8,7 +9,12 @@ namespace Assets._Game.UI.Common.Scripts
         [SerializeField] private float _targetScaleX = 1;
         [SerializeField] private float _targetScaleY = 1;
         [SerializeField] private float _highlightedIconScale = 1.3f;
-
+        [Space]
+        [SerializeField] private TMP_Text _label;
+        [SerializeField] private int _normalFontSize;
+        [SerializeField] private int _highligtedFontSize;
+        
+        
         private RectTransform _buttonTransform;
         private Vector2 _normalButtonSize;
         private Vector2 _highlightedButtonSize;
@@ -16,6 +22,8 @@ namespace Assets._Game.UI.Common.Scripts
         private RectTransform _iconTransform;
         private Vector2 _normalIconSize;
         private Vector2 _highlightedIconSize;
+        
+        
 
         public void Initialize(
             RectTransform buttonTransform,
@@ -42,6 +50,8 @@ namespace Assets._Game.UI.Common.Scripts
                 _buttonTransform.sizeDelta = _highlightedButtonSize;
             if(_iconTransform != null)
                 _iconTransform.sizeDelta = _highlightedIconSize;
+            if (_label != null)
+                _label.fontSize = _highligtedFontSize;
         }
         public void UnHighlight()
         {
@@ -49,6 +59,8 @@ namespace Assets._Game.UI.Common.Scripts
                 _buttonTransform.sizeDelta = _normalButtonSize;
             if(_iconTransform != null)
                 _iconTransform.sizeDelta = _normalIconSize;
+            if (_label != null)
+                _label.fontSize = _normalFontSize;
         }
     }
 }

@@ -53,6 +53,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         public async UniTask<Disposable<MiniShop>> Load()
         {
             _miniShop = await LoadDisposable<MiniShop>(AssetsConstants.MINI_SHOP);
+            
             _miniShop.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService,
@@ -73,5 +74,17 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         }
 
         private void OnInsufficientFunds() => _miniShop?.Value.ForceHide();
+        
+        public override void Unload()
+        {
+            if (_miniShop != null)
+            {
+                _miniShop.Value.Cleanup();
+                _miniShop.Dispose();
+                _miniShop = null;
+            }
+            
+            base.Unload();
+        }
     }
 }

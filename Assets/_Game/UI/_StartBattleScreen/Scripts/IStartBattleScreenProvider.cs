@@ -1,11 +1,11 @@
-﻿using _Game.UI._StartBattleScreen.Scripts;
-using Assets._Game.Utils.Disposable;
+﻿using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 
-namespace Assets._Game.UI._StartBattleWindow.Scripts
+namespace _Game.UI._StartBattleScreen.Scripts
 {
     public interface IStartBattleScreenProvider
     {
         UniTask<Disposable<StartBattleScreen>> Load();
+        void Unload();
     }
 }

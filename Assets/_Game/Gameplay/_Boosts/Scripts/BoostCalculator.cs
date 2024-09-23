@@ -6,6 +6,7 @@ using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories._Cards;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
+using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 
@@ -24,6 +25,7 @@ namespace _Game.Gameplay._Boosts.Scripts
         private readonly IGameInitializer _gameInitializer;
         private readonly ICardsConfigRepository _cardsConfigRepository;
         private readonly IMyLogger _logger;
+        private readonly IAgeNavigator _ageNavigator;
         private ICardsCollectionStateReadonly CardsState => _userContainer.State.CardsCollectionState;
         
         public BoostsCalculator(
@@ -31,13 +33,15 @@ namespace _Game.Gameplay._Boosts.Scripts
             IUserContainer userContainer,
             IGameInitializer gameInitializer,
             IConfigRepositoryFacade configRepositoryFacade,
-            IMyLogger logger)
+            IMyLogger logger,
+            IAgeNavigator ageNavigator)
         {
             _dataPool = dataPool;
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
             _cardsConfigRepository = configRepositoryFacade.CardsConfigRepository;
             _logger = logger;
+            _ageNavigator = ageNavigator;
             gameInitializer.OnMainInitialization += Init;
         }
 
@@ -46,6 +50,7 @@ namespace _Game.Gameplay._Boosts.Scripts
             CalculateCardBoosts();
             CardsState.CardsCollected += OnCardsCollected;
             CardsState.CardUpgraded += OnCardsUpgraded;
+            _ageNavigator.AgeChanged += OnAgeChanged;
         }
 
         public void Dispose()
@@ -53,7 +58,10 @@ namespace _Game.Gameplay._Boosts.Scripts
             _gameInitializer.OnMainInitialization -= Init;
             CardsState.CardsCollected -= OnCardsCollected;
             CardsState.CardUpgraded -= OnCardsUpgraded;
+            _ageNavigator.AgeChanged += OnAgeChanged;
         }
+
+        private void OnAgeChanged() => CalculateCardBoosts();
 
         private void OnCardsUpgraded(int _) => CalculateCardBoosts();
 

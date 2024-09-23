@@ -11,8 +11,7 @@ namespace _Game.UI._MainMenu.State
         private readonly MainMenu _mainMenu;
         private readonly IUpgradeAndEvolutionScreenProvider _provider;
         private readonly IUINotifier _uiNotifier;
-        
-        private Disposable<UpgradeAndEvolutionScreen> _upgradesAndEvolutionScreen;
+
         private readonly ToggleButton _button;
 
         public UpgradesState(
@@ -32,25 +31,17 @@ namespace _Game.UI._MainMenu.State
             _mainMenu.SetActiveButton(_button);
             _button.HighlightBtn();
             _mainMenu.RebuildLayout();
-            _upgradesAndEvolutionScreen = await _provider.Load();
-
-            if (_upgradesAndEvolutionScreen?.Value != null)
-            {
-                _upgradesAndEvolutionScreen.Value.Show();
-                _uiNotifier.OnScreenOpened(GameScreen.UpgradesAndEvolution);
-            }
+            
+            var upgradesAndEvolutionScreen = await _provider.Load();
+            upgradesAndEvolutionScreen.Value.Show();
+            _uiNotifier.OnScreenOpened(GameScreen.UpgradesAndEvolution);
             
             _mainMenu.UpgradeTutorialStep.CancelStep();
         }
 
         public void Exit()
         {
-            if (_upgradesAndEvolutionScreen?.Value != null)
-            {
-                _upgradesAndEvolutionScreen.Value.Hide();
-                _upgradesAndEvolutionScreen.Dispose();
-                _upgradesAndEvolutionScreen = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
             _uiNotifier.OnScreenClosed(GameScreen.UpgradesAndEvolution);
             
@@ -60,12 +51,7 @@ namespace _Game.UI._MainMenu.State
 
         public void Cleanup()
         {
-            if (_upgradesAndEvolutionScreen?.Value != null)
-            {
-                _upgradesAndEvolutionScreen.Value.Hide();
-                _upgradesAndEvolutionScreen.Dispose();
-                _upgradesAndEvolutionScreen = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
         }
     }

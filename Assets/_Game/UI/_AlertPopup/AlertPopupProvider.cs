@@ -11,6 +11,8 @@ namespace _Game.UI._AlertPopup
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
+
+        private Disposable<AlertPopup> _popup;
         
         public AlertPopupProvider(
             IWorldCameraService cameraService,
@@ -21,11 +23,26 @@ namespace _Game.UI._AlertPopup
         }
         public async UniTask<Disposable<AlertPopup>> Load()
         {
-            var popup = await LoadDisposable<AlertPopup>(AssetsConstants.ALERT_POPUP);
-            popup.Value.Construct(
+            if (_popup != null) return _popup; 
+                
+            _popup = await LoadDisposable<AlertPopup>(AssetsConstants.ALERT_POPUP);
+            _popup?.Value.Construct(
                 _cameraService.UICameraOverlay,
                 _audioService);
-            return popup;
+            
+            return _popup;
+        }
+        
+        public override void Unload()
+        {
+            if (_popup != null)
+            {
+                _popup.Value.Cleanup();
+                _popup.Dispose();
+                _popup = null;
+            }
+            
+            base.Unload();
         }
     }
 }

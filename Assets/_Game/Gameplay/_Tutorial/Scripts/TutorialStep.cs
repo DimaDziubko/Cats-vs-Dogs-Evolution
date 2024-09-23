@@ -1,5 +1,4 @@
 ﻿using System;
-using Assets._Game.Gameplay._Tutorial.Scripts;
 using UnityEngine;
 
 namespace _Game.Gameplay._Tutorial.Scripts
@@ -53,8 +52,15 @@ namespace _Game.Gameplay._Tutorial.Scripts
         {
             var positionMultiplier = _isUnderneath ? -1 : 1;
 
-            Canvas.ForceUpdateCanvases();
-            
+            try
+            {
+                Canvas.ForceUpdateCanvases();
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+
             Vector3 worldPosition = _tutorialObjectRectTransform.TransformPoint(_tutorialObjectRectTransform.rect.center);
             
             RectTransformUtility.ScreenPointToLocalPointInRectangle(_rootCanvasTransform, worldPosition, null, out var canvasPosition);

@@ -17,11 +17,14 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         public event Action<UnitType> InfoClicked;
         
         [SerializeField] private Image _backgroundHolder;
+        [SerializeField] private Image _infoIcon;
         
         [SerializeField] private Sprite _lockedItemImage;
         [SerializeField] private Sprite _unlockedItemImage;
         
         [SerializeField] private Image _unitIconHolder;
+        [SerializeField] private Color _unlockedIconColor;
+        [SerializeField] private Color _lockedIconColor;
 
         [SerializeField] private TransactionButton _transactionButton;
         [SerializeField] private TMP_Text _unitNameLabel;
@@ -89,8 +92,10 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private void HandleLockedState(UnitUpgradeItemModel model)
         {
+            _infoIcon.enabled = false;
             _transactionButton.Show();
             _unitIconHolder.sprite = model.WarriorIcon;
+            _unitIconHolder.color = _lockedIconColor;
             _type = model.Type;
             _price = model.Price;
             _backgroundHolder.sprite = _lockedItemImage;
@@ -102,8 +107,10 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private void HandleUnlockedState(UnitUpgradeItemModel model)
         {
+            _infoIcon.enabled = true;
             _transactionButton.Hide();
             _unitIconHolder.sprite = model.WarriorIcon;
+            _unitIconHolder.color = _unlockedIconColor;
             _type = model.Type;
             _price = model.Price;
             _backgroundHolder.sprite = _unlockedItemImage;

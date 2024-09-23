@@ -32,7 +32,8 @@ namespace _Game.UI.Common.Scripts
 
         private ButtonState _state;
         
-        public void Initialize(bool isUnlocked, 
+        public void Initialize(
+            bool isUnlocked, 
             Action<ToggleButton> callback,
             Action playSound, 
             NotificationData data = null)

@@ -140,8 +140,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             var isExit = await popup.Value.ShowAndAwaitForDecision(price);
             if (isExit)
             {
-                popup.Value.Hide();
-                popup.Dispose();
+                _miniShopProvider.Unload();
             }
         }
 

@@ -20,6 +20,8 @@ namespace _Game.UI._CardsGeneral.Scripts
         private readonly IAudioService _audioService;
         private readonly IBoostDataPresenter _boostDataPresenter;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
+        
+        private Disposable<GeneralCardsScreen> _popup;
 
         public GeneralCardsScreenProvider(
             IWorldCameraService cameraService,
@@ -39,18 +41,32 @@ namespace _Game.UI._CardsGeneral.Scripts
             _upgradesChecker = upgradesChecker;
         }
 
-            public async UniTask<Disposable<GeneralCardsScreen>> Load()
+        public async UniTask<Disposable<GeneralCardsScreen>> Load()
         {
-            var popup = await LoadDisposable<GeneralCardsScreen>(AssetsConstants.GENERAL_CARDS_SCREEN);
-            popup.Value.Construct(
-                _cameraService, 
-                _cardsScreenProvider, 
+            if (_popup != null) return _popup;
+            
+            _popup = await LoadDisposable<GeneralCardsScreen>(AssetsConstants.GENERAL_CARDS_SCREEN);
+            _popup.Value.Construct(
+                _cameraService,
+                _cardsScreenProvider,
                 _uiNotifier,
                 _featureUnlockSystem,
                 _audioService,
                 _boostDataPresenter,
                 _upgradesChecker);
-            return popup;
+            return _popup;
+        }
+
+        public override void Unload()
+        {
+            if (_popup != null)
+            {
+                _popup.Value.Hide();
+                _popup.Dispose();
+                _popup = null;
+            }
+
+            base.Unload();
         }
     }
 }

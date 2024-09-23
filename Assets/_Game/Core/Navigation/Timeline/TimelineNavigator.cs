@@ -20,6 +20,7 @@ using System.Collections.Generic;
     public class TimelineNavigator : ITimelineNavigator, IDisposable
     {
         public event Action TimelineChanged;
+        public int CurrentTimelineNumber => _userContainer.State.TimelineState.TimelineId + 1;
 
         private readonly IUserContainer _userContainer;
         private readonly ILoadingScreenProvider _loadingScreenProvider;

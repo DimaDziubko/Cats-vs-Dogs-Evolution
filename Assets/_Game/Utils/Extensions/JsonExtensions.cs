@@ -27,6 +27,7 @@ namespace _Game.Utils.Extensions
                 GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
                 SummoningData = ExtractSummoning(jsonData),
                 CardPricingConfig = ExtractCardsPricingConfig(jsonData),
+                DifficultyConfig = ExtractDifficultyConfig(jsonData)
             };
 
             var (cardConfigsByType, cardConfigsById) = ExtractCardsConfig(jsonData);
@@ -35,6 +36,9 @@ namespace _Game.Utils.Extensions
             config.CardConfigsById = cardConfigsById;
             return config;
         }
+
+        private static DifficultyConfig ExtractDifficultyConfig(JObject jsonData) => 
+            Resources.Load<DifficultyConfig>(Constants.LocalConfigPath.DIFFICULTY_PATH);
 
         private static (Dictionary<CardType, List<CardConfig>>, Dictionary<int, CardConfig>) ExtractCardsConfig(JObject jsonData)
         {

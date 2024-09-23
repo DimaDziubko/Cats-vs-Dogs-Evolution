@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services.Audio;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,14 +42,22 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             gameObject.SetActive(false);
         }
 
-        public void PlayAppearanceAnimation(
+        public async UniTask PlayAppearanceAnimation(
             IAudioService audioService, 
             Color flashColor, 
             bool needIlluminationAnimation,
             bool isNew)
         {
             _appearanceAnimation.Init(audioService, flashColor, isNew);
-            _appearanceAnimation.Play(needIlluminationAnimation);
+            await _appearanceAnimation.PlayAsync(needIlluminationAnimation);
+            
+            //TODO Delete later
+            Debug.Log("PlayAppearanceAnimation end");
+        }
+
+        public void Cleanup()
+        {
+            _appearanceAnimation.Cleanup();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -64,7 +65,7 @@ namespace _Game.Core.Configs.Models._Cards
                     rate = Common;
                     break;
             }
-            return rate.ToString("0.000") + "%";
+            return rate.ToString("0.000", CultureInfo.InvariantCulture) + "%";
         }
 
         public List<int> DropList;

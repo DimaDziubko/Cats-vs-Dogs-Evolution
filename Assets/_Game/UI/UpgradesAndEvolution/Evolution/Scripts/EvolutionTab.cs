@@ -1,12 +1,11 @@
 using System;
-using _Game.Core.DataPresenters.Evolution;
+using _Game.Core._DataPresenters.Evolution;
 using _Game.Core.Services.Audio;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
 using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,7 +82,10 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             bool isExit = await popup.Value.ShowAndAwaitForDecision(_evolutionPresenter.GetEvolutionPrice());
-            if(isExit) popup.Dispose();
+            if(isExit)
+            {
+                _miniShopProvider.Unload();
+            }
         }
 
         public void Hide()
@@ -112,11 +114,11 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         {
             PlayButtonSound();
             
-            var window = await _timelineInfoProvider.Load();
-            var isExited = await window.Value.ShowScreenWithTransitionAnimation();
+            var screen = await _timelineInfoProvider.Load();
+            var isExited = await screen.Value.ShowScreenWithTransitionAnimation();
             
-            if(isExited) window.Dispose();
-            _disposable = window;
+            if(isExited) screen.Dispose();
+            _disposable = screen;
         }
 
         private void PlayButtonSound() => 

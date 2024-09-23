@@ -29,7 +29,7 @@ namespace _Game.Core.AssetManagement
             return Disposable<T>.Borrow(component, _ => Unload());
         }
 
-        public void Unload()
+        public virtual void Unload()
         {
             if (_cacheObject == null)
             {

@@ -10,6 +10,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
     public interface ICardPopupProvider
     {
         UniTask<Disposable<CardPopup>> Load();
+        void Unload();
     }
 
     public class CardPopupProvider : LocalAssetLoader, ICardPopupProvider
@@ -31,11 +32,26 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _boostDataPresenter = boostDataPresenter;
         }
         
+        private Disposable<CardPopup> _popup;
+        
         public async UniTask<Disposable<CardPopup>> Load()
         {
-            var popup = await LoadDisposable<CardPopup>(AssetsConstants.CARD_POPUP);
-            popup.Value.Construct(_cameraService, _cardPresenter, _boostDataPresenter, _audioService);
-            return popup;
+            if (_popup != null) return _popup;
+            _popup = await LoadDisposable<CardPopup>(AssetsConstants.CARD_POPUP);
+            _popup.Value.Construct(_cameraService, _cardPresenter, _boostDataPresenter, _audioService);
+            return _popup;
+        }
+        
+        public override void Unload()
+        {
+            if (_popup != null)
+            {
+                _popup.Value.Cleanup();
+                _popup.Dispose();
+                _popup = null;
+            }
+            
+            base.Unload();
         }
     }
 }

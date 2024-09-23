@@ -17,6 +17,9 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public IUIFactory OriginFactory { get; set; }
 
+        private Tween _transformTween;
+        private Tween _scaleTween;
+
         public void Show(TutorialStepData tutorialData)
         {
             if (tutorialData.NeedAppearanceAnimation)
@@ -35,6 +38,9 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         private void ShowWithAppearanceAnimation(TutorialStepData tutorialData)
         {
+            _transformTween?.Kill();
+            _scaleTween?.Kill();
+            
             Enable();
             _pointerTransform.anchoredPosition = tutorialData.IsUnderneath ? 
                 new Vector2(tutorialData.RequiredPointerPosition.x, -DefaultPosition.y) :
@@ -44,10 +50,10 @@ namespace _Game.Gameplay._Tutorial.Scripts
             
             _pointerTransform.localScale = StartAppearanceScale;
 
-            _pointerTransform.DOAnchorPosY(tutorialData.RequiredPointerPosition.y, _animationDuration)
+            _transformTween = _pointerTransform.DOAnchorPosY(tutorialData.RequiredPointerPosition.y, _animationDuration)
                 .SetEase(Ease.OutQuad);
 
-            _pointerTransform.DOScale(Vector3.one, _animationDuration)
+            _scaleTween = _pointerTransform.DOScale(Vector3.one, _animationDuration)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() => {
                     Position = tutorialData.RequiredPointerPosition;
@@ -59,6 +65,8 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public void Hide()
         {
+            _scaleTween?.Kill();
+            _transformTween?.Kill();
             StopAnimation();
             Disable();
             OriginFactory.Reclaim(this);

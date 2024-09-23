@@ -18,5 +18,6 @@ namespace _Game.Core.Configs.Models
         public Dictionary<CardType, List<CardConfig>> CardConfigsByType;
         public Dictionary<int, CardConfig> CardConfigsById;
         public CardsPricingConfig CardPricingConfig;
+        public DifficultyConfig DifficultyConfig;
     }
 }

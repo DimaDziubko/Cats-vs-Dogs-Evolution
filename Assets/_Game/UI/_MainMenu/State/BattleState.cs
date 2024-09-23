@@ -12,8 +12,7 @@ namespace _Game.UI._MainMenu.State
         private readonly MainMenu _mainMenu;
         private readonly IStartBattleScreenProvider _provider;
         private readonly IUINotifier _uiNotifier;
-
-        private Disposable<StartBattleScreen> _startBattleWindow;
+        
         private readonly ToggleButton _button;
 
         public BattleState(
@@ -34,37 +33,24 @@ namespace _Game.UI._MainMenu.State
             _mainMenu.HideCurtain();
             _button.HighlightBtn();
             _mainMenu.RebuildLayout();
-            _startBattleWindow = await _provider.Load();
-
-            if (_startBattleWindow?.Value != null)
-            {
-                _startBattleWindow.Value.Show();
-                _uiNotifier.OnScreenOpened(GameScreen.Battle);
-            }
+            
+            var startBattleWindow = await _provider.Load();
+            startBattleWindow.Value.Show();
+            _uiNotifier.OnScreenOpened(GameScreen.Battle);
         }
 
         public void Exit()
         {
             _mainMenu.ShowCurtain();
-            
-            if (_startBattleWindow?.Value != null)
-            {
-                _startBattleWindow.Value.Hide();
-                _startBattleWindow.Dispose();
-                _startBattleWindow = null;
-            }
+
+            _provider.Unload();
             _button.UnHighlightBtn();
             _uiNotifier.OnScreenClosed(GameScreen.Battle);
         }
 
         public void Cleanup()
         {
-            if (_startBattleWindow?.Value != null)
-            {
-                _startBattleWindow.Value.Hide();
-                _startBattleWindow.Dispose();
-                _startBattleWindow = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
         }
     }

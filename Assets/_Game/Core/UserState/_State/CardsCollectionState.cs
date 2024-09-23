@@ -76,7 +76,7 @@ namespace _Game.Core.UserState._State
                     {
                         Id = cardId,
                         Level = 1,
-                        Count = 1,
+                        Count = 0,
                         Equipped = false,
                         EquippedSlot = -1
                     };

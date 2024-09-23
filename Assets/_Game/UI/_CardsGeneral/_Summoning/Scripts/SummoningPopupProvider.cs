@@ -16,7 +16,7 @@ namespace _Game.UI._CardsGeneral._Summoning.Scripts
     {
         private readonly IWorldCameraService _cameraService;
         private readonly IAudioService _audioService;
-        private CardsSummoningModel _cardsSummoningModel;
+        private readonly CardsSummoningModel _cardsSummoningModel;
 
         public SummoningPopupProvider(
             IWorldCameraService cameraService,

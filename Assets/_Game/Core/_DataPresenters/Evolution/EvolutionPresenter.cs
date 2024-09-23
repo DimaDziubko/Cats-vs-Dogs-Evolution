@@ -16,9 +16,8 @@ using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 
-namespace _Game.Core.DataPresenters.Evolution
+namespace _Game.Core._DataPresenters.Evolution
 {
     public class EvolutionPresenter : IEvolutionPresenter, IUpgradeAvailabilityProvider, IDisposable
     {
@@ -39,7 +38,7 @@ namespace _Game.Core.DataPresenters.Evolution
         private readonly IGameInitializer _gameInitializer;
         private readonly IUserContainer _userContainer;
         private readonly ITimelineConfigRepository _timelineConfigRepository;
-        private readonly IAgeConfigRepository _ageConfigRepository;
+        private readonly IDifficultyConfigRepository _difficultyConfigRepository;
         private readonly IMyLogger _logger;
         private readonly IUpgradesAvailabilityChecker _upgradesChecker;
         private readonly IGeneralDataPool _generalDataPool;
@@ -60,7 +59,7 @@ namespace _Game.Core.DataPresenters.Evolution
         {
             _userContainer = userContainer;
             _timelineConfigRepository = configRepositoryFacade.TimelineConfigRepository;
-            _ageConfigRepository = configRepositoryFacade.AgeConfigRepository;
+            _difficultyConfigRepository = configRepositoryFacade.DifficultyConfigRepository;
             _logger = logger;
             _upgradesChecker = upgradesChecker;
             _generalDataPool = generalDataPool;
@@ -74,7 +73,6 @@ namespace _Game.Core.DataPresenters.Evolution
             _upgradesChecker.Register(this);
             UpdateEvolutionData();
             _ageNavigator.AgeChanged += OnAgeChanged;
-            //TimelineState.NextTimelineOpened += OnNextTimelineOpened;
             Currency.CurrenciesChanged += OnCurrenciesChanged;
         }
 
@@ -82,7 +80,6 @@ namespace _Game.Core.DataPresenters.Evolution
         {
             _upgradesChecker.Register(this);
             TimelineState.NextAgeOpened -= OnAgeChanged;
-            //TimelineState.NextTimelineOpened -= OnNextTimelineOpened;
             Currency.CurrenciesChanged -= OnCurrenciesChanged;
             _gameInitializer.OnMainInitialization -= Init;
         }
@@ -151,15 +148,16 @@ namespace _Game.Core.DataPresenters.Evolution
             {
                 return true;
             }
-            return _ageConfigRepository
-                .GetAgePrice(TimelineState.AgeId) <= Currency.Coins;
+            return _difficultyConfigRepository
+                .GetEvolutionPrice(TimelineState.TimelineId + 1, TimelineState.AgeId + 1) 
+                   <= Currency.Coins;
         }
 
         public float GetEvolutionPrice()
         {
             if (TimelineState.MaxBattle > TimelineState.AgeId) return -1;
-            return _ageConfigRepository
-                .GetAgePrice(TimelineState.AgeId);
+            return _difficultyConfigRepository
+                .GetEvolutionPrice(TimelineState.TimelineId + 1, TimelineState.AgeId + 1);
         }
     }
     

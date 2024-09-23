@@ -96,14 +96,6 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         {
             _taskCompletion?.TrySetResult(true);
         }
-
-        public void Hide()
-        {
-            Unsubscribe();
-            _container.Cleanup();
-            _canvas.enabled = false;
-        }
-
         private void OnCancelled()
         {
             _audioService.PlayButtonSound();
@@ -118,6 +110,12 @@ namespace _Game.UI._Shop._MiniShop.Scripts
 
         private void UpdateCoinsLabelColor() => 
             _coinsLabel.color = Currencies.Coins < _price ? Color.red : Color.white;
-        
+
+        public void Cleanup()
+        {
+            Unsubscribe();
+            _container.Cleanup();
+            _canvas.enabled = false;
+        }
     }
 }

@@ -23,6 +23,8 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         private readonly ICardsPresenter _cardsPresenter;
         private readonly ITutorialManager _tutorialManager;
 
+        private Disposable<CardsScreen> _popup;
+        
         public CardsScreenProvider(
             IWorldCameraService cameraService,
             IAudioService audioService,
@@ -47,8 +49,10 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
         
         public async UniTask<Disposable<CardsScreen>> Load()
         {
-            var popup = await LoadDisposable<CardsScreen>(AssetsConstants.CARDS_SCREEN);
-            popup.Value.Construct(
+            if (_popup != null) return _popup;
+            
+            _popup = await LoadDisposable<CardsScreen>(AssetsConstants.CARDS_SCREEN);
+            _popup.Value.Construct(
                 _cameraService, 
                 _audioService,
                 _cardsScreenPresenter, 
@@ -58,7 +62,19 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
                 _upgradesChecker,
                 _cardsPresenter,
                 _tutorialManager);
-            return popup;
+            return _popup;
+        }
+        
+        public override void Unload()
+        {
+            if (_popup != null)
+            {
+                _popup.Value.Hide();
+                _popup.Dispose();
+                _popup = null;
+            }
+
+            base.Unload();
         }
     }
 }

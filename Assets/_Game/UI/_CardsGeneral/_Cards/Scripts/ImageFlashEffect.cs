@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,6 +55,22 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
             _imageFlashCoroutine = StartCoroutine(ImageFlasher(callback));
         }
 
+        public async UniTask TriggerFlashAsync()
+        {
+            await UniTask.DelayFrame(1);
+
+            SetFlashColor();
+
+            float elapsedTime = 0f;
+            while (elapsedTime < _flashTime)
+            {
+                elapsedTime += Time.deltaTime;
+                var currentFlashAmount = Mathf.Lerp(1f, _flashSpeedCurve.Evaluate(elapsedTime), (elapsedTime / _flashTime));
+                SetFlashAmount(currentFlashAmount);
+                await UniTask.Yield();
+            }
+        }
+        
         private IEnumerator ImageFlasher(Action callback = null)
         {
             SetFlashColor();
