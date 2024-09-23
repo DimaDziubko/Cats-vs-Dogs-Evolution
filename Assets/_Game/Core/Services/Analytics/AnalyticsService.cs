@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
+using AppsFlyerSDK;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
@@ -13,7 +15,7 @@ using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
-using MadPixelAnalytics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.Device;
 
 namespace _Game.Core.Services.Analytics
@@ -26,7 +28,7 @@ namespace _Game.Core.Services.Analytics
 
         private readonly IMyLogger _logger;
         private readonly IUserContainer _userContainer;
-        private readonly AppMetricaComp _appMetricaComp;
+
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         private IBattleStatisticsReadonly BattleStatistics => _userContainer.State.BattleStatistics;
@@ -37,12 +39,10 @@ namespace _Game.Core.Services.Analytics
         public AnalyticsService(
             IMyLogger logger,
             IUserContainer userContainer,
-            IGameInitializer gameInitializer,
-            AppMetricaComp appMetricaComp)
+            IGameInitializer gameInitializer)
         {
             _logger = logger;
             _userContainer = userContainer;
-            _appMetricaComp = appMetricaComp;
             gameInitializer.RegisterAsyncInitialization(Init);
         }
 
@@ -84,7 +84,7 @@ namespace _Game.Core.Services.Analytics
             //MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += LogAdPurchase;
         }
 
-        private void LogAdPurchase(string AdUnitID, MaxSdkBase.AdInfo adInfo)
+        private void LogAdPurchase(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             double revenue = adInfo.Revenue;
             if (revenue > 0)
@@ -107,7 +107,20 @@ namespace _Game.Core.Services.Analytics
 
                 Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", impressionParameters);
 
-                //Debug.Log($"[MadPixel] Revenue logged {adInfo}");
+                //Debug.Log($"Revenue logged {adInfo}");
+
+                Dictionary<string, string> additionalParams = new Dictionary<string, string>();
+                additionalParams.Add(AFAdRevenueEvent.COUNTRY, countryCode);
+                additionalParams.Add(AFAdRevenueEvent.AD_UNIT, adUnitId);
+                additionalParams.Add(AFAdRevenueEvent.AD_TYPE, adInfo.AdFormat);
+                additionalParams.Add(AFAdRevenueEvent.PLACEMENT, placement);
+
+                AppsFlyerAdRevenue.logAdRevenue(networkName,
+                    AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeApplovinMax,
+                    revenue, "USD", additionalParams
+                );
+
+                //DebugEvent("AdRevenue", additionalParams);
             }
         }
 
@@ -187,13 +200,6 @@ namespace _Game.Core.Services.Analytics
         {
             if (!IsComponentsReady()) return;
             SendEvent($"battle_started_{battleAnalyticsData.BattleNumber}");
-
-
-            _appMetricaComp.SendCustomEvent("level_start", new Dictionary<string, object>() {
-                {"level_number", battleAnalyticsData.BattleNumber },
-                {"age_number", battleAnalyticsData.AgeNumber },
-                {"timeline_number", battleAnalyticsData.TimelineNumber },
-            }, true);
         }
 
         private bool IsComponentsReady() =>
@@ -210,19 +216,6 @@ namespace _Game.Core.Services.Analytics
             if (!IsComponentsReady()) return;
 
             SendEvent($"battle_completed_{TimelineState.MaxBattle}");
-
-            // SendEvent("battle_completed", new Dictionary<string, object>
-            // {
-            //     {"TimelineNumber", TimelineState.TimelineId + 1},
-            //     {"AgeNumber", TimelineState.AgeId + 1},
-            //     {"BattleNumber", TimelineState.MaxBattle}
-            // });
-
-            _appMetricaComp.SendCustomEvent("level_finish", new Dictionary<string, object>() {
-                {"level_number", TimelineState.MaxBattle },
-                {"age_number", TimelineState.AgeId},
-                {"timeline_number", TimelineState.TimelineId},
-            }, true);
         }
 
         private void OnNextAgeOpened()
@@ -281,18 +274,18 @@ namespace _Game.Core.Services.Analytics
 
         private void OnStepCompleted(int step)
         {
-            var trueStepNumber = step + 1;
-            int lastStep = 5;
-            if (trueStepNumber == lastStep)
-            {
-                _appMetricaComp.SendCustomEvent("tutorial", new Dictionary<string, object>() {
-                {"step_name", $"{lastStep}_mainTutorFinish" },
-            }, true);
-                return;
-            }
-            _appMetricaComp.SendCustomEvent("tutorial", new Dictionary<string, object>() {
-                {"step_name", $"{trueStepNumber}_mainTutor" },
-            }, true);
+            //var trueStepNumber = step + 1;
+            //int lastStep = 5;
+            //if (trueStepNumber == lastStep)
+            //{
+            //    _appMetricaComp.SendCustomEvent("tutorial", new Dictionary<string, object>() {
+            //    {"step_name", $"{lastStep}_mainTutorFinish" },
+            //}, true);
+            //    return;
+            //}
+            //_appMetricaComp.SendCustomEvent("tutorial", new Dictionary<string, object>() {
+            //    {"step_name", $"{trueStepNumber}_mainTutor" },
+            //}, true);
         }
     }
 

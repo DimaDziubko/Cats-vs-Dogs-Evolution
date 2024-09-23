@@ -12,11 +12,10 @@ namespace _Game.Core.Ads
     {
 #if cas_advertisment_enabled
         event Action<AdImpressionDto> AdImpression;
-        void ShowRewardedVideo(Action onVideoCompleted, Placement placement);
 #endif
+        void ShowRewardedVideo(Action onVideoCompleted, Placement placement);
         event Action<AdType> OnVideoLoaded;
         bool IsAdReady(AdType type);
-        void ShowRewardedVideo(UnityAction<bool> onVideoCompleted, Placement placement);
         void ShowInterstitialVideo(Placement placement);
     }
 }

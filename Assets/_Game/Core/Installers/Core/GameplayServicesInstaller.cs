@@ -22,16 +22,13 @@ using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core.Pause.Scripts;
 using Zenject;
 using UnityEngine;
-using MAXHelper;
-using MadPixelAnalytics;
 using _Game.Core.Notifications;
 
 namespace _Game.Core.Installers.Core
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
-        [SerializeField] private AdsManager _madPixelAdsManager;
-        [SerializeField] private AppMetricaComp _madPixelAppMetrica;
+
         public override void InstallBindings()
         {
             BindUpgradesAvailabilityChecker();
@@ -42,8 +39,6 @@ namespace _Game.Core.Installers.Core
             BindUpgradesServices();
             BindEvolutionService();
             BindTimerService();
-            BindMadPixelAdsManager();
-            BindMadPixelAppMetrica();
             BindAdsService();
             BindNotificationService();
             BindFoodBoostService();
@@ -111,19 +106,6 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<TimelineTravelPresenter>()
                 .AsSingle();
         }
-        private void BindMadPixelAdsManager() =>
-            Container
-                .BindInterfacesTo<AdsManager>()
-                .FromInstance(_madPixelAdsManager)
-                .AsSingle()
-                .NonLazy();
-
-        private void BindMadPixelAppMetrica() =>
-            Container
-                .Bind<AppMetricaComp>()
-                .FromInstance(_madPixelAppMetrica)
-                .AsSingle()
-                .NonLazy();
 
         private void BindEvolutionService() =>
             Container

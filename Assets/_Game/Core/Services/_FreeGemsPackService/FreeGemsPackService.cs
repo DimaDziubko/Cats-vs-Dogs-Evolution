@@ -115,23 +115,16 @@ namespace _Game.Core.Services._FreeGemsPackService
             return productDescription;
         }
 
-        private void OnRewardedVideoComplete(bool successAd)
+        private void OnRewardedVideoComplete()
         {
-            if (successAd)
-            {
-                var freeGemsPackConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
-                var productConfig = _shopConfigRepository.GetPlacementConfig();
+            var freeGemsPackConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
+            var productConfig = _shopConfigRepository.GetPlacementConfig();
 
-                _userContainer.FreeGemsPackStateHandler.SpendGemsPack(FreeGemsPackState.FreeGemPackCount == freeGemsPackConfig.DailyGemsPackCount
-                    ? DateTime.UtcNow
-                    : FreeGemsPackState.LastFreeGemPackDay);
+            _userContainer.FreeGemsPackStateHandler.SpendGemsPack(FreeGemsPackState.FreeGemPackCount == freeGemsPackConfig.DailyGemsPackCount
+                ? DateTime.UtcNow
+                : FreeGemsPackState.LastFreeGemPackDay);
 
-                _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity, CurrenciesSource.FreeGemsPack);
-            }
-            else
-            {
-
-            }
+            _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity, CurrenciesSource.FreeGemsPack);
         }
     }
 }

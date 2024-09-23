@@ -136,8 +136,8 @@ namespace _Game.Core.Services.IAP
                 Product Prod = purchaseEvent.purchasedProduct;
 
 
-                MadPixelAnalytics.AnalyticsManager.PaymentSucceed(Prod);
-                MAXHelper.AdsManager.AddPurchaseKeyword();
+                //MadPixelAnalytics.AnalyticsManager.PaymentSucceed(Prod);
+                //MAXHelper.AdsManager.AddPurchaseKeyword();
             }
 
             return _iapService.ProcessPurchase(purchaseEvent.purchasedProduct);

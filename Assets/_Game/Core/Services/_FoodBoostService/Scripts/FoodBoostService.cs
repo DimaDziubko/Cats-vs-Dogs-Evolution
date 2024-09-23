@@ -137,26 +137,19 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             }
         }
 
-        private void OnFoodBoostRewardedVideoComplete(bool successAd)
+        private void OnFoodBoostRewardedVideoComplete()
         {
-            if (successAd)
+            var foodBoostConfig = _configRepository.GetFoodBoostConfig();
+            if (FoodBoostState.DailyFoodBoostCount == foodBoostConfig.DailyFoodBoostCount)
             {
-                var foodBoostConfig = _configRepository.GetFoodBoostConfig();
-                if (FoodBoostState.DailyFoodBoostCount == foodBoostConfig.DailyFoodBoostCount)
-                {
-                    _userContainer.FoodBoostStateHandler.SpendFoodBoost(DateTime.UtcNow);
-                }
-                else
-                {
-                    _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
-                }
-
-                ChangeFood?.Invoke(_foodBoostBtnModel.FoodAmount, true);
+                _userContainer.FoodBoostStateHandler.SpendFoodBoost(DateTime.UtcNow);
             }
             else
             {
-
+                _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
             }
+
+            ChangeFood?.Invoke(_foodBoostBtnModel.FoodAmount, true);
         }
 
         private void UpdateFoodBoostBtnModel()

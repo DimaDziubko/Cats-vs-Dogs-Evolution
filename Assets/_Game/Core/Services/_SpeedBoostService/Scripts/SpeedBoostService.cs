@@ -142,17 +142,9 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
         private bool SpeedConfigOut() =>
             BattleSpeed.PermanentSpeedId == _battleSpeedConfigRepository.GetBattleSpeedConfigs().Count - 1;
 
-        private void OnSpeedBoostRewardedVideoComplete(bool successAd)
+        private void OnSpeedBoostRewardedVideoComplete()
         {
-            if (successAd)
-            {
-                _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(false);
-            }
-            else
-            {
-
-            }
-
+            _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(false);
         }
 
         private void OnRewardVideoLoaded(AdType type)

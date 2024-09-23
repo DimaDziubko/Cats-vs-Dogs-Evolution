@@ -14,7 +14,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "02b3db3ad7bdac8f683a20bf1668a29b8038019f"
+      "hash": "804e7131595335e87bd59b88099b190e5bcac787"
     },
     "com.arongranberg.astar": {
       "version": "file:com.arongranberg.astar",
@@ -45,6 +45,24 @@
       "source": "git",
       "dependencies": {},
       "hash": "fbe0bf85155f42f8832205f7b3ac3df571ada33e"
+    },
+    "com.devtodev.sdk.analytics": {
+      "version": "https://github.com/devtodev-analytics/package_Analytics.git#v3.8.3",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "33070f00d778de80282c7898d0a1b486054e523e"
+    },
+    "com.devtodev.sdk.analytics.google": {
+      "version": "https://github.com/devtodev-analytics/package_Google.git#v3.6.5",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.devtodev.sdk.analytics": "https://github.com/devtodev-analytics/package_Analytics.git#3.6.5"
+      },
+      "hash": "a951799f80929faebbc8e3bc908e1331d1ce3935"
     },
     "com.google.android.appbundle": {
       "version": "https://github.com/google-unity/android-app-bundle.git#1.9.0",
@@ -313,7 +331,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
