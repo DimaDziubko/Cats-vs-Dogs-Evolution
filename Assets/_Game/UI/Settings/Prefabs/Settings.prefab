@@ -535,14 +535,13 @@ GameObject:
   - component: {fileID: 2077543650097246735}
   - component: {fileID: 8100883225743363925}
   - component: {fileID: 6003040440652790602}
-  - component: {fileID: 3410277714251210606}
   m_Layer: 5
   m_Name: GDPRSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8325123171543764179
 RectTransform:
   m_ObjectHideFlags: 0
@@ -558,9 +557,9 @@ RectTransform:
   - {fileID: 2450722411212682302}
   m_Father: {fileID: 8647808615295101346}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300, y: -460}
   m_SizeDelta: {x: 591, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2077543650097246735
@@ -645,18 +644,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3410277714251210606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2996666722586586312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8bbeebebb79f2e418bb73b728a7da0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3253068309674279606
 GameObject:
   m_ObjectHideFlags: 0

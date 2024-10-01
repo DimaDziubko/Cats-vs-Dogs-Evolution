@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
+using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.UI._Currencies;
@@ -15,7 +16,9 @@ namespace _Game.Core.Services.IAP
     public class IAPService : IIAPService, IDisposable
     {
         private const int INFINITY_PURCHASES_TRIGGER = -1;
-        
+
+        private readonly string PUBLIC_GOOGLE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxGde1T1Vx9a9V7BaMET88bAzmTHVpx9NKxrsezjORO+cmKHlFGHe1LshZ4E/OcJN3FAPqTakWEV0xh5uINsnFWDfSzu0BnSFHVuhZ8D3bmUGoEqItB8yCqBA8HYLKo+645d5uCO6L4HhEJvAgcUEKIFOpFCqj+kgbp5klUbVWIsbmDsLB7JKM0cu5TSJmnOXSlldmUkeOMQNmy+chnkLFN9+ZY9jz6x2rntuv2w9g1cXgq9n84v4aQX5z2gosbLum3tAg3HbRYophyKw8BTDC98vitT1X1JTjcxDjYvokBDO6YOc0ALHqjb0YU+J6rIvBpOW39YL5V69u7Zm0owCvwIDAQAB";
+
         public event Action Initialized;
         public event Action<Product> Purchased;
 
@@ -23,22 +26,26 @@ namespace _Game.Core.Services.IAP
         private readonly IGameInitializer _gameInitializer;
         private readonly IAPProvider _iapProvider;
         private readonly IFeatureUnlockSystem _featureUnlockSystem;
+        private readonly AppsFlyerAnalyticsService _appsFlyerAnalyticsService;
 
         private IPurchaseDataStateReadonly PurchaseData => _userContainer.State.PurchaseDataState;
 
         public bool IsInitialized => _iapProvider.IsInitialized;
+        public string PublicGooglePlayKey => PUBLIC_GOOGLE_KEY;
 
-        
         public IAPService(
-            IAPProvider iapProvider, 
+            IAPProvider iapProvider,
             IUserContainer userContainer,
             IGameInitializer gameInitializer,
-            IFeatureUnlockSystem featureUnlockSystem)
+            IFeatureUnlockSystem featureUnlockSystem,
+            AppsFlyerAnalyticsService appsFlyerAnalyticsService
+            )
         {
             _userContainer = userContainer;
             _iapProvider = iapProvider;
             _gameInitializer = gameInitializer;
             _featureUnlockSystem = featureUnlockSystem;
+            _appsFlyerAnalyticsService = appsFlyerAnalyticsService;
             _gameInitializer.OnPreInitialization += Init;
         }
 
@@ -48,10 +55,10 @@ namespace _Game.Core.Services.IAP
             _iapProvider.Initialized += () => Initialized?.Invoke();
         }
 
-        public void Dispose() => 
+        public void Dispose() =>
             _gameInitializer.OnPreInitialization -= Init;
-                                      
-        public List<ProductDescription> Products() => 
+
+        public List<ProductDescription> Products() =>
             ProductDefinitions().ToList();
 
 
@@ -63,9 +70,9 @@ namespace _Game.Core.Services.IAP
                 Product product = _iapProvider.Products[productId];
 
                 BoughtIAP boughtIap = PurchaseData.BoughtIAPs.Find(x => x.IAPId == productId);
-                
+
                 if (
-                    ProductBoughtOut(boughtIap, config) && 
+                    ProductBoughtOut(boughtIap, config) &&
                     config.MaxPurchaseCount != INFINITY_PURCHASES_TRIGGER)
                 {
                     continue;
@@ -75,7 +82,7 @@ namespace _Game.Core.Services.IAP
                 {
                     continue;
                 }
-                
+
                 yield return new ProductDescription()
                 {
                     Id = productId,
@@ -84,7 +91,7 @@ namespace _Game.Core.Services.IAP
                     AvailablePurchasesLeft = boughtIap != null
                         ? config.MaxPurchaseCount - boughtIap.Count
                         : config.MaxPurchaseCount,
-                
+
                 };
             }
         }
@@ -109,17 +116,17 @@ namespace _Game.Core.Services.IAP
         private bool IsSpeedItemAvailable(ItemType configItemType)
         {
             bool isSpeedFeatureUnlocked = _featureUnlockSystem.IsFeatureUnlocked(Feature.BattleSpeed);
-    
+
             if (!isSpeedFeatureUnlocked)
             {
                 return false;
             }
-            
+
             if (configItemType == ItemType.x1_5)
             {
                 return true;
             }
-            
+
             if (configItemType == ItemType.x2)
             {
                 bool isX15Bought = PurchaseData.BoughtIAPs
@@ -129,31 +136,45 @@ namespace _Game.Core.Services.IAP
 
             return true;
         }
-        
-        
-        private bool ProductBoughtOut(BoughtIAP boughtIap, ProductConfig config) => 
+
+
+        private bool ProductBoughtOut(BoughtIAP boughtIap, ProductConfig config) =>
             boughtIap != null && boughtIap.Count >= config.MaxPurchaseCount;
 
 
-        public void StartPurchase(string productId) => 
-            _iapProvider.StartPurchase(productId);
+        public void StartPurchase(string productId)
+        {
+            UnityEngine.Purchasing.Product product = _iapProvider.StoreController.products.WithID(productId);
+
+            if (product != null && product.availableToPurchase)
+            {
+                //Debug.Log(string.Format("Purchasing product:" + product.definition.id.ToString()));
+                _appsFlyerAnalyticsService.InitiatedCheckout(product);
+                _iapProvider.StartPurchase(productId);
+            }
+            else
+            {
+                Debug.Log("BuyProductID: FAIL. Not purchasing product, either is not found or is not available for purchase");
+            }
+
+        }
 
         public PurchaseProcessingResult ProcessPurchase(Product purchasedProduct)
         {
-            ProductConfig productConfig =  _iapProvider.Configs[purchasedProduct.definition.id];
+            ProductConfig productConfig = _iapProvider.Configs[purchasedProduct.definition.id];
 
 
             switch (productConfig.ItemType)
             {
                 case ItemType.x1_5:
                     //TODO Check later
-                    int speedIdFor1_5 = 1; 
+                    int speedIdFor1_5 = 1;
                     _userContainer.BattleSpeedStateHandler.ChangePermanentSpeedId(speedIdFor1_5);
                     _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
                     break;
                 case ItemType.x2:
                     //TODO Check later
-                    int speedIdFor2 = 2; 
+                    int speedIdFor2 = 2;
                     _userContainer.BattleSpeedStateHandler.ChangePermanentSpeedId(speedIdFor2);
                     _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
                     break;

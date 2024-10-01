@@ -49,7 +49,7 @@ namespace Assets._Game.UI.Settings.Scripts
             Unsubscribe();
             Subscribe();
 
-            _gdprSettings.SetActive(GeoLocationChecker.IsInEURegion);
+            //_gdprSettings.SetActive(GeoLocationChecker.IsInEURegion);
 
             _sfxToggle.Initialize(_audioService.IsOnSFX(), _audioService);
             _ambienceToggle.Initialize(_audioService.IsOnAmbience(), _audioService);

@@ -6,7 +6,7 @@ namespace _Game.Core._GameMode
     {
         [SerializeField] private bool _testMode;
         [SerializeField] private bool _isCheatEnabled;
-        
+
         public static GameMode I;
 
         public bool TestMode => _testMode;
@@ -18,6 +18,12 @@ namespace _Game.Core._GameMode
             {
                 I = this;
             }
+        }
+
+        //Todo Change Mb Save UserID
+        public static string GetUniqUserID()
+        {
+            return UnityEngine.Device.SystemInfo.deviceUniqueIdentifier;
         }
     }
 }

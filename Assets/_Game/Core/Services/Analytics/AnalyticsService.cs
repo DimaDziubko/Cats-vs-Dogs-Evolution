@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
@@ -15,7 +14,6 @@ using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine.Device;
 
 namespace _Game.Core.Services.Analytics
@@ -28,6 +26,7 @@ namespace _Game.Core.Services.Analytics
 
         private readonly IMyLogger _logger;
         private readonly IUserContainer _userContainer;
+        private readonly AppsFlyerAnalyticsService _appsFlyerAnalyticsService;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
@@ -39,10 +38,12 @@ namespace _Game.Core.Services.Analytics
         public AnalyticsService(
             IMyLogger logger,
             IUserContainer userContainer,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            AppsFlyerAnalyticsService appsFlyerAnalyticsService)
         {
             _logger = logger;
             _userContainer = userContainer;
+            _appsFlyerAnalyticsService = appsFlyerAnalyticsService;
             gameInitializer.RegisterAsyncInitialization(Init);
         }
 
@@ -120,7 +121,7 @@ namespace _Game.Core.Services.Analytics
                     revenue, "USD", additionalParams
                 );
 
-                //DebugEvent("AdRevenue", additionalParams);
+                _appsFlyerAnalyticsService.DebugEvent("AdRevenue", additionalParams);
             }
         }
 

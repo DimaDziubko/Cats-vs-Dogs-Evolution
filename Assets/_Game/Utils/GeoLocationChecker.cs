@@ -23,7 +23,7 @@ namespace _Game.Utils
         private void Start()
         {
             _isInEURegion = false;
-            StartCoroutine(GetLocation());
+            //StartCoroutine(GetLocation());
         }
 
         private IEnumerator GetLocation()

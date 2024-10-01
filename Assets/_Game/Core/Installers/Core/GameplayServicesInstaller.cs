@@ -45,6 +45,7 @@ namespace _Game.Core.Installers.Core
             BindSpeedBoostService();
             BindBattleSpeedService();
             BindAnalyticsService();
+            BindAppsFlyerService();
             BindTimelineNavigator();
             BindAgeNavigator();
             BindBattleNavigator();
@@ -60,6 +61,8 @@ namespace _Game.Core.Installers.Core
 
         private void BindAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<AnalyticsService>().AsSingle();
+        private void BindAppsFlyerService() =>
+            Container.Bind<AppsFlyerAnalyticsService>().AsSingle();
 
         private void BindUpgradesAvailabilityChecker() =>
             Container

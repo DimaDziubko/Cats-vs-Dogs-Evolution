@@ -22,8 +22,8 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         private readonly string _rewardedID = "89c3dc86f476dee";
 
 #else // UNITY_ANDROID
-        private readonly string _interstitialID = "55db943149400c1a";
-        private readonly string _rewardedID = "39486b35f459019a";
+        private readonly string _interstitialID = "bf36589164e49496";
+        private readonly string _rewardedID = "5500aOf67f9db05f";
 
         //private const string RewardedInterstitialAdUnitId = "ENTER_ANDROID_REWARD_INTER_AD_UNIT_ID_HERE";
         //private const string BannerAdUnitId = "39486b35f459019a";
@@ -76,11 +76,11 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
             //if (_isDebugTest)
             //{
-            //    MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
-            //    {
-            //        // Show Mediation Debugger
-            //        MaxSdk.ShowMediationDebugger();
-            //    };
+            //MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
+            //{
+            //    // Show Mediation Debugger
+            //    MaxSdk.ShowMediationDebugger();
+            //};
             //}
 
             MaxSdkCallbacks.OnSdkInitializedEvent += sdkConfiguration =>

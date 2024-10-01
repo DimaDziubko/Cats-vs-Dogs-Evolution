@@ -24,6 +24,7 @@ namespace _Game.Core.Services.Analytics
         private readonly IMyLogger _logger;
         private readonly IIAPService _iapService;
         private readonly IIGPService _igpService;
+        private readonly IAPProvider _iapProvider;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         private ITutorialStateReadonly TutorialState => _userContainer.State.TutorialState;
@@ -37,7 +38,8 @@ namespace _Game.Core.Services.Analytics
             IGameInitializer gameInitializer,
             IMyLogger logger,
             IIAPService iapService,
-            IIGPService igpService)
+            IIGPService igpService,
+            IAPProvider iapProvider)
         {
             _userContainer = userContainer;
             _adsService = adsService;
@@ -45,6 +47,7 @@ namespace _Game.Core.Services.Analytics
             _logger = logger;
             _iapService = iapService;
             _igpService = igpService;
+            _iapProvider = iapProvider;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -57,8 +60,9 @@ namespace _Game.Core.Services.Analytics
             RaceState.Changed += OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
             Currencies.CurrenciesChanged += OnCurrenciesChanged;
-            _iapService.Purchased += TrackPurchase;
             _igpService.Purchased += TrackInGamePurchase;
+            _iapProvider.OnTrackPurchaseDev2Dev += TrackPurchase;
+
 
             MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += TrackAdImpression;
             MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent += TrackAdImpression;
@@ -81,7 +85,7 @@ namespace _Game.Core.Services.Analytics
             RaceState.Changed -= OnRaceChanged;
             BattleStatistics.CompletedBattlesCountChanged += OnCompletedBattleChanged;
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
-            _iapService.Purchased -= TrackPurchase;
+            _iapProvider.OnTrackPurchaseDev2Dev -= TrackPurchase;
             _igpService.Purchased -= TrackInGamePurchase;
 
             MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent -= TrackAdImpression;
