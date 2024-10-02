@@ -18,6 +18,7 @@ namespace _Game.Core.Communication
             _migrations.Add(new MigrationTo110());
             _migrations.Add(new MigrationTo120());
             _migrations.Add(new MigrationTo130());
+            _migrations.Add(new MigrationTo140());
         }
 
         public void Migrate(ref UserAccountState state)

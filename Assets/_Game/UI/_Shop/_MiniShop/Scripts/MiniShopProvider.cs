@@ -22,7 +22,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
         private readonly IAudioService _audioService;
         private readonly IHeader _header;
         private readonly IUIFactory _uiFactory;
-        private readonly IShopPresenter _shopPresenter;
+        private readonly IMiniShopPresenter _miniShopPresenter;
         private readonly IUpgradesAvailabilityChecker _checker;
         private readonly IMyLogger _logger;
         private readonly IUserContainer _userContainer;
@@ -36,7 +36,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             IWorldCameraService cameraService,
             IAudioService audioService,
             IUIFactory uiFactory,
-            IShopPresenter shopPresenter,
+            IMiniShopPresenter miniShopPresenter,
             IMyLogger logger, 
             IUserContainer userContainer,
             IFeatureUnlockSystem featureUnlockSystem)
@@ -44,7 +44,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             _cameraService = cameraService;
             _audioService = audioService;
             _uiFactory = uiFactory;
-            _shopPresenter = shopPresenter;
+            _miniShopPresenter = miniShopPresenter;
             _logger = logger;
             _userContainer = userContainer;
             _featureUnlockSystem = featureUnlockSystem;
@@ -58,7 +58,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
                 _cameraService.UICameraOverlay,
                 _audioService,
                 _uiFactory,
-                _shopPresenter,
+                _miniShopPresenter,
                 _logger,
                 _userContainer);
             return _miniShop;

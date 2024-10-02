@@ -7,6 +7,7 @@
         Battle,
         MiniShop,
         FreeGemsPack,
+        AdsGemsPack,
         Upgrade,
         DailyTask,
         Cards

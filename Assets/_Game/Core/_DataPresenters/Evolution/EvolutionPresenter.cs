@@ -14,6 +14,7 @@ using _Game.UI._Currencies;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
+using _Game.Utils.Extensions;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.UserState;
 
@@ -96,7 +97,7 @@ namespace _Game.Core._DataPresenters.Evolution
             }
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source) 
+        private void OnCurrenciesChanged(CurrencyType currencyType, double delta, CurrenciesSource source) 
             => UpdateEvolutionData();
 
         private void OnNextTimelineOpened() => UpdateEvolutionData();
@@ -122,10 +123,12 @@ namespace _Game.Core._DataPresenters.Evolution
 
             _evolutionTabModel = new EvolutionTabModel()
             {
-                CurrentTimelineId = TimelineState.TimelineId,
+                TimelineInfo = $"Timeline {TimelineState.TimelineId + 1}",
                 CurrentAgeIcon = _generalDataPool.TimelineStaticData.TimelineInfoItems[currentAgeNumber].AgeIcon,
                 EvolutionBtnData = evolutionButtonData,
                 CurrentAgeName = _generalDataPool.TimelineStaticData.TimelineInfoItems[currentAgeNumber].Name,
+                Difficulty = $"Difficulty x{_difficultyConfigRepository.GetDifficultyValue(TimelineState.TimelineId + 1).ToFormattedString()}",
+                ShowDifficulty = _difficultyConfigRepository.GetDifficultyValue(TimelineState.TimelineId + 1) > 1,
             };
 
             if (IsNextAge())

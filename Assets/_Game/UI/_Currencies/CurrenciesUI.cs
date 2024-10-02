@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _Game.UI._Currencies
 {
-    public enum Currencies
+    public enum CurrencyType
     {
         Coins,
         Gems
@@ -44,18 +44,18 @@ namespace _Game.UI._Currencies
             _currencies.CurrenciesChanged -= OnCurrenciesChanged;
             _currencies.CurrenciesChanged += OnCurrenciesChanged;
             
-            OnCurrenciesChanged(Currencies.Coins, 0, CurrenciesSource.None);
-            OnCurrenciesChanged(Currencies.Gems, 0, CurrenciesSource.None);
+            OnCurrenciesChanged(CurrencyType.Coins, 0, CurrenciesSource.None);
+            OnCurrenciesChanged(CurrencyType.Gems, 0, CurrenciesSource.None);
         }
 
-        private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType type, double delta, CurrenciesSource source)
         {
             switch (type)
             {
-                case Currencies.Coins:
+                case CurrencyType.Coins:
                     HandleCoins(source);
                     break;
-                case Currencies.Gems:
+                case CurrencyType.Gems:
                     HandleGems(source);
                     break;
             }

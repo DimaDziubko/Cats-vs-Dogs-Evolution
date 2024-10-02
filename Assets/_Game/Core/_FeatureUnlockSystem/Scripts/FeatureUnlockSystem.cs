@@ -100,8 +100,8 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
             TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.FOOD_UPGRADE) &&
             BattleStatisticsState.BattlesCompleted >= Constants.FeatureCompletedBattleThresholds.X2;
 
-        private bool GetThresholdForBattleSpeed() =>
-            TimelineState.TimelineId > 0 || TimelineState.AgeId >= BATTLE_SPEED_AGE_THRESHOLD;
+        private bool GetThresholdForBattleSpeed() => false;
+            //TimelineState.TimelineId > 0 || TimelineState.AgeId >= BATTLE_SPEED_AGE_THRESHOLD;
 
         private bool GetThresholdForEvolutionScreen() =>
             TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.FOOD_UPGRADE) &&

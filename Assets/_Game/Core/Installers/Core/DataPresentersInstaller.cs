@@ -1,5 +1,7 @@
 ﻿using _Game.Core._DataPresenters.UnitBuilderDataPresenter;
 using _Game.Core.DataPresenters.BattlePresenter;
+using _Game.Core.Services.IAP;
+using _Game.Core.Services.IGPService;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
@@ -13,13 +15,20 @@ namespace _Game.Core.Installers.Core
         {
             BindUnitBuilderDataPresenter();
             BindBattlePresenter();
+            BindCoinsBundlePresenterFactory();
+            BindGemsBundlePresenterFactory();
+            BindSpeedOfferPresenterFactory();
+            BindProfitOfferPresenterFactory();
+            BindAdsGemsPackPresenterFactory();
+            BindFreeGemsPackPresenterFactory();
             BindShopPresenter();
+            BindMiniShopPresenter();
             BindBoostDataPresenter();
             BindCardsPresenter();
             BindCardsScreenPresenter();
         }
 
-        private void BindUnitBuilderDataPresenter() => 
+        private void BindUnitBuilderDataPresenter() =>
             Container
                 .BindInterfacesAndSelfTo<UnitBuilderDataPresenter>()
                 .AsSingle();
@@ -29,12 +38,53 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<BattlePresenter>()
                 .AsSingle();
 
+        private void BindCoinsBundlePresenterFactory() =>
+            Container
+                .BindFactory<CoinsBundle, CoinsBundleView, CoinsBundlePresenter, CoinsBundlePresenter.Factory>()
+                .AsSingle()
+                .NonLazy();
+        
+        private void BindGemsBundlePresenterFactory() =>
+            Container
+                .BindFactory<GemsBundle, GemsBundleView, GemsBundlePresenter, GemsBundlePresenter.Factory>()
+                .AsSingle()
+                .NonLazy();
+        
+        private void BindSpeedOfferPresenterFactory() =>
+            Container
+                .BindFactory<SpeedOffer, SpeedOfferView, SpeedOfferPresenter, SpeedOfferPresenter.Factory>()
+                .AsSingle()
+                .NonLazy();
+        
+        private void BindProfitOfferPresenterFactory() =>
+            Container
+                .BindFactory<ProfitOffer, ProfitOfferView, ProfitOfferPresenter, ProfitOfferPresenter.Factory>()
+                .AsSingle()
+                .NonLazy();
+        
+        private void BindAdsGemsPackPresenterFactory() =>
+            Container
+                .BindFactory<AdsGemsPack, AdsGemsPackView, AdsGemsPackPresenter, AdsGemsPackPresenter.Factory>()
+                .AsSingle()
+                .NonLazy();
+        
+        private void BindFreeGemsPackPresenterFactory() =>
+            Container
+                .BindFactory<FreeGemsPack, FreeGemsPackView, FreeGemsPackPresenter, FreeGemsPackPresenter.Factory>()
+                .AsSingle()
+                .NonLazy();
+
         private void BindShopPresenter() =>
             Container
                 .BindInterfacesAndSelfTo<ShopPresenter>()
                 .AsSingle();
 
-        private void BindCardsPresenter() => 
+        private void BindMiniShopPresenter() =>
+            Container
+                .BindInterfacesAndSelfTo<MiniShopPresenter>()
+                .AsSingle();
+
+        private void BindCardsPresenter() =>
             Container.BindInterfacesAndSelfTo<CardsPresenter>().AsSingle();
 
         private void BindCardsScreenPresenter() =>

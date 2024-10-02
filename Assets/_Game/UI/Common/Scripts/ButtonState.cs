@@ -4,6 +4,7 @@
     {
         Active,
         Inactive,
-        Loading
+        Loading,
+        Recovering
     }
 }

@@ -5,6 +5,7 @@ using _Game.Core.Services.Random;
 using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay.Common.Scripts;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Core.UserState._State
@@ -29,7 +30,12 @@ namespace _Game.Core.UserState._State
         public DailyTasksState DailyTasksState;
         public AdsWeeklyWatchState AdsWeeklyWatchState;
         public CardsCollectionState CardsCollectionState;
-
+        
+        [ShowInInspector]
+        public FreeGemsPackContainer FreeGemsPackContainer;
+        
+        [ShowInInspector]
+        public AdsGemsPackContainer AdsGemsPackContainer;
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -109,7 +115,7 @@ namespace _Game.Core.UserState._State
                 
                 FreeGemsPackState = new FreeGemsPackState()
                 {
-                    FreeGemPackCount = 2,
+                    FreeGemPackCount = 4,
                     LastFreeGemPackDay = DateTime.UtcNow
                 },
                 
@@ -137,7 +143,7 @@ namespace _Game.Core.UserState._State
                     CardSummoningLevel = 1,
                     CardsSummoningProgressCount = 0,
                     Cards = new List<Card>(),
-                }
+                },
             };
         }
 

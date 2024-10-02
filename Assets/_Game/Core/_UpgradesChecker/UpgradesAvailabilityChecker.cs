@@ -126,7 +126,7 @@ namespace _Game.Core._UpgradesChecker
             UpdateData();
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType currencyType, double delta, CurrenciesSource source)
         {
             if (delta > 0)
             {

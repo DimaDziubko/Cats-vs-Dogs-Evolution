@@ -22,11 +22,12 @@ namespace _Game.Core.Services.UserContainer
         IAnalyticsStateHandler AnalyticsStateHandler { get; }
         IUpgradeStateHandler UpgradeStateHandler { get; }
         IPurchaseStateHandler PurchaseStateHandler  { get; }
-        IFreeGemsPackStateHandler FreeGemsPackStateHandler  { get; }
         IFoodBoostStateHandler FoodBoostStateHandler { get; }
         IBattleSpeedStateHandler BattleSpeedStateHandler { get; }
         ITutorialStateHandler TutorialStateHandler { get; }
         IDailyTaskStateHandler DailyTaskStateHandler { get;}
+        IAdsGemsPackStateHandler AdsGemsPackStateHandler { get;}
+        IFreeGemsPackStateHandler FreeGemsPackStateHandler  { get; }
         void RequestSaveGame(bool isDebounced = false);
     }
 }

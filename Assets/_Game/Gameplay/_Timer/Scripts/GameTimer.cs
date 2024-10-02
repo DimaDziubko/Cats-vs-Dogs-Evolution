@@ -2,10 +2,12 @@
 using System.Collections;
 using _Game.Common;
 using Assets._Game.Gameplay._Timer.Scripts;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Gameplay._Timer.Scripts
 {
+    [ShowInInspector]
     public class GameTimer
     {
         public event Action<float> Tick;

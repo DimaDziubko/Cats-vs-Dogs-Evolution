@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._GameInitializer;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
-using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
-using _Game.Utils;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core.UserState;
-using UnityEngine;
+using Zenject;
 
 namespace _Game.Core.Services.IGPService
 {
@@ -21,49 +23,92 @@ namespace _Game.Core.Services.IGPService
         public string PurchaseCurrency;
         public Dictionary<string, int> Resources;
     }
-    
-    public class IGPService : IIGPService
+
+    public class IGPService : IIGPService, IDisposable
     {
         public event Action<IGPDto> Purchased;
-        
+
         private readonly IUserContainer _userContainer;
         private readonly IShopConfigRepository _shopConfigRepository;
+        private readonly IFeatureUnlockSystem _featureUnlockSystem;
+        private readonly IGameInitializer _gameInitializer;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
+        private IUserCurrenciesStateReadonly Currencies => _userContainer.State.Currencies;
         
+        private List<CoinsBundle> _bundles = new List<CoinsBundle>(2);
+
         public IGPService(
             IUserContainer userContainer,
-            IConfigRepositoryFacade configRepositoryFacade)
+            IConfigRepositoryFacade configRepositoryFacade,
+            IFeatureUnlockSystem featureUnlockSystem,
+            IGameInitializer gameInitializer)
         {
             _userContainer = userContainer;
             _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
+            _featureUnlockSystem = featureUnlockSystem;
+            _gameInitializer = gameInitializer;
+            
+            _gameInitializer.OnMainInitialization += Init;
         }
 
-        public List<ProductDescription> Products() => 
-            ProductDefinitions().ToList();
-
-        public void StartPurchase(ProductConfig config)
+        private void Init()
         {
-            switch (config.ItemType)
+            Currencies.CurrenciesChanged += OnCurrencyChanged;
+            TimelineState.UpgradeItemLevelChanged += OnUpgradeItemChanged;
+            TimelineState.NextAgeOpened += OnAgeChanged;
+        }
+
+        public void StartPurchase(CoinsBundle bundle)
+        {
+            _userContainer.PurchaseStateHandler
+                .PurchaseCoinsWithGems(bundle.Quantity, bundle.Config.Price, CurrenciesSource.Shop);
+            
+            Notify(
+                bundle.Config.IGP_ID,
+                CurrencyType.Coins.ToString(),
+                (int) bundle.Quantity,
+                bundle.Config.Price,
+                CurrencyType.Gems.ToString());
+        }
+        
+        void IDisposable.Dispose()
+        {
+            Currencies.CurrenciesChanged -= OnCurrencyChanged;
+            TimelineState.UpgradeItemLevelChanged -= OnUpgradeItemChanged;
+            TimelineState.NextAgeOpened -= OnAgeChanged;
+            _gameInitializer.OnMainInitialization -= Init;
+        }
+
+        private void OnAgeChanged() => UpdateCoinBundles();
+
+        private void OnUpgradeItemChanged(UpgradeItemType type, int _)
+        {
+            if (type == UpgradeItemType.FoodProduction)
             {
-                case ItemType.x1_5:
-                    break;
-                case ItemType.x2:
-                    break;
-                case ItemType.Gems:
-                    break;
-                case ItemType.Coins:
-                    _userContainer.PurchaseStateHandler
-                        .PurchaseCoinsWithGems(config.Quantity, config.Price, CurrenciesSource.Shop);
-                    Notify(
-                        config.IGP_ID,
-                        config.ItemType.ToString(),
-                        (int)config.Quantity,
-                        config.Price,
-                        Currencies.Gems.ToString());
-                    break;
+                UpdateCoinBundles();
             }
         }
+
+        private void OnCurrencyChanged(CurrencyType type, double __, CurrenciesSource ___)
+        {
+            if (type == CurrencyType.Gems)
+            {
+                UpdateCoinBundles();
+            }
+        }
+
+        private void UpdateCoinBundles()
+        {
+            foreach (var bundle in _bundles)
+            {
+                bundle.Quantity = bundle.Config.GetQuantity(TimelineState.AgeId, TimelineState.FoodProductionLevel);
+                bundle.IsAffordable = bundle.Config.Price < Currencies.Gems;
+            }
+        }
+
+        public List<CoinsBundle> CoinsBundles() =>
+            GetCoinsBundles().ToList();
 
         private void Notify(
             string purchaseId,
@@ -72,7 +117,7 @@ namespace _Game.Core.Services.IGPService
             int purchasePrice,
             string purchaseCurrency,
             Dictionary<string, int> resources = null
-            )
+        )
         {
             var dto = new IGPDto()
             {
@@ -87,29 +132,29 @@ namespace _Game.Core.Services.IGPService
         }
 
 
-        private IEnumerable<ProductDescription> ProductDefinitions()
+        private IEnumerable<CoinsBundle> GetCoinsBundles()
         {
-            var configs = _shopConfigRepository.GetIGPConfig();
+            if (!_featureUnlockSystem.IsFeatureUnlocked(Feature.GemsShopping)) yield return null;
 
+            ClearBundles();
+            
+            var configs = _shopConfigRepository.GetCoinsBundleConfigs();
+            
             foreach (var config in configs)
             {
-                if (config.ItemType == ItemType.Coins)
+                var bundle = new CoinsBundle()
                 {
-                    //var level = Mathf.Max(TimelineState.BaseHealthLevel, TimelineState.FoodProductionLevel);
-                    //config.Quantity = config.QuantityExponential.GetValue(level);
-                    config.Quantity = config.LinearFunctions[TimelineState.AgeId]
-                        .GetIntValue(TimelineState.FoodProductionLevel);
-                }
-                
-                yield return new ProductDescription()
-                {
-                    Id = Constants.ConfigKeys.MISSING_KEY,
+                    Id = config.Id,
                     Config = config,
-                    Product = null,
-                    AvailablePurchasesLeft = config.MaxPurchaseCount,
-                
+                    Quantity = config.GetQuantity(TimelineState.AgeId, TimelineState.FoodProductionLevel),
+                    IsAffordable = config.Price < Currencies.Gems
                 };
+                
+                _bundles.Add(bundle);
+                yield return bundle;
             }
         }
+
+        private void ClearBundles() => _bundles.Clear();
     }
 }

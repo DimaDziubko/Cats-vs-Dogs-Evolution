@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.UI._Shop.Scripts;
 using UnityEngine.Purchasing;
 
 
@@ -7,10 +8,15 @@ namespace _Game.Core.Services.IAP
 {
     public interface IIAPService
     {
+        event Action<SpeedOffer> SpeedOfferRemoved;
         event Action<Product> Purchased;
-        bool IsInitialized { get; }
         event Action Initialized;
-        List<ProductDescription> Products();
+        bool IsInitialized { get; }
+
         void StartPurchase(string productId);
+        List<GemsBundle> GemsBundles();
+        List<SpeedOffer> SpeedOffers();
+        List<ProfitOffer> ProfitOffers();
     }
+
 }

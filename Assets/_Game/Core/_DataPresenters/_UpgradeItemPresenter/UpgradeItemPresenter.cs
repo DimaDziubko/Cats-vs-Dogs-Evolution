@@ -187,7 +187,7 @@ namespace _Game.Core.DataPresenters._UpgradeItemPresenter
             UpgradeItemUpdated?.Invoke(model);
         }
         
-        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source) => 
+        private void OnCurrenciesChanged(CurrencyType currencyType, double delta, CurrenciesSource source) => 
             UpdateUpgradeItems();
 
         private void Cleanup() => _models.Clear();

@@ -27,6 +27,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         [SerializeField] private TransactionButton _evolveButton;
 
         [SerializeField] private TMP_Text _timelineLabel;
+        [SerializeField] private TMP_Text _difficultyLabel;
     
         private IDisposable _disposable;
         
@@ -98,17 +99,19 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void OnEvolutionViewModelUpdated(EvolutionTabModel tabModel)
         {
-            UpdateTimelineLabel(tabModel.CurrentTimelineId);
             UpdateButtonData(tabModel.EvolutionBtnData);
 
+            _timelineLabel.text = tabModel.TimelineInfo;
             _currentAgeImage.sprite = tabModel.CurrentAgeIcon;
             _nextAgeImage.sprite = tabModel.NextAgeIcon;
             _currentAgeName.text = tabModel.CurrentAgeName;
             _nextAgeName.text = tabModel.NextAgeName;
+            _difficultyLabel.text = tabModel.Difficulty;
+            _difficultyLabel.enabled = tabModel.ShowDifficulty;
         }
 
         private void UpdateButtonData(EvolutionBtnData data) => 
-            _evolveButton.UpdateButtonState(data.ButtonState, data.Price.FormatMoney(), data.Price > 0);
+            _evolveButton.UpdateButtonState(data.ButtonState, data.Price.FormatMoney(),  "Evolve", true,data.Price > 0);
 
         private async void OnEvolveButtonClick()
         {
@@ -123,10 +126,6 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-
-
-        private void UpdateTimelineLabel(int id) => 
-            _timelineLabel.text = $"Timeline {id + 1}";
         
     }
 }

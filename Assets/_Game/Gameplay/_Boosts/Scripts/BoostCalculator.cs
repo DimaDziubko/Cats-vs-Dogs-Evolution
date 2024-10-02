@@ -7,7 +7,9 @@ using _Game.Core.Configs.Repositories._Cards;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Navigation.Age;
+using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
+using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 
 namespace _Game.Gameplay._Boosts.Scripts
@@ -26,7 +28,9 @@ namespace _Game.Gameplay._Boosts.Scripts
         private readonly ICardsConfigRepository _cardsConfigRepository;
         private readonly IMyLogger _logger;
         private readonly IAgeNavigator _ageNavigator;
+        private readonly IIAPService _iapService;
         private ICardsCollectionStateReadonly CardsState => _userContainer.State.CardsCollectionState;
+        private IPurchaseDataStateReadonly Purchases => _userContainer.State.PurchaseDataState;
         
         public BoostsCalculator(
             IGeneralDataPool dataPool,
@@ -34,7 +38,8 @@ namespace _Game.Gameplay._Boosts.Scripts
             IGameInitializer gameInitializer,
             IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
-            IAgeNavigator ageNavigator)
+            IAgeNavigator ageNavigator,
+            IIAPService iapService)
         {
             _dataPool = dataPool;
             _userContainer = userContainer;
@@ -42,15 +47,18 @@ namespace _Game.Gameplay._Boosts.Scripts
             _cardsConfigRepository = configRepositoryFacade.CardsConfigRepository;
             _logger = logger;
             _ageNavigator = ageNavigator;
+            _iapService = iapService;
             gameInitializer.OnMainInitialization += Init;
         }
 
         private void Init()
         {
             CalculateCardBoosts();
+            CalculateOfferBoosts();
             CardsState.CardsCollected += OnCardsCollected;
             CardsState.CardUpgraded += OnCardsUpgraded;
             _ageNavigator.AgeChanged += OnAgeChanged;
+            Purchases.Changed += OnPurchasesChanged;
         }
 
         public void Dispose()
@@ -59,6 +67,7 @@ namespace _Game.Gameplay._Boosts.Scripts
             CardsState.CardsCollected -= OnCardsCollected;
             CardsState.CardUpgraded -= OnCardsUpgraded;
             _ageNavigator.AgeChanged += OnAgeChanged;
+            Purchases.Changed -= OnPurchasesChanged;
         }
 
         private void OnAgeChanged() => CalculateCardBoosts();
@@ -66,6 +75,25 @@ namespace _Game.Gameplay._Boosts.Scripts
         private void OnCardsUpgraded(int _) => CalculateCardBoosts();
 
         private void OnCardsCollected(List<int> _) => CalculateCardBoosts();
+
+        private void OnPurchasesChanged() => CalculateOfferBoosts();
+
+        private void CalculateOfferBoosts() => CalculateProfitOfferBoosts();
+
+        private void CalculateProfitOfferBoosts()
+        {
+            float coinsGained = MIN_BOOST_VALUE;
+            var profitOffers = _iapService.ProfitOffers();
+            foreach (var offer in profitOffers)
+            {
+                if (offer.IsActive)
+                {
+                    coinsGained *= offer.Config.CoinBoostFactor;
+                }
+            }
+            
+            _dataPool.AgeDynamicData.ChangeBoost(BoostSource.Shop, BoostType.CoinsGained, coinsGained);
+        }
 
         private void CalculateCardBoosts()
         {

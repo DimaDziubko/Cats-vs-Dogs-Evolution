@@ -13,6 +13,8 @@ namespace _Game.Core.Data.Age.Dynamic._UpgradeItem
         public float CardsCoinsGainedBoost;
         public float CardsBaseHealthBoost;
 
+        public float ProfitOffersCoinsGainedBoost;
+        
         public void Change(BoostSource source, BoostType boostType, float value)
         {
             switch (source)
@@ -21,6 +23,9 @@ namespace _Game.Core.Data.Age.Dynamic._UpgradeItem
                     break;
                 case BoostSource.Cards:
                     ChangeCardsBoosts(boostType, value);
+                    break;
+                case BoostSource.Shop:
+                    ChangeProfitOfferBoosts(boostType, value);
                     break;
             }
             
@@ -37,6 +42,26 @@ namespace _Game.Core.Data.Age.Dynamic._UpgradeItem
                     return GetCardBoost(type);
                 default:
                     return 1;
+            }
+        }
+
+        private void ChangeProfitOfferBoosts(BoostType boostType, float value)
+        {
+            switch (boostType)
+            {
+                case BoostType.None:
+                    break;
+                case BoostType.AllUnitDamage:
+                    break;
+                case BoostType.AllUnitHealth:
+                    break;
+                case BoostType.FoodProduction:
+                    break;
+                case BoostType.BaseHealth:
+                    break;
+                case BoostType.CoinsGained:
+                    ProfitOffersCoinsGainedBoost = value;
+                    break;
             }
         }
 
@@ -102,7 +127,7 @@ namespace _Game.Core.Data.Age.Dynamic._UpgradeItem
                 case BoostType.BaseHealth:
                     return CardsBaseHealthBoost;
                 case BoostType.CoinsGained:
-                    return CardsCoinsGainedBoost;
+                    return CardsCoinsGainedBoost * ProfitOffersCoinsGainedBoost;
                 default:
                     return 1;
             }

@@ -46,7 +46,6 @@ namespace _Game.Gameplay._Boosts.Scripts
             IConfigRepositoryFacade configRepositoryFacade,
             IWorldCameraService cameraService,
             IAudioService audioService,
-            IMyDebugger debugger,
             IMyLogger logger)
         {
             _dataPool = dataPool;
@@ -56,9 +55,6 @@ namespace _Game.Gameplay._Boosts.Scripts
             _audioService = audioService;
             _gameInitializer.OnMainInitialization += Init;
             _logger = logger;
-
-            debugger.Boosts = _boosts;
-            debugger.BoostUpgrades = _boostUpgrade;
         }
 
         private void Init()

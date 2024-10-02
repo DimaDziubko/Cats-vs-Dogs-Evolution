@@ -104,7 +104,7 @@ namespace _Game.Utils
             public const string WARRIORS = "Warriors";
             public const string AGES = "Ages";
             public const string BATTLES = "Battles";
-            
+
             //Summoning
             public const string SUMMONING_CONFIGS = "SummoningConfigs";
 
@@ -133,7 +133,8 @@ namespace _Game.Utils
             //Shop
             public const string SHOP_CONFIG = "ShopConfig";
             public const string PLACEMENT = "adPlacement";
-            
+            public const string FREE_GEMS_PACK = "freeGemsPack";
+
             //GeneralDailyTask
             public const string GENERAL_DAILY_TASK_CONFIG = "GeneralDailyTaskConfig";
         }

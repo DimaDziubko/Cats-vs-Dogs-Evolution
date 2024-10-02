@@ -20,6 +20,8 @@ namespace _Game.Core.Ads
 {
     public class CasAdsService : IAdsService, IDisposable
     {
+        private const string INTERSTITIAL_TIMER_KEY = "InterstitialTimerKey";   
+
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> VideoLoaded;
 
@@ -156,11 +158,11 @@ namespace _Game.Core.Ads
             _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}");
             IsTimeForInterstitial = false;
 
-            GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
+            GameTimer timer = _timerService.GetTimer(INTERSTITIAL_TIMER_KEY);
             if (timer != null)
             {
                 timer.Stop();
-                _timerService.RemoveTimer(TimerType.InterstitialAdDelay);
+                _timerService.RemoveTimer(INTERSTITIAL_TIMER_KEY);
             }
 
             TimerData timerData = new TimerData
@@ -170,9 +172,9 @@ namespace _Game.Core.Ads
                 StartValue = delay
             };
 
-            _timerService.CreateTimer(TimerType.InterstitialAdDelay, timerData, OnInterstitialAdTimerOut);
-            _timerService.StartTimer(TimerType.InterstitialAdDelay);
-            _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
+            _timerService.CreateTimer(INTERSTITIAL_TIMER_KEY, timerData, OnInterstitialAdTimerOut);
+            _timerService.StartTimer(INTERSTITIAL_TIMER_KEY);
+            _timer = _timerService.GetTimer(INTERSTITIAL_TIMER_KEY);
 
             _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!");
         }

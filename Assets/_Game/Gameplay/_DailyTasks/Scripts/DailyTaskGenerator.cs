@@ -130,17 +130,35 @@ namespace _Game.Gameplay._DailyTasks.Scripts
 
         private int SelectRandomDailyTask(List<DailyTaskConfig> configs)
         {
-            List<int> ids = new List<int>();
+            int totalDropChance = 0;
             foreach (var config in configs)
             {
-                if(DailyState.CompletedTasks.Contains(config.Id - 1)) continue; //Completed tasks are idx
-                for (int i = 0; i < config.DropChance; i++)
+                if (!DailyState.CompletedTasks.Contains(config.Id))
                 {
-                    ids.Add(config.Id);
+                    totalDropChance += config.DropChance;
                 }
             }
 
-            return _random.Next(0, ids.Count);
+            if (totalDropChance == 0)
+            {
+                throw new InvalidOperationException("No valid tasks available for selection.");
+            }
+            
+            int randomPoint = _random.Next(0, totalDropChance);
+            
+            int cumulativeChance = 0;
+            foreach (var config in configs)
+            {
+                if (DailyState.CompletedTasks.Contains(config.Id)) continue;
+
+                cumulativeChance += config.DropChance;
+                if (randomPoint < cumulativeChance)
+                {
+                    return config.Id;
+                }
+            }
+            
+            throw new InvalidOperationException("Failed to select a daily task.");
         }
 
         private void GenerateDailyTask(DailyTaskConfig config)

@@ -26,9 +26,6 @@ namespace _Game.Core.Configs.Repositories.Economy
                 .GameConfig
                 .FoodBoostConfig;
 
-        public FreeGemsPackDayConfig GetFreeGemsPackDayConfig() => 
-            _userContainer.GameConfig.FreeGemsPackDayConfig;
-
         public float GetMinimalCoinsForBattle() => 
             _ageAgeConfigRepository
                 .GetAgeConfig(TimelineState.AgeId)

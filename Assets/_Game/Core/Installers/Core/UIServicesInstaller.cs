@@ -145,7 +145,7 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
 
         private void BindUIFactory() => 
-            Container.Bind<IUIFactory>().To<UIFactory>().FromInstance(_uiFactory).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIFactory>().FromInstance(_uiFactory).AsSingle().NonLazy();
 
         private void BindCardsScreenProvider() =>
             Container.Bind<ICardsScreenProvider>()

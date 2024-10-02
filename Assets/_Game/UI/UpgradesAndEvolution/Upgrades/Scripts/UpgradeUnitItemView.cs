@@ -109,6 +109,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         {
             _infoIcon.enabled = true;
             _transactionButton.Hide();
+            _transactionButton.Cleanup();
             _unitIconHolder.sprite = model.WarriorIcon;
             _unitIconHolder.color = _unlockedIconColor;
             _type = model.Type;

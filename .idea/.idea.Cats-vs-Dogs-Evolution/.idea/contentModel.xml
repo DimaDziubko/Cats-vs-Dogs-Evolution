@@ -258,6 +258,7 @@
                 <e p="MigrationTo110.cs" t="Include" />
                 <e p="MigrationTo120.cs" t="Include" />
                 <e p="MigrationTo130.cs" t="Include" />
+                <e p="MigrationTo140.cs" t="Include" />
               </e>
               <e p="StateMigrationBase.cs" t="Include" />
               <e p="StateMigrationManager.cs" t="Include" />
@@ -283,7 +284,7 @@
                 <e p="EnemyWave.cs" t="Include" />
                 <e p="Exponential.cs" t="Include" />
                 <e p="FoodBoostConfig.cs" t="Include" />
-                <e p="FreeGemsPackDayConfig.cs" t="Include" />
+                <e p="FreeGemsPackConfig.cs" t="Include" />
                 <e p="GameConfig.cs" t="Include" />
                 <e p="GeneralAgesConfig.cs" t="Include" />
                 <e p="GeneralBattlesConfig.cs" t="Include" />
@@ -475,6 +476,11 @@
               <e p="SoundsHolder.cs" t="Include" />
             </e>
             <e p="Services" t="Include">
+              <e p="_AdsGemsPackService" t="Include">
+                <e p="AdsGemsPackService.cs" t="Include" />
+                <e p="IAdsGemsPackService.cs" t="Include" />
+                <e p="TimeBasedRecoveryCalculator.cs" t="Include" />
+              </e>
               <e p="_BattleSpeedService" t="Include">
                 <e p="_Scripts" t="Include">
                   <e p="BattleSpeedService.cs" t="Include" />
@@ -527,11 +533,13 @@
                 <e p="IAPProvider.cs" t="Include" />
                 <e p="IAPService.cs" t="Include" />
                 <e p="IIAPService.cs" t="Include" />
-                <e p="ItemType.cs" t="Include" />
                 <e p="ProductConfig.cs" t="Include" />
                 <e p="ProductDescription.cs" t="Include" />
+                <e p="ProfitOffer.cs" t="Include" />
+                <e p="ShopItemType.cs" t="Include" />
               </e>
               <e p="IGPService" t="Include">
+                <e p="CoinsBundle.cs" t="Include" />
                 <e p="IGPService.cs" t="Include" />
                 <e p="IIGPService.cs" t="Include" />
               </e>
@@ -589,10 +597,13 @@
                 </e>
                 <e p="FreeGemsPack" t="Include">
                   <e p="FreeGemsPackStateHandler.cs" t="Include" />
+                  <e p="IAdsGemsPackStateHandler.cs" t="Include" />
                   <e p="IFreeGemsPackStateHandler.cs" t="Include" />
                 </e>
               </e>
               <e p="_State" t="Include">
+                <e p="AdsGemsPackContainer.cs" t="Include" />
+                <e p="AdsGemsPackState.cs" t="Include" />
                 <e p="AdsStatistics.cs" t="Include" />
                 <e p="AdsWeeklyWatchState.cs" t="Include" />
                 <e p="BattleSpeedState.cs" t="Include" />
@@ -602,9 +613,12 @@
                 <e p="DailyTasksState.cs" t="Include" />
                 <e p="FactionState.cs" t="Include" />
                 <e p="FoodBoostState.cs" t="Include" />
+                <e p="FreeGemsPackContainer.cs" t="Include" />
                 <e p="FreeGemsPackState.cs" t="Include" />
+                <e p="IAdsGemsPackStateReadonly.cs" t="Include" />
                 <e p="IBattleSpeedStateReadonly.cs" t="Include" />
                 <e p="IDailyTasksStateReadonly.cs" t="Include" />
+                <e p="IFreeGemsPackContainer.cs" t="Include" />
                 <e p="IFreeGemsPackStateReadonly.cs" t="Include" />
                 <e p="IPurchaseDataStateReadonly.cs" t="Include" />
                 <e p="ITasksStateReadonly.cs" t="Include" />
@@ -944,6 +958,8 @@
               <e p="BoostPopupProvider.cs" t="Include" />
               <e p="BoostUpgradeInfoItem.cs" t="Include" />
               <e p="BoostUpgradeInfoPanel.cs" t="Include" />
+              <e p="FadeAnimation.cs" t="Include" />
+              <e p="FadeData.cs" t="Include" />
               <e p="IBoostPopupProvider.cs" t="Include" />
               <e p="QuickBoostInfoPanel.cs" t="Include" />
               <e p="UIElementsFadeAnimation.cs" t="Include" />
@@ -1081,19 +1097,45 @@
                 </e>
               </e>
               <e p="Scripts" t="Include">
+                <e p="AdsGemsPack.cs" t="Include" />
+                <e p="AdsGemsPackPresenter.cs" t="Include" />
+                <e p="AdsGemsPackView.cs" t="Include" />
+                <e p="AmountListView.cs" t="Include" />
+                <e p="AmountView.cs" t="Include" />
+                <e p="CoinsBundlePresenter.cs" t="Include" />
+                <e p="CoinsBundleView.cs" t="Include" />
                 <e p="Delimiter.cs" t="Include" />
                 <e p="DynamicGridLayout.cs" t="Include" />
+                <e p="FreeGemsPack.cs" t="Include" />
+                <e p="FreeGemsPackPresenter.cs" t="Include" />
+                <e p="FreeGemsPackProductPresenter.cs" t="Include" />
+                <e p="FreeGemsPackView.cs" t="Include" />
+                <e p="GemsBundle.cs" t="Include" />
+                <e p="GemsBundlePresenter.cs" t="Include" />
+                <e p="GemsBundleView.cs" t="Include" />
+                <e p="IAPProductPresenter.cs" t="Include" />
+                <e p="IFreeGemsPackProductPresenter.cs" t="Include" />
+                <e p="IIGPProductPresenter.cs" t="Include" />
+                <e p="IMiniShopPresenter.cs" t="Include" />
+                <e p="IProductPresenter.cs" t="Include" />
                 <e p="IShopPresenter.cs" t="Include" />
                 <e p="IShopProvider.cs" t="Include" />
                 <e p="ItemType.cs" t="Include" />
+                <e p="ListView.cs" t="Include" />
+                <e p="MiniShopPresenter.cs" t="Include" />
                 <e p="Plug.cs" t="Include" />
+                <e p="ProfitOfferPresenter.cs" t="Include" />
+                <e p="ProfitOfferView.cs" t="Include" />
                 <e p="Shop.cs" t="Include" />
-                <e p="ShopItem.cs" t="Include" />
                 <e p="ShopItemModel.cs" t="Include" />
                 <e p="ShopItemsContainer.cs" t="Include" />
                 <e p="ShopItemStaticData.cs" t="Include" />
+                <e p="ShopItemView.cs" t="Include" />
                 <e p="ShopPresenter.cs" t="Include" />
                 <e p="ShopProvider.cs" t="Include" />
+                <e p="SpeedOffer.cs" t="Include" />
+                <e p="SpeedOfferPresenter.cs" t="Include" />
+                <e p="SpeedOfferView.cs" t="Include" />
               </e>
             </e>
             <e p="_StartBattleScreen" t="Include">
@@ -1262,6 +1304,9 @@
               <e p="AlertPopup.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="AddressableAssetsData" t="Include">
+          <e p="link.xml" t="Include" />
         </e>
         <e p="CleverAdsSolutions" t="Include">
           <e p="Editor" t="Include">

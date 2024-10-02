@@ -24,7 +24,6 @@ namespace _Game.Core.UserState._Handler._DailyTask
         {
             _userContainer.State.DailyTasksState.ChangeCurrentTaskIdx(id);
             _userContainer.RequestSaveGame();
-
         }
 
         public void AddProgress(float delta)

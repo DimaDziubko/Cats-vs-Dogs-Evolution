@@ -228,7 +228,7 @@ namespace _Game.Core._DataPresenters.UnitUpgradePresenter
             stats[StatType.Health].NeedAnimation = true;
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType currencyType, double delta, CurrenciesSource source)
             => UpdateUnitItems();
 
 

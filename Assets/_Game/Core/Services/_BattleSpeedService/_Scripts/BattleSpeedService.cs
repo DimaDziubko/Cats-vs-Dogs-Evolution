@@ -18,13 +18,14 @@ using UnityEngine;
 
 namespace _Game.Core.Services._BattleSpeedService._Scripts
 {
-    public class BattleSpeedService : 
-        IBattleSpeedService, 
+    public class BattleSpeedService :
+        IBattleSpeedService,
         IDisposable,
         IStartBattleListener,
         IPauseListener,
         IStopBattleListener
     {
+        private const string BATTLE_SPEED_TIMER_KEY = "BattleSpeedTimerKey";
         public event Action<BattleSpeedBtnModel> BattleSpeedBtnModelChanged;
         public event Action<GameTimer, bool> SpeedBoostTimerActivityChanged;
 
@@ -119,7 +120,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 
         void IPauseListener.SetPaused(bool isPaused)
         {
-            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            var timer = _timerService.GetTimer(BATTLE_SPEED_TIMER_KEY);
             if (timer == null) return;
             if (isPaused)
             {
@@ -133,7 +134,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
         void IStopBattleListener.OnStopBattle()
         {
             _isBattleRunning = false;
-            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            var timer = _timerService.GetTimer(BATTLE_SPEED_TIMER_KEY);
             timer?.Stop();
             SaveBattleTimerValue();
         }
@@ -150,9 +151,9 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
             if (!BattleSpeed.IsNormalSpeedActive)
             {
                 _userContainer.BattleSpeedStateHandler.ChangeNormalSpeed(true);
-                if (_timerService.GetTimer(TimerType.BattleSpeed) != null)
+                if (_timerService.GetTimer(BATTLE_SPEED_TIMER_KEY) != null)
                 {
-                    _timerService.RemoveTimer(TimerType.BattleSpeed);
+                    _timerService.RemoveTimer(BATTLE_SPEED_TIMER_KEY);
                 }
             }
         }
@@ -232,13 +233,12 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 
         private void UpdateSpeedButtonTimer()
         {
-            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            var timer = _timerService.GetTimer(BATTLE_SPEED_TIMER_KEY);
             if (timer != null && !BattleSpeed.IsNormalSpeedActive)
             {
                 _battleSpeedBtnModel.TimerTime = timer.TimeLeft;
             }
         }
-
 
         private void ActivateSpeedBoost()
         {
@@ -257,7 +257,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
                 StartValue = duration,
             };
             
-            _timerService.CreateTimer(TimerType.BattleSpeed, timerData, ResetBattleSpeed);
+            _timerService.CreateTimer(BATTLE_SPEED_TIMER_KEY, timerData, ResetBattleSpeed);
         }
 
         private void ResetBattleSpeed()
@@ -270,13 +270,13 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 
         private void StartSpeedBoostTimer()
         {
-            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            var timer = _timerService.GetTimer(BATTLE_SPEED_TIMER_KEY);
             timer?.Start();
         }
 
         private void TryNotifyAboutTimerActivity(bool isActive)
         {
-            var timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            var timer = _timerService.GetTimer(BATTLE_SPEED_TIMER_KEY);
             if (timer != null)
             {
                 SpeedBoostTimerActivityChanged?.Invoke(timer, isActive);
@@ -285,7 +285,7 @@ namespace _Game.Core.Services._BattleSpeedService._Scripts
 
         private void SaveBattleTimerValue()
         {
-            GameTimer timer = _timerService.GetTimer(TimerType.BattleSpeed);
+            GameTimer timer = _timerService.GetTimer(BATTLE_SPEED_TIMER_KEY);
             if (timer != null)
             {
                 _userContainer.BattleSpeedStateHandler.ChangeBattleSpeedTimerDurationLeft(timer.TimeLeft);

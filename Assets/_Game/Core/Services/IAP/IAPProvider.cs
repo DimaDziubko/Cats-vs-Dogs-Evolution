@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Core._Logger;
+using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
 using UnityEngine.Purchasing;
@@ -17,12 +18,19 @@ namespace _Game.Core.Services.IAP
         private IExtensionProvider _extensions;
         
         private IAPService _iapService;
+        
+        public Dictionary<string, GemsBundleConfig> GemsBundleConfigs { get; private set; }
+        public Dictionary<string, Product> GemsBundleProducts { get; private set; }
 
-        public Dictionary<string, ProductConfig> Configs { get; private set; }
-        public Dictionary<string, Product> Products { get; private set; }
+        
+        public Dictionary<string, SpeedBoostOfferConfig> SpeedBoostOfferConfigs { get; private set; }
+        public Dictionary<string, Product> SpeedOffers { get; private set; }
+        
 
+        public Dictionary<string, ProfitOfferConfig> ProfitOfferConfigs { get; private set; }
+        public Dictionary<string, Product> ProfitOffers { get; set; }
+        
         public event Action Initialized;
-
         public bool IsInitialized => _controller != null && _extensions != null;
 
 
@@ -36,19 +44,34 @@ namespace _Game.Core.Services.IAP
 
         public void Initialize(IAPService iapService)
         {
-            
             _iapService = iapService;
             
-            Configs = new Dictionary<string, ProductConfig>();
-            Products = new Dictionary<string, Product>();
+            GemsBundleConfigs = new Dictionary<string, GemsBundleConfig>();
+            GemsBundleProducts = new Dictionary<string, Product>();
+            
+            SpeedBoostOfferConfigs = new Dictionary<string, SpeedBoostOfferConfig>();
+            SpeedOffers = new Dictionary<string, Product>();
+            
+            ProfitOfferConfigs = new Dictionary<string, ProfitOfferConfig>();
+            ProfitOffers = new Dictionary<string, Product>();
             
             Load();
             
             ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-            foreach (ProductConfig productConfig in Configs.Values)
+            foreach (GemsBundleConfig gemsBundleConfig in GemsBundleConfigs.Values)
             {
-                builder.AddProduct(productConfig.IAP_ID, productConfig.ProductType);
+                builder.AddProduct(gemsBundleConfig.IAP_ID, gemsBundleConfig.ProductType);
+            }
+            
+            foreach (SpeedBoostOfferConfig speedBoostOfferConfig in SpeedBoostOfferConfigs.Values)
+            {
+                builder.AddProduct(speedBoostOfferConfig.IAP_ID, speedBoostOfferConfig.ProductType);
+            }
+            
+            foreach (ProfitOfferConfig profitOfferConfig in ProfitOfferConfigs.Values)
+            {
+                builder.AddProduct(profitOfferConfig.IAP_ID, profitOfferConfig.ProductType);
             }
   
             UnityPurchasing.Initialize(this, builder);
@@ -64,7 +87,20 @@ namespace _Game.Core.Services.IAP
 
             foreach (Product product in _controller.products.all)
             {
-                Products.Add(product.definition.id, product);
+                if (GemsBundleConfigs.ContainsKey(product.definition.id))
+                {
+                    GemsBundleProducts.Add(product.definition.id, product);
+                }
+       
+                if (SpeedBoostOfferConfigs.ContainsKey(product.definition.id))
+                {
+                    SpeedOffers.Add(product.definition.id, product);
+                }
+                
+                if (ProfitOfferConfigs.ContainsKey(product.definition.id))
+                {
+                    ProfitOffers.Add(product.definition.id, product);
+                }
             }
             
             Initialized?.Invoke();
@@ -90,10 +126,20 @@ namespace _Game.Core.Services.IAP
 
         private void Load()
         {
-            Configs = _shopConfigRepository
-                .GetIAPConfig()
+            GemsBundleConfigs = _shopConfigRepository
+                .GetGemsBundleConfigs()
                 .ToDictionary(x =>x.IAP_ID, 
                 x=>x);
+            
+            SpeedBoostOfferConfigs = _shopConfigRepository
+                .GetSpeedBoostOfferConfigs()
+                .ToDictionary(x =>x.IAP_ID, 
+                    x=>x);
+
+            ProfitOfferConfigs = _shopConfigRepository
+                .GetProfitOfferConfigs()
+                .ToDictionary(x => x.IAP_ID,
+                x => x);
         }
     }
 }

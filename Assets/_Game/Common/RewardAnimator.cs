@@ -49,14 +49,14 @@ namespace _Game.Common
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
         }
 
-        private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType type, double delta, CurrenciesSource source)
         {
             switch (type)
             {
-                case UI._Currencies.Currencies.Coins:
+                case UI._Currencies.CurrencyType.Coins:
                     TryToShowCoinsRewardAnimation(delta, source);
                     break;
-                case UI._Currencies.Currencies.Gems:
+                case UI._Currencies.CurrencyType.Gems:
                     TryToShowGemsRewardAnimation(delta, source);
                     break;
             }

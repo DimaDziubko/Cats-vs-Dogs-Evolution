@@ -22,7 +22,6 @@ namespace _Game.Utils.Extensions
                 CommonConfig = ExtractCommonConfig(jsonData),
                 FoodBoostConfig = ExtractFoodBoostConfig(jsonData),
                 ShopConfig = ExtractShopConfig(jsonData),
-                FreeGemsPackDayConfig = ExtractFreeGemsPackDayConfig(jsonData),
                 AdsConfig = ExtractAdsConfig(jsonData),
                 GeneralDailyTaskConfig = ExtractGeneralDailyTaskConfig(jsonData),
                 SummoningData = ExtractSummoning(jsonData),
@@ -122,19 +121,7 @@ namespace _Game.Utils.Extensions
 
             return generalDailyTaskToken.ToObject<GeneralDailyTaskConfig>();
         }
-
-        private static FreeGemsPackDayConfig ExtractFreeGemsPackDayConfig(JObject jsonData)
-        {
-            var freeGemsPackDayConfigToken = jsonData[Constants.ConfigKeys.FREE_GEMS_PACK_DAY_CONFIG];
-            if (freeGemsPackDayConfigToken == null)
-            {
-                Debug.LogError("FreeGemsPackDayConfig is null");
-                return null;
-            }
-
-            return freeGemsPackDayConfigToken.ToObject<FreeGemsPackDayConfig>();
-        }
-
+        
         private static ShopConfig ExtractShopConfig(JObject jsonData)
         {
             var shopToken = jsonData[Constants.ConfigKeys.SHOP_CONFIG];

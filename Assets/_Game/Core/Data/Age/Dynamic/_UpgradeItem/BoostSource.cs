@@ -3,6 +3,7 @@
     public enum BoostSource
     {
         TotalBoosts,
-        Cards
+        Cards,
+        Shop
     }
 }

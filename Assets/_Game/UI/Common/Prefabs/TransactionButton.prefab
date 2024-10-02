@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1428699069, guid: 9ceb87a36f0873447b95f30ebe11cddf, type: 3}
+  m_Sprite: {fileID: 1012610461, guid: 5de807814f6f1ad4cb7b05640e43b50a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7244339080653130024}
   - component: {fileID: 2580571824225555156}
   m_Layer: 5
-  m_Name: LoadingText
+  m_Name: InfoLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -574,11 +574,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonRectTransform: {fileID: 1058585485758766936}
-  _priceText: {fileID: 3454184508613951650}
-  _infoText: {fileID: 0}
+  _priceLabel: {fileID: 3454184508613951650}
+  _infoText: {fileID: 2580571824225555156}
   _moneyPanel: {fileID: 5421473843308809956}
   _currencyIconHolder: {fileID: 2819995581031297157}
-  _loadingText: {fileID: 2580571824225555156}
+  _infoLabel: {fileID: 2580571824225555156}
   _button: {fileID: 3155344610350266037}
   _isHoldable: 1
 --- !u!114 &7064327904658108775

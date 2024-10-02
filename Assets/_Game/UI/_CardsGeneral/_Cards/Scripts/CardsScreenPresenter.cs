@@ -112,7 +112,7 @@ namespace _Game.UI._CardsGeneral._Cards.Scripts
                 UpdateButtonModels();
         }
 
-        private void OnCurrenciesChanged(Currencies currencies, double delta, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType currencyType, double delta, CurrenciesSource source)
         {
             UpdateButtonModels();
         }

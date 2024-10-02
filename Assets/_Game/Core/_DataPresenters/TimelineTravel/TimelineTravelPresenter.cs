@@ -5,16 +5,16 @@ using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
+using _Game.Core.DataPresenters.TimelineTravel;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._MainMenu.Scripts;
-using _Game.UI.TimelineInfoWindow.Scripts;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using Assets._Game.Core._UpgradesChecker;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
 
-namespace _Game.Core.DataPresenters.TimelineTravel
+namespace _Game.Core._DataPresenters.TimelineTravel
 {
     public class TimelineTravelPresenter : ITimelineTravelPresenter, IUpgradeAvailabilityProvider, IDisposable
     {

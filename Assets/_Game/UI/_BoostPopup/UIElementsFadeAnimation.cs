@@ -19,18 +19,19 @@ namespace _Game.UI._BoostPopup
         private Tween _labelTween;
         private Tween _fadeDelayTween;
         private Tween _fadeDurationTween;
+
         public void Play()
         {
             _imageTween?.Kill();
             _labelTween?.Kill();
             _fadeDelayTween?.Kill();
             _fadeDurationTween?.Kill();
-            
+
             if (!gameObject.activeInHierarchy)
             {
                 gameObject.SetActive(true);
             }
-            
+
             if (_images != null)
             {
                 foreach (var image in _images)
@@ -98,11 +99,13 @@ namespace _Game.UI._BoostPopup
             _labelTween = null;
             _fadeDelayTween = null;
             _fadeDurationTween = null;
-            
+
             if (gameObject.activeInHierarchy)
             {
                 gameObject.SetActive(false);
             }
         }
+
     }
 }
+    

@@ -17,10 +17,9 @@ namespace _Game.Core.Data
         public DataPool<int, ShopItemStaticData> ShopItemStaticDataPool { get; set; }
 
         public GeneralDataPool(
-            IMyLogger logger,
-            IMyDebugger debugger)
+            IMyLogger logger)
         {
-            debugger.GeneralDataPool = this;
+
         }
     }
 }

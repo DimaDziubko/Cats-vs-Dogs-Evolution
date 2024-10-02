@@ -5,7 +5,7 @@ using _Game.Core._DataLoaders.BaseDataProvider;
 using _Game.Core._DataLoaders.BattleDataLoader;
 using _Game.Core._DataLoaders.EnvironmentDataProvider;
 using _Game.Core._DataLoaders.Facade;
-using _Game.Core._DataLoaders.ShopDataProvider;
+using _Game.Core._DataLoaders.ShopDataLoader;
 using _Game.Core._DataLoaders.Timeline;
 using _Game.Core._DataLoaders.UnitDataLoaders;
 using _Game.Core._DataLoaders.WeaponDataProviders;

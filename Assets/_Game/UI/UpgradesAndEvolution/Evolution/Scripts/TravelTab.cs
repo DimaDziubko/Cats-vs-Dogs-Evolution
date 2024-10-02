@@ -115,7 +115,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         private void UpdateTravelButton(in bool canTravel)
         {
             var state = canTravel ? ButtonState.Active : ButtonState.Inactive;
-            _travelButton.UpdateButtonState(state, "0", false);
+            _travelButton.UpdateButtonState(state, "0", null, false);
         }
     }
 }

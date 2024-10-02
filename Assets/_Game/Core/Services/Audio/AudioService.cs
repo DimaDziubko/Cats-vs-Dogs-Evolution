@@ -11,6 +11,9 @@ namespace _Game.Core.Services.Audio
         private const string SFX_VOLUME = "SFX";
         private const string MUSIC_VOLUME = "MUSIC";
 
+        private const string SFX_PREFS_KEY = "SFXOn";
+        private const string AMBIENCE_PREFS_KEY = "AmbienceOn";
+        
         private readonly AudioMixer _mixer;
 
         private readonly AudioSource[] _sFXSources;
@@ -36,6 +39,19 @@ namespace _Game.Core.Services.Audio
             _sFXSources = sfxSourcesHolder.SfxSources;
             _musicSource = musicSource;
             _soundsHolder = soundsHolder;
+            
+            _isSFXOn = PlayerPrefs.GetInt(SFX_PREFS_KEY, 1) == 1;
+            _isAmbienceOn = PlayerPrefs.GetInt(AMBIENCE_PREFS_KEY, 1) == 1;
+
+            if (!_isSFXOn)
+            {
+                _mixer.SetFloat(SFX_VOLUME, MIN_VOLUME_DB);
+            }
+
+            if (!_isAmbienceOn)
+            {
+                _mixer.SetFloat(MUSIC_VOLUME, MIN_VOLUME_DB);
+            }
         }
         
         public void PlayOneShot(AudioClip audioClip)
@@ -105,10 +121,7 @@ namespace _Game.Core.Services.Audio
             }
         }
         
-        public void Stop()
-        {
-            _musicSource.Stop();
-        }
+        public void Stop() => _musicSource.Stop();
 
         public void PlayCoinDropSound()
         {
@@ -135,6 +148,10 @@ namespace _Game.Core.Services.Audio
         public void SwitchSFX(bool isOn)
         {
             _isSFXOn = isOn;
+            
+            PlayerPrefs.SetInt(SFX_PREFS_KEY, _isSFXOn ? 1 : 0);
+            PlayerPrefs.Save();
+            
             if (isOn)
             {
                 SetSFXVolume(_sfxVolumeBeforeMute);
@@ -149,6 +166,10 @@ namespace _Game.Core.Services.Audio
         public void SwitchAmbience(bool isOn)
         {
             _isAmbienceOn = isOn;
+            
+            PlayerPrefs.SetInt(AMBIENCE_PREFS_KEY, _isAmbienceOn ? 1 : 0);
+            PlayerPrefs.Save();
+            
             if (isOn)
             {
                 SetMusicVolume(_musicVolumeBeforeMute);

@@ -6,11 +6,11 @@ using _Game.Core.Ads;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
-using _Game.UI.TimelineInfoWindow.Scripts;
 using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using CAS;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +23,9 @@ namespace _Game.UI.TimelineInfoScreen.Scripts
         [SerializeField] private Canvas _canvas;
         [SerializeField] private ScrollRect _scrollRect;
 
+        [SerializeField] private TMP_Text _timelineInfoLabel;
+        [SerializeField] private TMP_Text _difficultyInfoLabel;
+        
         [SerializeField] private TimelineInfoItem[] _items;
         [SerializeField] private TimelineProgressBar _progressBar;
         [SerializeField] private Button _exitBtn;
@@ -62,7 +65,6 @@ namespace _Game.UI.TimelineInfoScreen.Scripts
             _evolutionPresenter = evolutionPresenter;
             _logger = logger;
             _canvas.worldCamera = cameraService.UICameraOverlay;
-            //Show();
             _exitBtn.interactable = false;
             _adsService = adsService;
         }
@@ -189,7 +191,7 @@ namespace _Game.UI.TimelineInfoScreen.Scripts
         private void Subscribe()
         {
             Opened += _timelineInfoPresenter.OnPrepareTimelineInfoData;
-            Opened += _timelineInfoPresenter.OnTimelineInfoWindowOpened;
+            Opened += _timelineInfoPresenter.OnTimelineInfoScreenOpened;
 
             _timelineInfoPresenter.TimelineInfoDataUpdated += UpdateUIElements;
             _exitBtn.onClick.AddListener(OnExit);
@@ -198,7 +200,7 @@ namespace _Game.UI.TimelineInfoScreen.Scripts
         private void Unsubscribe()
         {
             Opened -= _timelineInfoPresenter.OnPrepareTimelineInfoData;
-            Opened -= _timelineInfoPresenter.OnTimelineInfoWindowOpened;
+            Opened -= _timelineInfoPresenter.OnTimelineInfoScreenOpened;
 
             _timelineInfoPresenter.TimelineInfoDataUpdated -= UpdateUIElements;
             _exitBtn.onClick.RemoveAllListeners();
@@ -208,7 +210,9 @@ namespace _Game.UI.TimelineInfoScreen.Scripts
 
         private void UpdateUIElements(TimelineInfoModel model)
         {
-            //Debug.Log("UpdateUIElements");
+            _timelineInfoLabel.text = model.TimelineInfo;
+            _difficultyInfoLabel.enabled = model.ShowDifficulty;
+            _difficultyInfoLabel.text = model.DifficultyInfo;
 
             if (_isShowForInfo)
             {

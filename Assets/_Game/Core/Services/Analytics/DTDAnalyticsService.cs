@@ -101,7 +101,7 @@ namespace _Game.Core.Services.Analytics
             DTDAnalytics.RealCurrencyPayment(orderId, price, productId, currencyCode);
         }
 
-        private void OnCurrenciesChanged(Currencies type, double amount, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType type, double amount, CurrenciesSource source)
         {
             if (amount > 1)
             {
@@ -120,7 +120,7 @@ namespace _Game.Core.Services.Analytics
             DTDAnalytics.VirtualCurrencyPayment(dto.PurchaseId, dto.PurchaseType, dto.PurchaseAmount, dto.PurchasePrice, dto.PurchaseCurrency);
         }
 
-        private void TrackCurrencyAccrual(Currencies type, double amount, CurrenciesSource source)
+        private void TrackCurrencyAccrual(CurrencyType type, double amount, CurrenciesSource source)
         {
             DTDAccrualType accrualType;
             if (source == CurrenciesSource.Shop || source == CurrenciesSource.MiniShop) accrualType = DTDAccrualType.Bought;
@@ -131,9 +131,9 @@ namespace _Game.Core.Services.Analytics
             
             switch (type)
             {
-                case UI._Currencies.Currencies.Coins:
+                case UI._Currencies.CurrencyType.Coins:
                     break;
-                case UI._Currencies.Currencies.Gems:
+                case UI._Currencies.CurrencyType.Gems:
                     DTDAnalytics.CurrencyAccrual(type.ToString(), (int)amount, source.ToString(), accrualType);
                     DTDAnalytics.CurrentBalance(new Dictionary<string, long>
                     {

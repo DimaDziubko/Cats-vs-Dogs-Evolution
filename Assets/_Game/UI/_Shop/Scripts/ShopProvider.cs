@@ -1,7 +1,6 @@
 ﻿using _Game.Core._Logger;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.AssetManagement;
-using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
@@ -13,7 +12,6 @@ namespace _Game.UI._Shop.Scripts
     public class ShopProvider : LocalAssetLoader, IShopProvider
     {
         private readonly IWorldCameraService _cameraService;
-        private readonly IAudioService _audioService;
         private readonly IHeader _header;
         private readonly IUIFactory _uiFactory;
         private readonly IShopPresenter _shopPresenter;
@@ -24,7 +22,6 @@ namespace _Game.UI._Shop.Scripts
         
         public ShopProvider(
             IWorldCameraService cameraService,
-            IAudioService audioService,
             IHeader header,
             IUIFactory uiFactory,
             IShopPresenter shopPresenter,
@@ -32,7 +29,6 @@ namespace _Game.UI._Shop.Scripts
             IMyLogger logger)
         {
             _cameraService = cameraService;
-            _audioService = audioService;
             _header = header;
             _uiFactory = uiFactory;
             _shopPresenter = shopPresenter;
@@ -45,7 +41,6 @@ namespace _Game.UI._Shop.Scripts
             _screen = await LoadDisposable<Shop>(AssetsConstants.SHOP);
             _screen.Value.Construct(
                 _cameraService.UICameraOverlay,
-                _audioService,
                 _header,
                 _uiFactory,
                 _shopPresenter,
