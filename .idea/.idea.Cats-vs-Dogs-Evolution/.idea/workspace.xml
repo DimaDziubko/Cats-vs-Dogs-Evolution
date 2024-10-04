@@ -23,15 +23,203 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4eaf3ee4-aec3-4cf2-a4d6-7fe65bb69f7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Communication/Migrations/MigrationTo140.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Communication/Migrations/MigrationTo140.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/FreeGemsPackConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ProfitOffer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ProfitOffer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IGPService/CoinsBundle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IGPService/CoinsBundle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/AdsGemsPackService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/AdsGemsPackService.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/IAdsGemsPackService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/IAdsGemsPackService.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/TimeBasedRecoveryCalculator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/TimeBasedRecoveryCalculator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/IAdsGemsPackStateHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/IAdsGemsPackStateHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/AdsGemsPackContainer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/AdsGemsPackContainer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/AdsGemsPackState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/AdsGemsPackState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/FreeGemsPackContainer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/FreeGemsPackContainer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IAdsGemsPackStateReadonly.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IAdsGemsPackStateReadonly.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IFreeGemsPackContainer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IFreeGemsPackContainer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/FadeAnimation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/FadeAnimation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/FadeData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/FadeData.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPackPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPackPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPackView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPackView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AmountListView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AmountListView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AmountView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AmountView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/CoinsBundlePresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/CoinsBundleView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/CoinsBundleView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackProductPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackProductPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/GemsBundle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/GemsBundle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/GemsBundlePresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/GemsBundlePresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/GemsBundleView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/GemsBundleView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IAPProductPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IAPProductPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IFreeGemsPackProductPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IFreeGemsPackProductPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IIGPProductPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IIGPProductPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IMiniShopPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IMiniShopPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IProductPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IProductPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ListView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ListView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/MiniShopPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/MiniShopPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItemView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/SpeedOffer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/SpeedOffer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/SpeedOfferPresenter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/SpeedOfferPresenter.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/SpeedOfferView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/SpeedOfferView.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Cats-vs-Dogs-Evolution/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cats-vs-Dogs-Evolution/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Cats-vs-Dogs-Evolution/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cats-vs-Dogs-Evolution/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Windows.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Windows.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameAnalytics/Plugins/Playmaker/Examples/GameAnalyticsPlayMakerDemo.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameAnalytics/Plugins/Prefabs/GameAnalytics.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameAnalytics/Plugins/Prefabs/GameAnalytics.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StompyRobot/SRDebugger/PlaymakerIntegration.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Cats-vs-Dogs-Evolution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cats-vs-Dogs-Evolution/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/link.xml.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/link.xml.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Bundles/Shared/UIElements/1x/GeneralUI.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Bundles/Shared/UIElements/1x/GeneralUI.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Bundles/Shared/UIElements/1x/GeneralUI.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Bundles/Shared/UIElements/1x/GeneralUI.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Bundles/Shop/1x/Shop.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Bundles/Shop/1x/Shop.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Bundles/Shop/1x/Shop.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Bundles/Shop/1x/Shop.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Common/RewardAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Common/RewardAnimator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Ads/CasAdsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Ads/CasAdsService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Communication/StateMigrationManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Communication/StateMigrationManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/FreeGemsPackDayConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/FreeGemsPackDayConfig.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/FreeGemsPackConfig.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/GameConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/GameConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/ShopConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/ShopConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Economy/EconomyConfigRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Economy/EconomyConfigRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Economy/IEconomyConfigRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Economy/IEconomyConfigRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Shop/IShopConfigRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Shop/IShopConfigRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Shop/ShopConfigRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Shop/ShopConfigRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Data/Age/Dynamic/_UpgradeItem/BoostSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Data/Age/Dynamic/_UpgradeItem/BoostSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Data/Age/Dynamic/_UpgradeItem/BoostsData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Data/Age/Dynamic/_UpgradeItem/BoostsData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Data/GeneralDataPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Data/GeneralDataPool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Debugger/MyDebugger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Debugger/MyDebugger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Installers/BattleMode/UIInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Installers/BattleMode/UIInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/CoreServicesInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/CoreServicesInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/DataLoadersInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/DataLoadersInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/DataPresentersInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/DataPresentersInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/GameplayServicesInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/GameplayServicesInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/UIServicesInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/UIServicesInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/Analytics/DTDAnalyticsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/Analytics/DTDAnalyticsService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/Audio/AudioService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/Audio/AudioService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IIAPService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IIAPService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ItemType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ShopItemType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ItemType.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ShopItemType.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ProductConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/ProductConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IGPService/IGPService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IGPService/IGPService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/IGPService/IIGPService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/IGPService/IIGPService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/IUserContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/IUserContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/UserContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/UserContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/_BattleSpeedService/_Scripts/BattleSpeedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_BattleSpeedService/_Scripts/BattleSpeedService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/FreeGemsPackService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/FreeGemsPackService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/FreeGemsPackService.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/FreeGemsPackService.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/IFreeGemsPackService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/IFreeGemsPackService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/IFreeGemsPackService.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/IFreeGemsPackService.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/FreeGemsPackStateHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/FreeGemsPackStateHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/IFreeGemsPackStateHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/IFreeGemsPackStateHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/_DailyTask/DailyTaskStateHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/_DailyTask/DailyTaskStateHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/DailyTasksState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/DailyTasksState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/FreeGemsPackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/FreeGemsPackState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IFreeGemsPackStateReadonly.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IFreeGemsPackStateReadonly.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IUserCurrenciesStateReadonly.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IUserCurrenciesStateReadonly.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/UserAccountState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/UserAccountState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/UserCurrenciesState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/UserCurrenciesState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataLoaders/ShopDataLoader/ShopDataLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataLoaders/ShopDataLoader/ShopDataLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/Evolution/EvolutionPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/Evolution/EvolutionPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/TimelineTravel/TimelineTravelPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/TimelineTravel/TimelineTravelPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/UnitUpgradePresenter/UnitUpgradesPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/UnitUpgradePresenter/UnitUpgradesPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/_TimelineInfoPresenter/ITimelineInfoPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/_TimelineInfoPresenter/ITimelineInfoPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/_TimelineInfoPresenter/TimelineInfoPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/_TimelineInfoPresenter/TimelineInfoPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/_UpgradeItemPresenter/UpgradeItemPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_DataPresenters/_UpgradeItemPresenter/UpgradeItemPresenter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_FeatureUnlockSystem/Scripts/FeatureUnlockSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_FeatureUnlockSystem/Scripts/FeatureUnlockSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_Logger/IMyLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_Logger/IMyLogger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_Logger/MyLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_Logger/MyLogger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Core/_UpgradesChecker/UpgradesAvailabilityChecker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Core/_UpgradesChecker/UpgradesAvailabilityChecker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Boosts/Scripts/BoostCalculator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Boosts/Scripts/BoostCalculator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Boosts/Scripts/BoostDataPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Boosts/Scripts/BoostDataPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Gameplay/_DailyTasks/Scripts/DailyTaskGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Gameplay/_DailyTasks/Scripts/DailyTaskGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Timer/Scripts/GameTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Timer/Scripts/GameTimer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Timer/Scripts/TimerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Gameplay/_Timer/Scripts/TimerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Scenes/BattleMode.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Scenes/BattleMode.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/Common/Prefabs/TransactionButton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/Common/Prefabs/TransactionButton.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/Common/Scripts/ButtonState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/Common/Scripts/ButtonState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/Common/Scripts/TransactionButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/Common/Scripts/TransactionButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/Factory/UIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/Factory/UIFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/Prefabs/CurrenciesUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/Prefabs/CurrenciesUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/TimelineInfoScreen/Prefabs/TimelineInfoWindow.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/TimelineInfoScreen/Prefabs/TimelineInfoWindow.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/TimelineInfoScreen/Scripts/TimelineInfoModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/TimelineInfoScreen/Scripts/TimelineInfoModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/TimelineInfoScreen/Scripts/TimelineInfoScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/TimelineInfoScreen/Scripts/TimelineInfoScreen.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionTab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionTab.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionTabModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionTabModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/TravelTab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/TravelTab.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Prefabs/UpgradeAndEvolutionWindow.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Prefabs/UpgradeAndEvolutionWindow.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Upgrades/Scripts/UpgradeUnitItemView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Upgrades/Scripts/UpgradeUnitItemView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/UIElementsFadeAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/UIElementsFadeAnimation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Prefabs/CardAppearancePopup.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Prefabs/CardAppearancePopup.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Prefabs/CardsScreen.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Prefabs/CardsScreen.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/CardsScreenPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/CardsScreenPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/TransactionButtonModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/TransactionButtonModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Currencies/CurrenciesSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Currencies/CurrenciesSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Currencies/CurrenciesUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Currencies/CurrenciesUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/Shop.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/Shop.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/ShopItem_Type_1.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/ShopItem_Type_1.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/ShopItem_Type_3.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/ShopItem_Type_3.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/ShopItem_Type_4.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/ShopItem_Type_4.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/UI Factory.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Prefabs/UI Factory.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IShopPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/IShopPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/Shop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/Shop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItem.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItemView.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItemsContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItemsContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniItemShopContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniItemShopContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniShop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniShop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniShopProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniShopProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/UI/_StartBattleScreen/Prefab/StartBattleWindow.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/UI/_StartBattleScreen/Prefab/StartBattleWindow.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Utils/Constants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Utils/Constants.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Game/Utils/Extensions/JsonExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Game/Utils/Extensions/JsonExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,9 +234,11 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/b7/47526294/SynchronizationContextAwaitTaskContinuation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_Tutorial/Scripts/TutorialManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/63/3b56de6f/SynchronizationContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@14.0.11/Runtime/Debugging/DebugUpdater.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/91/66601cb3/AwaitTaskContinuation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/AspectRatioFitter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Scenes/Tests/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Scripts/UnitInfoItem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/BCE0D997-31C9-43CE-83DD-04BD92783BCB/f0/59a13d23/IManagerBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Age/IAgeConfigRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/25/9a0d7803/AsyncVoidMethodBuilder.cs" root0="SKIP_HIGHLIGHTING" />
@@ -61,6 +251,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/d8/79feb738/UnitySynchronizationContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Unity-Audio-Pooling-master/Assets/_Project/Scripts/AudioSystem/SoundEmitter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Scenes/Tests/TestAttack.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Scripts/StatsPopup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/4f/80b30e2b/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/82A2FD07-3EE4-4992-8E16-1903460426D7/a5/55f99c34/DOTweenComponent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A0F48008-D351-4033-961B-6CFBFEC6A87C/28/9ba149f6/EventDispatcher.cs" root0="SKIP_HIGHLIGHTING" />
@@ -68,31 +259,47 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/BB93580B-829E-4F7D-9C8D-742286F27F7D/1d/e162f9ad/MenuStrip.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Unity-Audio-Pooling-master/Assets/_Project/Scripts/AudioSystem/SoundManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_BattleField/Scripts/ICoinSpawner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/675AAEB3-A397-4EF2-B0E4-2A1826D2F505/13/1ed66f4b/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FCC0BBF6-BF4E-430C-91D4-AA05736FC5C6/6f/251f7abc/ShortcutExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Scenes/Tests/Proj_2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Scenes/Tests/UITest/UITest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_BattleField/Scripts/ProjectileSpawner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4746967B-7155-497E-87DA-4DDE169A2F21/68/0e28c6e9/Event.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/43/aac47a9b/AsyncMethodBuilderCore.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Stores/Util/UnityUtil.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_BattleField/Scripts/VfxSpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/51E2D50A-25BE-4E0E-8F1B-2720C516435C/d2/b0680d22/PlayerSettings.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_RaceSelectionScreen/Scripts/RaceSelectionWindowProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/82A2FD07-3EE4-4992-8E16-1903460426D7/0f/556d2d33/ShortcutExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9CC4437A-F196-49EE-9A3E-6D4A5D2DA506/41/5bd158f5/DTDAnalytics.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_MainMenu/Scripts/IMainMenuProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8BCD6417-9D0F-4CB2-97AD-5FB905442A36/2c/74a45240/IDisposable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/8c/32a7e217/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Summoning/Scripts/SummoningPopupProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/DynamicGridLayout.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Summoning/Scripts/SummoningPopup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/ConfigurationBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@fbe0bf8515/Runtime/UniTask.WhenAll.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/CoinsBundlePresenter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@fbe0bf8515/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/b2/b6337d32/KeyValuePair`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/ICardsPresenter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Stores/BaseStore/JSONStore.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/IStoreListener.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.core@1.12.5/Runtime/Core.Internal/UnityServicesEditorInitializer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Stores/FakeStore/FakeStore.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/ProductMetadata.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/Product.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionScreen.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/TravelTab.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/ProductType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/PurchasingManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/CardItemView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/_Cards/Scripts/CardsPresenter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Core/_FeatureUnlockSystem/Scripts/Feature.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@fbe0bf8515/Runtime/Internal/ContinuationQueue.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@4.12.2/Runtime/Purchasing/StoreListenerProxy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@fbe0bf8515/Runtime/Internal/PlayerLoopRunner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_UnitBuilder/Scripts/UnitBuilderBtnScaleAnimation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.google.play.review@699315e1e8/Runtime/Scripts/ReviewManager.cs" root0="SKIP_HIGHLIGHTING" />
@@ -105,6 +312,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/HorizontalOrVerticalLayoutGroup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/86/a500fc24/AsyncTaskMethodBuilder`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_Hud/Curtain.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_CardsGeneral/Scripts/GeneralCardsScreenProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/9b/e3328252/RuntimeConstructorInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.addressables@1.21.21/Runtime/Addressables.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_Hud/_DailyTaskView/DailyTaskViewAnimator.cs" root0="FORCE_HIGHLIGHTING" />
@@ -113,36 +321,46 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.addressables@1.21.21/Runtime/AddressablesImpl.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/3e/91318d48/ObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/ec/da0343e2/Task.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.addressables@1.21.21/Runtime/ResourceManager/Util/MonoBehaviourCallbackHooks.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/77C2DE5E-F35C-47BE-82AB-06BDDDD48241/8b/a0f3329a/Animation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/BoostPopupProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_Units/Scripts/Utils/StateIndіcator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0272D6C0-0C2A-4BD3-BA96-9589D4062F97/bb/30866e5e/BrExData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/86/d5013ca3/AsyncVoidMethodBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.addressables@1.21.21/Runtime/AssetReference.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cleversolutions.ads.unity@7c72301435/Runtime/Internal/Unity/CASManagerClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.addressables@1.21.21/Runtime/ResourceManager/Diagnostics/DiagnosticEventCollector.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AF9EE0C5-A8CB-435A-8FC7-7F3F1C1A3657/50/JObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1650F973-F320-45D6-BC81-ECA6BEEA8EA9/19/5259ebe6/SerializedProperty.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/_Units/Scripts/Movement/AUnitMove.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/Common/Scripts/CustomToggle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/81B759A8-4D7C-4418-9EBA-53F318B00F6C/9b/c66039fb/DTDAccrualType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/01/fbe243dc/ObjectEqualityComparer`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Unity-Audio-Pooling-master/Assets/_Project/Scripts/AudioSystem/SoundBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/05F3C630-C486-4265-91F6-1044EE8BCD8D/dd/758476ef/IUnitBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9524E8A7-B178-4EBE-94B3-19335D214802/c4/b5773743/AdMetaData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B74D7EA-4AF7-48E3-9868-09357B14D40B/46/55502032/AdType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Gameplay/Vfx/Scripts/PersistentVfx.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/StencilMaterial.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collections@1.5.1/Unity.Collections/AllocatorManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/_Timeline/ITimelineStateHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/25/daebcca2/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/f4/5ac1974d/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0DA8A948-97C9-4541-9A99-35A75F4E9B6A/40/c3828c0a/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/69/f7e78d50/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5487AF56-4B81-4981-82BB-BDFFBC786E9F/44/a4088023/SettingsWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/81B759A8-4D7C-4418-9EBA-53F318B00F6C/a9/a95fcd30/DTDAnalytics.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5755813-AA6E-45B3-B9BD-6AF0BC1E192A/17/abaf7a5e/FirebaseMonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8CE0BD04-A7A0-4B4B-9395-538239D3FDD8/17/9b50509a/Char.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0DA8A948-97C9-4541-9A99-35A75F4E9B6A/da/cd929ca7/KeyValuePair`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/3f/07677e28/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/StandaloneInputModule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Unity-Audio-Pooling-master/Assets/_Project/Scripts/AudioSystem/AudioExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/694551E7-9576-4B93-8030-A3128FAC2B36/35/92a3cf77/020007D2.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/CanvasUpdateRegistry.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B7513305-042D-4112-8726-D7378F1F9BA4/d1/713ebe1c/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionBtnData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/75/39596e49/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
@@ -155,6 +373,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Game/Core/Factory/FactoriesHolder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/64/da7f5272/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/77C2DE5E-F35C-47BE-82AB-06BDDDD48241/be/b5189ca1/IAnimationJob.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Game/Core/Data/Age/Dynamic/_UpgradeItem/IBoostsDataReadonly.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/2A3B1FC1-40AE-44E9-A447-6E34A2A29726/61/15b94a1d/0200026B.il" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Game/UI/_Environment/EnvironmentSocket.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/694551E7-9576-4B93-8030-A3128FAC2B36/d4/e1906ba1/NotImplementedException.cs" root0="SKIP_HIGHLIGHTING" />
@@ -168,57 +387,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_MainMenu/State/BattleState.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_MainMenu/State/ShopState.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_DailyTasks/Scripts/DailyTaskType.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/_GameListenerComposite/IFoodListener.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_DailyTasks/Scripts/DailyTaskCompletionChecker.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_UnitBuilder/Scripts/UnitBuilderViewController.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/_GameListenerComposite/GameListenerComposite.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_FoodBoostService/Scripts/FoodBoostService.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/Food/Scripts/FoodGenerator.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/_UpgradesChecker/UpgradesAvailabilityChecker.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Ads/CasAdsService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Shop/ShopConfigRepository.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Configs/Repositories/Shop/IShopConfigRepository.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/AdsGemsPackState.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/IFreeGemsPackStateHandler.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/IUserContainer.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/AdsGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/FreeGemsPackStateHandler.cs" />
         <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_BattleSpeedService/_Scripts/BattleSpeedService.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_SpeedBoostService/Scripts/SpeedBoostService.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/UserContainer.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/BattleLauncher/BattleManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Hud/_FoodBoostView/FoodBoostBtn.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Hud/Hud.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Hud/_FoodBoostView/FoodBoostView.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Hud/_DailyTaskView/DailyTaskViewAnimator.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/Global/UIManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/CoreServicesInstaller.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Debugger/MyDebugger.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_UnitBuilder/Scripts/UnitBuilderBtnModel.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_UnitBuilder/Scripts/UnitBuilderBtnDynamicData.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Ads/CasAdsService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/IAdsGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_Boosts/Scripts/BoostDataPresenter.cs" />
         <option value="$PROJECT_DIR$/Assets/_Game/Core/Data/GeneralDataPool.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/UnitUpgradeDataProvider/IUnitUpgradeDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/WarriorConfig.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Utils/Extensions/WarriorConfigExtension.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/AssetManagement/AssetRegistry.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/UnitBuilderDataProvider/UnitBuilderDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/UnitUpgradeDataProvider/UnitUpgradeDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/AssetManagement/IAssetRegistry.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/Ambience/AmbienceDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/EnvironmentDataProvider/EnvironmentDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/Common/CommonItemsDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/WeaponDataProviders/WeaponDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/BaseDataProvider/BaseStaticDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/AgeConfig.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/ShopDataProvider/ShopDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/Timeline/TimelineDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_DailyTasks/Scripts/DailyTaskGenerator.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/DataProviders/AgeDataProvider/AgeDataProvider.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Scripts/UpgradeAndEvolutionScreen.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_Tutorial/Scripts/TutorialPointerView.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_Tutorial/Scripts/TutorialManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_DailyTasks/Scripts/DailyTaskPresenter.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/_MiniShop/Scripts/MiniShop.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Evolution/Scripts/EvolutionTab.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Upgrades/Scripts/UpgradesScreen.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/Analytics/AnalyticsService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Communication/Migrations/MigrationTo140.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Debugger/MyDebugger.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/UserAccountState.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_Timer/Scripts/TimerService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/AdsGemsPackContainer.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/FreeGemsPackContainer.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Upgrades/Scripts/UpgradeUnitItemView.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/FreeGemsPackConfig.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Configs/Models/ShopConfig.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/Common/Scripts/TransactionButton.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_Timer/Scripts/GameTimer.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/TimeBasedRecoveryCalculator.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/IAdsGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/_Logger/MyLogger.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/FreeGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Currencies/CurrenciesSource.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/IFreeGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPack.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPack.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/FreeGemsPackState.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_State/IFreeGemsPackStateReadonly.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/CoreServicesInstaller.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPackView.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackView.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Installers/Core/DataPresentersInstaller.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopItemsContainer.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/UserState/_Handler/FreeGemsPack/IAdsGemsPackStateHandler.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_AdsGemsPackService/AdsGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/_FreeGemsPackService/FreeGemsPackService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/FreeGemsPackPresenter.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/AdsGemsPackPresenter.cs" />
         <option value="$PROJECT_DIR$/Assets/_Game/Core/_FeatureUnlockSystem/Scripts/FeatureUnlockSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ShopPresenter.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IIAPService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Gameplay/_Boosts/Scripts/BoostCalculator.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferPresenter.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPService.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/UserContainer/UserContainer.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Game/Core/Services/Audio/AudioService.cs" />
       </list>
     </option>
   </component>
@@ -231,8 +450,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.248104" />
-    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.21289274" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.24377032" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.20855905" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -240,11 +459,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor &amp; Play">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="467256">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="467256" />
       <option name="selectedOptions">
         <set />
       </option>
@@ -452,8 +671,70 @@
       <workItem from="1723964874026" duration="30456000" />
       <workItem from="1724063044506" duration="16301000" />
       <workItem from="1724152011251" duration="3510000" />
-      <workItem from="1724798947729" duration="4381000" />
-      <workItem from="1728044420611" duration="550000" />
+      <workItem from="1724330575534" duration="2351000" />
+      <workItem from="1724341289303" duration="3511000" />
+      <workItem from="1724402119605" duration="18521000" />
+      <workItem from="1724485951829" duration="32392000" />
+      <workItem from="1724573199284" duration="32809000" />
+      <workItem from="1724670841968" duration="12096000" />
+      <workItem from="1724708762135" duration="4999000" />
+      <workItem from="1724805014749" duration="551000" />
+      <workItem from="1724835193376" duration="1314000" />
+      <workItem from="1724843327337" duration="2445000" />
+      <workItem from="1724870835249" duration="7738000" />
+      <workItem from="1724925140102" duration="4989000" />
+      <workItem from="1724967389093" duration="3161000" />
+      <workItem from="1725092595534" duration="83000" />
+      <workItem from="1725092830065" duration="7158000" />
+      <workItem from="1725107373056" duration="3820000" />
+      <workItem from="1725122254692" duration="10923000" />
+      <workItem from="1725179355018" duration="1286000" />
+      <workItem from="1725193115020" duration="6734000" />
+      <workItem from="1725215675430" duration="6505000" />
+      <workItem from="1725265797498" duration="26614000" />
+      <workItem from="1725345373603" duration="4672000" />
+      <workItem from="1725369651706" duration="13775000" />
+      <workItem from="1725437015385" duration="12946000" />
+      <workItem from="1725467408855" duration="11826000" />
+      <workItem from="1725537856539" duration="17295000" />
+      <workItem from="1725615889162" duration="19057000" />
+      <workItem from="1725692250884" duration="26943000" />
+      <workItem from="1725728549578" duration="9530000" />
+      <workItem from="1725781043652" duration="12921000" />
+      <workItem from="1725801783175" duration="16502000" />
+      <workItem from="1725873228008" duration="6444000" />
+      <workItem from="1725984036295" duration="1760000" />
+      <workItem from="1726053300467" duration="7495000" />
+      <workItem from="1726133407523" duration="10255000" />
+      <workItem from="1726169222714" duration="2117000" />
+      <workItem from="1726172314942" duration="1638000" />
+      <workItem from="1726218432358" duration="14229000" />
+      <workItem from="1726250977571" duration="4676000" />
+      <workItem from="1726302539656" duration="29830000" />
+      <workItem from="1726396001414" duration="28436000" />
+      <workItem from="1726480134299" duration="9725000" />
+      <workItem from="1726496734760" duration="8942000" />
+      <workItem from="1726583758101" duration="1649000" />
+      <workItem from="1726598964855" duration="1212000" />
+      <workItem from="1726653601354" duration="833000" />
+      <workItem from="1726737699616" duration="2656000" />
+      <workItem from="1726754065841" duration="607000" />
+      <workItem from="1726761242638" duration="1392000" />
+      <workItem from="1726765167833" duration="716000" />
+      <workItem from="1726823560835" duration="10490000" />
+      <workItem from="1726912941025" duration="2771000" />
+      <workItem from="1727082178481" duration="15768000" />
+      <workItem from="1727176788259" duration="19894000" />
+      <workItem from="1727212231826" duration="1437000" />
+      <workItem from="1727251688591" duration="19432000" />
+      <workItem from="1727342915966" duration="3037000" />
+      <workItem from="1727526684638" duration="19543000" />
+      <workItem from="1727595761622" duration="21047000" />
+      <workItem from="1727622928500" duration="14911000" />
+      <workItem from="1727681946663" duration="17291000" />
+      <workItem from="1727715857205" duration="15054000" />
+      <workItem from="1727788059680" duration="26132000" />
+      <workItem from="1727862866061" duration="31561000" />
     </task>
     <servers />
   </component>
@@ -478,187 +759,196 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1037" height="533" key="DebuggerActiveHint" timestamp="1724802025107">
+    <state width="1037" height="579" key="DebuggerActiveHint" timestamp="1727731200228">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="578" height="464" key="DebuggerActiveHint/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1723671811723" />
-    <state width="1037" height="533" key="DebuggerActiveHint/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724802025107" />
-    <state width="1877" height="29" key="GridCell.Tab.0.bottom" timestamp="1724801937801">
+    <state width="1767" height="464" key="DebuggerActiveHint/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1726431486035" />
+    <state width="1037" height="579" key="DebuggerActiveHint/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727731200228" />
+    <state width="1877" height="89" key="GridCell.Tab.0.bottom" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.0.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.0.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937801" />
-    <state width="1877" height="29" key="GridCell.Tab.0.center" timestamp="1724801937801">
+    <state width="1860" height="209" key="GridCell.Tab.0.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886849" />
+    <state width="1877" height="89" key="GridCell.Tab.0.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.0.center" timestamp="1727901370254">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.0.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.0.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937801" />
-    <state width="1877" height="29" key="GridCell.Tab.0.left" timestamp="1724801937801">
+    <state width="1860" height="209" key="GridCell.Tab.0.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886848" />
+    <state width="1877" height="89" key="GridCell.Tab.0.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370254" />
+    <state width="1877" height="89" key="GridCell.Tab.0.left" timestamp="1727901370254">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.0.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.0.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937801" />
-    <state width="1877" height="29" key="GridCell.Tab.0.right" timestamp="1724801937801">
+    <state width="1860" height="209" key="GridCell.Tab.0.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886848" />
+    <state width="1877" height="89" key="GridCell.Tab.0.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370254" />
+    <state width="1877" height="89" key="GridCell.Tab.0.right" timestamp="1727901370254">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.0.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.0.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937801" />
-    <state width="1877" height="29" key="GridCell.Tab.1.bottom" timestamp="1724801974633">
+    <state width="1860" height="209" key="GridCell.Tab.0.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886848" />
+    <state width="1877" height="89" key="GridCell.Tab.0.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370254" />
+    <state width="1877" height="89" key="GridCell.Tab.1.bottom" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.1.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.1.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801974633" />
-    <state width="1877" height="29" key="GridCell.Tab.1.center" timestamp="1724801974633">
+    <state width="1860" height="209" key="GridCell.Tab.1.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.1.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.1.center" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.1.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.1.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801974633" />
-    <state width="1877" height="29" key="GridCell.Tab.1.left" timestamp="1724801974633">
+    <state width="1860" height="209" key="GridCell.Tab.1.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.1.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.1.left" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.1.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.1.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801974633" />
-    <state width="1877" height="29" key="GridCell.Tab.1.right" timestamp="1724801974633">
+    <state width="1860" height="209" key="GridCell.Tab.1.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.1.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.1.right" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.1.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.1.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801974633" />
-    <state width="1877" height="29" key="GridCell.Tab.2.bottom" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.1.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.1.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.2.bottom" timestamp="1727901370256">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.2.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.2.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.2.center" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.2.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886615" />
+    <state width="1877" height="89" key="GridCell.Tab.2.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370256" />
+    <state width="1877" height="89" key="GridCell.Tab.2.center" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.2.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.2.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.2.left" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.2.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.2.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.2.left" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.2.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973566" />
-    <state width="1877" height="29" key="GridCell.Tab.2.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.2.right" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.2.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.2.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.2.right" timestamp="1727901370255">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.2.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.2.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.3.bottom" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.2.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886614" />
+    <state width="1877" height="89" key="GridCell.Tab.2.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370255" />
+    <state width="1877" height="89" key="GridCell.Tab.3.bottom" timestamp="1727901370256">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.3.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.3.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.3.center" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.3.bottom/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886615" />
+    <state width="1877" height="89" key="GridCell.Tab.3.bottom/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370256" />
+    <state width="1877" height="89" key="GridCell.Tab.3.center" timestamp="1727901370256">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.3.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.3.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.3.left" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.3.center/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886615" />
+    <state width="1877" height="89" key="GridCell.Tab.3.center/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370256" />
+    <state width="1877" height="89" key="GridCell.Tab.3.left" timestamp="1727901370256">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.3.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.3.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state width="1877" height="29" key="GridCell.Tab.3.right" timestamp="1724801937708">
+    <state width="1860" height="209" key="GridCell.Tab.3.left/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886615" />
+    <state width="1877" height="89" key="GridCell.Tab.3.left/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370256" />
+    <state width="1877" height="89" key="GridCell.Tab.3.right" timestamp="1727901370256">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="29" key="GridCell.Tab.3.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724086973567" />
-    <state width="1877" height="29" key="GridCell.Tab.3.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724801937708" />
-    <state x="794" y="217" key="RiderGenerateDialog" timestamp="1724068687299">
+    <state width="1860" height="209" key="GridCell.Tab.3.right/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727810886615" />
+    <state width="1877" height="89" key="GridCell.Tab.3.right/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727901370256" />
+    <state x="794" y="217" key="RiderGenerateDialog" timestamp="1727801663161">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="794" y="217" key="RiderGenerateDialog/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724068687299" />
-    <state x="2714" y="217" key="RiderGenerateDialog/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1723986231967" />
-    <state x="92" y="92" width="1736" height="848" key="VCS.FileHistoryDialog" timestamp="1723976640783">
+    <state x="794" y="217" key="RiderGenerateDialog/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727801663161" />
+    <state x="2714" y="217" key="RiderGenerateDialog/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727103086877" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1727614955467">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="92" y="92" width="1736" height="848" key="VCS.FileHistoryDialog/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1723976640783" />
-    <state x="2012" y="92" width="1736" height="848" key="VCS.FileHistoryDialog/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1723723158683" />
+    <state width="498" height="446" key="SwitcherDM/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727614955467" />
+    <state width="498" height="446" key="SwitcherDM/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1726413121626" />
+    <state x="92" y="92" width="1736" height="848" key="VCS.FileHistoryDialog" timestamp="1727596377267">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="92" y="92" width="1736" height="848" key="VCS.FileHistoryDialog/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727596377267" />
+    <state x="2012" y="92" width="1736" height="848" key="VCS.FileHistoryDialog/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727103912798" />
     <state width="968" height="524" key="XDebugger.FullValuePopup" timestamp="1722894474612">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state width="968" height="524" key="XDebugger.FullValuePopup/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1722894474612" />
-    <state x="2485" y="127" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1724078892685">
+    <state x="2485" y="127" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1725095809444">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="565" y="127" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1719573829468" />
-    <state x="2485" y="127" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1724078892685" />
-    <state x="426" y="0" width="1404" height="1019" maximized="true" key="dock-window-1" timestamp="1723551560771">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="426" y="0" width="1404" height="1019" maximized="true" key="dock-window-1/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1723551560771" />
-    <state x="2088" y="192" width="672" height="678" key="search.everywhere.popup" timestamp="1728044931897">
+    <state x="2485" y="127" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1725095809444" />
+    <state x="2388" y="347" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1727731072590">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state x="623" y="223" width="672" height="678" key="search.everywhere.popup/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1724750128699" />
-    <state x="2088" y="192" width="672" height="678" key="search.everywhere.popup/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1728044931897" />
+    <state x="2388" y="347" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727731072590" />
+    <state x="1920" y="0" width="1491" height="1019" maximized="true" key="dock-window-1" timestamp="1725217273063">
+      <screen x="1920" y="0" width="1920" height="1032" />
+    </state>
+    <state x="1920" y="0" width="1491" height="1019" maximized="true" key="dock-window-1/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1725217273063" />
+    <state x="2081" y="238" width="672" height="678" key="search.everywhere.popup" timestamp="1727898200952">
+      <screen x="1920" y="0" width="1920" height="1032" />
+    </state>
+    <state x="623" y="223" width="672" height="678" key="search.everywhere.popup/0.0.1920.1032/1920.0.1920.1032@0.0.1920.1032" timestamp="1727894029082" />
+    <state x="2081" y="238" width="672" height="678" key="search.everywhere.popup/0.0.1920.1032/1920.0.1920.1032@1920.0.1920.1032" timestamp="1727898200952" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+        <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/_Game/Core/Services/Audio/AudioService.cs</url>
-          <line>120</line>
+          <line>142</line>
           <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\Core\Services\Audio\AudioService.cs" initialLine="114">
             <startOffsets>
-              <option value="3261" />
+              <option value="3739" />
             </startOffsets>
             <endOffsets>
-              <option value="3262" />
+              <option value="3740" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPService.cs</url>
-          <line>97</line>
-          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\Core\Services\IAP\IAPService.cs" initialLine="153">
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/_Game/UI/_BoostPopup/BoostPopup.cs</url>
+          <line>53</line>
+          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\UI\_BoostPopup\BoostPopup.cs" initialLine="53">
             <startOffsets>
-              <option value="5229" />
+              <option value="1698" />
             </startOffsets>
             <endOffsets>
-              <option value="5249" />
+              <option value="1699" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="100" />
+          <option name="timeStamp" value="146" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Scripts/UpgradeAndEvolutionScreen.cs</url>
-          <line>123</line>
-          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\UI\UpgradesAndEvolution\Scripts\UpgradeAndEvolutionScreen.cs" initialLine="118">
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/_Game/Core/Services/IAP/IAPProvider.cs</url>
+          <line>45</line>
+          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\Core\Services\IAP\IAPProvider.cs" initialLine="38">
             <startOffsets>
-              <option value="4279" />
+              <option value="1579" />
             </startOffsets>
             <endOffsets>
-              <option value="4280" />
+              <option value="1580" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="118" />
+          <option name="timeStamp" value="150" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Upgrades/Scripts/UpgradesScreen.cs</url>
-          <line>65</line>
-          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradesScreen.cs" initialLine="61">
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferPresenter.cs</url>
+          <line>81</line>
+          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\UI\_Shop\Scripts\ProfitOfferPresenter.cs" initialLine="68">
             <startOffsets>
-              <option value="2340" />
+              <option value="2766" />
             </startOffsets>
             <endOffsets>
-              <option value="2341" />
+              <option value="2767" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="127" />
+          <option name="timeStamp" value="155" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/_Game/UI/UpgradesAndEvolution/Upgrades/Scripts/UpgradesScreen.cs</url>
-          <line>143</line>
-          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\UI\UpgradesAndEvolution\Upgrades\Scripts\UpgradesScreen.cs" initialLine="141">
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/_Game/UI/_Shop/Scripts/ProfitOfferPresenter.cs</url>
+          <line>41</line>
+          <properties documentPath="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution\Assets\_Game\UI\_Shop\Scripts\ProfitOfferPresenter.cs" initialLine="37">
             <startOffsets>
-              <option value="5095" />
+              <option value="1231" />
             </startOffsets>
             <endOffsets>
-              <option value="5096" />
+              <option value="1232" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="128" />
+          <option name="timeStamp" value="156" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -33,7 +33,6 @@ namespace Assets._Game.UI.Common.Scripts
             if (_slider.fillRect.anchoredPosition != Vector2.zero)
             {
                 _slider.fillRect.anchoredPosition = Vector2.zero;
-                Debug.Log("SliderHelper FIX! " + _slider.fillRect.anchoredPosition);
             };
         }
     }

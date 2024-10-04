@@ -1,5 +1,4 @@
 ﻿using System;
-using _Game.Common;
 using _Game.UI._Currencies;
 using _Game.Utils;
 
@@ -10,7 +9,7 @@ namespace _Game.Core.UserState._State
         public double Coins;
         public double Gems;
 
-        public event Action<Currencies, double, CurrenciesSource> CurrenciesChanged;
+        public event Action<CurrencyType, double, CurrenciesSource> CurrenciesChanged;
 
         double IUserCurrenciesStateReadonly.Coins => Coins + Constants.ComparisonThreshold.MONEY_EPSILON;
         double IUserCurrenciesStateReadonly.Gems => Gems + Constants.ComparisonThreshold.MONEY_EPSILON;
@@ -23,7 +22,7 @@ namespace _Game.Core.UserState._State
             
             if (Coins < 0) Coins = 0;
             
-            CurrenciesChanged?.Invoke(Currencies.Coins, delta, source);
+            CurrenciesChanged?.Invoke(CurrencyType.Coins, delta, source);
         }
         
         public void ChangeGems(float delta, bool isPositive, CurrenciesSource source)
@@ -34,14 +33,14 @@ namespace _Game.Core.UserState._State
             
             if (Gems < 0) Coins = 0;
             
-            CurrenciesChanged?.Invoke(Currencies.Gems, delta, source);
+            CurrenciesChanged?.Invoke(CurrencyType.Gems, delta, source);
         }
 
         public void RemoveAllCoins()
         {
             var delta = -Coins;
             Coins = 0;
-            CurrenciesChanged?.Invoke(Currencies.Coins, delta, CurrenciesSource.None);
+            CurrenciesChanged?.Invoke(CurrencyType.Coins, delta, CurrenciesSource.None);
         }
     }
 }

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.Random;
+using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay.Common.Scripts;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Game.Core.UserState._State
@@ -28,7 +29,13 @@ namespace _Game.Core.UserState._State
         public TasksState TasksState;
         public DailyTasksState DailyTasksState;
         public AdsWeeklyWatchState AdsWeeklyWatchState;
-
+        public CardsCollectionState CardsCollectionState;
+        
+        [ShowInInspector]
+        public FreeGemsPackContainer FreeGemsPackContainer;
+        
+        [ShowInInspector]
+        public AdsGemsPackContainer AdsGemsPackContainer;
         
         public static UserAccountState GetInitial(
             IRandomService random)
@@ -54,13 +61,13 @@ namespace _Game.Core.UserState._State
                     OpenUnits = new List<UnitType>(3)
                     {
                         UnitType.Light,
-                    }
+                    } 
                 },
                 
                 Currencies = new UserCurrenciesState()
                 {
                     Coins = 0,
-                    Gems = 100
+                    Gems = 1000
                 },
                 
                 FoodBoost = new FoodBoostState()
@@ -76,7 +83,10 @@ namespace _Game.Core.UserState._State
                 
                 TutorialState = new TutorialState()
                 {
-                    StepsCompleted = -1
+                    CompletedSteps = new List<int>()
+                    {
+                        -1
+                    }
                 },
                 
                 BattleSpeedState = new BattleSpeedState()
@@ -105,7 +115,7 @@ namespace _Game.Core.UserState._State
                 
                 FreeGemsPackState = new FreeGemsPackState()
                 {
-                    FreeGemPackCount = 2,
+                    FreeGemPackCount = 4,
                     LastFreeGemPackDay = DateTime.UtcNow
                 },
                 
@@ -126,7 +136,14 @@ namespace _Game.Core.UserState._State
                 {
                     LastWeekAdsWatched = new List<int>(7) { 0, 0, 0, 0, 0, 0, 0 },
                     LastDay = DateTime.Today
-                }
+                },
+                
+                CardsCollectionState = new CardsCollectionState()
+                {
+                    CardSummoningLevel = 1,
+                    CardsSummoningProgressCount = 0,
+                    Cards = new List<Card>(),
+                },
             };
         }
 

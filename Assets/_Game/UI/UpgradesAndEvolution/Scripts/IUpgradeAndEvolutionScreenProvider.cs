@@ -6,5 +6,6 @@ namespace _Game.UI.UpgradesAndEvolution.Scripts
     public interface IUpgradeAndEvolutionScreenProvider
     {
         UniTask<Disposable<UpgradeAndEvolutionScreen>> Load();
+        void Unload();
     }
 }

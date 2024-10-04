@@ -1,6 +1,5 @@
 ﻿using _Game.Core.Configs.Models;
 using _Game.UI._Environment;
-using Assets._Game.UI._Environment;
 using UnityEngine;
 
 namespace _Game.Gameplay._Battle.Scripts

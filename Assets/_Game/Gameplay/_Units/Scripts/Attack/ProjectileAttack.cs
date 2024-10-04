@@ -1,7 +1,5 @@
-﻿using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
+﻿using _Game.Core.Services.Audio;
 using _Game.Gameplay.Vfx.Scripts;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
@@ -17,13 +15,13 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         private Faction _faction;
 
         public override void Construct(
-            WeaponConfig config,
+            IUnitData unitData,
             Faction faction,
             ISoundService soundService,
             Transform unitTransform)
         {
-            base.Construct(config, faction, soundService, unitTransform);
-            _weaponId = config.Id;
+            base.Construct(unitData, faction, soundService, unitTransform);
+            _weaponId = unitData.WeaponId;
             _faction = faction;
             DisableAttackDelay = 0;
         }

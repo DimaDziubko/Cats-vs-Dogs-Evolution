@@ -1,13 +1,11 @@
 using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
-using _Game.Core.DataPresenters.Evolution;
+using _Game.Core._DataPresenters.Evolution;
+using _Game.Core.Services.Audio;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Evolution.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +27,7 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
         [SerializeField] private TransactionButton _evolveButton;
 
         [SerializeField] private TMP_Text _timelineLabel;
+        [SerializeField] private TMP_Text _difficultyLabel;
     
         private IDisposable _disposable;
         
@@ -84,10 +83,9 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
             if(!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
             bool isExit = await popup.Value.ShowAndAwaitForDecision(_evolutionPresenter.GetEvolutionPrice());
-            if (isExit)
+            if(isExit)
             {
-                popup.Value.Hide();
-                popup.Dispose();
+                _miniShopProvider.Unload();
             }
         }
 
@@ -101,35 +99,33 @@ namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 
         private void OnEvolutionViewModelUpdated(EvolutionTabModel tabModel)
         {
-            UpdateTimelineLabel(tabModel.CurrentTimelineId);
             UpdateButtonData(tabModel.EvolutionBtnData);
 
+            _timelineLabel.text = tabModel.TimelineInfo;
             _currentAgeImage.sprite = tabModel.CurrentAgeIcon;
             _nextAgeImage.sprite = tabModel.NextAgeIcon;
             _currentAgeName.text = tabModel.CurrentAgeName;
             _nextAgeName.text = tabModel.NextAgeName;
+            _difficultyLabel.text = tabModel.Difficulty;
+            _difficultyLabel.enabled = tabModel.ShowDifficulty;
         }
 
         private void UpdateButtonData(EvolutionBtnData data) => 
-            _evolveButton.UpdateButtonState(data.ButtonState, data.Price.FormatMoney(), data.Price > 0);
+            _evolveButton.UpdateButtonState(data.ButtonState, data.Price.FormatMoney(),  "Evolve", true,data.Price > 0);
 
         private async void OnEvolveButtonClick()
         {
             PlayButtonSound();
             
-            var window = await _timelineInfoProvider.Load();
-            var isExited = await window.Value.ShowScreenWithTransitionAnimation();
+            var screen = await _timelineInfoProvider.Load();
+            var isExited = await screen.Value.ShowScreenWithTransitionAnimation();
             
-            if(isExited) window.Dispose();
-            _disposable = window;
+            if(isExited) screen.Dispose();
+            _disposable = screen;
         }
 
         private void PlayButtonSound() => 
             _audioService.PlayButtonSound();
-
-
-        private void UpdateTimelineLabel(int id) => 
-            _timelineLabel.text = $"Timeline {id + 1}";
         
     }
 }

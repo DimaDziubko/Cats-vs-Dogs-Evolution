@@ -1,4 +1,4 @@
-﻿namespace Assets._Game.Utils.Extensions
+﻿namespace _Game.Utils.Extensions
 {
     public static class StringExtensions
     {

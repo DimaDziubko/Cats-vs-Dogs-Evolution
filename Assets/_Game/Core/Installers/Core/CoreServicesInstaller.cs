@@ -9,14 +9,12 @@ using _Game.Core._StateFactory;
 using _Game.Core.AssetManagement;
 using _Game.Core.Communication;
 using _Game.Core.Data;
-using _Game.Core.Debugger;
+using _Game.Core.Services._AdsGemsPackService;
 using _Game.Core.Services._FreeGemsPackService;
-using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
 using _Game.Core.Services.Random;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Common;
 using UnityEngine;
 using Zenject;
 
@@ -25,12 +23,10 @@ namespace _Game.Core.Installers.Core
     public class CoreServicesInstaller : MonoInstaller
     {
         [SerializeField] private CoroutineRunner _coroutineRunner;
-        [SerializeField] private MyDebugger _debugger;
 
         public override void InstallBindings()
         {
             BindLogger();
-            BindDebugger();
             BindInitializer();
             BindSceneLoader();
             BindStaticDataService();
@@ -47,6 +43,8 @@ namespace _Game.Core.Installers.Core
             BindIAPProvider();
             BindIAPService();
             BindIGPService();
+            BindTimeBaseRecoveryCalculator();
+            BindAdsGemsPackService();
             BindFreeGemsPackService();
         }
 
@@ -60,33 +58,22 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<MyLogger>()
                 .AsSingle();
 
-        private void BindDebugger() =>
-            Container
-                .BindInterfacesAndSelfTo<MyDebugger>()
-                .FromInstance(_debugger)
-                .AsSingle();
-
         private void BindSceneLoader() => 
             Container
                 .Bind<SceneLoader>()
                 .FromNew()
                 .AsSingle();
 
-        private void BindStaticDataService()
-        {
-            AssetProvider assetProvider = new AssetProvider();
+        private void BindStaticDataService() =>
             Container.BindInterfacesAndSelfTo<AssetProvider>()
-                .FromInstance(assetProvider)
                 .AsSingle().NonLazy();
-        }
 
         private void BindAssetRegistry() => 
             Container.BindInterfacesAndSelfTo<AssetRegistry>()
                 .AsSingle();
 
         private void BindPersistentData() =>
-            Container.Bind<IUserContainer>()
-                .To<UserContainer>()
+            Container.BindInterfacesAndSelfTo<UserContainer>()
                 .AsSingle();
 
         private void BindStateCommunicator()
@@ -149,9 +136,22 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<IGPService>()
                 .AsSingle();
+
+        private void BindAdsGemsPackService() => 
+            Container
+                .BindInterfacesAndSelfTo<AdsGemsPackService>()
+                .AsSingle();
+        
         private void BindFreeGemsPackService() => 
             Container
                 .BindInterfacesAndSelfTo<FreeGemsPackService>()
                 .AsSingle();
+
+        private void BindTimeBaseRecoveryCalculator()
+        {
+            Container
+                .Bind<TimeBasedRecoveryCalculator>()
+                .AsSingle();
+        }
     }
 }

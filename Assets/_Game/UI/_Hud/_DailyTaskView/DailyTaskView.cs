@@ -1,7 +1,7 @@
 ﻿using _Game.Core._Logger;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 using TMPro;
 using UnityEngine;

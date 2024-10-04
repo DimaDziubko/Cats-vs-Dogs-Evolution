@@ -1,71 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Common;
-using Assets._Game.Common;
 using Assets._Game.Gameplay._Timer.Scripts;
+using Sirenix.OdinInspector;
 
 namespace _Game.Gameplay._Timer.Scripts
 {
     public interface ITimerService
     {
-        void CreateTimer(TimerType type, TimerData data, Action completeAction = null);
-        void RemoveTimer(TimerType type);
-        GameTimer GetTimer(TimerType type);
-        void StartTimer(TimerType type);
-        void Stop(TimerType type);
+        GameTimer CreateTimer(string key, TimerData data, Action completeAction = null);
+        void RemoveTimer(string key);
+        GameTimer GetTimer(string key);
+        void StartTimer(string key);
+        void Stop(string key);
     }
 
     public class TimerService : ITimerService
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly Dictionary<TimerType, GameTimer> _timers = new Dictionary<TimerType, GameTimer>(1);
         
+        [ShowInInspector]
+        private readonly Dictionary<string, GameTimer> _timers = new Dictionary<string, GameTimer>(1);
+
         public TimerService(ICoroutineRunner coroutineRunner)
         {
             _coroutineRunner = coroutineRunner;
         }
 
-        public void CreateTimer(TimerType type, TimerData data, Action completeAction = null)
+        public GameTimer CreateTimer(string key, TimerData data, Action completeAction = null)
         {
-            if (_timers.ContainsKey(type))
+            if (_timers.ContainsKey(key))
             {
-                _timers[type].Stop();
-                _timers.Remove(type);
+                _timers[key].Stop();
+                _timers.Remove(key);
             }
             
             var timer = new GameTimer(_coroutineRunner);
             timer.Init(data, completeAction);
-            _timers[type] = timer;
+            _timers[key] = timer;
+            return timer;
         }
 
-        public void RemoveTimer(TimerType type)
+        public void RemoveTimer(string key)
         {
-            if (_timers.ContainsKey(type))
+            if (_timers.ContainsKey(key))
             {
-                _timers[type].Stop();
-                _timers.Remove(type);
+                _timers[key].Stop();
+                _timers.Remove(key);
             }
         }
         
-        public void StartTimer(TimerType type)
+        public void StartTimer(string key)
         {
-            if (_timers.TryGetValue(type, out var timer))
+            if (_timers.TryGetValue(key, out var timer))
             {
                 timer.Start();
             }
         }
         
-        public void Stop(TimerType type)
+        public void Stop(string key)
         {
-            if (_timers.TryGetValue(type, out var timer))
+            if (_timers.TryGetValue(key, out var timer))
             {
                 timer.Stop();
             }
         }
         
-        public GameTimer GetTimer(TimerType type)
+        public GameTimer GetTimer(string key)
         {
-            if (_timers.TryGetValue(type, out var timer))
+            if (_timers.TryGetValue(key, out var timer))
             {
                 return timer;
             }

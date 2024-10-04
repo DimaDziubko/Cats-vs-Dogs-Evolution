@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._DataPresenters._UpgradeItemPresenter;
+using _Game.Core._DataPresenters.UnitUpgradePresenter;
 using _Game.Core._UpgradesChecker;
-using _Game.Core.DataPresenters._UpgradeItemPresenter;
-using _Game.Core.DataPresenters.UnitUpgradePresenter;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.Common.Scripts;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using UnityEngine;
 
 namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 {
-    public class UpgradesScreen : MonoBehaviour, IUIScreen
+    public class UpgradesScreen : MonoBehaviour, IGameScreen
     {
         public event Action Opened;
         public GameScreen GameScreen => GameScreen.Upgrades;
@@ -26,8 +24,6 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         [SerializeField] private Canvas _canvas;
         [SerializeField] private UpgradeUnitItemView[] _unitItems;
         [SerializeField] private UpgradeItemView _foodProduction, _baseHealth;
-
-        [SerializeField] private AudioClip _unitUpgradeSFX;
 
         [SerializeField] private TutorialStep _foodProductionStep;
 
@@ -65,11 +61,11 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
             Unsubscribe();
             Subscribe();
-            
+
             _tutorialManager.Register(_foodProductionStep);
 
             InitItems();
-        
+
             Opened?.Invoke();
 
             _upgradesChecker.MarkAsReviewed(GameScreen);
@@ -82,8 +78,9 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             {
                 unitItem.Upgrade += OnUnitItemUpgrade;
                 unitItem.TryUpgrade += OnTryUpgrade;
+                unitItem.InfoClicked += OnInfoClicked;
             }
-            
+
             _foodProduction.Upgrade += OnItemUpgrade;
             _baseHealth.Upgrade += OnItemUpgrade;
             _foodProduction.TryUpgrade += OnTryUpgrade;
@@ -91,20 +88,25 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             _foodProduction.ButtonStateChanged += OnFoodProductionButtonStateChanged;
 
             _unitUpgradesPresenter.UpgradeUnitItemsUpdated += UpdateUnitItems;
-            _upgradeItemPresenter.UpgradeItemUpdated += UpdateUpgradeItemItem;
+            _upgradeItemPresenter.UpgradeItemUpdated += UpdateUpgradeItem;
 
             Opened += OnUpgradesScreenOpened;
+        }
+
+        private void OnInfoClicked(UnitType type)
+        {
+            _unitUpgradesPresenter.ShowInfoFor(type);
         }
 
         public void Hide()
         {
             _canvas.enabled = false;
-            
+
             Unsubscribe();
 
             _foodProduction.Cleanup();
             _baseHealth.Cleanup();
-            
+
             _foodProductionStep.CancelStep();
             _tutorialManager.UnRegister(_foodProductionStep);
         }
@@ -112,12 +114,13 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
         private void Unsubscribe()
         {
             _unitUpgradesPresenter.UpgradeUnitItemsUpdated -= UpdateUnitItems;
-            _upgradeItemPresenter.UpgradeItemUpdated -= UpdateUpgradeItemItem;
+            _upgradeItemPresenter.UpgradeItemUpdated -= UpdateUpgradeItem;
 
             foreach (var item in _unitItems)
             {
                 item.Upgrade -= OnUnitItemUpgrade;
                 item.TryUpgrade -= OnTryUpgrade;
+                item.InfoClicked -= OnInfoClicked;
                 item.Cleanup();
             }
 
@@ -132,13 +135,12 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private async void OnTryUpgrade(float price)
         {
-            if(!_miniShopProvider.IsUnlocked) return;
+            if (!_miniShopProvider.IsUnlocked) return;
             var popup = await _miniShopProvider.Load();
-            var isExit =  await popup.Value.ShowAndAwaitForDecision(price);
+            var isExit = await popup.Value.ShowAndAwaitForDecision(price);
             if (isExit)
             {
-                popup.Value.Hide();
-                popup.Dispose();
+                _miniShopProvider.Unload();
             }
         }
 
@@ -147,6 +149,10 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             if (state == ButtonState.Active)
             {
                 _foodProductionStep.ShowStep();
+            }
+            else if(state == ButtonState.Inactive)
+            {
+                _foodProductionStep.CancelStep();
             }
         }
 
@@ -158,7 +164,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private void OnItemUpgrade(UpgradeItemType type, float price)
         {
-            if(type == UpgradeItemType.FoodProduction)
+            if (type == UpgradeItemType.FoodProduction)
                 _foodProductionStep.CompleteStep();
 
             _upgradeItemPresenter.UpgradeItem(type, price);
@@ -178,7 +184,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private void OnUpgradesScreenOpened()
         {
-            _unitUpgradesPresenter.OnUpgradesWindowOpened();
+            _unitUpgradesPresenter.OnUpgradesScreenOpened();
             _upgradeItemPresenter.OnUpgradesScreenOpened();
         }
 
@@ -188,12 +194,12 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
             {
                 unitItem.Init(_audioService);
             }
-            
+
             _foodProduction.Init(_audioService);
             _baseHealth.Init(_audioService);
         }
 
-        private void UpdateUpgradeItemItem(UpgradeItemModel model)
+        private void UpdateUpgradeItem(UpgradeItemModel model)
         {
             switch (model.StaticData.Type)
             {
@@ -210,10 +216,7 @@ namespace _Game.UI.UpgradesAndEvolution.Upgrades.Scripts
 
         private void PlayUpgradeSound()
         {
-            if (_audioService != null && _unitUpgradeSFX != null)
-            {
-                _audioService.PlayOneShot(_unitUpgradeSFX);
-            }
+            _audioService?.PlayUpgradeSound();
         }
     }
 }

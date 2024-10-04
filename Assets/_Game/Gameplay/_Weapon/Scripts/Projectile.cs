@@ -58,23 +58,22 @@ namespace _Game.Gameplay._Weapon.Scripts
         public virtual void Construct(
             ISoundService soundService,
             Faction faction,
-            WeaponConfig config,
-            int layer)
+            IWeaponData weaponData)
         {
             _soundService = soundService;
 
             Faction = faction;
 
-            WeaponId = config.Id;
+            WeaponId =  weaponData.WeaponId;
 
-            gameObject.layer = layer;
+            gameObject.layer = weaponData.Layer;
 
-            _damage = config.GetProjectileDamageForFaction(faction);
+            _damage =  weaponData.GetProjectileDamageForFaction(faction);
 
             _move.Construct(
                 _transform,
-                config.ProjectileSpeed,
-                config.TrajectoryWarpFactor);
+                weaponData.ProjectileSpeed,
+                weaponData.TrajectoryWarpFactor);
 
             _isDead = false;
         }

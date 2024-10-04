@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core._GameInitializer;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Services.UserContainer;
@@ -42,12 +43,12 @@ namespace _Game.Core.Navigation.Battle
         
 
         public BattleNavigator(
-            ITimelineConfigRepository timelineConfig,
+            IConfigRepositoryFacade configRepositoryFacade,
             IUserContainer userContainer,
             IGameInitializer gameInitializer,
             IAgeNavigator ageNavigator)
         {
-            _timelineConfig = timelineConfig;
+            _timelineConfig = configRepositoryFacade.TimelineConfigRepository;
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
             _ageNavigator = ageNavigator;

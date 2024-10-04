@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets._Game.Core.Prefabs
+namespace _Game.Core.Prefabs
 {
     public class SoundsHolder : MonoBehaviour
     {
@@ -15,5 +15,6 @@ namespace Assets._Game.Core.Prefabs
         public AudioClip BaseDestructionSFX;
         public AudioClip VictorySound;
         public AudioClip StartBattrleSound;
+        public AudioClip UpgradeSound;
     }
 }

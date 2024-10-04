@@ -7,13 +7,11 @@ using Assets._Game.Utils.Disposable;
 
 namespace _Game.UI._MainMenu.State
 {
-    public class ShopState : IMenuState
+    public class ShopState : ILocalState
     {
         private readonly MainMenu _mainMenu;
         private readonly IShopProvider _provider;
         private readonly IUINotifier _uiNotifier;
-
-        private Disposable<Shop> _shop;
         private readonly ToggleButton _button;
 
         public ShopState(
@@ -34,39 +32,22 @@ namespace _Game.UI._MainMenu.State
             _button.HighlightBtn();
             _mainMenu.RebuildLayout();
 
-            _shop = await _provider.Load();
-
-            if (_shop?.Value != null)
-            {
-                _shop.Value.Show();
-                //_shop.Value.Init(); // Uncomment if initialization is required
-                _uiNotifier.OnScreenOpened(GameScreen.Shop);
-            }
+            var shop = await _provider.Load();
+            shop.Value.Show();
+            _uiNotifier.OnScreenOpened(GameScreen.Shop);
+            
         }
 
         public void Exit()
         {
-            if (_shop?.Value != null)
-            {
-                _shop.Value.Hide();
-                _shop.Dispose();
-                _shop = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
             _uiNotifier.OnScreenClosed(GameScreen.Shop);
         }
 
         public void Cleanup()
         {
-            if (_shop != null)
-            {
-                if (_shop.Value != null)
-                {
-                    _shop.Value.Hide();
-                }
-                _shop.Dispose();
-                _shop = null;
-            }
+            _provider.Unload();
             _button.UnHighlightBtn();
         }
     }

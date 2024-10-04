@@ -1,21 +1,20 @@
 ﻿using System;
-using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core._DataPresenters.Evolution;
 using _Game.Core._UpgradesChecker;
-using _Game.Core.DataPresenters.Evolution;
 using _Game.Core.DataPresenters.TimelineTravel;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using Assets._Game.UI.Common.Scripts;
-using Assets._Game.UI.TimelineInfoWindow.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Game.UI.UpgradesAndEvolution.Evolution.Scripts
 {
-    public class EvolutionScreen : MonoBehaviour, IUIScreen
+    public class EvolutionScreen : MonoBehaviour, IGameScreen
     {
         [SerializeField] private Canvas _canvas;
 

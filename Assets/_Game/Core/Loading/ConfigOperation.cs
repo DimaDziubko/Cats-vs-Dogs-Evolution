@@ -9,6 +9,7 @@ using Assets._Game.Core.Loading;
 using Assets._Game.Core.UserState;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 namespace _Game.Core.Loading
 {

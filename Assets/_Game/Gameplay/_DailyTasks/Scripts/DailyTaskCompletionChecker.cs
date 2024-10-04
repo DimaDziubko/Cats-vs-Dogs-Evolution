@@ -4,6 +4,7 @@ using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._CoinCounter.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.Utils;
 using Assets._Game.Gameplay._Units.Scripts;
 using Zenject;

@@ -16,7 +16,6 @@ namespace _Game.Core.UserState._State
         List<int> IDailyTasksStateReadonly.CompletedTasks => CompletedTasks;
         DateTime IDailyTasksStateReadonly.LastTimeGenerated => LastTimeGenerated;
         int IDailyTasksStateReadonly.CurrentTaskIdx => CurrentTaskIdx;
-        
         float IDailyTasksStateReadonly.ProgressOnTask => ProgressOnTask;
 
         public void ChangeLastTimeGenerated(DateTime time)

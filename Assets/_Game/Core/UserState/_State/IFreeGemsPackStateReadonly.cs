@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public interface IFreeGemsPackStateReadonly
     {
-        event Action FreeGemsPackCountChanged;
+        event Action<int, int> FreeGemsPackCountChanged;
         int FreeGemPackCount { get; }
         DateTime LastFreeGemPackDay { get;}
     }

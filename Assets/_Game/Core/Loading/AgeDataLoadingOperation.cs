@@ -1,7 +1,7 @@
 ﻿using System;
+using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.Services.UserContainer;
 using _Game.Utils;
 using Assets._Game.Core.Data;
@@ -15,7 +15,7 @@ namespace _Game.Core.Loading
     public class AgeDataLoadingOperation : ILoadingOperation
     {
         private readonly IGeneralDataPool _generalDataPool;
-        private readonly IAgeDataProvider _ageDataProvider;
+        private readonly IAgeDataLoader _ageDataLoader;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
         public string Description => "Loading age...";
@@ -24,13 +24,13 @@ namespace _Game.Core.Loading
 
         public AgeDataLoadingOperation(
             IGeneralDataPool generalDataPool,
-            IAgeDataProvider ageDataProvider,
+            IAgeDataLoader ageDataLoader,
             IAssetRegistry assetRegistry,
             IUserContainer userContainer)
         {
             _assetRegistry = assetRegistry;
             _generalDataPool = generalDataPool;
-            _ageDataProvider = ageDataProvider;
+            _ageDataLoader = ageDataLoader;
             _userContainer = userContainer;
         }
         
@@ -41,7 +41,7 @@ namespace _Game.Core.Loading
             onProgress.Invoke(0.4f);
             _assetRegistry.ClearContext(TimelineState.TimelineId, Constants.CacheContext.AGE);
             onProgress.Invoke(0.6f);
-            _generalDataPool.AgeStaticData = await _ageDataProvider.Load(TimelineState.TimelineId);
+            _generalDataPool.AgeStaticData = await _ageDataLoader.Load(TimelineState.TimelineId);
             onProgress.Invoke(1.0f);
         }
     }

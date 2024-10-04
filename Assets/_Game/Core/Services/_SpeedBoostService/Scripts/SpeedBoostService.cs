@@ -4,6 +4,7 @@ using _Game.Core._FeatureUnlockSystem.Scripts;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.BattleSpeed;
 using _Game.Core.Debugger;
 using _Game.Core.Services.UserContainer;
@@ -38,14 +39,14 @@ namespace _Game.Core.Services._SpeedBoostService.Scripts
         public SpeedBoostService(
             IAdsService adsService,
             IUserContainer userContainer,
-            IBattleSpeedConfigRepository battleSpeedConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IFeatureUnlockSystem featureUnlockSystem,
             IGameInitializer gameInitializer)
         {
             _adsService = adsService;
             _userContainer = userContainer;
-            _battleSpeedConfigRepository = battleSpeedConfigRepository;
+            _battleSpeedConfigRepository = configRepositoryFacade.BattleSpeedConfigRepository;
             _logger = logger;
             _featureUnlockSystem = featureUnlockSystem;
             _gameInitializer = gameInitializer;

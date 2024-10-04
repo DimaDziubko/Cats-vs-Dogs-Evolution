@@ -1,12 +1,12 @@
 ﻿using System;
 using _Game.Core._Logger;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI.Header.Scripts;
-using Assets._Game.Core.Services.Audio;
 using UnityEngine;
 using Zenject;
 
@@ -49,14 +49,14 @@ namespace _Game.Common
             Currencies.CurrenciesChanged -= OnCurrenciesChanged;
         }
 
-        private void OnCurrenciesChanged(Currencies type, double delta, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType type, double delta, CurrenciesSource source)
         {
             switch (type)
             {
-                case UI._Currencies.Currencies.Coins:
+                case UI._Currencies.CurrencyType.Coins:
                     TryToShowCoinsRewardAnimation(delta, source);
                     break;
-                case UI._Currencies.Currencies.Gems:
+                case UI._Currencies.CurrencyType.Gems:
                     TryToShowGemsRewardAnimation(delta, source);
                     break;
             }

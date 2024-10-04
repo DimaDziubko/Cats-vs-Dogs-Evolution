@@ -4,10 +4,7 @@ namespace _Game.Core.Configs.Providers
 {
     public class LocalConfigProvider : ILocalConfigProvider
     {
-        public string GetConfig()
-        {
-            return LocalConfigSaver.GetConfig();
-        }
+        public string GetConfig() => LocalConfigSaver.GetConfig();
     }
 
     public interface ILocalConfigProvider

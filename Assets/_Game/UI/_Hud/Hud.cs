@@ -4,20 +4,18 @@ using _Game.Core._Logger;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
 using _Game.Core.Services._SpeedBoostService.Scripts;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay.BattleLauncher;
+using _Game.UI._AlertPopup;
 using _Game.UI._Hud._BattleSpeedView;
 using _Game.UI._Hud._CoinCounterView;
 using _Game.UI._Hud._DailyTaskView;
 using _Game.UI._Hud._FoodBoostView;
 using _Game.UI._Hud._PauseView;
 using _Game.UI._Hud._SpeedBoostView.Scripts;
-using _Game.UI.Header.Scripts;
-using _Game.Utils;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Tutorial.Scripts;
-using Assets._Game.Utils.Popups;
 using UnityEngine;
 
 namespace _Game.UI._Hud
@@ -25,7 +23,7 @@ namespace _Game.UI._Hud
     public class Hud : MonoBehaviour
     {
         public event Action QuitBattle;
-
+        
         [SerializeField] private Canvas _canvas;
         [SerializeField] private CoinCounterView _counterView;
         [SerializeField] private FoodBoostView _foodBoostView;
@@ -33,9 +31,6 @@ namespace _Game.UI._Hud
         [SerializeField] private BattleSpeedView _battleSpeedView;
         [SerializeField] private SpeedBoostView _speedBoostView;
         [SerializeField] private DailyTaskView _dailyTaskView;
-        [Space, Header("CHEAT BTNS")]
-        [SerializeField] private HudVisibilityBtn _disableHudBtn;
-        [SerializeField] private CheatBoostFoodBtn _cheatBoostFoodBtn;
 
         public CoinCounterView CounterView => _counterView;
 
@@ -51,26 +46,16 @@ namespace _Game.UI._Hud
             IDailyTaskPresenter dailyTaskPresenter,
             ITutorialManager tutorialManager,
             IMyLogger logger,
-            IHeader header
-            )
+            Header.Scripts.IHeader header)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
 
             _foodBoostView.Construct(foodBoostService, audioService);
-            _pauseView.Construct(audioService, featureUnlockSystem, alertPopupProvider, battleManager, this);
+            _pauseView.Construct(audioService, featureUnlockSystem, alertPopupProvider,  battleManager, this);
             _battleSpeedView.Construct(battleSpeed, audioService);
             _speedBoostView.Construct(speedBoost, audioService);
             _counterView.Construct();
             _dailyTaskView.Construct(dailyTaskPresenter, audioService, tutorialManager, logger);
-            if (_disableHudBtn)
-                _disableHudBtn.Construct(header);
-
-            if (_cheatBoostFoodBtn)
-            {
-                FoodBoostService service = foodBoostService as FoodBoostService;
-
-                _cheatBoostFoodBtn.Initialize(() => service.OnAddFreeFoodCheat());
-            }
         }
 
         public void Init()
@@ -79,8 +64,6 @@ namespace _Game.UI._Hud
             _speedBoostView.Init();
             _pauseView.Init();
             _foodBoostView.Init();
-            if (_disableHudBtn)
-                _disableHudBtn.Init();
             Show();
         }
 
@@ -90,8 +73,6 @@ namespace _Game.UI._Hud
             _speedBoostView.Cleanup();
             _pauseView.Cleanup();
             _foodBoostView.Cleanup();
-            if (_disableHudBtn)
-                _disableHudBtn.Cleanup();
         }
 
         public void Show()
@@ -109,7 +90,7 @@ namespace _Game.UI._Hud
             _foodBoostView.Hide();
         }
 
-        public void ShowCoinCounter() =>
+        public void ShowCoinCounter() => 
             _counterView.Show();
 
         public void HideCoinCounter()
@@ -118,24 +99,24 @@ namespace _Game.UI._Hud
             _counterView.Hide();
         }
 
-        public void OnCoinsCoinsChanged(float amount) =>
+        public void OnCoinsCoinsChanged(float amount) => 
             _counterView.UpdateCoins(amount);
 
 
-        public void ShowFoodBoostBtn() =>
+        public void ShowFoodBoostBtn() => 
             _foodBoostView.Show();
 
-        public void HideFoodBoostView() =>
+        public void HideFoodBoostView() => 
             _foodBoostView.Hide();
 
 
-        public void ShowPauseToggle() =>
+        public void ShowPauseToggle() => 
             _pauseView.Show();
 
-        public void HidePauseToggle() =>
+        public void HidePauseToggle() => 
             _pauseView.Hide();
 
-        public void Quit() =>
+        public void Quit() => 
             QuitBattle?.Invoke();
     }
 }

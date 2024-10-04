@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _Game.Core.Configs.Models;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
-using _Game.Utils;
 
 namespace _Game.Core.Configs.Repositories.Shop
 {
@@ -13,29 +13,49 @@ namespace _Game.Core.Configs.Repositories.Shop
         public ShopConfigRepository(IUserContainer userContainer) =>
             _userContainer = userContainer;
 
-        public List<ProductConfig> GetIAPConfig()
-        {
-            return _userContainer.GameConfig.ShopConfig.Products
-                .Where(x => x.IAP_ID != Constants.ConfigKeys.MISSING_KEY && 
-                            x.IAP_ID != Constants.ConfigKeys.PLACEMENT)
-                .ToList();
-        }
-        
-        public List<ProductConfig> GetIGPConfig()
-        {
-            return _userContainer.GameConfig.ShopConfig.Products
-                .Where(x => x.IAP_ID == Constants.ConfigKeys.MISSING_KEY &&
-                 x.IAP_ID != Constants.ConfigKeys.PLACEMENT) 
-                .ToList();
-        }
-        
-        public ProductConfig GetPlacementConfig()
-        {
-            return _userContainer.GameConfig.ShopConfig.Products
-                .Find(x => x.IAP_ID == Constants.ConfigKeys.PLACEMENT);
-        }
+        public GemsBundleConfig GetGemsBundleConfig(int id) =>
+            _userContainer.GameConfig.ShopConfig.GemsBundleConfigs
+                .FirstOrDefault(x => x.Id == id);
 
-        public IEnumerable<ProductConfig> GetConfigs() => 
-            _userContainer.GameConfig.ShopConfig.Products;
+        public CoinsBundleConfig GetCoinsBundleConfig(int id) =>
+            _userContainer.GameConfig.ShopConfig.CoinsBundleConfigs
+                .FirstOrDefault(x => x.Id == id);
+
+        public SpeedBoostOfferConfig GetSpeedBoostOfferConfig(int id) =>
+            _userContainer.GameConfig.ShopConfig.SpeedBoostOfferConfigs
+                .FirstOrDefault(x => x.Id == id);
+
+        public FreeGemsPackConfig GetFreeGemsPackDayConfig(int id) =>
+            _userContainer.GameConfig.ShopConfig.FreeGemsPackConfigs
+                .FirstOrDefault(x => x.Id == id);
+
+        public ProfitOfferConfig GetProfitOfferConfig(int id) =>
+            _userContainer.GameConfig.ShopConfig.ProfitOfferConfigs
+                .FirstOrDefault(x => x.Id == id);
+        
+        public IEnumerable<GemsBundleConfig> GetGemsBundleConfigs() =>
+            _userContainer.GameConfig.ShopConfig.GemsBundleConfigs;
+
+        public IEnumerable<CoinsBundleConfig> GetCoinsBundleConfigs() =>
+            _userContainer.GameConfig.ShopConfig.CoinsBundleConfigs;
+
+        public IEnumerable<SpeedBoostOfferConfig> GetSpeedBoostOfferConfigs() =>
+            _userContainer.GameConfig.ShopConfig.SpeedBoostOfferConfigs;
+
+        public IEnumerable<FreeGemsPackConfig> GetFreeGemsPackConfigs() =>
+            _userContainer.GameConfig.ShopConfig.FreeGemsPackConfigs;
+        
+        public IEnumerable<ProfitOfferConfig> GetProfitOfferConfigs() =>
+            _userContainer.GameConfig.ShopConfig.ProfitOfferConfigs;
+
+        public IEnumerable<AdsGemsPackConfig> GetAdsGemsPackConfigs() => 
+            _userContainer.GameConfig.ShopConfig.AdsGemsPackConfigs;
+
+        public IEnumerable<ProductConfig> ProductConfigs 
+            => GetGemsBundleConfigs()
+                    .Cast<ProductConfig>()
+                    .Concat(GetSpeedBoostOfferConfigs())
+                    .Concat(GetProfitOfferConfigs());
+        
     }
 }

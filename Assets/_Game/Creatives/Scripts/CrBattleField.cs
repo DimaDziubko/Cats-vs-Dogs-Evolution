@@ -1,12 +1,11 @@
-﻿using _Game.Gameplay._BattleField.Scripts;
+﻿using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
+using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._BattleSpeed.Scripts;
 using _Game.Gameplay._CoinCounter.Scripts;
 using _Game.UI._Hud._CoinCounterView;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
-using Assets._Game.Creatives.Scripts;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using UnityEngine;
 

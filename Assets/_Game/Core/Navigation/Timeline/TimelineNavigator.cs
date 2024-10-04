@@ -1,18 +1,17 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
+ using _Game.Core._DataLoaders.AgeDataProvider;
  using _Game.Core._GameInitializer;
  using _Game.Core._Logger;
  using _Game.Core.AssetManagement;
  using _Game.Core.Configs.Providers;
  using _Game.Core.Data;
- using _Game.Core.DataProviders.AgeDataProvider;
+ using _Game.Core.DataProviders.BattleDataProvider;
  using _Game.Core.DataProviders.ShopDataProvider;
  using _Game.Core.DataProviders.Timeline;
  using _Game.Core.Loading;
  using _Game.Core.LoadingScreen;
  using _Game.Core.Services.UserContainer;
- using Assets._Game.Core.Data;
- using Assets._Game.Core.DataProviders.BattleDataProvider;
  using Assets._Game.Core.Loading;
  using Assets._Game.Core.UserState;
 
@@ -21,19 +20,20 @@ using System.Collections.Generic;
     public class TimelineNavigator : ITimelineNavigator, IDisposable
     {
         public event Action TimelineChanged;
+        public int CurrentTimelineNumber => _userContainer.State.TimelineState.TimelineId + 1;
 
         private readonly IUserContainer _userContainer;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IGameInitializer _gameInitializer;
         private readonly IGeneralDataPool _generalDataPool;
-        private readonly IAgeDataProvider _ageDataProvider;
+        private readonly IAgeDataLoader _ageDataLoader;
         private readonly IRemoteConfigProvider _remoteConfigProvider;
         private readonly IMyLogger _logger;
-        private readonly IBattleDataProvider _battleDataProvider;
-        private readonly ITimelineDataProvider _timelineDataProvider;
+        private readonly IBattleDataLoader _battleDataLoader;
+        private readonly ITimelineDataLoader _timelineDataLoader;
         private readonly ILocalConfigProvider _localConfigProvider;
         private readonly IAssetRegistry _assetRegistry;
-        private readonly IShopDataProvider _shopDataProvider;
+        private readonly IShopDataLoader _shopDataLoader;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         
@@ -41,13 +41,13 @@ using System.Collections.Generic;
             IUserContainer userContainer,
             ILoadingScreenProvider loadingScreenProvider,
             IGeneralDataPool generalDataPool,
-            IAgeDataProvider ageDataProvider,
+            IAgeDataLoader ageDataLoader,
             IGameInitializer gameInitializer,
             IRemoteConfigProvider remoteConfigProvider,
             ILocalConfigProvider localConfigProvider,
-            IBattleDataProvider battleDataProvider,
-            ITimelineDataProvider timelineDataProvider,
-            IShopDataProvider shopDataProvider,
+            IBattleDataLoader battleDataLoader,
+            ITimelineDataLoader timelineDataLoader,
+            IShopDataLoader shopDataLoader,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
@@ -56,14 +56,14 @@ using System.Collections.Generic;
             _gameInitializer = gameInitializer;
             _userContainer = userContainer;
             _generalDataPool = generalDataPool;
-            _ageDataProvider = ageDataProvider;
+            _ageDataLoader = ageDataLoader;
             _remoteConfigProvider = remoteConfigProvider;
-            _battleDataProvider = battleDataProvider;
-            _timelineDataProvider = timelineDataProvider;
+            _battleDataLoader = battleDataLoader;
+            _timelineDataLoader = timelineDataLoader;
             _localConfigProvider = localConfigProvider;
             _logger = logger;
             _assetRegistry = assetRegistry;
-            _shopDataProvider = shopDataProvider;
+            _shopDataLoader = shopDataLoader;
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -89,10 +89,10 @@ using System.Collections.Generic;
             
             loadingOperations.Enqueue(new DataLoadingOperation(
                 _generalDataPool,
-                _ageDataProvider, 
-                _battleDataProvider, 
-                _timelineDataProvider,
-                _shopDataProvider,
+                _ageDataLoader, 
+                _battleDataLoader, 
+                _timelineDataLoader,
+                _shopDataLoader,
                 _assetRegistry,
                 _userContainer,
                 _logger));

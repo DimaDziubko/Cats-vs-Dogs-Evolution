@@ -1,48 +1,58 @@
-﻿using _Game.Core.Factory;
+﻿using System.Collections.Generic;
+using _Game.Core.Factory;
+using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 using _Game.UI._Shop.Scripts;
 using UnityEngine;
+using Zenject;
 
 namespace _Game.UI.Factory
 {
-    public enum ShopItemViewType
-    {
-        Type1,
-        Type2, 
-        Type3,
-        Type4,
-    }
-    
     [CreateAssetMenu(fileName = "UI Factory", menuName = "Factories/UI")]
-    public class UIFactory : GameObjectFactory, IUIFactory
+    public class UIFactory : GameObjectFactory, IUIFactory, IInitializable
     {
-        [SerializeField] private ShopItem _shopItemType1, _shopItemType2, _shopItemType3, _shopItemType4;
+        [SerializeField] private List<ShopItemView> _shopItemViews;
+        private Dictionary<int, ShopItemView> _shopItemPrefabs;
+
         [SerializeField] private Plug _shopItemPlug;
 
-        public ShopItem Get(ShopItemViewType type, Transform parent)
+        [SerializeField] private CardItemView cardItemView;
+
+        [SerializeField] private TutorialPointerView _tutorialPointer;
+
+        void IInitializable.Initialize()
         {
-            ShopItem item = null;
-            switch (type)
+            _shopItemPrefabs = new Dictionary<int, ShopItemView>();
+            foreach (var prefab in _shopItemViews)
             {
-                case ShopItemViewType.Type1:
-                    item = CreateGameObjectInstance(_shopItemType1, parent);
-                    break;
-                case ShopItemViewType.Type2:
-                    item = CreateGameObjectInstance(_shopItemType2, parent);
-                    break;
-                case ShopItemViewType.Type3:
-                    item = CreateGameObjectInstance(_shopItemType3, parent);
-                    break;
-                case ShopItemViewType.Type4:
-                    item = CreateGameObjectInstance(_shopItemType4, parent);
-                    break;
+                int id = prefab.Id;
+                if (!_shopItemPrefabs.ContainsKey(id))
+                {
+                    _shopItemPrefabs.Add(id, prefab);
+                }
+                else
+                {
+                    Debug.LogWarning($"Duplicate id {id} found in _shopItemPrefabs.");
+                }
             }
-            
-            if(item != null)
-                item.OriginFactory = this;
-            
-            return item;
         }
         
+        public T GetShopItem<T>(int id, Transform parent) where T : ShopItemView
+        {
+            if (_shopItemPrefabs.TryGetValue(id, out var prefab))
+            {
+                var instance = CreateGameObjectInstance(prefab, parent) as T;
+                if (instance != null)
+                    instance.OriginFactory = this;
+                return instance;
+            }
+            else
+            {
+                Debug.LogError($"Prefab for type {id} not found.");
+                return null;
+            }
+        }
+
         public Plug GetShopItemPlug(Transform parent)
         {
             var instance = CreateGameObjectInstance(_shopItemPlug, parent);
@@ -51,18 +61,44 @@ namespace _Game.UI.Factory
             return instance;
         }
 
-        public void Reclaim(ShopItem item) => 
-            Destroy(item.gameObject);
+        public CardItemView GetCard(Transform parent)
+        {
+            var instance = CreateGameObjectInstance(cardItemView, parent);
+            if(instance != null)
+                instance.OriginFactory = this;
+            return instance;
+        }
+
+        public TutorialPointerView GetTutorialPointer(Transform parent)
+        {
+            var instance = CreateGameObjectInstance(_tutorialPointer, parent);
+            if(instance != null)
+                instance.OriginFactory = this;
+            return instance;
+        }
+
+        public void Reclaim(ShopItemView itemView) => 
+            Destroy(itemView.gameObject);
 
         public void Reclaim(Plug item) => 
             Destroy(item.gameObject);
+
+        public void Reclaim(CardItemView cardItemView) => 
+            Destroy(cardItemView.gameObject);
+
+        public void Reclaim(TutorialPointerView tutorialPointer) => 
+            Destroy(tutorialPointer.gameObject);
     }
 
     public interface IUIFactory
     {
-        ShopItem Get(ShopItemViewType type, Transform parent);
         Plug GetShopItemPlug(Transform parent);
+        CardItemView GetCard(Transform parent);
+        TutorialPointerView GetTutorialPointer(Transform parent);
         void Reclaim(Plug item);
-        void Reclaim(ShopItem item);
+        void Reclaim(ShopItemView itemView);
+        void Reclaim(CardItemView cardItemView);
+        void Reclaim(TutorialPointerView cardItemView);
+        T GetShopItem<T>(int id, Transform parent) where T : ShopItemView;
     }
 }

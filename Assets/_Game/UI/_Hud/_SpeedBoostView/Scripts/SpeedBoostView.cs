@@ -1,5 +1,5 @@
 ﻿using _Game.Core.Services._SpeedBoostService.Scripts;
-using Assets._Game.Core.Services.Audio;
+using _Game.Core.Services.Audio;
 using UnityEngine;
 
 namespace _Game.UI._Hud._SpeedBoostView.Scripts

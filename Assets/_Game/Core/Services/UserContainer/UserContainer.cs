@@ -1,4 +1,5 @@
-﻿using _Game.Core.Configs.Models;
+﻿using System;
+using _Game.Core.Configs.Models;
 using _Game.Core.Debugger;
 using _Game.Core.UserState._Handler._Analytics;
 using _Game.Core.UserState._Handler._BattleSpeed;
@@ -11,11 +12,15 @@ using _Game.Core.UserState._Handler._Upgrade;
 using _Game.Core.UserState._Handler.Currencies;
 using _Game.Core.UserState._Handler.FreeGemsPack;
 using _Game.Core.UserState._State;
+using Sirenix.OdinInspector;
 
 namespace _Game.Core.Services.UserContainer
 {
-    public class UserContainer : IUserContainer
+    public class UserContainer : IUserContainer, ISaveGameTrigger
     {
+        public event Action<bool> SaveGameRequested;
+        
+        [ShowInInspector]
         public UserAccountState State { get; set; }
         public GameConfig GameConfig { get; set; }
 
@@ -24,11 +29,13 @@ namespace _Game.Core.Services.UserContainer
         public IAnalyticsStateHandler AnalyticsStateHandler { get; }
         public IUpgradeStateHandler UpgradeStateHandler { get; }
         public IPurchaseStateHandler PurchaseStateHandler  { get; }
-        public IFreeGemsPackStateHandler FreeGemsPackStateHandler  { get; }
         public IFoodBoostStateHandler FoodBoostStateHandler { get; }
         public IBattleSpeedStateHandler BattleSpeedStateHandler { get; }
         public ITutorialStateHandler TutorialStateHandler { get; }
         public IDailyTaskStateHandler DailyTaskStateHandler { get; }
+        public IAdsGemsPackStateHandler AdsGemsPackStateHandler { get;}
+        public IFreeGemsPackStateHandler FreeGemsPackStateHandler  { get; }
+
 
         public UserContainer()
         {
@@ -43,6 +50,9 @@ namespace _Game.Core.Services.UserContainer
             BattleSpeedStateHandler = new BattleSpeedStateHandler(this);
             TutorialStateHandler = new TutorialStateHandler(this);
             DailyTaskStateHandler = new DailyTaskStateHandler(this);
+            AdsGemsPackStateHandler = new AdsGemsPackStateHandler(this);
         }
+        
+        public void RequestSaveGame(bool isDebounced = false) => SaveGameRequested?.Invoke(isDebounced);
     }
 }

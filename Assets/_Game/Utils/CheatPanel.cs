@@ -3,12 +3,13 @@ using _Game.Core.Configs.Repositories.Timeline;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
+using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.UI._Currencies;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Core.UserState;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Game.Utils
@@ -28,7 +29,8 @@ namespace _Game.Utils
         [SerializeField] private Button _nextBattleBtn;
         [SerializeField] private Button _previousBattleBtn;
 
-        [SerializeField] private Button _cheatButton;
+        [SerializeField] private Button _coinsCheatButton;
+        [SerializeField] private Button _gemsCheatButton;
         
         private ITimelineNavigator _timelineNavigator;
         private IAgeNavigator _ageNavigator;
@@ -84,7 +86,8 @@ namespace _Game.Utils
             _previousAgeBtn.onClick.AddListener(OnPreviousAgeBtnClicked);
             _nextAgeBtn.onClick.AddListener(OnNextAgeBtnClicked);
 
-            _cheatButton.onClick.AddListener(OnCheatButtonClick);
+            _coinsCheatButton.onClick.AddListener(OnCoinsCheatButtonClick);
+            _gemsCheatButton.onClick.AddListener(OnGemsCheatButtonClick);
         }
 
         private void Unsubscribe()
@@ -102,13 +105,20 @@ namespace _Game.Utils
             _previousAgeBtn.onClick.RemoveAllListeners();
             _nextAgeBtn.onClick.RemoveAllListeners();
             
-            _cheatButton.onClick.RemoveAllListeners();
+            _gemsCheatButton.onClick.RemoveAllListeners();
+            _coinsCheatButton.onClick.RemoveAllListeners();
         }
 
-        private void OnCheatButtonClick()
+        private void OnCoinsCheatButtonClick()
         {
             PlayButtonSound();
             _userContainer.CurrenciesHandler.AddCoins(10_000_000, CurrenciesSource.None);
+        }
+
+        private void OnGemsCheatButtonClick()
+        {
+            PlayButtonSound();
+            _userContainer.CurrenciesHandler.AddGems(1000, CurrenciesSource.None);
         }
 
         private void OnTimelineChanged()

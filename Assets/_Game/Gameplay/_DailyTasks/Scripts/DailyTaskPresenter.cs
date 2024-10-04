@@ -4,6 +4,7 @@ using _Game.Core.Data;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Zenject;
 
@@ -91,27 +92,27 @@ namespace _Game.Gameplay._DailyTasks.Scripts
                 case DailyTaskType.SpawnLightUnit:
                     return _generalDataPool
                         .AgeStaticData.ForUnit(UnitType.Light)
-                        .Config.Name;
+                        .Name;
                 case DailyTaskType.SpawnMediumUnit:
                     return _generalDataPool
                         .AgeStaticData.ForUnit(UnitType.Medium)
-                        .Config.Name;
+                        .Name;
                 case DailyTaskType.SpawnHeavyUnit:
                     return _generalDataPool
                         .AgeStaticData.ForUnit(UnitType.Heavy)
-                        .Config.Name;
+                        .Name;
                 case DailyTaskType.DefeatLightEnemy:
                     return _generalDataPool
                         .BattleStaticData.ForUnit(_battleNavigator.CurrentBattle, UnitType.Light)
-                        .Config.Name;
+                        .Name;
                 case DailyTaskType.DefeatMediumEnemy:
                     return _generalDataPool
                         .BattleStaticData.ForUnit(_battleNavigator.CurrentBattle, UnitType.Medium)
-                        .Config.Name;
+                        .Name;
                 case DailyTaskType.DefeatHeavyEnemy:
                     return _generalDataPool
                         .BattleStaticData.ForUnit(_battleNavigator.CurrentBattle, UnitType.Heavy)
-                        .Config.Name;
+                        .Name;
                 default:
                     return string.Empty;
             }

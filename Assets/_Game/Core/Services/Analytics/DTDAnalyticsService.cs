@@ -8,7 +8,9 @@ using _Game.Core.Services.IGPService;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI._Currencies;
+using _Game.Utils;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Units.Scripts;
 using DevToDev.Analytics;
@@ -53,6 +55,7 @@ namespace _Game.Core.Services.Analytics
 
         private void Init()
         {
+
             TimelineState.NextBattleOpened += OnNextBattleOpened;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             TimelineState.OpenedUnit += OnUnitOpened;
@@ -67,11 +70,10 @@ namespace _Game.Core.Services.Analytics
             MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += TrackAdImpression;
             MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent += TrackAdImpression;
 
-            int zeroTutorialStepNumber = -1;
-            if (TutorialState.StepsCompleted == zeroTutorialStepNumber)
+            if (!TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.START_TUTORIAL_KEY))
             {
-                int tutorialStartedKey = -1;
-                DTDAnalytics.Tutorial(tutorialStartedKey);
+                DTDAnalytics.Tutorial(Constants.TutorialSteps.START_TUTORIAL_KEY);
+                _userContainer.TutorialStateHandler.CompleteTutorialStep(Constants.TutorialSteps.START_TUTORIAL_KEY);
             }
         }
 
@@ -110,7 +112,7 @@ namespace _Game.Core.Services.Analytics
             DTDAnalytics.RealCurrencyPayment(orderId, price, productId, currencyCode);
         }
 
-        private void OnCurrenciesChanged(Currencies type, double amount, CurrenciesSource source)
+        private void OnCurrenciesChanged(CurrencyType type, double amount, CurrenciesSource source)
         {
             if (amount > 1)
             {
@@ -129,7 +131,7 @@ namespace _Game.Core.Services.Analytics
             DTDAnalytics.VirtualCurrencyPayment(dto.PurchaseId, dto.PurchaseType, dto.PurchaseAmount, dto.PurchasePrice, dto.PurchaseCurrency);
         }
 
-        private void TrackCurrencyAccrual(Currencies type, double amount, CurrenciesSource source)
+        private void TrackCurrencyAccrual(CurrencyType type, double amount, CurrenciesSource source)
         {
             DTDAccrualType accrualType;
             if (source == CurrenciesSource.Shop || source == CurrenciesSource.MiniShop) accrualType = DTDAccrualType.Bought;
@@ -140,9 +142,9 @@ namespace _Game.Core.Services.Analytics
 
             switch (type)
             {
-                case UI._Currencies.Currencies.Coins:
+                case UI._Currencies.CurrencyType.Coins:
                     break;
-                case UI._Currencies.Currencies.Gems:
+                case UI._Currencies.CurrencyType.Gems:
                     DTDAnalytics.CurrencyAccrual(type.ToString(), (int)amount, source.ToString(), accrualType);
                     DTDAnalytics.CurrentBalance(new Dictionary<string, long>
                     {
@@ -265,13 +267,13 @@ namespace _Game.Core.Services.Analytics
 
         private void OnCompletedBattleChanged()
         {
-            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 1)
+            if (BattleStatistics.BattlesCompleted == 1 && TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER))
             {
                 DTDAnalytics.CustomEvent("first_build_success");
                 _logger.Log("first_build_success");
             }
 
-            else if (BattleStatistics.BattlesCompleted == 1 && TutorialState.StepsCompleted == 0)
+            else if (BattleStatistics.BattlesCompleted == 1 && !TutorialState.CompletedSteps.Contains(Constants.TutorialSteps.BUILDER))
             {
                 DTDAnalytics.CustomEvent("first_build_failed");
                 _logger.Log("first_build_failed");

@@ -37,5 +37,16 @@ namespace _Game.UI._Shop.Scripts
             _gridLayoutGroup.cellSize = new Vector2(cellWidth, cellHeight);
             _gridLayoutGroup.spacing = new Vector2(_fixedSpacing, _fixedSpacing);
         }
+
+        public void AdjustViewport(int cardsCount)
+        {
+            int rows = Mathf.CeilToInt((float)cardsCount / _numberOfColumns);
+            float cellHeight = _gridLayoutGroup.cellSize.y;
+            float spacingHeight = _gridLayoutGroup.spacing.y;
+            
+            float totalHeight = (rows * cellHeight) + (rows * spacingHeight);
+            
+            _parentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalHeight);
+        }
     }
 }

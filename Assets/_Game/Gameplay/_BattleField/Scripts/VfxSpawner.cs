@@ -1,6 +1,6 @@
-﻿using _Game.Gameplay.Vfx.Factory;
+﻿using _Game.Common;
+using _Game.Gameplay.Vfx.Factory;
 using _Game.Gameplay.Vfx.Scripts;
-using Assets._Game.Common;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 

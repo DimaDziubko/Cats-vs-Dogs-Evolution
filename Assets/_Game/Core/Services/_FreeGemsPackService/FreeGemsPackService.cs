@@ -1,130 +1,236 @@
 ﻿using System;
-using _Game.Common;
+using System.Collections.Generic;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
-using _Game.Core.Ads;
-using _Game.Core.Configs.Repositories.Economy;
+using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
-using _Game.Core.Services.Analytics;
-using _Game.Core.Services.IAP;
+using _Game.Core.Services._AdsGemsPackService;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
+using _Game.Core.UserState._State;
+using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Currencies;
-#if cas_advertisment_enabled
-using CAS;
-#endif
-using UnityEngine;
+using _Game.UI._Shop.Scripts;
+using Assets._Game.Gameplay._Timer.Scripts;
 
 namespace _Game.Core.Services._FreeGemsPackService
 {
     public class FreeGemsPackService : IFreeGemsPackService, IDisposable
     {
-        public event Action FreeGemsPackUpdated;
-
         private readonly IUserContainer _userContainer;
-        private readonly IEconomyConfigRepository _economyConfigRepository;
         private readonly IShopConfigRepository _shopConfigRepository;
         private readonly IMyLogger _logger;
-        private readonly IAdsService _adsService;
         private readonly IGameInitializer _gameInitializer;
-        private IFreeGemsPackStateReadonly FreeGemsPackState => _userContainer.State.FreeGemsPackState;
+        private readonly ITimerService _timerService;
+        private readonly TimeBasedRecoveryCalculator _recoveryCalculator;
 
-        public ProductDescription FreeGemsPack => MakeProductDefinition();
+        private IFreeGemsPackContainer FreeGemsPackContainer => _userContainer.State.FreeGemsPackContainer;
+
+        private readonly Dictionary<int, FreeGemsPack> _freeGemsPacks = new Dictionary<int, FreeGemsPack>();
 
         public FreeGemsPackService(
             IUserContainer userContainer,
-            IEconomyConfigRepository economyConfigRepository,
-            IShopConfigRepository shopConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
-            IAdsService adsService,
-            IGameInitializer gameInitializer)
+            IGameInitializer gameInitializer,
+            ITimerService timerService,
+            TimeBasedRecoveryCalculator recoveryCalculator)
         {
             _userContainer = userContainer;
-            _economyConfigRepository = economyConfigRepository;
-            _shopConfigRepository = shopConfigRepository;
+            _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
             _logger = logger;
-            _adsService = adsService;
             _gameInitializer = gameInitializer;
+            _timerService = timerService;
+            _recoveryCalculator = recoveryCalculator;
+            
             gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
         {
-            UpdateFreeGemsPack();
-            _adsService.OnVideoLoaded += OnRewardVideoLoaded;
+            CheckStorage();
+            InitFreeGemsPacks();
 
-        }
-
-        public void UpdateFreeGemsPack()
-        {
-            var freeGemsPackDayConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
-
-            DateTime now = DateTime.UtcNow;
-
-            TimeSpan timeSinceLastBoost = now - FreeGemsPackState.LastFreeGemPackDay;
-            int recoverablePacks = (int)(timeSinceLastBoost.TotalMinutes / freeGemsPackDayConfig.RecoverTimeMinutes);
-
-            if (recoverablePacks > 0)
+            foreach (var pack in FreeGemsPackContainer.FreeGemsPacks.Values)
             {
-                int lackingPacks = freeGemsPackDayConfig.DailyGemsPackCount - FreeGemsPackState.FreeGemPackCount;
-                int packsToAdd = Mathf.Min(recoverablePacks, lackingPacks);
-
-                DateTime newLastDailyFreePackSpent = FreeGemsPackState.LastFreeGemPackDay
-                    .AddMinutes(packsToAdd * freeGemsPackDayConfig.RecoverTimeMinutes);
-                _userContainer.FreeGemsPackStateHandler.RecoverFreeGemsPack(
-                    packsToAdd,
-                    newLastDailyFreePackSpent);
+                pack.FreeGemsPackCountChanged += OnFreeGemsPackCountChanged;
             }
+
         }
 
         void IDisposable.Dispose()
         {
-            _adsService.OnVideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
+            
+            foreach (var pack in FreeGemsPackContainer.FreeGemsPacks.Values)
+            {
+                pack.FreeGemsPackCountChanged -= OnFreeGemsPackCountChanged;
+            }
+
         }
 
-        private void OnRewardVideoLoaded(AdType type)
+        public Dictionary<int, FreeGemsPack> GetFreeGemsPacks() => _freeGemsPacks;
+
+        private void OnFreeGemsPackCountChanged(int id, int newCount)
         {
-            if (type == AdType.Rewarded)
+            _freeGemsPacks[id].SetAmount(newCount);
+            CheckRecovering(FreeGemsPackContainer.FreeGemsPacks[id], _freeGemsPacks[id]);
+        }
+
+        private void CheckStorage()
+        {
+            if (FreeGemsPackContainer == null) 
+                _userContainer.State.FreeGemsPackContainer = new FreeGemsPackContainer();
+
+            HashSet<int> validPackIds = new HashSet<int>();
+            
+            foreach (FreeGemsPackConfig config in _shopConfigRepository.GetFreeGemsPackConfigs())
             {
-                UpdateFreeGemsPack();
-                NotifyUpdateFreeGemsPack();
+                validPackIds.Add(config.Id);
+                
+                if (!FreeGemsPackContainer.TryGetPack(config.Id, out var pack))
+                {
+                    var newPack = new FreeGemsPackState()
+                    {
+                        Id = config.Id,
+                        FreeGemPackCount = config.DailyGemsPackCount,
+                        LastFreeGemPackDay = DateTime.UtcNow
+                    };
+                    
+                    FreeGemsPackContainer.AddPack(config.Id, newPack);
+                }
+            }
+            
+            var packsToRemove = new List<int>();
+            
+            foreach (var existingPackId in FreeGemsPackContainer.FreeGemsPacks.Keys)
+            {
+                if (!validPackIds.Contains(existingPackId))
+                {
+                    packsToRemove.Add(existingPackId);
+                }
+            }
+            
+            foreach (var packId in packsToRemove)
+            {
+                FreeGemsPackContainer.RemovePack(packId);
             }
         }
 
-        private void NotifyUpdateFreeGemsPack() =>
-            FreeGemsPackUpdated?.Invoke();
-
-
-        void IFreeGemsPackService.OnFreeGemsPackBtnClicked() =>
-            _adsService.ShowRewardedVideo(OnRewardedVideoComplete, Placement.FreeGemsPack);
-
-        private ProductDescription MakeProductDefinition()
+        private void InitFreeGemsPacks()
         {
-            var freeGemsPackDayConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
-            var productConfig = _shopConfigRepository.GetPlacementConfig();
-            var productDescription = new ProductDescription()
+            _freeGemsPacks.Clear();
+            
+            foreach (var config in _shopConfigRepository.GetFreeGemsPackConfigs())
             {
-                Id = productConfig.IAP_ID,
-                AvailablePurchasesLeft = FreeGemsPackState.FreeGemPackCount,
-                MaxPurchasesCount = freeGemsPackDayConfig.DailyGemsPackCount,
-                Config = productConfig,
-                IsReady = _adsService.IsAdReady(AdType.Rewarded),
-            };
+                FreeGemsPackState packState = FreeGemsPackContainer.FreeGemsPacks[config.Id];
+                
+                FreeGemsPack pack = new FreeGemsPack
+                {
+                    Id = config.Id,
+                    Config = config,
+                };
 
-            return productDescription;
+                CheckRecovering(packState, pack);
+                
+                pack.SetAmount(packState.FreeGemPackCount);
+                
+                _freeGemsPacks.Add(pack.Id, pack);
+            }
         }
 
-        private void OnRewardedVideoComplete()
+        private void CheckRecovering(FreeGemsPackState packState, FreeGemsPack pack)
         {
-            var freeGemsPackConfig = _economyConfigRepository.GetFreeGemsPackDayConfig();
-            var productConfig = _shopConfigRepository.GetPlacementConfig();
+            if (packState.FreeGemPackCount > pack.Config.DailyGemsPackCount)
+            {
+                int delta = pack.Config.DailyGemsPackCount - packState.FreeGemPackCount;
+                _userContainer.FreeGemsPackStateHandler.RecoverFreeGemsPack(pack.Id, delta, DateTime.UtcNow); 
+                return;
+            }
+            
+            if(packState.FreeGemPackCount == pack.Config.DailyGemsPackCount) return;
+            
+            var isRecovered = _recoveryCalculator.CalculateRecoveredUnits(
+                packState.FreeGemPackCount,
+                pack.Config.DailyGemsPackCount,
+                pack.Config.RecoverTimeMinutes,
+                packState.LastFreeGemPackDay,
+                out int recoveredUnits);
 
-            _userContainer.FreeGemsPackStateHandler.SpendGemsPack(FreeGemsPackState.FreeGemPackCount == freeGemsPackConfig.DailyGemsPackCount
-                ? DateTime.UtcNow
-                : FreeGemsPackState.LastFreeGemPackDay);
+            if (isRecovered)
+            {
+                _userContainer.FreeGemsPackStateHandler.RecoverFreeGemsPack(pack.Id, recoveredUnits, DateTime.UtcNow); 
+                return;
+            }
 
-            _userContainer.CurrenciesHandler.AddGems(productConfig.Quantity, CurrenciesSource.FreeGemsPack);
+            if (recoveredUnits > 0)
+            {
+                DateTime newLastUseTime = _recoveryCalculator.CalculateNewLastUseTime(
+                    packState.LastFreeGemPackDay, 
+                    recoveredUnits, 
+                    pack.Config.RecoverTimeMinutes);
+                
+                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, recoveredUnits, newLastUseTime); 
+            }
+
+            
+            float timeUntilNextRecover = _recoveryCalculator.CalculateTimeUntilNextRecoverySeconds(pack.Config.RecoverTimeMinutes, packState.LastFreeGemPackDay);
+
+            TimeSpan timeSpanUntilNextRecover = TimeSpan.FromSeconds(timeUntilNextRecover);
+
+            _logger.Log($"[CheckRecovering] Time Until Next Recovery: {timeSpanUntilNextRecover:hh\\:mm\\:ss}", DebugStatus.Success);
+
+            StartRecoveryTimer(pack, timeUntilNextRecover);
+
+
+            _logger.Log($"[CheckRecovering] Pack ID: {pack.Id}, Is Recovered: {isRecovered}, Recovered Units: {recoveredUnits}", DebugStatus.Success);
+            _logger.Log($"[CheckRecovering] Recover Time (minutes): {pack.Config.RecoverTimeMinutes}, Max Packs: {pack.Config.DailyGemsPackCount}, Current Packs: {packState.FreeGemPackCount}", DebugStatus.Success);
+
+        }
+
+        private void StartRecoveryTimer(FreeGemsPack pack, float remainingTime)
+        {
+            string key = $"FreeGemsPack_{pack.Id}";
+
+            GameTimer existingTimer = _timerService.GetTimer(key);
+    
+            if (existingTimer != null)
+            {
+                _logger.Log($"Timer for AdsGemsPack {pack.Id} is already running.", DebugStatus.Warning);
+                return;
+            }
+    
+            _logger.Log($"Starting new timer for AdsGemsPack {pack.Id}. Remaining time: {remainingTime} seconds", DebugStatus.Success);
+
+            var timerData = new TimerData()
+            {
+                Countdown = true,
+                Duration = remainingTime,
+                StartValue = remainingTime,
+            };
+
+            var timer = _timerService.CreateTimer(key, timerData, () => RecoverPack(pack, key));
+            timer.Tick += pack.Tick;
+            timer.Start();
+        }
+
+        private void RecoverPack(FreeGemsPack pack, string key)
+        {
+            GameTimer timer = _timerService.GetTimer(key);
+            timer.Tick -= pack.Tick;
+            _timerService.RemoveTimer(key); 
+            
+            var packState = FreeGemsPackContainer.FreeGemsPacks[pack.Id];
+            if (packState.FreeGemPackCount < pack.Config.DailyGemsPackCount)
+            {
+                CheckRecovering(packState, pack);
+            }
+        }
+        
+        void IFreeGemsPackService.OnFreeGemsPackBtnClicked(FreeGemsPack pack)
+        {
+            _userContainer.FreeGemsPackStateHandler.SpendFreeGemsPack(pack.Id, DateTime.UtcNow);
+            _userContainer.CurrenciesHandler.AddGems(pack.Config.Quantity, CurrenciesSource.FreeGemsPack);
         }
     }
 }

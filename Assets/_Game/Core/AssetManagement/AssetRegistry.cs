@@ -37,22 +37,22 @@ namespace _Game.Core.AssetManagement
         }
 
         
-        public async UniTask<T> LoadAsset<T>(AssetReference assetReference, int timeline, int context) where T : class
+        public async UniTask<T> LoadAsset<T>(AssetReference assetReference, int timeline, int cacheContext) where T : class
         {
             var asset = await _assetProvider.Load<T>(assetReference);
 
             string cacheKey = assetReference.AssetGUID;
 
-            CacheAsset(timeline, context, cacheKey);
+            CacheAsset(timeline, cacheContext, cacheKey);
 
             return asset;
         }
         
-        public async UniTask<T> LoadAsset<T>(string key, int timeline, int context) where T : class
+        public async UniTask<T> LoadAsset<T>(string key, int timeline, int cacheContext) where T : class
         {
             var asset = await _assetProvider.Load<T>(key);
 
-            CacheAsset(timeline, context, key);
+            CacheAsset(timeline, cacheContext, key);
 
             return asset;
         }

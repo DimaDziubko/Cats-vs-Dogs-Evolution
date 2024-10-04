@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets._Game.Core.Services.Camera;
+using _Game.Core.Services.Camera;
 using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;

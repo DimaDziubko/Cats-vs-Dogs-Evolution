@@ -1,7 +1,5 @@
-﻿using _Game.Core.Configs.Models;
-using _Game.Core.Services.Audio;
+﻿using _Game.Core.Services.Audio;
 using _Game.Gameplay.Vfx.Scripts;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
 using UnityEngine;
 
@@ -14,19 +12,19 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         private int _weaponId;
         private Faction _faction;
         
-        private WeaponConfig _config;
+        private float _damage;
 
         public override void Construct(
-            WeaponConfig config,
+            IUnitData unitData,
             Faction faction,
             ISoundService soundService,
             Transform unitTransform)
         {
-            base.Construct(config, faction, soundService, unitTransform);
+            base.Construct(unitData, faction, soundService, unitTransform);
             
-            _weaponId = config.Id;
+            _weaponId = unitData.WeaponId;
             _faction = faction;
-            _config = config;
+            _damage = unitData.Damage;
         }
 
         protected override void OnAttack()
@@ -43,7 +41,7 @@ namespace _Game.Gameplay._Units.Scripts.Attack
             
             _vFXProxy.SpawnMuzzleFlash(muzzleData);
             
-            _target?.Damageable.GetDamage(_config.Damage);
+            _target?.Damageable.GetDamage(_damage);
             base.OnAttack();
         }
     }

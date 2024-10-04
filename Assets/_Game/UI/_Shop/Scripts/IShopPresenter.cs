@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using _Game.Core.Services.IAP;
-
-namespace _Game.UI._Shop.Scripts
+﻿namespace _Game.UI._Shop.Scripts
 {
     public interface IShopPresenter
     {
-        event Action<List<ShopItemModel>> ShopItemsUpdated;
+        Shop Shop { set; }
         void OnShopOpened();
-        void TryToBuy(ProductDescription productDescription);
+        void OnShopClosed();
     }
 }

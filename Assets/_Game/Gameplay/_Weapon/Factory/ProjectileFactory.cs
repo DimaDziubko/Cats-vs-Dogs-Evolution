@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Core._DataPresenters.WeaponDataPresenter;
 using _Game.Core.DataPresenters.WeaponDataPresenter;
 using _Game.Core.Factory;
 using _Game.Core.Services.Audio;
@@ -21,7 +22,7 @@ namespace _Game.Gameplay._Weapon.Factory
     [CreateAssetMenu(fileName = "Projectile Factory", menuName = "Factories/Projectile")]
     public class ProjectileFactory : GameObjectFactory, IProjectileFactory
     {
-        private IWeaponDataPresenter _weaponDataPresenter;
+        private IWeaponDataProvider _weaponDataProvider;
         private ISoundService _soundService;
 
 
@@ -30,15 +31,15 @@ namespace _Game.Gameplay._Weapon.Factory
 
         public void Initialize(
             ISoundService soundService,
-            IWeaponDataPresenter weaponDataPresenter)
+            IWeaponDataProvider weaponDataProvider)
         {
-            _weaponDataPresenter = weaponDataPresenter;
+            _weaponDataProvider = weaponDataProvider;
             _soundService = soundService;
         }
         
         public Projectile Get(Faction faction,  int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null) return null;
             if (weaponData.ProjectilePrefab == null) return null;
 
@@ -60,15 +61,15 @@ namespace _Game.Gameplay._Weapon.Factory
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData);
             return instance;
         }
         
         public async UniTask<Projectile> GetAsync(Faction faction,  int weaponId)
         {
-            WeaponData weaponData = GetWeaponData(faction, weaponId);
+            IWeaponData weaponData = GetWeaponData(faction, weaponId);
             if (weaponData == null) return null;
-            if (weaponData.Config.ProjectileKey == Constants.ConfigKeys.MISSING_KEY) return null;
+            if (weaponData.ProjectileKey == Constants.ConfigKeys.MISSING_KEY) return null;
 
             if (!_projectilesPools.TryGetValue((faction, weaponId), out Queue<Projectile> pool))
             {
@@ -84,11 +85,11 @@ namespace _Game.Gameplay._Weapon.Factory
             }
             else
             {
-                instance = await CreateGameObjectInstanceAsync<Projectile>(weaponData.Config.ProjectileKey);
+                instance = await CreateGameObjectInstanceAsync<Projectile>(weaponData.ProjectileKey);
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData);
             return instance;
         }
         
@@ -100,10 +101,10 @@ namespace _Game.Gameplay._Weapon.Factory
             switch (faction)
             {
                 case Faction.Player:
-                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.AGE);
+                    weaponData = _weaponDataProvider.GetWeaponData(weaponId, Constants.CacheContext.AGE);
                     break;
                 case Faction.Enemy:
-                    weaponData = _weaponDataPresenter.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
+                    weaponData = _weaponDataProvider.GetWeaponData(weaponId, Constants.CacheContext.BATTLE);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(faction), faction, null);
