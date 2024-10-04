@@ -1,14 +1,13 @@
-﻿using _Game.Core.Services.UserContainer;
-using _Game.UI._RaceSelectionWindow.Scripts;
-using _Game.Utils;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.UI.Common.Scripts;
+﻿using _Game.Core.Services.Audio;
+using _Game.Core.Services.UserContainer;
+using _Game.UI._RaceSelectionScreen.Scripts;
+using _Game.UI.Common.Scripts;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._Game.UI.Settings.Scripts
+namespace _Game.UI.Settings.Scripts
 {
     [RequireComponent(typeof(Canvas))]
     public class SettingsPopup : MonoBehaviour
@@ -18,13 +17,9 @@ namespace Assets._Game.UI.Settings.Scripts
 
         [SerializeField] private CustomToggle _sfxToggle, _ambienceToggle;
         [SerializeField] private Button _changeRaceBtn;
-        [SerializeField] private GameObject _gdprSettings;
-        [Space]
-        [SerializeField] private string _privacyLink;
-        [SerializeField] private Button _privacyButton;
 
         private UniTaskCompletionSource<bool> _taskCompletion;
-
+        
         private IAudioService _audioService;
         private IUserContainer _userContainer;
         private IRaceSelectionWindowProvider _raceSelectionWindowProvider;
@@ -37,20 +32,17 @@ namespace Assets._Game.UI.Settings.Scripts
             _canvas.worldCamera = uICamera;
             _audioService = audioService;
             _raceSelectionWindowProvider = raceSelectionWindowProvider;
-
+            
             _closeButton.onClick.AddListener(OnCloseBtnClick);
 
             InitializeUIElements();
-
+            
         }
 
         private void InitializeUIElements()
         {
             Unsubscribe();
             Subscribe();
-
-            //_gdprSettings.SetActive(GeoLocationChecker.IsInEURegion);
-
             _sfxToggle.Initialize(_audioService.IsOnSFX(), _audioService);
             _ambienceToggle.Initialize(_audioService.IsOnAmbience(), _audioService);
         }
@@ -70,20 +62,16 @@ namespace Assets._Game.UI.Settings.Scripts
             Unsubscribe();
             _sfxToggle.Cleanup();
             _ambienceToggle.Cleanup();
-
+            
             _audioService.PlayButtonSound();
             _taskCompletion.TrySetResult(true);
         }
-        private void OnOpenPrivacyLink()
-        {
-            Application.OpenURL(_privacyLink);
-        }
+
         private void Subscribe()
         {
             _sfxToggle.ValueChanged += _audioService.SwitchSFX;
             _ambienceToggle.ValueChanged += _audioService.SwitchAmbience;
             _changeRaceBtn.onClick.AddListener(OnChangeRaceBtnClicked);
-            _privacyButton.onClick.AddListener(OnOpenPrivacyLink);
         }
 
         private void Unsubscribe()
@@ -91,14 +79,13 @@ namespace Assets._Game.UI.Settings.Scripts
             _sfxToggle.ValueChanged -= _audioService.SwitchSFX;
             _ambienceToggle.ValueChanged -= _audioService.SwitchAmbience;
             _changeRaceBtn.onClick.RemoveAllListeners();
-            _privacyButton.onClick.RemoveAllListeners();
         }
 
         private async void OnChangeRaceBtnClicked()
         {
             Disposable<RaceSelectionWindow> factionSelectionWindow = await _raceSelectionWindowProvider.Load();
             var result = await factionSelectionWindow.Value.AwaitForDecision();
-            if (result)
+            if(result)
                 factionSelectionWindow.Dispose();
         }
     }

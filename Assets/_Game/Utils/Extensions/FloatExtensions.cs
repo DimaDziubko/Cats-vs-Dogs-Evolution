@@ -47,6 +47,7 @@ namespace _Game.Utils.Extensions
         {
             return number.ToString(CultureInfo.InvariantCulture);
         }
+
         public static string FormatTime(this float value)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(value);
@@ -66,13 +67,13 @@ namespace _Game.Utils.Extensions
 
             return sb.ToString().Trim();
         }
-        
+
         public static string ToSpeedFormat(this float value)
         {
             CultureInfo ci = CultureInfo.InvariantCulture;
             return Math.Round(value, 2).ToString("0.##", ci) + "/s";
         }
-        
+
         public static string FormatMoney(this float price)
         {
             var absValue = Math.Abs(price);
@@ -88,7 +89,7 @@ namespace _Game.Utils.Extensions
 
             return string.Format(CultureInfo.InvariantCulture, "{0:0}", price);
         }
-        
+
         public static string FormatMoney(this double price)
         {
             var absValue = Math.Abs(price);
@@ -105,7 +106,7 @@ namespace _Game.Utils.Extensions
             return string.Format(CultureInfo.InvariantCulture, "{0:0}", price);
         }
 
-        
+
         private static string CurrencyString(double newNum, string cur)
         {
             var str = "";
@@ -144,6 +145,47 @@ namespace _Game.Utils.Extensions
             {
                 return Math.Ceiling(num);
             }
+        }
+
+
+        public static string ToFormattedString(this float number, int decimalPlaces = 2)
+        {
+            return ToFormattedStringInternal(number, decimalPlaces);
+        }
+
+        public static string ToFormattedString(this double number, int decimalPlaces = 2)
+        {
+            return ToFormattedStringInternal(number, decimalPlaces);
+        }
+
+        private static string ToFormattedStringInternal(double number, int decimalPlaces)
+        {
+            if (decimalPlaces < 0)
+                throw new ArgumentException("Decimal places must be non-negative", nameof(decimalPlaces));
+            
+            if (number < 100)
+            {
+                if (decimalPlaces == 0 || Math.Abs(number % 1) < 1e-10)
+                {
+                    return number.ToString("0", CultureInfo.InvariantCulture);
+                }
+                return number.ToString("N" + decimalPlaces, CultureInfo.InvariantCulture);
+            }
+
+            foreach (var (threshold, suffix) in CurrencyThresholds)
+            {
+                if (number >= threshold)
+                {
+                    var formattedNumber = number / threshold;
+                    if (decimalPlaces == 0 || Math.Abs(formattedNumber % 1) < 1e-10)
+                    {
+                        return formattedNumber.ToString("0", CultureInfo.InvariantCulture) + suffix;
+                    }
+                    return formattedNumber.ToString("N" + decimalPlaces, CultureInfo.InvariantCulture) + suffix;
+                }
+            }
+
+            return number.ToString("N" + decimalPlaces, CultureInfo.InvariantCulture);
         }
     }
 }

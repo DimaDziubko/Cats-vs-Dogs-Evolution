@@ -1,12 +1,11 @@
-﻿using _Game.UI._Hud;
+﻿using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.UI._Hud._CoinCounterView;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.UI.Common.Scripts;
 using UnityEngine;
 
-namespace Assets._Game.Creatives.Scripts
+namespace _Game.Creatives.Scripts
 {
     public class CrHud : MonoBehaviour
     {

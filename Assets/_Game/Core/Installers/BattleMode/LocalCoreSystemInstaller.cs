@@ -1,21 +1,26 @@
-﻿using _Game.Gameplay._DailyTasks.Scripts;
+﻿using _Game.Gameplay._Cards.Scripts;
+using _Game.Gameplay._DailyTasks.Scripts;
 using _Game.Gameplay._Race;
 using Zenject;
-using UnityEngine;
 
 namespace _Game.Core.Installers.BattleMode
 {
     public class LocalCoreSystemInstaller : MonoInstaller
     {
-        [SerializeField] private DailyTaskNotification _dailyTaskNotification;
         public override void InstallBindings()
         {
             BindRaceSelectionController();
             BindDailyTaskGenerator();
             BindDailyTaskCompletionChecker();
             BindDailyTaskPresenter();
-            BindDailyTaskNotification();
+            BindCardGenerator();
         }
+
+        private void BindCardGenerator() =>
+            Container     
+                .BindInterfacesAndSelfTo<CardGenerator>()
+                .AsSingle()
+                .NonLazy();
 
         private void BindRaceSelectionController() =>
             Container
@@ -39,13 +44,5 @@ namespace _Game.Core.Installers.BattleMode
                 .BindInterfacesAndSelfTo<DailyTaskPresenter>()
                 .AsSingle()
                 .NonLazy();
-
-        private void BindDailyTaskNotification() =>
-            Container
-                .Bind<DailyTaskNotification>()
-                .FromInstance(_dailyTaskNotification)
-                .AsSingle()
-                .NonLazy();
-
     }
 }

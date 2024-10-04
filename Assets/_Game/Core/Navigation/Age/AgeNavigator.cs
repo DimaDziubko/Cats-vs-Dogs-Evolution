@@ -1,8 +1,8 @@
 ﻿using System;
+using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._GameInitializer;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
-using _Game.Core.DataProviders.AgeDataProvider;
 using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
 using _Game.Core.Navigation.Timeline;
@@ -19,7 +19,7 @@ namespace _Game.Core.Navigation.Age
         
         private readonly IUserContainer _useContainer;
         private readonly IGeneralDataPool _generalDataPool;
-        private readonly IAgeDataProvider _ageDataProvider;
+        private readonly IAgeDataLoader _ageDataLoader;
         private readonly IAssetRegistry _assetRegistry;
         private readonly ILoadingScreenProvider _loadingScreenProvider;
         private readonly IGameInitializer _gameInitializer;
@@ -31,7 +31,7 @@ namespace _Game.Core.Navigation.Age
             ILoadingScreenProvider loadingScreenProvider,
             IUserContainer useContainer,
             IGeneralDataPool generalDataPool,
-            IAgeDataProvider ageDataProvider,
+            IAgeDataLoader ageDataLoader,
             IAssetRegistry assetRegistry,
             IGameInitializer gameInitializer,
             ITimelineNavigator timelineNavigator)
@@ -41,7 +41,7 @@ namespace _Game.Core.Navigation.Age
             _gameInitializer = gameInitializer;
             _useContainer = useContainer;
             _generalDataPool = generalDataPool;
-            _ageDataProvider = ageDataProvider;
+            _ageDataLoader = ageDataLoader;
             _assetRegistry = assetRegistry;
             _timelineNavigator = timelineNavigator;
             gameInitializer.OnPostInitialization += Init;
@@ -66,7 +66,7 @@ namespace _Game.Core.Navigation.Age
         {
             var ageLoadingOperation = new AgeDataLoadingOperation(
                 _generalDataPool,
-                _ageDataProvider, 
+                _ageDataLoader, 
                 _assetRegistry,
                 _useContainer);
 

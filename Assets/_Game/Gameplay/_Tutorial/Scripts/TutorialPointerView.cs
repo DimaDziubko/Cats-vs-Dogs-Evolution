@@ -1,3 +1,4 @@
+using _Game.UI.Factory;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,10 +15,16 @@ namespace _Game.Gameplay._Tutorial.Scripts
         [SerializeField] private Vector3 StartAppearanceScale = new Vector3(4, 4, 1);
         [SerializeField] private float _animationDuration = 0.5f;
 
+        public IUIFactory OriginFactory { get; set; }
+
+        private Tween _transformTween;
+        private Tween _scaleTween;
+
         public void Show(TutorialStepData tutorialData)
         {
             if (tutorialData.NeedAppearanceAnimation)
             {
+                Rotation = tutorialData.RequiredPointerRotation;
                 ShowWithAppearanceAnimation(tutorialData);
                 return;
             }
@@ -31,17 +38,22 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         private void ShowWithAppearanceAnimation(TutorialStepData tutorialData)
         {
+            _transformTween?.Kill();
+            _scaleTween?.Kill();
+            
             Enable();
             _pointerTransform.anchoredPosition = tutorialData.IsUnderneath ? 
                 new Vector2(tutorialData.RequiredPointerPosition.x, -DefaultPosition.y) :
                 new Vector2(tutorialData.RequiredPointerPosition.x, DefaultPosition.y);
             
+            
+            
             _pointerTransform.localScale = StartAppearanceScale;
 
-            _pointerTransform.DOAnchorPosY(tutorialData.RequiredPointerPosition.y, _animationDuration)
+            _transformTween = _pointerTransform.DOAnchorPosY(tutorialData.RequiredPointerPosition.y, _animationDuration)
                 .SetEase(Ease.OutQuad);
 
-            _pointerTransform.DOScale(Vector3.one, _animationDuration)
+            _scaleTween = _pointerTransform.DOScale(Vector3.one, _animationDuration)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() => {
                     Position = tutorialData.RequiredPointerPosition;
@@ -53,8 +65,11 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public void Hide()
         {
+            _scaleTween?.Kill();
+            _transformTween?.Kill();
             StopAnimation();
             Disable();
+            OriginFactory.Reclaim(this);
         }
 
         private Vector3 Position

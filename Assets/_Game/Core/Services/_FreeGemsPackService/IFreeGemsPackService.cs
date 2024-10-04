@@ -1,13 +1,11 @@
-﻿using System;
-using _Game.Core.Services.IAP;
+﻿using System.Collections.Generic;
+using _Game.UI._Shop.Scripts;
 
 namespace _Game.Core.Services._FreeGemsPackService
 {
     public interface IFreeGemsPackService
     {
-        event Action FreeGemsPackUpdated;
-        ProductDescription FreeGemsPack { get; }
-        void OnFreeGemsPackBtnClicked();
-        void UpdateFreeGemsPack();
+        Dictionary<int, FreeGemsPack> GetFreeGemsPacks();
+        void OnFreeGemsPackBtnClicked(FreeGemsPack pack);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Assets._Game.Core.Services.Audio;
+﻿using _Game.Core.Services.Audio;
 using UnityEngine;
 
 namespace _Game.Gameplay._Battle.Scripts

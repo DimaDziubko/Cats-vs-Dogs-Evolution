@@ -1,10 +1,12 @@
 ﻿using _Game.Common;
+using _Game.Core.Services.Camera;
+using _Game.Core.Services.IGPService;
 using _Game.UI._BattleUIController;
 using _Game.UI._Environment;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
+using _Game.UI._Shop.Scripts;
 using _Game.UI.GameResult.Scripts;
-using Assets._Game.Core.Services.Camera;
 using UnityEngine;
 using Zenject;
 
@@ -33,7 +35,7 @@ namespace _Game.Core.Installers.BattleMode
 
         private void BindBattleUIController() => 
             Container.BindInterfacesAndSelfTo<BattleUIController>().AsSingle();
-        
+
         private void BindRewardAnimator() =>
             Container.BindInterfacesAndSelfTo<RewardAnimator>().AsSingle().Lazy();
 
@@ -46,5 +48,6 @@ namespace _Game.Core.Installers.BattleMode
 
         private void BindEnvironmentController() => 
             Container.BindInterfacesTo<EnvironmentController>().AsSingle().NonLazy();
+        
     }
 }

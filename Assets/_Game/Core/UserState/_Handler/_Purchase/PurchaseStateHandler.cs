@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services.UserContainer;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI._Currencies;
 using Assets._Game.Gameplay._Units.Scripts;
 
@@ -19,6 +20,8 @@ namespace _Game.Core.UserState._Handler._Purchase
             {
                 _userContainer.State.Currencies.ChangeCoins(price, false, source);
                 _userContainer.State.TimelineState.OpenUnit(type);
+                _userContainer.RequestSaveGame();
+
             }
         }
 
@@ -26,9 +29,15 @@ namespace _Game.Core.UserState._Handler._Purchase
         {
             _userContainer.State.Currencies.ChangeCoins(quantity, true, CurrenciesSource.MiniShop);
             _userContainer.State.Currencies.ChangeGems(price, false, source);
+            _userContainer.RequestSaveGame();
+
         }
 
-        public void AddPurchase(string id) => 
+        public void AddPurchase(string id)
+        {
             _userContainer.State.PurchaseDataState.AddPurchase(id);
+            _userContainer.RequestSaveGame();
+
+        }
     }
 }

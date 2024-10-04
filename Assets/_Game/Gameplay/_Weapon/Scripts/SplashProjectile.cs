@@ -1,10 +1,7 @@
 ﻿using System;
-using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
 using _Game.Utils;
-using Assets._Game.Core.Services.Audio;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Utils;
 using UnityEngine;
 
 namespace _Game.Gameplay._Weapon.Scripts
@@ -19,18 +16,18 @@ namespace _Game.Gameplay._Weapon.Scripts
 
         private int _collisionMask;
 
-        public override void Construct(ISoundService soundService, Faction faction, WeaponConfig config, int layer)
+        public override void Construct(ISoundService soundService, Faction faction, IWeaponData weaponData)
         {
-            base.Construct(soundService, faction, config, layer);
-            _splashRadius = config.SplashRadius;
+            base.Construct(soundService, faction, weaponData);
+            _splashRadius = weaponData.SplashRadius;
 
-            if (layer == Constants.Layer.PLAYER_PROJECTILE)
+            if (weaponData.Layer == Constants.Layer.PLAYER_PROJECTILE)
             {
                 _collisionMask = (1 << Constants.Layer.MELEE_ENEMY)
                                  | (1 << Constants.Layer.ENEMY_BASE)
                                  | (1 << Constants.Layer.RANGE_ENEMY);
             }
-            else if (layer == Constants.Layer.ENEMY_PROJECTILE)
+            else if (weaponData.Layer == Constants.Layer.ENEMY_PROJECTILE)
             {
                 _collisionMask = (1 << Constants.Layer.MELEE_PLAYER)
                                  | (1 << Constants.Layer.PLAYER_BASE) |

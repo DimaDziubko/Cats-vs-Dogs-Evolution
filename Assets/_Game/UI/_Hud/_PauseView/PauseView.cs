@@ -1,9 +1,8 @@
 ﻿using _Game.Core._FeatureUnlockSystem.Scripts;
+using _Game.Core.Services.Audio;
 using _Game.Gameplay.BattleLauncher;
-using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Services.Audio;
+using _Game.UI._AlertPopup;
 using Assets._Game.UI.Common.Scripts;
-using Assets._Game.Utils.Popups;
 using UnityEngine;
 
 namespace _Game.UI._Hud._PauseView
@@ -72,9 +71,13 @@ namespace _Game.UI._Hud._PauseView
             var isConfirmed = await popup.Value.AwaitForDecision("End battle?");
             
             _pauseToggle.UpdateToggleStateManually(false);
-            if (isConfirmed) _hud.Quit();
-            _battleManager.SetPaused(false);
-            popup.Dispose();
+            
+            if (isConfirmed)
+            {
+                _hud.Quit();
+                _battleManager.SetPaused(false);
+                _alertPopupProvider.Unload();
+            }
         }
         
     }

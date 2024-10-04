@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using _Game.Common;
-using _Game.Core.Configs.Models;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Gameplay._BattleField.Scripts;
 using _Game.Gameplay._Units.Factory;
@@ -13,13 +13,10 @@ using _Game.Gameplay._Units.Scripts.Movement;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.Gameplay.Vfx.Scripts;
 using _Game.Utils;
-using _Game.Utils.Extensions;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Gameplay._BattleField.Scripts;
 using Assets._Game.Gameplay._Units.FSM.States;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.Gameplay._Units.Scripts.Utils;
-using Assets._Game.Utils.Extensions;
 using Pathfinding.RVO;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -56,7 +53,7 @@ namespace _Game.Gameplay._Units.Scripts
         public Faction Faction { get; private set; }
         public UnitType Type { get; private set; }
 
-        private int _coinsPerKill;
+        private float _coinsPerKill;
 
         private IRandomService _random;
 
@@ -117,47 +114,43 @@ namespace _Game.Gameplay._Units.Scripts
         private void RegisterSelf() => InteractionCache.Register(_bodyCollider, _targetPoint);
 
         public void Construct(
-            WarriorConfig config,
+            IUnitData unitData,
             IWorldCameraService cameraService,
             Faction faction,
-            UnitType type,
             IRandomService random,
-            ISoundService soundService,
-            int unitLayer,
-            int aggroLayer,
-            int attackLayer)
+            ISoundService soundService)
         {
-            SetupRVOLayers(faction, config.WeaponConfig.WeaponType);
+            SetupRVOLayers(faction, unitData.WeaponType);
 
             Faction = faction;
-            Type = type;
+            Type = unitData.Type;
 
-            gameObject.layer = unitLayer;
+            gameObject.layer = unitData.UnitLayer;
             
             _random = random;
 
-            WeaponType = config.WeaponConfig.WeaponType;
-            _coinsPerKill = config.CoinsPerKill;
+            WeaponType = unitData.WeaponType;
+            _coinsPerKill = unitData.CoinsPerKill;
 
 
-            _aggroDetection.Construct(aggroLayer);
+            _aggroDetection.Construct(unitData.AggroLayer);
             _attackDetection.Construct(
-                attackLayer,
-                config.AttackDistance);
+                unitData.AttackLayer,
+                unitData.AttackDistance);
             
             _attack.Construct(
-                config.WeaponConfig,
+                unitData,
                 faction,
                 soundService,
                 _transform);
 
             _health.Construct(
-                config.GetUnitHealthForFaction(faction),
+                unitData.GetUnitHealthForFaction(faction),
                 cameraService);
             
             _aMove.Construct(
                 transform,
-                config.Speed);
+                unitData.Speed);
             
             _damageFlash.Construct();
 
@@ -167,7 +160,7 @@ namespace _Game.Gameplay._Units.Scripts
             _targetPoint.Damageable = _health;
             _targetPoint.Transform = _transform;
 
-            _animator.Construct(config.AttackPerSecond);
+            _animator.Construct(unitData.AttackPerSecond);
             
             InitializeFsm();
         }

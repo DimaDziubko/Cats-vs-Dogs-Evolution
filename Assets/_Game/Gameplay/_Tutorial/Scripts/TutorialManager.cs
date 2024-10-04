@@ -1,58 +1,54 @@
 using System;
+using System.Collections.Generic;
 using _Game.Core._GameInitializer;
-using _Game.Core._Logger;
 using _Game.Core.Services.UserContainer;
-using Assets._Game.Core.UserState;
+using _Game.Core.UserState._State;
+using _Game.UI.Factory;
 using Assets._Game.Gameplay._Tutorial.Scripts;
 
 namespace _Game.Gameplay._Tutorial.Scripts
 {
     public class TutorialManager : ITutorialManager, IDisposable
     {
-        private readonly TutorialPointerView _pointerView;
-        private readonly IUserContainer _userContainer;
+        private readonly TutorialPointersParent _pointersParent;
+        private readonly IUserContainer _persistentData;
         private readonly IGameInitializer _gameInitializer;
-        private readonly IMyLogger _logger;
-        private ITutorialStateReadonly TutorialStateReadonly => _userContainer.State.TutorialState;
+        private readonly IUIFactory _uiFactory;
+        private ITutorialStateReadonly TutorialStateReadonly => _persistentData.State.TutorialState;
 
-        private bool _inProgress;
-
+        private readonly Dictionary<int, TutorialPointerView> _activePointers = new Dictionary<int, TutorialPointerView>();
+        
         public TutorialManager(
-            TutorialPointerView pointerView,
-            IUserContainer userContainer,
+            TutorialPointersParent pointersParent,
+            IUserContainer persistentData,
             IGameInitializer gameInitializer,
-            IMyLogger logger)
+            IUIFactory uiFactory)
         {
-            _pointerView = pointerView;
-            _userContainer = userContainer;
+            _pointersParent = pointersParent;
+            _persistentData = persistentData;
             _gameInitializer = gameInitializer;
-            _logger = logger;
+            _uiFactory = uiFactory;
             gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
         {
             TutorialStateReadonly.StepsCompletedChanged += OnStepCompleted;
-            _pointerView.Hide();
-            _inProgress = false;
+            _pointersParent.Disable();
         }
 
         void IDisposable.Dispose()
         {
             TutorialStateReadonly.StepsCompletedChanged -= OnStepCompleted;
             _gameInitializer.OnPostInitialization -= Init;
+            ClearAllPointers(); 
         }
 
         public void Register(ITutorialStep tutorialStep)
         {
-            if (tutorialStep == null) return;
+            if(tutorialStep == null) return;
             var step = tutorialStep.GetTutorialStepData().Step;
-            if (step != 5) //DAILY TASK STEP TODO change
-            {
-                if (TutorialStateReadonly.StepsCompleted >= step
-                    || step > TutorialStateReadonly.StepsCompleted + 1) return;
-            }
-
+            if(TutorialStateReadonly.CompletedSteps.Contains(step)) return;
             tutorialStep.Show += Show;
             tutorialStep.Complete += OnStepComplete;
             tutorialStep.Cancel += OnTutorialBroke;
@@ -60,7 +56,7 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         public void UnRegister(ITutorialStep tutorialStep)
         {
-            if (tutorialStep == null) return;
+            if(tutorialStep == null) return;
             tutorialStep.Show -= Show;
             tutorialStep.Complete -= OnStepComplete;
             tutorialStep.Cancel -= OnTutorialBroke;
@@ -68,33 +64,52 @@ namespace _Game.Gameplay._Tutorial.Scripts
 
         private void Show(ITutorialStep tutorialStep)
         {
-            if (_inProgress) return;
             var tutorialData = tutorialStep.GetTutorialStepData();
-            _pointerView.Show(tutorialData);
-            _inProgress = true;
-            _logger.Log($"SHOW TUTORIAL STEP {tutorialData.Step}");
+            
+            if (_activePointers.ContainsKey(tutorialData.Step) ||
+                TutorialStateReadonly.CompletedSteps.Contains(tutorialData.Step)) return;
+
+            _pointersParent.Enable();
+            TutorialPointerView view = _uiFactory.GetTutorialPointer(_pointersParent.RectTransform);
+            view.Show(tutorialData);
+            
+            _activePointers[tutorialData.Step] = view;
         }
 
-        private void OnTutorialBroke(ITutorialStep tutorialStep)
-        {
-            Break();
-            _logger.Log($"BREAK TUTORIAL STEP {tutorialStep.GetTutorialStepData().Step}");
-        }
+        private void OnTutorialBroke(ITutorialStep tutorialStep) => 
+            Break(tutorialStep.GetTutorialStepData().Step);
 
         private void OnStepComplete(ITutorialStep tutorialStep)
         {
             UnRegister(tutorialStep);
             var tutorialData = tutorialStep.GetTutorialStepData();
-            _userContainer.TutorialStateHandler.CompleteTutorialStep(tutorialData.Step);
-            _logger.Log($"COMPLETE TUTORIAL STEP {tutorialStep.GetTutorialStepData().Step}");
+            foreach (var step in tutorialData.AffectedSteps)
+            {
+                _persistentData.TutorialStateHandler.CompleteTutorialStep(step);
+            }
         }
 
-        private void OnStepCompleted(int step) => Break();
+        private void OnStepCompleted(int step) => Break(step);
 
-        private void Break()
+        private void Break(int step)
         {
-            _pointerView.Hide();
-            _inProgress = false;
+            if (_activePointers.TryGetValue(step, out var pointer) && pointer != null)
+            {
+                pointer.Hide();
+                _activePointers.Remove(step);
+            }
+            
+            if(_activePointers.Count == 0) _pointersParent.Disable();
+        }
+        
+        private void ClearAllPointers()
+        {
+            foreach (var pointer in _activePointers.Values)
+            {
+                pointer.Hide();
+            }
+            
+            _activePointers.Clear();
         }
     }
 }

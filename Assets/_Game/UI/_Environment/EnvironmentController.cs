@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core.DataPresenters.BattlePresenter;
 using _Game.Gameplay._Battle.Scripts;
-using Assets._Game.UI._Environment.Factory;
+using _Game.UI._Environment.Factory;
 using Zenject;
 
 namespace _Game.UI._Environment

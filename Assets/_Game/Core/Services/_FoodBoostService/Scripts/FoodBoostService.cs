@@ -6,17 +6,18 @@ using _Game.Core._GameListenerComposite;
 using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.Configs.Models;
+using _Game.Core.Configs.Repositories;
+using _Game.Core.Configs.Repositories.Common;
 using _Game.Core.Configs.Repositories.Economy;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic._UpgradeItem;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Hud;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
-#if cas_advertisment_enabled
 using CAS;
-#endif
 using UnityEngine;
 
 namespace _Game.Core.Services._FoodBoostService.Scripts
@@ -33,6 +34,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         private readonly IGeneralDataPool _generalDataPool;
         private readonly IGameInitializer _gameInitializer;
         private readonly IMyLogger _logger;
+        private readonly ICommonItemsConfigRepository _commonConfig;
 
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
         private IUpgradeItemsReadonly UpgradeItems => _generalDataPool.AgeDynamicData.UpgradeItems;
@@ -42,7 +44,7 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
 
         public FoodBoostService(
             IUserContainer userContainer,
-            IEconomyConfigRepository configRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IAdsService adsService,
             IFeatureUnlockSystem featureUnlockSystem,
@@ -50,7 +52,8 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             IGameInitializer gameInitializer)
         {
             _userContainer = userContainer;
-            _configRepository = configRepository;
+            _configRepository = configRepositoryFacade.EconomyConfigRepository;
+            _commonConfig = configRepositoryFacade.CommonItemsConfigRepository;
             _logger = logger;
             _adsService = adsService;
             _featureUnlockSystem = featureUnlockSystem;
@@ -66,22 +69,22 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
         private void Init()
         {
             UpdateFoodBoost();
-
+            
             FoodBoostState.FoodBoostChanged += OnFoodBoostChanged;
-            _adsService.OnVideoLoaded += OnRewardVideoLoaded;
+            _adsService.VideoLoaded += OnRewardVideoLoaded;
 
         }
 
         void IDisposable.Dispose()
         {
             FoodBoostState.FoodBoostChanged -= OnFoodBoostChanged;
-            _adsService.OnVideoLoaded -= OnRewardVideoLoaded;
+            _adsService.VideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
         }
 
         private void OnRewardVideoLoaded(AdType type)
         {
-            if (type == AdType.Rewarded)
+            if(type == AdType.Rewarded)
                 UpdateFoodBoostBtnModel();
         }
 
@@ -91,27 +94,10 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             UpdateFoodBoostBtnModel();
         }
 
-        public void OnFoodBoostBtnClicked() =>
+        public void OnFoodBoostBtnClicked() => 
             _adsService.ShowRewardedVideo(OnFoodBoostRewardedVideoComplete, Placement.Food);
 
-        //CREATIVE CHEAT
-        public void OnAddFreeFoodCheat()
-        {
-            //var foodBoostConfig = _configRepository.GetFoodBoostConfig();
-            //if (FoodBoostState.DailyFoodBoostCount == foodBoostConfig.DailyFoodBoostCount)
-            //{
-            //    _userContainer.FoodBoostStateHandler.SpendFoodBoost(DateTime.UtcNow);
-            //}
-            //else
-            //{
-            //    _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
-            //}
-
-            ChangeFood?.Invoke(2, true);
-
-        }
-
-        private void OnFoodBoostChanged() =>
+        private void OnFoodBoostChanged() => 
             UpdateFoodBoostBtnModel();
 
         private void UpdateFoodBoost()
@@ -127,12 +113,12 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             {
                 int lackingBoosts = foodBoostConfig.DailyFoodBoostCount - FoodBoostState.DailyFoodBoostCount;
                 int boostsToAdd = Mathf.Min(recoverableBoosts, lackingBoosts);
-
+                
                 DateTime newLastDailyFoodBoost = FoodBoostState.LastDailyFoodBoost.AddMinutes(boostsToAdd * foodBoostConfig.RecoverTimeMinutes);
                 _userContainer.FoodBoostStateHandler.RecoverFoodBoost(
                     boostsToAdd,
                     newLastDailyFoodBoost);
-
+                
                 UpdateFoodBoostBtnModel();
             }
         }
@@ -148,21 +134,21 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             {
                 _userContainer.FoodBoostStateHandler.SpendFoodBoost(FoodBoostState.LastDailyFoodBoost);
             }
-
+            
             ChangeFood?.Invoke(_foodBoostBtnModel.FoodAmount, true);
         }
 
         private void UpdateFoodBoostBtnModel()
         {
             FoodBoostConfig foodBoostConfig = _configRepository.GetFoodBoostConfig();
-
-            _foodBoostBtnModel.FoodIcon = _generalDataPool.AgeStaticData.ForFoodIcon(RaceState.CurrentRace);
-            _foodBoostBtnModel.FoodAmount = (int)(UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount
+            
+            _foodBoostBtnModel.FoodIcon = _commonConfig.ForFoodIcon(RaceState.CurrentRace);
+            _foodBoostBtnModel.FoodAmount = (int)(UpgradeItems.GetItemData(UpgradeItemType.FoodProduction).Amount 
                                                   * foodBoostConfig.FoodBoostCoefficient);
-
-            _foodBoostBtnModel.IsAvailable =
+            
+            _foodBoostBtnModel.IsAvailable = 
                 FoodBoostState.DailyFoodBoostCount > 0 && _featureUnlockSystem.IsFeatureUnlocked(Feature.FoodBoost);
-
+            
             _foodBoostBtnModel.IsInteractable = _adsService.IsAdReady(AdType.Rewarded);
 
             FoodBoostBtnModelChanged?.Invoke(_foodBoostBtnModel);

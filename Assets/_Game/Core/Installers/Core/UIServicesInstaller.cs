@@ -1,20 +1,22 @@
 ﻿using _Game.Core.LoadingScreen;
 using _Game.Gameplay._Tutorial.Scripts;
+using _Game.UI._AlertPopup;
+using _Game.UI._CardsGeneral._Cards.Scripts;
+using _Game.UI._CardsGeneral.Scripts;
 using _Game.UI._Hud;
 using _Game.UI._MainMenu.Scripts;
-using _Game.UI._RaceSelectionWindow.Scripts;
+using _Game.UI._RaceSelectionScreen.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
 using _Game.UI._Shop.Scripts;
-using _Game.UI._StartBattleWindow.Scripts;
+using _Game.UI._StartBattleScreen.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.GameResult.Scripts;
 using _Game.UI.Global;
 using _Game.UI.Header.Scripts;
 using _Game.UI.RateGame.Scripts;
-using _Game.UI.TimelineInfoWindow.Scripts;
+using _Game.UI.Settings.Scripts;
+using _Game.UI.TimelineInfoScreen.Scripts;
 using _Game.UI.UpgradesAndEvolution.Scripts;
-using Assets._Game.UI.Settings.Scripts;
-using Assets._Game.Utils.Popups;
 using UnityEngine;
 using Zenject;
 
@@ -23,18 +25,19 @@ namespace _Game.Core.Installers.Core
     public class UIServicesInstaller : MonoInstaller
     {
         [SerializeField] private Header _header;
-        [SerializeField] private TutorialPointerView _tutorialPointerView;
+        [SerializeField] private TutorialPointersParent _tutorialPointerParent;
         [SerializeField] private UIFactory _uiFactory;
         [SerializeField] private Curtain _curtain;
-        
+
         public override void InstallBindings()
         {
             BindUINotifier();
             BindCurtain();
             BindHeader();
             BindAlertPopupProvider();
-            BindTutorialPointerView();
-            BindTutorialController();
+            BindTutorialPointersParent();
+            BindUIFactory();
+            BindTutorialManager();
             BindShopProvider();
             BindMiniShopProvider();
             BindLoadingScreenProvider();
@@ -47,7 +50,9 @@ namespace _Game.Core.Installers.Core
             BindFactionSelectionWindowProvider();
             BindGameRateScreenProvider();
             BindRateGameChecker();
-            BindUIFactory();
+            BindCardsScreenProvider();
+            BindGeneralCardsScreenProvider();
+            BindStatsPopupProvider();
         }
 
         private void BindUINotifier() => 
@@ -65,15 +70,15 @@ namespace _Game.Core.Installers.Core
                 .FromInstance(_header)
                 .AsSingle();
 
-        private void BindTutorialPointerView()
+        private void BindTutorialPointersParent()
         {
             Container
-                .Bind<TutorialPointerView>()
-                .FromInstance(_tutorialPointerView)
+                .Bind<TutorialPointersParent>()
+                .FromInstance(_tutorialPointerParent)
                 .AsSingle();
         }
-
-        private void BindTutorialController() => 
+        
+        private void BindTutorialManager() => 
             Container.BindInterfacesAndSelfTo<TutorialManager>().AsSingle();
 
 
@@ -140,6 +145,22 @@ namespace _Game.Core.Installers.Core
                 .AsSingle();
 
         private void BindUIFactory() => 
-            Container.Bind<IUIFactory>().To<UIFactory>().FromInstance(_uiFactory).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIFactory>().FromInstance(_uiFactory).AsSingle().NonLazy();
+
+        private void BindCardsScreenProvider() =>
+            Container.Bind<ICardsScreenProvider>()
+                .To<CardsScreenProvider>()
+                .AsSingle();
+
+        private void BindGeneralCardsScreenProvider() =>
+            Container.Bind<IGeneralCardsScreenProvider>()
+                .To<GeneralCardsScreenProvider>()
+                .AsSingle();
+
+        private void BindStatsPopupProvider() =>
+            Container.Bind<IStatsPopupProvider>()
+                .To<StatsPopupProvider>()
+                .AsSingle();
+        
     }
 }

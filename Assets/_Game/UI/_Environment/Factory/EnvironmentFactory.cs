@@ -1,11 +1,9 @@
 ﻿using _Game.Core.Factory;
+using _Game.Core.Services.Camera;
 using _Game.Gameplay._Battle.Scripts;
-using _Game.UI._Environment;
-using Assets._Game.Core.Factory;
-using Assets._Game.Core.Services.Camera;
 using UnityEngine;
 
-namespace Assets._Game.UI._Environment.Factory
+namespace _Game.UI._Environment.Factory
 {
     public interface IEnvironmentFactory
     {

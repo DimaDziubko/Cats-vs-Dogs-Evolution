@@ -1886,9 +1886,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c01f693c8f46a3a080227ec3d92609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _step: 1
+  _step: 2
+  _affectedSteps: 02000000
   _requiredPointerSize: {x: 170, y: 170}
-  _offset: {x: 0, y: 10}
+  _offset: {x: 0, y: -100}
   _rootCanvasTransform: {fileID: 520730401}
   _tutorialObjectRectTransform: {fileID: 6981895714900609251}
   _isUnderneath: 0
@@ -3829,6 +3830,7 @@ GameObject:
   - component: {fileID: 1349865474}
   - component: {fileID: 1349865476}
   - component: {fileID: 1349865477}
+  - component: {fileID: 1349865478}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -3966,6 +3968,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 735305f895f948c98665c1f46b24d161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1349865478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349865468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e87560ac9514704b1f364a587a4cfde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1432369171
@@ -4819,7 +4833,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1126724913, guid: 9ceb87a36f0873447b95f30ebe11cddf, type: 3}
+  m_Sprite: {fileID: -1773765558, guid: 5de807814f6f1ad4cb7b05640e43b50a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5243,7 +5257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c01f693c8f46a3a080227ec3d92609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _step: 5
+  _step: 6
+  _affectedSteps: 06000000
   _requiredPointerSize: {x: 150, y: 150}
   _offset: {x: 0, y: -60}
   _rootCanvasTransform: {fileID: 520730401}

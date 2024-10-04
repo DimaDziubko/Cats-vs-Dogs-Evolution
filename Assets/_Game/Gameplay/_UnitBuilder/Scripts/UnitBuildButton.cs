@@ -1,6 +1,6 @@
 ﻿using System;
+using _Game.Gameplay._Units.Scripts;
 using _Game.UI.Common.Scripts;
-using Assets._Game.Gameplay._UnitBuilder.Scripts;
 using Assets._Game.Gameplay._Units.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Sirenix.OdinInspector;
@@ -59,7 +59,7 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
         {
             _unitBuilder = unitBuilder;
             
-            if (!model.DynamicData.IsUnlocked)
+            if (!model.IsUnlocked)
             {
                 Hide();
                 return;
@@ -67,12 +67,12 @@ namespace _Game.Gameplay._UnitBuilder.Scripts
 
             Show();
 
-            UnitType = model.StaticData.Type;
+            UnitType = model.Type;
 
-            _foodPrice = model.StaticData.FoodPrice;
+            _foodPrice = model.FoodPrice;
             if(_priceText != null) _priceText.text = _foodPrice.ToString();
-            if(_foodIconHolder != null) _foodIconHolder.sprite = model.DynamicData.FoodIcon;
-            if(_unitIconHolder != null) _unitIconHolder.sprite = model.StaticData.UnitIcon;
+            if(_foodIconHolder != null) _foodIconHolder.sprite = model.FoodIcon;
+            if(_unitIconHolder != null) _unitIconHolder.sprite = model.UnitIcon;
 
             ChangeState -= unitBuilder.OnButtonChangeState;
             ChangeState += unitBuilder.OnButtonChangeState;

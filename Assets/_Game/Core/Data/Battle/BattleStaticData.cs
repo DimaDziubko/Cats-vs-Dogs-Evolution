@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
+using _Game.Gameplay._Bases.Scripts;
 using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
 using _Game.UI._Environment;
-using Assets._Game.Gameplay._Bases.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
 using UnityEngine;
 
 namespace _Game.Core.Data.Battle
 {
     public class BattleStaticData
     {
-        public Dictionary<int, DataPool<UnitType, UnitData>> UnitDataPools;
+        public Dictionary<int, DataPool<UnitType, IUnitData>> UnitDataPools;
         public Dictionary<int, DataPool<int, WeaponData>> WeaponDataPools;
         public Dictionary<int, BattleScenarioData> BattleDataPools;
         public Dictionary<int, BaseStaticData> BasePool;
@@ -20,7 +18,7 @@ namespace _Game.Core.Data.Battle
         public Dictionary<int, EnvironmentData> EnvironmentPool;
         public Dictionary<int, AudioClip> AmbiencePool;
         
-        public UnitData ForUnit(int battle, UnitType type) => UnitDataPools[battle].ForType(type);
+        public IUnitData ForUnit(int battle, UnitType type) => UnitDataPools[battle].ForType(type);
         public WeaponData ForWeapon(int battle, int weaponId) => WeaponDataPools[battle].ForType(weaponId);
         public BaseStaticData ForBase(int battle) => BasePool[battle];
         public AudioClip ForAmbience(int battle) => AmbiencePool[battle];

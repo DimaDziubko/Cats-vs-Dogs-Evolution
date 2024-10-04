@@ -26,14 +26,14 @@ namespace _Game.Gameplay._Units.Scripts.Attack
         [ShowInInspector, ReadOnly] 
         private string _hash;
         public override void Construct(            
-            WeaponConfig config,
+            IUnitData unitData,
             Faction faction,
             ISoundService soundService,
             Transform unitTransform)
         {
-            base.Construct(config, faction, soundService, unitTransform);
-            _splashRadius = config.SplashRadius;
-            _damage = config.Damage;
+            base.Construct(unitData, faction, soundService, unitTransform);
+            _splashRadius = unitData.SplashRadius;
+            _damage = unitData.Damage;
 
             switch (faction)
             {

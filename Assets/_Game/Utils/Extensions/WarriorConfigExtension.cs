@@ -51,22 +51,6 @@ namespace _Game.Utils.Extensions
             }
         }
         
-        public static string GetUnitIconKeyForRace( this WarriorConfig config, Race race)
-        {
-            switch (race)
-            {
-                case Race.None:
-                    return config.CatIconKey;
-                case Race.Cat:
-                    return config.CatIconKey;
-                case Race.Dog:
-                    return config.DogIconKey;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(race), race, null);
-            }
-        }
-
-        
         public static string GetUnitKeyForAnotherRace( this WarriorConfig config, Race race)
         {
             switch (race)

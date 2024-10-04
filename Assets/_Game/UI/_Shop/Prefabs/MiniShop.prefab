@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 5149864523746011686}
   - component: {fileID: 271548815376836627}
   - component: {fileID: 1137832478773819929}
-  - component: {fileID: 1385412549937225711}
+  - component: {fileID: 6563120025677729225}
   m_Layer: 5
   m_Name: MiniShop
   m_TagString: Untagged
@@ -513,7 +513,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 110
+  m_SortingOrder: 1100
   m_TargetDisplay: 0
 --- !u!114 &2383661259262155798
 MonoBehaviour:
@@ -570,7 +570,7 @@ MonoBehaviour:
   _canvas: {fileID: 2383661259262155793}
   _container: {fileID: 5149864523746011686}
   _exitButtons:
-  - {fileID: 1385412549937225711}
+  - {fileID: 6563120025677729225}
   - {fileID: 8704060077082147016}
   _coinsLabel: {fileID: 3103424674812296531}
 --- !u!114 &5149864523746011686
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.1764706, g: 0.30980393, b: 0.53333336, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -624,7 +624,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1385412549937225711
+--- !u!114 &6563120025677729225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

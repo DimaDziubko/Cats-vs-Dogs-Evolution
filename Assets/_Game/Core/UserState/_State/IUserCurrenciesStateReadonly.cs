@@ -8,6 +8,6 @@ namespace _Game.Core.UserState._State
     {
         double Coins { get; }
         double Gems { get; }
-        event Action<Currencies, double, CurrenciesSource> CurrenciesChanged;
+        event Action<CurrencyType, double, CurrenciesSource> CurrenciesChanged;
     }
 }

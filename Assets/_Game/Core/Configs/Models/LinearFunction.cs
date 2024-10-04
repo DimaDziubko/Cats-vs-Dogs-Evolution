@@ -13,7 +13,7 @@ namespace _Game.Core.Configs.Models
             float result = A * level + B;
             return Mathf.Round(result);
         }
-        
+
         public float GetValue(int level)
         {
             float result = A * level + B;

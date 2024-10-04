@@ -3,7 +3,7 @@ guid: 630c9b08fa2af3e4ab543fc6ee4a5923
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -123,6 +129,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -135,6 +142,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -147,6 +155,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -156,8 +165,8 @@ TextureImporter:
       name: GemsPack_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 359
+        x: 15
+        y: 857
         width: 150
         height: 150
       alignment: 0
@@ -177,8 +186,8 @@ TextureImporter:
       name: GemsPack_1
       rect:
         serializedVersion: 2
-        x: 172
-        y: 359
+        x: 171
+        y: 857
         width: 150
         height: 150
       alignment: 0
@@ -198,8 +207,8 @@ TextureImporter:
       name: GemsPack_2
       rect:
         serializedVersion: 2
-        x: 349
-        y: 360
+        x: 353
+        y: 857
         width: 150
         height: 149
       alignment: 0
@@ -219,8 +228,8 @@ TextureImporter:
       name: GemsPack_3
       rect:
         serializedVersion: 2
-        x: 8
-        y: 211
+        x: 9
+        y: 703
         width: 150
         height: 150
       alignment: 0
@@ -240,8 +249,8 @@ TextureImporter:
       name: GoldPack_0
       rect:
         serializedVersion: 2
-        x: 168
-        y: 213
+        x: 174
+        y: 706
         width: 150
         height: 150
       alignment: 0
@@ -261,8 +270,8 @@ TextureImporter:
       name: GoldPack_1
       rect:
         serializedVersion: 2
-        x: 354
-        y: 215
+        x: 358
+        y: 709
         width: 150
         height: 150
       alignment: 0
@@ -274,6 +283,69 @@ TextureImporter:
       bones: []
       spriteID: 64f554ef8b0256c41907b1f8ccfae03a
       internalID: -964802257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GemsPack_4
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 548
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 397d5467a39dde246bcab45cdb44273b
+      internalID: 1270137838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProfitIcon_1
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 847
+        width: 308
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67b39c60da0cb1d4a8698cc457c85eb8
+      internalID: -943647252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shop_0
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 874
+        width: 102
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac03173fedc78c43a205bd861f3058e
+      internalID: -740994741
       vertices: []
       indices: 
       edges: []
@@ -293,11 +365,13 @@ TextureImporter:
       GemsPack_1: -1959666465
       GemsPack_2: 335948417
       GemsPack_3: 94661188
+      GemsPack_4: 1270137838
       GoldPack_0: 523545438
       GoldPack_1: -964802257
-  spritePackingTag: 
+      ProfitIcon_1: -943647252
+      Shop_0: -740994741
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

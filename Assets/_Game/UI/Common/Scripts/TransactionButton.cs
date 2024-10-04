@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Game.UI._CardsGeneral._Cards.Scripts;
 using Assets._Game.UI.Common.Scripts;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -17,11 +18,11 @@ namespace _Game.UI.Common.Scripts
         public event Action InactiveClick;
 
         [SerializeField] private RectTransform _buttonRectTransform;
-        [SerializeField] private TMP_Text _priceText;
+        [SerializeField] private TMP_Text _priceLabel;
         [SerializeField] private TMP_Text _infoText;
         [SerializeField] private GameObject _moneyPanel;
         [SerializeField] private Image _currencyIconHolder;
-        [SerializeField] private TMP_Text _loadingText;
+        [SerializeField] private TMP_Text _infoLabel;
         [SerializeField] private Button _button;
 
         [SerializeField] private bool _isHoldable = false;
@@ -39,7 +40,7 @@ namespace _Game.UI.Common.Scripts
         private CancellationTokenSource _cancellationTokenSource;
         public RectTransform ButtonRectTransform => _buttonRectTransform;
 
-        public void Construct(Sprite currencyIcon)
+        public void SetCurrencyIcon(Sprite currencyIcon)
         {
             _currencyIconHolder.gameObject.SetActive(true);
             
@@ -58,82 +59,96 @@ namespace _Game.UI.Common.Scripts
         }
 
         public void UpdateButtonState(
+            TransactionButtonModel model)
+        {
+            UpdateButtonState(model.State, model.Price, model.Info, model.ShowMoneyPanel);
+        }
+
+        public void UpdateButtonState(
             ButtonState state, 
             string price, 
+            string info = null, 
+            bool showInfo = false,
             bool showMoneyPanel = true)
         {
             switch (state)
             {
                 case ButtonState.Active:
-                    HandleActiveState(price, showMoneyPanel);
+                    HandleActiveState(price, showInfo, showMoneyPanel);
                     break;
                 case ButtonState.Inactive:
-                    HandleInactiveState(price, showMoneyPanel);
+                    HandleInactiveState(price, showInfo, showMoneyPanel);
                     break;
                 case ButtonState.Loading:
-                    HandleLoadingState();
+                    HandleLoadingState(showInfo);
+                    break;
+                case ButtonState.Recovering:
+                    HandleRecoveringState(price,  info, showInfo, showMoneyPanel);
                     break;
             }
         }
 
-        private void HandleActiveState(string price, bool showMoneyPanel = true)
+        private void HandleRecoveringState(string price, string info, bool showInfo = true, bool showMoneyPanel = true)
+        {
+            _button.interactable = false;
+            
+            _infoLabel.gameObject.SetActive(showInfo);
+            _infoLabel.text = info;
+            _infoLabel.color = _affordableColor;
+            
+            _moneyPanel.SetActive(showMoneyPanel);
+            _isPointerDown = false;
+            
+            if (_state != ButtonState.Recovering)
+            {
+                _state = ButtonState.Recovering;
+                ButtonStateChanged?.Invoke(_state);
+            }
+            
+            _priceLabel.text = price;
+            _priceLabel.color = _expensiveColor;
+            _infoText.color = _expensiveColor;
+        }
+
+        private void HandleActiveState(string price, bool showInfo = true, bool showMoneyPanel = true)
         {
             _button.interactable = true;
-            if(_loadingText != null)
-                _loadingText.enabled = false;
-            if (_moneyPanel != null) 
-                _moneyPanel.SetActive(showMoneyPanel);
+            _infoLabel.gameObject.SetActive(showInfo);
+            _moneyPanel.SetActive(showMoneyPanel);
             if (_state != ButtonState.Active)
             {
                 _state = ButtonState.Active;
                 ButtonStateChanged?.Invoke(_state);
             }
             
-            if (_priceText != null)
-            {
-                _priceText.text = price;
-                _priceText.color = _affordableColor;
-            }
-            if (_infoText != null)
-            {
-                _infoText.color = _affordableColor;
-            }
+            _priceLabel.text = price;
+            _priceLabel.color = _affordableColor;
+            _infoText.color = _affordableColor;
             
         }
 
-        private void HandleInactiveState(string price, bool showMoneyPanel = true)
+        private void HandleInactiveState(string price, bool showInfo = true, bool showMoneyPanel = true)
         {
             _button.interactable = false;
-            if(_loadingText != null)
-                _loadingText.enabled = false;
-            if (_moneyPanel != null) 
-                _moneyPanel.SetActive(showMoneyPanel);
+            _infoLabel.gameObject.SetActive(showInfo);
+            _moneyPanel.SetActive(showMoneyPanel);
             _isPointerDown = false;
             if (_state != ButtonState.Inactive)
             {
                 _state = ButtonState.Inactive;
                 ButtonStateChanged?.Invoke(_state);
             }
-            
-            if (_priceText != null)
-            {
-                _priceText.text = price;
-                _priceText.color = _expensiveColor;
-            }
-            if (_infoText != null)
-            {
-                _infoText.color = _expensiveColor;
-            }
-            
+            _priceLabel.text = price;
+            _priceLabel.color = _expensiveColor;
+            _infoText.color = _expensiveColor;
         }
 
-        private void HandleLoadingState()
+        private void HandleLoadingState(bool infoEnabled)
         {
             _button.interactable = false;
-            if(_loadingText != null)
-                _loadingText.enabled = true;
-            if (_moneyPanel != null) 
-                _moneyPanel.SetActive(false);
+            _infoLabel.gameObject.SetActive(infoEnabled);
+            _infoLabel.text = "Loading...";
+            _moneyPanel.SetActive(false);
             _isPointerDown = false;
             if (_state != ButtonState.Loading)
             {
@@ -141,15 +156,16 @@ namespace _Game.UI.Common.Scripts
                 ButtonStateChanged?.Invoke(_state);
             }
         }
-        
+
         public void Show() => 
             gameObject.SetActive(true);
 
-        public void Hide()
-        {
+        public void Hide() => 
             gameObject.SetActive(false);
-            Cleanup();
-        }
+
+        public void HideCurrencyIcon() => _currencyIconHolder.gameObject.SetActive(false);
+
+        public void ShowCurrencyIcon() => _currencyIconHolder.gameObject.SetActive(true);
 
         public void Cleanup()
         {
@@ -158,15 +174,11 @@ namespace _Game.UI.Common.Scripts
             Unsubscribe();
         }
 
-        private void Subscribe()
-        {
+        private void Subscribe() => 
             _button.onClick.AddListener(OnTransitionButtonClick);
-        }
 
-        private void Unsubscribe()
-        {
+        private void Unsubscribe() => 
             _button.onClick.RemoveAllListeners();
-        }
 
         private void OnTransitionButtonClick()
         {
@@ -190,7 +202,7 @@ namespace _Game.UI.Common.Scripts
 
             }
         }
-        
+
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             if (_button == null)

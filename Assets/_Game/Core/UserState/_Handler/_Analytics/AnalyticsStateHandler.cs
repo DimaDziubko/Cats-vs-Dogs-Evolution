@@ -15,14 +15,27 @@ namespace _Game.Core.UserState._Handler._Analytics
         {
             _userContainer.State.AdsStatistics.AddWatchedAd();
             _userContainer.State.AdsWeeklyWatchState.AddWatchedAd(DateTime.UtcNow);
+            _userContainer.RequestSaveGame();
+
         }
 
-        public void FirstDayRetentionSent() => 
+        public void FirstDayRetentionSent()
+        {
             _userContainer.State.RetentionState.ChangeFirstDayRetentionEventSent(true);
-        public void SecondDayRetentionSent() => 
-            _userContainer.State.RetentionState.ChangeSecondDayRetentionEventSent(true);
+            _userContainer.RequestSaveGame();
+        }
 
-        public void AddCompletedBattle() => 
+        public void SecondDayRetentionSent()
+        {
+            _userContainer.State.RetentionState.ChangeSecondDayRetentionEventSent(true);
+            _userContainer.RequestSaveGame();
+
+        }
+
+        public void AddCompletedBattle()
+        {
             _userContainer.State.BattleStatistics.AddCompletedBattle();
+            _userContainer.RequestSaveGame();
+        }
     }
 }

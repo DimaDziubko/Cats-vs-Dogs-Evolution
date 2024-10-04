@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Linq;
-using Assets._Game.Gameplay._Units.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

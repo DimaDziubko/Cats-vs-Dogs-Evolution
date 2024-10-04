@@ -2,6 +2,7 @@
 using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
+using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Debugger;
 using _Game.Core.Services.Analytics;
@@ -23,6 +24,8 @@ namespace _Game.Core.Ads.CASAds
 
     public class CasAdsService : IAdsService, IDisposable
     {
+        private const string INTERSTITIAL_TIMER_KEY = "InterstitialTimerKey";   
+
         public event Action<AdImpressionDto> AdImpression;
         public event Action<AdType> OnVideoLoaded;
 
@@ -57,14 +60,14 @@ namespace _Game.Core.Ads.CASAds
             IBattleManager battleManager,
             IUserContainer userContainer,
             ITimerService timerService,
-            IAdsConfigRepository adsConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IGameInitializer gameInitializer)
         {
             _rewardAdsService = new CasRewardAdService(logger, battleManager, userContainer);
             _interstitialAdsService = new CasInterstitialAdService(logger, userContainer);
             _logger = logger;
             _timerService = timerService;
-            _adsConfigRepository = adsConfigRepository;
+            _adsConfigRepository = configRepositoryFacade.AdsConfigRepository;
             _userContainer = userContainer;
             //debugger.CasAdsService = this;
 
@@ -159,11 +162,11 @@ namespace _Game.Core.Ads.CASAds
             _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}");
             IsTimeForInterstitial = false;
 
-            GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
+            GameTimer timer = _timerService.GetTimer(INTERSTITIAL_TIMER_KEY);
             if (timer != null)
             {
                 timer.Stop();
-                _timerService.RemoveTimer(TimerType.InterstitialAdDelay);
+                _timerService.RemoveTimer(INTERSTITIAL_TIMER_KEY);
             }
 
             TimerData timerData = new TimerData
@@ -173,9 +176,9 @@ namespace _Game.Core.Ads.CASAds
                 StartValue = delay
             };
 
-            _timerService.CreateTimer(TimerType.InterstitialAdDelay, timerData, OnInterstitialAdTimerOut);
-            _timerService.StartTimer(TimerType.InterstitialAdDelay);
-            _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
+            _timerService.CreateTimer(INTERSTITIAL_TIMER_KEY, timerData, OnInterstitialAdTimerOut);
+            _timerService.StartTimer(INTERSTITIAL_TIMER_KEY);
+            _timer = _timerService.GetTimer(INTERSTITIAL_TIMER_KEY);
 
             _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!");
         }

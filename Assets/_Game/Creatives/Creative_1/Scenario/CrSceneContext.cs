@@ -1,10 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Audio.Scripts;
 using _Game.Core._SystemUpdate;
 using _Game.Core.Pause.Scripts;
+using _Game.Core.Prefabs;
 using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using _Game.Core.Services.Random;
 using _Game.Creatives.Factories;
 using _Game.Creatives.Scripts;
@@ -16,20 +17,11 @@ using _Game.Gameplay._Coins.Factory;
 using _Game.Gameplay._UnitBuilder.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Gameplay._Weapon.Scripts;
-using _Game.Gameplay.Food.Scripts;
 using _Game.UI._GameplayUI.Scripts;
-using _Game.Utils;
 using Assets._Game.Core.Factory;
 using Assets._Game.Core.Pause.Scripts;
-using Assets._Game.Core.Prefabs;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
 using Assets._Game.Creatives.LocalUnitConfigs.Scr;
 using Assets._Game.Creatives.Scripts;
-using Assets._Game.Gameplay._UnitBuilder.Scripts;
-using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -160,40 +152,40 @@ namespace _Game.Creatives.Creative_1.Scenario
 
         private void SetupWeaponData()
         {
-            foreach (var unit in _playerUnits)
-            {
-                if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
-                WeaponData data = new WeaponData()
-                {
-                    Config = unit.Data.Config.WeaponConfig,
-                    Layer = Constants.Layer.PLAYER_PROJECTILE,
-                    MuzzlePrefab = unit.MuzzlePrefab,
-                    ProjectilePrefab = unit.ProjectilePrefab,
-                    ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
-                };
-                _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
-            }
-
-            foreach (var unit in _enemyUnits)
-            {
-                if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
-                WeaponData data = new WeaponData()
-                {
-                    Config = unit.Data.Config.WeaponConfig,
-                    Layer = Constants.Layer.ENEMY_PROJECTILE,
-                    MuzzlePrefab = unit.MuzzlePrefab,
-                    ProjectilePrefab = unit.ProjectilePrefab,
-                    ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
-                };
-                _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
-            }
+            // foreach (var unit in _playerUnits)
+            // {
+            //     if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
+            //     WeaponData data = new WeaponData()
+            //     {
+            //         Config = unit.Data.Config.WeaponConfig,
+            //         Layer = Constants.Layer.PLAYER_PROJECTILE,
+            //         MuzzlePrefab = unit.MuzzlePrefab,
+            //         ProjectilePrefab = unit.ProjectilePrefab,
+            //         ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
+            //     };
+            //     _playerWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
+            // }
+            //
+            // foreach (var unit in _enemyUnits)
+            // {
+            //     if (unit.Data.Config.WeaponConfig.WeaponType == WeaponType.Melee) continue;
+            //     WeaponData data = new WeaponData()
+            //     {
+            //         Config = unit.Data.Config.WeaponConfig,
+            //         Layer = Constants.Layer.ENEMY_PROJECTILE,
+            //         MuzzlePrefab = unit.MuzzlePrefab,
+            //         ProjectilePrefab = unit.ProjectilePrefab,
+            //         ProjectileExplosionPrefab = unit.ProjectileExplosionPrefab
+            //     };
+            //     _enemiesWeaponsData.Add(unit.Data.Config.WeaponConfig.Id, data);
+            // }
         }
         private void SetupUnitBuilderCoinsBtnData()
         {
             int index = 0;
             foreach (var unit in _playerUnits)
             {
-                _crGameplayUI.CrUnitBuilButtons[index].InitButtonData(unit.name, unit.Icon, unit.Data.Config.FoodPrice);
+                //_crGameplayUI.CrUnitBuilButtons[index].InitButtonData(unit.name, unit.Icon, unit.Data.Config.FoodPrice);
             }
 
             _builder = new CrUnitBuilderViewController(_gameplayUI, _foodGenerator, _coinCounter, _audioService, _pauseManager);
@@ -215,18 +207,7 @@ namespace _Game.Creatives.Creative_1.Scenario
             {
                 var newData = new UnitBuilderBtnModel()
                 {
-                    StaticData = new UnitBuilderBtnStaticData()
-                    {
-                        FoodPrice = unit.Data.Config.FoodPrice,
-                        Type = unit.Type,
-                        UnitIcon = unit.Icon
-                    },
-
-                    DynamicData = new UnitBuilderBtnDynamicData()
-                    {
-                        FoodIcon = _foodSprite,
-                        IsUnlocked = true,
-                    }
+                    //TODO Fix later
 
                 };
 

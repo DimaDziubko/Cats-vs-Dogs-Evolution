@@ -2,9 +2,9 @@
 using _Game.Core._SceneLoader;
 using _Game.Core.Loading;
 using _Game.Core.LoadingScreen;
+using _Game.Core.Services.Camera;
 using Assets._Game.Core.GameState;
 using Assets._Game.Core.Loading;
-using Assets._Game.Core.Services.Camera;
 
 namespace _Game.Core.GameState
 {

@@ -5,11 +5,7 @@ using _Game.Core.Services.Audio;
 using _Game.Creatives.Creative_1.Scenario;
 using _Game.Gameplay._Weapon.Factory;
 using _Game.Gameplay._Weapon.Scripts;
-using Assets._Game.Core.Factory;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Creatives.Creative_1.Scenario;
 using Assets._Game.Gameplay._Units.Scripts;
-using Assets._Game.Gameplay._Weapon.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -50,7 +46,7 @@ namespace _Game.Creatives.Factories
                 instance.OriginFactory = this;
             }
 
-            instance.Construct(_soundService, faction, weaponData.Config, weaponData.Layer);
+            instance.Construct(_soundService, faction, weaponData);
             return instance;
         }
 

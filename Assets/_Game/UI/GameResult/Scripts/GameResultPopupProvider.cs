@@ -1,8 +1,8 @@
 ﻿using _Game.Core._Logger;
 using _Game.Core.Ads;
 using _Game.Core.AssetManagement;
-using Assets._Game.Core.Services.Audio;
-using Assets._Game.Core.Services.Camera;
+using _Game.Core.Services.Audio;
+using _Game.Core.Services.Camera;
 using Assets._Game.Utils.Disposable;
 using Cysharp.Threading.Tasks;
 

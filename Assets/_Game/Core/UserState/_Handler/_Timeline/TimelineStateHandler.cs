@@ -15,21 +15,32 @@ namespace _Game.Core.UserState._Handler._Timeline
         {
             _userContainer.State.Currencies.RemoveAllCoins();
             _userContainer.State.TimelineState.OpenNewAge(isNext);
+            _userContainer.RequestSaveGame();
         }
 
         public void OpenNewTimeline(bool isNext = true)
         {
             _userContainer.State.Currencies.RemoveAllCoins();
             _userContainer.State.TimelineState.OpenNewTimeline(isNext);
+            _userContainer.RequestSaveGame();
         }
         
-        public void OpenNewBattle(int nextBattle) => 
+        public void OpenNewBattle(int nextBattle)
+        {
             _userContainer.State.TimelineState.OpenNextBattle(nextBattle);
-        
-        public void ChooseRace(Race race) => 
+            _userContainer.RequestSaveGame();
+        }
+
+        public void ChooseRace(Race race)
+        {
             _userContainer.State.RaceState.Change(race);
-        
-        public void SetAllBattlesWon(bool allBattlesWon) => 
+            _userContainer.RequestSaveGame();
+        }
+
+        public void SetAllBattlesWon(bool allBattlesWon)
+        {
             _userContainer.State.TimelineState.SetAllBattlesWon(true);
+            _userContainer.RequestSaveGame();
+        }
     }
 }

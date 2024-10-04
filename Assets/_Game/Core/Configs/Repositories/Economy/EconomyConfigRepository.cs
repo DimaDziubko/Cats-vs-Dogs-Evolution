@@ -2,15 +2,15 @@
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories.Age;
 using _Game.Core.Services.UserContainer;
+using _Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 using Assets._Game.Core.UserState;
-using Assets._Game.UI.UpgradesAndEvolution.Upgrades.Scripts;
 
 namespace _Game.Core.Configs.Repositories.Economy
 {
     public class EconomyConfigRepository : IEconomyConfigRepository
     {
         private readonly IUserContainer _userContainer;
-        private readonly IAgeConfigRepository _ageConfigRepository;
+        private readonly IAgeConfigRepository _ageAgeConfigRepository;
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
 
         public EconomyConfigRepository(
@@ -18,7 +18,7 @@ namespace _Game.Core.Configs.Repositories.Economy
             IAgeConfigRepository ageConfigRepository)
         {
             _userContainer = userContainer;
-            _ageConfigRepository = ageConfigRepository;
+            _ageAgeConfigRepository = ageConfigRepository;
         }
         
         public FoodBoostConfig GetFoodBoostConfig() => 
@@ -26,11 +26,8 @@ namespace _Game.Core.Configs.Repositories.Economy
                 .GameConfig
                 .FoodBoostConfig;
 
-        public FreeGemsPackDayConfig GetFreeGemsPackDayConfig() => 
-            _userContainer.GameConfig.FreeGemsPackDayConfig;
-
         public float GetMinimalCoinsForBattle() => 
-            _ageConfigRepository
+            _ageAgeConfigRepository
                 .GetAgeConfig(TimelineState.AgeId)
                 .Economy
                 .CoinPerBattle;
@@ -40,12 +37,12 @@ namespace _Game.Core.Configs.Repositories.Economy
             switch (type)
             {
                 case UpgradeItemType.FoodProduction:
-                    return _ageConfigRepository
+                    return _ageAgeConfigRepository
                         .GetAgeConfig(TimelineState.AgeId)?
                         .Economy
                         .FoodProduction;;
                 case UpgradeItemType.BaseHealth:
-                    return _ageConfigRepository
+                    return _ageAgeConfigRepository
                         .GetAgeConfig(TimelineState.AgeId)?
                         .Economy
                         .BaseHealth;
@@ -55,7 +52,7 @@ namespace _Game.Core.Configs.Repositories.Economy
         }
 
         public int GetInitialFoodAmount() =>
-            _ageConfigRepository
+            _ageAgeConfigRepository
                 .GetAgeConfig(TimelineState.AgeId)
                 .Economy.InitialFoodAmount;
     }

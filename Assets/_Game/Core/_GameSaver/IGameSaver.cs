@@ -1,7 +1,10 @@
-﻿namespace _Game.Core._GameSaver
+﻿using _Game.Core.Services.UserContainer;
+
+namespace _Game.Core._GameSaver
 {
     public interface IGameSaver
     {
-        void Init();
+        void Register(ISaveGameTrigger trigger);
+        void Unregister(ISaveGameTrigger trigger);
     }
 }
