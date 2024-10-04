@@ -48,6 +48,7 @@ namespace _Game.Core.Installers.Core
             BindFoodBoostService();
             BindSpeedBoostService();
             BindBattleSpeedService();
+            BindAppsFlyerAnalyticsService();
             BindAnalyticsService();
             BindDTDAnalyticsService();
             BindTimelineNavigator();
@@ -71,6 +72,9 @@ namespace _Game.Core.Installers.Core
         private void BindDTDAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<DTDAnalyticsService>().AsSingle();
 
+        private void BindAppsFlyerAnalyticsService() =>
+            Container.BindInterfacesAndSelfTo<AppsFlyerAnalyticsService>().AsSingle();
+        
         private void BindAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<AnalyticsService>().AsSingle();
 

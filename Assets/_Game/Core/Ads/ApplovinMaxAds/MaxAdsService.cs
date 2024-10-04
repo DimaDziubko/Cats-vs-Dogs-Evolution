@@ -7,6 +7,7 @@ using _Game.Core.UserState;
 using _Game.Gameplay._Timer.Scripts;
 using Assets._Game.Core.UserState;
 using System;
+using _Game.Core.Configs.Repositories;
 using UnityEngine;
 using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Gameplay._Timer.Scripts;
@@ -63,13 +64,13 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             IBattleManager battleManager,
             IUserContainer userContainer,
             ITimerService timerService,
-            IAdsConfigRepository adsConfigRepository,
+            IConfigRepositoryFacade configRepositoryFacade,
             IGameInitializer gameInitializer
             )
         {
             _logger = logger;
             _timerService = timerService;
-            _adsConfigRepository = adsConfigRepository;
+            _adsConfigRepository = configRepositoryFacade.AdsConfigRepository;
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
             _gameInitializer.OnPostInitialization += Init;
