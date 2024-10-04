@@ -5,6 +5,7 @@
     <e p="C:\Users\dimam\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Cats-vs-Dogs-Evolution.-1951554600.00" t="ExcludeRecursive" />
     <e p="C:\Users\dimam\AppData\Roaming\JetBrains\Rider2020.2\scratches" t="IncludeRecursive" />
     <e p="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution" t="IncludeRecursive">
+      <e p="AppsFlyer.Purchase.Connector.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -117,7 +118,6 @@
             <e p="Ads" t="Include">
               <e p="AdType.cs" t="Include" />
               <e p="ApplovinMaxAds" t="Include">
-                <e p="IMadPixelAdsManager.cs" t="Include" />
                 <e p="MaxAdsService.cs" t="Include" />
               </e>
               <e p="CASAds" t="Include">
@@ -475,8 +475,14 @@
                 <e p="AdImpressionDTO.cs" t="Include" />
                 <e p="AnalyticsEvent.cs" t="Include" />
                 <e p="AnalyticsService.cs" t="Include" />
+                <e p="AppsFlyerAnalyticsService.cs" t="Include" />
+                <e p="CustomAppsFlyerObject.cs" t="Include" />
+                <e p="DTDAnalyticsService.cs" t="Include" />
+                <e p="GameAnalyticsObject.cs" t="Include" />
                 <e p="IAnalyticsService.cs" t="Include" />
+                <e p="IDTDAnalyticsService.cs" t="Include" />
                 <e p="RewardType.cs" t="Include" />
+                <e p="UserCentricsService.cs" t="Include" />
               </e>
               <e p="AssetProvider" t="Include">
                 <e p="IAssetProvider.cs" t="Include" />
@@ -496,6 +502,10 @@
               </e>
               <e p="IAP" t="Include">
                 <e p="BoughtIAP.cs" t="Include" />
+                <e p="Data" t="Include">
+                  <e p="PayloadAndroidData.cs" t="Include" />
+                  <e p="ReceiptData.cs" t="Include" />
+                </e>
                 <e p="IAPProvider.cs" t="Include" />
                 <e p="IAPService.cs" t="Include" />
                 <e p="IIAPService.cs" t="Include" />
@@ -1123,37 +1133,14 @@
             <e p="IntRange.cs" t="Include" />
           </e>
         </e>
-        <e p="AppMetrica" t="Include">
-          <e p="AppMetrica.cs" t="Include" />
-          <e p="BaseYandexAppMetrica.cs" t="Include" />
+        <e p="AppsFlyer" t="Include">
+          <e p="AppsFlyer.Purchase.Connector.asmdef" t="Include" />
+          <e p="AppsFlyerPurchaseConnector.cs" t="Include" />
           <e p="Editor" t="Include">
-            <e p="AppMetricaDependencies.xml" t="Include" />
-            <e p="PostprocessBuildPlayerAppMetrica.cs" t="Include" />
+            <e p="AppsFlyerPurchaseConnectorDependencies.xml" t="Include" />
           </e>
-          <e p="IYandexAppMetrica.cs" t="Include" />
-          <e p="Profile" t="Include">
-            <e p="YandexAppMetricaAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaBirthDateAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaBooleanAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaCounterAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaGenderAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaNameAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaNotificationsEnabledAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaNumberAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaStringAttribute.cs" t="Include" />
-            <e p="YandexAppMetricaUserProfile.cs" t="Include" />
-            <e p="YandexAppMetricaUserProfileUpdate.cs" t="Include" />
-          </e>
-          <e p="YandexAppMetricaAdRevenue.cs" t="Include" />
-          <e p="YandexAppMetricaAndroid.cs" t="Include" />
-          <e p="YandexAppMetricaConfig.cs" t="Include" />
-          <e p="YandexAppMetricaDummy.cs" t="Include" />
-          <e p="YandexAppMetricaError.cs" t="Include" />
-          <e p="YandexAppMetricaErrorDetails.cs" t="Include" />
-          <e p="YandexAppMetricaIOS.cs" t="Include" />
-          <e p="YandexAppMetricaRequestTrackingStatus.cs" t="Include" />
-          <e p="YandexAppMetricaRevenue.cs" t="Include" />
-          <e p="YMMJSONUtils.cs" t="Include" />
+          <e p="IAppsFlyerPurchaseValidation.cs" t="Include" />
+          <e p="ProductPurchase.cs" t="Include" />
         </e>
         <e p="CodeBase" t="Include">
           <e p="Infrastructure" t="Include">
@@ -1170,72 +1157,6 @@
         <e p="ExternalDependencyManager" t="Include">
           <e p="Editor" t="Include">
             <e p="external-dependency-manager_version-1.2.166_manifest.txt" t="Include" />
-          </e>
-        </e>
-        <e p="FacebookSDK" t="Include">
-          <e p="Examples" t="Include">
-            <e p="CloudAndroid" t="Include">
-              <e p="Prefabs" t="Include">
-                <e p="ProductRowPrefab.cs" t="Include" />
-                <e p="PurchaseRowPrefab.cs" t="Include" />
-              </e>
-              <e p="Scripts" t="Include">
-                <e p="AdsPage.cs" t="Include" />
-                <e p="LogScroller.cs" t="Include" />
-                <e p="MainPage.cs" t="Include" />
-                <e p="Menu.cs" t="Include" />
-                <e p="PurchasePage.cs" t="Include" />
-                <e p="SavePage.cs" t="Include" />
-                <e p="SettingsMenu.cs" t="Include" />
-                <e p="UIState.cs" t="Include" />
-                <e p="Utility.cs" t="Include" />
-              </e>
-            </e>
-            <e p="InputSystemWarning.cs" t="Include" />
-            <e p="Mobile" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="ConsoleBase.cs" t="Include" />
-                <e p="LogView.cs" t="Include" />
-                <e p="MenuBase.cs" t="Include" />
-                <e p="SubMenus" t="Include">
-                  <e p="AccessTokenMenu.cs" t="Include" />
-                  <e p="AppEvents.cs" t="Include" />
-                  <e p="AppLinks.cs" t="Include" />
-                  <e p="AppRequests.cs" t="Include" />
-                  <e p="DialogShare.cs" t="Include" />
-                  <e p="GraphRequest.cs" t="Include" />
-                  <e p="MainMenu.cs" t="Include" />
-                  <e p="Pay.cs" t="Include" />
-                  <e p="Subscription.cs" t="Include" />
-                  <e p="TournamentsMenu.cs" t="Include" />
-                  <e p="UploadToMediaLibrary.cs" t="Include" />
-                </e>
-                <e p="UIInputHelper.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Windows" t="Include">
-              <e p="FBWindowsA2UNotificationsManager.cs" t="Include" />
-              <e p="FBWindowsADSManager.cs" t="Include" />
-              <e p="FBWindowsExampleTabsManager.cs" t="Include" />
-              <e p="FBWindowsFriendsManager.cs" t="Include" />
-              <e p="FBWindowsGraphAPIManager.cs" t="Include" />
-              <e p="FBWindowsInitManager.cs" t="Include" />
-              <e p="FBWindowsLoginManager.cs" t="Include" />
-              <e p="FBWindowsLogsManager.cs" t="Include" />
-              <e p="FBWindowsPhysicalGamepadManager.cs" t="Include" />
-              <e p="FBWindowsPurchaseManager.cs" t="Include" />
-              <e p="FBWindowsReferralsManager.cs" t="Include" />
-              <e p="FBWindowsShareManager.cs" t="Include" />
-              <e p="FBWindowsSoftKeyboardManager.cs" t="Include" />
-              <e p="FBWindowsTournamentsManager.cs" t="Include" />
-              <e p="FBWindowsVirtualGamepadManager.cs" t="Include" />
-            </e>
-          </e>
-          <e p="link.xml" t="Include" />
-          <e p="Plugins" t="Include">
-            <e p="Editor" t="Include">
-              <e p="Dependencies.xml" t="Include" />
-            </e>
           </e>
         </e>
         <e p="Firebase" t="Include">
@@ -1273,6 +1194,113 @@
               </e>
             </e>
           </e>
+        </e>
+        <e p="GameAnalytics" t="Include">
+          <e p="Editor" t="Include">
+            <e p="Android" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+            <e p="GA_AssetPostprocessor.cs" t="Include" />
+            <e p="GA_AutoRun.cs" t="Include" />
+            <e p="GA_ContinuationManager.cs" t="Include" />
+            <e p="GA_EditorUtilities.cs" t="Include" />
+            <e p="GA_Menu.cs" t="Include" />
+            <e p="GA_PostprocessBuild.cs" t="Include" />
+            <e p="GA_SettingsInspector.cs" t="Include" />
+            <e p="GA_SignUp.cs" t="Include" />
+            <e p="GA_UpdateWindow.cs" t="Include" />
+            <e p="GameAnalyticsInspector.cs" t="Include" />
+            <e p="Playmaker" t="Include">
+              <e p="PlayMakerPresenceCheck.cs" t="Include" />
+              <e p="SendProgressionEventActionEditor.cs" t="Include" />
+              <e p="SendResourceEventActionEditor.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Plugins" t="Include">
+            <e p="Playmaker" t="Include">
+              <e p="GAInitialize.cs" t="Include" />
+              <e p="GetABTestingId.cs" t="Include" />
+              <e p="GetABTestingVariantId.cs" t="Include" />
+              <e p="GetRemoteConfigsValueAsString.cs" t="Include" />
+              <e p="IsRemoteConfigsReady.cs" t="Include" />
+              <e p="SendAdEvent.cs" t="Include" />
+              <e p="SendBusinessEvent.cs" t="Include" />
+              <e p="SendDesignEvent.cs" t="Include" />
+              <e p="SendErrorEvent.cs" t="Include" />
+              <e p="SendProgressionEvent.cs" t="Include" />
+              <e p="SendResourceEvent.cs" t="Include" />
+              <e p="SetCustomDimension.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="ATT" t="Include">
+                <e p="GameAnalyticsATTClient.cs" t="Include" />
+                <e p="GameAnalyticsATTObjCBridge.cs" t="Include" />
+              </e>
+              <e p="Enums.cs" t="Include" />
+              <e p="Events" t="Include">
+                <e p="GA_Ads.cs" t="Include" />
+                <e p="GA_Business.cs" t="Include" />
+                <e p="GA_Debug.cs" t="Include" />
+                <e p="GA_Design.cs" t="Include" />
+                <e p="GA_Error.cs" t="Include" />
+                <e p="GA_Progression.cs" t="Include" />
+                <e p="GA_Resource.cs" t="Include" />
+                <e p="GA_Setup.cs" t="Include" />
+                <e p="GA_SpecialEvents.cs" t="Include" />
+                <e p="GAValidator.cs" t="Include" />
+              </e>
+              <e p="GameAnalytics.cs" t="Include" />
+              <e p="GameAnalyticsScripts.asmdef" t="Include" />
+              <e p="IGameAnalyticsATTListener.cs" t="Include" />
+              <e p="ILRD" t="Include">
+                <e p="AdMob" t="Include">
+                  <e p="GAAdMobIntegration.cs" t="Include" />
+                </e>
+                <e p="Aequus" t="Include">
+                  <e p="GAAequusIntegration.cs" t="Include" />
+                </e>
+                <e p="Fyber" t="Include">
+                  <e p="GAFyberIntegration.cs" t="Include" />
+                </e>
+                <e p="GameAnalyticsILRD.cs" t="Include" />
+                <e p="HyperBid" t="Include">
+                  <e p="GAHyperBidIntegration.cs" t="Include" />
+                </e>
+                <e p="IronSource" t="Include">
+                  <e p="GAIronSourceIntegration.cs" t="Include" />
+                </e>
+                <e p="Max" t="Include">
+                  <e p="GAMaxIntegration.cs" t="Include" />
+                </e>
+                <e p="Mopub" t="Include">
+                  <e p="GAMopubIntegration.cs" t="Include" />
+                </e>
+                <e p="TopOn" t="Include">
+                  <e p="GATopOnIntegration.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Setup" t="Include">
+                <e p="Settings.cs" t="Include" />
+              </e>
+              <e p="State" t="Include">
+                <e p="GAState.cs" t="Include" />
+              </e>
+              <e p="Utilities" t="Include">
+                <e p="GA_MiniJson.cs" t="Include" />
+              </e>
+              <e p="Wrapper" t="Include">
+                <e p="GA_AndroidWrapper.cs" t="Include" />
+                <e p="GA_iOSWrapper.cs" t="Include" />
+                <e p="GA_MonoWrapper.cs" t="Include" />
+                <e p="GA_TizenWrapper.cs" t="Include" />
+                <e p="GA_tvOSWrapper.cs" t="Include" />
+                <e p="GA_UWPWrapper.cs" t="Include" />
+                <e p="GA_WebGLWrapper.cs" t="Include" />
+                <e p="GA_Wrapper.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="ReadMe.txt" t="Include" />
         </e>
         <e p="JMO Assets" t="Include">
           <e p="Cartoon FX (legacy)" t="Include">
@@ -1351,41 +1379,6 @@
             <e p="CFXR_WelcomeScreen.uxml" t="Include" />
           </e>
         </e>
-        <e p="MadPixel" t="Include">
-          <e p="AnalyticsHelper" t="Include">
-            <e p="Analytics" t="Include">
-              <e p="AnalyticsManager.cs" t="Include" />
-              <e p="AppMetricaComp.cs" t="Include" />
-              <e p="AppsFlyerComp.cs" t="Include" />
-              <e p="FirebaseComp.cs" t="Include" />
-            </e>
-          </e>
-          <e p="MAXHelper" t="Include">
-            <e p="AdButton.cs" t="Include" />
-            <e p="AdInfo.cs" t="Include" />
-            <e p="AdsManager.cs" t="Include" />
-            <e p="AppLovinComp.cs" t="Include" />
-            <e p="Demo" t="Include">
-              <e p="ShowBannerExample.cs" t="Include" />
-            </e>
-            <e p="Editor" t="Include">
-              <e p="MAXHelperDefineSymbols.cs" t="Include" />
-              <e p="MAXHelperInitWindow.cs" t="Include" />
-              <e p="MAXHelperPostBuild.cs" t="Include" />
-              <e p="MPCChecker.cs" t="Include" />
-              <e p="MPCTargetCheckerWindow.cs" t="Include" />
-            </e>
-            <e p="InterstitialButton.cs" t="Include" />
-            <e p="MAXCustomSettings.cs" t="Include" />
-            <e p="TermsAndATT.cs" t="Include" />
-            <e p="UITermsPanel.cs" t="Include" />
-            <e p="UIUMPSettingsButton.cs" t="Include" />
-          </e>
-          <e p="SharedScripts" t="Include">
-            <e p="ExtensionMethods.cs" t="Include" />
-            <e p="SimpleJSON.cs" t="Include" />
-          </e>
-        </e>
         <e p="MaxSdk" t="Include">
           <e p="AppLovin" t="Include">
             <e p="Editor" t="Include">
@@ -1393,7 +1386,17 @@
             </e>
           </e>
           <e p="Mediation" t="Include">
+            <e p="BidMachine" t="Include">
+              <e p="Editor" t="Include">
+                <e p="Dependencies.xml" t="Include" />
+              </e>
+            </e>
             <e p="ByteDance" t="Include">
+              <e p="Editor" t="Include">
+                <e p="Dependencies.xml" t="Include" />
+              </e>
+            </e>
+            <e p="Chartboost" t="Include">
               <e p="Editor" t="Include">
                 <e p="Dependencies.xml" t="Include" />
               </e>
@@ -1413,7 +1416,7 @@
                 <e p="Dependencies.xml" t="Include" />
               </e>
             </e>
-            <e p="InMobi" t="Include">
+            <e p="GoogleAdManager" t="Include">
               <e p="Editor" t="Include">
                 <e p="Dependencies.xml" t="Include" />
               </e>
@@ -1429,12 +1432,7 @@
                 <e p="Dependencies.xml" t="Include" />
               </e>
             </e>
-            <e p="MyTarget" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="Smaato" t="Include">
+            <e p="MobileFuse" t="Include">
               <e p="Editor" t="Include">
                 <e p="Dependencies.xml" t="Include" />
               </e>
@@ -1455,7 +1453,6 @@
               <e p="Editor" t="Include">
                 <e p="AppLovinAutoUpdater.cs" t="Include" />
                 <e p="AppLovinCommandLine.cs" t="Include" />
-                <e p="AppLovinDownloadHandler.cs" t="Include" />
                 <e p="AppLovinEditorCoroutine.cs" t="Include" />
                 <e p="AppLovinInitialize.cs" t="Include" />
                 <e p="AppLovinIntegrationManager.cs" t="Include" />
@@ -1486,6 +1483,7 @@
             <e p="MaxSdkLogger.cs" t="Include" />
             <e p="MaxSdkUnityEditor.cs" t="Include" />
             <e p="MaxSdkUtils.cs" t="Include" />
+            <e p="MaxSegmentCollection.cs" t="Include" />
             <e p="MaxTargetingData.cs" t="Include" />
             <e p="MaxUserSegment.cs" t="Include" />
             <e p="MaxUserServiceAndroid.cs" t="Include" />
@@ -2827,6 +2825,47 @@
             </e>
           </e>
         </e>
+        <e p="Usercentrics" t="Include">
+          <e p="Demo" t="Include">
+            <e p="DemoScript.cs" t="Include" />
+            <e p="FirstLayerUIScript.cs" t="Include" />
+          </e>
+          <e p="Editor" t="Include">
+            <e p="ATTLocalizationMessageDrawer.cs" t="Include" />
+            <e p="Unity.UsercentricsEditor.asmdef" t="Include" />
+            <e p="UsercentricsATTPostProcessor.cs" t="Include" />
+            <e p="UsercentricsDependencies.xml" t="Include" />
+            <e p="UsercentricsPBXProjectExtensions.cs" t="Include" />
+            <e p="UsercentricsWelcomeDialog.cs" t="Include" />
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="AppTrackingTransparency" t="Include">
+              <e p="AppTrackingTransparencyManager.cs" t="Include" />
+              <e p="Model" t="Include">
+                <e p="ATTLocalizationMessage.cs" t="Include" />
+                <e p="AuthorizationStatus.cs" t="Include" />
+                <e p="Language.cs" t="Include" />
+              </e>
+            </e>
+            <e p="AppTrackingTransparency.cs" t="Include" />
+            <e p="Internal" t="Include">
+              <e p="AutoInitialize.cs" t="Include" />
+              <e p="BannerSettings.cs" t="Include" />
+              <e p="Data.cs" t="Include" />
+              <e p="Errors.cs" t="Include" />
+              <e p="FirstLayerStyleSettings.cs" t="Include" />
+              <e p="InspectorLink.cs" t="Include" />
+              <e p="IUsercentrics.cs" t="Include" />
+              <e p="Singleton.cs" t="Include" />
+              <e p="StringParser.cs" t="Include" />
+              <e p="UCConstants.cs" t="Include" />
+              <e p="UsercentricsAndroid.cs" t="Include" />
+              <e p="UsercentricsIOS.cs" t="Include" />
+            </e>
+            <e p="Unity.Usercentrics.asmdef" t="Include" />
+            <e p="Usercentrics.cs" t="Include" />
+          </e>
+        </e>
       </e>
       <e p="AstarPackageToolsEditor.csproj" t="IncludeRecursive" />
       <e p="AstarPathfindingProject.csproj" t="IncludeRecursive" />
@@ -2839,6 +2878,7 @@
       <e p="Drawing.csproj" t="IncludeRecursive" />
       <e p="DrawingEditor.csproj" t="IncludeRecursive" />
       <e p="DrawingPackageToolsEditor.csproj" t="IncludeRecursive" />
+      <e p="GameAnalyticsScripts.csproj" t="IncludeRecursive" />
       <e p="KinoBloom.Runtime.csproj" t="IncludeRecursive" />
       <e p="MaxSdk.Scripts.csproj" t="IncludeRecursive" />
       <e p="MaxSdk.Scripts.IntegrationManager.Editor.csproj" t="IncludeRecursive" />
@@ -3292,6 +3332,8 @@
       <e p="StompyRobot.SRF.Editor.csproj" t="IncludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
       <e p="ToonyColorsPro.Demo.Editor.csproj" t="IncludeRecursive" />
+      <e p="Unity.Usercentrics.csproj" t="IncludeRecursive" />
+      <e p="Unity.UsercentricsEditor.csproj" t="IncludeRecursive" />
       <e p="Zenject-Editor.csproj" t="IncludeRecursive" />
       <e p="Zenject-IntegrationTests-Editor.csproj" t="IncludeRecursive" />
       <e p="Zenject-IntegrationTests.csproj" t="IncludeRecursive" />

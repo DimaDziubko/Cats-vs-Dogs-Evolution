@@ -118,8 +118,10 @@ namespace _Game.Core._FeatureUnlockSystem.Scripts
         {
             if (!IsFeatureUnlocked(Feature.BattleSpeed) && GetTresholdForBattleSpeed())
             {
-                _featureUnlockState[Feature.BattleSpeed] = true;
-                FeatureUnlocked?.Invoke(Feature.BattleSpeed);
+                //Disable
+                _featureUnlockState[Feature.BattleSpeed] = false;
+                // _featureUnlockState[Feature.BattleSpeed] = true;
+                // FeatureUnlocked?.Invoke(Feature.BattleSpeed);
             }
         }
 
