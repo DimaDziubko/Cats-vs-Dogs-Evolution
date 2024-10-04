@@ -6,6 +6,7 @@ using _Game.Core._DataPresenters.UnitUpgradePresenter;
 using _Game.Core._RetentionChecker;
 using _Game.Core._UpgradesChecker;
 using _Game.Core.Ads;
+using _Game.Core.Ads.ApplovinMaxAds;
 using _Game.Core.DataPresenters._TimelineInfoPresenter;
 using _Game.Core.DataPresenters._UpgradeItemPresenter;
 using _Game.Core.DataPresenters.TimelineTravel;
@@ -13,6 +14,7 @@ using _Game.Core.DataPresenters.UnitUpgradePresenter;
 using _Game.Core.Navigation.Age;
 using _Game.Core.Navigation.Battle;
 using _Game.Core.Navigation.Timeline;
+using _Game.Core.Notifications;
 using _Game.Core.Pause.Scripts;
 using _Game.Core.Services._BattleSpeedService._Scripts;
 using _Game.Core.Services._FoodBoostService.Scripts;
@@ -42,6 +44,7 @@ namespace _Game.Core.Installers.Core
             BindEvolutionService();
             BindTimerService();
             BindAdsService();
+            BindNotificationService();
             BindFoodBoostService();
             BindSpeedBoostService();
             BindBattleSpeedService();
@@ -59,16 +62,16 @@ namespace _Game.Core.Installers.Core
             Container.BindInterfacesAndSelfTo<BoostsCalculator>().AsSingle();
         }
 
-        private void BindRetentionChecker() => 
+        private void BindRetentionChecker() =>
             Container.BindInterfacesAndSelfTo<RetentionChecker>().AsSingle();
 
-        private void BindRaceChanger() => 
+        private void BindRaceChanger() =>
             Container.BindInterfacesAndSelfTo<RaceChanger>().AsSingle();
 
-        private void BindDTDAnalyticsService() => 
+        private void BindDTDAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<DTDAnalyticsService>().AsSingle();
 
-        private void BindAnalyticsService() => 
+        private void BindAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<AnalyticsService>().AsSingle();
 
         private void BindUpgradesAvailabilityChecker() =>
@@ -103,15 +106,15 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<UpgradeItemPresenter>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<UnitUpgradesPresenter>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<TimelineInfoPresenter>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<TimelineTravelPresenter>()
                 .AsSingle();
@@ -126,12 +129,21 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<EvolutionPresenter>()
                 .AsSingle();
 
+#if cas_advertisment_enabled
         private void BindAdsService() =>
             Container
                 .BindInterfacesAndSelfTo<CasAdsService>()
                 .AsSingle();
+#endif
+        private void BindAdsService() =>
+            Container
+                .BindInterfacesAndSelfTo<MaxAdsService>()
+                .AsSingle();
+        private void BindNotificationService() =>
+            Container.Bind<NotificationService>()
+                .AsSingle();
 
-        private void BindFoodBoostService() => 
+        private void BindFoodBoostService() =>
             Container
                 .BindInterfacesAndSelfTo<FoodBoostService>()
                 .AsSingle();
@@ -151,7 +163,7 @@ namespace _Game.Core.Installers.Core
                 .BindInterfacesAndSelfTo<BattleSpeedService>()
                 .AsSingle();
 
-        private void BindBattleNavigator() => 
+        private void BindBattleNavigator() =>
             Container
                 .BindInterfacesAndSelfTo<BattleNavigator>()
                 .AsSingle();
@@ -160,7 +172,7 @@ namespace _Game.Core.Installers.Core
             Container
                 .BindInterfacesAndSelfTo<AgeNavigator>()
                 .AsSingle();
-        
+
         private void BindTimelineNavigator() =>
             Container
                 .BindInterfacesAndSelfTo<TimelineNavigator>()

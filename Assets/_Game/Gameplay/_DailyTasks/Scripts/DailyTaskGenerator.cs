@@ -74,7 +74,19 @@ namespace _Game.Gameplay._DailyTasks.Scripts
             if(!_featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask))
                 _featureUnlockSystem.FeatureUnlocked += OnFeatureUnlocked;
         }
+        public float GetMinutesToGenerateDailyTask()
+        {
+            if (!_featureUnlockSystem.IsFeatureUnlocked(Feature.DailyTask))
+                return 0;
 
+            DateTime lastTimeGenerated = DailyState.LastTimeGenerated;
+
+            var minutesSpend = (DateTime.UtcNow - lastTimeGenerated).Minutes;
+            //UnityEngine.Debug.Log("TIME : minutesSpend " + minutesSpend);
+            //UnityEngine.Debug.Log("TIME : lastTimeGenerated " + lastTimeGenerated.Minute);
+
+            return _dailyTaskConfigRepository.RecoverTimeMinutes + minutesSpend;
+        }
         private void RestoreDailyTask()
         {
             var tasks = _dailyTaskConfigRepository.GetDailyTaskConfigs();

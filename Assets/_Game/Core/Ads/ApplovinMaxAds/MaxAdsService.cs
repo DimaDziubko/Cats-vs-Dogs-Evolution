@@ -206,11 +206,11 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}");
             IsTimeForInterstitial = false;
 
-            GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
+            GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay.ToString());
             if (timer != null)
             {
                 timer.Stop();
-                _timerService.RemoveTimer(TimerType.InterstitialAdDelay);
+                _timerService.RemoveTimer(TimerType.InterstitialAdDelay.ToString());
             }
 
             TimerData timerData = new TimerData
@@ -220,9 +220,9 @@ namespace _Game.Core.Ads.ApplovinMaxAds
                 StartValue = delay
             };
 
-            _timerService.CreateTimer(TimerType.InterstitialAdDelay, timerData, OnInterstitialAdTimerOut);
-            _timerService.StartTimer(TimerType.InterstitialAdDelay);
-            _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay);
+            _timerService.CreateTimer(TimerType.InterstitialAdDelay.ToString(), timerData, OnInterstitialAdTimerOut);
+            _timerService.StartTimer(TimerType.InterstitialAdDelay.ToString());
+            _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay.ToString());
 
             _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!");
         }

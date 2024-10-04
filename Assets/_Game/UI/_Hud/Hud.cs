@@ -45,7 +45,8 @@ namespace _Game.UI._Hud
             IBattleManager battleManager,
             IDailyTaskPresenter dailyTaskPresenter,
             ITutorialManager tutorialManager,
-            IMyLogger logger)
+            IMyLogger logger,
+            Header.Scripts.IHeader header)
         {
             _canvas.worldCamera = cameraService.UICameraOverlay;
 

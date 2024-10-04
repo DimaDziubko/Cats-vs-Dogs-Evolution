@@ -13,6 +13,8 @@ namespace _Game.UI.Header.Scripts
         [SerializeField] private CurrenciesUI _currenciesUI;
 
         public Vector3 CoinsWalletWorldPosition => _currenciesUI.CoinsWalletWorldPosition;
+        //Util
+        public void SetActive(bool isActive) => gameObject.SetActive(isActive);
         public Vector3 GemsWalletWorldPosition => _currenciesUI.GemsWalletWorldPosition;
 
         public void Construct(

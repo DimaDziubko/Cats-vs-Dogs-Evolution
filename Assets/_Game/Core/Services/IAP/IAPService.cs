@@ -17,6 +17,9 @@ namespace _Game.Core.Services.IAP
     public class IAPService : IIAPService, IDisposable
     {
         private const int INFINITY_PURCHASES_TRIGGER = -1;
+        private readonly string PUBLIC_GOOGLE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxGde1T1Vx9a9V7BaMET88bAzmTHVpx9NKxrsezjORO+cmKHlFGHe1LshZ4E/OcJN3FAPqTakWEV0xh5uINsnFWDfSzu0BnSFHVuhZ8D3bmUGoEqItB8yCqBA8HYLKo+645d5uCO6L4HhEJvAgcUEKIFOpFCqj+kgbp5klUbVWIsbmDsLB7JKM0cu5TSJmnOXSlldmUkeOMQNmy+chnkLFN9+ZY9jz6x2rntuv2w9g1cXgq9n84v4aQX5z2gosbLum3tAg3HbRYophyKw8BTDC98vitT1X1JTjcxDjYvokBDO6YOc0ALHqjb0YU+J6rIvBpOW39YL5V69u7Zm0owCvwIDAQAB";
+
+
         public event Action<SpeedOffer> SpeedOfferRemoved;
         public event Action Initialized;
         public event Action<Product> Purchased;
@@ -30,7 +33,9 @@ namespace _Game.Core.Services.IAP
         private IPurchaseDataStateReadonly PurchaseData => _userContainer.State.PurchaseDataState;
 
         public bool IsInitialized => _iapProvider.IsInitialized;
-        
+        public string PublicGooglePlayKey => PUBLIC_GOOGLE_KEY;
+
+
         private List<GemsBundle> _gemsBundlesCache;
         private List<SpeedOffer> _speedOffersCache;
         private List<ProfitOffer> _profitOffersCache;
@@ -56,7 +61,7 @@ namespace _Game.Core.Services.IAP
             _iapProvider.Initialize(this);
             _iapProvider.Initialized += () => Initialized?.Invoke();
             PurchaseData.Changed += OnPurchaseDataChanged;
-            
+
             _gemsBundlesCache = new List<GemsBundle>();
             _speedOffersCache = new List<SpeedOffer>();
             _profitOffersCache = new List<ProfitOffer>();
@@ -121,7 +126,7 @@ namespace _Game.Core.Services.IAP
         private void OnPurchaseDataChanged()
         {
             _logger.Log("OnPurchaseDataChanged", DebugStatus.Success);
-            
+
             UpdateCaches();
             CheckSpeedOffersBoughtOut();
             CheckProfitOffers();

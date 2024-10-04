@@ -13,7 +13,9 @@ using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts;
 using Assets._Game.Gameplay._Timer.Scripts;
+#if cas_advertisment_enabled
 using CAS;
+#endif
 
 namespace _Game.Core.Services._AdsGemsPackService
 {
@@ -47,7 +49,7 @@ namespace _Game.Core.Services._AdsGemsPackService
             _gameInitializer = gameInitializer;
             _timerService = timerService;
             _recoveryCalculator = recoveryCalculator;
-            
+
             gameInitializer.OnPostInitialization += Init;
         }
 
@@ -55,8 +57,8 @@ namespace _Game.Core.Services._AdsGemsPackService
         {
             CheckStorage();
             InitAdsGemsPacks();
-            _adsService.VideoLoaded += OnRewardVideoLoaded;
-            
+            _adsService.OnVideoLoaded += OnRewardVideoLoaded;
+
             foreach (var pack in AdsGemsPackContainer.AdsGemsPacks.Values)
             {
                 pack.AdsGemsPackCountChanged += OnAdsGemsPackCountChanged;
@@ -66,9 +68,9 @@ namespace _Game.Core.Services._AdsGemsPackService
 
         void IDisposable.Dispose()
         {
-            _adsService.VideoLoaded -= OnRewardVideoLoaded;
+            _adsService.OnVideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
-            
+
             foreach (var pack in AdsGemsPackContainer.AdsGemsPacks.Values)
             {
                 pack.AdsGemsPackCountChanged -= OnAdsGemsPackCountChanged;
@@ -86,15 +88,15 @@ namespace _Game.Core.Services._AdsGemsPackService
 
         private void CheckStorage()
         {
-            if (AdsGemsPackContainer == null) 
+            if (AdsGemsPackContainer == null)
                 _userContainer.State.AdsGemsPackContainer = new AdsGemsPackContainer();
 
             HashSet<int> validPackIds = new HashSet<int>();
-            
+
             foreach (AdsGemsPackConfig config in _shopConfigRepository.GetAdsGemsPackConfigs())
             {
                 validPackIds.Add(config.Id);
-                
+
                 if (!AdsGemsPackContainer.TryGetPack(config.Id, out var pack))
                 {
                     var newPack = new AdsGemsPackState()
@@ -103,13 +105,13 @@ namespace _Game.Core.Services._AdsGemsPackService
                         AdsGemPackCount = config.DailyGemsPackCount,
                         LastAdsGemPackDay = DateTime.UtcNow
                     };
-                    
+
                     AdsGemsPackContainer.AddPack(config.Id, newPack);
                 }
             }
-            
+
             var packsToRemove = new List<int>();
-            
+
             foreach (var existingPackId in AdsGemsPackContainer.AdsGemsPacks.Keys)
             {
                 if (!validPackIds.Contains(existingPackId))
@@ -117,7 +119,7 @@ namespace _Game.Core.Services._AdsGemsPackService
                     packsToRemove.Add(existingPackId);
                 }
             }
-            
+
             foreach (var packId in packsToRemove)
             {
                 AdsGemsPackContainer.RemovePack(packId);
@@ -127,11 +129,11 @@ namespace _Game.Core.Services._AdsGemsPackService
         private void InitAdsGemsPacks()
         {
             _adsGemsPacks.Clear();
-            
+
             foreach (var config in _shopConfigRepository.GetAdsGemsPackConfigs())
             {
                 AdsGemsPackState packState = AdsGemsPackContainer.AdsGemsPacks[config.Id];
-                
+
                 AdsGemsPack pack = new AdsGemsPack
                 {
                     Id = config.Id,
@@ -139,7 +141,7 @@ namespace _Game.Core.Services._AdsGemsPackService
                 };
 
                 CheckRecovering(packState, pack);
-                
+
                 pack.SetLoaded(_adsService.IsAdReady(AdType.Rewarded));
                 pack.SetAmount(packState.AdsGemPackCount);
 
@@ -152,12 +154,12 @@ namespace _Game.Core.Services._AdsGemsPackService
             if (packState.AdsGemPackCount > pack.Config.DailyGemsPackCount)
             {
                 int delta = pack.Config.DailyGemsPackCount - packState.AdsGemPackCount;
-                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, delta, DateTime.UtcNow); 
+                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, delta, DateTime.UtcNow);
                 return;
             }
-            
-            if(packState.AdsGemPackCount == pack.Config.DailyGemsPackCount) return;
-            
+
+            if (packState.AdsGemPackCount == pack.Config.DailyGemsPackCount) return;
+
             var isRecovered = _recoveryCalculator.CalculateRecoveredUnits(
                 packState.AdsGemPackCount,
                 pack.Config.DailyGemsPackCount,
@@ -167,21 +169,21 @@ namespace _Game.Core.Services._AdsGemsPackService
 
             if (isRecovered)
             {
-                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, recoveredUnits, DateTime.UtcNow); 
+                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, recoveredUnits, DateTime.UtcNow);
                 return;
             }
 
             if (recoveredUnits > 0)
             {
                 DateTime newLastUseTime = _recoveryCalculator.CalculateNewLastUseTime(
-                    packState.LastAdsGemPackDay, 
-                    recoveredUnits, 
+                    packState.LastAdsGemPackDay,
+                    recoveredUnits,
                     pack.Config.RecoverTimeMinutes);
-                
-                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, recoveredUnits, newLastUseTime); 
+
+                _userContainer.AdsGemsPackStateHandler.RecoverAdsGemsPack(pack.Id, recoveredUnits, newLastUseTime);
             }
 
-            
+
             float timeUntilNextRecover = _recoveryCalculator.CalculateTimeUntilNextRecoverySeconds(pack.Config.RecoverTimeMinutes, packState.LastAdsGemPackDay);
 
             TimeSpan timeSpanUntilNextRecover = TimeSpan.FromSeconds(timeUntilNextRecover);
@@ -201,13 +203,13 @@ namespace _Game.Core.Services._AdsGemsPackService
             string key = $"AdsGemsPack_{pack.Id}";
 
             GameTimer existingTimer = _timerService.GetTimer(key);
-    
+
             if (existingTimer != null)
             {
                 _logger.Log($"Timer for AdsGemsPack {pack.Id} is already running.", DebugStatus.Warning);
                 return;
             }
-    
+
             _logger.Log($"Starting new timer for AdsGemsPack {pack.Id}. Remaining time: {remainingTime} seconds", DebugStatus.Success);
 
             var timerData = new TimerData()
@@ -226,8 +228,8 @@ namespace _Game.Core.Services._AdsGemsPackService
         {
             GameTimer timer = _timerService.GetTimer(key);
             timer.Tick -= pack.Tick;
-            _timerService.RemoveTimer(key); 
-            
+            _timerService.RemoveTimer(key);
+
             var packState = AdsGemsPackContainer.AdsGemsPacks[pack.Id];
             if (packState.AdsGemPackCount < pack.Config.DailyGemsPackCount)
             {
