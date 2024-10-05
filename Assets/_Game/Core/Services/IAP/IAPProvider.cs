@@ -10,6 +10,7 @@ using DevToDev.AntiCheat;
 using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Security;
 
 namespace _Game.Core.Services.IAP
 {
