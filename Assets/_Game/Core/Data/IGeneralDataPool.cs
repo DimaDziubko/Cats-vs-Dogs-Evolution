@@ -12,7 +12,6 @@ namespace _Game.Core.Data
         AgeStaticData AgeStaticData { get; set; }
         AgeDynamicData AgeDynamicData { get; set; }
         BattleStaticData BattleStaticData { get; set; }
-        DataPool<int, ShopItemStaticData> ShopItemStaticDataPool { get; set; }
 
         void CleanupAgeData() =>
             AgeStaticData.Cleanup();

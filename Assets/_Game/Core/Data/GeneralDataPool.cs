@@ -14,7 +14,6 @@ namespace _Game.Core.Data
         public AgeStaticData AgeStaticData { get; set; }
         public AgeDynamicData AgeDynamicData { get; set; }
         public BattleStaticData BattleStaticData { get; set; }
-        public DataPool<int, ShopItemStaticData> ShopItemStaticDataPool { get; set; }
 
         public GeneralDataPool(
             IMyLogger logger)

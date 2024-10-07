@@ -25,7 +25,6 @@ namespace _Game.Core.UserState._State
         public AdsStatistics AdsStatistics;
         public RetentionState RetentionState;
         public PurchaseDataState PurchaseDataState;
-        public FreeGemsPackState FreeGemsPackState;
         public TasksState TasksState;
         public DailyTasksState DailyTasksState;
         public AdsWeeklyWatchState AdsWeeklyWatchState;
@@ -112,13 +111,7 @@ namespace _Game.Core.UserState._State
                 {
                     BoudhtIAPs = new List<BoughtIAP>()
                 },
-                
-                FreeGemsPackState = new FreeGemsPackState()
-                {
-                    FreeGemPackCount = 4,
-                    LastFreeGemPackDay = DateTime.UtcNow
-                },
-                
+
                 DailyTasksState = new DailyTasksState()
                 {
                     ProgressOnTask = 0,
@@ -144,6 +137,9 @@ namespace _Game.Core.UserState._State
                     CardsSummoningProgressCount = 0,
                     Cards = new List<Card>(),
                 },
+                
+                FreeGemsPackContainer =  new FreeGemsPackContainer(),
+                AdsGemsPackContainer = new AdsGemsPackContainer()
             };
         }
 

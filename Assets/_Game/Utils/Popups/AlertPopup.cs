@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace _Game.Utils.Popups
 {
-    [RequireComponent(typeof(Canvas))]
     public class AlertPopup : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;

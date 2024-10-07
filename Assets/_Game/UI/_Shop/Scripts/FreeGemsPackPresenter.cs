@@ -82,7 +82,7 @@ namespace _Game.UI._Shop.Scripts
         private void OnTimerChanged(float remainingTime)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(remainingTime);
-            _view.UpdateTimer($"{timeSpan.Minutes}m:{timeSpan.Seconds}s");
+            _view.UpdateTimer($"{timeSpan.Minutes}m {timeSpan.Seconds}s");
         }
 
         private void HandleActiveState()
