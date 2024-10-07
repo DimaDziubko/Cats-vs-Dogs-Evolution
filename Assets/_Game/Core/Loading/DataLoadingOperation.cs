@@ -46,12 +46,16 @@ namespace _Game.Core.Loading
         
         public async UniTask Load(Action<float> onProgress)
         {
+            _assetRegistry.ClearTimeline(TimelineStateReadonly.TimelineId - 1);
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(1)); //Delay between loading and releasing
+            
             onProgress.Invoke(0.3f);
             UniTask timelineTask = LoadTimelineData();
             UniTask ageTask = LoadAgeData();
             UniTask battleTask = LoadBattleData();
             await UniTask.WhenAll(ageTask, battleTask, timelineTask);
-            _assetRegistry.ClearTimeline(TimelineStateReadonly.TimelineId - 1);
+
             onProgress.Invoke(1);
         }
 
