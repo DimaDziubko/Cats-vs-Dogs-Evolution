@@ -18,12 +18,6 @@ namespace _Game.Core.Communication.Migrations
             {
                 BoudhtIAPs = new List<BoughtIAP>()
             };
-
-            state.FreeGemsPackState ??= new FreeGemsPackState()
-            {
-                FreeGemPackCount = 2,
-                LastFreeGemPackDay = DateTime.UtcNow
-            };
             
             state.DailyTasksState ??= new DailyTasksState()
             {

@@ -11,7 +11,6 @@ namespace _Game.Core.Configs.Models
         public FoodBoostConfig FoodBoostConfig;
         public List<BattleSpeedConfig> BattleSpeedConfigs;
         public ShopConfig ShopConfig;
-        //public Dictionary<int, FreeGemsPackDayConfig> FreeGemsPackDayConfigs;
         public AdsConfig AdsConfig;
         public GeneralDailyTaskConfig GeneralDailyTaskConfig;
         public SummoningData SummoningData;

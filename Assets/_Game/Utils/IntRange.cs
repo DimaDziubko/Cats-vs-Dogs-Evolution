@@ -24,7 +24,7 @@ namespace _Game.Utils
             _min = min;
             _max = max;
         }
-    }
+    } 
 
     public class IntRangeSliderAttribute : PropertyAttribute
     {

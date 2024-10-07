@@ -4,7 +4,6 @@ using _Game.Core._Logger;
 using _Game.Core.AssetManagement;
 using _Game.Core.Data;
 using _Game.Core.DataProviders.BattleDataProvider;
-using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Loading;
 using _Game.Core.Services.UserContainer;
@@ -23,7 +22,6 @@ namespace _Game.Core.GameState
         private readonly ITimelineDataLoader _timelineDataLoader;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
-        private readonly IShopDataLoader _shopDataLoader;
 
         public DataLoadingState(
             IGeneralDataPool generalDataPool,
@@ -33,8 +31,7 @@ namespace _Game.Core.GameState
             IMyLogger logger,
             IGameStateMachine stateMachine,
             IAssetRegistry assetRegistry,
-            IUserContainer userContainer, 
-            IShopDataLoader shopDataLoader)
+            IUserContainer userContainer)
         {
             _generalDataPool = generalDataPool;
             _ageDataLoader = ageDataLoader;
@@ -44,7 +41,6 @@ namespace _Game.Core.GameState
             _stateMachine = stateMachine;
             _assetRegistry = assetRegistry;
             _userContainer = userContainer;
-            _shopDataLoader = shopDataLoader;
         }
         
         public void Enter(Queue<ILoadingOperation> loadingOperations)
@@ -54,7 +50,6 @@ namespace _Game.Core.GameState
                 _ageDataLoader,
                 _battleDataLoader,
                 _timelineDataLoader,
-                _shopDataLoader,
                 _assetRegistry,
                 _userContainer,
                 _logger

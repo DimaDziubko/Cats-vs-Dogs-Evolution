@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
- using _Game.Core._DataLoaders.AgeDataProvider;
- using _Game.Core._GameInitializer;
- using _Game.Core._Logger;
- using _Game.Core.AssetManagement;
- using _Game.Core.Configs.Providers;
- using _Game.Core.Data;
- using _Game.Core.DataProviders.BattleDataProvider;
- using _Game.Core.DataProviders.ShopDataProvider;
- using _Game.Core.DataProviders.Timeline;
- using _Game.Core.Loading;
- using _Game.Core.LoadingScreen;
- using _Game.Core.Services.UserContainer;
- using Assets._Game.Core.Loading;
- using Assets._Game.Core.UserState;
+using _Game.Core._DataLoaders.AgeDataProvider;
+using _Game.Core._GameInitializer;
+using _Game.Core._Logger;
+using _Game.Core.AssetManagement;
+using _Game.Core.Configs.Providers;
+using _Game.Core.Data;
+using _Game.Core.DataProviders.BattleDataProvider;
+using _Game.Core.DataProviders.Timeline;
+using _Game.Core.Loading;
+using _Game.Core.LoadingScreen;
+using _Game.Core.Services.UserContainer;
+using Assets._Game.Core.Loading;
+using Assets._Game.Core.UserState;
 
- namespace _Game.Core.Navigation.Timeline
+namespace _Game.Core.Navigation.Timeline
 {
     public class TimelineNavigator : ITimelineNavigator, IDisposable
     {
@@ -33,10 +32,9 @@ using System.Collections.Generic;
         private readonly ITimelineDataLoader _timelineDataLoader;
         private readonly ILocalConfigProvider _localConfigProvider;
         private readonly IAssetRegistry _assetRegistry;
-        private readonly IShopDataLoader _shopDataLoader;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
-        
+
         public TimelineNavigator(
             IUserContainer userContainer,
             ILoadingScreenProvider loadingScreenProvider,
@@ -47,7 +45,6 @@ using System.Collections.Generic;
             ILocalConfigProvider localConfigProvider,
             IBattleDataLoader battleDataLoader,
             ITimelineDataLoader timelineDataLoader,
-            IShopDataLoader shopDataLoader,
             IAssetRegistry assetRegistry,
             IMyLogger logger)
         {
@@ -63,11 +60,10 @@ using System.Collections.Generic;
             _localConfigProvider = localConfigProvider;
             _logger = logger;
             _assetRegistry = assetRegistry;
-            _shopDataLoader = shopDataLoader;
             gameInitializer.OnPostInitialization += Init;
         }
 
-        private void Init() => 
+        private void Init() =>
             TimelineState.NextTimelineOpened += MoveToNextTimeline;
 
         void IDisposable.Dispose()
@@ -79,27 +75,25 @@ using System.Collections.Generic;
         private void MoveToNextTimeline()
         {
             var loadingOperations = new Queue<ILoadingOperation>();
-            
+
             loadingOperations.Enqueue(new ConfigOperation(
-                _userContainer, 
+                _userContainer,
                 _remoteConfigProvider,
                 _localConfigProvider,
                 _logger,
                 ConfigurationLevel.Timeline));
-            
+
             loadingOperations.Enqueue(new DataLoadingOperation(
                 _generalDataPool,
-                _ageDataLoader, 
-                _battleDataLoader, 
+                _ageDataLoader,
+                _battleDataLoader,
                 _timelineDataLoader,
-                _shopDataLoader,
                 _assetRegistry,
                 _userContainer,
                 _logger));
 
             _loadingScreenProvider.LoadingCompleted += OnLoadingCompleted;
             _loadingScreenProvider.LoadAndDestroy(loadingOperations, LoadingScreenType.Transparent);
-            
         }
 
         private void OnLoadingCompleted()
@@ -107,6 +101,5 @@ using System.Collections.Generic;
             _loadingScreenProvider.LoadingCompleted -= OnLoadingCompleted;
             TimelineChanged?.Invoke();
         }
-        
     }
 }

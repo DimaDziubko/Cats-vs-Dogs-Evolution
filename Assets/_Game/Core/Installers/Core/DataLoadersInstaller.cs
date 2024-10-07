@@ -1,11 +1,9 @@
 ﻿using _Game.Core._DataLoaders.AgeDataLoader;
-using _Game.Core._DataLoaders.AgeDataProvider;
 using _Game.Core._DataLoaders.Ambience;
 using _Game.Core._DataLoaders.BaseDataProvider;
 using _Game.Core._DataLoaders.BattleDataLoader;
 using _Game.Core._DataLoaders.EnvironmentDataProvider;
 using _Game.Core._DataLoaders.Facade;
-using _Game.Core._DataLoaders.ShopDataLoader;
 using _Game.Core._DataLoaders.Timeline;
 using _Game.Core._DataLoaders.UnitDataLoaders;
 using _Game.Core._DataLoaders.WeaponDataProviders;
@@ -29,8 +27,7 @@ namespace _Game.Core.Installers.Core
             BindAmbienceDataProvider();
 
             BindTimelineDataLoader();
-            BindShopDataLoader();
-            
+
             BindDataLoaderFacade();
 
             BindAgeDataLoader();
@@ -82,9 +79,6 @@ namespace _Game.Core.Installers.Core
         private void BindBattleDataLoader() =>
             Container.BindInterfacesAndSelfTo<BattleDataLoader>()
                 .AsSingle();
-
-        private void BindShopDataLoader() =>
-            Container.BindInterfacesAndSelfTo<ShopDataLoader>()
-                .AsSingle();
+        
     }
 }

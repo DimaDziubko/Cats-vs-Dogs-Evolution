@@ -5,7 +5,6 @@ using _Game.Core.AssetManagement;
 using _Game.Core.Data;
 using _Game.Core.Data.Age.Dynamic;
 using _Game.Core.DataProviders.BattleDataProvider;
-using _Game.Core.DataProviders.ShopDataProvider;
 using _Game.Core.DataProviders.Timeline;
 using _Game.Core.Services.UserContainer;
 using Assets._Game.Core.Loading;
@@ -25,7 +24,6 @@ namespace _Game.Core.Loading
         private readonly IMyLogger _logger;
         private readonly IAssetRegistry _assetRegistry;
         private readonly IUserContainer _userContainer;
-        private readonly IShopDataLoader _shopDataLoader;
         private ITimelineStateReadonly TimelineStateReadonly => _userContainer.State.TimelineState;
         
         public DataLoadingOperation(
@@ -33,7 +31,6 @@ namespace _Game.Core.Loading
             IAgeDataLoader ageDataLoader,
             IBattleDataLoader baseDataLoader,
             ITimelineDataLoader timelineDataLoader,
-            IShopDataLoader shopDataLoader,
             IAssetRegistry assetRegistry,
             IUserContainer userContainer,
             IMyLogger logger)
@@ -45,7 +42,6 @@ namespace _Game.Core.Loading
             _assetRegistry = assetRegistry; 
             _logger = logger;
             _userContainer = userContainer;
-            _shopDataLoader = shopDataLoader;
         }
         
         public async UniTask Load(Action<float> onProgress)
@@ -54,8 +50,7 @@ namespace _Game.Core.Loading
             UniTask timelineTask = LoadTimelineData();
             UniTask ageTask = LoadAgeData();
             UniTask battleTask = LoadBattleData();
-            UniTask shopTask = LoadShopData();
-            await UniTask.WhenAll(ageTask, battleTask, timelineTask, shopTask);
+            await UniTask.WhenAll(ageTask, battleTask, timelineTask);
             _assetRegistry.ClearTimeline(TimelineStateReadonly.TimelineId - 1);
             onProgress.Invoke(1);
         }
@@ -77,12 +72,6 @@ namespace _Game.Core.Loading
             _generalDataPool.AgeStaticData = await _ageDataLoader.Load(TimelineStateReadonly.TimelineId);
             _generalDataPool.AgeDynamicData = new AgeDynamicData();
             _logger.Log("AgeData load successfully");
-        }
-
-        private async UniTask LoadShopData()
-        {
-            _generalDataPool.ShopItemStaticDataPool = await _shopDataLoader.LoadShopData();
-            _logger.Log("Shop load successfully");
         }
     }
 }

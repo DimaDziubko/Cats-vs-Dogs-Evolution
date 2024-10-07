@@ -19,7 +19,8 @@ namespace _Game.Core.Installers.Core
         }
 
         private void BindUnitDataProvider() => 
-            Container.BindInterfacesAndSelfTo<UnitDataProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnitDataProvider>()
+                .AsSingle();
 
         private void BindCommonItemsDataProvider() =>
             Container.BindInterfacesAndSelfTo<CommonItemsDataProvider>()
