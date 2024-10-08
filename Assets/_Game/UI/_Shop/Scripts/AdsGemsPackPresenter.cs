@@ -1,7 +1,7 @@
 ﻿using System;
+using _Game._AssetProvider;
 using _Game.Core._Logger;
 using _Game.Core.Services._AdsGemsPackService;
-using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.Audio;
 using _Game.UI.Common.Scripts;
 using UnityEngine;

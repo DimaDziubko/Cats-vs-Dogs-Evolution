@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using _Game._AssetProvider;
 using _Game.Core._Logger;
-using _Game.Core.Services.AssetProvider;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.IAP;
 using _Game.UI.Common.Scripts;

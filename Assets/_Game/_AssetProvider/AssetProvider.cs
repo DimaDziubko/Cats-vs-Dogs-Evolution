@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,7 +8,7 @@ using Zenject;
 
 namespace _Game._AssetProvider
 {
-    public class AssetProvider : IAssetProvider, IDisposable, IInitializable
+    public class AssetProvider : IAssetProvider, IInitializable, IDisposable
     {
         private readonly Dictionary<string, AsyncOperationHandle> _completeCache = new Dictionary<string, AsyncOperationHandle>();
 
@@ -79,11 +78,6 @@ namespace _Game._AssetProvider
             }
         }
 
-        void IDisposable.Dispose()
-        {
-            CleanUp();
-        }
-
         public void CleanUp()
         {
             foreach (List<AsyncOperationHandle> resourcesHandles in _handles.Values)
@@ -116,6 +110,11 @@ namespace _Game._AssetProvider
 
             AddHandler(cacheKey, handle);
             return await handle.Task;
+        }
+
+        void IDisposable.Dispose()
+        {
+            CleanUp();
         }
     }
 }

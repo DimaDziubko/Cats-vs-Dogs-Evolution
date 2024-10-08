@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Game._AssetProvider;
 using _Game.Core._Logger;
-using _Game.Core.Services.AssetProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 

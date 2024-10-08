@@ -14,6 +14,7 @@
         <e p="_Game" t="Include">
           <e p="_AssetProvider" t="Include">
             <e p="AssetProvider.cs" t="Include" />
+            <e p="IAssetProvider.cs" t="Include" />
           </e>
           <e p="_BattleModes" t="Include">
             <e p="Scripts" t="Include">
@@ -95,10 +96,6 @@
                 <e p="DataProvider.cs" t="Include" />
                 <e p="IDataLoaderFacade.cs" t="Include" />
                 <e p="LoadContext.cs" t="Include" />
-              </e>
-              <e p="ShopDataLoader" t="Include">
-                <e p="IShopDataLoader.cs" t="Include" />
-                <e p="ShopDataLoader.cs" t="Include" />
               </e>
               <e p="Timeline" t="Include">
                 <e p="ITimelineDataLoader.cs" t="Include" />
@@ -529,9 +526,6 @@
                 <e p="IDTDAnalyticsService.cs" t="Include" />
                 <e p="RewardType.cs" t="Include" />
                 <e p="UserCentricsService.cs" t="Include" />
-              </e>
-              <e p="AssetProvider" t="Include">
-                <e p="IAssetProvider.cs" t="Include" />
               </e>
               <e p="Audio" t="Include">
                 <e p="AudioService.cs" t="Include" />

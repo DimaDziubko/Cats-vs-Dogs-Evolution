@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using _Game.Core.Services.AssetProvider;
+using _Game._AssetProvider;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
-using Zenject;
 
 namespace _Game.Core.Services.Audio
 {

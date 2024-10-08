@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using _Game.Core.Services.AssetProvider;
+using _Game._AssetProvider;
 using _Game.Core.Services.Audio;
 using _Game.Core.Services.IGPService;
 using _Game.Temp;
