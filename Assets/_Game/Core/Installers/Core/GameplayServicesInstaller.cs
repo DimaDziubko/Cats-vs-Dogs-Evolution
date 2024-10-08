@@ -32,6 +32,7 @@ namespace _Game.Core.Installers.Core
         {
             BindUpgradesAvailabilityChecker();
             BindPauseManager();
+            BindAdsService();
             BindBattleSpeedManager();
             BindBeginGameManager();
             BindUpgradesCalculator();
@@ -39,7 +40,6 @@ namespace _Game.Core.Installers.Core
             BindUpgradesServices();
             BindEvolutionService();
             BindTimerService();
-            BindAdsService();
             BindNotificationService();
             BindFoodBoostService();
             BindSpeedBoostService();
@@ -70,7 +70,7 @@ namespace _Game.Core.Installers.Core
 
         private void BindAppsFlyerAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<AppsFlyerAnalyticsService>().AsSingle();
-        
+
         private void BindAnalyticsService() =>
             Container.BindInterfacesAndSelfTo<AnalyticsService>().AsSingle();
 
