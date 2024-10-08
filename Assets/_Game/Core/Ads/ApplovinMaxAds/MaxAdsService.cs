@@ -22,7 +22,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         private readonly string _interstitialID = "fa1af5faa1b59bdc";
         private readonly string _rewardedID = "89c3dc86f476dee";
 
-#else // UNITY_ANDROID
+#elif UNITY_ANDROID
         private readonly string _interstitialID = "bf36589164e49496";
         private readonly string _rewardedID = "5500aOf67f9db05f";
 
@@ -75,15 +75,6 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             _gameInitializer = gameInitializer;
             _gameInitializer.OnPostInitialization += Init;
 
-            //if (_isDebugTest)
-            //{
-            //MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
-            //{
-            //    // Show Mediation Debugger
-            //    MaxSdk.ShowMediationDebugger();
-            //};
-            //}
-
             MaxSdkCallbacks.OnSdkInitializedEvent += sdkConfiguration =>
             {
                 _logger.Log("MAX SDK Initialized");
@@ -106,15 +97,6 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
         void IDisposable.Dispose()
         {
-            //if (_isDebugTest)
-            //{
-            //    MaxSdkCallbacks.OnSdkInitializedEvent -= (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
-            //    {
-            //        // Show Mediation Debugger
-            //        MaxSdk.ShowMediationDebugger();
-            //    };
-            //}
-
             MaxSdkCallbacks.OnSdkInitializedEvent -= sdkConfiguration =>
             {
                 InitializeInterstitialAds();
@@ -123,8 +105,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
             _gameInitializer.OnPostInitialization -= Init;
 
-            MaxSdkCallbacks.Rewarded.OnAdLoadedEvent -= OnRWVideoLoaded;
-            MaxSdkCallbacks.Interstitial.OnAdLoadedEvent -= OnInterVideoLoaded;
+            Unsubscribe();
         }
 
         public bool IsAdReady(AdType type)
@@ -198,10 +179,31 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
         private void Subscribe()
         {
+            if (MaxHelper.I.IsDebugAdMode)
+            {
+                MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
+                {
+                    // Show Mediation Debugger
+                    MaxSdk.ShowMediationDebugger();
+                };
+            }
+
             MaxSdkCallbacks.Rewarded.OnAdLoadedEvent += OnRWVideoLoaded;
             MaxSdkCallbacks.Interstitial.OnAdLoadedEvent += OnInterVideoLoaded;
         }
-
+        private void Unsubscribe()
+        {
+            if (MaxHelper.I.IsDebugAdMode)
+            {
+                MaxSdkCallbacks.OnSdkInitializedEvent -= (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
+                {
+                    // Show Mediation Debugger
+                    MaxSdk.ShowMediationDebugger();
+                };
+            }
+            MaxSdkCallbacks.Rewarded.OnAdLoadedEvent -= OnRWVideoLoaded;
+            MaxSdkCallbacks.Interstitial.OnAdLoadedEvent -= OnInterVideoLoaded;
+        }
         private void StartCountdown(float delay)
         {
             _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}");
