@@ -5,6 +5,7 @@ using _Game.Core.Services.Audio;
 using _Game.Core.Services.IGPService;
 using _Game.Temp;
 using _Game.UI.Common.Scripts;
+using _Game.Utils.Extensions;
 using UnityEngine;
 using Zenject;
 
@@ -76,7 +77,7 @@ namespace _Game.UI._Shop.Scripts
         }
 
         private void OnQuantityChanged(float newValue) => 
-            _view.SetQuantity(newValue.ToString(CultureInfo.InvariantCulture));
+            _view.SetQuantity(newValue.FormatMoney());
 
         private void OnInactiveButtonClicked() => 
             GlobalEvents.RaiseOnInsufficientFunds();

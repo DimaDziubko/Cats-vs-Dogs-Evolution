@@ -17,7 +17,8 @@ namespace _Game.Core.Services.IAP
     public class IAPService : IIAPService, IDisposable
     {
         private const int INFINITY_PURCHASES_TRIGGER = -1;
-        private readonly string PUBLIC_GOOGLE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxGde1T1Vx9a9V7BaMET88bAzmTHVpx9NKxrsezjORO+cmKHlFGHe1LshZ4E/OcJN3FAPqTakWEV0xh5uINsnFWDfSzu0BnSFHVuhZ8D3bmUGoEqItB8yCqBA8HYLKo+645d5uCO6L4HhEJvAgcUEKIFOpFCqj+kgbp5klUbVWIsbmDsLB7JKM0cu5TSJmnOXSlldmUkeOMQNmy+chnkLFN9+ZY9jz6x2rntuv2w9g1cXgq9n84v4aQX5z2gosbLum3tAg3HbRYophyKw8BTDC98vitT1X1JTjcxDjYvokBDO6YOc0ALHqjb0YU+J6rIvBpOW39YL5V69u7Zm0owCvwIDAQAB";
+        private readonly string PUBLIC_GOOGLE_KEY 
+            = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxGde1T1Vx9a9V7BaMET88bAzmTHVpx9NKxrsezjORO+cmKHlFGHe1LshZ4E/OcJN3FAPqTakWEV0xh5uINsnFWDfSzu0BnSFHVuhZ8D3bmUGoEqItB8yCqBA8HYLKo+645d5uCO6L4HhEJvAgcUEKIFOpFCqj+kgbp5klUbVWIsbmDsLB7JKM0cu5TSJmnOXSlldmUkeOMQNmy+chnkLFN9+ZY9jz6x2rntuv2w9g1cXgq9n84v4aQX5z2gosbLum3tAg3HbRYophyKw8BTDC98vitT1X1JTjcxDjYvokBDO6YOc0ALHqjb0YU+J6rIvBpOW39YL5V69u7Zm0owCvwIDAQAB";
 
 
         public event Action<SpeedOffer> SpeedOfferRemoved;
@@ -80,6 +81,10 @@ namespace _Game.Core.Services.IAP
         public List<SpeedOffer> SpeedOffers() => _speedOffersCache;
 
         public List<ProfitOffer> ProfitOffers() => _profitOffersCache;
+        public void Refresh()
+        {
+            UpdateCaches();
+        }
 
         private void ClearCaches()
         {

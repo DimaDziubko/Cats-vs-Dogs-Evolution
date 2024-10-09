@@ -115,7 +115,11 @@ namespace _Game.UI._Shop.Scripts
             }
         }
 
-        public void OnShopOpened() => UpdateItems();
+        public void OnShopOpened()
+        {
+            _iapService.Refresh();
+            UpdateItems();
+        }
 
         public void OnShopClosed()
         {
