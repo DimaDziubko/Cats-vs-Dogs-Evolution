@@ -5,7 +5,6 @@
     <e p="C:\Users\dimam\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Cats-vs-Dogs-Evolution.-1951554600.00" t="ExcludeRecursive" />
     <e p="C:\Users\dimam\AppData\Roaming\JetBrains\Rider2020.2\scratches" t="IncludeRecursive" />
     <e p="C:\Users\dimam\GitHub\Cats-vs-Dogs-Evolution" t="IncludeRecursive">
-      <e p="AppsFlyer.Purchase.Connector.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -96,10 +95,6 @@
                 <e p="IDataLoaderFacade.cs" t="Include" />
                 <e p="LoadContext.cs" t="Include" />
               </e>
-              <e p="ShopDataLoader" t="Include">
-                <e p="IShopDataLoader.cs" t="Include" />
-                <e p="ShopDataLoader.cs" t="Include" />
-              </e>
               <e p="Timeline" t="Include">
                 <e p="ITimelineDataLoader.cs" t="Include" />
                 <e p="TimelineDataLoader.cs" t="Include" />
@@ -179,9 +174,6 @@
                 <e p="UnitDataProvider.cs" t="Include" />
               </e>
             </e>
-            <e p="_Facebook" t="Include">
-              <e p="FacebookInitializer.cs" t="Include" />
-            </e>
             <e p="_FeatureUnlockSystem" t="Include">
               <e p="Scripts" t="Include">
                 <e p="Feature.cs" t="Include" />
@@ -235,15 +227,9 @@
               <e p="UpgradesAvailabilityChecker.cs" t="Include" />
             </e>
             <e p="Ads" t="Include">
-              <e p="AdType.cs" t="Include" />
-              <e p="ApplovinMaxAds" t="Include">
-                <e p="MaxAdsService.cs" t="Include" />
-              </e>
-              <e p="CASAds" t="Include">
-                <e p="CasAdsService.cs" t="Include" />
-                <e p="CasInterstitialAdService.cs" t="Include" />
-                <e p="CasRewardAdService.cs" t="Include" />
-              </e>
+              <e p="CasAdsService.cs" t="Include" />
+              <e p="CasInterstitialAdService.cs" t="Include" />
+              <e p="CasRewardAdService.cs" t="Include" />
               <e p="IAdsService.cs" t="Include" />
               <e p="UnityAdsService.cs" t="Include" />
             </e>
@@ -437,7 +423,6 @@
                 <e p="DataProvidersInstaller.cs" t="Include" />
                 <e p="GameplayServicesInstaller.cs" t="Include" />
                 <e p="GameStateMachineInstaller.cs" t="Include" />
-                <e p="SDKServicesInstaller.cs" t="Include" />
                 <e p="UIServicesInstaller.cs" t="Include" />
               </e>
             </e>
@@ -474,9 +459,6 @@
                 <e p="ITimelineNavigator.cs" t="Include" />
                 <e p="TimelineNavigator.cs" t="Include" />
               </e>
-            </e>
-            <e p="Notifications" t="Include">
-              <e p="NotificationService.cs" t="Include" />
             </e>
             <e p="Pause" t="Include">
               <e p="Scripts" t="Include">
@@ -521,14 +503,10 @@
                 <e p="AdImpressionDTO.cs" t="Include" />
                 <e p="AnalyticsEvent.cs" t="Include" />
                 <e p="AnalyticsService.cs" t="Include" />
-                <e p="AppsFlyerAnalyticsService.cs" t="Include" />
-                <e p="CustomAppsFlyerObject.cs" t="Include" />
                 <e p="DTDAnalyticsService.cs" t="Include" />
-                <e p="GameAnalyticsObject.cs" t="Include" />
                 <e p="IAnalyticsService.cs" t="Include" />
                 <e p="IDTDAnalyticsService.cs" t="Include" />
                 <e p="RewardType.cs" t="Include" />
-                <e p="UserCentricsService.cs" t="Include" />
               </e>
               <e p="AssetProvider" t="Include">
                 <e p="IAssetProvider.cs" t="Include" />
@@ -548,10 +526,6 @@
               </e>
               <e p="IAP" t="Include">
                 <e p="BoughtIAP.cs" t="Include" />
-                <e p="Data" t="Include">
-                  <e p="PayloadAndroidData.cs" t="Include" />
-                  <e p="ReceiptData.cs" t="Include" />
-                </e>
                 <e p="IAPProvider.cs" t="Include" />
                 <e p="IAPService.cs" t="Include" />
                 <e p="IIAPService.cs" t="Include" />
@@ -786,7 +760,6 @@
                 <e p="DailyTaskCompletionChecker.cs" t="Include" />
                 <e p="DailyTaskDto.cs" t="Include" />
                 <e p="DailyTaskGenerator.cs" t="Include" />
-                <e p="DailyTaskNotification.cs" t="Include" />
                 <e p="DailyTaskPresenter.cs" t="Include" />
                 <e p="DailyTaskType.cs" t="Include" />
               </e>
@@ -1301,7 +1274,6 @@
               <e p="BezierCurve.cs" t="Include" />
               <e p="BezierPoint.cs" t="Include" />
             </e>
-            <e p="CheatBoostFoodBtn.cs" t="Include" />
             <e p="CheatPanel.cs" t="Include" />
             <e p="Constants.cs" t="Include" />
             <e p="Disposable" t="Include">
@@ -1323,22 +1295,16 @@
               <e p="FpsCounter.cs" t="Include" />
               <e p="FpsDisplay.cs" t="Include" />
             </e>
-            <e p="GeoLocationChecker.cs" t="Include" />
-            <e p="HudVisibilityBtn.cs" t="Include" />
             <e p="IntRange.cs" t="Include" />
             <e p="Popups" t="Include">
               <e p="AlertPopup.cs" t="Include" />
             </e>
           </e>
         </e>
-        <e p="AppsFlyer" t="Include">
-          <e p="AppsFlyer.Purchase.Connector.asmdef" t="Include" />
-          <e p="AppsFlyerPurchaseConnector.cs" t="Include" />
+        <e p="CleverAdsSolutions" t="Include">
           <e p="Editor" t="Include">
-            <e p="AppsFlyerPurchaseConnectorDependencies.xml" t="Include" />
+            <e p="CASAndroidOptimalAdsDependencies.xml" t="Include" />
           </e>
-          <e p="IAppsFlyerPurchaseValidation.cs" t="Include" />
-          <e p="ProductPurchase.cs" t="Include" />
         </e>
         <e p="CodeBase" t="Include">
           <e p="Infrastructure" t="Include">
@@ -1348,9 +1314,6 @@
               </e>
             </e>
           </e>
-        </e>
-        <e p="Editor" t="Include">
-          <e p="DisableBitcode.cs" t="Include" />
         </e>
         <e p="ExternalDependencyManager" t="Include">
           <e p="Editor" t="Include">
@@ -1392,113 +1355,6 @@
               </e>
             </e>
           </e>
-        </e>
-        <e p="GameAnalytics" t="Include">
-          <e p="Editor" t="Include">
-            <e p="Android" t="Include">
-              <e p="Dependencies.xml" t="Include" />
-            </e>
-            <e p="GA_AssetPostprocessor.cs" t="Include" />
-            <e p="GA_AutoRun.cs" t="Include" />
-            <e p="GA_ContinuationManager.cs" t="Include" />
-            <e p="GA_EditorUtilities.cs" t="Include" />
-            <e p="GA_Menu.cs" t="Include" />
-            <e p="GA_PostprocessBuild.cs" t="Include" />
-            <e p="GA_SettingsInspector.cs" t="Include" />
-            <e p="GA_SignUp.cs" t="Include" />
-            <e p="GA_UpdateWindow.cs" t="Include" />
-            <e p="GameAnalyticsInspector.cs" t="Include" />
-            <e p="Playmaker" t="Include">
-              <e p="PlayMakerPresenceCheck.cs" t="Include" />
-              <e p="SendProgressionEventActionEditor.cs" t="Include" />
-              <e p="SendResourceEventActionEditor.cs" t="Include" />
-            </e>
-          </e>
-          <e p="Plugins" t="Include">
-            <e p="Playmaker" t="Include">
-              <e p="GAInitialize.cs" t="Include" />
-              <e p="GetABTestingId.cs" t="Include" />
-              <e p="GetABTestingVariantId.cs" t="Include" />
-              <e p="GetRemoteConfigsValueAsString.cs" t="Include" />
-              <e p="IsRemoteConfigsReady.cs" t="Include" />
-              <e p="SendAdEvent.cs" t="Include" />
-              <e p="SendBusinessEvent.cs" t="Include" />
-              <e p="SendDesignEvent.cs" t="Include" />
-              <e p="SendErrorEvent.cs" t="Include" />
-              <e p="SendProgressionEvent.cs" t="Include" />
-              <e p="SendResourceEvent.cs" t="Include" />
-              <e p="SetCustomDimension.cs" t="Include" />
-            </e>
-            <e p="Scripts" t="Include">
-              <e p="ATT" t="Include">
-                <e p="GameAnalyticsATTClient.cs" t="Include" />
-                <e p="GameAnalyticsATTObjCBridge.cs" t="Include" />
-              </e>
-              <e p="Enums.cs" t="Include" />
-              <e p="Events" t="Include">
-                <e p="GA_Ads.cs" t="Include" />
-                <e p="GA_Business.cs" t="Include" />
-                <e p="GA_Debug.cs" t="Include" />
-                <e p="GA_Design.cs" t="Include" />
-                <e p="GA_Error.cs" t="Include" />
-                <e p="GA_Progression.cs" t="Include" />
-                <e p="GA_Resource.cs" t="Include" />
-                <e p="GA_Setup.cs" t="Include" />
-                <e p="GA_SpecialEvents.cs" t="Include" />
-                <e p="GAValidator.cs" t="Include" />
-              </e>
-              <e p="GameAnalytics.cs" t="Include" />
-              <e p="GameAnalyticsScripts.asmdef" t="Include" />
-              <e p="IGameAnalyticsATTListener.cs" t="Include" />
-              <e p="ILRD" t="Include">
-                <e p="AdMob" t="Include">
-                  <e p="GAAdMobIntegration.cs" t="Include" />
-                </e>
-                <e p="Aequus" t="Include">
-                  <e p="GAAequusIntegration.cs" t="Include" />
-                </e>
-                <e p="Fyber" t="Include">
-                  <e p="GAFyberIntegration.cs" t="Include" />
-                </e>
-                <e p="GameAnalyticsILRD.cs" t="Include" />
-                <e p="HyperBid" t="Include">
-                  <e p="GAHyperBidIntegration.cs" t="Include" />
-                </e>
-                <e p="IronSource" t="Include">
-                  <e p="GAIronSourceIntegration.cs" t="Include" />
-                </e>
-                <e p="Max" t="Include">
-                  <e p="GAMaxIntegration.cs" t="Include" />
-                </e>
-                <e p="Mopub" t="Include">
-                  <e p="GAMopubIntegration.cs" t="Include" />
-                </e>
-                <e p="TopOn" t="Include">
-                  <e p="GATopOnIntegration.cs" t="Include" />
-                </e>
-              </e>
-              <e p="Setup" t="Include">
-                <e p="Settings.cs" t="Include" />
-              </e>
-              <e p="State" t="Include">
-                <e p="GAState.cs" t="Include" />
-              </e>
-              <e p="Utilities" t="Include">
-                <e p="GA_MiniJson.cs" t="Include" />
-              </e>
-              <e p="Wrapper" t="Include">
-                <e p="GA_AndroidWrapper.cs" t="Include" />
-                <e p="GA_iOSWrapper.cs" t="Include" />
-                <e p="GA_MonoWrapper.cs" t="Include" />
-                <e p="GA_TizenWrapper.cs" t="Include" />
-                <e p="GA_tvOSWrapper.cs" t="Include" />
-                <e p="GA_UWPWrapper.cs" t="Include" />
-                <e p="GA_WebGLWrapper.cs" t="Include" />
-                <e p="GA_Wrapper.cs" t="Include" />
-              </e>
-            </e>
-          </e>
-          <e p="ReadMe.txt" t="Include" />
         </e>
         <e p="JMO Assets" t="Include">
           <e p="Cartoon FX (legacy)" t="Include">
@@ -1577,121 +1433,6 @@
             <e p="CFXR_WelcomeScreen.uxml" t="Include" />
           </e>
         </e>
-        <e p="MaxSdk" t="Include">
-          <e p="AppLovin" t="Include">
-            <e p="Editor" t="Include">
-              <e p="Dependencies.xml" t="Include" />
-            </e>
-          </e>
-          <e p="Mediation" t="Include">
-            <e p="BidMachine" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="ByteDance" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="Chartboost" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="Facebook" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="Fyber" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="google" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="GoogleAdManager" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="IronSource" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="MediationAdapters.txt" t="Include" />
-            <e p="Mintegral" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="MobileFuse" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="UnityAds" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-            <e p="Vungle" t="Include">
-              <e p="Editor" t="Include">
-                <e p="Dependencies.xml" t="Include" />
-              </e>
-            </e>
-          </e>
-          <e p="Scripts" t="Include">
-            <e p="IntegrationManager" t="Include">
-              <e p="Editor" t="Include">
-                <e p="AppLovinAutoUpdater.cs" t="Include" />
-                <e p="AppLovinCommandLine.cs" t="Include" />
-                <e p="AppLovinEditorCoroutine.cs" t="Include" />
-                <e p="AppLovinInitialize.cs" t="Include" />
-                <e p="AppLovinIntegrationManager.cs" t="Include" />
-                <e p="AppLovinIntegrationManagerWindow.cs" t="Include" />
-                <e p="AppLovinInternalSettings.cs" t="Include" />
-                <e p="AppLovinMenuItems.cs" t="Include" />
-                <e p="AppLovinPostProcessAndroid.cs" t="Include" />
-                <e p="AppLovinPostProcessAndroidGradle.cs" t="Include" />
-                <e p="AppLovinPostProcessiOS.cs" t="Include" />
-                <e p="AppLovinPreProcess.cs" t="Include" />
-                <e p="AppLovinPreProcessAndroid.cs" t="Include" />
-                <e p="AppLovinPreProcessiOS.cs" t="Include" />
-                <e p="AppLovinProcessGradleBuildFile.cs" t="Include" />
-                <e p="AppLovinSettings.cs" t="Include" />
-                <e p="MaxSdk.IntegrationManager.Editor.asmdef" t="Include" />
-              </e>
-            </e>
-            <e p="MaxCmpService.cs" t="Include" />
-            <e p="MaxEventExecutor.cs" t="Include" />
-            <e p="MaxEvents.cs" t="Include" />
-            <e p="MaxEventSystemChecker.cs" t="Include" />
-            <e p="MaxSdk.cs" t="Include" />
-            <e p="MaxSdk.Scripts.asmdef" t="Include" />
-            <e p="MaxSdkAndroid.cs" t="Include" />
-            <e p="MaxSdkBase.cs" t="Include" />
-            <e p="MaxSdkCallbacks.cs" t="Include" />
-            <e p="MaxSdkiOS.cs" t="Include" />
-            <e p="MaxSdkLogger.cs" t="Include" />
-            <e p="MaxSdkUnityEditor.cs" t="Include" />
-            <e p="MaxSdkUtils.cs" t="Include" />
-            <e p="MaxSegmentCollection.cs" t="Include" />
-            <e p="MaxTargetingData.cs" t="Include" />
-            <e p="MaxUserSegment.cs" t="Include" />
-            <e p="MaxUserServiceAndroid.cs" t="Include" />
-            <e p="MaxUserServiceiOS.cs" t="Include" />
-            <e p="MaxUserServiceUnityEditor.cs" t="Include" />
-            <e p="ThirdParty" t="Include">
-              <e p="MiniJSON.cs" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="Plugins" t="Include">
           <e p="Android" t="Include">
             <e p="AndroidManifest.xml" t="Include" />
@@ -1751,6 +1492,253 @@
             </e>
             <e p="ReadMe.txt" t="Include" />
           </e>
+        </e>
+        <e p="Resources" t="Include">
+          <e p="BillingMode.json" t="Include" />
+          <e p="DevToDev" t="Include">
+            <e p="DevToDev.xml" t="Include" />
+          </e>
+          <e p="IAPProductCatalog.json" t="Include" />
+        </e>
+        <e p="StompyRobot" t="Include">
+          <e p="SRDebugger" t="Include">
+            <e p="ReadMe.txt" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="AutoInitialize.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="ApiSignup.cs" t="Include" />
+                <e p="ApiSignupWindow.cs" t="Include" />
+                <e p="Migrations.cs" t="Include" />
+                <e p="ProfilerCameraListenerEditor.cs" t="Include" />
+                <e p="SettingsEditor.cs" t="Include" />
+                <e p="SettingsWindow.cs" t="Include" />
+                <e p="SROptionsWindow.cs" t="Include" />
+                <e p="StompyRobot.SRDebugger.Editor.asmdef" t="Include" />
+                <e p="WelcomeWindow.cs" t="Include" />
+              </e>
+              <e p="Internal" t="Include">
+                <e p="Api.cs" t="Include" />
+                <e p="ApiUtil.cs" t="Include" />
+                <e p="BugReportApi.cs" t="Include" />
+                <e p="BugReportScreenshotUtil.cs" t="Include" />
+                <e p="CircularBuffer.cs" t="Include" />
+                <e p="EditorUtil.cs" t="Include" />
+                <e p="OptionControlFactory.cs" t="Include" />
+                <e p="OptionDefinition.cs" t="Include" />
+                <e p="Paths.cs" t="Include" />
+                <e p="Service.cs" t="Include" />
+                <e p="Strings.cs" t="Include" />
+                <e p="Util.cs" t="Include" />
+              </e>
+              <e p="Profiler" t="Include">
+                <e p="ProfilerCameraListener.cs" t="Include" />
+                <e p="ProfilerLateUpdateListener.cs" t="Include" />
+                <e p="ProfilerServiceImpl.cs" t="Include" />
+                <e p="SRPProfilerService.cs" t="Include" />
+              </e>
+              <e p="Services" t="Include">
+                <e p="IBugReportService.cs" t="Include" />
+                <e p="IConsoleService.cs" t="Include" />
+                <e p="IDebugCameraService.cs" t="Include" />
+                <e p="IDebugPanelService.cs" t="Include" />
+                <e p="IDebugService.cs" t="Include" />
+                <e p="IDebugTriggerService.cs" t="Include" />
+                <e p="IDockConsoleService.cs" t="Include" />
+                <e p="Implementation" t="Include">
+                  <e p="BugReportApiService.cs" t="Include" />
+                  <e p="BugReportPopoverService.cs" t="Include" />
+                  <e p="DebugCameraServiceImpl.cs" t="Include" />
+                  <e p="DebugPanelServiceImpl.cs" t="Include" />
+                  <e p="DebugTriggerImpl.cs" t="Include" />
+                  <e p="DockConsoleServiceImpl.cs" t="Include" />
+                  <e p="KeyboardShortcutListenerService.cs" t="Include" />
+                  <e p="OptionsServiceImpl.cs" t="Include" />
+                  <e p="PinEntryServiceImpl.cs" t="Include" />
+                  <e p="PinnedUIServiceImpl.cs" t="Include" />
+                  <e p="SRDebugService.cs" t="Include" />
+                  <e p="StandardConsoleService.cs" t="Include" />
+                  <e p="SystemInformationService.cs" t="Include" />
+                </e>
+                <e p="IOptionsService.cs" t="Include" />
+                <e p="IPinEntryService.cs" t="Include" />
+                <e p="IPinnedOptionsService.cs" t="Include" />
+                <e p="IProfilerService.cs" t="Include" />
+                <e p="ISystemInformationService.cs" t="Include" />
+                <e p="ServiceSelectors.cs" t="Include" />
+              </e>
+              <e p="Settings.cs" t="Include" />
+              <e p="SRDebug.cs" t="Include" />
+              <e p="SRDebuggerInit.cs" t="Include" />
+              <e p="SROptions.Attributes.cs" t="Include" />
+              <e p="SROptions.cs" t="Include" />
+              <e p="SROptions.Test.cs" t="Include" />
+              <e p="UI" t="Include">
+                <e p="Controls" t="Include">
+                  <e p="ConsoleEntryView.cs" t="Include" />
+                  <e p="ConsoleLogControl.cs" t="Include" />
+                  <e p="Data" t="Include">
+                    <e p="ActionControl.cs" t="Include" />
+                    <e p="BoolControl.cs" t="Include" />
+                    <e p="DataBoundControl.cs" t="Include" />
+                    <e p="EnumControl.cs" t="Include" />
+                    <e p="NumberControl.cs" t="Include" />
+                    <e p="OptionsControlBase.cs" t="Include" />
+                    <e p="ReadOnlyControl.cs" t="Include" />
+                    <e p="StringControl.cs" t="Include" />
+                  </e>
+                  <e p="InfoBlock.cs" t="Include" />
+                  <e p="MultiTapButton.cs" t="Include" />
+                  <e p="PinEntryControl.cs" t="Include" />
+                  <e p="Profiler" t="Include">
+                    <e p="ProfilerFPSLabel.cs" t="Include" />
+                    <e p="ProfilerMemoryBlock.cs" t="Include" />
+                    <e p="ProfilerMonoBlock.cs" t="Include" />
+                  </e>
+                  <e p="ProfilerEnableControl.cs" t="Include" />
+                  <e p="ProfilerGraphAxisLabel.cs" t="Include" />
+                  <e p="ProfilerGraphControl.cs" t="Include" />
+                  <e p="SRTabButton.cs" t="Include" />
+                </e>
+                <e p="DebuggerTabController.cs" t="Include" />
+                <e p="DebugPanelRoot.cs" t="Include" />
+                <e p="MobileMenuController.cs" t="Include" />
+                <e p="Other" t="Include">
+                  <e p="BugReportPopoverRoot.cs" t="Include" />
+                  <e p="BugReportSheetController.cs" t="Include" />
+                  <e p="CategoryGroup.cs" t="Include" />
+                  <e p="ConfigureCanvasFromSettings.cs" t="Include" />
+                  <e p="ConsoleTabQuickViewControl.cs" t="Include" />
+                  <e p="DebugPanelBackgroundBehaviour.cs" t="Include" />
+                  <e p="DockConsoleController.cs" t="Include" />
+                  <e p="DockConsoleRoot.cs" t="Include" />
+                  <e p="ErrorNotifier.cs" t="Include" />
+                  <e p="HandleManager.cs" t="Include" />
+                  <e p="IEnableTab.cs" t="Include" />
+                  <e p="LoadingSpinnerBehaviour.cs" t="Include" />
+                  <e p="PinnedUIRoot.cs" t="Include" />
+                  <e p="ScrollRectPatch.cs" t="Include" />
+                  <e p="ScrollSettingsBehaviour.cs" t="Include" />
+                  <e p="SetLayerFromSettings.cs" t="Include" />
+                  <e p="SRTab.cs" t="Include" />
+                  <e p="SRTabController.cs" t="Include" />
+                  <e p="TriggerRoot.cs" t="Include" />
+                  <e p="VersionTextBehaviour.cs" t="Include" />
+                </e>
+                <e p="Tabs" t="Include">
+                  <e p="BugReportTabController.cs" t="Include" />
+                  <e p="ConsoleTabController.cs" t="Include" />
+                  <e p="InfoTabController.cs" t="Include" />
+                  <e p="OptionsTabController.cs" t="Include" />
+                  <e p="ProfilerTabController.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Version.cs" t="Include" />
+            </e>
+            <e p="StompyRobot.SRDebugger.asmdef" t="Include" />
+            <e p="UI" t="Include">
+              <e p="Fonts" t="Include">
+                <e p="FONT LICENSE.txt" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="SRF" t="Include">
+            <e p="External" t="Include">
+              <e p="Jetbrains.Annotations.cs" t="Include" />
+              <e p="MiniJSON.cs" t="Include" />
+            </e>
+            <e p="Internal" t="Include">
+              <e p="ComponentMenuPaths.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Collections" t="Include">
+                <e p="SRList.cs" t="Include" />
+              </e>
+              <e p="Components" t="Include">
+                <e p="SRAutoSingleton.cs" t="Include" />
+                <e p="SRMonoBehaviour.cs" t="Include" />
+                <e p="SRMonoBehaviourEx.cs" t="Include" />
+                <e p="SRSingleton.cs" t="Include" />
+              </e>
+              <e p="Coroutines.cs" t="Include" />
+              <e p="Extensions" t="Include">
+                <e p="FloatExtensions.cs" t="Include" />
+                <e p="GameObjectExtensions.cs" t="Include" />
+                <e p="IListExtensions.cs" t="Include" />
+                <e p="NetFxExtensions.cs" t="Include" />
+                <e p="StringExtensions.cs" t="Include" />
+                <e p="TransformExtensions.cs" t="Include" />
+              </e>
+              <e p="Helpers" t="Include">
+                <e p="AssetUtil.cs" t="Include" />
+                <e p="Hierarchy.cs" t="Include" />
+                <e p="MethodReference.cs" t="Include" />
+                <e p="PropertyReference.cs" t="Include" />
+                <e p="SRDebugUtil.cs" t="Include" />
+                <e p="SRFileUtil.cs" t="Include" />
+                <e p="SRInstantiate.cs" t="Include" />
+                <e p="SRMath.cs" t="Include" />
+                <e p="SRMath.Tweening.cs" t="Include" />
+                <e p="SRMath.Tweening.Functions.cs" t="Include" />
+                <e p="SRReflection.cs" t="Include" />
+              </e>
+              <e p="Service" t="Include">
+                <e p="Attributes.cs" t="Include" />
+                <e p="IAsyncService.cs" t="Include" />
+                <e p="SRDependencyServiceBase.cs" t="Include" />
+                <e p="SRSceneServiceBase.cs" t="Include" />
+                <e p="SRServiceBase.cs" t="Include" />
+                <e p="SRServiceManager.cs" t="Include" />
+              </e>
+              <e p="UI" t="Include">
+                <e p="ContentFitText.cs" t="Include" />
+                <e p="CopyLayoutElement.cs" t="Include" />
+                <e p="CopyPreferredSize.cs" t="Include" />
+                <e p="CopySizeIntoLayoutElement.cs" t="Include" />
+                <e p="DragHandle.cs" t="Include" />
+                <e p="Editor" t="Include">
+                  <e p="CopyLayoutElementEditor.cs" t="Include" />
+                  <e p="CopyPreferredSizeEditor.cs" t="Include" />
+                  <e p="LongPressButtonEditor.cs" t="Include" />
+                  <e p="SRNumberButtonEditor.cs" t="Include" />
+                  <e p="StompyRobot.SRF.Editor.asmdef" t="Include" />
+                  <e p="StyleComponentEditor.cs" t="Include" />
+                  <e p="StyleSheetEditor.cs" t="Include" />
+                </e>
+                <e p="FlashGraphic.cs" t="Include" />
+                <e p="InheritColour.cs" t="Include" />
+                <e p="Layout" t="Include">
+                  <e p="FlowLayoutGroup.cs" t="Include" />
+                  <e p="VirtualVerticalLayoutGroup.cs" t="Include" />
+                </e>
+                <e p="LongPressButton.cs" t="Include" />
+                <e p="ResponsiveBase.cs" t="Include" />
+                <e p="ResponsiveEnable.cs" t="Include" />
+                <e p="ResponsiveResize.cs" t="Include" />
+                <e p="ScrollToBottomBehaviour.cs" t="Include" />
+                <e p="SRNumberButton.cs" t="Include" />
+                <e p="SRNumberSpinner.cs" t="Include" />
+                <e p="SRRetinaScaler.cs" t="Include" />
+                <e p="SRSpinner.cs" t="Include" />
+                <e p="SRText.cs" t="Include" />
+                <e p="StyleComponent.cs" t="Include" />
+                <e p="StyleRoot.cs" t="Include" />
+                <e p="StyleSheet.cs" t="Include" />
+                <e p="Unselectable.cs" t="Include" />
+              </e>
+            </e>
+            <e p="StompyRobot.SRF.asmdef" t="Include" />
+          </e>
+          <e p="SROptions" t="Include">
+            <e p="SROptions.Attributes.cs" t="Include" />
+            <e p="SROptions.cs" t="Include" />
+            <e p="SROptions.Test.cs" t="Include" />
+          </e>
+        </e>
+        <e p="StreamingAssets" t="Include">
+          <e p="google-services-desktop.json" t="Include" />
+          <e p="google-services.json" t="Include" />
+        </e>
+        <e p="SynchronizedPlugins" t="Include">
           <e p="Zenject" t="Include">
             <e p="LICENSE.txt" t="Include" />
             <e p="OptionalExtras" t="Include">
@@ -2671,257 +2659,6 @@
             <e p="zenject.asmdef" t="Include" />
           </e>
         </e>
-        <e p="Resources" t="Include">
-          <e p="BillingMode.json" t="Include" />
-          <e p="IAPProductCatalog.json" t="Include" />
-        </e>
-        <e p="Scripts" t="Include">
-          <e p="UnityPurchasing" t="Include">
-            <e p="generated" t="Include">
-              <e p="AppleStoreKitTestTangle.cs" t="Include" />
-              <e p="AppleTangle.cs" t="Include" />
-              <e p="GooglePlayTangle.cs" t="Include" />
-            </e>
-          </e>
-        </e>
-        <e p="StompyRobot" t="Include">
-          <e p="SRDebugger" t="Include">
-            <e p="ReadMe.txt" t="Include" />
-            <e p="Scripts" t="Include">
-              <e p="AutoInitialize.cs" t="Include" />
-              <e p="Editor" t="Include">
-                <e p="ApiSignup.cs" t="Include" />
-                <e p="ApiSignupWindow.cs" t="Include" />
-                <e p="Migrations.cs" t="Include" />
-                <e p="ProfilerCameraListenerEditor.cs" t="Include" />
-                <e p="SettingsEditor.cs" t="Include" />
-                <e p="SettingsWindow.cs" t="Include" />
-                <e p="SROptionsWindow.cs" t="Include" />
-                <e p="StompyRobot.SRDebugger.Editor.asmdef" t="Include" />
-                <e p="WelcomeWindow.cs" t="Include" />
-              </e>
-              <e p="Internal" t="Include">
-                <e p="Api.cs" t="Include" />
-                <e p="ApiUtil.cs" t="Include" />
-                <e p="BugReportApi.cs" t="Include" />
-                <e p="BugReportScreenshotUtil.cs" t="Include" />
-                <e p="CircularBuffer.cs" t="Include" />
-                <e p="EditorUtil.cs" t="Include" />
-                <e p="OptionControlFactory.cs" t="Include" />
-                <e p="OptionDefinition.cs" t="Include" />
-                <e p="Paths.cs" t="Include" />
-                <e p="Service.cs" t="Include" />
-                <e p="Strings.cs" t="Include" />
-                <e p="Util.cs" t="Include" />
-              </e>
-              <e p="Profiler" t="Include">
-                <e p="ProfilerCameraListener.cs" t="Include" />
-                <e p="ProfilerLateUpdateListener.cs" t="Include" />
-                <e p="ProfilerServiceImpl.cs" t="Include" />
-                <e p="SRPProfilerService.cs" t="Include" />
-              </e>
-              <e p="Services" t="Include">
-                <e p="IBugReportService.cs" t="Include" />
-                <e p="IConsoleService.cs" t="Include" />
-                <e p="IDebugCameraService.cs" t="Include" />
-                <e p="IDebugPanelService.cs" t="Include" />
-                <e p="IDebugService.cs" t="Include" />
-                <e p="IDebugTriggerService.cs" t="Include" />
-                <e p="IDockConsoleService.cs" t="Include" />
-                <e p="Implementation" t="Include">
-                  <e p="BugReportApiService.cs" t="Include" />
-                  <e p="BugReportPopoverService.cs" t="Include" />
-                  <e p="DebugCameraServiceImpl.cs" t="Include" />
-                  <e p="DebugPanelServiceImpl.cs" t="Include" />
-                  <e p="DebugTriggerImpl.cs" t="Include" />
-                  <e p="DockConsoleServiceImpl.cs" t="Include" />
-                  <e p="KeyboardShortcutListenerService.cs" t="Include" />
-                  <e p="OptionsServiceImpl.cs" t="Include" />
-                  <e p="PinEntryServiceImpl.cs" t="Include" />
-                  <e p="PinnedUIServiceImpl.cs" t="Include" />
-                  <e p="SRDebugService.cs" t="Include" />
-                  <e p="StandardConsoleService.cs" t="Include" />
-                  <e p="SystemInformationService.cs" t="Include" />
-                </e>
-                <e p="IOptionsService.cs" t="Include" />
-                <e p="IPinEntryService.cs" t="Include" />
-                <e p="IPinnedOptionsService.cs" t="Include" />
-                <e p="IProfilerService.cs" t="Include" />
-                <e p="ISystemInformationService.cs" t="Include" />
-                <e p="ServiceSelectors.cs" t="Include" />
-              </e>
-              <e p="Settings.cs" t="Include" />
-              <e p="SRDebug.cs" t="Include" />
-              <e p="SRDebuggerInit.cs" t="Include" />
-              <e p="SROptions.Attributes.cs" t="Include" />
-              <e p="SROptions.cs" t="Include" />
-              <e p="SROptions.Test.cs" t="Include" />
-              <e p="UI" t="Include">
-                <e p="Controls" t="Include">
-                  <e p="ConsoleEntryView.cs" t="Include" />
-                  <e p="ConsoleLogControl.cs" t="Include" />
-                  <e p="Data" t="Include">
-                    <e p="ActionControl.cs" t="Include" />
-                    <e p="BoolControl.cs" t="Include" />
-                    <e p="DataBoundControl.cs" t="Include" />
-                    <e p="EnumControl.cs" t="Include" />
-                    <e p="NumberControl.cs" t="Include" />
-                    <e p="OptionsControlBase.cs" t="Include" />
-                    <e p="ReadOnlyControl.cs" t="Include" />
-                    <e p="StringControl.cs" t="Include" />
-                  </e>
-                  <e p="InfoBlock.cs" t="Include" />
-                  <e p="MultiTapButton.cs" t="Include" />
-                  <e p="PinEntryControl.cs" t="Include" />
-                  <e p="Profiler" t="Include">
-                    <e p="ProfilerFPSLabel.cs" t="Include" />
-                    <e p="ProfilerMemoryBlock.cs" t="Include" />
-                    <e p="ProfilerMonoBlock.cs" t="Include" />
-                  </e>
-                  <e p="ProfilerEnableControl.cs" t="Include" />
-                  <e p="ProfilerGraphAxisLabel.cs" t="Include" />
-                  <e p="ProfilerGraphControl.cs" t="Include" />
-                  <e p="SRTabButton.cs" t="Include" />
-                </e>
-                <e p="DebuggerTabController.cs" t="Include" />
-                <e p="DebugPanelRoot.cs" t="Include" />
-                <e p="MobileMenuController.cs" t="Include" />
-                <e p="Other" t="Include">
-                  <e p="BugReportPopoverRoot.cs" t="Include" />
-                  <e p="BugReportSheetController.cs" t="Include" />
-                  <e p="CategoryGroup.cs" t="Include" />
-                  <e p="ConfigureCanvasFromSettings.cs" t="Include" />
-                  <e p="ConsoleTabQuickViewControl.cs" t="Include" />
-                  <e p="DebugPanelBackgroundBehaviour.cs" t="Include" />
-                  <e p="DockConsoleController.cs" t="Include" />
-                  <e p="DockConsoleRoot.cs" t="Include" />
-                  <e p="ErrorNotifier.cs" t="Include" />
-                  <e p="HandleManager.cs" t="Include" />
-                  <e p="IEnableTab.cs" t="Include" />
-                  <e p="LoadingSpinnerBehaviour.cs" t="Include" />
-                  <e p="PinnedUIRoot.cs" t="Include" />
-                  <e p="ScrollRectPatch.cs" t="Include" />
-                  <e p="ScrollSettingsBehaviour.cs" t="Include" />
-                  <e p="SetLayerFromSettings.cs" t="Include" />
-                  <e p="SRTab.cs" t="Include" />
-                  <e p="SRTabController.cs" t="Include" />
-                  <e p="TriggerRoot.cs" t="Include" />
-                  <e p="VersionTextBehaviour.cs" t="Include" />
-                </e>
-                <e p="Tabs" t="Include">
-                  <e p="BugReportTabController.cs" t="Include" />
-                  <e p="ConsoleTabController.cs" t="Include" />
-                  <e p="InfoTabController.cs" t="Include" />
-                  <e p="OptionsTabController.cs" t="Include" />
-                  <e p="ProfilerTabController.cs" t="Include" />
-                </e>
-              </e>
-              <e p="Version.cs" t="Include" />
-            </e>
-            <e p="StompyRobot.SRDebugger.asmdef" t="Include" />
-            <e p="UI" t="Include">
-              <e p="Fonts" t="Include">
-                <e p="FONT LICENSE.txt" t="Include" />
-              </e>
-            </e>
-          </e>
-          <e p="SRF" t="Include">
-            <e p="External" t="Include">
-              <e p="Jetbrains.Annotations.cs" t="Include" />
-              <e p="MiniJSON.cs" t="Include" />
-            </e>
-            <e p="Internal" t="Include">
-              <e p="ComponentMenuPaths.cs" t="Include" />
-            </e>
-            <e p="Scripts" t="Include">
-              <e p="Collections" t="Include">
-                <e p="SRList.cs" t="Include" />
-              </e>
-              <e p="Components" t="Include">
-                <e p="SRAutoSingleton.cs" t="Include" />
-                <e p="SRMonoBehaviour.cs" t="Include" />
-                <e p="SRMonoBehaviourEx.cs" t="Include" />
-                <e p="SRSingleton.cs" t="Include" />
-              </e>
-              <e p="Coroutines.cs" t="Include" />
-              <e p="Extensions" t="Include">
-                <e p="FloatExtensions.cs" t="Include" />
-                <e p="GameObjectExtensions.cs" t="Include" />
-                <e p="IListExtensions.cs" t="Include" />
-                <e p="NetFxExtensions.cs" t="Include" />
-                <e p="StringExtensions.cs" t="Include" />
-                <e p="TransformExtensions.cs" t="Include" />
-              </e>
-              <e p="Helpers" t="Include">
-                <e p="AssetUtil.cs" t="Include" />
-                <e p="Hierarchy.cs" t="Include" />
-                <e p="MethodReference.cs" t="Include" />
-                <e p="PropertyReference.cs" t="Include" />
-                <e p="SRDebugUtil.cs" t="Include" />
-                <e p="SRFileUtil.cs" t="Include" />
-                <e p="SRInstantiate.cs" t="Include" />
-                <e p="SRMath.cs" t="Include" />
-                <e p="SRMath.Tweening.cs" t="Include" />
-                <e p="SRMath.Tweening.Functions.cs" t="Include" />
-                <e p="SRReflection.cs" t="Include" />
-              </e>
-              <e p="Service" t="Include">
-                <e p="Attributes.cs" t="Include" />
-                <e p="IAsyncService.cs" t="Include" />
-                <e p="SRDependencyServiceBase.cs" t="Include" />
-                <e p="SRSceneServiceBase.cs" t="Include" />
-                <e p="SRServiceBase.cs" t="Include" />
-                <e p="SRServiceManager.cs" t="Include" />
-              </e>
-              <e p="UI" t="Include">
-                <e p="ContentFitText.cs" t="Include" />
-                <e p="CopyLayoutElement.cs" t="Include" />
-                <e p="CopyPreferredSize.cs" t="Include" />
-                <e p="CopySizeIntoLayoutElement.cs" t="Include" />
-                <e p="DragHandle.cs" t="Include" />
-                <e p="Editor" t="Include">
-                  <e p="CopyLayoutElementEditor.cs" t="Include" />
-                  <e p="CopyPreferredSizeEditor.cs" t="Include" />
-                  <e p="LongPressButtonEditor.cs" t="Include" />
-                  <e p="SRNumberButtonEditor.cs" t="Include" />
-                  <e p="StompyRobot.SRF.Editor.asmdef" t="Include" />
-                  <e p="StyleComponentEditor.cs" t="Include" />
-                  <e p="StyleSheetEditor.cs" t="Include" />
-                </e>
-                <e p="FlashGraphic.cs" t="Include" />
-                <e p="InheritColour.cs" t="Include" />
-                <e p="Layout" t="Include">
-                  <e p="FlowLayoutGroup.cs" t="Include" />
-                  <e p="VirtualVerticalLayoutGroup.cs" t="Include" />
-                </e>
-                <e p="LongPressButton.cs" t="Include" />
-                <e p="ResponsiveBase.cs" t="Include" />
-                <e p="ResponsiveEnable.cs" t="Include" />
-                <e p="ResponsiveResize.cs" t="Include" />
-                <e p="ScrollToBottomBehaviour.cs" t="Include" />
-                <e p="SRNumberButton.cs" t="Include" />
-                <e p="SRNumberSpinner.cs" t="Include" />
-                <e p="SRRetinaScaler.cs" t="Include" />
-                <e p="SRSpinner.cs" t="Include" />
-                <e p="SRText.cs" t="Include" />
-                <e p="StyleComponent.cs" t="Include" />
-                <e p="StyleRoot.cs" t="Include" />
-                <e p="StyleSheet.cs" t="Include" />
-                <e p="Unselectable.cs" t="Include" />
-              </e>
-            </e>
-            <e p="StompyRobot.SRF.asmdef" t="Include" />
-          </e>
-          <e p="SROptions" t="Include">
-            <e p="SROptions.Attributes.cs" t="Include" />
-            <e p="SROptions.cs" t="Include" />
-            <e p="SROptions.Test.cs" t="Include" />
-          </e>
-        </e>
-        <e p="StreamingAssets" t="Include">
-          <e p="google-services-desktop.json" t="Include" />
-          <e p="google-services.json" t="Include" />
-        </e>
         <e p="ThirdParty" t="Include">
           <e p="TextMesh Pro" t="Include">
             <e p="Examples &amp; Extras" t="Include">
@@ -3012,47 +2749,6 @@
             </e>
           </e>
         </e>
-        <e p="Usercentrics" t="Include">
-          <e p="Demo" t="Include">
-            <e p="DemoScript.cs" t="Include" />
-            <e p="FirstLayerUIScript.cs" t="Include" />
-          </e>
-          <e p="Editor" t="Include">
-            <e p="ATTLocalizationMessageDrawer.cs" t="Include" />
-            <e p="Unity.UsercentricsEditor.asmdef" t="Include" />
-            <e p="UsercentricsATTPostProcessor.cs" t="Include" />
-            <e p="UsercentricsDependencies.xml" t="Include" />
-            <e p="UsercentricsPBXProjectExtensions.cs" t="Include" />
-            <e p="UsercentricsWelcomeDialog.cs" t="Include" />
-          </e>
-          <e p="Scripts" t="Include">
-            <e p="AppTrackingTransparency" t="Include">
-              <e p="AppTrackingTransparencyManager.cs" t="Include" />
-              <e p="Model" t="Include">
-                <e p="ATTLocalizationMessage.cs" t="Include" />
-                <e p="AuthorizationStatus.cs" t="Include" />
-                <e p="Language.cs" t="Include" />
-              </e>
-            </e>
-            <e p="AppTrackingTransparency.cs" t="Include" />
-            <e p="Internal" t="Include">
-              <e p="AutoInitialize.cs" t="Include" />
-              <e p="BannerSettings.cs" t="Include" />
-              <e p="Data.cs" t="Include" />
-              <e p="Errors.cs" t="Include" />
-              <e p="FirstLayerStyleSettings.cs" t="Include" />
-              <e p="InspectorLink.cs" t="Include" />
-              <e p="IUsercentrics.cs" t="Include" />
-              <e p="Singleton.cs" t="Include" />
-              <e p="StringParser.cs" t="Include" />
-              <e p="UCConstants.cs" t="Include" />
-              <e p="UsercentricsAndroid.cs" t="Include" />
-              <e p="UsercentricsIOS.cs" t="Include" />
-            </e>
-            <e p="Unity.Usercentrics.asmdef" t="Include" />
-            <e p="Usercentrics.cs" t="Include" />
-          </e>
-        </e>
       </e>
       <e p="AstarPackageToolsEditor.csproj" t="IncludeRecursive" />
       <e p="AstarPathfindingProject.csproj" t="IncludeRecursive" />
@@ -3065,10 +2761,7 @@
       <e p="Drawing.csproj" t="IncludeRecursive" />
       <e p="DrawingEditor.csproj" t="IncludeRecursive" />
       <e p="DrawingPackageToolsEditor.csproj" t="IncludeRecursive" />
-      <e p="GameAnalyticsScripts.csproj" t="IncludeRecursive" />
       <e p="KinoBloom.Runtime.csproj" t="IncludeRecursive" />
-      <e p="MaxSdk.Scripts.csproj" t="IncludeRecursive" />
-      <e p="MaxSdk.Scripts.IntegrationManager.Editor.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive">
         <e p="com.arongranberg.astar" t="Include">
@@ -3519,8 +3212,6 @@
       <e p="StompyRobot.SRF.Editor.csproj" t="IncludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
       <e p="ToonyColorsPro.Demo.Editor.csproj" t="IncludeRecursive" />
-      <e p="Unity.Usercentrics.csproj" t="IncludeRecursive" />
-      <e p="Unity.UsercentricsEditor.csproj" t="IncludeRecursive" />
       <e p="Zenject-Editor.csproj" t="IncludeRecursive" />
       <e p="Zenject-IntegrationTests-Editor.csproj" t="IncludeRecursive" />
       <e p="Zenject-IntegrationTests.csproj" t="IncludeRecursive" />
