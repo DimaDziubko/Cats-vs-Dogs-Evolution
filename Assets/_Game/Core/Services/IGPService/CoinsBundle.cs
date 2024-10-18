@@ -1,9 +1,10 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
+using _Game.UI._Shop.Scripts._ShopScr;
 
 namespace _Game.Core.Services.IGPService
 {
-    public class CoinsBundle
+    public class CoinsBundle : ShopItem
     {
         public event Action<float> QuantityChanged;
         public event Action<bool> IsAffordableChanged;
@@ -33,5 +34,7 @@ namespace _Game.Core.Services.IGPService
                 IsAffordableChanged?.Invoke(_isAffordable);
             }
         }
+
+        public override int ShopItemViewId => Config.ShopItemViewId;
     }
 }

@@ -22,6 +22,8 @@ namespace _Game.Core.Services.UserContainer
         
         [ShowInInspector]
         public UserAccountState State { get; set; }
+        
+        [ShowInInspector]
         public GameConfig GameConfig { get; set; }
 
         public ITimelineStateHandler TimelineStateHandler { get; }

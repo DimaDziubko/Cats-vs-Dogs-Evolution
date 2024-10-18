@@ -8,6 +8,7 @@ using _Game.Core.Debugger;
 using _Game.Core.Services.Analytics;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Core.UserState;

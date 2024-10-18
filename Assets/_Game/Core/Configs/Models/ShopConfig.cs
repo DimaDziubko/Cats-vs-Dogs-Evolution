@@ -91,6 +91,6 @@ namespace _Game.Core.Configs.Models
         public int Id;
         public string IconKey;
         public float Quantity;
-        internal CurrencyType CurrencyType;
+        public CurrencyType CurrencyType;
     }
 }

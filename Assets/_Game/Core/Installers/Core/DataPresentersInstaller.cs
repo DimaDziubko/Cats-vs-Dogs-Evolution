@@ -4,7 +4,14 @@ using _Game.Core.Services.IAP;
 using _Game.Core.Services.IGPService;
 using _Game.Gameplay._Boosts.Scripts;
 using _Game.UI._CardsGeneral._Cards.Scripts;
-using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop._MiniShop.Scripts;
+using _Game.UI._Shop.Scripts._AdsGemsPack;
+using _Game.UI._Shop.Scripts._CoinBundles;
+using _Game.UI._Shop.Scripts._FreeGemsPack;
+using _Game.UI._Shop.Scripts._GemsBundle;
+using _Game.UI._Shop.Scripts._ProfitOffer;
+using _Game.UI._Shop.Scripts._ShopScr;
+using _Game.UI._Shop.Scripts._SpeedOffer;
 using Zenject;
 
 namespace _Game.Core.Installers.Core

@@ -1086,52 +1086,67 @@
             <e p="_Shop" t="Include">
               <e p="_MiniShop" t="Include">
                 <e p="Scripts" t="Include">
+                  <e p="IMiniShopPresenter.cs" t="Include" />
                   <e p="IMiniShopProvider.cs" t="Include" />
                   <e p="MiniItemShopContainer.cs" t="Include" />
                   <e p="MiniShop.cs" t="Include" />
+                  <e p="MiniShopPresenter.cs" t="Include" />
                   <e p="MiniShopProvider.cs" t="Include" />
                 </e>
               </e>
               <e p="Scripts" t="Include">
-                <e p="AdsGemsPack.cs" t="Include" />
-                <e p="AdsGemsPackPresenter.cs" t="Include" />
-                <e p="AdsGemsPackView.cs" t="Include" />
-                <e p="AmountListView.cs" t="Include" />
-                <e p="AmountView.cs" t="Include" />
-                <e p="CoinsBundlePresenter.cs" t="Include" />
-                <e p="CoinsBundleView.cs" t="Include" />
-                <e p="Delimiter.cs" t="Include" />
-                <e p="DynamicGridLayout.cs" t="Include" />
-                <e p="FreeGemsPack.cs" t="Include" />
-                <e p="FreeGemsPackPresenter.cs" t="Include" />
-                <e p="FreeGemsPackProductPresenter.cs" t="Include" />
-                <e p="FreeGemsPackView.cs" t="Include" />
-                <e p="GemsBundle.cs" t="Include" />
-                <e p="GemsBundlePresenter.cs" t="Include" />
-                <e p="GemsBundleView.cs" t="Include" />
-                <e p="IAPProductPresenter.cs" t="Include" />
-                <e p="IFreeGemsPackProductPresenter.cs" t="Include" />
-                <e p="IIGPProductPresenter.cs" t="Include" />
-                <e p="IMiniShopPresenter.cs" t="Include" />
-                <e p="IProductPresenter.cs" t="Include" />
-                <e p="IShopPresenter.cs" t="Include" />
-                <e p="IShopProvider.cs" t="Include" />
-                <e p="ItemType.cs" t="Include" />
-                <e p="ListView.cs" t="Include" />
-                <e p="MiniShopPresenter.cs" t="Include" />
-                <e p="Plug.cs" t="Include" />
-                <e p="ProfitOfferPresenter.cs" t="Include" />
-                <e p="ProfitOfferView.cs" t="Include" />
-                <e p="Shop.cs" t="Include" />
-                <e p="ShopItemModel.cs" t="Include" />
-                <e p="ShopItemsContainer.cs" t="Include" />
-                <e p="ShopItemStaticData.cs" t="Include" />
-                <e p="ShopItemView.cs" t="Include" />
-                <e p="ShopPresenter.cs" t="Include" />
-                <e p="ShopProvider.cs" t="Include" />
-                <e p="SpeedOffer.cs" t="Include" />
-                <e p="SpeedOfferPresenter.cs" t="Include" />
-                <e p="SpeedOfferView.cs" t="Include" />
+                <e p="_AdsGemsPack" t="Include">
+                  <e p="AdsGemsPack.cs" t="Include" />
+                  <e p="AdsGemsPackPresenter.cs" t="Include" />
+                  <e p="AdsGemsPackView.cs" t="Include" />
+                </e>
+                <e p="_AmountView" t="Include">
+                  <e p="AmountListView.cs" t="Include" />
+                  <e p="AmountView.cs" t="Include" />
+                </e>
+                <e p="_CoinBundles" t="Include">
+                  <e p="CoinsBundlePresenter.cs" t="Include" />
+                  <e p="CoinsBundleView.cs" t="Include" />
+                </e>
+                <e p="_DecorAndUtils" t="Include">
+                  <e p="Delimiter.cs" t="Include" />
+                  <e p="DynamicGridLayout.cs" t="Include" />
+                  <e p="Plug.cs" t="Include" />
+                </e>
+                <e p="_FreeGemsPack" t="Include">
+                  <e p="FreeGemsPack.cs" t="Include" />
+                  <e p="FreeGemsPackPresenter.cs" t="Include" />
+                  <e p="FreeGemsPackView.cs" t="Include" />
+                </e>
+                <e p="_GemsBundle" t="Include">
+                  <e p="GemsBundle.cs" t="Include" />
+                  <e p="GemsBundlePresenter.cs" t="Include" />
+                  <e p="GemsBundleView.cs" t="Include" />
+                </e>
+                <e p="_ProfitOffer" t="Include">
+                  <e p="ProfitOfferPresenter.cs" t="Include" />
+                  <e p="ProfitOfferView.cs" t="Include" />
+                </e>
+                <e p="_ShopScr" t="Include">
+                  <e p="IShopPresenter.cs" t="Include" />
+                  <e p="IShopProvider.cs" t="Include" />
+                  <e p="Shop.cs" t="Include" />
+                  <e p="ShopItem.cs" t="Include" />
+                  <e p="ShopItemManager.cs" t="Include" />
+                  <e p="ShopItemsContainer.cs" t="Include" />
+                  <e p="ShopItemView.cs" t="Include" />
+                  <e p="ShopPresenter.cs" t="Include" />
+                  <e p="ShopProvider.cs" t="Include" />
+                </e>
+                <e p="_SpeedOffer" t="Include">
+                  <e p="SpeedOffer.cs" t="Include" />
+                  <e p="SpeedOfferPresenter.cs" t="Include" />
+                  <e p="SpeedOfferView.cs" t="Include" />
+                </e>
+                <e p="Common" t="Include">
+                  <e p="IProductPresenter.cs" t="Include" />
+                  <e p="ListView.cs" t="Include" />
+                </e>
               </e>
             </e>
             <e p="_StartBattleScreen" t="Include">
@@ -1299,6 +1314,9 @@
             <e p="Popups" t="Include">
               <e p="AlertPopup.cs" t="Include" />
             </e>
+            <e p="Timers" t="Include">
+              <e p="SynchronizedCountdownTimer.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="CleverAdsSolutions" t="Include">
@@ -1355,6 +1373,17 @@
               </e>
             </e>
           </e>
+        </e>
+        <e p="ImprovedTimers" t="Include">
+          <e p="CountdownTimer.cs" t="Include" />
+          <e p="Extensions" t="Include">
+            <e p="ListExtensions.cs" t="Include" />
+          </e>
+          <e p="ImprovedTimers.asmdef" t="Include" />
+          <e p="PlayerLoopUtils.cs" t="Include" />
+          <e p="Timer.cs" t="Include" />
+          <e p="TimerBootstrapper.cs" t="Include" />
+          <e p="TimerManager.cs" t="Include" />
         </e>
         <e p="JMO Assets" t="Include">
           <e p="Cartoon FX (legacy)" t="Include">
@@ -2761,6 +2790,7 @@
       <e p="Drawing.csproj" t="IncludeRecursive" />
       <e p="DrawingEditor.csproj" t="IncludeRecursive" />
       <e p="DrawingPackageToolsEditor.csproj" t="IncludeRecursive" />
+      <e p="ImprovedTimers.csproj" t="IncludeRecursive" />
       <e p="KinoBloom.Runtime.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive">

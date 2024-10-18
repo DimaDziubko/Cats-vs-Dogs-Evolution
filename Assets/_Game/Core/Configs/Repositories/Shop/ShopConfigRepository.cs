@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
@@ -9,9 +10,15 @@ namespace _Game.Core.Configs.Repositories.Shop
     public class ShopConfigRepository : IShopConfigRepository
     {
         private readonly IUserContainer _userContainer;
-        
-        public ShopConfigRepository(IUserContainer userContainer) =>
+        private readonly IMyLogger _logger;
+
+        public ShopConfigRepository(
+            IUserContainer userContainer,
+            IMyLogger logger)
+        {
             _userContainer = userContainer;
+            _logger = logger;
+        }
 
         public GemsBundleConfig GetGemsBundleConfig(int id) =>
             _userContainer.GameConfig.ShopConfig.GemsBundleConfigs
@@ -29,10 +36,12 @@ namespace _Game.Core.Configs.Repositories.Shop
             _userContainer.GameConfig.ShopConfig.FreeGemsPackConfigs
                 .FirstOrDefault(x => x.Id == id);
 
-        public ProfitOfferConfig GetProfitOfferConfig(int id) =>
-            _userContainer.GameConfig.ShopConfig.ProfitOfferConfigs
+        public ProfitOfferConfig GetProfitOfferConfig(int id)
+        {
+            return _userContainer.GameConfig.ShopConfig.ProfitOfferConfigs
                 .FirstOrDefault(x => x.Id == id);
-        
+        }
+
         public IEnumerable<GemsBundleConfig> GetGemsBundleConfigs() =>
             _userContainer.GameConfig.ShopConfig.GemsBundleConfigs;
 

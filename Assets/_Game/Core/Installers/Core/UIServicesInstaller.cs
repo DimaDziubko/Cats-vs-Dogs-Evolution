@@ -7,7 +7,7 @@ using _Game.UI._Hud;
 using _Game.UI._MainMenu.Scripts;
 using _Game.UI._RaceSelectionScreen.Scripts;
 using _Game.UI._Shop._MiniShop.Scripts;
-using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop.Scripts._ShopScr;
 using _Game.UI._StartBattleScreen.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.GameResult.Scripts;

@@ -4,7 +4,6 @@ using _Game.Core.Services.Audio;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
-using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.Utils.Extensions;
 using Cysharp.Threading.Tasks;

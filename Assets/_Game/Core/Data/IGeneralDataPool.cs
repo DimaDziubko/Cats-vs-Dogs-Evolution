@@ -2,7 +2,6 @@
 using _Game.Core.Data.Age.Static;
 using _Game.Core.Data.Battle;
 using _Game.Core.Data.Timeline.Static;
-using _Game.UI._Shop.Scripts;
 
 namespace _Game.Core.Data
 {

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace _Game.Core.Services._AdsGemsPackService
 {
@@ -16,10 +15,6 @@ namespace _Game.Core.Services._AdsGemsPackService
 
             DateTime now = DateTime.UtcNow;
             TimeSpan timeSinceLastUse = now - lastUseTime;
-
-            
-            Debug.Log($"lastUseTime: {lastUseTime:yyyy-MM-dd HH:mm:ss}");
-            Debug.Log($"<color=green>timeSinceLastUse: {timeSinceLastUse.TotalMinutes} minutes</color>");
             
             if (timeSinceLastUse.TotalMinutes < 0)
             {
@@ -28,9 +23,6 @@ namespace _Game.Core.Services._AdsGemsPackService
 
             int recoverableUnits = Math.Max(0, (int)(timeSinceLastUse.TotalMinutes / recoverTimeMinutes));
             recoveredUnits = Math.Min(recoverableUnits, maxCount - currentCount);
-
-            Debug.Log($"<color=green>recoverableUnits: {recoverableUnits}</color>");
-            Debug.Log($"<color=green>recoveredUnits: {recoveredUnits}</color>");
 
             return currentCount + recoveredUnits >= maxCount;
         }
@@ -44,9 +36,7 @@ namespace _Game.Core.Services._AdsGemsPackService
             TimeSpan timeForNextUnit = recoveryInterval - (now - lastUseTime);
             
             float secondsUntilNextRecovery = (float)Math.Max(0, timeForNextUnit.TotalSeconds);
-            
-            Debug.Log($"<color=green>Time Until Next Recovery: {secondsUntilNextRecovery} seconds</color>");
-    
+
             return secondsUntilNextRecovery;
         }
         
