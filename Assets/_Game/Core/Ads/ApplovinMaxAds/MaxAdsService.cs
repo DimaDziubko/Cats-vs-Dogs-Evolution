@@ -12,6 +12,7 @@ using UnityEngine;
 using _Game.Gameplay.BattleLauncher;
 using Assets._Game.Gameplay._Timer.Scripts;
 using Cysharp.Threading.Tasks;
+using _Game.Core.UserState._State;
 
 namespace _Game.Core.Ads.ApplovinMaxAds
 {
