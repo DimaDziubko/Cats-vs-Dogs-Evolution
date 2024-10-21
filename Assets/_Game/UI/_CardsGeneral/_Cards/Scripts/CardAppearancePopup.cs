@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Core.Services.Audio;
-using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop.Scripts._DecorAndUtils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;

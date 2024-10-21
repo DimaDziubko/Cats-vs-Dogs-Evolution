@@ -1,5 +1,5 @@
 ﻿using _Game.UI._MainMenu.Scripts;
-using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop.Scripts._ShopScr;
 using _Game.UI.Common.Scripts;
 using _Game.UI.Global;
 using Assets._Game.UI.Common.Scripts;

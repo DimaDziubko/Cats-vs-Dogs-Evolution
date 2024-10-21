@@ -38,7 +38,7 @@ namespace _Game.Core.Configs.Repositories
             BattleSpeedConfigRepository = new BattleSpeedConfigRepository(userContainer);
             EconomyConfigRepository = new EconomyConfigRepository(userContainer, AgeConfigRepository);
             DailyTaskConfigRepository = new DailyTaskConfigRepository(userContainer);
-            ShopConfigRepository = new ShopConfigRepository(userContainer);
+            ShopConfigRepository = new ShopConfigRepository(userContainer, logger);
             DifficultyConfigRepository = new DifficultyConfigRepository(userContainer);
         }
         

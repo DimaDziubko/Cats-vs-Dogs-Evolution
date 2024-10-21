@@ -1,4 +1,5 @@
 ﻿using _Game.Core.Services._AdsGemsPackService;
+using _Game.Core.Services.IAP;
 using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Timer.Scripts;
 using Sirenix.OdinInspector;
@@ -17,6 +18,9 @@ namespace _Game.Core.Debugger
         
         [Inject, ShowInInspector]
         private AdsGemsPackService _adsGemsPackService;
-
+       
+        
+        [Inject, ShowInInspector]
+        private IAPService _iasService;
     }
 }

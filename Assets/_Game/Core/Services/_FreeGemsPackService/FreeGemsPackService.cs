@@ -10,8 +10,8 @@ using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Currencies;
-using _Game.UI._Shop.Scripts;
-using Assets._Game.Gameplay._Timer.Scripts;
+using _Game.UI._Shop.Scripts._FreeGemsPack;
+using _Game.Utils.Timers;
 
 namespace _Game.Core.Services._FreeGemsPackService
 {
@@ -21,26 +21,24 @@ namespace _Game.Core.Services._FreeGemsPackService
         private readonly IShopConfigRepository _shopConfigRepository;
         private readonly IMyLogger _logger;
         private readonly IGameInitializer _gameInitializer;
-        private readonly ITimerService _timerService;
         private readonly TimeBasedRecoveryCalculator _recoveryCalculator;
 
         private IFreeGemsPackContainer FreeGemsPackContainer => _userContainer.State.FreeGemsPackContainer;
 
         private readonly Dictionary<int, FreeGemsPack> _freeGemsPacks = new Dictionary<int, FreeGemsPack>();
+        private readonly Dictionary<int, SynchronizedCountdownTimer> _countdownTimers = new Dictionary<int, SynchronizedCountdownTimer>();
 
         public FreeGemsPackService(
             IUserContainer userContainer,
             IConfigRepositoryFacade configRepositoryFacade,
             IMyLogger logger,
             IGameInitializer gameInitializer,
-            ITimerService timerService,
             TimeBasedRecoveryCalculator recoveryCalculator)
         {
             _userContainer = userContainer;
             _shopConfigRepository = configRepositoryFacade.ShopConfigRepository;
             _logger = logger;
             _gameInitializer = gameInitializer;
-            _timerService = timerService;
             _recoveryCalculator = recoveryCalculator;
             
             gameInitializer.OnPostInitialization += Init;
@@ -66,7 +64,16 @@ namespace _Game.Core.Services._FreeGemsPackService
             {
                 pack.FreeGemsPackCountChanged -= OnFreeGemsPackCountChanged;
             }
+            
+            _freeGemsPacks.Clear();
 
+            foreach (var timer in _countdownTimers.Values)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
+            
+            _countdownTimers.Clear();
         }
 
         public Dictionary<int, FreeGemsPack> GetFreeGemsPacks() => _freeGemsPacks;
@@ -190,36 +197,23 @@ namespace _Game.Core.Services._FreeGemsPackService
 
         private void StartRecoveryTimer(FreeGemsPack pack, float remainingTime)
         {
-            string key = $"FreeGemsPack_{pack.Id}";
-
-            GameTimer existingTimer = _timerService.GetTimer(key);
-    
-            if (existingTimer != null)
+            if (!_countdownTimers.TryGetValue(pack.Id, out var timer))
             {
-                _logger.Log($"Timer for AdsGemsPack {pack.Id} is already running.", DebugStatus.Warning);
-                return;
+                _countdownTimers[pack.Id]  = new SynchronizedCountdownTimer(remainingTime);
+                _countdownTimers[pack.Id].TimerStop += () => RecoverPack(pack);
             }
-    
-            _logger.Log($"Starting new timer for AdsGemsPack {pack.Id}. Remaining time: {remainingTime} seconds", DebugStatus.Success);
-
-            var timerData = new TimerData()
-            {
-                Countdown = true,
-                Duration = remainingTime,
-                StartValue = remainingTime,
-            };
-
-            var timer = _timerService.CreateTimer(key, timerData, () => RecoverPack(pack, key));
-            timer.Tick += pack.Tick;
-            timer.Start();
+            
+            _countdownTimers[pack.Id].Reset(remainingTime);
+            _countdownTimers[pack.Id].OnTick += pack.Tick;
+            _countdownTimers[pack.Id].Start();
+            pack.Tick(_countdownTimers[pack.Id].CurrentTime);
         }
 
-        private void RecoverPack(FreeGemsPack pack, string key)
+        private void RecoverPack(FreeGemsPack pack)
         {
-            GameTimer timer = _timerService.GetTimer(key);
-            timer.Tick -= pack.Tick;
-            _timerService.RemoveTimer(key); 
-            
+            _countdownTimers[pack.Id] .OnTick -= pack.Tick;
+            _countdownTimers[pack.Id] .Stop();
+
             var packState = FreeGemsPackContainer.FreeGemsPacks[pack.Id];
             if (packState.FreeGemPackCount < pack.Config.DailyGemsPackCount)
             {

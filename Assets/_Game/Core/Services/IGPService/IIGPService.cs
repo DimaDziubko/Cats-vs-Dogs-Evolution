@@ -6,7 +6,7 @@ namespace _Game.Core.Services.IGPService
     public interface IIGPService
     {
         event Action<IGPDto> Purchased;
-        List<CoinsBundle> CoinsBundles();
+        List<CoinsBundle> CoinsBundles { get; }
         void StartPurchase(CoinsBundle config);
     }
 }
