@@ -9,16 +9,9 @@ using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
-using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts._AdsGemsPack;
 using _Game.Utils.Timers;
-using Assets._Game.Gameplay._Timer.Scripts;
-using CAS;
-
-#if cas_advertisment_enabled
-using CAS;
-#endif
 
 namespace _Game.Core.Services._AdsGemsPackService
 {

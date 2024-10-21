@@ -6,7 +6,7 @@ using _Game.Core._Logger;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.Gameplay._Timer.Scripts;
 using Assets._Game.Core.UserState;
 using Assets._Game.Gameplay._Timer.Scripts;
@@ -24,7 +24,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
 #elif UNITY_ANDROID
         private readonly string _interstitialID = "bf36589164e49496";
-        private readonly string _rewardedID = "5500aOf67f9db05f";
+        private readonly string _rewardedID = "5500a0f67f9db05f";
 
         //private const string RewardedInterstitialAdUnitId = "ENTER_ANDROID_REWARD_INTER_AD_UNIT_ID_HERE";
         //private const string BannerAdUnitId = "39486b35f459019a";
@@ -32,7 +32,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
 #endif
 
-        public event Action<AdType> OnVideoLoaded;
+        public event Action<AdType> VideoLoaded;
         public event Action<AdType> VideoLoadingFailed;
         
         private Action _onVideoCompleted;
@@ -74,7 +74,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             _adsConfigRepository = configRepositoryFacade.AdsConfigRepository;
             _userContainer = userContainer;
             _gameInitializer = gameInitializer;
-            //_gameInitializer.OnPostInitialization += Init;
+            _gameInitializer.OnPostInitialization += Init;
         }
 
         private void Init()
@@ -82,7 +82,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             MaxSdkCallbacks.OnSdkInitializedEvent += sdkConfiguration =>
             {
                 InitializeRewardedAds();
-                //InitializeInterstitialAds();
+                InitializeInterstitialAds();
             };
             
             MaxSdk.InitializeSdk();
@@ -242,7 +242,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         private void OnRewardedAdLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             _logger.Log("Rewarded ad loaded", DebugStatus.Success);
-            OnVideoLoaded?.Invoke(AdType.Rewarded);
+            VideoLoaded?.Invoke(AdType.Rewarded);
             _rewardedRetryAttempt = 0;
         }
         private async void OnRewardedAdFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
@@ -312,7 +312,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         {
             _logger.Log("Interstitial loaded", DebugStatus.Success);
             
-            OnVideoLoaded?.Invoke(AdType.Interstitial);
+            VideoLoaded?.Invoke(AdType.Interstitial);
             
             _interstitialRetryAttempt = 0;
         }

@@ -73,14 +73,14 @@ namespace _Game.Core.Services._FoodBoostService.Scripts
             UpdateFoodBoost();
 
             FoodBoostState.FoodBoostChanged += OnFoodBoostChanged;
-            _adsService.OnVideoLoaded += OnRewardVideoLoaded;
+            _adsService.VideoLoaded += OnRewardVideoLoaded;
 
         }
 
         void IDisposable.Dispose()
         {
             FoodBoostState.FoodBoostChanged -= OnFoodBoostChanged;
-            _adsService.OnVideoLoaded -= OnRewardVideoLoaded;
+            _adsService.VideoLoaded -= OnRewardVideoLoaded;
             _gameInitializer.OnPostInitialization -= Init;
         }
 

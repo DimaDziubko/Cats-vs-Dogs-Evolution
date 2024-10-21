@@ -14,7 +14,7 @@ namespace _Game.Core.Ads
         event Action<AdImpressionDto> AdImpression;
 #endif
         void ShowRewardedVideo(Action onVideoCompleted, Placement placement);
-        event Action<AdType> OnVideoLoaded;
+        event Action<AdType> VideoLoaded;
         event Action<AdType> VideoLoadingFailed;
         bool IsAdReady(AdType type);
         void ShowInterstitialVideo(Placement placement);

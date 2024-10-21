@@ -7,8 +7,11 @@ using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
+using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop.Scripts._GemsBundle;
+using _Game.UI._Shop.Scripts._SpeedOffer;
 using _Game.Utils;
 using UnityEngine.Purchasing;
 
