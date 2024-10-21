@@ -1050,7 +1050,6 @@ Transform:
   - {fileID: 413009244245902431}
   - {fileID: 6851348404970444185}
   - {fileID: 4078092834450450976}
-  - {fileID: 8122894764690313344}
   - {fileID: 3458006266743657768}
   - {fileID: 1928983122615667952}
   - {fileID: 5633299287466413877}
@@ -1058,6 +1057,7 @@ Transform:
   - {fileID: 8350881074431934085}
   - {fileID: 5447873106605926959}
   - {fileID: 8189481969249607917}
+  - {fileID: 4711484275811586}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5180834647038271119
@@ -1230,7 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df13f4e7ea8e4bc99ad7642512626267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6507026609203256125
+--- !u!1 &6434528653745706524
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1238,22 +1238,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8122894764690313344}
-  - component: {fileID: 2959857015608930252}
+  - component: {fileID: 4711484275811586}
+  - component: {fileID: 5991810747307600238}
   m_Layer: 0
-  m_Name: Debugger
+  m_Name: MaxTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8122894764690313344
+--- !u!4 &4711484275811586
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6507026609203256125}
+  m_GameObject: {fileID: 6434528653745706524}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1262,16 +1262,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1258253947384861881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2959857015608930252
+--- !u!114 &5991810747307600238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6507026609203256125}
+  m_GameObject: {fileID: 6434528653745706524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e87560ac9514704b1f364a587a4cfde, type: 3}
+  m_Script: {fileID: 11500000, guid: ec28e70b4b6fd4944b68835ead654632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7098074204996009186

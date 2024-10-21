@@ -28,12 +28,12 @@ namespace _Game.Core.Services.Analytics
 
         public void Dispose()
         {
-
+            _gameInitializer.OnPostInitialization -= Init;
         }
 
         private void Init()
         {
-            _gameInitializer.OnPostInitialization -= Init;
+            
         }
 
         /// <summary>

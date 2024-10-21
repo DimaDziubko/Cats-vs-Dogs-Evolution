@@ -11,7 +11,7 @@ namespace _Game.Core._Logger
     {
         public void Log(string message, DebugStatus status)
         {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             switch (status)
             {
                 case DebugStatus.Success:
@@ -21,28 +21,28 @@ namespace _Game.Core._Logger
                     Debug.Log($"<color=yellow>{message}</color>");
                     break;
             }
-#endif
+//#endif
         }
         
         public void Log(string message)
         {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             Debug.Log(message);
-#endif
+//#endif
         }
 
         public void LogWarning(string message)
         {
-#if UNITY_EDITOR           
+//#if UNITY_EDITOR           
             Debug.LogWarning(message);
-#endif            
+//#endif            
         }
 
         public void LogError(string message)
         {
-#if UNITY_EDITOR            
+//#if UNITY_EDITOR            
             Debug.LogError(message);
-#endif           
+//#endif           
         }
     }
 }

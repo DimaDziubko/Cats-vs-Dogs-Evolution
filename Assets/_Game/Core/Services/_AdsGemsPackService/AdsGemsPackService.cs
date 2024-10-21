@@ -13,9 +13,6 @@ using _Game.Gameplay._Timer.Scripts;
 using _Game.UI._Currencies;
 using _Game.UI._Shop.Scripts;
 using Assets._Game.Gameplay._Timer.Scripts;
-#if cas_advertisment_enabled
-using CAS;
-#endif
 
 namespace _Game.Core.Services._AdsGemsPackService
 {

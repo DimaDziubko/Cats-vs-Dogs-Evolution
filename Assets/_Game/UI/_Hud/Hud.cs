@@ -31,6 +31,9 @@ namespace _Game.UI._Hud
         [SerializeField] private BattleSpeedView _battleSpeedView;
         [SerializeField] private SpeedBoostView _speedBoostView;
         [SerializeField] private DailyTaskView _dailyTaskView;
+        [SerializeField] private AdsDebugView _adsDebugView;
+
+        public AdsDebugView AdsDebugView => _adsDebugView;
 
         public CoinCounterView CounterView => _counterView;
 
