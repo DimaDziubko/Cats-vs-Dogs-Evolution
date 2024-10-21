@@ -19,7 +19,7 @@ namespace _Game.Core.Services.IAP
         List<GemsBundle> GemsBundles();
         List<SpeedOffer> SpeedOffers();
         List<ProfitOffer> ProfitOffers();
-        void Refresh();
+        void UpdateProducts();
     }
 
 }

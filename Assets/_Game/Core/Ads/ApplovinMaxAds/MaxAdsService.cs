@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using _Game.Common;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
@@ -8,8 +7,8 @@ using _Game.Core.Configs.Repositories._Ads;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Timer.Scripts;
+using _Game.Utils.Timers;
 using Assets._Game.Core.UserState;
-using Assets._Game.Gameplay._Timer.Scripts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -17,7 +16,8 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 {
     public class MaxAdsService : IAdsService, IDisposable
     {
-        private const string MaxSdkKey = "5AAhiuFzwRBZXL6NRkfMQIFE9TpJ-fX4qinXb1VVTh4_1ANSv1qJJ3TSWLnV_Jaq1LLcMr7rXCqTMC0FDqZXu6";
+        private const string MaxSdkKey =
+            "5AAhiuFzwRBZXL6NRkfMQIFE9TpJ-fX4qinXb1VVTh4_1ANSv1qJJ3TSWLnV_Jaq1LLcMr7rXCqTMC0FDqZXu6";
 #if UNITY_IOS
         private readonly string _interstitialID = "fa1af5faa1b59bdc";
         private readonly string _rewardedID = "89c3dc86f476dee";
@@ -34,7 +34,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
 
         public event Action<AdType> VideoLoaded;
         public event Action<AdType> VideoLoadingFailed;
-        
+
         private Action _onVideoCompleted;
 
         private readonly IGameInitializer _gameInitializer;
@@ -55,6 +55,8 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         private string _placement;
         private int _interstitialRetryAttempt;
 
+        private SynchronizedCountdownTimer _countdownTimer;
+
         public bool CanShowInterstitial =>
             _adsConfigRepository.GetConfig().IsInterstitialActive &&
             (Purchases.BoughtIAPs?.Find(x => x.Count > 0) == null) &&
@@ -67,7 +69,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             ITimerService timerService,
             IConfigRepositoryFacade configRepositoryFacade,
             IGameInitializer gameInitializer
-            )
+        )
         {
             _logger = logger;
             _timerService = timerService;
@@ -84,7 +86,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
                 InitializeRewardedAds();
                 InitializeInterstitialAds();
             };
-            
+
             MaxSdk.InitializeSdk();
 
             LoadAndShowCmpFlow();
@@ -136,7 +138,6 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         {
             if (MaxSdk.IsRewardedAdReady(_rewardedID))
             {
-
                 _logger.Log("Rewarded Video Show");
                 _onVideoCompleted = onVideoCompleted;
                 _placement = placement.ToString();
@@ -174,48 +175,48 @@ namespace _Game.Core.Ads.ApplovinMaxAds
                 };
             }
         }
-        
-        private void Unsubscribe() { }
-        
+
+        private void Unsubscribe()
+        {
+        }
+
         private void StartCountdown(float delay)
         {
             _logger.Log($"START INTERSTITIAL COUNTDOWN! {delay}", DebugStatus.Warning);
-            IsTimeForInterstitial = false;
 
-            GameTimer timer = _timerService.GetTimer(TimerType.InterstitialAdDelay.ToString());
-            if (timer != null)
+            if (_timer != null)
             {
-                timer.Stop();
-                _timerService.RemoveTimer(TimerType.InterstitialAdDelay.ToString());
+                _countdownTimer.Stop();
+                IsTimeForInterstitial = false;
             }
 
-            TimerData timerData = new TimerData
-            {
-                Countdown = true,
-                Duration = delay,
-                StartValue = delay
-            };
 
-            _timerService.CreateTimer(TimerType.InterstitialAdDelay.ToString(), timerData, OnInterstitialAdTimerOut);
-            _timerService.StartTimer(TimerType.InterstitialAdDelay.ToString());
-            _timer = _timerService.GetTimer(TimerType.InterstitialAdDelay.ToString());
+            if (_countdownTimer == null)
+            {
+                _countdownTimer = new SynchronizedCountdownTimer(delay);
+                _countdownTimer.TimerStop += OnInterstitialAdTimerOut;
+            }
+
+            _countdownTimer.Start();
 
             _logger.Log($"INTERSTITIAL READY: {IsTimeForInterstitial}!", DebugStatus.Warning);
         }
 
         private bool IsInternetConnected() =>
             Application.internetReachability != NetworkReachability.NotReachable;
-        
-        private void OnInterstitialAdTimerOut() =>
+
+        private void OnInterstitialAdTimerOut()
+        {
             IsTimeForInterstitial = true;
-        
+        }
+
         private async UniTask RetryLoadWithDelay(Func<UniTask> loadFunc, double retryDelay)
         {
             _logger.Log($"Retrying in {retryDelay} seconds");
             await UniTask.Delay(TimeSpan.FromSeconds(retryDelay));
             await loadFunc();
         }
-        
+
         #region Rewarded Ad Methods
 
         private async void InitializeRewardedAds()
@@ -228,7 +229,7 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             MaxSdkCallbacks.Rewarded.OnAdClickedEvent += OnRewardedAdClickedEvent;
             MaxSdkCallbacks.Rewarded.OnAdHiddenEvent += OnRewardedAdDismissedEvent;
             MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent += OnRewardedAdReceivedRewardEvent;
-            
+
             await LoadRewardedAd();
         }
 
@@ -245,18 +246,20 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             VideoLoaded?.Invoke(AdType.Rewarded);
             _rewardedRetryAttempt = 0;
         }
+
         private async void OnRewardedAdFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
             _rewardedRetryAttempt++;
             double retryDelay = Math.Pow(2, Math.Min(6, _rewardedRetryAttempt));
-            
+
             _logger.Log("Rewarded ad failed to load with error code: " + errorInfo.Code);
 
             VideoLoadingFailed?.Invoke(AdType.Rewarded);
             await RetryLoadWithDelay(LoadRewardedAd, retryDelay);
         }
 
-        private async void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
+        private async void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo,
+            MaxSdkBase.AdInfo adInfo)
         {
             _logger.Log("Rewarded ad failed to display with error code: " + errorInfo.Code);
             await LoadRewardedAd();
@@ -282,7 +285,6 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         {
             _logger.Log("Rewarded ad received reward");
             _onVideoCompleted?.Invoke();
-
         }
 
         #endregion
@@ -297,10 +299,10 @@ namespace _Game.Core.Ads.ApplovinMaxAds
             MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent += OnInterstitialFailedEvent;
             MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent += InterstitialFailedToDisplayEvent;
             MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += OnInterstitialDismissedEvent;
-            
+
             await LoadInterstitial();
         }
-        
+
         private async UniTask LoadInterstitial()
         {
             MaxSdk.LoadInterstitial(_interstitialID);
@@ -311,9 +313,9 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         private void OnInterstitialLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             _logger.Log("Interstitial loaded", DebugStatus.Success);
-            
+
             VideoLoaded?.Invoke(AdType.Interstitial);
-            
+
             _interstitialRetryAttempt = 0;
         }
 
@@ -321,13 +323,14 @@ namespace _Game.Core.Ads.ApplovinMaxAds
         {
             _interstitialRetryAttempt++;
             double retryDelay = Math.Pow(2, Math.Min(6, _interstitialRetryAttempt));
-            
+
             _logger.Log("Interstitial failed to load with error code: " + errorInfo.Code);
 
             await RetryLoadWithDelay(LoadInterstitial, retryDelay);
         }
 
-        private async void InterstitialFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
+        private async void InterstitialFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo,
+            MaxSdkBase.AdInfo adInfo)
         {
             _logger.Log("Interstitial failed to display with error code: " + errorInfo.Code);
             await LoadInterstitial();

@@ -6,13 +6,12 @@ using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Services.UserContainer;
-using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.UI._Currencies;
-using _Game.UI._Shop.Scripts;
 using _Game.UI._Shop.Scripts._GemsBundle;
 using _Game.UI._Shop.Scripts._SpeedOffer;
 using _Game.Utils;
+using Sirenix.OdinInspector;
 using UnityEngine.Purchasing;
 
 namespace _Game.Core.Services.IAP
@@ -20,7 +19,6 @@ namespace _Game.Core.Services.IAP
     public class IAPService : IIAPService, IDisposable
     {
         private const int INFINITY_PURCHASES_TRIGGER = -1;
-
         public event Action<SpeedOffer> SpeedOfferRemoved;
         public event Action Initialized;
         public event Action<Product> Purchased;
@@ -35,10 +33,9 @@ namespace _Game.Core.Services.IAP
 
         public bool IsInitialized => _iapProvider.IsInitialized;
 
-
-        private List<GemsBundle> _gemsBundlesCache;
-        private List<SpeedOffer> _speedOffersCache;
-        private List<ProfitOffer> _profitOffersCache;
+        [ShowInInspector] private List<GemsBundle> _gemsBundlesCache;
+        [ShowInInspector] private List<SpeedOffer> _speedOffersCache;
+        [ShowInInspector] private List<ProfitOffer> _profitOffersCache;
 
         public IAPService(
             IAPProvider iapProvider,
@@ -66,7 +63,7 @@ namespace _Game.Core.Services.IAP
             _speedOffersCache = new List<SpeedOffer>();
             _profitOffersCache = new List<ProfitOffer>();
 
-            UpdateCaches();
+            DefineProducts();
         }
 
         public void Dispose()
@@ -80,9 +77,10 @@ namespace _Game.Core.Services.IAP
         public List<SpeedOffer> SpeedOffers() => _speedOffersCache;
 
         public List<ProfitOffer> ProfitOffers() => _profitOffersCache;
-        public void Refresh()
+
+        void IIAPService.UpdateProducts()
         {
-            UpdateCaches();
+            DefineProducts();
         }
 
         private void ClearCaches()
@@ -92,7 +90,7 @@ namespace _Game.Core.Services.IAP
             _profitOffersCache.Clear();
         }
 
-        private void UpdateCaches()
+        private void DefineProducts()
         {
             ClearCaches();
 
@@ -129,9 +127,6 @@ namespace _Game.Core.Services.IAP
 
         private void OnPurchaseDataChanged()
         {
-            _logger.Log("OnPurchaseDataChanged", DebugStatus.Success);
-
-            UpdateCaches();
             CheckSpeedOffersBoughtOut();
             CheckProfitOffers();
         }
@@ -245,6 +240,8 @@ namespace _Game.Core.Services.IAP
             {
                 foreach (var moneyBox in profitOffer.MoneyBoxes)
                 {
+                    _logger.Log($"Money box contain {moneyBox.CurrencyType.ToString()}", DebugStatus.Warning);
+
                     switch (moneyBox.CurrencyType)
                     {
                         case CurrencyType.Coins:
@@ -255,6 +252,7 @@ namespace _Game.Core.Services.IAP
                             break;
                     }
                 }
+
                 _userContainer.PurchaseStateHandler.AddPurchase(purchasedProduct.definition.id);
             }
 
