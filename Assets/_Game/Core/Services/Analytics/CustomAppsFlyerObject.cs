@@ -34,27 +34,44 @@ namespace _Game.Core.Services.Analytics
 
         private void Start()
         {
-            // These fields are set from the editor so do not modify!
-            //******************************//
+            InitAppsFlyer();
+
+        }
+        private void InitAppsFlyer()
+        {
             AppsFlyer.setIsDebug(_isDebug);
 
-            AppsFlyer.initSDK(_devKey, _appID, _isGetConversionData ? this : null);
-            //******************************/
+            SetCustomerID();
 
-            // Purchase connector implementation 
+            AppsFlyer.initSDK(_devKey, _appID, this);
             AppsFlyerPurchaseConnector.init(this, AppsFlyerConnector.Store.GOOGLE);
-            AppsFlyerPurchaseConnector.setIsSandbox(_isSandbox);
-
+            //#if DEVELOPMENT_BUILD
+            AppsFlyerPurchaseConnector.setIsSandbox(true);
+            //#else
+            //            AppsFlyerPurchaseConnector.setIsSandbox(false);
+            //#endif
             AppsFlyerPurchaseConnector.setPurchaseRevenueValidationListeners(true);
-            //Auto Send AF_Purchase
-            //AppsFlyerPurchaseConnector.setAutoLogPurchaseRevenue(AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsAutoRenewableSubscriptions, AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsInAppPurchases);
+            AppsFlyerPurchaseConnector.setAutoLogPurchaseRevenue(AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsAutoRenewableSubscriptions,
+                AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsInAppPurchases);
             AppsFlyerPurchaseConnector.build();
-
             AppsFlyerPurchaseConnector.startObservingTransactions();
 
 
             AppsFlyer.startSDK();
 
+            Invoke(nameof(StartAdRevenueConnector), 1);
+        }
+        private void StartAdRevenueConnector()
+        {
+            AppsFlyerAdRevenue.start();
+#if DEVELOPMENT_BUILD
+            AppsFlyerAdRevenue.setIsDebug(true);
+#else
+            AppsFlyerAdRevenue.setIsDebug(false);
+#endif
+            MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent += OnAdRevenuePaidEvent;
+            MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += OnAdRevenuePaidEvent;
+            MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent += OnAdRevenuePaidEvent;
         }
 
         public void didReceivePurchaseRevenueValidationInfo(string validationInfo)
@@ -64,36 +81,32 @@ namespace _Game.Core.Services.Analytics
             Dictionary<string, object> dictionary = AFMiniJSON.Json.Deserialize(validationInfo) as Dictionary<string, object>;
 
             // if the platform is Android, you can create an object from the dictionnary 
-#if UNITY_ANDROID
-            if (dictionary.ContainsKey("productPurchase") && dictionary["productPurchase"] != null)
-            {
-                // Create an object from the JSON string.
-                InAppPurchaseValidationResult iapObject = JsonUtility.FromJson<InAppPurchaseValidationResult>(validationInfo);
-            }
-            else if (dictionary.ContainsKey("subscriptionPurchase") && dictionary["subscriptionPurchase"] != null)
-            {
-                SubscriptionValidationResult iapObject = JsonUtility.FromJson<SubscriptionValidationResult>(validationInfo);
-            }
-#endif
+            //#if UNITY_ANDROID
+            //            if (dictionary.ContainsKey("productPurchase") && dictionary["productPurchase"] != null)
+            //            {
+            //                // Create an object from the JSON string.
+            //                InAppPurchaseValidationResult iapObject = JsonUtility.FromJson<InAppPurchaseValidationResult>(validationInfo);
+            //            }
+            //            else if (dictionary.ContainsKey("subscriptionPurchase") && dictionary["subscriptionPurchase"] != null)
+            //            {
+            //                SubscriptionValidationResult iapObject = JsonUtility.FromJson<SubscriptionValidationResult>(validationInfo);
+            //            }
+            //#endif
         }
-
+        private void OnAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        {
+            Dictionary<string, string> additionalParams = new Dictionary<string, string>();
+            additionalParams.Add(AFAdRevenueEvent.AD_UNIT, adInfo.AdUnitIdentifier);
+            additionalParams.Add(AFAdRevenueEvent.AD_TYPE, adInfo.AdFormat);
+            AppsFlyerAdRevenue.logAdRevenue(adInfo.NetworkName,
+                AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeApplovinMax,
+                adInfo.Revenue, "USD", additionalParams);
+        }
         public void SetCustomerID()
         {
             AppsFlyer.setCustomerUserId(GameMode.GetUniqUserID());
         }
 
-        public void StartTrackAdRevenue()
-        {
-            AppsFlyerAdRevenue.start();
-
-
-            Debug.Log($"AppsFlyerAnalyticServicePlatform:: AdRevenueConnector: AppsFlyerAdRevenue.start()");
-#if DEVELOPMENT_BUILD
-            AppsFlyerAdRevenue.setIsDebug(true);
-#else
-            AppsFlyerAdRevenue.setIsDebug(false);
-#endif
-        }
 
         // Mark AppsFlyer CallBacks
         public void onConversionDataSuccess(string conversionData)
