@@ -1,7 +1,6 @@
 ﻿using _Game.Core.Services.UserContainer;
 using _Game.Gameplay._Units.Scripts;
 using _Game.UI._Currencies;
-using Assets._Game.Gameplay._Units.Scripts;
 
 namespace _Game.Core.UserState._Handler._Purchase
 {

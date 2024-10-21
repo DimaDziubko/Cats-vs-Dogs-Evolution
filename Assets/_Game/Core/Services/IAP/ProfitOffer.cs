@@ -1,10 +1,13 @@
 ﻿using System;
 using _Game.Core.Configs.Models;
+using _Game.UI._Shop.Scripts._ShopScr;
+using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.Purchasing;
 
 namespace _Game.Core.Services.IAP
 {
-    public class ProfitOffer
+    public class ProfitOffer : ShopItem
     {
         public event Action<bool> IsActiveChanged;
         
@@ -12,6 +15,7 @@ namespace _Game.Core.Services.IAP
         public ProfitOfferConfig Config;
         public Product Product;
         
+        [ShowInInspector]
         private bool _isActive;
         
         public bool IsActive
@@ -23,5 +27,7 @@ namespace _Game.Core.Services.IAP
                 IsActiveChanged?.Invoke(IsActive);
             }
         }
+
+        public override int ShopItemViewId => Config.ShopItemViewId;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using _Game.Core.Services.IAP;
 
-namespace _Game.Core.UserState
+namespace _Game.Core.UserState._State
 {
     public interface IPurchaseDataStateReadonly
     {

@@ -26,6 +26,7 @@ namespace _Game.Core.Services.IAP
         private IExtensionProvider _extensions;
 
         private IAPService _iapService;
+        private Product _productTryToPurchase;
 
         public Dictionary<string, GemsBundleConfig> GemsBundleConfigs { get; private set; }
         public Dictionary<string, Product> GemsBundleProducts { get; private set; }
@@ -124,34 +125,65 @@ namespace _Game.Core.Services.IAP
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
-            _logger.Log($"UnityPurchasing ProcessPurchase success {purchaseEvent.purchasedProduct.definition.id}");
+            if (purchaseEvent == null)
+            {
+                Debug.LogError("PurchaseEventArgs is null.");
+                // Handle the error or return an appropriate result
+                return PurchaseProcessingResult.Complete;
+            }
+
+            if (purchaseEvent.purchasedProduct == null)
+            {
+                Debug.LogError("PurchasedProduct is null.");
+                return PurchaseProcessingResult.Complete;
+            }
+
+            if (purchaseEvent.purchasedProduct.definition == null)
+            {
+                Debug.LogError("Product definition is null.");
+                return PurchaseProcessingResult.Complete;
+            }
+
+            if (string.IsNullOrEmpty(purchaseEvent.purchasedProduct.definition.id))
+            {
+                Debug.LogError("Product definition ID is null or empty.");
+                return PurchaseProcessingResult.Complete;
+            }
+
+            Debug.Log($"UnityPurchasing ProcessPurchase success {purchaseEvent.purchasedProduct.definition.id}");
+
+            _productTryToPurchase = purchaseEvent.purchasedProduct;
 
             List<string> receitsIDs = new List<string>();
 
             bool validPurchase = true;
 
-#if !UNITY_EDITOR
-            // Prepare the validator with the secrets we prepared in the Editor
-            // obfuscation window.
-
+            //#if !UNITY_EDITOR
             var validator = new CrossPlatformValidator(GooglePlayTangle.Data(),
                 AppleTangle.Data(), Application.identifier);
 
-            try {
-                // On Google Play, result has a single product ID.
-                // On Apple stores, receipts contain multiple products.
-                var result = validator.Validate(purchaseEvent.purchasedProduct.receipt);
-                // For informational purposes, we list the receipt(s)
-                //Debug.Log("Valid!");
-                foreach (IPurchaseReceipt productReceipt in result) {
-                    receitsIDs.Add(productReceipt.productID);
+            try
+            {
+                if (string.IsNullOrEmpty(_productTryToPurchase.receipt))
+                {
+                    Debug.LogError("Product receipt is null or empty.");
+                    validPurchase = false;
                 }
-            } catch (IAPSecurityException) {
-                //Debug.Log("Invalid receipt, not unlocking content");
+                else
+                {
+                    var result = validator.Validate(_productTryToPurchase.receipt);
+                    foreach (IPurchaseReceipt productReceipt in result)
+                    {
+                        receitsIDs.Add(productReceipt.productID);
+                    }
+                }
+            }
+            catch (IAPSecurityException ex)
+            {
+                Debug.LogError("Invalid receipt, not unlocking content: " + ex.Message);
                 validPurchase = false;
             }
-
-#endif
+            //#endif
 
 
             bool isValidID = false;
@@ -159,7 +191,18 @@ namespace _Game.Core.Services.IAP
             {
                 foreach (string ProductID in receitsIDs)
                 {
-                    //Debug.Log($"{E.purchasedProduct.definition.storeSpecificId}, and {ProductID}");
+                    if (string.IsNullOrEmpty(purchaseEvent.purchasedProduct.definition.storeSpecificId))
+                    {
+                        Debug.LogError("Store specific ID is null or empty.");
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(ProductID))
+                    {
+                        Debug.LogError("ProductID in receitsIDs is null or empty.");
+                        continue;
+                    }
+
                     if (purchaseEvent.purchasedProduct.definition.storeSpecificId.Equals(ProductID))
                     {
                         isValidID = true;
@@ -167,68 +210,46 @@ namespace _Game.Core.Services.IAP
                     }
                 }
             }
-
-#if UNITY_EDITOR
-            validPurchase = isValidID = true;
-#endif
-
-
-            if (validPurchase && isValidID)
+            else
             {
-                Product prod = purchaseEvent.purchasedProduct;
-                if (prod != null)
-                {
-                    string receipt = prod.receipt;
-                    string currency = prod.metadata.isoCurrencyCode;
-                    int amount = decimal.ToInt32(prod.metadata.localizedPrice * 100);
-#if !UNITY_EDITOR
-#if UNITY_ANDROID
-                    //GA
-                    ReceiptData receiptAndroid = JsonUtility.FromJson<ReceiptData>(receipt);
-                    PayloadAndroidData receiptPayload = JsonUtility.FromJson<PayloadAndroidData>(receiptAndroid.Payload);
-                    GameAnalytics.NewBusinessEventGooglePlay(currency, amount, prod.definition.payout.subtype,
-                        purchaseEvent.purchasedProduct.definition.id, "Shop", receiptPayload.json, receiptPayload.signature);
-
-                    DTDAntiCheat.VerifyPayment(_iapService.PublicGooglePlayKey, purchaseEvent.purchasedProduct.receipt, result =>
-                        {
-                            if (result.ReceiptStatus == DTDReceiptVerificationStatus.ReceiptValid ||
-                                result.ReceiptStatus == DTDReceiptVerificationStatus.ReceiptInternalError ||
-                                result.ReceiptStatus == DTDReceiptVerificationStatus.ReceiptServerError)
-                            {
-                                // Code for valid result.
-                                OnTrackPurchaseDev2Dev?.Invoke(prod);
-                            }
-                            else
-                            {
-                                // Code for invalid result.
-                            }
-                        });
-#endif
-#if UNITY_IPHONE
-                    //GA
-                    ReceiptData receiptiOS = JsonUtility.FromJson<ReceiptData>(receipt);
-                    string receiptPayload = receiptiOS.Payload;
-                    GameAnalytics.NewBusinessEventIOS(currency, amount, prod.definition.payout.subtype,
-                            purchaseEvent.purchasedProduct.definition.id, "Shop", receiptPayload);
-
-                    DTDAntiCheat.VerifyPayment(purchaseEvent.purchasedProduct.receipt, result =>
-                    {
-                        if (result.ReceiptStatus == DTDReceiptVerificationStatus.ReceiptValid ||
-                            result.ReceiptStatus == DTDReceiptVerificationStatus.ReceiptInternalError ||
-                            result.ReceiptStatus == DTDReceiptVerificationStatus.ReceiptServerError)
-                        {
-                            OnTrackPurchaseDev2Dev?.Invoke(prod);
-                        }
-                        else
-                        {
-                        }
-                    });
-#endif
-#endif
-                }
-
+                Debug.LogError("receitsIDs is null or empty.");
             }
-            return _iapService.ProcessPurchase(purchaseEvent.purchasedProduct);
+
+            //#if UNITY_EDITOR
+            //            validPurchase = isValidID = true;
+            //#endif
+
+
+            //            if (validPurchase && isValidID)
+            //            {
+            //                if (_productTryToPurchase != null)
+            //                {
+            //                    string receipt = _productTryToPurchase.receipt;
+            //                    string currency = _productTryToPurchase.metadata.isoCurrencyCode;
+            //                    int amount = decimal.ToInt32(_productTryToPurchase.metadata.localizedPrice * 100);
+            //#if !UNITY_EDITOR
+            //#if UNITY_ANDROID
+            //                    //GA
+            //                    ReceiptData receiptAndroid = JsonUtility.FromJson<ReceiptData>(receipt);
+            //                    PayloadAndroidData receiptPayload = JsonUtility.FromJson<PayloadAndroidData>(receiptAndroid.Payload);
+            //                    GameAnalytics.NewBusinessEventGooglePlay(currency, amount, _productTryToPurchase.definition.payout.subtype,
+            //                        purchaseEvent.purchasedProduct.definition.id, "Shop", receiptPayload.json, receiptPayload.signature);
+
+            //#endif
+            //#if UNITY_IPHONE
+            //                    //GA
+            //                    ReceiptData receiptiOS = JsonUtility.FromJson<ReceiptData>(receipt);
+            //                    string receiptPayload = receiptiOS.Payload;
+            //                    GameAnalytics.NewBusinessEventIOS(currency, amount, _productTryToPurchase.definition.payout.subtype,
+            //                            purchaseEvent.purchasedProduct.definition.id, "Shop", receiptPayload);
+
+            //#endif
+            //#endif
+            //                }
+            //            }
+
+            Debug.Log("UnityPurchasing _iapService.ProcessPurchase(_productTryToPurchase)");
+            return _iapService.ProcessPurchase(_productTryToPurchase);
         }
 
         public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) =>

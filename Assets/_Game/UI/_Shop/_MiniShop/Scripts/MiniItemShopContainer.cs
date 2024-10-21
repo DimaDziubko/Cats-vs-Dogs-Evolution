@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Game.Core._Logger;
-using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop.Scripts._CoinBundles;
+using _Game.UI._Shop.Scripts._ShopScr;
 using _Game.UI.Factory;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
     {
         [SerializeField] private Transform _parent;
         
-        private readonly List<CoinsBundleView> _coinBundles = new List<CoinsBundleView>();
+        private readonly List<ShopItemView> _coinBundles = new List<ShopItemView>();
         
         private IUIFactory _uiFactory;
         private IMyLogger _logger;
@@ -40,7 +41,7 @@ namespace _Game.UI._Shop._MiniShop.Scripts
             return view;
         }
         
-        public void Remove(CoinsBundleView view)
+        public void Remove(ShopItemView view)
         {
             if (_coinBundles.Contains(view))
             {

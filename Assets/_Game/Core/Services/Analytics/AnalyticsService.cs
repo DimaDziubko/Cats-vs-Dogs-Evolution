@@ -109,20 +109,20 @@ namespace _Game.Core.Services.Analytics
 
                 Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", impressionParameters);
 
-                //Debug.Log($"Revenue logged {adInfo}");
+                #region AppsFlyer
+                //Dictionary<string, string> additionalParams = new Dictionary<string, string>();
+                //additionalParams.Add(AFAdRevenueEvent.COUNTRY, countryCode);
+                //additionalParams.Add(AFAdRevenueEvent.AD_UNIT, adUnitId);
+                //additionalParams.Add(AFAdRevenueEvent.AD_TYPE, adInfo.AdFormat);
+                //additionalParams.Add(AFAdRevenueEvent.PLACEMENT, placement);
 
-                Dictionary<string, string> additionalParams = new Dictionary<string, string>();
-                additionalParams.Add(AFAdRevenueEvent.COUNTRY, countryCode);
-                additionalParams.Add(AFAdRevenueEvent.AD_UNIT, adUnitId);
-                additionalParams.Add(AFAdRevenueEvent.AD_TYPE, adInfo.AdFormat);
-                additionalParams.Add(AFAdRevenueEvent.PLACEMENT, placement);
+                //AppsFlyerAdRevenue.logAdRevenue(networkName,
+                //    AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeApplovinMax,
+                //    revenue, "USD", additionalParams
+                //);
 
-                AppsFlyerAdRevenue.logAdRevenue(networkName,
-                    AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeApplovinMax,
-                    revenue, "USD", additionalParams
-                );
-
-                _appsFlyerAnalyticsService.DebugEvent("AdRevenue", additionalParams);
+                //_appsFlyerAnalyticsService.DebugEvent("AdRevenue", additionalParams);
+                #endregion
             }
         }
 

@@ -2,7 +2,8 @@
 using _Game.Core.Factory;
 using _Game.Gameplay._Tutorial.Scripts;
 using _Game.UI._CardsGeneral._Cards.Scripts;
-using _Game.UI._Shop.Scripts;
+using _Game.UI._Shop.Scripts._DecorAndUtils;
+using _Game.UI._Shop.Scripts._ShopScr;
 using UnityEngine;
 using Zenject;
 

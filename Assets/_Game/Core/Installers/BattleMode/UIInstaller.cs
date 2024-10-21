@@ -5,7 +5,6 @@ using _Game.UI._BattleUIController;
 using _Game.UI._Environment;
 using _Game.UI._GameplayUI.Scripts;
 using _Game.UI._Hud;
-using _Game.UI._Shop.Scripts;
 using _Game.UI.GameResult.Scripts;
 using UnityEngine;
 using Zenject;

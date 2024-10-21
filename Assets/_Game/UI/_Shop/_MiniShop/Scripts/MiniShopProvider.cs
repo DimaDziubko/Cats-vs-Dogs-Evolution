@@ -7,7 +7,6 @@ using _Game.Core.Services.Audio;
 using _Game.Core.Services.Camera;
 using _Game.Core.Services.UserContainer;
 using _Game.Temp;
-using _Game.UI._Shop.Scripts;
 using _Game.UI.Factory;
 using _Game.UI.Header.Scripts;
 using Assets._Game.Utils.Disposable;

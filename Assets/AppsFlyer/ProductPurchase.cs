@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public class InAppPurchaseValidationResult : EventArgs
+class InAppPurchaseValidationResult : EventArgs
 {
     public bool success;
     public ProductPurchase? productPurchase;
@@ -13,7 +13,7 @@ public class InAppPurchaseValidationResult : EventArgs
 }
 
 [System.Serializable]
-public class ProductPurchase
+class ProductPurchase
 {
     public string kind;
     public string purchaseTimeMillis;
@@ -32,14 +32,14 @@ public class ProductPurchase
 }
 
 [System.Serializable]
-public class ValidationFailureData
+class ValidationFailureData
 {
     public int status;
     public string description;
 }
 
 [System.Serializable]
-public class SubscriptionValidationResult
+class SubscriptionValidationResult
 {
     public bool success;
     public SubscriptionPurchase? subscriptionPurchase;
@@ -48,7 +48,7 @@ public class SubscriptionValidationResult
 }
 
 [System.Serializable]
-public class SubscriptionPurchase
+class SubscriptionPurchase
 {
     public string acknowledgementState;
     public CanceledStateContext? canceledStateContext;
@@ -66,16 +66,17 @@ public class SubscriptionPurchase
 }
 
 [System.Serializable]
-public class CanceledStateContext
+class CanceledStateContext
 {
     public DeveloperInitiatedCancellation? developerInitiatedCancellation;
     public ReplacementCancellation? replacementCancellation;
     public SystemInitiatedCancellation? systemInitiatedCancellation;
     public UserInitiatedCancellation? userInitiatedCancellation;
+
 }
 
 [System.Serializable]
-public class ExternalAccountIdentifiers
+class ExternalAccountIdentifiers
 {
     public string externalAccountId;
     public string obfuscatedExternalAccountId;
@@ -83,7 +84,7 @@ public class ExternalAccountIdentifiers
 }
 
 [System.Serializable]
-public class SubscriptionPurchaseLineItem
+class SubscriptionPurchaseLineItem
 {
     public AutoRenewingPlan? autoRenewingPlan;
     public DeferredItemReplacement? deferredItemReplacement;
@@ -94,13 +95,13 @@ public class SubscriptionPurchaseLineItem
 }
 
 [System.Serializable]
-public class PausedStateContext
+class PausedStateContext
 {
     public string autoResumeTime;
 }
 
 [System.Serializable]
-public class SubscribeWithGoogleInfo
+class SubscribeWithGoogleInfo
 {
     public string emailAddress;
     public string familyName;
@@ -110,39 +111,39 @@ public class SubscribeWithGoogleInfo
 }
 
 [System.Serializable]
-public class TestPurchase { }
+class TestPurchase{}
 
 [System.Serializable]
-public class DeveloperInitiatedCancellation { }
+class DeveloperInitiatedCancellation{}
 
 [System.Serializable]
-public class ReplacementCancellation { }
+class ReplacementCancellation{}
 
 [System.Serializable]
-public class SystemInitiatedCancellation { }
+class SystemInitiatedCancellation{}
 
 [System.Serializable]
-public class UserInitiatedCancellation
+class UserInitiatedCancellation
 {
     public CancelSurveyResult? cancelSurveyResult;
     public string cancelTime;
 }
 
 [System.Serializable]
-public class AutoRenewingPlan
+class AutoRenewingPlan
 {
     public string? autoRenewEnabled;
     public SubscriptionItemPriceChangeDetails? priceChangeDetails;
 }
 
 [System.Serializable]
-public class DeferredItemReplacement
+class DeferredItemReplacement
 {
     public string productId;
 }
 
 [System.Serializable]
-public class OfferDetails
+class OfferDetails
 {
     public List<string>? offerTags;
     public string basePlanId;
@@ -150,20 +151,20 @@ public class OfferDetails
 }
 
 [System.Serializable]
-public class PrepaidPlan
+class PrepaidPlan
 {
     public string? allowExtendAfterTime;
 }
 
 [System.Serializable]
-public class CancelSurveyResult
+class CancelSurveyResult
 {
     public string reason;
     public string reasonUserInput;
 }
 
 [System.Serializable]
-public class SubscriptionItemPriceChangeDetails
+class SubscriptionItemPriceChangeDetails
 {
     public string expectedNewPriceChargeTime;
     public Money? newPrice;
@@ -172,9 +173,10 @@ public class SubscriptionItemPriceChangeDetails
 }
 
 [System.Serializable]
-public class Money
-{
+ class Money
+ {
     public string currencyCode;
     public long nanos;
     public long units;
-}
+ }
+   
