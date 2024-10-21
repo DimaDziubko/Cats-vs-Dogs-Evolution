@@ -1,41 +1,79 @@
 ﻿using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
-using _Game.Core.Services.UserContainer;
 using AppsFlyerSDK;
 using System;
 using System.Collections.Generic;
+using _Game.Core._GameMode;
+using _Game.Core.Ads;
+using AppsFlyerConnector;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using Zenject;
 
 namespace _Game.Core.Services.Analytics
 {
-    public class AppsFlyerAnalyticsService : IDisposable
+    public class AppsFlyerAnalyticsService : IInitializable, IDisposable
     {
-        private readonly IUserContainer _userContainer;
         private readonly IGameInitializer _gameInitializer;
         private readonly IMyLogger _logger;
+        private readonly AppsFlyerSettings _settings;
+        private readonly IAdsService _iAdsService;
 
         public AppsFlyerAnalyticsService(
-            IUserContainer userContainer,
-            IGameInitializer gameInitializer,
-            IMyLogger logger)
+            IMyLogger logger,
+            AppsFlyerSettings settings,
+            IAdsService iAdsService)
         {
-            _userContainer = userContainer;
-            _gameInitializer = gameInitializer;
             _logger = logger;
-            gameInitializer.OnPostInitialization += Init;
+            _settings = settings;
+            _iAdsService = iAdsService;    
         }
 
-        public void Dispose()
+        void IInitializable.Initialize()
         {
-            _gameInitializer.OnPostInitialization -= Init;
-        }
-
-        private void Init()
-        {
+            AppsFlyer.setIsDebug(_settings.IsDebug);
             
+            AppsFlyer.setCustomerUserId(UnityEngine.Device.SystemInfo.deviceUniqueIdentifier);
+
+            AppsFlyer.initSDK(_settings.DevKey, _settings.AppID, _settings);
+            
+            AppsFlyerPurchaseConnector.init(_settings, Store.GOOGLE);
+
+            AppsFlyerPurchaseConnector.setIsSandbox(GameMode.I.TestMode);
+            
+            AppsFlyerPurchaseConnector.setPurchaseRevenueValidationListeners(true);
+            
+            AppsFlyerPurchaseConnector.setAutoLogPurchaseRevenue(
+                AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsAutoRenewableSubscriptions,
+                AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsInAppPurchases);
+            
+            AppsFlyerPurchaseConnector.build();
+            AppsFlyerPurchaseConnector.startObservingTransactions();
+            
+            AppsFlyer.startSDK();
+
+            AppsFlyerAdRevenue.start();
+
+            AppsFlyerAdRevenue.setIsDebug(GameMode.I.TestMode);
+
+            _iAdsService.OnAdRevenuePaidEvent += OnAdRevenuePaidEvent;
         }
 
+        void IDisposable.Dispose()
+        {
+            _iAdsService.OnAdRevenuePaidEvent -= OnAdRevenuePaidEvent;
+        }
+        
+        private void OnAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        {
+            Dictionary<string, string> additionalParams = new Dictionary<string, string>();
+            additionalParams.Add(AFAdRevenueEvent.AD_UNIT, adInfo.AdUnitIdentifier);
+            additionalParams.Add(AFAdRevenueEvent.AD_TYPE, adInfo.AdFormat);
+            AppsFlyerAdRevenue.logAdRevenue(adInfo.NetworkName,
+                AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeApplovinMax,
+                adInfo.Revenue, "USD", additionalParams);
+        }
+        
         /// <summary>
         /// * Event parameters for af_initiated_checkout event
         /// </summary>

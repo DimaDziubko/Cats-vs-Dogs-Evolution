@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using _Game.Core._GameInitializer;
 using _Game.Core._Logger;
+using _Game.Core.Ads;
 using _Game.Core.Services.UserContainer;
 using _Game.Core.UserState;
 using _Game.Core.UserState._State;
 using _Game.Gameplay._Battle.Scripts;
 using _Game.Gameplay._Units.Scripts;
 using _Game.Utils;
-using AppsFlyerSDK;
 using Assets._Game.Core.Services.Analytics;
 using Assets._Game.Core.UserState;
 using Cysharp.Threading.Tasks;
@@ -19,7 +19,7 @@ using UnityEngine.Device;
 
 namespace _Game.Core.Services.Analytics
 {
-    public class AnalyticsService : IAnalyticsService, IDisposable
+    public class FirebaseAnalyticsService : IAnalyticsService, IDisposable
     {
         private FirebaseApp _app;
         private bool _isFirebaseInitialized = false;
@@ -27,7 +27,7 @@ namespace _Game.Core.Services.Analytics
 
         private readonly IMyLogger _logger;
         private readonly IUserContainer _userContainer;
-        private readonly AppsFlyerAnalyticsService _appsFlyerAnalyticsService;
+        private readonly IAdsService _adsService;
 
         private ITimelineStateReadonly TimelineState => _userContainer.State.TimelineState;
         private IRaceStateReadonly RaceState => _userContainer.State.RaceState;
@@ -36,15 +36,15 @@ namespace _Game.Core.Services.Analytics
         private IAdsStatisticsReadonly AdsStatistics => _userContainer.State.AdsStatistics;
         private IRetentionStateReadonly RetentionStateReadonly => _userContainer.State.RetentionState;
 
-        public AnalyticsService(
+        public FirebaseAnalyticsService(
             IMyLogger logger,
             IUserContainer userContainer,
             IGameInitializer gameInitializer,
-            AppsFlyerAnalyticsService appsFlyerAnalyticsService)
-        {
+            IAdsService adsService)
+        { 
             _logger = logger;
             _userContainer = userContainer;
-            _appsFlyerAnalyticsService = appsFlyerAnalyticsService;
+            _adsService = adsService;
             gameInitializer.RegisterAsyncInitialization(Init);
         }
 
@@ -67,6 +67,11 @@ namespace _Game.Core.Services.Analytics
                 _logger.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
 
+            Subscribe();
+        }
+
+        private void Subscribe()
+        {
             TimelineState.NextBattleOpened += OnNextBattleOpened;
             TimelineState.NextAgeOpened += OnNextAgeOpened;
             TimelineState.OpenedUnit += OnUnitOpened;
@@ -78,13 +83,7 @@ namespace _Game.Core.Services.Analytics
             TutorialState.StepsCompletedChanged += OnStepCompleted;
         }
 
-        private void InnerInit()
-        {
-            MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += LogAdPurchase;
-            MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent += LogAdPurchase;
-            //MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent += LogAdPurchase;
-            //MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += LogAdPurchase;
-        }
+        private void InnerInit() => _adsService.OnAdRevenuePaidEvent += LogAdPurchase;
 
         private void LogAdPurchase(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
@@ -138,6 +137,13 @@ namespace _Game.Core.Services.Analytics
 
         void IDisposable.Dispose()
         {
+            Unsubscribe();
+
+            _app?.Dispose();
+        }
+
+        private void Unsubscribe()
+        {
             TimelineState.NextBattleOpened -= OnNextBattleOpened;
             TimelineState.NextAgeOpened -= OnNextAgeOpened;
             TimelineState.OpenedUnit -= OnUnitOpened;
@@ -145,13 +151,7 @@ namespace _Game.Core.Services.Analytics
             BattleStatistics.CompletedBattlesCountChanged -= OnCompletedBattleChanged;
             AdsStatistics.AdsReviewedChanged -= OnAdsStatisticsChanged;
             TutorialState.StepsCompletedChanged -= OnStepCompleted;
-
-            MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent -= LogAdPurchase;
-            MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent -= LogAdPurchase;
-            //MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent -= LogAdPurchase;
-            //MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= LogAdPurchase;
-
-            _app?.Dispose();
+            _adsService.OnAdRevenuePaidEvent -= LogAdPurchase;
         }
 
         private void SendFirstDayRetentionEvent()

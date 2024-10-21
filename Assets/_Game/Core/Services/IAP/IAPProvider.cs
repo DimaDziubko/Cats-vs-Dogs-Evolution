@@ -5,9 +5,6 @@ using _Game.Core._Logger;
 using _Game.Core.Configs.Models;
 using _Game.Core.Configs.Repositories;
 using _Game.Core.Configs.Repositories.Shop;
-using _Game.Core.Services.IAP.Data;
-using DevToDev.AntiCheat;
-using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Security;
@@ -18,9 +15,6 @@ namespace _Game.Core.Services.IAP
     {
         private readonly IShopConfigRepository _shopConfigRepository;
         private readonly IMyLogger _logger;
-
-        public event Action<Product> OnTrackPurchaseDev2Dev; //That Action just for Dev2Dev Because AntiCheat
-
 
         private IStoreController _controller;
         private IExtensionProvider _extensions;
